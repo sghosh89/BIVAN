@@ -149,7 +149,7 @@ fit_BIV<-function(d,families,level=0.05){
 ```{r loaddatatest, echo=F}
 # here you can directly load the bivariate data to the variable d
 # or you can save the bivariate data to d after some data extraction
-d<-readRDS("givendata.RDS")
+d<-readRDS("../Data/givendata.RDS")
 ```
 
 * **Copula plot of the data :**
@@ -176,7 +176,7 @@ knitr::kable(x[[2]])
 ```{r loaddata1, echo=F}
 # here you can directly load the bivariate data to the variable d
 # or you can save the bivariate data to d after some data extraction
-d<-readRDS("givendata.RDS")
+d<-readRDS("../Data/givendata.RDS")
 ```
 
 * **Copula plot of the data :**

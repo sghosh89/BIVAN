@@ -70,7 +70,7 @@ fit_BIV<-function(d,families,level=0.05){
   u1<-m[,1]
   u2<-m[,2]
        
-  ans<-OurBiCopSelect(u1,u2,families,AICBIC="AIC",level=0.05,numBS=4,gofnormal=T)
+  ans<-OurBiCopSelect(u1,u2,families,AICBIC="AIC",level=0.05,numBS=100,gofnormal=T)
   if(ans$IndepTestRes<level){
     gfc_numBS<-100
     gfc_p_CvM<-ans$GofRes_CvM
@@ -85,7 +85,7 @@ fit_BIV<-function(d,families,level=0.05){
     
     pmin<-min(ans$GofRes_CvM,ans$GofRes_KS,ans$GofRes_Normal_CvM,ans$GofRes_Normal_KS)
     if(pmin<0.2){
-      ans2<-OurBiCopSelect(u1,u2,families,AICBIC="AIC",level=0.05,numBS=5,gofnormal=T)
+      ans2<-OurBiCopSelect(u1,u2,families,AICBIC="AIC",level=0.05,numBS=1000,gofnormal=T)
       gfc_numBS<-1000
       gfc_p_CvM<-ans2$GofRes_CvM
       gfc_p_KS<-ans2$GofRes_KS
@@ -149,7 +149,7 @@ fit_BIV<-function(d,families,level=0.05){
 ```{r loaddatatest, echo=F}
 # here you can directly load the bivariate data to the variable d
 # or you can save the bivariate data to d after some data extraction
-d<-readRDS("../Data/givendata.RDS")
+d<-readRDS("Data/givendata.RDS")
 ```
 
 * **Copula plot of the data :**
@@ -176,7 +176,7 @@ knitr::kable(x[[2]])
 ```{r loaddata1, echo=F}
 # here you can directly load the bivariate data to the variable d
 # or you can save the bivariate data to d after some data extraction
-d<-readRDS("../Data/givendata.RDS")
+d<-readRDS("Data/givendata.RDS")
 ```
 
 * **Copula plot of the data :**

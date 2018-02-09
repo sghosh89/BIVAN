@@ -51,7 +51,7 @@ copsurrog2d<-function(m,targetcop,numsurrog)
   return(surrogs)
 }
 
-#test 
+#***basic tests of the function
 datcop<-claytonCopula(5,2)
 numpts<-1000
 m<-rCopula(numpts,datcop)
@@ -61,8 +61,38 @@ tarcop<-gumbelCopula(3,2)
 
 res<-copsurrog2d(m,tarcop,3)
 dim(res)
+
 plot(res[,1,1],res[,2,1],type='p')
 BiCopGofTest(res[,1,1],res[,2,1],family=4)
 BiCopGofTest(res[,1,2],res[,2,2],family=4)
 BiCopGofTest(res[,1,3],res[,2,3],family=4)
 
+sum(sort(res[,1,1])==sort(m[,1]))
+sum(sort(res[,2,1])==sort(m[,2]))
+sum(sort(res[,1,2])==sort(m[,1]))
+sum(sort(res[,2,2])==sort(m[,2]))
+sum(sort(res[,1,3])==sort(m[,1]))
+sum(sort(res[,2,3])==sort(m[,2]))
+
+#***test to see whether changing the copula
+#markedly influences the distribution
+#of the mean
+
+#make the data
+datcop<-rotCopula(claytonCopula(5,2))
+d<-rCopula(10000,datcop)
+d<-qnorm(d,mean=0,sd=1)
+
+#change the copula
+tarcop<-claytonCopula(3,2)
+sur<-copsurrog2d(d,tarcop,1000)
+
+#see how the skewness of the spatial average 
+#is affected
+source("SkewnessAnd3CentMom.R")
+skdat<-myskns(apply(FUN=mean,X=d,MARGIN=1))
+mnres<-apply(FUN=mean,X=sur,MARGIN=c(1,3))
+sksur<-apply(FUN=myskns,X=mnres,MARGIN=2)
+sum(sksur<skdat)/length(sksur)
+range(sksur) #all negative, consistent with understanding
+skdat #positive, also consistent

@@ -7,17 +7,17 @@ require(mvtnorm)
 #to a normal copula.
 #
 #Args
-#m          A T by n matrix, where T is the length of the time 
-#             series and n is the number of time series
+#m          A N by n matrix, where N is the length of the time series 
+#           and n is the number of time series
 #numsurrog  The desired number of surrogate datasets
 #
 #Output
-#A T by n by numsurrog array, surrogs. The ith surrogate is stored
+#A N by n by numsurrog array, surrogs. The ith surrogate is stored
 #surrog[,,i].
 #
 ncsurrog<-function(m,numsurrog)
 {
-  T<-dim(m)[1]
+  N<-dim(m)[1]
   n<-dim(m)[2]
   
   #get the kendall correlation matrix of the data
@@ -31,8 +31,8 @@ ncsurrog<-function(m,numsurrog)
   #generate a bunch of mv normals in the shape of the final
   #desired output. Each row is a draw from an mv normal with 
   #mean 0 and cov matrix ncov.
-  surrogs<-array(rmvnorm(T*numsurrog,mean=rep(0,n),sigma=ncov),
-                 dim=c(T,numsurrog,n))
+  surrogs<-array(rmvnorm(N*numsurrog,mean=rep(0,n),sigma=ncov),
+                 dim=c(N,numsurrog,n))
   surrogs<-aperm(surrogs,c(1,3,2)) #now it is T by n by numsurrog
   
   #The nth-smallest element of each time series surrog[,a,b] 
@@ -73,29 +73,29 @@ ncsurrog<-function(m,numsurrog)
 }
 
 #test without NAs
-cop<-claytonCopula(5,2)
-numpts<-1000
-m<-rCopula(numpts,cop)
-plot(m[,1],m[,2],type='p')
-res<-ncsurrog(m,3)
-dim(res)
-plot(res[,1,1],res[,2,1],type='p')
-ncop<-normalCopula(.5,2)
-BiCopGofTest(res[,1,1],res[,2,1],family=1)
-BiCopGofTest(res[,1,2],res[,2,2],family=1)
-BiCopGofTest(res[,1,3],res[,2,3],family=1)
+#cop<-claytonCopula(5,2)
+#numpts<-1000
+#m<-rCopula(numpts,cop)
+#plot(m[,1],m[,2],type='p')
+#res<-ncsurrog(m,3)
+#dim(res)
+#plot(res[,1,1],res[,2,1],type='p')
+#ncop<-normalCopula(.5,2)
+#BiCopGofTest(res[,1,1],res[,2,1],family=1)
+#BiCopGofTest(res[,1,2],res[,2,2],family=1)
+#BiCopGofTest(res[,1,3],res[,2,3],family=1)
 
 #test with NAs
-m[sample(1:numpts,5),1]<-NA
-m[sample(1:numpts,5),2]<-NA
-res<-ncsurrog(m,3)
-dim(res)
-sum(is.na(res[,1,1]))
-sum(is.na(res[,2,1]))
-sum(is.na(res[,1,2]))
-sum(is.na(res[,2,2]))
-plot(res[,1,1],res[,2,1],type='p')
-BiCopGofTest(res[,1,1],res[,2,1],family=1)
-BiCopGofTest(res[,1,2],res[,2,2],family=1)
-BiCopGofTest(res[,1,3],res[,2,3],family=1)
+#m[sample(1:numpts,5),1]<-NA
+#m[sample(1:numpts,5),2]<-NA
+#res<-ncsurrog(m,3)
+#dim(res)
+#sum(is.na(res[,1,1]))
+#sum(is.na(res[,2,1]))
+#sum(is.na(res[,1,2]))
+#sum(is.na(res[,2,2]))
+#plot(res[,1,1],res[,2,1],type='p')
+#BiCopGofTest(res[,1,1],res[,2,1],family=1)
+#BiCopGofTest(res[,1,2],res[,2,2],family=1)
+#BiCopGofTest(res[,1,3],res[,2,3],family=1)
 

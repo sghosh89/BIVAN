@@ -1,0 +1,67 @@
+---
+title: "For testing OurBiCopSelect.R"
+author: "Daniel Reuman"
+date: "February 12, 2018"
+output: pdf_document
+---
+
+This is just for testing the `OurBiCopSelect.R` function. We test that
+it runs and gives reasonable results by simulating data and seeing if 
+you recover what kind of copula was used.
+
+<!--Source in the function and a package, changeable constants-->
+```{r}
+source("OurBiCopSelect.R")
+require(copula)
+nbsmall<-8
+pthresh<-0.2
+nblarge<-15 #for bootstrapping, see below
+numdat<-100 #amount of artificial data
+```
+
+<!--A function needed for caching-->
+```{r echo=F}
+mtime <- function(files)
+{
+  lapply(Sys.glob(files),function(x) X =   
+          file.info(x)$mtime)
+}
+```
+
+If real data come from a Clayton copula, independence should
+be rejected, Clayton should be the AIC best, it should pass the
+goodness of fit test, and the normal copula should fail the
+goodness of fit test:
+<!--Test for real data from a clayton-->
+```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,mtime("OutBiCopSelect.R"))}
+families<-c(1,3:6,13,14,16)
+
+#data are really from a clayton
+cop<-claytonCopula(5,2)
+dat<-rCopula(numdat,cop)
+allresC<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
+                        numBSlarge=nblarge,pthresh=0.2)
+allresC
+```
+
+Same test, but data now come from a Gumbel copula:
+<!--Test for real data from a gumbel-->
+```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,mtime("OutBiCopSelect.R"))}
+#data are really from a gumbel
+cop<-gumbelCopula(4,2)
+dat<-rCopula(numdat,cop)
+allresG<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
+                        numBSlarge=nblarge,pthresh=0.2)
+allresG
+```
+
+Same test, but data now come from a Frank copula:
+<!--Test for real data from a frank-->
+```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,mtime("OutBiCopSelect.R"))}
+#data are really from a frank
+cop<-frankCopula(5,2)
+dat<-rCopula(numdat,cop)
+allresF<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
+                        numBSlarge=nblarge,pthresh=0.2)
+allresF
+```

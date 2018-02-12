@@ -20,14 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 <mark>*Code preloaded*</mark>
 
 ```{r BIVAN, echo=F}
-#----------------------
-rm(list=ls())
-graphics.off()
 library(copula)
-library(VineCopula)
-#----------------------
 source("OurBiCopSelect.R")
-#----------------------
+
 # This function takes a bivariable dataset (matrix or dataframe)
 # Output : a plot(optional) and rankings as a dataframe
 

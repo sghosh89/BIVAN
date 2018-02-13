@@ -1,0 +1,37 @@
+library(VineCopula)
+
+#This function takes a bivariable dataset (matrix or dataframe) and gets the
+#associated sample from the underlying copula by taking ranks.
+#
+#Args
+#d          An N by 2 matrix or data frame
+#rankon     Should ranks be taken? This could be F, for instance, if data 
+#             were simulated from a copula.
+#ploton     Should a plot of the copula be generated?
+#
+#Note: An NA means that whole row is automatically removed.
+#
+#Output : a plot(optional) and rankings as a matrix
+#
+getcopula<-function(d,rankon=T,ploton=F)
+{
+  #get rid of NAs
+  inds<-which(is.finite(d[,1]) && is.finite(d[,2]))
+  d<-d[inds,]
+  
+  #get ranks
+  if (rankon)
+  {
+    v<-VineCopula::pobs(d)
+  }else
+  {
+    v<-d
+  }
+  
+  #plot
+  if(ploton==T){
+    plot(v[,1],v[,2],type="p",col="red",xlab=expression(v[1]),ylab=expression(v[2]),cex.lab=1)
+  }
+  
+  return(v)
+}

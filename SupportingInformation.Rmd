@@ -1,11 +1,49 @@
 ---
-title: "For testing OurBiCopSelect.R"
-author: "Daniel Reuman"
+title: "Supporting Information"
+author: "Shyamolina Ghosh and Daniel Reuman"
 date: "February 12, 2018"
 output: pdf_document
 ---
 
-This is just for testing the `OurBiCopSelect.R` function. We test that
+# Descriptions of data
+
+
+# Testing the ranking and bivariate copula display function
+
+This is just for testing the `getcopula` function.
+
+<!--Source in function and a package--->
+```{r}
+source("getcopula.R")
+require(copula)
+require(mvtnorm)
+```
+
+Plot data from a Clayton copula, which has lower tail dependence:
+```{r}
+copC<-claytonCopula(8,2)
+dC<-rCopula(1000,copC)
+vC<-getcopula(d=dC,rankon=F,ploton=T)
+```
+
+Plot data from a Joe copula, which has upper tail dependence:
+```{r}
+copJ<-joeCopula(8,2)
+dJ<-rCopula(1000,copJ)
+vJ<-getcopula(d=dJ,rankon=F,ploton=T)
+```
+
+Get data from a bivariate normal distribution and take ranks and
+then plot:
+```{r}
+sigma<-matrix(c(1,.7,.7,1),2,2)
+dN<-rmvnorm(1000,mean=c(0,0),sigma=sigma)
+vN<-getcopula(d=dN,rankon=T,ploton=T)
+```
+
+# Testing the bivariate model selection and goodness-of-fit pipeline
+
+This is just for testing the `OurBiCopSelect` function. We test that
 it runs and gives reasonable results by simulating data and seeing if 
 you recover what kind of copula was used.
 
@@ -85,3 +123,6 @@ allresJ<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
                         numBSlarge=nblarge,pthresh=0.2)
 allresJ
 ```
+
+# Testing the pipeline for examining tail dependence in bivariate data
+

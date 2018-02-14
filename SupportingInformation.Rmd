@@ -5,8 +5,17 @@ date: "February 12, 2018"
 output: pdf_document
 ---
 
-# Descriptions of data
+<!--A function needed for caching-->
+```{r echo=F}
+mtime <- function(files)
+{
+  lapply(Sys.glob(files),function(x) X =   
+          file.info(x)$mtime)
+}
+```
 
+# Descriptions of data
+Each data contributor writes one to a few paragraphs about their data.
 
 # Testing the ranking and bivariate copula display function
 
@@ -56,15 +65,6 @@ pthresh<-0.2
 nblarge<-1000 #for bootstrapping, see below
 numdat<-500 #amount of artificial data
 seed<-101
-```
-
-<!--A function needed for caching-->
-```{r echo=F}
-mtime <- function(files)
-{
-  lapply(Sys.glob(files),function(x) X =   
-          file.info(x)$mtime)
-}
 ```
 
 If real data come from a Clayton copula, independence should
@@ -123,6 +123,12 @@ allresJ<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
                         numBSlarge=nblarge,pthresh=0.2)
 allresJ
 ```
+
+The goodness of fit test is quite slow when testing the fit of a
+normal copula, and the results are not great: often the normal copula
+cannot be rejected even when it is not the true copula, even though
+a comparison of A/BICs strongly supports the true copula over the normal.
+So I think the best way forward is to use `gofnormal=FALSE`.
 
 # Testing the pipeline for examining tail dependence in bivariate data
 

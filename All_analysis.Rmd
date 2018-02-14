@@ -6,14 +6,14 @@ output:
   html_document:
     fig_caption: yes
     fig_width: 5
-    highlight: zenburn
+    highlight: tango
     keep_tex: yes
     number_sections: yes
     df_print: kable # data frame printing option
 fontsize: 11pt
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 seed<-101
 families<-c(1,3:6,14)
@@ -25,59 +25,73 @@ Updated on `r Sys.Date()`
 
 # Template analysis
 
-**About the dataset :** These data were simulated from a Clayton copula with parameter 8.
+**About the dataset :**  
+These data were simulated from a Clayton copula with parameter 8.
 
+**Plot the raw data:**  
 ```{r load_data_test, echo=F}
 #Load your data - should be a data frame with 2 columns. Can contain NAs.
 d<-readRDS("Data/givendata.RDS")
+plot(d[,1],d[,2],type="p",col="red",xlab=expression(d[1]),ylab=expression(d[2]),cex.lab=1,
+     xlim=c(0,1),ylim=c(0,1),asp=1)
+rect(0,0,1,1)
 ```
 
-**Copula plot of the data :**
-```{r rankandplot_test, echo=F, cache=T, cache.extra=list(d)}
+**Copula plot of the data:**  
+```{r rankandplot_test, echo=F}
 #convert to a copula and plot
 v<-getcopula(d=d,rankon=F,ploton=T) #with real data, rankon should be T
 ```
 
-**Bivariate copula model selection and goodness of fit pipeline:**
-```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(seed,d)}
-x<-fit_BIV(d=d,families)
+**Bivariate copula model selection and goodness of fit pipeline:**  
+```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(seed,v,families)}
+set.seed(seed)
+BivMS_res_test<-OurBiCopSelect(v[,1],v[,2],families=families,gofnormal=FALSE,status=TRUE)
 ```
 
-* **Results :**
-```{r restest, echo=F}
-knitr::kable(x[[1]])
-knitr::kable(x[[2]])
+```{r}
+BivMS_res_test
 ```
 
+# Results from dataset1 : T. Loecke
 
+**About the dataset :**  
+Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
 
-
-
-# Results from dataset1 : Prof. T. Loecke
-<mark>*You have to edit this section*</mark>
-
-* **About the dataset :** <mark>*Please provide a brief description*</mark>
-
-```{r loaddata1, echo=F}
-# here you can directly load the bivariate data to the variable d
-# or you can save the bivariate data to d after some data extraction
-d<-readRDS("Data/givendata.RDS")
+**Plot the raw data:**  
+```{r load_data_Loecke, echo=F}
+#Load your data - should be a data frame with 2 columns. Can contain NAs.
+d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
+d<-d[,c("SOCstock100","TSNstock100")]
+plot(d[,1],d[,2],type="p",col="red",xlab=expression(d[1]),ylab=expression(d[2]),cex.lab=1)
+rect(0,0,1,1)
 ```
 
-* **Copula plot of the data :**
-```{r callingcode1, echo=F, cache=T, cache.extra=list(d)}
-#Test the function
-cop_rank<-(getcopula(d=d,ploton=T))
-
-families<-c(1,3,5)
-x<-fit_BIV(d=d,families)
+**Copula plot of the data:**  
+```{r rankandplot_Loecke, echo=F}
+#convert to a copula and plot
+v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 ```
 
-* **Results :**
-```{r res1, echo=F}
-knitr::kable(x[[1]])
-knitr::kable(x[[2]])
+**Bivariate copula model selection and goodness of fit pipeline:**  
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v)}
+set.seed(seed)
+families_Loecke<-c(1,3:10,13:14,16:20,104,114,204,214)
+BivMS_res_Loecke<-OurBiCopSelect(v[,1],v[,2],families=families_Loecke,
+                                 gofnormal=FALSE,status=TRUE)
 ```
 
+```{r}
+BivMS_res_Loecke
+```
 
-# Results from dataset2 : Prof. ____________
+None of the copulas we tried here was a good fit, but some are much 
+better than others, and the normal copula is not close to the best, 
+so that shows there is non-trivial (i.e., non-normal) copula structure. 
+
+It looks like the data might be asymmetric about the y=x line, which
+might require a special copula to model. What is the significance,
+biologically?
+
+Strong dependence in the extreme right tails is evident. We could
+quantify this, and (probably) show it is significantly more than what one would expect from a null hypothesis of a normal copula with the same kendall as the data. What is the significance, biologically?

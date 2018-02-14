@@ -130,5 +130,7 @@ cannot be rejected even when it is not the true copula, even though
 a comparison of A/BICs strongly supports the true copula over the normal.
 So I think the best way forward is to use `gofnormal=FALSE`.
 
-# Testing the pipeline for examining tail dependence in bivariate data
+# Testing the pipeline for examining tail dependence in bivariate data using `copsurrog2d`
+
+
 

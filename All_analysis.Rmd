@@ -19,6 +19,9 @@ seed<-101
 families<-c(1,3:6,14)
 source("getcopula.R")
 source("OurBiCopSelect.R")
+source("copsurrog2d.R")
+source("SkewnessAnd3CentMom.R")
+source("empcdfcloud.R")
 ```
 
 <!--A function needed for caching-->
@@ -37,7 +40,7 @@ Updated on `r Sys.Date()`
 **About the dataset :**  
 These data were simulated from a Clayton copula with parameter 8.
 
-**Plot the raw data:**  
+**Load and plot the raw data:**  
 ```{r load_data_test, echo=F}
 #Load your data - should be a data frame with 2 columns. Can contain NAs.
 d<-readRDS("Data/givendata.RDS")
@@ -53,13 +56,68 @@ v<-getcopula(d=d,rankon=F,ploton=T) #with real data, rankon should be T
 ```
 
 **Bivariate copula model selection and goodness of fit pipeline:**  
-```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(seed,v,families)}
+```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(seed,v,families,mtime("OurBiCopSelect.R"))}
 set.seed(seed)
 BivMS_res_test<-OurBiCopSelect(v[,1],v[,2],families=families,gofnormal=FALSE,status=TRUE)
 ```
 
 ```{r}
 BivMS_res_test
+```
+
+**Surrogate datasets and tail dependence pipeline:**
+<!--Use normal-copula surrogates, calculate upper and lower tail dependence stats for
+real data and for the surrogates, and compare in the usual way. Also for the difference
+of the two stats (to measure asymmetry of tail dependence). Have to decide what tail 
+dependence stat to use.-->
+
+**Surrogate datasets and an "outcome" function:**
+You first choose an "outcome function" that takes as input the two variables of your 
+data and gives as output some third thing of interest. For instance, if the two columns
+are soil C and N, the outcome function might be expected soil respiration. Obviously
+you have to have a context and know some science about that context to write a function
+that makes sense. For testing the workflow, we just use the sum:
+
+```{r}
+ocf_test<-function(d)
+{
+  return(d[,1]+d[,2])
+}
+```
+
+Once you have such a function, you can compare the distribution of values of this
+function for your real data to what it would be if copula were the normal copula
+instead, but other statistical aspects are the same. We compare empirical cdfs in
+two ways:
+
+```{r outcomefunc_test, echo=F, cache=T, cache.extra=list(seed,d,mtime("copsurrog2d.R"),mtime("empcdfcloud.R"))}
+#get rid of NAs
+inds<-which(is.finite(d[,1]) & is.finite(d[,2]))
+d<-d[inds,]
+
+#normalize the data - won't do this with real data
+d<-qnorm(d)
+
+#get surrogate data
+cop<-normalCopula(.5,2)
+dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=1000)
+
+#compute the outcome function on d and dsur
+ocfd<-ocf_test(d)
+ocfsur<-apply(FUN=ocf_test,MARGIN=3,X=dsur)
+ecdfc_test<-empcdfcloud(ocfd,ocfsur,prob=c(0.005,.5,.995))
+```
+
+We can compare skewness of the outcome function to what you 
+would get if the copula were normal:
+
+```{r echo=F}
+realskew<-myskns(ocfd)
+surskew<-apply(FUN=myskns,MARGIN=2,X=ocfsur)
+sum(surskew>realskew)/length(surskew)
+hist(surskew,50)
+points(realskew,0,col='red')
+realskew
 ```
 
 # Results from dataset1 : T. Loecke
@@ -72,7 +130,7 @@ Carbon and nitrogen in soil at many locations across CONUS (Terry to augment thi
 #Load your data - should be a data frame with 2 columns. Can contain NAs.
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
-plot(d[,1],d[,2],type="p",col="red",xlab=expression(d[1]),ylab=expression(d[2]),cex.lab=1)
+plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 rect(0,0,1,1)
 ```
 
@@ -102,72 +160,97 @@ It looks like the data might be asymmetric about the y=x line, which
 might require a special copula to model. What is the significance of this,
 biologically?
 
-Strong dependence in the extreme right tails is evident. We could
-quantify this, and (probably) show it is significantly more than what one would expect from a null hypothesis of a normal copula with the same kendall as the data. What is the significance, biologically? We could (probably) also show there is much more asymmetry of tail dependence (upper v. lower) than would be expected from a normal-copula null hypothesis.
+**Surrogate datasets and tail dependence pipeline:**
+<!--Use normal-copula surrogates, calculate upper and lower tail dependence stats for
+real data and for the surrogates, and compare in the usual way. Also for the difference
+of the two stats (to measure asymmetry of tail dependence). Have to decide what tail 
+dependence stat to use.-->
 
-Probably the most promising next step is to get a function $f(N,C)$ from Amy or Terry (or someone else) which is the expected value of some ecosystem function (or other quantity of interest), supported by a publication. Then calculate its value on all the sites and look at the distribution and calculate, say, its skewness or some other property. Then get surrogate, randomized data with normal copula structure (or some other copula structure - try Clayton because it has the reverse tail dependence). Then calculate the distribution of $f(N,C)$ for each surrogate dataset and its skewness (or other statistic) and compare. I already have code for this (`copsurrog2d.R`). So let's try this. Here is a function:
+Strong dependence in the extreme right tails is evident. We should
+quantify this, and (probably) show it is significantly more than what one would expect from a null hypothesis of a normal copula with the same kendall as the data. What is the significance, biologically? We could (probably) also show there is much more asymmetry of tail dependence (upper v. lower) than would be expected from a normal-copula null hypothesis. First do the parallel analysis for the test data, indicated but not completed above.
 
-```{r ecofunc_Loecke, cache=T, cache.extra=list(d,mtime("copsurrog2d.R"))}
-#Expected value of some ecosystem function for a 
-#soil based on soil N and C
-#
-#Args
-#N    Vector of N values for a bunch of soils
-#C    Vector (same length as N) of C values for the same soils
-#
-#Output
-#Expected value of some ecosystem function for those soils (vector of the same length as N and C).
-#
-ecofunc<-function(N,C)
+**Surrogate datasets and an "outcome" function:**
+
+You first choose an "outcome function" that takes as input the two variables of your 
+data and gives as output some third thing of interest. This is a place holder now, 
+have asked for a real function from Terry and Amy. May be more than one for different
+ecosystem processes.
+```{r}
+ocf_Loecke<-function(d)
 {
-  #right now this is just a placeholder, a real formula and a specific ecosystem function of interest to be specified by Amy and Terry
-  return(N+C)
+  C<-d[,1]
+  N<-d[,2]
+  return(C+N)
 }
+```
 
-source("copsurrog2d.R")
-source("SkewnessAnd3CentMom.R")
+Once you have such a function, you can compare the distribution of values of this
+function for your real data to what it would be if copula were the normal copula
+instead, but other statistical aspects are the same. We compare empirical cdfs in two ways:
+
+```{r outcomefunc_Loecke, echo=F, cache=T, cache.extra=list(seed,d,mtime("copsurrog2d.R"),mtime("empcdfcloud.R"))}
+#get rid of NAs
 inds<-which(is.finite(d[,1]) & is.finite(d[,2]))
 d<-d[inds,]
 
-#compare to a normal-copula null
+#get surrogate data
 cop<-normalCopula(.5,2)
-numresamp<-1000
-dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=numresamp)
-efval<-myskns(ecofunc(d[,2],d[,1]))
+dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=1000)
 
-efvalsurN<-NA*numeric(numresamp)
-for (counter in 1:numresamp)
-{
-  efvalsurN[counter]<-myskns(ecofunc(dsur[,2,counter],dsur[,1,counter]))
-}
-sum(efvalsurN<efval)/numresamp
-hist(efvalsurN,50)
-points(efval,0,col='red')
-
-#compare to a clayton-copula null
-cop<-claytonCopula(.5,2)
-numresamp<-1000
-dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=numresamp)
-efvalsurC<-NA*numeric(numresamp)
-for (counter in 1:numresamp)
-{
-  efvalsurC[counter]<-myskns(ecofunc(dsur[,2,counter],dsur[,1,counter]))
-}
-sum(efvalsurC<efval)/numresamp
-hist(efvalsurC,50)
-points(efval,0,col='red')
-
-#compare to a joe-copula null
-cop<-joeCopula(3,2)
-numresamp<-1000
-dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=numresamp)
-efvalsurJ<-NA*numeric(numresamp)
-for (counter in 1:numresamp)
-{
-  efvalsurJ[counter]<-myskns(ecofunc(dsur[,2,counter],dsur[,1,counter]))
-}
-sum(efvalsurJ<efval)/numresamp
-hist(efvalsurJ,50)
-points(efval,0,col='red')
+#compute the outcome function on d and dsur
+ocfd<-ocf_Loecke(d)
+ocfsur<-apply(FUN=ocf_Loecke,MARGIN=3,X=dsur)
+ecdfc_Loecke<-empcdfcloud(ocfd,ocfsur,prob=c(.005,.5,.995))
 ```
 
+We can compare skewness of the outcome function to what you 
+would get if the copula were normal:
+
+```{r echo=F}
+realskew<-myskns(ocfd)
+surskew<-apply(FUN=myskns,MARGIN=2,X=ocfsur)
+sum(surskew>realskew)/length(surskew)
+hist(surskew,50)
+points(realskew,0,col='red')
+realskew
+```
+
+We can compare skewness of the outcome function to what you 
+would get if the copula were Clayton:
+
+```{r echo=F}
+#get surrogate data
+cop<-claytonCopula(5,2)
+dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=1000)
+
+#compute the outcome function on d and dsur
+ocfd<-ocf_Loecke(d)
+ocfsur<-apply(FUN=ocf_Loecke,MARGIN=3,X=dsur)
+
+realskew<-myskns(ocfd)
+surskew<-apply(FUN=myskns,MARGIN=2,X=ocfsur)
+sum(surskew>realskew)/length(surskew)
+hist(surskew,50)
+points(realskew,0,col='red')
+realskew
+```
+
+We can compare skewness of the outcome function to what you 
+would get if the copula were Joe:
+
+```{r echo=F}
+#get surrogate data
+cop<-joeCopula(5,2)
+dsur<-copsurrog2d(m=d,targetcop=cop,numsurrog=1000)
+
+#compute the outcome function on d and dsur
+ocfd<-ocf_Loecke(d)
+ocfsur<-apply(FUN=ocf_Loecke,MARGIN=3,X=dsur)
+
+realskew<-myskns(ocfd)
+surskew<-apply(FUN=myskns,MARGIN=2,X=ocfsur)
+sum(surskew>realskew)/length(surskew)
+hist(surskew,50)
+points(realskew,0,col='red')
+realskew
+```

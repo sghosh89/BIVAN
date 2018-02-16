@@ -1,0 +1,286 @@
+---
+title: "Exploring the importance of a complete statistical description of dependence in ecology and evolution: Theory"
+author: "Shyamolina Ghosh and Daniel Reuman"
+date: "February 8, 2018"
+output: 
+  pdf_document:
+    fig_caption: yes
+    fig_width: 5
+    highlight: tango
+    keep_tex: yes
+    number_sections: yes
+    df_print: kable # data frame printing option
+fontsize: 11pt
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+seed<-101
+families<-c(1,3:6,14)
+source("getcopula.R")
+source("OurBiCopSelect.R")
+source("copsurrog2d.R")
+source("SkewnessAnd3CentMom.R")
+source("empcdfcloud.R")
+```
+
+# Simulations showing that copula structure matters for the distribution of the spatial mean
+
+
+
+# Simulations showing that copula structure matters for Taylor's law
+
+
+# Simulations exploring whether copula structure matters for extinction risk
+
+We assume a 2-location Lewontin-Cohen model with dispersal,
+$$\left[\begin{array}{cc}
+p_{1,t+1} \\ 
+p_{2,t+1}
+\end{array}\right]=
+\left[ \begin{array}{cc}
+1-d & d \\
+d & 1-d
+\end{array} \right]
+\left[\begin{array}{cc}
+\lambda_{1,t}p_{1,t} \\
+\lambda_{2,t}p_{2,t}
+\end{array}\right],$$
+where $\lambda_{i,t}=\exp(\epsilon_{i,t})$ and the 
+$\epsilon_t=(\epsilon_{1,t},\epsilon_{2,t})$ are idd draws 
+from a bivariate random variable representing the environment at 
+the two locations. After each step, if $p_{i,t+1}<1$ it is set to $0$. We will experiment with keeping the Kendall 
+correlation and the marginal distributions of $\epsilon$ constant 
+but changing its copula structure to see how that affects the 
+extinction risk.  
+
+```{r echo=F} 
+#The simulator of the model described above.
+#
+#Args
+#p0       A length 2 vector holding initial populations
+#ns       An numsims by 2 by n array of the epsilons, where
+#           n is the number of time steps you want
+#d        The dispersal rate
+#
+#Output
+#A numsims by 2 by n+1 array of populations
+#
+popsim<-function(p0,ns,d)
+{
+  numsims<-dim(ns)[1]
+  n<-dim(ns)[3]
+  
+  #initialization
+  res<-array(NA,c(numsims,2,n+1))
+  res[,,1]<-rep(p0,each=numsims)
+  
+  #step the populations forward
+  for (tct in 1:n)
+  {
+    #growth rates based on the noise
+    lam1<-exp(ns[,1,tct])
+    lam2<-exp(ns[,2,tct])
+    
+    #growth prior to dispersal
+    res[,1,tct+1]<-lam1*res[,1,tct]
+    res[,2,tct+1]<-lam2*res[,2,tct]
+    
+    #dispersal
+    res[,1,tct+1]<-(1-d)*res[,1,tct+1]+d*res[,2,tct+1]
+    res[,2,tct+1]<-(1-d)*res[,2,tct+1]+d*res[,1,tct+1]
+    
+    #see if there is extinction
+    h<-res[,,tct+1]
+    h[h<1]<-0
+    res[,,tct+1]<-h
+  }
+  
+  return(res)
+}
+
+extrisk<-function(sims)
+{
+  totpop<-apply(FUN=sum,X=sims,MARGIN=c(1,3))
+  return(apply(FUN=sum,X=(totpop==0),MARGIN=2)/dim(sims)[1])
+}
+```
+
+First use the extreme tail dependent random number generator in `ExtremeTailDep.R`, so there is extreme right tail dependence in the noise. This means that good years for population growth are prefectly correlated. Extinction risk through time is plotted in blue below. Then consider if the tail dependence is reverse (extreme left tail dependence), so bad years are perfectly correlated (plotted in red below).
+
+```{r echo=F}
+source("ExtremeTailDep.R")
+numsims<-10000
+numsteps<-100
+d<-.1
+ns1<-retd(n=numsteps*numsims,d=2,rl=1)
+ns1<-array(ns1,c(numsteps,numsims,2))
+ns1<-aperm(ns1,c(2,3,1))
+pops<-popsim(p0=rep(25,2),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+ns2<-(-ns1)
+pops<-popsim(p0=rep(25,2),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+Risks are a bit higher for the left-tail dependence. This was for $d=$ `r d`. Try again with $d=0.25$.
+
+```{r echo=F}
+d<-.25
+pops<-popsim(p0=rep(25,2),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim(p0=rep(25,2),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+This looks very similar. Try with $d=0$ to see what happens.
+
+```{r echo=F}
+d<-0
+pops<-popsim(p0=rep(25,2),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim(p0=rep(25,2),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+Now let's try a model with 20 locations, back to $d=0.1$.
+
+```{r echo=F} 
+#The simulator of the multi-location model.
+#
+#Args
+#p0       A length numlocs vector holding initial populations
+#ns       An numsims by numlocs by numsteps array of the epsilons, 
+#           where numsteps is the number of time steps you want
+#d        The dispersal rate (sptially homogeneous)
+#
+#Output
+#A numsims by numlocs by numsteps+1 array of populations
+#
+popsim_ml<-function(p0,ns,d)
+{
+  numsims<-dim(ns)[1]
+  numlocs<-dim(ns)[2]
+  numsteps<-dim(ns)[3]
+  
+  #initialization
+  res<-array(NA,c(numsims,numlocs,numsteps+1))
+  res[,,1]<-rep(p0,each=numsims)
+  
+  #step the populations forward
+  for (tct in 1:numsteps)
+  {
+    #growth rates based on the noise
+    lam<-exp(ns[,,tct])
+
+    #growth prior to dispersal
+    res[,,tct+1]<-lam*res[,,tct]
+    res[,,tct+1]<-lam*res[,,tct]
+    
+    #dispersal - a fraction d of the total population 
+    #disperses evenly everywhere
+    totpop<-apply(FUN=sum,X=res[,,tct+1],MARGIN=1)
+    totpop<-matrix(rep(totpop,times=numlocs),numsims,numlocs)
+    res[,,tct+1]<-(d/numlocs)*totpop+(1-d)*res[,,tct+1]
+    
+    #see if there is extinction
+    h<-res[,,tct+1]
+    h[h<1]<-0
+    res[,,tct+1]<-h
+  }
+  
+  return(res)
+}
+```
+
+```{r echo=F}
+numsims<-10000
+numsteps<-100
+numlocs<-20
+d<-.1
+ns1<-retd(n=numsteps*numsims,d=numlocs,rl=1)
+ns1<-array(ns1,c(numsteps,numsims,numlocs))
+ns1<-aperm(ns1,c(2,3,1))
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+ns2<-(-ns1)
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+Now try with $d=0.25$:
+
+```{r echo=F}
+d<-.25
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+And with $d=0.05$:
+
+```{r echo=F}
+d<-.05
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+And with $d=0.01$:
+
+```{r echo=F}
+d<-.01
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+And with $d=0$:
+
+```{r echo=F}
+d<-0
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns1,d=d)
+risk1<-extrisk(pops)
+
+pops<-popsim_ml(p0=rep(25,numlocs),ns=ns2,d=d)
+risk2<-extrisk(pops)
+
+plot(0:(length(risk1)-1),risk1,type='l',xlab='Time',ylab='Risk',ylim=c(0,max(risk1,risk2)),col='blue')
+lines(0:(length(risk2)-1),risk2,type='l',col='red')
+```
+
+This preliminary analysis seems to show copula structure can make a noticable difference on extinction risks, even controlling for marginals and correlations.  
+
+Recode carefully and systematically to explore dependence of the effect on parameters and model setup assumptions within a reasonable space of possibilities. E.g., consider a range of $d$, perhaps a range of numbers of locations. Can shorten runs to 25 years. Look at time series to make sure nothing crazy/unrealistic is happening. Think it through and figure out how to move this from a preliminary result to a real result. Maybe make dispersal different. Also, why is it dispersal is really making no difference, or not much, the way things are? Is this from a bug? If I decide to change how dispersal works in the multi-population model, one way to do it might be to assume the pops are located along a transect and dispersal only occurs to the one or two (depending on whether you are on the end or not) neighbors.
+

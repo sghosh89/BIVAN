@@ -1,0 +1,67 @@
+---
+title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
+author: "Shyamoline Ghosh, other authors, Daniel Reuman"
+date: "February 18, 2018"
+output: 
+  pdf_document:
+    fig_caption: yes
+    fig_width: 5
+    highlight: tango
+    keep_tex: yes
+    number_sections: yes
+    df_print: kable # data frame printing option
+fontsize: 11pt
+---
+
+# Front matter
+
+*Affiliations:*
+
+Reuman: 
+
+Ghosh:
+
+*Possible alternative titles:*
+
+- A complete statistical description of dependence between variables for ecology and related fields
+
+*Keywords:*
+
+# Abstract
+
+# Introduction
+
+*Goes in the last paragraph of the intro:*
+We address the following questions. 1) Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Gaussian copula, and in particular do they show asymmetric tail dependence? 2) If so, what are some possible causes of non-Gaussian copula structure? And 3) what are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
+
+# Methods
+
+## Datasets
+
+
+## Statistical methods
+
+Shyamolina, please work on a description of the model-selection approach you have implemented and insert it here. You can just talk about how you go about doing model selection to decide on the best copula of several alternatives (and what those alternatives are) for a bivariate dataset, including the independence test step, the AIC step, and the goodness of fit test for the AIC-best copula. Omit the goodness of fit test for the normal copula, please, since I think we won't be using that.
+
+Shyamolina and Dan to discuss which tail-dependence statistic(s) to use and then we can insert a description here.
+
+Dan to insert a description of the surrogate approach here.
+
+
+# Results
+
+## Do datasets have non-Gaussian copula structure and tail dependence?
+
+Model selection results:  
+- Paragraph on model selection results for the soil C and N data from Terry
+- Other stuff, including aphids, depending on what datasets we settle on
+
+Tail dependence results
+- again start with C/N data from Terry
+- other stuff, inc. aphids
+
+## What are some causes of non-Gaussian copula structure and tail dependence?
+
+## What are the consequences of non-Gaussian copula structure and tail dependence?
+
+# Discussion

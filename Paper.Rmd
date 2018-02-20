@@ -1,6 +1,6 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamoline Ghosh, other authors, Daniel Reuman"
+author: "Shyamolina Ghosh, other authors, Daniel Reuman"
 date: "February 18, 2018"
 output: 
   pdf_document:
@@ -12,6 +12,7 @@ output:
     df_print: kable # data frame printing option
 fontsize: 11pt
 ---
+updated on `r Sys.Date()`
 
 # Front matter
 
@@ -39,10 +40,21 @@ We address the following questions. 1) Do datasets in ecology and related fields
 ## Datasets
 
 
-## Statistical methods
+## Statistical methods  
 
-Shyamolina, please work on a description of the model-selection approach you have implemented and insert it here. You can just talk about how you go about doing model selection to decide on the best copula of several alternatives (and what those alternatives are) for a bivariate dataset, including the independence test step, the AIC step, and the goodness of fit test for the AIC-best copula. Omit the goodness of fit test for the normal copula, please, since I think we won't be using that.
+Shyamolina, please work on a description of the model-selection approach 
+you have implemented and insert it here. You can just talk about how you go
+about doing model selection to decide on the best copula of several alternatives
+(and what those alternatives are) for a bivariate dataset, including the 
+independence test step, the AIC step, and the goodness of fit 
+test for the AIC-best copula. Omit the goodness of fit test for 
+the normal copula, please, since I think we won't be using that.
 
+____________________________________________________
+
+Here we intend to study that if for a given bivariate dataset we are able to plot the data within a unit square box based on their rankings then does that data look like totally independent or do they assume a copula structure? If they do show some dependence then at best by which family of copula we can describe their dependence? To answer these questions, we first choose to pass our bivariate dataset through a p-value based independence-test using *BiCopIndTest* function from *VineCopula* package. For that we set the significance level equal to *0.05*. If independence is rejected then we perform a test based on maximum likelihood estimation which returns us estimated parameters and log-likelihood, AIC, BIC informations for a specific copula indicated by its familycode. We used *BiCopEst* function from *VineCopula* package for families like **N**ormal/Gaussian*{1}*, **C**layton*{3}*, **G**umbel*{4}*, **F**rank*{5}*, **J**oe*{6}*, **BB1***{7}*, **BB6***{8}*, **BB7***{9}*, **BB8***{10}*, **S**urvival **C**layton*{13}*, **S**urvival **G**umbel*{14}*, **S**urvival **J**oe*{16}*, **S**urvival **BB1***{17}*, **S**urvival **BB6***{18}*, **S**urvival **BB7***{19}* and **S**urvival **BB8***{20}*. The integer within the curly bracket *`{}`* indicates the familycode of a specific copula. We choose a best-fitted copula based on minimum AIC value and to verify that fitted copula-model we perform a goodness-of-fit test of our given data with that best-fitted copula-family by *BiCopGofTest* function from *VineCopula* package. For the goodness-of-fit test if any of these p-values (based on CvM or KS method) is less than a threshold *(=0.2)* we used *1000* number of bootstraps and *100* otherwise. We also keep the informations like p-values and associated statistics based on Cramer-von Mises test and Kolmogorov-Smirnov test for all next possible fitted copulas in addition to that best-fitted one. We choose a collection of possible good fitted copula by seeting a reasonable bar from the minimum AIC values obtained from bestfitted copula model. Say, if the AIC of any copula is atmost greater than the AIC value of the best-fitted one by a threshold value *(=2 unit)* then we consider that copula to be in the possible good-fit copula list. We can use that same approach for multivariable dataset too. A multivariate dataset when considered as pairwise behaves as a bivariate dataset and we can count how many times a specific copula family wins over others as a bestfit or possible good-fit copula model. If that data has a certain tail dependence then the winners mostly come from either {**C, SG, SJ, SBB8**} or {**G, SC, J, BB8**} category indicating lower and upper tail dependence respectively. 
+
+----------------------------------------------------------------------
 Shyamolina and Dan to discuss which tail-dependence statistic(s) to use and then we can insert a description here.
 
 Dan to insert a description of the surrogate approach here.

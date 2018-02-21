@@ -62,16 +62,16 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                          gofnormal=TRUE,status=TRUE)
 {
   #first, test for independence (H0 is independence)
-  #if (status) {cat(paste("Starting independence test: ",Sys.time(),"\n"))}
+  if (status) {cat(paste("Starting independence test: ",Sys.time(),"\n"))}
   IndepTestRes<-BiCopIndTest(u1,u2)$p.value
-  #if (status) {cat(paste("Done:",Sys.time(),"\n"))}
+  if (status) {cat(paste("Done:",Sys.time(),"\n"))}
   
   #if independence rejected, then get AICs for copulas and do 
   #goodness of fit stuff
   if (IndepTestRes<level){
     
     #AIC/BIC stuff
-    #if (status) {cat(paste("Starting A/BIC model selection: ",Sys.time(),"\n"))}
+    if (status) {cat(paste("Starting A/BIC model selection: ",Sys.time(),"\n"))}
     InfCritRes<-data.frame(copcode=families,
                     copname=BiCopName(families, short=TRUE),
                     par1=NA,
@@ -111,10 +111,10 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       relUTdep_BICw<-sum((InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
     
     
-    #if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
+    if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
     
     #g.o.f. stuff for the A/BIC-best copula
-    #if (status) {cat(paste("Starting gof for A/BIC-best copula: ",Sys.time(),"\n"))}
+    if (status) {cat(paste("Starting gof for A/BIC-best copula: ",Sys.time(),"\n"))}
     if (AICBIC=="AIC"){
       ind<-which.min(InfCritRes$AIC)
     }
@@ -139,7 +139,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
     }
     GofRes_CvM_stat<-gres$statistic.CvM
     GofRes_KS_stat<-gres$statistic.KS
-    #if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
+    if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
     
     #g.o.f. stuff for the normal copula  
     if(gofnormal==T){

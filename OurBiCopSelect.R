@@ -5,7 +5,8 @@ library(VineCopula)
 #a) tests for independence
 #b) if independence can be rejected, it fit a series of bivariate 
 #   copula models and provides fitted parameters, log likelihood, 
-#   AIC and BIC for each
+#   AIC and BIC for each, also tail dependence (upper and lower)
+#   for the fitted copulas, also AIC and BIC weights
 #c) for the best copula model (by AIC or BIC), the function tests
 #   for the goodness of fit in two ways
 #d) optionally tests for the goodness of fit of the normal copula
@@ -78,7 +79,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                     par2=NA,
                     logLik=NA,
                     AIC=NA,
-                    BIC=NA)
+                    BIC=NA)#Shya add columns for AICw, BICw, lower and upper tail dep of fitted copula 
     for (counter in 1:(dim(InfCritRes)[1])){
       tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
       InfCritRes$par1[counter]<-tres$par
@@ -86,6 +87,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       InfCritRes$logLik[counter]<-tres$logLik
       InfCritRes$AIC[counter]<-tres$AIC
       InfCritRes$BIC[counter]<-tres$BIC
+      #Shy add the info listed in line 82 above
     }
     if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
     

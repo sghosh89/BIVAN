@@ -78,7 +78,15 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                     par2=NA,
                     logLik=NA,
                     AIC=NA,
-                    BIC=NA)
+                    BIC=NA,
+                    LTdep=NA,
+                    UTdep=NA,
+                    AICw=NA,
+                    BICw=NA,
+                    relLTdep_AICw=NA, 
+                    relUTdep_AICw=NA,
+                    relLTdep_BICw=NA, 
+                    relUTdep_BICw=NA)
     for (counter in 1:(dim(InfCritRes)[1])){
       tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
       InfCritRes$par1[counter]<-tres$par
@@ -86,7 +94,27 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       InfCritRes$logLik[counter]<-tres$logLik
       InfCritRes$AIC[counter]<-tres$AIC
       InfCritRes$BIC[counter]<-tres$BIC
+      InfCritRes$LTdep[counter]<-tres$taildep$lower
+      InfCritRes$UTdep[counter]<-tres$taildep$upper
     }
+    
+    for(counter in 1:(dim(InfCritRes)[1])){
+      InfCritRes$AICw[counter]<-exp(-0.5*(InfCritRes$AIC[counter]-min(InfCritRes$AIC)))
+      InfCritRes$BICw[counter]<-exp(-0.5*(InfCritRes$BIC[counter]-min(InfCritRes$BIC)))
+    }
+
+      InfCritRes$AICw<-InfCritRes$AICw/sum(InfCritRes$AICw)
+      InfCritRes$BICw<-InfCritRes$BICw/sum(InfCritRes$BICw)
+
+      # check : sum(InfCritRes$AICw)=1, sum(InfCritRes$BICw)=1
+      
+      InfCritRes$relLTdep_AICw<-(InfCritRes$LTdep*InfCritRes$AICw)/sum(InfCritRes$AICw)
+      InfCritRes$relUTdep_AICw<-(InfCritRes$UTdep*InfCritRes$AICw)/sum(InfCritRes$AICw)
+      
+      InfCritRes$relLTdep_BICw<-(InfCritRes$LTdep*InfCritRes$BICw)/sum(InfCritRes$BICw)
+      InfCritRes$relUTdep_BICw<-(InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw)
+    
+    
     if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
     
     #g.o.f. stuff for the A/BIC-best copula

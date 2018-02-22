@@ -15,9 +15,36 @@ mtime <- function(files)
 ```
 
 # Descriptions of data
-Each data contributor writes one to a few paragraphs about their data.
+<!--Each data contributor writes one to a few paragraphs about their data.-->
+
+## Soil C and N data
+
+## Aphid data
+<!--Shya to add some facts, make sure to name the species-->
+We threw out all locations that had fewer than 30 years data (Shya to make more precise, also add any other cleaning info you did, in summary/bullet form)
+
+## North Sea plankton data
+Make sure to name the species used
 
 # Question 1 analyses for each dataset
+
+## Soil C and N data
+<!--Shya to add model selection analysis of Terry data here. You just have to move it over from All_analysis.Rmd and edit the code. in a few ways:
+1) make the code get displayed at each step
+2) you have added some columns to the InfCritRes table so that will come out differently
+3) you can also report your result for tail dependence based on model averaging
+4) stop after that (e.g., don't put in the stuff about the outcome function, etc.-->
+
+## Aphid data, count
+<!--Shya to add model selection analysis here for aphid data, first the species for which you are using count data, then the one for ff data, just the model selection stuff, we'll do the other stuff with the tail dependence asymmetry statistics later-->
+
+## Aphid data, first flight
+<!--Shya also add as above-->
+
+## North sea plankton data
+<!--Shya also add as above-->
+
+
 
 # Question 2 analyses for each dataset
 

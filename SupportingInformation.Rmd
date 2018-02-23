@@ -4,6 +4,7 @@ author: "Shyamolina Ghosh and Daniel Reuman"
 date: "February 12, 2018"
 output: pdf_document
 ---
+updated on `r Sys.Date()`
 
 <!--A function needed for caching-->
 ```{r echo=F}
@@ -14,6 +15,15 @@ mtime <- function(files)
 }
 ```
 
+```{r setup, echo=F}
+knitr::opts_chunk$set(echo = TRUE)
+seed<-101
+families<-c(1,3:10,13,14,16:20)
+source("getcopula.R")
+source("OurBiCopSelect.R")
+source("FittingCopula_selective_loc.R")
+```
+
 # Descriptions of data
 <!--Each data contributor writes one to a few paragraphs about their data.-->
 
@@ -21,11 +31,17 @@ mtime <- function(files)
 
 ## Aphid data
 <!--Shya to add some facts, make sure to name the species-->
-We threw out all locations that had fewer than 30 years data (Shya to make more precise, also add any other cleaning info you did, in summary/bullet form)
-
+   * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
+   * We threw out all locations that had fewer than 30 years data 
+   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
+   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
+   
 ## North Sea plankton data
-Make sure to name the species used
 
+   * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
+   * We threw out all locations that had fewer than 45 years data
+   * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
+   
 # Question 1 analyses for each dataset
 
 ## Soil C and N data
@@ -34,160 +50,245 @@ Make sure to name the species used
 2) you have added some columns to the InfCritRes table so that will come out differently
 3) you can also report your result for tail dependence based on model averaging
 4) stop after that (e.g., don't put in the stuff about the outcome function, etc.-->
+**About the dataset :**  
+Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
+
+**Plot the raw data:**    
+    
+```{r load_data_Loecke, echo=F}
+#Load your data - should be a data frame with 2 columns. Can contain NAs.
+d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
+d<-d[,c("SOCstock100","TSNstock100")]
+plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
+rect(0,0,1,1)
+```
+
+**Copula plot of the data:**  
+```{r rankandplot_Loecke, echo=F}
+#convert to a copula and plot
+v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
+```
+
+**Bivariate copula model selection and goodness of fit pipeline:**  
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v)}
+set.seed(seed)
+families_Loecke<-c(1,3:10,13:14,16:20)
+BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",
+                         numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                         gofnormal=F,status=T)
+```
+
+```{r}
+BivMS_res_Loecke
+BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw # -ve value indicates UT dep?
+#or we should discard this result because none of the chosen model is a good fit for this dataset?
+```
+
+## Aphid data
+<!--Shya to add model selection analysis here for aphid data, first the species for which you are using count data, then the one for ff data, just the model selection stuff, we'll do the other stuff with the tail dependence asymmetry statistics later-->
+**Bivariate copula model selection and goodness of fit pipeline:** 
+```{r vivj_matrix, echo=F}
+# Select any two location pair [i,j] for a copula of species sp
+# This function gives you a matrix with vi and vj as two columns
+vivj_matrix<-function(d_allsp,sp,i,j){
+  
+  ds1<-d_allsp[[sp]][[i]]
+  ds2<-d_allsp[[sp]][[j]]
+  #----------------------------
+  a1<-ds1$Year[1]
+  a2<-ds2$Year[1]
+  a3<-ds1$Year[dim(ds1)[1]]
+  a4<-ds2$Year[dim(ds2)[1]]
+  year_s<-max(a1,a2)
+  year_e<-min(a3,a4)
+  ind_s1<-which(ds1$Year==year_s)
+  ind_s2<-which(ds2$Year==year_s)
+  ind_e1<-which(ds1$Year==year_e)
+  ind_e2<-which(ds2$Year==year_e)
+  ds1<-ds1[ind_s1:ind_e1,]
+  ds2<-ds2[ind_s2:ind_e2,]
+  # Omitting the years and data containing NA in either d1 or d2 
+  #from both d1 and d2
+  if(anyNA(ds1$Dat)==T | anyNA(ds2$Dat)==T){
+    ind_na1<-which(is.na(ds1$Dat))
+    ind_na2<-c(ind_na1,which(is.na(ds2$Dat)))
+    ind_na<-unique(ind_na2)
+    
+    d1Dat<-ds1$Dat[-ind_na]
+    d2Dat<-ds2$Dat[-ind_na]
+    Years<-ds1$Year[-ind_na]
+    d1<-data.frame(Year=Years,Dat=d1Dat)
+    d2<-data.frame(Year=Years,Dat=d2Dat)
+  } else {
+    d1<-ds1
+    d2<-ds2
+  }
+  #get ranks modified now
+  vi<-pobs(d1$Dat)
+  vj<-pobs(d2$Dat)
+  Years<-d1$Year
+  #-------------------------
+  #n_datapt<-length(vi)
+  #--------------------
+  #plot(vi,vj,type="p")
+  #-------------------------
+  mat<-as.matrix(cbind(vi,vj))
+  return(mat)  
+}
+```
+
+```{r d_allsp_data_aphid, echo=F}
+d_allsp_data<-function(d0){
+  
+  name.aphid<-c("Apple-grass aphid","Bird cherry-oat aphid","Black bean aphid", "Blackberry-cereal aphid","Blackcurrant-sowthistle aphid",
+                "Corn leaf aphid","Currant-lettuce aphid","Damson-hop aphid","Grain aphid","Green spruce aphid",
+                "Leaf-curling plum aphid","Mealy cabbage aphid","Mealy plum aphid","Pea aphid","Peach-potato aphid",
+                "Potato aphid","Rose-grain aphid","Shallot aphid","Sycamore aphid","Willow-carrot aphid")
+  longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+  lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
+  loc_name<-c("Ayr","Broom's Barn","Dundee","Edinburgh","Hereford","Newcastle","Preston","Rothamsted",
+              "Starcross","Writtle","Wye")
+  d0[d0==-999]<-NA
+  Years<-1976:2010
+  d_allsp<-list() #this is a list with 20 elements, all the species
+  for (sp_c in 1:20)
+  {
+    d_thissp<-list() #a list with 11 locations for the current species
+    for (st_c in 1:11)
+    {
+      d_thissp[[st_c]]<-data.frame(Year=Years,Dat=d0[st_c,((sp_c-1)*35+1):(sp_c*35)])
+    }
+    d_allsp[[sp_c]]<-d_thissp
+  }
+  names(d_allsp)<-name.aphid
+  
+  return(d_allsp=d_allsp)
+  
+}
+
+# Aphid raw data for count
+d0_count<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
+
+# Aphid raw data for first flight
+d0_firstflight<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
+
+# Aphid raw data for flight duration
+d0_flightduration<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsflightduration141117.csv",header=F))
+
+```
 
 ## Aphid data, count
-<!--Shya to add model selection analysis here for aphid data, first the species for which you are using count data, then the one for ff data, just the model selection stuff, we'll do the other stuff with the tail dependence asymmetry statistics later-->
+
+```{r aphid_count, echo=F, cache=T, cache.extra=list(seed,d0_count)}
+set.seed(seed)
+cat(paste("start-time: ",Sys.time(),"\n"))
+RES_aphid_count<-RES_single_sp(d_allsp=d_allsp_data(d0_count),sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+cat(paste("stop-time: ",Sys.time(),"\n"))
+resloc<-"Results/"
+saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
+```
+
+```{r}
+RES_aphid_count
+#no of locations showing greater lower tail dependence
+sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)
+
+#no of locations showing greater upper tail dependence
+sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)<0,na.rm=T)
+
+```
 
 ## Aphid data, first flight
-<!--Shya also add as above-->
+
+```{r aphid_firstflight, echo=F, cache=T, cache.extra=list(seed,d0_firstflight)}
+set.seed(seed)
+cat(paste("start-time: ",Sys.time(),"\n"))
+RES_aphid_firstflight<-RES_single_sp(d_allsp=d_allsp_data(d0_firstflight),sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+cat(paste("stop-time: ",Sys.time(),"\n"))
+resloc<-"Results/"
+saveRDS(RES_aphid_firstflight,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
+```
+
+
+```{r}
+RES_aphid_firstflight
+#no of locations showing greater lower tail dependence
+sum((RES_aphid_firstflight$LTdep_AICw-RES_aphid_firstflight$UTdep_AICw)>0,na.rm=T)
+
+#no of locations showing greater upper tail dependence
+sum((RES_aphid_firstflight$LTdep_AICw-RES_aphid_firstflight$UTdep_AICw)<0,na.rm=T)
+
+```
+
 
 ## North sea plankton data
 <!--Shya also add as above-->
+```{r d_allsp_data_plankton_north_sea, echo=F}
+d_allsp_data_plankton_north_sea<-function(d0){
+  
+  name.plankton<-c('Calanus_I-IV','Para-Pseudocalanus_spp','Temora_longicornis','Acartia_spp_(unidentified)','Centropages_typicus',
+                   'Oithona_spp','Echinoderm_larvae','Calanus_finmarchicus','Calanus_helgolandicus','Metridia_lucens','Decapoda_larvae_(Total)',
+                   'Euphausiacea_Total','Thalassiosira_spp','Rhizosolenia_styliformis','Ceratium_fusus','Ceratium_furca','Ceratium_tripos',
+                   'Ceratium_macroceros','Rhizosolenia_alata_alata','Pseudocalanus_elongatus_Adult','Nitzschia_delicatissima','Nitzschia_seriata')
+  
+  longs<-read.csv("Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
+  lats<-read.csv("Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
+  longs<-longs[[1]]
+  lats<-lats[[1]]
+  d0[d0==-999]<-NA
+  Years<-1958:2013
+  
+  d_allsp<-list() #this is a list with 20 elements, all the species
+  for (sp_c in 1:22)
+  {
+    d_thissp<-list() #a list with 11 locations for the current species
+    d1<-d0[((sp_c-1)*26+1):(sp_c*26),]
+    for (st_c in 1:26)
+    {
+      d_thissp[[st_c]]<-data.frame(Year=Years,Dat=d1[st_c,])
+    }
+    d_allsp[[sp_c]]<-d_thissp
+  }
+  names(d_allsp)<-name.plankton
+  
+  
+  return(d_allsp=d_allsp)
+  
+}
 
+d0_plankton_north_sea<-as.matrix(read.csv("Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
 
+```
+
+```{r plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,d0_plankton_north_sea)}
+set.seed(seed)
+cat(paste("start-time: ",Sys.time(),"\n"))
+RES_plankton_north_sea<-RES_single_sp(d_allsp=d_allsp_data_plankton_north_sea(d0_plankton_north_sea),sp=16,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45)
+cat(paste("stop-time: ",Sys.time(),"\n"))
+resloc<-"Results/"
+saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS",sep=""))
+```
+
+```{r}
+RES_plankton_north_sea
+#no of locations showing greater lower tail dependence
+sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)
+
+#no of locations showing greater upper tail dependence
+sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)<0,na.rm=T)
+
+```
 
 # Question 2 analyses for each dataset
 
 # Question 3 analyses for each dataset
 
-# Testing 
-
-## Testing the ranking and bivariate copula display function
-
-This is for testing the `getcopula` function.
-
-<!--Source in function and a package--->
-```{r}
-source("getcopula.R")
-require(copula)
-require(mvtnorm)
-```
-
-Plot data from a Clayton copula, which has lower tail dependence:
-```{r}
-copC<-claytonCopula(8,2)
-dC<-rCopula(1000,copC)
-vC<-getcopula(d=dC,rankon=F,ploton=T)
-```
-
-Plot data from a Joe copula, which has upper tail dependence:
-```{r}
-copJ<-joeCopula(8,2)
-dJ<-rCopula(1000,copJ)
-vJ<-getcopula(d=dJ,rankon=F,ploton=T)
-```
-
-Get data from a bivariate normal distribution and take ranks and
-then plot:
-```{r}
-sigma<-matrix(c(1,.7,.7,1),2,2)
-dN<-rmvnorm(1000,mean=c(0,0),sigma=sigma)
-vN<-getcopula(d=dN,rankon=T,ploton=T)
-```
-
-## Testing the bivariate model selection and goodness-of-fit pipeline
-
-This is for testing the `OurBiCopSelect` function. We test that
-it runs and gives reasonable results by simulating data and seeing if 
-you recover what kind of copula was used.
-
-<!--Source in the function and a package, changeable constants-->
-```{r}
-source("OurBiCopSelect.R")
-require(copula)
-nbsmall<-100
-pthresh<-0.2
-nblarge<-1000 #for bootstrapping, see below
-numdat<-500 #amount of artificial data
-seed<-101
-```
-
-If real data come from a Clayton copula, independence should
-be rejected, Clayton should be the AIC best, it should pass the
-goodness of fit test, the normal copula should fail the
-goodness of fit test, and model-averaged tail dependence should
-indicate left-tail dependence:
-<!--Test for real data from a clayton-->
-```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,seed,mtime("OurBiCopSelect.R"))}
-set.seed(seed)
-
-families<-c(1,3:6,13,14,16)
-
-#data are really from a clayton
-cop<-claytonCopula(5,2)
-dat<-rCopula(numdat,cop)
-
-#do the analysis
-allresC<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
-                        numBSlarge=nblarge,pthresh=0.2)
-allresC
-
-#calculate model-averaged left- and right-tail dependence
-#DAN: ad this later
-```
 
 
-Same test, but data now come from a Gumbel copula:
-<!--Test for real data from a gumbel-->
-```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,seed,mtime("OurBiCopSelect.R"))}
-set.seed(seed)
 
-#data are really from a gumbel
-cop<-gumbelCopula(6,2)
-dat<-rCopula(numdat,cop)
 
-#do the analysis
-allresG<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
-                        numBSlarge=nblarge,pthresh=0.2)
-allresG
 
-#calculate model-averaged left- and right-tail dependence
-#DAN: ad this later
-```
 
-Same test, but data now come from a Frank copula:
-<!--Test for real data from a frank-->
-```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,seed,mtime("OurBiCopSelect.R"))}
-set.seed(seed)
-
-#data are really from a frank
-cop<-frankCopula(5,2)
-dat<-rCopula(numdat,cop)
-
-#do the analysis
-allresF<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
-                        numBSlarge=nblarge,pthresh=0.2)
-allresF
-
-#calculate model-averaged left- and right-tail dependence
-#DAN: ad this later
-```
-
-Same test, but data now come from a Joe copula:
-<!--Test for real data from a joe-->
-```{r cache=T, cache.extra=list(nbsmall,nblarge,pthresh,numdat,seed,mtime("OurBiCopSelect.R"))}
-set.seed(seed)
-
-#data are really from a joe
-cop<-joeCopula(6,2)
-dat<-rCopula(numdat,cop)
-
-#do the analysis
-allresJ<-OurBiCopSelect(dat[,1],dat[,2],families,numBSsmall=nbsmall,
-                        numBSlarge=nblarge,pthresh=0.2)
-allresJ
-
-#calculate model-averaged left- and right-tail dependence
-#DAN: ad this later
-```
-
-The goodness of fit test is quite slow when testing the fit of a
-normal copula, and the results are not great: often the normal copula
-cannot be rejected even when it is not the true copula, even though
-a comparison of A/BICs strongly supports the true copula over the normal.
-So proceed using `gofnormal=FALSE` when analyzing real data.
-
-# Testing the pipeline for examining tail dependence in bivariate data using `copsurrog2d`
 
 
 

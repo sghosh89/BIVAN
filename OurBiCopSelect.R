@@ -99,16 +99,16 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       InfCritRes$BICw[counter]<-exp(-0.5*(InfCritRes$BIC[counter]-min(InfCritRes$BIC)))
     }
 
-      InfCritRes$AICw<-InfCritRes$AICw/sum(InfCritRes$AICw)
-      InfCritRes$BICw<-InfCritRes$BICw/sum(InfCritRes$BICw)
+    InfCritRes$AICw<-InfCritRes$AICw/sum(InfCritRes$AICw)
+    InfCritRes$BICw<-InfCritRes$BICw/sum(InfCritRes$BICw)
 
-      # check : sum(InfCritRes$AICw)=1, sum(InfCritRes$BICw)=1
+    # check : sum(InfCritRes$AICw)=1, sum(InfCritRes$BICw)=1
       
-      relLTdep_AICw<-sum((InfCritRes$LTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
-      relUTdep_AICw<-sum((InfCritRes$UTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
-      
-      relLTdep_BICw<-sum((InfCritRes$LTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
-      relUTdep_BICw<-sum((InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
+    relLTdep_AICw<-sum((InfCritRes$LTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
+    relUTdep_AICw<-sum((InfCritRes$UTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
+    
+    relLTdep_BICw<-sum((InfCritRes$LTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
+    relUTdep_BICw<-sum((InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
     
     
     if (status) {cat(paste("Done: ",Sys.time(),"\n"))}

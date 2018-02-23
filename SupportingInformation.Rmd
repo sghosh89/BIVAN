@@ -2,7 +2,10 @@
 title: "Supporting Information"
 author: "Shyamolina Ghosh and Daniel Reuman"
 date: "February 12, 2018"
-output: pdf_document
+output: 
+  pdf_document:
+    number_sections: yes
+    keep_tex: yes
 ---
 updated on `r Sys.Date()`
 
@@ -15,6 +18,7 @@ mtime <- function(files)
 }
 ```
 
+<!--Setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE)
 seed<-101
@@ -28,33 +32,9 @@ source("FittingCopula_selective_loc.R")
 <!--Each data contributor writes one to a few paragraphs about their data.-->
 
 ## Soil C and N data
-
-## Aphid data
-<!--Shya to add some facts, make sure to name the species-->
-   * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
-   * We threw out all locations that had fewer than 30 years data 
-   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
-   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
-   
-## North Sea plankton data
-
-   * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
-   * We threw out all locations that had fewer than 45 years data
-   * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
-   
-# Question 1 analyses for each dataset
-
-## Soil C and N data
-<!--Shya to add model selection analysis of Terry data here. You just have to move it over from All_analysis.Rmd and edit the code. in a few ways:
-1) make the code get displayed at each step
-2) you have added some columns to the InfCritRes table so that will come out differently
-3) you can also report your result for tail dependence based on model averaging
-4) stop after that (e.g., don't put in the stuff about the outcome function, etc.-->
-**About the dataset :**  
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
 
-**Plot the raw data:**    
-    
+Plot the raw data:
 ```{r load_data_Loecke, echo=F}
 #Load your data - should be a data frame with 2 columns. Can contain NAs.
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
@@ -63,30 +43,68 @@ plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 rect(0,0,1,1)
 ```
 
-**Copula plot of the data:**  
+Copula plot of the data:
 ```{r rankandplot_Loecke, echo=F}
 #convert to a copula and plot
 v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 ```
 
-**Bivariate copula model selection and goodness of fit pipeline:**  
+## Aphid data
+   * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
+   * We threw out all locations that had fewer than 30 years data 
+   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
+   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
+   
+## North Sea plankton data
+   * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
+   * We threw out all locations that had fewer than 45 years data
+   * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
+   
+# Question 1 analyses for each dataset
+
+Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
+
+## Details of methods
+
+### Model selection approach
+
+
+### Non-paramtric analysis of tail dependence
+
+## Soil C and N data
+
+### Model selection approach
+
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v)}
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20)
-BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",
-                         numBSsmall=100,pthresh=0.2,numBSlarge=1000,
-                         gofnormal=F,status=T)
+BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
 
-```{r}
-BivMS_res_Loecke
-BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw # -ve value indicates UT dep?
-#or we should discard this result because none of the chosen model is a good fit for this dataset?
+The test of indepedence gave $p=$`r BivMS_res_Loecke$IndepTestRes`. We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas:
+
+```{r echo=F}
+h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+rownames(h)<-NULL
+h
 ```
+
+This shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+
+The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged (again, AIC) upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+
+Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+
+### Non-paramtric analysis of tail dependence
+
+<!--Shya could work on this. Select 1-2 statistics, maybe more, but try to cut some of them (looks like there will be 4). Apply to C/N data, get results, display in the same kind of way.-->
 
 ## Aphid data
-<!--Shya to add model selection analysis here for aphid data, first the species for which you are using count data, then the one for ff data, just the model selection stuff, we'll do the other stuff with the tail dependence asymmetry statistics later-->
-**Bivariate copula model selection and goodness of fit pipeline:** 
+<!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->
+
+### Model selection approach
+
 ```{r vivj_matrix, echo=F}
 # Select any two location pair [i,j] for a copula of species sp
 # This function gives you a matrix with vi and vj as two columns
@@ -177,7 +195,7 @@ d0_flightduration<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsfli
 
 ```
 
-## Aphid data, count
+Count results
 
 ```{r aphid_count, echo=F, cache=T, cache.extra=list(seed,d0_count)}
 set.seed(seed)
@@ -198,7 +216,7 @@ sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)<0,na.rm=T)
 
 ```
 
-## Aphid data, first flight
+First flight results
 
 ```{r aphid_firstflight, echo=F, cache=T, cache.extra=list(seed,d0_firstflight)}
 set.seed(seed)
@@ -220,9 +238,19 @@ sum((RES_aphid_firstflight$LTdep_AICw-RES_aphid_firstflight$UTdep_AICw)<0,na.rm=
 
 ```
 
+### Non-paramtric analysis of tail dependence
+
+Cout results
+
+
+First flight results
 
 ## North sea plankton data
-<!--Shya also add as above-->
+
+<!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->
+
+### Model selection approach
+
 ```{r d_allsp_data_plankton_north_sea, echo=F}
 d_allsp_data_plankton_north_sea<-function(d0){
   
@@ -278,6 +306,8 @@ sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.r
 sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)<0,na.rm=T)
 
 ```
+
+### Non-paramtric analysis of tail dependence
 
 # Question 2 analyses for each dataset
 

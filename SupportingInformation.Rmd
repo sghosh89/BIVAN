@@ -284,7 +284,7 @@ d_allsp_data_plankton_north_sea<-function(d0){
   
 }
 
-d0_plankton_north_sea<-as.matrix(read.csv("Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
+d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
 
 ```
 

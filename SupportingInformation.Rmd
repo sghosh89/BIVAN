@@ -185,13 +185,13 @@ d_allsp_data<-function(d0){
 }
 
 # Aphid raw data for count
-d0_count<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
+d0_count<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
 
 # Aphid raw data for first flight
-d0_firstflight<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
+d0_firstflight<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
 
-# Aphid raw data for flight duration
-d0_flightduration<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsflightduration141117.csv",header=F))
+## Aphid raw data for flight duration
+#d0_flightduration<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsflightdu#ration141117.csv",header=F))
 
 ```
 

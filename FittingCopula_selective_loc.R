@@ -3,23 +3,16 @@
 library(copula)
 library(VineCopula)
 #-------------------------------------
+source("vivj_matrix.R")
+source("good_loclist.R")
 source(file="OurBiCopSelect.R")
 #---------------------------------------------------------------------------------------
 # This function generates result for single species
 RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
   
   len<-length(families)
-  lenloc<-length(d_allsp[[1]])
-  
-  finitedat_ind<-vector(mode = "list", length = lenloc)
-  num_datapt<-c()
-  for(loc in c(1:lenloc)){
-    finitedat_ind[[loc]]<-which(!is.na(d_allsp[[sp]][[loc]]$Dat))
-    num_datapt<-c(num_datapt,length(finitedat_ind[[loc]]))
-  }
-  
-  good_loc<-which(num_datapt>=data_pt_thrs)
-  cat("good_loc=",good_loc,"\n")
+  good_loc<-good_loclist(d_allsp=d_allsp,sp=sp,data_pt_thrs=data_pt_thrs)
+  #cat("good_loc=",good_loc,"\n")
   
   lengoodloc<-length(good_loc)
   
@@ -108,7 +101,7 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
         
         ans<-OurBiCopSelect(u1,u2,families,level=0.05,AICBIC="AIC",
                             numBSsmall=100,pthresh=0.2,numBSlarge=1000,
-                            gofnormal=FALSE,status=TRUE)
+                            gofnormal=FALSE,status=FALSE)
         
         if(ans$IndepTestRes<level){
           gfc_numBS[i,j]<-ans$Numboot

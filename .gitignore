@@ -1,5 +1,5 @@
-.pdf
-.rds
-.RDS
-.msg
+*.pdf
+*.rds
+*.RDS
+*.msg
 

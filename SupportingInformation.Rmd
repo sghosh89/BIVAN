@@ -14,21 +14,14 @@ output:
     keep_tex: yes
     fig_caption: yes
 ---
+
 updated on `r Sys.Date()`
 
+<!--Shya pls add a short description of what this chunk is for. Should it be in the setup chunk down below?-->
 ```{r ,echo=FALSE}
 library(captioner)
 table_nums <- captioner(prefix = "Table")
 fig_nums <- captioner(prefix="Figure")
-```
-
-<!--A function needed for caching-->
-```{r echo=F}
-mtime <- function(files)
-{
-  lapply(Sys.glob(files),function(x) X =   
-          file.info(x)$mtime)
-}
 ```
 
 <!--Setup-->
@@ -36,12 +29,19 @@ mtime <- function(files)
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 seed<-101
 families<-c(1,3:10,13,14,16:20)
+#A function needed for caching
+mtime <- function(files)
+{
+  lapply(Sys.glob(files),function(x) X =   
+          file.info(x)$mtime)
+}
 source("getcopula.R")
 source("OurBiCopSelect.R")
 source("FittingCopula_selective_loc.R")
 source("aphid_data_calling.R")
 source("plankton_north_sea_data_calling.R")
 source("NonParamStat.R")
+source("copsurrog2d.R")
 ```
 
 # Descriptions of data
@@ -50,18 +50,18 @@ source("NonParamStat.R")
 ## Soil C and N data
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
 
-
-```{r load_data_Loecke, echo=F, fig.cap="plot of the raw data", fig.height=5, fig.width=5}
-#Load your data - should be a data frame with 2 columns. Can contain NAs.
+The raw data look like this:
+<!--Load the soil C and N data and make a plot-->
+```{r load_data_Loecke, echo=F, fig.cap="Plot of the raw soil C and N data.", fig.height=5, fig.width=5}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 fig_nums("soilCNraw",display=F)
 plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
-rect(0,0,1,1)
 ```
 
-
-```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C/N data",  fig.height=5, fig.width=5}
+The copula looks like this:
+<!--Plot the copula of the soil C and N data--> 
+```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of the soil C and N data",  fig.height=5, fig.width=5}
 #convert to a copula and plot
 fig_nums("soilCNcop",display=F)
 v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
@@ -79,7 +79,6 @@ v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
    * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
    
 # Question 1 analyses for each dataset
-
 Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
 
 ## Details of methods
@@ -92,24 +91,21 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 ## Soil C and N data
 
 ### Model selection approach
-
-```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v)}
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v,mtime(list("OurBiCopSelect.R")))}
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20) 
 BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
+The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes`. 
 
-The test of indepedence gave *p=*`r BivMS_res_Loecke$IndepTestRes` . We fitted several copulas
+We fitted several copulas
 and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas:
-
 ```{r soilCNfit,echo=F}
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
-#rownames(h)<-NULL
 table_nums("soilCNfit",display=F)
-knitr::kable(h, caption = "Fitting info for soilC/N dataset")
+knitr::kable(h, caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=Survival Clayton; SG=Survival Gumbel; SJ=Survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by 180 degrees).")
 ```
-
-`r table_nums("soilCNfit",display="c")` shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+`r table_nums("soilCNfit",display="c")` shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
 
 The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged (again, AIC) upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
@@ -117,22 +113,31 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 ### Non-paramtric analysis of tail dependence
 
-```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v)}
+<!--DAN: wherever copsync is needs to be sourced and also added to the mlist below-->
+```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mlist(list("CopulaFunctions.R","copsurrog2d.R")))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_soilCN/"
 
-stat_soilCN<-copsync(v)
+#get the stats for the real data
+stat_soilCN<-copsync(v) 
 saveRDS(stat_soilCN,paste(resloc,file="stat_soilCN.RDS",sep=''))
 sCN<-stat_soilCN[c(2:5,7,8,10:13)]
 stat<-unlist(sCN)
+
+#get surrogates and get stats for them
+cop<-normalCopula(.5,2)
+surv<-copsurrog2d(v,cop,1000)
+#DAN: once you get the code for copsync, apply it to each surrogate and keep the results
 ```
 
+<!--DAN: modify the table so it also shows tail asymmetry stats (differences) and also shows fractions of surrogates for both the tail dependence stats and the asymmetry stats that are greater than the real data stat-->
 ```{r table_stat_soilCN, echo=F, results="asis"}
 table_nums("table_stat_soilCN",display=F)
 
 knitr::kable(data.frame(stat=stat),caption = "Non-parametric stats on soil C/N dataset")
 ```
 
+<!--DAN: The below will no longer be necessary once you make the above changes-->
 ```{r ,echo=F}
 #sCN
 CorlmCoru<-stat_soilCN$Corl-stat_soilCN$Coru
@@ -144,9 +149,6 @@ cat("Tl-Tu = ",TlmTu,"\n")
 D2umD2l<-stat_soilCN$D2u-stat_soilCN$D2l
 cat("D2u-D2l = ",D2umD2l,"\n")
 ```
-
-<!--Shya could work on this. Select 1-2 statistics, maybe more, but try to cut some of them (looks like there will be 4). Apply to C/N data, get results, display in the same kind of way.-->
-
 
 ## Aphid data
 <!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->

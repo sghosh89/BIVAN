@@ -1,13 +1,26 @@
 ---
+output:
+  pdf_document: default
+---
+---
 title: "Supporting Information"
 author: "Shyamolina Ghosh and Daniel Reuman"
 date: "February 12, 2018"
+geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
+
 output: 
   pdf_document:
     number_sections: yes
     keep_tex: yes
+    fig_caption: yes
 ---
 updated on `r Sys.Date()`
+
+```{r ,echo=FALSE}
+library(captioner)
+table_nums <- captioner(prefix = "Table")
+fig_nums <- captioner(prefix="Figure")
+```
 
 <!--A function needed for caching-->
 ```{r echo=F}
@@ -20,12 +33,15 @@ mtime <- function(files)
 
 <!--Setup-->
 ```{r setup, echo=F}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 seed<-101
 families<-c(1,3:10,13,14,16:20)
 source("getcopula.R")
 source("OurBiCopSelect.R")
 source("FittingCopula_selective_loc.R")
+source("aphid_data_calling.R")
+source("plankton_north_sea_data_calling.R")
+source("NonParamStat.R")
 ```
 
 # Descriptions of data
@@ -34,18 +50,20 @@ source("FittingCopula_selective_loc.R")
 ## Soil C and N data
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
 
-Plot the raw data:
-```{r load_data_Loecke, echo=F}
+
+```{r load_data_Loecke, echo=F, fig.cap="plot of the raw data", fig.height=5, fig.width=5}
 #Load your data - should be a data frame with 2 columns. Can contain NAs.
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
+fig_nums("soilCNraw",display=F)
 plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 rect(0,0,1,1)
 ```
 
-Copula plot of the data:
-```{r rankandplot_Loecke, echo=F}
+
+```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C/N data",  fig.height=5, fig.width=5}
 #convert to a copula and plot
+fig_nums("soilCNcop",display=F)
 v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 ```
 
@@ -77,20 +95,21 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v)}
 set.seed(seed)
-families_Loecke<-c(1,3:10,13:14,16:20)
+families_Loecke<-c(1,3:10,13:14,16:20) 
 BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
 
-The test of indepedence gave $p=$`r BivMS_res_Loecke$IndepTestRes`. We fitted several copulas
+The test of indepedence gave *p=*`r BivMS_res_Loecke$IndepTestRes` . We fitted several copulas
 and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas:
 
-```{r echo=F}
+```{r soilCNfit,echo=F}
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
-rownames(h)<-NULL
-h
+#rownames(h)<-NULL
+table_nums("soilCNfit",display=F)
+knitr::kable(h, caption = "Fitting info for soilC/N dataset")
 ```
 
-This shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+`r table_nums("soilCNfit",display="c")` shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
 
 The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged (again, AIC) upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
@@ -98,152 +117,333 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 ### Non-paramtric analysis of tail dependence
 
+```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v)}
+set.seed(seed) 
+resloc<-"./Results/stat_results/stat_soilCN/"
+
+stat_soilCN<-copsync(v)
+saveRDS(stat_soilCN,paste(resloc,file="stat_soilCN.RDS",sep=''))
+sCN<-stat_soilCN[c(2:5,7,8,10:13)]
+stat<-unlist(sCN)
+```
+
+```{r table_stat_soilCN, echo=F, results="asis"}
+table_nums("table_stat_soilCN",display=F)
+
+knitr::kable(data.frame(stat=stat),caption = "Non-parametric stats on soil C/N dataset")
+```
+
+```{r ,echo=F}
+#sCN
+CorlmCoru<-stat_soilCN$Corl-stat_soilCN$Coru
+cat("Corl-Coru = ",CorlmCoru,"\n")
+PlmPu<-stat_soilCN$Pl-stat_soilCN$Pu
+cat("Pl-Pu = ",PlmPu,"\n")
+TlmTu<-stat_soilCN$Tl-stat_soilCN$Tu
+cat("Tl-Tu = ",TlmTu,"\n")
+D2umD2l<-stat_soilCN$D2u-stat_soilCN$D2l
+cat("D2u-D2l = ",D2umD2l,"\n")
+```
+
 <!--Shya could work on this. Select 1-2 statistics, maybe more, but try to cut some of them (looks like there will be 4). Apply to C/N data, get results, display in the same kind of way.-->
+
 
 ## Aphid data
 <!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->
 
 ### Model selection approach
 
-```{r vivj_matrix, echo=F}
-# Select any two location pair [i,j] for a copula of species sp
-# This function gives you a matrix with vi and vj as two columns
-vivj_matrix<-function(d_allsp,sp,i,j){
-  
-  ds1<-d_allsp[[sp]][[i]]
-  ds2<-d_allsp[[sp]][[j]]
-  #----------------------------
-  a1<-ds1$Year[1]
-  a2<-ds2$Year[1]
-  a3<-ds1$Year[dim(ds1)[1]]
-  a4<-ds2$Year[dim(ds2)[1]]
-  year_s<-max(a1,a2)
-  year_e<-min(a3,a4)
-  ind_s1<-which(ds1$Year==year_s)
-  ind_s2<-which(ds2$Year==year_s)
-  ind_e1<-which(ds1$Year==year_e)
-  ind_e2<-which(ds2$Year==year_e)
-  ds1<-ds1[ind_s1:ind_e1,]
-  ds2<-ds2[ind_s2:ind_e2,]
-  # Omitting the years and data containing NA in either d1 or d2 
-  #from both d1 and d2
-  if(anyNA(ds1$Dat)==T | anyNA(ds2$Dat)==T){
-    ind_na1<-which(is.na(ds1$Dat))
-    ind_na2<-c(ind_na1,which(is.na(ds2$Dat)))
-    ind_na<-unique(ind_na2)
-    
-    d1Dat<-ds1$Dat[-ind_na]
-    d2Dat<-ds2$Dat[-ind_na]
-    Years<-ds1$Year[-ind_na]
-    d1<-data.frame(Year=Years,Dat=d1Dat)
-    d2<-data.frame(Year=Years,Dat=d2Dat)
-  } else {
-    d1<-ds1
-    d2<-ds2
-  }
-  #get ranks modified now
-  vi<-pobs(d1$Dat)
-  vj<-pobs(d2$Dat)
-  Years<-d1$Year
-  #-------------------------
-  #n_datapt<-length(vi)
-  #--------------------
-  #plot(vi,vj,type="p")
-  #-------------------------
-  mat<-as.matrix(cbind(vi,vj))
-  return(mat)  
-}
-```
-
-```{r d_allsp_data_aphid, echo=F}
-d_allsp_data<-function(d0){
-  
-  name.aphid<-c("Apple-grass aphid","Bird cherry-oat aphid","Black bean aphid", "Blackberry-cereal aphid","Blackcurrant-sowthistle aphid",
-                "Corn leaf aphid","Currant-lettuce aphid","Damson-hop aphid","Grain aphid","Green spruce aphid",
-                "Leaf-curling plum aphid","Mealy cabbage aphid","Mealy plum aphid","Pea aphid","Peach-potato aphid",
-                "Potato aphid","Rose-grain aphid","Shallot aphid","Sycamore aphid","Willow-carrot aphid")
-  longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
-  lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
-  loc_name<-c("Ayr","Broom's Barn","Dundee","Edinburgh","Hereford","Newcastle","Preston","Rothamsted",
-              "Starcross","Writtle","Wye")
-  d0[d0==-999]<-NA
-  Years<-1976:2010
-  d_allsp<-list() #this is a list with 20 elements, all the species
-  for (sp_c in 1:20)
-  {
-    d_thissp<-list() #a list with 11 locations for the current species
-    for (st_c in 1:11)
-    {
-      d_thissp[[st_c]]<-data.frame(Year=Years,Dat=d0[st_c,((sp_c-1)*35+1):(sp_c*35)])
-    }
-    d_allsp[[sp_c]]<-d_thissp
-  }
-  names(d_allsp)<-name.aphid
-  
-  return(d_allsp=d_allsp)
-  
-}
-
+```{r read_aphid_data, echo=F}
 # Aphid raw data for count
 d0_count<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
-
+data_aphid_count<-d_allsp_data(d0_count)     
+ 
 # Aphid raw data for first flight
 d0_firstflight<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
+data_aphid_ff<-d_allsp_data(d0_firstflight) 
 
-## Aphid raw data for flight duration
-#d0_flightduration<-as.matrix(read.csv("Data/Aphid_data/APHID_DATA_RAW/aphidtsflightdu#ration141117.csv",header=F))
+# Aphid raw data for flight duration   
+#d0_flightduration<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsflightduration141117.csv",header=F))
 
 ```
 
 Count results
 
-```{r aphid_count, echo=F, cache=T, cache.extra=list(seed,d0_count)}
+```{r RES_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count)}
 set.seed(seed)
-cat(paste("start-time: ",Sys.time(),"\n"))
-RES_aphid_count<-RES_single_sp(d_allsp=d_allsp_data(d0_count),sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
-cat(paste("stop-time: ",Sys.time(),"\n"))
-resloc<-"Results/"
+#cat(paste("start-time: ",Sys.time(),"\n")) 
+RES_aphid_count<-RES_single_sp(d_allsp=data_aphid_count,sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+#cat(paste("stop-time: ",Sys.time(),"\n"))
+resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
 ```
 
-```{r}
-RES_aphid_count
-#no of locations showing greater lower tail dependence
-sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)
+```{r read_RES_aphid_count, echo=F}
+RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
+```
 
-#no of locations showing greater upper tail dependence
-sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)<0,na.rm=T)
+```{r count_bestcop,echo=F,results="asis"}
+#library(pander)
+#pander(best_cop_LTdep, caption = "Hello caption!")
+#knitr::kable(RES_aphid_count$info_ord_copname[,,1],format="latex",longtable=F,caption = "Aphid_count : Best fit copula family for each selective location pair")
+
+table_nums("count_bestcop",display=F)
+knitr::kable(RES_aphid_count$info_ord_copname[,,1],caption = "Aphid_count : Best fit copula family for each selective location pair")
+```
+
+```{r count_AICw,echo=F,results="asis"}
+
+cat("\n\n\\pagebreak\n")
+
+table_nums("count_AICw",display=F)
+knitr::kable(RES_aphid_count$info_ord_AICw[,,1], caption = "Aphid_count : AICw for best fit copula family for each selective location pair")
+```
+
+```{r count_LTdep,echo=F,results="asis"}
+table_nums("count_LTdep",display=F)
+knitr::kable(RES_aphid_count$info_ord_LTdep[,,1], caption = "Aphid_count : Lower Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r count_UTdep,echo=F,results="asis"}
+table_nums("count_UTdep",display=F)
+knitr::kable(RES_aphid_count$info_ord_UTdep[,,1], caption = "Aphid_count : Upper Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r count_LTdep_AICw,echo=F,results="asis"}
+table_nums("count_LTdep_AICw",display=F)
+knitr::kable(RES_aphid_count$LTdep_AICw,caption = "Aphid_count : Lower Tail dependence statistic for best fit copula family for each selective location pair")
+```
+
+```{r count_UTdep_AICw,echo=F,results="asis"}
+table_nums("count_UTdep_AICw",display=F)
+knitr::kable(RES_aphid_count$UTdep_AICw,caption = "Aphid_count : Upper Tail dependence statistic for best fit copula family for each selective location pair")
 
 ```
+
+```{r count_LTmUT,echo=F,results="asis"}
+table_nums("count_LTmUT",display=F)
+knitr::kable(round(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,5),caption = "Aphid_count : Lower Tail - Upper Tail dependence statistic for best fit copula family for each of the selective location pair")
+```
+
+```{r count_p_CvM,echo=F,results="asis"}
+table_nums("count_p_CvM",display=F)
+knitr::kable(RES_aphid_count$gfc_p_CvM, caption = "Aphid_count : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula")
+```
+
+```{r count_p_KS,echo=F,results="asis"}
+table_nums("count_p_KS",display=F)
+knitr::kable(RES_aphid_count$gfc_p_KS,caption = "Aphid_count : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula")
+```
+
+`r table_nums("count_bestcop",display="c")` shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in `r table_nums("count_LTdep_AICw",display="c")` and `r table_nums("count_UTdep_AICw",display="c")` respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in `r table_nums("count_LTmUT",display="c")` indicates it is different from 0 for most of the locations, answering the third part of question 1. 
+
+These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)`** out of **`r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-RES_aphid_count$num_indep_loc_pair`** location pair with greater lower tail dependence. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [`r table_nums("count_p_CvM",display="c")`] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [`r table_nums("count_p_KS",display="c")`] of the goodness of fit.
+
+The next section looks at tail dependence in a non-parametric way.
 
 First flight results
 
-```{r aphid_firstflight, echo=F, cache=T, cache.extra=list(seed,d0_firstflight)}
+```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff)} 
 set.seed(seed)
-cat(paste("start-time: ",Sys.time(),"\n"))
-RES_aphid_firstflight<-RES_single_sp(d_allsp=d_allsp_data(d0_firstflight),sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
-cat(paste("stop-time: ",Sys.time(),"\n"))
-resloc<-"Results/"
-saveRDS(RES_aphid_firstflight,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
+#cat(paste("start-time: ",Sys.time(),"\n"))
+RES_aphid_ff<-RES_single_sp(d_allsp=data_aphid_ff,sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+#cat(paste("stop-time: ",Sys.time(),"\n")) 
+resloc<-"./Results/fitting_results/"
+saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
 ```
 
-
-```{r}
-RES_aphid_firstflight
-#no of locations showing greater lower tail dependence
-sum((RES_aphid_firstflight$LTdep_AICw-RES_aphid_firstflight$UTdep_AICw)>0,na.rm=T)
-
-#no of locations showing greater upper tail dependence
-sum((RES_aphid_firstflight$LTdep_AICw-RES_aphid_firstflight$UTdep_AICw)<0,na.rm=T)
-
+```{r read_RES_aphid_ff,echo=F}
+RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
 ```
+
+```{r ff_bestcop,echo=F,results="asis"}
+table_nums("ff_bestcop",display=F)
+knitr::kable(RES_aphid_ff$info_ord_copname[,,1], caption = "Aphid_firstflight : Best fit copula family for each selective location pair")
+```
+
+```{r ff_AICw,echo=F,results="asis"}
+table_nums("ff_AICw",display=F)
+knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], caption = "Aphid_firstflight : AICw for best fit copula family for each selective location pair")
+```
+
+```{r ff_LTdep,echo=F,results="asis"}
+cat("\n\n\\pagebreak\n")
+
+table_nums("ff_LTdep",display=F)
+knitr::kable(RES_aphid_ff$info_ord_LTdep[,,1], caption = "Aphid_firstflight : Lower Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r ff_UTdep,echo=F,results="asis"}
+table_nums("ff_UTdep",display=F)
+knitr::kable(RES_aphid_ff$info_ord_UTdep[,,1], caption = "Aphid_firstflight : Upper Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r ff_LTdep_AICw,echo=F,results="asis"}
+table_nums("ff_LTdep_AICw",display=F)
+knitr::kable(RES_aphid_ff$LTdep_AICw, caption = "Aphid_firstflight : Lower Tail dependence statistic for best fit copula family for each selective location pair")
+```
+
+```{r ff_UTdep_AICw,echo=F,results="asis"}
+table_nums("ff_UTdep_AICw",display=F)
+knitr::kable(RES_aphid_ff$UTdep_AICw, caption = "Aphid_firstflight : Upper Tail dependence statistic for best fit copula family for each selective location pair")
+```
+
+```{r ff_LTmUT,echo=F,results="asis"}
+table_nums("ff_LTmUT",display=F)
+knitr::kable(round(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,5), caption = "Aphid_firstflight : Lower Tail - Upper Tail dependence statistic for best fit copula family for each of the selective location pair")
+```
+
+```{r ff_p_CvM,echo=F,results="asis"}
+table_nums("ff_p_CvM",display=F)
+knitr::kable(RES_aphid_ff$gfc_p_CvM, caption = "Aphid_firstflight : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula")
+```
+
+```{r ff_p_KS,echo=F,results="asis"}
+table_nums("ff_p_KS",display=F)
+knitr::kable(RES_aphid_ff$gfc_p_KS, caption = "Aphid_firstflight : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula")
+```
+
+`r table_nums("ff_bestcop",display="c")`  shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in `r table_nums("ff_LTdep_AICw",display="c")` and `r table_nums("ff_UTdep_AICw",display="c")` respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in `r table_nums("ff_LTmUT",display="c")` indicates it is different from 0 for most of the locations, answering the third part of question 1. 
+
+These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)`** out of **`r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-RES_aphid_ff$num_indep_loc_pair`** location pair more upper tail dependence. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [`r table_nums("ff_p_CvM",display="c")`] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [`r table_nums("ff_p_KS",display="c")`] of the goodness of fit.
 
 ### Non-paramtric analysis of tail dependence
 
-Cout results
+# Count results
+```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count)}
+set.seed(seed) 
+resloc<-"./Results/stat_results/stat_aphid_count/"
 
+sp<-10
+good_loc <- good_loclist(d_allsp=data_aphid_count,sp=sp,data_pt_thrs=30)
+longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
 
-First flight results
+stat_aphid_count<-multcall(d_allsp=data_aphid_count,sp=sp,lats=lats,longs=longs,pfname=paste(resloc,"Sp_",sp,sep=''),good_loc=good_loc)
+saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep='')) 
+```
+
+```{r read_stat_aphid_count,echo=F}
+stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_count_sp_10.RDS")
+```
+
+```{r count_resamp,echo=F,results="asis"}
+table_nums("count_resamp",display=F)
+knitr::kable(stat_aphid_count$numericdf, caption = "Aphid_count : resampling result for stat indicating lower tail dependence")
+```
+
+```{r count_allcop,echo=F}
+fig_nums("count_allcop",display=F)
+```
+![copula plot for aphid-count](./Results/stat_results/stat_aphid_count/Sp_10_AllCops.pdf)
+
+```{r count_spear,echo=F}
+fig_nums("count_spear",display=F)
+```
+![Plot for aphid-count : Spearman vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf)
+
+```{r count_kend,echo=F}
+fig_nums("count_kend",display=F)
+```
+![Plot for aphid-count : Kendall vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf)
+
+```{r count_Corl-Coru,echo=F}
+fig_nums("count_Corl-Coru",display=F)
+```
+![Corl-Coru vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf)
+
+```{r count_Pl-Pu,echo=F}
+fig_nums("count_Pl-Pu",display=F)
+```
+![Pl-Pu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf)
+
+```{r count_Tl-Tu,echo=F}
+fig_nums("count_Tl-Tu",display=F)
+```
+![Tl-Tu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Tl-Tu_vs_D.pdf)
+
+```{r count_D2u-D2l,echo=F}
+fig_nums("count_D2u-D2l",display=F)
+```
+![D2u-D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf)
+
+```{r count_D2u/D2l,echo=F}
+fig_nums("count_D2u/D2l",display=F)
+```
+![D2u/D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u_by_D2l_vs_D.pdf)
+
+<!--
+```{r, echo=F,out.width = "8cm", out.height= "8cm", out.caption="adhjk"}
+knitr::include_graphics("./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf")
+knitr::include_graphics("./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf")
+```
+-->
+
+# First flight results
+
+```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff)}
+set.seed(seed)
+resloc<-"./Results/stat_results/stat_aphid_ff/"
+
+sp<-11
+good_loc<-good_loclist(d_allsp=data_aphid_ff,sp=sp,data_pt_thrs=30)
+longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
+
+stat_aphid_ff<-multcall(d_allsp=data_aphid_ff,sp=sp,lats=lats,longs=longs,pfname=paste(resloc,"Sp_",sp,sep=''),good_loc=good_loc) 
+saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep='')) 
+```
+
+```{r read_stat_aphid_ff,echo=F}
+stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11.RDS")
+```
+
+```{r ff_resamp,echo=F,results="asis"}
+table_nums("ff_resamp",display=F)
+knitr::kable(stat_aphid_ff$numericdf, caption = "Aphid_firstflight : resampling result for stat indicating upper tail dependence")
+```
+
+```{r ff_allcop,echo=F}
+fig_nums("ff_allcop",display=F)
+```
+![copula plot for aphid-firstflight](./Results/stat_results/stat_aphid_ff/Sp_11_AllCops.pdf)
+
+```{r ff_spear,echo=F}
+fig_nums("ff_spear",display=F)
+```
+![Plot for aphid-firstflight : Spearman vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf)
+
+```{r ff_kend,echo=F}
+fig_nums("ff_kend",display=F)
+```
+![Plot for aphid-firstflight : Kendall vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf)
+
+```{r ff_Corl-Coru,echo=F}
+fig_nums("ff_Corl-Coru",display=F)
+```
+![Corl-Coru vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf)
+
+```{r ff_Pl-Pu,echo=F}
+fig_nums("ff_Pl-Pu",display=F)
+```
+![Pl-Pu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf)
+
+```{r ff_Tl-Tu,echo=F}
+fig_nums("ff_Tl-Tu",display=F)
+```
+![Tl-Tu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Tl-Tu_vs_D.pdf)
+
+```{r ff_D2u-D2l,echo=F}
+fig_nums("ff_D2u-D2l",display=F)
+```
+![D2u-D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf)
+
+```{r ff_D2u/D2l,echo=F}
+fig_nums("ff_D2u/D2l",display=F)
+```
+![D2u/D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u_by_D2l_vs_D.pdf)
 
 ## North sea plankton data
 
@@ -251,69 +451,158 @@ First flight results
 
 ### Model selection approach
 
-```{r d_allsp_data_plankton_north_sea, echo=F}
-d_allsp_data_plankton_north_sea<-function(d0){
-  
-  name.plankton<-c('Calanus_I-IV','Para-Pseudocalanus_spp','Temora_longicornis','Acartia_spp_(unidentified)','Centropages_typicus',
-                   'Oithona_spp','Echinoderm_larvae','Calanus_finmarchicus','Calanus_helgolandicus','Metridia_lucens','Decapoda_larvae_(Total)',
-                   'Euphausiacea_Total','Thalassiosira_spp','Rhizosolenia_styliformis','Ceratium_fusus','Ceratium_furca','Ceratium_tripos',
-                   'Ceratium_macroceros','Rhizosolenia_alata_alata','Pseudocalanus_elongatus_Adult','Nitzschia_delicatissima','Nitzschia_seriata')
-  
-  longs<-read.csv("Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
-  lats<-read.csv("Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
-  longs<-longs[[1]]
-  lats<-lats[[1]]
-  d0[d0==-999]<-NA
-  Years<-1958:2013
-  
-  d_allsp<-list() #this is a list with 20 elements, all the species
-  for (sp_c in 1:22)
-  {
-    d_thissp<-list() #a list with 11 locations for the current species
-    d1<-d0[((sp_c-1)*26+1):(sp_c*26),]
-    for (st_c in 1:26)
-    {
-      d_thissp[[st_c]]<-data.frame(Year=Years,Dat=d1[st_c,])
-    }
-    d_allsp[[sp_c]]<-d_thissp
-  }
-  names(d_allsp)<-name.plankton
-  
-  
-  return(d_allsp=d_allsp)
-  
-}
-
+```{r read_plankton_north_sea_data, echo=F}
 d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
+data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
+``` 
 
-```
-
-```{r plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,d0_plankton_north_sea)}
+```{r RES_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea)}
 set.seed(seed)
-cat(paste("start-time: ",Sys.time(),"\n"))
-RES_plankton_north_sea<-RES_single_sp(d_allsp=d_allsp_data_plankton_north_sea(d0_plankton_north_sea),sp=16,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45)
-cat(paste("stop-time: ",Sys.time(),"\n"))
-resloc<-"Results/"
+#cat(paste("start-time: ",Sys.time(),"\n")) 
+RES_plankton_north_sea<-RES_single_sp(d_allsp=data_plankton_north_sea,sp=16,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45)
+#cat(paste("stop-time: ",Sys.time(),"\n"))    
+resloc<-"./Results/fitting_results/"
 saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS",sep=""))
 ```
 
-```{r}
-RES_plankton_north_sea
-#no of locations showing greater lower tail dependence
-sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)
-
-#no of locations showing greater upper tail dependence
-sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)<0,na.rm=T)
-
+```{r read_RES_plankton_north_sea,echo=F}
+RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
 ```
 
-### Non-paramtric analysis of tail dependence
+```{r pns_bestcop,echo=F,results="asis"}
+#library(pander)
+#pander(best_cop_LTdep, caption = "Hello caption!")
+# alternatively,
+#pandoc.table(RES_plankton_north_sea$info_ord_AICw[,,1], caption="Plankton_north_sea : AICw for best fit copula family for each selective location pair")
+cat("\n\n\\pagebreak\n")
 
+table_nums("pns_bestcop",display=F)
+knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], caption = "Plankton_north_sea : Best fit copula family for each selective location pair")
+```
+
+```{r pns_AICw,echo=F,results="asis"}
+table_nums("pns_AICw",display=F)
+knitr::kable(round(RES_plankton_north_sea$info_ord_AICw[,,1],3), caption = "Plankton_north_sea : AICw for best fit copula family for each selective location pair")
+```
+
+```{r pns_LTdep,echo=F,results="asis"}
+cat("\n\n\\pagebreak\n")
+
+table_nums("pns_LTdep",display=F)
+knitr::kable(round(RES_plankton_north_sea$info_ord_LTdep[,,1],3), caption = "Plankton_north_sea : Lower Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r pns_UTdep,echo=F,results="asis"}
+table_nums("pns_UTdep",display=F)
+knitr::kable(round(RES_plankton_north_sea$info_ord_UTdep[,,1],3), caption = "Plankton_north_sea : Upper Tail dependence for best fit copula family for each selective location pair")
+```
+
+```{r pns_LTdep_AICw,echo=F,results="asis"}
+cat("\n\n\\pagebreak\n")
+
+table_nums("pns_LTdep_AICw",display=F)
+knitr::kable(round(RES_plankton_north_sea$LTdep_AICw,3), caption = "Plankton_north_sea : Lower Tail dependence statistic for best fit copula family for each selective location pair")
+```
+
+```{r pns_UTdep_AICw,echo=F,results="asis"}
+table_nums("pns_UTdep_AICw",display=F)
+knitr::kable(round(RES_plankton_north_sea$UTdep_AICw,3), caption = "Plankton_north_sea : Upper Tail dependence statistic for best fit copula family for each selective location pair")
+```
+
+```{r pns_LTmUT,echo=F,results="asis"}
+cat("\n\n\\pagebreak\n")
+
+table_nums("pns_LTmUT",display=F)
+knitr::kable(round(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw,3), caption = "Plankton_north_sea : Lower Tail - Upper Tail dependence statistic for best fit copula family for each of the selective location pair")
+```
+
+```{r pns_p_CvM,echo=F,results="asis"}
+table_nums("pns_p_CvM",display=F)
+knitr::kable(round(RES_plankton_north_sea$gfc_p_CvM,3), caption = "Plankton_north_sea : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula")
+```
+
+```{r pns_p_KS,echo=F,results="asis"}
+cat("\n\n\\pagebreak\n")
+
+table_nums("pns_p_KS",display=F)
+knitr::kable(round(RES_plankton_north_sea$gfc_p_KS,3), caption = "Plankton_north_sea : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula")
+```
+
+`r table_nums("pns_bestcop",display="c")` shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data.
+The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in   `r table_nums("pns_LTdep_AICw",display="c")` and `r table_nums("pns_UTdep_AICw",display="c")` respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in `r table_nums("pns_LTmUT",display="c")` indicates it is different from 0 for most of the locations, answering the third part of question 1. 
+
+These results do convincingly show non-Gaussian copula structure, having `r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-RES_plankton_north_sea$num_indep_loc_pair` location pair more lower tail dependence. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [`r table_nums("pns_p_CvM",display="c")`] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [`r table_nums("pns_p_KS",display="c")`] of the goodness of fit.
+
+### Non-paramtric analysis of tail dependence
+```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea)}
+set.seed(seed)
+resloc<-"./Results/stat_results/stat_plankton_north_sea/"
+
+sp<-16
+good_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=sp,data_pt_thrs=45)
+longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
+lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
+longs<-longs[[1]] 
+lats<-lats[[1]]
+
+stat_plankton_north_sea<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats,longs=longs,pfname=paste(resloc,"Sp_",sp,sep=''),good_loc=good_loc) 
+saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16.RDS",sep=''))
+```
+
+```{r read_stat_plankton_north_sea,echo=F}
+stat_plankton_north_sea<-readRDS("./Results/stat_results/stat_plankton_north_sea/stat_plankton_north_sea_sp_16.RDS")
+```
+
+```{r pns_resamp,echo=F,results="asis"}
+table_nums("count_resamp",display=F)
+knitr::kable(stat_plankton_north_sea$numericdf, caption = "Plankton_north_sea : resampling result for stat indicating lower tail dependence")
+```
+
+```{r pns_allcop,echo=F}
+fig_nums("pns_allcop",display=F)
+```
+![copula plot for Plankton_north_sea](./Results/stat_results/stat_plankton_north_sea/Sp_16_AllCops.pdf)
+
+```{r pns_spear,echo=F}
+fig_nums("pns_spear",display=F)
+```
+![Plot for Plankton_north_sea : Spearman vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Spearman_vs_D.pdf)
+
+```{r pns_kend,echo=F}
+fig_nums("pns_kend",display=F)
+```
+![Plot for Plankton_north_sea : Kendall vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf)
+
+```{r pns_Corl-Coru,echo=F}
+fig_nums("pns_Corl-Coru",display=F)
+```
+![Corl-Coru vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf)
+
+```{r pns_Pl-Pu,echo=F}
+fig_nums("pns_Pl-Pu",display=F)
+```
+![Pl-Pu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf)
+
+```{r pns_Tl-Tu,echo=F}
+fig_nums("pns_Tl-Tu",display=F)
+```
+![Tl-Tu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Tl-Tu_vs_D.pdf)
+
+```{r pns_D2u-D2l,echo=F}
+fig_nums("pns_D2u-D2l",display=F)
+```
+![D2u-D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf)
+
+```{r pns_D2u/D2l,echo=F}
+fig_nums("pns_D2u/D2l",display=F)
+```
+![D2u/D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u_by_D2l_vs_D.pdf)
+
+<!--
 # Question 2 analyses for each dataset
 
 # Question 3 analyses for each dataset
-
-
+-->
 
 
 

@@ -88,6 +88,8 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 
 ### Non-paramtric analysis of tail dependence
 
+<!--Shya pls add a description of each of the statistics implemented in CopulaFunctions.R. As usual, please describe the stats with sufficient precision that they could be re-coded by the reader.-->
+
 ## Soil C and N data
 
 ### Model selection approach
@@ -112,9 +114,8 @@ The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_
 Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 ### Non-paramtric analysis of tail dependence
-
-<!--DAN: wherever copsync is needs to be sourced and also added to the mlist below-->
-```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mlist(list("CopulaFunctions.R","copsurrog2d.R")))}
+<!--Do the analysis-->
+```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mlist(list("CopulaFunctions.R","copsurrog2d.R","NonParamStat.R")))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_soilCN/"
 
@@ -123,32 +124,39 @@ stat_soilCN<-copsync(v)
 saveRDS(stat_soilCN,paste(resloc,file="stat_soilCN.RDS",sep=''))
 sCN<-stat_soilCN[c(2:5,7,8,10:13)]
 stat<-unlist(sCN)
+stat<-c(stat[1:4],unname(stat[3]-stat[4]),stat[5:6],unname(stat[5]-stat[6]),stat[7:8],unname(stat[7]-stat[8]),stat[9:10],unname(stat[9]-stat[10]))
+names(stat)[c(5,8,11,14)]<-c("Corl_m_Coru","Pl_m_Pu","Tl_m_Tu","D2l_m_D2u")
 
 #get surrogates and get stats for them
 cop<-normalCopula(.5,2)
-surv<-copsurrog2d(v,cop,1000)
-#DAN: once you get the code for copsync, apply it to each surrogate and keep the results
+numsurrog<-1000
+surv<-copsurrog2d(v,cop,numsurrog)
+statsurr<-matrix(NA,length(stat),numsurrog)
+rownames(statsurr)<-names(stat)
+for (counter in 1:dim(surv)[3])
+{
+  h<-copsync(surv[,,counter])
+  h<-unlist(h[c(2:5,7,8,10:13)])
+  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[9]-h[10])
+  statsurr[,counter]<-unname(h)
+}
+
+#now get fractions of surrogates lt the data and gt the data for each stat
+stattab<-data.frame(statname=names(stat),stat=unname(stat),frac_surr_gt=NA,frac_surr_lt=NA)
+for (counter in 1:length(stat))
+{
+  stattab[counter,3]<-sum(statsurr[counter,]>stat[counter])/numsurrog
+  stattab[counter,4]<-sum(statsurr[counter,]<stat[counter])/numsurrog
+}
 ```
 
-<!--DAN: modify the table so it also shows tail asymmetry stats (differences) and also shows fractions of surrogates for both the tail dependence stats and the asymmetry stats that are greater than the real data stat-->
+<!--Display the table generated above-->
 ```{r table_stat_soilCN, echo=F, results="asis"}
 table_nums("table_stat_soilCN",display=F)
-
-knitr::kable(data.frame(stat=stat),caption = "Non-parametric stats on soil C/N dataset")
+knitr::kable(data.frame(stat=stattab),caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset.")
 ```
 
-<!--DAN: The below will no longer be necessary once you make the above changes-->
-```{r ,echo=F}
-#sCN
-CorlmCoru<-stat_soilCN$Corl-stat_soilCN$Coru
-cat("Corl-Coru = ",CorlmCoru,"\n")
-PlmPu<-stat_soilCN$Pl-stat_soilCN$Pu
-cat("Pl-Pu = ",PlmPu,"\n")
-TlmTu<-stat_soilCN$Tl-stat_soilCN$Tu
-cat("Tl-Tu = ",TlmTu,"\n")
-D2umD2l<-stat_soilCN$D2u-stat_soilCN$D2l
-cat("D2u-D2l = ",D2umD2l,"\n")
-```
+
 
 ## Aphid data
 <!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->

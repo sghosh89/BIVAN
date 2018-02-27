@@ -93,7 +93,7 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 ## Soil C and N data
 
 ### Model selection approach
-```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v,mtime(list("OurBiCopSelect.R")))}
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v,mtime("OurBiCopSelect.R"))}
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20) 
 BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
@@ -115,7 +115,7 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 ### Non-paramtric analysis of tail dependence
 <!--Do the analysis-->
-```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mlist(list("CopulaFunctions.R","copsurrog2d.R","NonParamStat.R")))}
+```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mtime("CopulaFunctions.R"),mtime("copsurrog2d.R"),mtime("NonParamStat.R"))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_soilCN/"
 

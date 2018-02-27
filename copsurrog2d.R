@@ -45,6 +45,10 @@ copsurrog2d<-function(m,targetcop,corpres,numsurrog)
     #than 1 parameter.
     targetcop@parameters<-iRho(targetcop,scor)
   }
+  if (corpres!="kendall" && corpres!="spearman")
+  {
+    stop("Error in copsurrog2d: corpres must be 'kendall' or 'spearman'")
+  }
   
   #Generate a bunch of draws from targetcop in the shape of the 
   #final desired output. 

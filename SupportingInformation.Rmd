@@ -13,16 +13,14 @@ output:
 
 updated on `r Sys.Date()`
 
-<!--Shya pls add a short description of what this chunk is for. Should it be in the setup chunk down below?-->
-```{r ,echo=FALSE}
-library(captioner)
-table_nums <- captioner(prefix = "Table")
-fig_nums <- captioner(prefix="Figure")
-```
-
 <!--Setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
+
+library(captioner)
+table_nums <- captioner(prefix = "Table")
+fig_nums <- captioner(prefix="Figure")
+
 seed<-101
 families<-c(1,3:10,13,14,16:20)
 #A function needed for caching
@@ -46,23 +44,28 @@ source("copsurrog2d.R")
 ## Soil C and N data
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
 
-The raw data look like this:
-<!--Load the soil C and N data and make a plot-->
-```{r load_data_Loecke, echo=F, fig.cap="Plot of the raw soil C and N data.", fig.height=5, fig.width=5}
+
+<!--The raw data look like this:-->
+```{r load_data_Loecke, echo=F, fig.cap="plot of the raw soil C and N data.", fig.height=5, fig.width=5}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 fig_nums("soilCNraw",display=F)
 plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 ```
 
-The copula looks like this:
-<!--Plot the copula of the soil C and N data--> 
-```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of the soil C and N data",  fig.height=5, fig.width=5}
+<!--The copula looks like this:-->
+```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data",  fig.height=5, fig.width=5}
 #convert to a copula and plot
 fig_nums("soilCNcop",display=F)
 v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 ```
 
+The raw data looks like : `r fig_nums("soilCNraw",display="c")`.
+
+The copula looks like : `r fig_nums("soilCNcop",display="c")`.
+
+
+\newpage
 ## Aphid data
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data 
@@ -85,6 +88,75 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 ### Non-paramtric analysis of tail dependence
 
 <!--Shya pls add a description of each of the statistics implemented in CopulaFunctions.R. As usual, please describe the stats with sufficient precision that they could be re-coded by the reader.-->
+#### stat_CorlCoru
+```{r stat_CorlCoru_D2lD2u, echo=F}
+fig_nums("stat_CorlCoru_D2lD2u",display=F)
+```
+![schematic diagram for stat_CorlCoru and stat_D2lD2u](./CorlCoru_D2lD2u.jpg){ width=30%, height=30% }
+
+If we draw a ranking based copula plot of a dataset within a unit square box then the points are scattered within the box according to their joint-marginal distribution. Say, there are total $n$ number of datapoints and $vi$ and $vj$ are the ranks of the dataset taken at [i,j] location pair or for [i,j] observables. To measure their tail dependence, i. e., the points are concentrated in the left corner or right corner of the box, we will calculate our statistics on left and right side of $vi+vj=1$ line [see solid blue line in `r fig_nums("stat_CorlCoru_D2lD2u",display="c")`]. Now, we define the total covariance of $(vi,vj)$ as;
+
+\begin{equation}\label{eq.CorlCoru}
+   C = \frac{1}{n-1}\sum_{k=1}^{n}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vi\right> \right ]
+\end{equation}
+
+where, $\left<vi\right>$ and $\left<vj\right>$ are the mean of $vi$ and $vj$ of the points within the box respectively. If we think the total covariance $C$ as sum of covariance of the points lie within $vi+vj<1$ region, namely, $Corl$ and for $vi+vj>1$ region, namely, $Coru$; then $C = Corl + Coru$. So, $Corl$ and $Coru$ can be defined by;
+
+\begin{equation}\label{eq.Corl}
+   Corl = \frac{1}{n-1}\sum_{k \epsilon (vi+vj<1)}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
+\end{equation}
+
+and
+
+\begin{equation}\label{eq.Coru}
+   Coru = \frac{1}{n-1}\sum_{k \epsilon (vi+vj>1)}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
+\end{equation}
+
+If we take their difference then that will tetll us which end of the copula is with stronger correlation. A copula with $(Corl-Coru)>0$ should have more lower tail dependence whereas $(Corl-Coru)<0$ indicates more upper tail dependence. Symmetric copula has $Corl = Coru$.
+
+#### stat_PlPu
+
+```{r stat_PlPu, echo=F}
+fig_nums("stat_PlPu",display=F)
+```
+![schematic diagram for stat_PlPu](./PlPu.jpg){ width=35%, height=35% } 
+
+To start with, we consider the lower triangular region of  `r fig_nums("stat_PlPu",display="c")` for which $vi+vj<1$. First, we take $Sl_{p}$, the ratio of number of points within the shaded pentagon and number of points lie on the left side of $vi+vj=1$ line. This $Sl_{p}$ is a function of distance-parameter $h$ which has range from $0$ to $\sqrt2/2$ (= half of the length of the box-diagonal). Similarly, we calculate $Su_{p}(h)$ for region $vi+vj>1$. Then we considered the independent case as if the points within the box scattered uniformly. $Si_{p}$ represents the ratio of the pentagon and the area of right angled isosceles triangle of unit side. Now, we want to measure that how much $Sl_{p}$ and $Su_{p}$ deviate from the standard $Si_{p}$ line when they are plotted against $h$. Their deviations $Pl$ and $Pu$, representing our statistics to measure lower and upper tail dependence, are given by;
+
+\begin{equation}\label{eq.Pl}
+   Pl = \int_0^{\sqrt2/2} \left[ Sl_{p}(h) - Si_{p}(h) \right] \,dh
+\end{equation}
+
+\begin{equation}\label{eq.Pu}
+   Pu = \int_0^{\sqrt2/2} \left[ Su_{p}(h) - Si_{p}(h) \right] \,dh
+\end{equation}
+
+A copula having $(Pl-Pu)>0$ represents more lower tail dependence whereas a copula with negative $(Pl-Pu)$ represents more upper tail dependence. A copula with equal $Pl$ and $Pu$ value is considered as symmetric with no tail-dependence.
+
+#### stat_TlTu
+
+```{r stat_TlTu, echo=F}
+fig_nums("stat_TlTu",display=F)
+```
+![schematic diagram for stat_TlTu](./TlTu.jpg){ width=30%, height=30% }
+
+This statistic is an alternative kind of the previous statistics. Here, to measure tail dependence between two marginal distributions, we will calculate our statistics on left and right side of $vi+vj=1$ line [see `r fig_nums("stat_TlTu",display="c")`] of the unit square box. First, we take $Il$, the ratio of number of points within the shaded lower triangle and the number of points lie on the left side of $vi+vj=1$ line. This $Il$ is a function of 
+box-corner to the box-diagonal distance $h$ which has range from $0$ to $\sqrt2/2$ (= half of the length of the box-diagonal). Thus $Il$ also lies in between the same range [$0,1$]. Similarly, we calculate $Iu(h)$ for region $vi+vj>1$. Usual independent standard $Ii(h)$ represents the ratio of one shaded triange and the area of right angled isosceles triangle of unit side. Now, we want to measure that how much $Il(h)$ and $Iu(h)$ deviate from the standard $Ii(h)$ line when they are plotted against $h$. Their deviations $Tl$ and $Tu$, representing our statistics to measure lower and upper tail dependence, are given by;
+
+\begin{equation}\label{eq.Tl}
+   Tl = \int_0^{\sqrt2/2} \left[ Il(h) - Ii(h) \right] \,dh
+\end{equation}
+
+\begin{equation}\label{eq.Tu}
+   Tu = \int_0^{\sqrt2/2} \left[Iu(h) - Ii(h) \right] \,dh
+\end{equation}
+
+According to this statistic a copula with more lower tail dependence should have positive $(Tl-Tu)$ value whereas a copula with negative $(Tl-Tu)$ represents more upper tail dependence. A copula with equal $Tl$ and $Tu$ value is considered as a member of symmetric copula family with no tail-dependence.
+
+#### stat_D2lD2u
+
+In this statistic as usual we divide the unit square box into two region based on either side of $vi+vj=1$ line. For the lower triangular region, we calculate squared distance of each scattered point from $vi-vj=0$ [the dotted line in `r fig_nums("stat_CorlCoru_D2lD2u",display="c")`] and then take their average. This quantity (say, $D2l$) represents how much the points in the lower tail of a copula are condensed to the identity line. Similarly, we calculate $D2u$ for the upper triangular region. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
+
 
 ## Soil C and N data
 
@@ -121,8 +193,8 @@ stat_soilCN<-copsync(v)
 saveRDS(stat_soilCN,paste(resloc,file="stat_soilCN.RDS",sep=''))
 sCN<-stat_soilCN[c(2:5,7,8,10:13)]
 stat<-unlist(sCN)
-stat<-c(stat[1:4],unname(stat[3]-stat[4]),stat[5:6],unname(stat[5]-stat[6]),stat[7:8],unname(stat[7]-stat[8]),stat[9:10],unname(stat[9]-stat[10]))
-names(stat)[c(5,8,11,14)]<-c("Corl_m_Coru","Pl_m_Pu","Tl_m_Tu","D2l_m_D2u")
+stat<-c(stat[1:4],unname(stat[3]-stat[4]),stat[5:6],unname(stat[5]-stat[6]),stat[7:8],unname(stat[7]-stat[8]),stat[9:10],unname(stat[10]-stat[9]))
+names(stat)[c(5,8,11,14)]<-c("Corl-Coru","Pl-Pu","Tl-Tu","D2u-D2l")
 
 #get surrogates and get stats for them, preserving kendall
 cop<-normalCopula(.5,2)
@@ -134,7 +206,7 @@ for (counter in 1:dim(surv)[3])
 {
   h<-copsync(surv[,,counter])
   h<-unlist(h[c(2:5,7,8,10:13)])
-  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[9]-h[10])
+  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[10]-h[9])
   statsurr_k[,counter]<-unname(h)
 }
 
@@ -146,7 +218,7 @@ for (counter in 1:dim(surv)[3])
 {
   h<-copsync(surv[,,counter])
   h<-unlist(h[c(2:5,7,8,10:13)])
-  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[9]-h[10])
+  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[10]-h[9])
   statsurr_s[,counter]<-unname(h)
 }
 ```
@@ -164,9 +236,9 @@ for (counter in 1:length(stat))
 }
 
 #display
-names(stattab)<-c("Statistic","Value on data","Frac. K surr >","Frac. K surr <","Frac. S surr >","Frac. S surr <")
+names(stattab)<-c("Statistic","Value on data","Frac_K_sur_gt","Frac_K_sur_lt","Frac_S_sur_gt","Frac_S_sur_lt")
 table_nums("table_stat_soilCN",display=F)
-knitr::kable(data.frame(stat=stattab),caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")
+knitr::kable(data.frame(stattab),caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")
 ```
 
 ## Aphid abundance data 
@@ -200,6 +272,8 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 ```{r read_RES_aphid_count, echo=F}
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
+
+\newpage
 
 ```{r count_bestcop,echo=F,results="asis"}
 #library(pander)
@@ -290,37 +364,37 @@ fig_nums("count_allcop",display=F)
 ```{r count_spear,echo=F}
 fig_nums("count_spear",display=F)
 ```
-![Plot for aphid-count : Spearman vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf)
+![Plot for aphid-count : Spearman vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_kend,echo=F}
 fig_nums("count_kend",display=F)
 ```
-![Plot for aphid-count : Kendall vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf)
+![Plot for aphid-count : Kendall vs. Distance](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_Corl-Coru,echo=F}
 fig_nums("count_Corl-Coru",display=F)
 ```
-![Corl-Coru vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf)
+![Corl-Coru vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_Pl-Pu,echo=F}
 fig_nums("count_Pl-Pu",display=F)
 ```
-![Pl-Pu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf)
+![Pl-Pu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_Tl-Tu,echo=F}
 fig_nums("count_Tl-Tu",display=F)
 ```
-![Tl-Tu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Tl-Tu_vs_D.pdf)
+![Tl-Tu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_D2u-D2l,echo=F}
 fig_nums("count_D2u-D2l",display=F)
 ```
-![D2u-D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf)
+![D2u-D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
 ```{r count_D2u/D2l,echo=F}
 fig_nums("count_D2u/D2l",display=F)
 ```
-![D2u/D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u_by_D2l_vs_D.pdf)
+![D2u/D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 <!--
 ```{r, echo=F,out.width = "8cm", out.height= "8cm", out.caption="adhjk"}
@@ -346,6 +420,8 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 ```{r read_RES_aphid_ff,echo=F}
 RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
 ```
+
+\newpage
 
 ```{r ff_bestcop,echo=F,results="asis"}
 table_nums("ff_bestcop",display=F)
@@ -429,37 +505,37 @@ fig_nums("ff_allcop",display=F)
 ```{r ff_spear,echo=F}
 fig_nums("ff_spear",display=F)
 ```
-![Plot for aphid-firstflight : Spearman vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf)
+![Plot for aphid-firstflight : Spearman vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_kend,echo=F}
 fig_nums("ff_kend",display=F)
 ```
-![Plot for aphid-firstflight : Kendall vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf)
+![Plot for aphid-firstflight : Kendall vs. Distance](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_Corl-Coru,echo=F}
 fig_nums("ff_Corl-Coru",display=F)
 ```
-![Corl-Coru vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf)
+![Corl-Coru vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_Pl-Pu,echo=F}
 fig_nums("ff_Pl-Pu",display=F)
 ```
-![Pl-Pu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf)
+![Pl-Pu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_Tl-Tu,echo=F}
 fig_nums("ff_Tl-Tu",display=F)
 ```
-![Tl-Tu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Tl-Tu_vs_D.pdf)
+![Tl-Tu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_D2u-D2l,echo=F}
 fig_nums("ff_D2u-D2l",display=F)
 ```
-![D2u-D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf)
+![D2u-D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
 ```{r ff_D2u/D2l,echo=F}
 fig_nums("ff_D2u/D2l",display=F)
 ```
-![D2u/D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u_by_D2l_vs_D.pdf)
+![D2u/D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 ## North sea plankton data
 
@@ -485,12 +561,14 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
 ```
 
+\newpage
+
 ```{r pns_bestcop,echo=F,results="asis"}
 #library(pander)
 #pander(best_cop_LTdep, caption = "Hello caption!")
 # alternatively,
 #pandoc.table(RES_plankton_north_sea$info_ord_AICw[,,1], caption="Plankton_north_sea : AICw for best fit copula family for each selective location pair")
-cat("\n\n\\pagebreak\n")
+#cat("\n\n\\pagebreak\n")
 
 table_nums("pns_bestcop",display=F)
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], caption = "Plankton_north_sea : Best fit copula family for each selective location pair")
@@ -501,8 +579,10 @@ table_nums("pns_AICw",display=F)
 knitr::kable(round(RES_plankton_north_sea$info_ord_AICw[,,1],3), caption = "Plankton_north_sea : AICw for best fit copula family for each selective location pair")
 ```
 
+\newpage
+
 ```{r pns_LTdep,echo=F,results="asis"}
-cat("\n\n\\pagebreak\n")
+#cat("\n\n\\pagebreak\n")
 
 table_nums("pns_LTdep",display=F)
 knitr::kable(round(RES_plankton_north_sea$info_ord_LTdep[,,1],3), caption = "Plankton_north_sea : Lower Tail dependence for best fit copula family for each selective location pair")
@@ -513,8 +593,10 @@ table_nums("pns_UTdep",display=F)
 knitr::kable(round(RES_plankton_north_sea$info_ord_UTdep[,,1],3), caption = "Plankton_north_sea : Upper Tail dependence for best fit copula family for each selective location pair")
 ```
 
+\newpage
+
 ```{r pns_LTdep_AICw,echo=F,results="asis"}
-cat("\n\n\\pagebreak\n")
+#cat("\n\n\\pagebreak\n")
 
 table_nums("pns_LTdep_AICw",display=F)
 knitr::kable(round(RES_plankton_north_sea$LTdep_AICw,3), caption = "Plankton_north_sea : Lower Tail dependence statistic for best fit copula family for each selective location pair")
@@ -525,8 +607,10 @@ table_nums("pns_UTdep_AICw",display=F)
 knitr::kable(round(RES_plankton_north_sea$UTdep_AICw,3), caption = "Plankton_north_sea : Upper Tail dependence statistic for best fit copula family for each selective location pair")
 ```
 
+\newpage
+
 ```{r pns_LTmUT,echo=F,results="asis"}
-cat("\n\n\\pagebreak\n")
+#cat("\n\n\\pagebreak\n")
 
 table_nums("pns_LTmUT",display=F)
 knitr::kable(round(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw,3), caption = "Plankton_north_sea : Lower Tail - Upper Tail dependence statistic for best fit copula family for each of the selective location pair")
@@ -537,8 +621,10 @@ table_nums("pns_p_CvM",display=F)
 knitr::kable(round(RES_plankton_north_sea$gfc_p_CvM,3), caption = "Plankton_north_sea : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula")
 ```
 
+\newpage
+
 ```{r pns_p_KS,echo=F,results="asis"}
-cat("\n\n\\pagebreak\n")
+#cat("\n\n\\pagebreak\n")
 
 table_nums("pns_p_KS",display=F)
 knitr::kable(round(RES_plankton_north_sea$gfc_p_KS,3), caption = "Plankton_north_sea : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula")
@@ -582,37 +668,37 @@ fig_nums("pns_allcop",display=F)
 ```{r pns_spear,echo=F}
 fig_nums("pns_spear",display=F)
 ```
-![Plot for Plankton_north_sea : Spearman vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Spearman_vs_D.pdf)
+![Plot for Plankton_north_sea : Spearman vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_kend,echo=F}
 fig_nums("pns_kend",display=F)
 ```
-![Plot for Plankton_north_sea : Kendall vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf)
+![Plot for Plankton_north_sea : Kendall vs. Distance](./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_Corl-Coru,echo=F}
 fig_nums("pns_Corl-Coru",display=F)
 ```
-![Corl-Coru vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf)
+![Corl-Coru vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_Pl-Pu,echo=F}
 fig_nums("pns_Pl-Pu",display=F)
 ```
-![Pl-Pu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf)
+![Pl-Pu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_Tl-Tu,echo=F}
 fig_nums("pns_Tl-Tu",display=F)
 ```
-![Tl-Tu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Tl-Tu_vs_D.pdf)
+![Tl-Tu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_D2u-D2l,echo=F}
 fig_nums("pns_D2u-D2l",display=F)
 ```
-![D2u-D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf)
+![D2u-D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
 ```{r pns_D2u/D2l,echo=F}
 fig_nums("pns_D2u/D2l",display=F)
 ```
-![D2u/D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u_by_D2l_vs_D.pdf)
+![D2u/D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 # Question 2 analyses for each dataset
 

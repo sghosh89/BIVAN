@@ -111,7 +111,7 @@ The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_
 Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 ### Non-paramtric analysis of tail dependence
-<!--Do the analysis-->
+<!--Do the intensive part of the analysis-->
 ```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mtime("CopulaFunctions.R"),mtime("copsurrog2d.R"),mtime("NonParamStat.R"))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_soilCN/"
@@ -149,7 +149,10 @@ for (counter in 1:dim(surv)[3])
   h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[9]-h[10])
   statsurr_s[,counter]<-unname(h)
 }
+```
 
+<!--Display the table generated above-->
+```{r table_stat_soilCN, echo=F, results="asis"}
 #now get fractions of surrogates lt the data and gt the data for each stat
 stattab<-data.frame(statname=names(stat),stat=unname(stat),frac_surr_gt_k=NA,frac_surr_lt_k=NA,frac_surr_gt_s=NA,frac_surr_lt_s=NA)
 for (counter in 1:length(stat))
@@ -159,10 +162,8 @@ for (counter in 1:length(stat))
   stattab[counter,5]<-sum(statsurr_s[counter,]>stat[counter])/numsurrog
   stattab[counter,6]<-sum(statsurr_s[counter,]<stat[counter])/numsurrog
 }
-```
 
-<!--Display the table generated above-->
-```{r table_stat_soilCN, echo=F, results="asis"}
+#display
 names(stattab)<-c("Statistic","Value on data","Frac. K surr >","Frac. K surr <","Frac. S surr >","Frac. S surr <")
 table_nums("table_stat_soilCN",display=F)
 knitr::kable(data.frame(stat=stattab),caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")

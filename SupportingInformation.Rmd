@@ -238,7 +238,7 @@ for (counter in 1:length(stat))
 #display
 names(stattab)<-c("Statistic","Value on data","Frac_K_sur_gt","Frac_K_sur_lt","Frac_S_sur_gt","Frac_S_sur_lt")
 table_nums("table_stat_soilCN",display=F)
-knitr::kable(data.frame(stattab),caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")
+knitr::kable(stattab,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")
 ```
 
 ## Aphid abundance data 

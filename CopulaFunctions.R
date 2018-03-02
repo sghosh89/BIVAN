@@ -4,7 +4,7 @@
 
 #--------------------------- STATISTICS 2 : correlation based Stat ---------------------------------------------------------
 
-source("CopulaFunction_flexible.R")
+source("CopulaFunctions_flexible.R")
 
 CorlCoru<-function(vi,vj)
 {

@@ -4,20 +4,13 @@
 
 #--------------------------- STATISTICS 2 : correlation based Stat ---------------------------------------------------------
 
+source("CopulaFunction_flexible.R")
+
 CorlCoru<-function(vi,vj)
 {
-  #get mean and variance
-  vi_mean<-mean(vi)
-  vj_mean<-mean(vj)
-  var_vi<-var(vi)
-  var_vj<-var(vj)
-  
-  #compute the indices
-  ind_ld<-which(vi+vj<1)
-  ind_hd<-which(vi+vj>1)
-  Corl<-sum((vi[ind_ld]-vi_mean)*(vj[ind_ld]-vj_mean))/((length(vi)-1)*sqrt(var_vi*var_vj))
-  Coru<-sum((vi[ind_hd]-vi_mean)*(vj[ind_hd]-vj_mean))/((length(vi)-1)*sqrt(var_vi*var_vj))
-  
+  Corl<-Corbds(vi,vj,0,0.5)
+  Coru<-Corbds(vi,vj,0.5,1)
+
   return(c(Corl,Coru))
 }
 
@@ -184,26 +177,12 @@ TlTu<-function(vi,vj){
 # get D2l : average of squared distance of points from the right diagonal of the box for lower triangle
 # get D2u : average of squared distance of points from the right diagonal of the box for upper triangle
 
-D2lD2u<-function(vi,vj){
-  
-  i_lt<-which(vi+vj<1)
-  i_ut<-which(vi+vj>1)
-  
-  if(length(i_lt)!=0 & length(i_ut)!=0){ 
-    
-    dsq_l<-0.5*(vi[i_lt]-vj[i_lt])^2
-    dsq_u<-0.5*(vi[i_ut]-vj[i_ut])^2
-    
-    D2l<-sum(dsq_l)/length(dsq_l)
-    D2u<-sum(dsq_u)/length(dsq_u)
-    
-  }else{
-    D2l<-NA
-    D2u<-NA
-  }
+D2lD2u<-function(vi,vj)
+{
+  D2l<-D2bds(vi,vj,0,0.5)
+  D2u<-D2bds(vi,vj,0.5,1)
   
   return(c(D2l,D2u))
-  
 }
 
 #---------------------------------------------------------------------------------------------------------------------

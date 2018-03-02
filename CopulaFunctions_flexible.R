@@ -229,9 +229,6 @@ Pbds<-function(vi,vj,lb,ub){
   #-----------------------------------------------------------------------
   res<-Au_S-Au_Si
   
-  stepfn_S<-list(dist_S,S)
-  stepfn_Si<-list(dist_Si,Si)
-  
   return(list(dist_S=dist_S,
               S=S,
               dist_Si=dist_Si,

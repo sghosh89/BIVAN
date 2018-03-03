@@ -287,9 +287,3 @@ stat_flexible_fn<-function(m,lb,ub){
 
 
 
-
-
-
-
-
->>>>>>> 0bb5df05a95de19346d23c80c1f76298ac06b307

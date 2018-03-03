@@ -62,8 +62,7 @@ v_CN<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in `r fig_nums("soilCNraw",display="c")`. The copula is shown in `r fig_nums("soilCNcop",display="c")`.
 
-<!--Shyamolina, let's not put in newpages and other spacing modifications until possibly at the end, once all the 
-content is essentially settled-->
+<!--Shyamolina, let's not put in newpages and other spacing modifications until possibly at the end, once all the content is essentially settled-->
 
 ## Aphid data
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
@@ -186,7 +185,11 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 set.seed(seed) 
 
 #initialize
-npa_res_CN<-data.frame(Statistic=c("Kendall","Spearman","Corl","Coru","CorlmCoru","Corlt0p1","Corgt0p9","Corlt0p1mCorgt0p9","D2l","D2u","D2umD2l","D2lt0p1","D2gt0p9","D2lt0p9mD2gt0p1"),Value=NA,Frac_of_K_surr_gt_val=NA,Frac_of_S_surr_gt_val=NA)
+npa_res_CN<-data.frame(Statistic=c("Kendall","Spearman",
+  "Corl","Coru","CorlmCoru","Corlt0p1","Corgt0p9","Corlt0p1mCorgt0p9",
+  "D2l","D2u","D2umD2l","D2lt0p1","D2gt0p9","D2lt0p9mD2gt0p1",
+  "Pl","Pu","PlmPu","Plt0p1","Pgt0p9","Plt0p1mPgt0p9"),
+  Value=NA,Frac_of_K_surr_gt_val=NA,Frac_of_S_surr_gt_val=NA)
 
 #utility function
 calcstats<-function(v)
@@ -199,12 +202,18 @@ calcstats<-function(v)
   h6<-D2bds(v[,1],v[,2],0.5,1)
   h7<-D2bds(v[,1],v[,2],0,.1)
   h8<-D2bds(v[,1],v[,2],0.9,1)
+  h9<-Pbds(v[,1],v[,2],0,0.5)$abs_res
+  h10<-Pbds(v[,1],v[,2],0.5,1)$abs_res
+  h11<-Pbds(v[,1],v[,2],0,0.1)$abs_res
+  h12<-Pbds(v[,1],v[,2],0.9,1)$abs_res
   return(c(cor(v[,1],v[,2],method="kendall"),
            cor(v[,1],v[,2],method="spearman"),
            h1,h2,h1-h2,
            h3,h4,h3-h4,
            h5,h6,h6-h5,
-           h7,h8,h8-h7
+           h7,h8,h8-h7,
+           h9,h10,h9-h10,
+           h11,h12,h11-h12
   ))
 }
 
@@ -233,8 +242,12 @@ for (counter in 1:dim(npa_res_CN)[1])
 <!--Display the table generated above-->
 ```{r table_stat_soilCN, echo=F, results="asis"}
 table_nums("table_stat_soilCN",display=F)
-knitr::kable(npa_res_CN,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names of statistics and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving (respectively, Spearman-preserving) surrogate datasets for which the given statistic is greater than its value on the real data. So if these quantities are smaller than 0.025 the statistic is significantly larger than expected based on null hypotheses of normal copulas; if larger than 0.975, significantly smaller.")
+knitr::kable(npa_res_CN,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names of statistics and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving (respectively, Spearman-preserving) surrogate datasets for which the given statistic is greater than its value on the real data. So if these quantities are smaller than 0.025 the statistic is significantly larger than expected based on a null hypotheses of normal copulas; if larger than 0.975, significantly smaller.")
 ```
+
+<!--Now need a chunk that calculated D2 for lb=0.1*n, ub=0.1*(n+1) for n=0,...,9, and get 
+a bunch of surrogates and calculates the same quantities and then makes a bunch of box-whisker
+plots and compares the real data to those for each of these lb/up limits. -->
 
 ## Aphid abundance data 
 <!--Add common and species name to header-->

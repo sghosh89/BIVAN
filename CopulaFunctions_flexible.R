@@ -44,7 +44,7 @@ D2bds<-function(vi,vj,lb,ub)
 #The earlier function CorlCoru should give the combined
 #results of Corbds(vi,vj,0,.5) and Corbds(vi,vj,0.5,1).
 #
-Corbds<-function(vi,vj,lb,lu)
+Corbds<-function(vi,vj,lb,ub)
 {
   #get mean and variance
   vi_mean<-mean(vi)

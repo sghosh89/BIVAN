@@ -13,7 +13,7 @@ output:
 
 updated on `r Sys.Date()`
 
-<!--Setup-->
+<!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 
@@ -23,12 +23,14 @@ fig_nums <- captioner(prefix="Figure")
 
 seed<-101
 families<-c(1,3:10,13,14,16:20)
+
 #A function needed for caching
 mtime <- function(files)
 {
   lapply(Sys.glob(files),function(x) X =   
           file.info(x)$mtime)
 }
+
 source("getcopula.R")
 source("OurBiCopSelect.R")
 source("FittingCopula_selective_loc.R")
@@ -42,8 +44,6 @@ source("copsurrog2d.R")
 <!--Each data contributor writes one to a few paragraphs about their data.-->
 
 ## Soil C and N data
-Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description).
-
 
 <!--The raw data look like this:-->
 ```{r load_data_Loecke, echo=F, fig.cap="plot of the raw soil C and N data.", fig.height=5, fig.width=5}
@@ -57,15 +57,14 @@ plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 ```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data",  fig.height=5, fig.width=5}
 #convert to a copula and plot
 fig_nums("soilCNcop",display=F)
-v<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
+v_CN<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
 ```
 
-The raw data looks like : `r fig_nums("soilCNraw",display="c")`.
+Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in `r fig_nums("soilCNraw",display="c")`. The copula is shown in `r fig_nums("soilCNcop",display="c")`.
 
-The copula looks like : `r fig_nums("soilCNcop",display="c")`.
+<!--Shyamolina, let's not put in newpages and other spacing modifications until possibly at the end, once all the 
+content is essentially settled-->
 
-
-\newpage
 ## Aphid data
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data 
@@ -87,7 +86,6 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 
 ### Non-paramtric analysis of tail dependence
 
-<!--Shya pls add a description of each of the statistics implemented in CopulaFunctions.R. As usual, please describe the stats with sufficient precision that they could be re-coded by the reader.-->
 #### stat_CorlCoru
 ```{r stat_CorlCoru_D2lD2u, echo=F}
 fig_nums("stat_CorlCoru_D2lD2u",display=F)
@@ -161,10 +159,10 @@ In this statistic as usual we divide the unit square box into two region based o
 ## Soil C and N data
 
 ### Model selection approach
-```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v,mtime("OurBiCopSelect.R"))}
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"))}
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20) 
-BivMS_res_Loecke<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
+BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
 The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes`. 
 
@@ -184,61 +182,58 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 ### Non-paramtric analysis of tail dependence
 <!--Do the intensive part of the analysis-->
-```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v,mtime("CopulaFunctions.R"),mtime("copsurrog2d.R"),mtime("NonParamStat.R"))}
+```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed) 
-resloc<-"./Results/stat_results/stat_soilCN/"
 
-#get the stats for the real data
-stat_soilCN<-copsync(v) 
-saveRDS(stat_soilCN,paste(resloc,file="stat_soilCN.RDS",sep=''))
-sCN<-stat_soilCN[c(2:5,7,8,10:13)]
-stat<-unlist(sCN)
-stat<-c(stat[1:4],unname(stat[3]-stat[4]),stat[5:6],unname(stat[5]-stat[6]),stat[7:8],unname(stat[7]-stat[8]),stat[9:10],unname(stat[10]-stat[9]))
-names(stat)[c(5,8,11,14)]<-c("Corl-Coru","Pl-Pu","Tl-Tu","D2u-D2l")
+#initialize
+npa_res_CN<-data.frame(Statistic=c("Kendall","Spearman","Corl","Coru","CorlmCoru","Corlt0p1","Corgt0p9","Corlt0p1mCorgt0p9","D2l","D2u","D2umD2l","D2lt0p1","D2gt0p9","D2lt0p9mD2gt0p1"),Value=NA,Frac_of_K_surr_gt_val=NA,Frac_of_S_surr_gt_val=NA)
 
-#get surrogates and get stats for them, preserving kendall
-cop<-normalCopula(.5,2)
-numsurrog<-1000
-surv<-copsurrog2d(v,cop,"kendall",numsurrog)
-statsurr_k<-matrix(NA,length(stat),numsurrog)
-rownames(statsurr_k)<-names(stat)
-for (counter in 1:dim(surv)[3])
+#utility function
+calcstats<-function(v)
 {
-  h<-copsync(surv[,,counter])
-  h<-unlist(h[c(2:5,7,8,10:13)])
-  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[10]-h[9])
-  statsurr_k[,counter]<-unname(h)
+  h1<-Corbds(v[,1],v[,2],0,.5)
+  h2<-Corbds(v[,1],v[,2],0.5,1)
+  h3<-Corbds(v[,1],v[,2],0,.1)
+  h4<-Corbds(v[,1],v[,2],0.9,1)
+  h5<-D2bds(v[,1],v[,2],0,.5)
+  h6<-D2bds(v[,1],v[,2],0.5,1)
+  h7<-D2bds(v[,1],v[,2],0,.1)
+  h8<-D2bds(v[,1],v[,2],0.9,1)
+  return(c(cor(v[,1],v[,2],method="kendall"),
+           cor(v[,1],v[,2],method="spearman"),
+           h1,h2,h1-h2,
+           h3,h4,h3-h4,
+           h5,h6,h6-h5,
+           h7,h8,h8-h7
+  ))
 }
 
-#same, preserving spearman
-surv<-copsurrog2d(v,cop,"spearman",numsurrog)
-statsurr_s<-matrix(NA,length(stat),numsurrog)
-rownames(statsurr_s)<-names(stat)
-for (counter in 1:dim(surv)[3])
+#get value on the real data
+npa_res_CN[,"Value"]<-calcstats(v_CN)
+
+#Do the kendall surrogates
+cop<-normalCopula(.5,2)
+numsurrog<-1000
+surv<-copsurrog2d(v_CN,cop,"kendall",numsurrog)
+res<-apply(FUN=calcstats,X=surv,MARGIN=3)
+for (counter in 1:dim(npa_res_CN)[1])
 {
-  h<-copsync(surv[,,counter])
-  h<-unlist(h[c(2:5,7,8,10:13)])
-  h<-c(h[1:4],h[3]-h[4],h[5:6],h[5]-h[6],h[7:8],h[7]-h[8],h[9:10],h[10]-h[9])
-  statsurr_s[,counter]<-unname(h)
+  npa_res_CN[counter,"Frac_of_K_surr_gt_val"]<-sum(res[counter,]>npa_res_CN[counter,"Value"])/numsurrog
+}
+
+#Do the spearman surrogates
+surv<-copsurrog2d(v_CN,cop,"spearman",numsurrog)
+res<-apply(FUN=calcstats,X=surv,MARGIN=3)
+for (counter in 1:dim(npa_res_CN)[1])
+{
+  npa_res_CN[counter,"Frac_of_S_surr_gt_val"]<-sum(res[counter,]>npa_res_CN[counter,"Value"])/numsurrog
 }
 ```
 
 <!--Display the table generated above-->
 ```{r table_stat_soilCN, echo=F, results="asis"}
-#now get fractions of surrogates lt the data and gt the data for each stat
-stattab<-data.frame(statname=names(stat),stat=unname(stat),frac_surr_gt_k=NA,frac_surr_lt_k=NA,frac_surr_gt_s=NA,frac_surr_lt_s=NA)
-for (counter in 1:length(stat))
-{
-  stattab[counter,3]<-sum(statsurr_k[counter,]>stat[counter])/numsurrog
-  stattab[counter,4]<-sum(statsurr_k[counter,]<stat[counter])/numsurrog
-  stattab[counter,5]<-sum(statsurr_s[counter,]>stat[counter])/numsurrog
-  stattab[counter,6]<-sum(statsurr_s[counter,]<stat[counter])/numsurrog
-}
-
-#display
-names(stattab)<-c("Statistic","Value on data","Frac_K_sur_gt","Frac_K_sur_lt","Frac_S_sur_gt","Frac_S_sur_lt")
 table_nums("table_stat_soilCN",display=F)
-knitr::kable(stattab,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving surrogate datasets for which the given statistic is greater than (resp., less than) its value on the real data. The last two columns are analogous but for Spearman-preserving surrogates.")
+knitr::kable(npa_res_CN,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names of statistics and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving (respectively, Spearman-preserving) surrogate datasets for which the given statistic is greater than its value on the real data. So if these quantities are smaller than 0.025 the statistic is significantly larger than expected based on null hypotheses of normal copulas; if larger than 0.975, significantly smaller.")
 ```
 
 ## Aphid abundance data 

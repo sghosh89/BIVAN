@@ -238,5 +238,54 @@ Pbds<-function(vi,vj,lb,ub){
 }
 
 #-------------------------------------------------------------------------------------------------
+#This is a flexible stat fn which calculates stat on symmetric part of both end
+# Input:
+# m : a 2 column matrix of rankings (vi,vj)
+# lb : lower boundary : a number between [0,1]
+# ub : upper boundary : a number between [0,1] # but lb>ub to run the code without any error message
+
+stat_flexible_fn<-function(m,lb,ub){
+  
+  spear<-cor(m[,1],m[,2], method ="pearson")
+  kend<-cor(m[,1], m[,2], method ="kendall")
+  Corl<-Corbds(m[,1],m[,2],lb=lb,ub=ub)
+  Coru<-Corbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
+  Pl<-Pbds(m[,1],m[,2],lb=lb,ub=ub)
+  Pu<-Pbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
+  D2l<-D2bds(m[,1],m[,2],lb=lb,ub=ub)
+  D2u<-D2bds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
+  
+  stat_flexible<-list(spear=spear,kend=kend,
+                      Corl=Corl,Coru=Coru,
+                      Pl=Pl,Pu=Pu,
+                      D2l=D2l,D2u=D2u)
+  
+  return(stat_flexible)
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

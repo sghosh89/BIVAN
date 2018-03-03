@@ -2,4 +2,9 @@
 *.rds
 *.RDS
 *.msg
+*.jpg
+*.csv
+*.RData
+*.RDS
+*.Rhistory
 

@@ -250,8 +250,12 @@ stat_flexible_fn<-function(m,lb,ub){
   kend<-cor(m[,1], m[,2], method ="kendall")
   Corl<-Corbds(m[,1],m[,2],lb=lb,ub=ub)
   Coru<-Corbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
-  Pl<-Pbds(m[,1],m[,2],lb=lb,ub=ub)
-  Pu<-Pbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
+  temp_Pl<-Pbds(m[,1],m[,2],lb=lb,ub=ub)
+  Pl<-temp_Pl$abs_res
+  
+  temp_Pu<-Pbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
+  Pu<-temp_Pu$abs_res
+    
   D2l<-D2bds(m[,1],m[,2],lb=lb,ub=ub)
   D2u<-D2bds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
   

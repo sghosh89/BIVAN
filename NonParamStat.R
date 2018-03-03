@@ -50,14 +50,6 @@ copsync<-function(m){
     Pl<-stat4[[2]]
     Pu<-stat4[[3]]
     
-    #----------------------------------------------------STATISTICS : 5 ---------------------------------------------------------
-    #get Il, Iu, Ii as a function of d_cd [stat based on the lower and upper triangle of left diagonal of the box]
-    # d_cd is the distance from corner to the diagonal of the box
-    stat5<-TlTu(vi,vj)
-    Il_Iu_Ii<-stat5[[1]]
-    Tl<-stat5[[2]]
-    Tu<-stat5[[3]]
-    
     #--------------------------------------------------------- STATISTICS : 6 -----------------------------------------------------------------------
     # get Rl : average of squared distance of points from the right diagonal of the box for lower triangle
     # get Ru : average of squared distance of points from the right diagonal of the box for upper triangle
@@ -65,8 +57,8 @@ copsync<-function(m){
     D2l<-stat6[1]
     D2u<-stat6[2]
     
-  }else  
-  {
+  }else{
+    
     spear<-NA
     kend<-NA
     Corl<-NA
@@ -74,9 +66,6 @@ copsync<-function(m){
     Sl_Su_Si_P<-NA
     Pl<-NA
     Pu<-NA
-    Il_Iu_Ii<-NA
-    Tl<-NA
-    Tu<-NA
     D2l<-NA
     D2u<-NA
     
@@ -86,7 +75,6 @@ copsync<-function(m){
               spear=spear,kend=kend,
               Corl=Corl,Coru=Coru,
               Sl_Su_Si_P=Sl_Su_Si_P,Pl=Pl,Pu=Pu,
-              Il_Iu_Ii=Il_Iu_Ii,Tl=Tl,Tu=Tu,
               D2l=D2l,D2u=D2u))
 }
 
@@ -172,8 +160,7 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
 #Coru       A matrix of Cu results, length(d) by length(d)
 #Pl    A matrix of Shy_lt results, length(d) by length(d)
 #Pu   A matrix of Shy_ut results, length(d) by length(d)
-#Tl    A matrix of stat_l results, length(d) by length(d)
-#Tu    A matrix of stat_u results, length(d) by length(d)
+
 #D2l    A matrix of R_l results, length(d) by length(d)
 #D2u    A matrix of R_u results, length(d) by length(d)
 #numericdf    A dataframe containing all the statistical data
@@ -211,14 +198,6 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   colnames(Pu) <- colnames(D)
   rownames(Pu) <-rownames(D)
   
-  Tl<-matrix(NA,lenloc,lenloc)
-  colnames(Tl) <- colnames(D)
-  rownames(Tl) <-rownames(D)
-  
-  Tu<-matrix(NA,lenloc,lenloc)
-  colnames(Tu) <- colnames(D)
-  rownames(Tu) <-rownames(D)
-  
   D2l<-matrix(NA,lenloc,lenloc)
   colnames(D2l) <- colnames(D)
   rownames(D2l) <-rownames(D)
@@ -252,9 +231,6 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
       
       Pl[ii,jj]<-thisres$Pl
       Pu[ii,jj]<-thisres$Pu
-      
-      Tl[ii,jj]<-thisres$Tl
-      Tu[ii,jj]<-thisres$Tu
       
       D2l[ii,jj]<-thisres$D2l
       D2u[ii,jj]<-thisres$D2u
@@ -298,34 +274,8 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   dev.off()
   #-------------------------------------------------------------------------
   
-  #------------------- PLOT :  Il, Iu and Ii for_all_location pair ----------------
-  pdf(paste(pfname,"_Il_Iu_Ii.pdf",sep=""),width=6*lenloc, height=6*lenloc)
-  op<-par(mfrow=c(lenloc,lenloc),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
-  for (ii in c(1:lenloc)){
-    for (jj in c(1:lenloc)){
-      
-      i<-good_loc[ii]
-      j<-good_loc[jj]
-      m<-vivj_matrix(d_allsp,sp,i,j)
-      thisres<-copsync(m)
-      
-      if(is.na(thisres$Il_Iu_Ii$Il[1]) == F){     
-        plot(thisres$Il_Iu_Ii$dist_Il,thisres$Il_Iu_Ii$Il,type='l',col="red",ylim=c(0,1),xlab=" ",ylab=" ")
-        lines(thisres$Il_Iu_Ii$dist_Iu,thisres$Il_Iu_Ii$Iu,type='l',col="blue",ylim=c(0,1))
-        lines(thisres$Il_Iu_Ii$dist_Ii,thisres$Il_Iu_Ii$Ii,type='l',lty="dashed",col="green4",ylim=c(0,1))
-        mtext(paste0("[ i, j ] ="," [",i,",",j,"], "," red : Il, "," blue : Iu, ", " green : Ii"),side = 3, line=0.15, adj=0.5, col="black")
-      }else{
-        plot(0,0,type='p',col="white",cex=0,xlim=c(0,sqrt(2)/2),ylim=c(0,1),xlab=" ",ylab=" ")
-        mtext(paste0("[ i, j ] ="," [",i,",",j,"]," ),side = 3, line=0.15, adj=0.5, col="black")
-        mtext(paste0("NA" ),side = 3, line=-22.5, adj=0.5, col="black", cex=4)
-      }
-    }
-  }
-  
-  par(op)
-  dev.off()
   #-------------------------------------------------------------------------
-  numericdf<-data.frame(Stat=c('spear','kend','Corl','Coru','Pl','Pu','Tl','Tu','D2l','D2u','Corl-Coru','Pl-Pu','Tl-Tu','D2u-D2l','D2u_by_D2l'),
+  numericdf<-data.frame(Stat=c('spear','kend','Corl','Coru','Pl','Pu','D2l','D2u','Corl-Coru','Pl-Pu','D2u-D2l'),
                         mnvalue=NA,Lower95CI=NA,Upper95CI=NA,fracgt0=NA)
   
   #---------------------- PLOT :  spear_vs_D -------------------------------
@@ -442,47 +392,6 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   dev.off()
   #-------------------------------------------------------------------------
   
-  #--------------------- PLOT :  Tl_vs_D ---------------------------------
-  pdf(paste(pfname,"_Tl_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Tl,xlab="D",ylab="Tl",col=rgb(0.5,0,0,.2),pch=19)
-  lines(range(D),c(0,0),type='l',lty='dashed')
-  result<-resampmn(Tl)
-  i_name<-which(numericdf$Stat=="Tl")
-  numericdf$mnvalue[i_name]<-result$datmean
-  numericdf$Lower95CI[i_name]<-result$quantiles[1]
-  numericdf$Upper95CI[i_name]<-result$quantiles[2]
-  numericdf$fracgt0[i_name]<-result$fracgt0
-  mtext(paste0("<Tl>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
-  dev.off()
-  #-------------------------------------------------------------------------
-  
-  #--------------------- PLOT :  Tu_vs_D ---------------------------------
-  pdf(paste(pfname,"_Tu_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Tu,xlab="D",ylab="Tu",col=rgb(0,0,0.5,.2),pch=19)
-  lines(range(D),c(0,0),type='l',lty='dashed')
-  result<-resampmn(Tu)
-  i_name<-which(numericdf$Stat=="Tu")
-  numericdf$mnvalue[i_name]<-result$datmean
-  numericdf$Lower95CI[i_name]<-result$quantiles[1]
-  numericdf$Upper95CI[i_name]<-result$quantiles[2]
-  numericdf$fracgt0[i_name]<-result$fracgt0
-  mtext(paste0("<Tu>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
-  dev.off()
-  #-------------------------------------------------------------------------
-  
-  #--------------------- PLOT :  Tl-Tu_vs_D ---------------------------------
-  pdf(paste(pfname,"_Tl-Tu_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Tl-Tu,xlab="D",ylab="Tl-Tu",col=rgb(0,0.5,0,.2),pch=19)
-  lines(range(D),c(0,0),type='l',lty='dashed')
-  result<-resampmn(Tl-Tu)
-  i_name<-which(numericdf$Stat=="Tl-Tu")
-  numericdf$mnvalue[i_name]<-result$datmean
-  numericdf$Lower95CI[i_name]<-result$quantiles[1]
-  numericdf$Upper95CI[i_name]<-result$quantiles[2]
-  numericdf$fracgt0[i_name]<-result$fracgt0
-  mtext(paste0("<Tl-Tu>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
-  dev.off()
-  #-------------------------------------------------------------------------
   #--------------------- PLOT :  D2l_vs_D ---------------------------------
   pdf(paste(pfname,"_D2l_vs_D.pdf",sep=""),width=8, height=8)
   plot(D,D2l,xlab="D",ylab="D2l",col=rgb(0.5,0,0,.2),pch=19)
@@ -524,27 +433,11 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   mtext(paste0("<D2u-D2l>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
   dev.off()
   #-------------------------------------------------------------------------
-  
-  
-  #--------------------- PLOT : D2u_by_D2l_vs_D ---------------------------------
-  pdf(paste(pfname,"_D2u_by_D2l_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,D2u/D2l,xlab="D",ylab="D2u/D2l",col=rgb(0,0,0.5,.2),pch=19)
-  lines(range(D),c(1,1),type='l',lty='dashed')
-  result<-resampmn(D2u/D2l)
-  i_name<-which(numericdf$Stat=="D2u_by_D2l")
-  numericdf$mnvalue[i_name]<-result$datmean
-  numericdf$Lower95CI[i_name]<-result$quantiles[1]
-  numericdf$Upper95CI[i_name]<-result$quantiles[2]
-  numericdf$fracgt0[i_name]<-result$fracgt0
-  mtext(paste0("<D2u/D2l>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
-  dev.off()
-  #-------------------------------------------------------------------------
-  
+
   return(list(D=D,
               spear=spear,kend=kend,
               Corl=Corl,Coru=Coru,
               Pl=Pl,Pu=Pu,
-              Tl=Tl,Tu=Tu,
               D2l=D2l,D2u=D2u,
               numericdf=numericdf))
 }

@@ -181,73 +181,64 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 ### Non-paramtric analysis of tail dependence
 <!--Do the intensive part of the analysis-->
-```{r stat_soilCN, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+```{r stat_soilCN_graphic_approach, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed) 
 
-#initialize
-npa_res_CN<-data.frame(Statistic=c("Kendall","Spearman",
-  "Corl","Coru","CorlmCoru","Corlt0p1","Corgt0p9","Corlt0p1mCorgt0p9",
-  "D2l","D2u","D2umD2l","D2lt0p1","D2gt0p9","D2lt0p9mD2gt0p1",
-  "Pl","Pu","PlmPu","Plt0p1","Pgt0p9","Plt0p1mPgt0p9"),
-  Value=NA,Frac_of_K_surr_gt_val=NA,Frac_of_S_surr_gt_val=NA)
-
 #utility function
-calcstats<-function(v)
+calcstats<-function(v,f,nm)
 {
-  h1<-Corbds(v[,1],v[,2],0,.5)
-  h2<-Corbds(v[,1],v[,2],0.5,1)
-  h3<-Corbds(v[,1],v[,2],0,.1)
-  h4<-Corbds(v[,1],v[,2],0.9,1)
-  h5<-D2bds(v[,1],v[,2],0,.5)
-  h6<-D2bds(v[,1],v[,2],0.5,1)
-  h7<-D2bds(v[,1],v[,2],0,.1)
-  h8<-D2bds(v[,1],v[,2],0.9,1)
-  h9<-Pbds(v[,1],v[,2],0,0.5)$abs_res
-  h10<-Pbds(v[,1],v[,2],0.5,1)$abs_res
-  h11<-Pbds(v[,1],v[,2],0,0.1)$abs_res
-  h12<-Pbds(v[,1],v[,2],0.9,1)$abs_res
-  return(c(cor(v[,1],v[,2],method="kendall"),
-           cor(v[,1],v[,2],method="spearman"),
-           h1,h2,h1-h2,
-           h3,h4,h3-h4,
-           h5,h6,h6-h5,
-           h7,h8,h8-h7,
-           h9,h10,h9-h10,
-           h11,h12,h11-h12
-  ))
+  #calculate the stats
+  res<-c(f(v[,1],v[,2],0,.5),
+          f(v[,1],v[,2],0.5,1),
+          f(v[,1],v[,2],0,.25),
+          f(v[,1],v[,2],0.25,.5),
+          f(v[,1],v[,2],.5,.75),
+          f(v[,1],v[,2],.75,1))
+  for (lbd in seq(from=0,to=0.9,by=0.1))
+  {
+    res<-c(res,f(v[,1],v[,2],lbd,lbd+.1))
+  }
+  
+  #name the result vector
+  h<-paste(nm,c(0,0.5,0,0.25,0.5,0.75,seq(from=0,to=0.9,by=0.1)),"to",
+                    c(0.5,1,0.25,0.5,0.75,1,seq(from=0,to=0.9,by=0.1)+.1),sep='')
+  h<-gsub(".","p",h,fixed=T)
+  names(res)<-h
+    
+  return(res)
 }
-
-#get value on the real data
-npa_res_CN[,"Value"]<-calcstats(v_CN)
 
 #Do the kendall surrogates
 cop<-normalCopula(.5,2)
 numsurrog<-1000
-surv<-copsurrog2d(v_CN,cop,"kendall",numsurrog)
-res<-apply(FUN=calcstats,X=surv,MARGIN=3)
-for (counter in 1:dim(npa_res_CN)[1])
-{
-  npa_res_CN[counter,"Frac_of_K_surr_gt_val"]<-sum(res[counter,]>npa_res_CN[counter,"Value"])/numsurrog
-}
+surv_K<-copsurrog2d(v_CN,cop,"kendall",numsurrog)
 
 #Do the spearman surrogates
-surv<-copsurrog2d(v_CN,cop,"spearman",numsurrog)
-res<-apply(FUN=calcstats,X=surv,MARGIN=3)
-for (counter in 1:dim(npa_res_CN)[1])
+surv_S<-copsurrog2d(v_CN,cop,"spearman",numsurrog)
+
+#now work with the correlation stats
+corstats_d<-calcstats(v_CN,Corbds,"Cor")
+corstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Corbds,nm="Cor")
+corstats_K<-apply(FUN=quantile,X=corstats_K,MARGIN=1,prob=c(.005,0.25,.975,.995))
+corstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Corbds,nm="Cor")
+corstats_S<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
+
+#now work with the D2 stats
+D2stats_d<-calcstats(v_CN,D2bds,"Dtwo")
+D2stats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=D2bds,nm="Dtwo")
+D2stats_K<-apply(FUN=quantile,X=D2stats_K,MARGIN=1,prob=c(.005,0.25,.975,.995))
+D2stats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=D2bds,nm="Dtwo")
+D2stats_S<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
+
+#now work with the P stats
+Pbds_wrap<-function(vi,vj,lb,ub)
 {
-  npa_res_CN[counter,"Frac_of_S_surr_gt_val"]<-sum(res[counter,]>npa_res_CN[counter,"Value"])/numsurrog
+  return(Pbds(vi,vj,lb,ub)$abs_res)
 }
+Pstats_d<-calcstats(v_CN,Pbds_wrap,"P")
+Pstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Pbds_wrap,nm="P")
+Pstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Pbds_wrap,nm="P")
 ```
-
-<!--Display the table generated above-->
-```{r table_stat_soilCN, echo=F, results="asis"}
-table_nums("table_stat_soilCN",display=F)
-knitr::kable(npa_res_CN,caption = "Results of non-parametric tests of tail dependence and asymmetry of tail dependence for the soil C and N dataset. Names of statistics and values on the actual C and N data are listed in the first two columns. The third (respectively, fourth) column is the fraction of Kendall-preserving (respectively, Spearman-preserving) surrogate datasets for which the given statistic is greater than its value on the real data. So if these quantities are smaller than 0.025 the statistic is significantly larger than expected based on a null hypotheses of normal copulas; if larger than 0.975, significantly smaller.")
-```
-
-<!--Now need a chunk that calculated D2 for lb=0.1*n, ub=0.1*(n+1) for n=0,...,9, and get 
-a bunch of surrogates and calculates the same quantities and then makes a bunch of box-whisker
-plots and compares the real data to those for each of these lb/up limits. -->
 
 ## Aphid abundance data 
 <!--Add common and species name to header-->

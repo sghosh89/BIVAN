@@ -76,14 +76,18 @@ Carbon and nitrogen in soil at many locations across CONUS (Terry to augment thi
    * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
    
 # Question 1 analyses for each dataset
-Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
+Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
 
 ## Details of methods
 
 ### Model selection approach
 
 
-### Non-paramtric analysis of tail dependence
+### Non-parametric analysis of tail dependence
+
+<!--Shya to edit this description of the stats. Don't need subsections for each stat.-->
+<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data-->
+<!--Eventually, for the multivariate data, we will need to demonstrate using a similar analysis to what is in mbsyn, that you can detect asymmetry of tail dependence using these stats - we have done this, but it needs to be adapted-->
 
 #### stat_CorlCoru
 ```{r stat_CorlCoru_D2lD2u, echo=F}
@@ -432,7 +436,7 @@ fracplot(Pstats_frac_S,ylimits_P)
 vlineplot(x,ylimits_P)
 
 dev.off()
-
+#DAN: have to make the plot actually appear in the Rmd output, with a caption and everything!
 ```
 
 ## Aphid abundance data 
@@ -898,6 +902,17 @@ fig_nums("pns_D2u/D2l",display=F)
 
 # Question 3 analyses for each dataset
 
+Recall question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
 
+## Aphid count
 
+<!--Shya to add results about skewness of spatial means-->
+
+## Aphid first flight
+
+<!--Shya to add results about skewness of spatial means-->
+
+## North Sea plankton
+
+<!--Shya to add results about skewness of spatial means-->
 

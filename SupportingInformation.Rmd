@@ -184,24 +184,27 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 ```{r stat_soilCN_graphic_approach, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed) 
 
-#utility function
+#utility function for calculating all the stats we want
 calcstats<-function(v,f,nm)
 {
   #calculate the stats
-  res<-c(f(v[,1],v[,2],0,.5),
-          f(v[,1],v[,2],0.5,1),
-          f(v[,1],v[,2],0,.25),
-          f(v[,1],v[,2],0.25,.5),
-          f(v[,1],v[,2],.5,.75),
-          f(v[,1],v[,2],.75,1))
+  res<-c()
+  #f(v[,1],v[,2],0,.5),
+  #        f(v[,1],v[,2],0.5,1),
+  #        f(v[,1],v[,2],0,.25),
+  #        f(v[,1],v[,2],0.25,.5),
+  #        f(v[,1],v[,2],.5,.75),
+  #        f(v[,1],v[,2],.75,1))
   for (lbd in seq(from=0,to=0.9,by=0.1))
   {
     res<-c(res,f(v[,1],v[,2],lbd,lbd+.1))
   }
   
   #name the result vector
-  h<-paste(nm,c(0,0.5,0,0.25,0.5,0.75,seq(from=0,to=0.9,by=0.1)),"to",
-                    c(0.5,1,0.25,0.5,0.75,1,seq(from=0,to=0.9,by=0.1)+.1),sep='')
+#  h<-paste(nm,c(0,0.5,0,0.25,0.5,0.75,seq(from=0,to=0.9,by=0.1)),"to",
+#                    c(0.5,1,0.25,0.5,0.75,1,seq(from=0,to=0.9,by=0.1)+.1),sep='')
+  h<-paste(nm,c(seq(from=0,to=0.9,by=0.1)),"to",
+                    c(seq(from=0,to=0.9,by=0.1)+.1),sep='')
   h<-gsub(".","p",h,fixed=T)
   names(res)<-h
     
@@ -216,18 +219,40 @@ surv_K<-copsurrog2d(v_CN,cop,"kendall",numsurrog)
 #Do the spearman surrogates
 surv_S<-copsurrog2d(v_CN,cop,"spearman",numsurrog)
 
+#utility function for calculating fractions of surrogates 
+#with a stat smaller than that of data, i.e., fraction of 
+#surrogates for which the stat value on the data is bigger
+fracwork<-function(dvals,surrvals)
+{
+  frac<-NA*numeric(length(corstats_d))
+  names(frac)<-names(dvals)
+  for (counter in 1:length(frac))
+  {
+    frac[counter]<-sum(surrvals[counter,]<dvals[counter])
+  }
+  return(frac)
+}
+
 #now work with the correlation stats
 corstats_d<-calcstats(v_CN,Corbds,"Cor")
+
 corstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Corbds,nm="Cor")
+corstats_frac_K<-fracwork(corstats_d,corstats_K)
 corstats_K<-apply(FUN=quantile,X=corstats_K,MARGIN=1,prob=c(.005,0.25,.975,.995))
+
 corstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Corbds,nm="Cor")
+corstats_frac_S<-fracwork(corstats_d,corstats_S)
 corstats_S<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
 
 #now work with the D2 stats
 D2stats_d<-calcstats(v_CN,D2bds,"Dtwo")
+
 D2stats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=D2bds,nm="Dtwo")
+D2stats_frac_K<-fracwork(D2stats_d,D2stats_K)
 D2stats_K<-apply(FUN=quantile,X=D2stats_K,MARGIN=1,prob=c(.005,0.25,.975,.995))
+
 D2stats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=D2bds,nm="Dtwo")
+D2stats_frac_S<-fracwork(D2stats_d,D2stats_S)
 D2stats_S<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
 
 #now work with the P stats
@@ -235,13 +260,180 @@ Pbds_wrap<-function(vi,vj,lb,ub)
 {
   return(Pbds(vi,vj,lb,ub)$abs_res)
 }
+
 Pstats_d<-calcstats(v_CN,Pbds_wrap,"P")
+
 Pstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Pbds_wrap,nm="P")
+Pstats_frac_K<-fracwork(Pstats_d,Pstats_K)
+Pstats_K<-apply(FUN=quantile,X=Pstats_K,MARGIN=1,prob=c(.005,0.25,.975,.995))
+
 Pstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Pbds_wrap,nm="P")
+Pstats_frac_S<-fracwork(Pstats_d,Pstats_S)
+Pstats_S<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
 ```
 
 <!--Now do the plotting-->
+```{r plot_soilCN_graphic_approach, echo=F}
+x<-seq(from=0.05,to=0.95,by=0.1)
+xlimits<-c(0,1)
 
+#plotting layout, units inches
+xht<-0.5
+ywd<-0.5
+titleht<-.25
+panht<-1.5
+panwd<-3
+gap<-.05
+totwd<-ywd+2*panwd+2*gap
+totht<-xht+3*panht+3*gap+titleht
+pdf(file="CNdata_NonparamTailDep.pdf",width=totwd,height=totht)
+  
+#plot kendall results on the left panels, spearman on right,
+#cor in top panels, then D2, then P on bottom panels
+
+#kendall, cor
+par(fig=c(ywd/totwd,
+          (ywd+panwd)/totwd,
+          (xht+2*panht+2*gap)/totht,
+          (xht+3*panht+2*gap)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
+ylimits_cor<-range(corstats_d,corstats_K,corstats_K)
+ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
+plot(x,corstats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_cor,
+     xaxt='n')
+mtext(side=3,line=0,text="Kendall-preserving surrogates")
+mtext(side=2,line=1,text="Partial correlation")
+axis(side=1,labels=F)
+lines(x,corstats_K[1,],type='l',lty='dotted')
+lines(x,corstats_K[2,],type='l',lty='dashed')
+lines(x,corstats_K[3,],type='l',lty='dashed')
+lines(x,corstats_K[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_cor[1],labels='A',cex=1.5,adj=c(.5,0))
+fracplot<-function(fracs,ylims)
+{
+  for (counter in 1:length(fracs))
+  {
+    ptxt<-''
+    if (fracs[counter]>.975*numsurrog)
+    {
+      ptxt<-paste(">",fracs[counter],sep='')
+    } 
+    if (fracs[counter]<.025*numsurrog)
+    {
+      ptxt<-paste("<",numsurrog-fracs[counter],sep='')
+    }
+    yht<-ylims[2]-.1*diff(ylims)
+    text(x[counter],yht,ptxt,adj=c(0.5,.5),cex=0.5,srt=90)
+  }
+}
+fracplot(corstats_frac_K,ylimits_cor)
+vlineplot<-function(x,ylims)
+{
+  for (counter in 1:length(x))
+  {
+    lines(rep(x[counter]-(x[2]-x[1])/2,2),ylims,type='l',lty='dotted')
+  }
+  lines(rep(x[length(x)]+(x[2]-x[1])/2,2),ylims,type='l',lty='dotted')
+}
+vlineplot(x,ylimits_cor)
+
+#spearman, cor
+par(fig=c((ywd+panwd+gap)/totwd,
+          (ywd+2*panwd+gap)/totwd,
+          (xht+2*panht+2*gap)/totht,
+          (xht+3*panht+2*gap)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+plot(x,corstats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_cor,
+     xaxt='n',yaxt='n')
+mtext(side=3,line=0,text="Spearman-preserving surrogates")
+axis(side=1,labels=F)
+axis(side=2,labels=F)
+lines(x,corstats_S[1,],type='l',lty='dotted')
+lines(x,corstats_S[2,],type='l',lty='dashed')
+lines(x,corstats_S[3,],type='l',lty='dashed')
+lines(x,corstats_S[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_cor[1],labels='B',cex=1.5,adj=c(.5,0))
+fracplot(corstats_frac_S,ylimits_cor)
+vlineplot(x,ylimits_cor)
+
+#kendall, D2
+par(fig=c(ywd/totwd,
+          (ywd+panwd)/totwd,
+          (xht+panht+gap)/totht,
+          (xht+2*panht+gap)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+ylimits_D2<-range(D2stats_d,D2stats_K,D2stats_K)
+ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
+plot(x,D2stats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_D2,
+     xaxt='n')
+mtext(side=2,line=1,text=expression(D[2]))
+axis(side=1,labels=F)
+lines(x,D2stats_K[1,],type='l',lty='dotted')
+lines(x,D2stats_K[2,],type='l',lty='dashed')
+lines(x,D2stats_K[3,],type='l',lty='dashed')
+lines(x,D2stats_K[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_D2[1],labels='C',cex=1.5,adj=c(.5,0))
+fracplot(D2stats_frac_K,ylimits_D2)
+vlineplot(x,ylimits_D2)
+
+#spearman, D2
+par(fig=c((ywd+panwd+gap)/totwd,
+          (ywd+2*panwd+gap)/totwd,
+          (xht+panht+gap)/totht,
+          (xht+2*panht+gap)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+plot(x,D2stats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_D2,
+     xaxt='n',yaxt='n')
+axis(side=1,labels=F)
+axis(side=2,labels=F)
+lines(x,D2stats_S[1,],type='l',lty='dotted')
+lines(x,D2stats_S[2,],type='l',lty='dashed')
+lines(x,D2stats_S[3,],type='l',lty='dashed')
+lines(x,D2stats_S[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_D2[1],labels='D',cex=1.5,adj=c(.5,0))
+fracplot(D2stats_frac_S,ylimits_D2)
+vlineplot(x,ylimits_D2)
+
+#kendall, P
+par(fig=c(ywd/totwd,
+          (ywd+panwd)/totwd,
+          (xht)/totht,
+          (xht+panht)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+ylimits_P<-range(Pstats_d,Pstats_K,Pstats_K)
+ylimits_P[2]<-ylimits_P[2]+.3*diff(ylimits_P)
+plot(x,Pstats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_P)
+mtext(side=2,line=1,text="P")
+mtext(side=1,line=1,text="Diagonal slice")
+lines(x,Pstats_K[1,],type='l',lty='dotted')
+lines(x,Pstats_K[2,],type='l',lty='dashed')
+lines(x,Pstats_K[3,],type='l',lty='dashed')
+lines(x,Pstats_K[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_P[1],labels='E',cex=1.5,adj=c(.5,0))
+fracplot(Pstats_frac_K,ylimits_P)
+vlineplot(x,ylimits_P)
+
+#spearman, P
+par(fig=c((ywd+panwd+gap)/totwd,
+          (ywd+2*panwd+gap)/totwd,
+          (xht)/totht,
+          (xht+panht)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+plot(x,Pstats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_P,
+     yaxt='n')
+mtext(side=1,line=1,text="Diagonal slice")
+axis(side=2,labels=F)
+lines(x,Pstats_S[1,],type='l',lty='dotted')
+lines(x,Pstats_S[2,],type='l',lty='dashed')
+lines(x,Pstats_S[3,],type='l',lty='dashed')
+lines(x,Pstats_S[4,],type='l',lty='dotted')
+text(xlimits[1],ylimits_P[1],labels='F',cex=1.5,adj=c(.5,0))
+fracplot(Pstats_frac_S,ylimits_P)
+vlineplot(x,ylimits_P)
+
+dev.off()
+
+```
 
 ## Aphid abundance data 
 <!--Add common and species name to header-->

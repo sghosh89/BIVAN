@@ -74,11 +74,13 @@ Pbds<-function(vi,vj,lb,ub){
   
   # when two boundary lines are on the right side of vi+vj=1 line  
   if((2*lb>=1) & (2*ub >=1)){
-    d_max<-lb*sqrt(2)
-    a<-2*sqrt(2)*(ub-1)
+    #d_max<-lb*sqrt(2)
+    d_max=abs((lb-1)*sqrt(2))
+    a<-abs(2*sqrt(2)*(ub-1))
     b<-2*d_max
     h<-abs(2*(ub-lb))/sqrt(2)
-    deno<-2*(((lb-1)^2)-((ub-1)^2))
+    #deno<-2*(((lb-1)^2)-((ub-1)^2))
+    deno<-0.5*(a+b)*h
     
     dist_Si1<-c()
     Si1<-c()
@@ -100,6 +102,9 @@ Pbds<-function(vi,vj,lb,ub){
     
     dist_Si<-c(dist_Si1,dist_Si2[-1])
     Si<-c(Si1,Si2[-1])/deno
+    
+    Au_Si<-0.25*h*(a^2)+(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
+    Au_Si<-Au_Si/deno
     
   # when two boundary lines are on the left side of vi+vj=1 line  
   }else if((2*lb<=1) & (2*ub <=1)){
@@ -107,8 +112,9 @@ Pbds<-function(vi,vj,lb,ub){
     a<-2*sqrt(2)*lb
     b<-2*d_max
     h<-abs(2*(ub-lb))/sqrt(2)
-    deno<-2*((ub^2)-(lb^2))
-    
+    #deno<-2*((ub^2)-(lb^2))
+    deno<-0.5*(a+b)*h
+ 
     dist_Si1<-c()
     Si1<-c()
     for (di in seq(from=0, to=(0.5*a), by=(0.5*a)/1000)){ 
@@ -130,6 +136,9 @@ Pbds<-function(vi,vj,lb,ub){
     dist_Si<-c(dist_Si1,dist_Si2[-1])
     Si<-c(Si1,Si2[-1])/deno
     
+    Au_Si<-0.25*h*(a^2)+(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
+    Au_Si<-Au_Si/deno
+
   # when lower boundary lines are on the left side of vi+vj=1 line and upper on the other side    
   }else{
     d_max<-1/sqrt(2)
@@ -172,30 +181,13 @@ Pbds<-function(vi,vj,lb,ub){
     
     dist_Si<-c(dist_Si1,dist_Si2[-1],dist_Si3[-1])
     Si<-c(Si1,Si2[-1],Si3[-1])/deno
-  
-  }
-  
-  #---------------------------------------------------------
-  #Au_Si<-0
-  #for(i in 1:(length(Si)-1)){
-  #  Au_Si<-Au_Si+(Si[i]*(dist_Si[i+1]-dist_Si[i]))
-  #}
-  
-  # analytical ingration
-  
-  # when lower boundary lines are on the left side of vi+vj=1 line and upper on the other side 
-  if((2*lb<1) & (2*ub >1)){
+    
     Au_Si<-(ditemp1^2)*(h-base)
     Au_Si<-Au_Si+((di1^3)/3)
     Au_Si<-Au_Si+(base*(ditemp2^2))
     Au_Si<-Au_Si-((ditemp2^3)/3)
     Au_Si<-Au_Si/deno
   
-  }else{
-    # when both boundaries are on the same side of vi+vj=1 line
-    Au_Si<-0.25*h*(a^2)+(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
-    Au_Si<-Au_Si/deno
-    
   }
   
   #---------------------------------------------------------
@@ -236,41 +228,7 @@ Pbds<-function(vi,vj,lb,ub){
  
 }
 
-#-------------------------------------------------------------------------------------------------
-#This is a flexible stat fn which calculates stat on symmetric part of both end
-# Input:
-# m : a 2 column matrix of rankings (vi,vj)
-# lb : lower boundary : a number between [0,1]
-# ub : upper boundary : a number between [0,1] # but lb>ub to run the code without any error message
-
-stat_flexible_fn<-function(m,lb,ub){
-  
-  spear<-cor(m[,1],m[,2], method ="pearson")
-  kend<-cor(m[,1], m[,2], method ="kendall")
-  Corl<-Corbds(m[,1],m[,2],lb=lb,ub=ub)
-  Coru<-Corbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
-  temp_Pl<-Pbds(m[,1],m[,2],lb=lb,ub=ub)
-  Pl<-temp_Pl$abs_res
-  
-  temp_Pu<-Pbds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
-  Pu<-temp_Pu$abs_res
-    
-  D2l<-D2bds(m[,1],m[,2],lb=lb,ub=ub)
-  D2u<-D2bds(m[,1],m[,2],lb=(1-ub),ub=(1-lb))
-  
-  stat_flexible<-list(spear=spear,kend=kend,
-                      Corl=Corl,Coru=Coru,
-                      Pl=Pl,Pu=Pu,
-                      D2l=D2l,D2u=D2u)
-  
-  return(stat_flexible)
-  
-}
-
-
-
-
-
+#--------------------------------------------------
 
 
 

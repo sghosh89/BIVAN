@@ -89,74 +89,34 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 <!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data-->
 <!--Eventually, for the multivariate data, we will need to demonstrate using a similar analysis to what is in mbsyn, that you can detect asymmetry of tail dependence using these stats - we have done this, but it needs to be adapted-->
 
-#### stat_CorlCoru
-```{r stat_CorlCoru_D2lD2u, echo=F}
-fig_nums("stat_CorlCoru_D2lD2u",display=F)
+```{r stat_image, echo=F}
+fig_nums("stat_image",display=F)
 ```
-![schematic diagram for stat_CorlCoru and stat_D2lD2u](./CorlCoru_D2lD2u.jpg){ width=30%, height=30% }
+![schematic diagram for npa of tail dependence](./stat_image.jpg){ width=30%, height=30% }
 
-If we draw a ranking based copula plot of a dataset within a unit square box then the points are scattered within the box according to their joint-marginal distribution. Say, there are total $n$ number of datapoints and $vi$ and $vj$ are the ranks of the dataset taken at [i,j] location pair or for [i,j] observables. To measure their tail dependence, i. e., the points are concentrated in the left corner or right corner of the box, we will calculate our statistics on left and right side of $vi+vj=1$ line [see solid blue line in `r fig_nums("stat_CorlCoru_D2lD2u",display="c")`]. Now, we define the total covariance of $(vi,vj)$ as;
+In a given ranking based copula plot of a dataset within a unit square box the data points are scattered according to their joint-marginal distribution. Say, there are total $n$ number of data points and $vi$ and $vj$ are the ranks of the dataset scaled down by factor $(n+1)$ taken at $(i,j)$ location pair or for $(i,j)$ observables. Now, to calculate our statistic we choose an arbitrary region of the box bounded by two parallel lines [blue line : $vi+vj=2l_{b}$, red line : $vi+vj=2u_{b}$ in `r fig_nums("stat_image",display="c")`] where $(l_{b},u_{b})$ has a range $[0,1]$ with the condition that $u_{b}$ must be greater than $l_{b}$. Now we will demonstrate 3 different type of stats : 
 
-\begin{equation}\label{eq.CorlCoru}
-   C = \frac{1}{n-1}\sum_{k=1}^{n}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vi\right> \right ]
+$Cor$, the correlation between the ${n}'$ number of points lying in between those two parallel lines, is given by;
+
+\begin{equation}\label{eq.Cor}
+   Cor = \frac{1}{n-1}\sum_{k=1}^{{n}'} \left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
 \end{equation}
 
-where, $\left<vi\right>$ and $\left<vj\right>$ are the mean of $vi$ and $vj$ of the points within the box respectively. If we think the total covariance $C$ as sum of covariance of the points lie within $vi+vj<1$ region, namely, $Corl$ and for $vi+vj>1$ region, namely, $Coru$; then $C = Corl + Coru$. So, $Corl$ and $Coru$ can be defined by;
+where, $\left<vi\right>$ and $\left<vj\right>$ are the arithmatic mean of $vi$ and $vj$ of $n$ data points within the box, respectively.
 
-\begin{equation}\label{eq.Corl}
-   Corl = \frac{1}{n-1}\sum_{k \epsilon (vi+vj<1)}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
+We can shift that pair of lines along the diagonal line of the box and can get a sense how the points are spread along the diagonal and how the quantity $Cor$ changes.
+
+For multivariate datasets due to limited number of data points this chosen region is broad, i. e., we measured $Cor$ for $(l_{b}=0,u_{b}=0.5)$ and $(l_{b}=0.5,u_{b}=1)$ and stored as $Corl$ and $Coru$ respectively. If we take their difference then that will tell us which end of the copula is with stronger correlation. A copula with $(Corl-Coru)>0$ should have more lower tail dependence whereas $(Corl-Coru)<0$ indicates more upper tail dependence. Symmetric copula, e. g., (Normal or Frannk) has $Corl = Coru$.
+
+On a second thought, we imagine as if we progress from the diagonal towards the sides of the box with $h$ gradually increasing from $0$ to $h_{max}$, where $h_{max}$ is the half-length of the longer one between two parallel lines. Then we take $S$, the ratio of number of points which are within $h$ distance from the diagonal on both side and the total number of points lie within the shaded region. Now, we want to measure that how much $S$ deviates from the standard $Si$ line when they are plotted against $h$ where $Si$ is the ratio of the area covered by distance $h$ on both side and the area of shaded region. This deviation $P$, representing our statistics to measure tail dependence, is given by;
+
+\begin{equation}\label{eq.P}
+   P = \int_0^{h_{max}} \left[ S(h) - Si(h) \right] \,dh
 \end{equation}
 
-and
+Like we said before, for multivariate dataset we measure $Pl = P$ for $(l_{b}=0, u_{b}=0.5)$ and $Pu = P$ for $(l_{b}=0.5, u_{b}=1)$ and these $Pl$, $Pu$ represent the lower and upper tail statistic respectively. A copula having $(Pl-Pu)>0$ represents more lower tail dependence whereas a copula with negative $(Pl-Pu)$ represents more upper tail dependence. A copula with equal $Pl$ and $Pu$ value is considered as symmetric with no tail-dependence.
 
-\begin{equation}\label{eq.Coru}
-   Coru = \frac{1}{n-1}\sum_{k \epsilon (vi+vj>1)}\left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
-\end{equation}
-
-If we take their difference then that will tetll us which end of the copula is with stronger correlation. A copula with $(Corl-Coru)>0$ should have more lower tail dependence whereas $(Corl-Coru)<0$ indicates more upper tail dependence. Symmetric copula has $Corl = Coru$.
-
-#### stat_PlPu
-
-```{r stat_PlPu, echo=F}
-fig_nums("stat_PlPu",display=F)
-```
-![schematic diagram for stat_PlPu](./PlPu.jpg){ width=35%, height=35% } 
-
-To start with, we consider the lower triangular region of  `r fig_nums("stat_PlPu",display="c")` for which $vi+vj<1$. First, we take $Sl_{p}$, the ratio of number of points within the shaded pentagon and number of points lie on the left side of $vi+vj=1$ line. This $Sl_{p}$ is a function of distance-parameter $h$ which has range from $0$ to $\sqrt2/2$ (= half of the length of the box-diagonal). Similarly, we calculate $Su_{p}(h)$ for region $vi+vj>1$. Then we considered the independent case as if the points within the box scattered uniformly. $Si_{p}$ represents the ratio of the pentagon and the area of right angled isosceles triangle of unit side. Now, we want to measure that how much $Sl_{p}$ and $Su_{p}$ deviate from the standard $Si_{p}$ line when they are plotted against $h$. Their deviations $Pl$ and $Pu$, representing our statistics to measure lower and upper tail dependence, are given by;
-
-\begin{equation}\label{eq.Pl}
-   Pl = \int_0^{\sqrt2/2} \left[ Sl_{p}(h) - Si_{p}(h) \right] \,dh
-\end{equation}
-
-\begin{equation}\label{eq.Pu}
-   Pu = \int_0^{\sqrt2/2} \left[ Su_{p}(h) - Si_{p}(h) \right] \,dh
-\end{equation}
-
-A copula having $(Pl-Pu)>0$ represents more lower tail dependence whereas a copula with negative $(Pl-Pu)$ represents more upper tail dependence. A copula with equal $Pl$ and $Pu$ value is considered as symmetric with no tail-dependence.
-
-#### stat_TlTu
-
-```{r stat_TlTu, echo=F}
-fig_nums("stat_TlTu",display=F)
-```
-![schematic diagram for stat_TlTu](./TlTu.jpg){ width=30%, height=30% }
-
-This statistic is an alternative kind of the previous statistics. Here, to measure tail dependence between two marginal distributions, we will calculate our statistics on left and right side of $vi+vj=1$ line [see `r fig_nums("stat_TlTu",display="c")`] of the unit square box. First, we take $Il$, the ratio of number of points within the shaded lower triangle and the number of points lie on the left side of $vi+vj=1$ line. This $Il$ is a function of 
-box-corner to the box-diagonal distance $h$ which has range from $0$ to $\sqrt2/2$ (= half of the length of the box-diagonal). Thus $Il$ also lies in between the same range [$0,1$]. Similarly, we calculate $Iu(h)$ for region $vi+vj>1$. Usual independent standard $Ii(h)$ represents the ratio of one shaded triange and the area of right angled isosceles triangle of unit side. Now, we want to measure that how much $Il(h)$ and $Iu(h)$ deviate from the standard $Ii(h)$ line when they are plotted against $h$. Their deviations $Tl$ and $Tu$, representing our statistics to measure lower and upper tail dependence, are given by;
-
-\begin{equation}\label{eq.Tl}
-   Tl = \int_0^{\sqrt2/2} \left[ Il(h) - Ii(h) \right] \,dh
-\end{equation}
-
-\begin{equation}\label{eq.Tu}
-   Tu = \int_0^{\sqrt2/2} \left[Iu(h) - Ii(h) \right] \,dh
-\end{equation}
-
-According to this statistic a copula with more lower tail dependence should have positive $(Tl-Tu)$ value whereas a copula with negative $(Tl-Tu)$ represents more upper tail dependence. A copula with equal $Tl$ and $Tu$ value is considered as a member of symmetric copula family with no tail-dependence.
-
-#### stat_D2lD2u
-
-In this statistic as usual we divide the unit square box into two region based on either side of $vi+vj=1$ line. For the lower triangular region, we calculate squared distance of each scattered point from $vi-vj=0$ [the dotted line in `r fig_nums("stat_CorlCoru_D2lD2u",display="c")`] and then take their average. This quantity (say, $D2l$) represents how much the points in the lower tail of a copula are condensed to the identity line. Similarly, we calculate $D2u$ for the upper triangular region. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
+For our third statistic, we imagine the diagonal line of the box as the major axis of the copula. We calculate squared distance of each scattered point from $vi-vj=0$ [the dotted diagonal line in `r fig_nums("stat_image",display="c")`] and then take their average. This mean squared distance (say, $D2$) represents the average width of the copula for that shaded region. Similarly, we calculate $D2l$ and $D2u$ for the lower and upper tail of a copula for multivariate dataset with $(l_{b}=0, u_{b}=0.5)$ and $(l_{b}=0.5, u_{b}=1)$ respectively. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
 
 
 ## Soil C and N data
@@ -630,20 +590,10 @@ fig_nums("count_Pl-Pu",display=F)
 ```
 ![Pl-Pu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-```{r count_Tl-Tu,echo=F}
-fig_nums("count_Tl-Tu",display=F)
-```
-![Tl-Tu vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
-
 ```{r count_D2u-D2l,echo=F}
 fig_nums("count_D2u-D2l",display=F)
 ```
 ![D2u-D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
-
-```{r count_D2u/D2l,echo=F}
-fig_nums("count_D2u/D2l",display=F)
-```
-![D2u/D2l vs. Distance plot for aphid-count showing lower tail dependence](./Results/stat_results/stat_aphid_count/Sp_10_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 <!--
 ```{r, echo=F,out.width = "8cm", out.height= "8cm", out.caption="adhjk"}
@@ -771,20 +721,10 @@ fig_nums("ff_Pl-Pu",display=F)
 ```
 ![Pl-Pu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-```{r ff_Tl-Tu,echo=F}
-fig_nums("ff_Tl-Tu",display=F)
-```
-![Tl-Tu vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
-
 ```{r ff_D2u-D2l,echo=F}
 fig_nums("ff_D2u-D2l",display=F)
 ```
 ![D2u-D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
-
-```{r ff_D2u/D2l,echo=F}
-fig_nums("ff_D2u/D2l",display=F)
-```
-![D2u/D2l vs. Distance plot for aphid-firstflight showing upper tail dependence](./Results/stat_results/stat_aphid_ff/Sp_11_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 ## North sea plankton data
 
@@ -934,20 +874,10 @@ fig_nums("pns_Pl-Pu",display=F)
 ```
 ![Pl-Pu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-```{r pns_Tl-Tu,echo=F}
-fig_nums("pns_Tl-Tu",display=F)
-```
-![Tl-Tu vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_Tl-Tu_vs_D.pdf){ width=50%, height=50% }
-
 ```{r pns_D2u-D2l,echo=F}
 fig_nums("pns_D2u-D2l",display=F)
 ```
 ![D2u-D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
-
-```{r pns_D2u/D2l,echo=F}
-fig_nums("pns_D2u/D2l",display=F)
-```
-![D2u/D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u_by_D2l_vs_D.pdf){ width=50%, height=50% }
 
 # Question 2 analyses for each dataset
 

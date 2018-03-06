@@ -410,13 +410,16 @@ dev.off()
 
 As described in Methods, each of our statistics, as computed for the 
 ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
-of values of the same statistic (with the same ranges) on 1000 normal-copula 
+of values of the same statistic with the same ranges computed on 1000 normal-copula 
 surrogate datasets with similar Kendall or Spearman correlations, in different 
 runs (`r fig_nums("soilCN_nonparam",display="c")`). Because the correlation 
 used in the Cor statistic is the Spearman correlation, Spearman-preserving surrogates
 should be used, so the top-left panel of `r fig_nums("soilCN_nonparam",display="c")`
-should be ignored (DAN: need to fix this). Results indicate
-DAN: continue here.
+should be ignored (DAN: need to fix this later). Results indicate that tail dependence of 
+data is stronger in both the lower and upper tails than would be expected under a 
+null hypothesis of a normal copula. The dependence between C and N is also 
+weaker in the middle of both marginal distributions
+than would be expected based on a normal-copula null model.
 
 <!--Now give the plot a number so it can be refered to-->
 ```{r show_plot_soildCN,echo=F}
@@ -424,7 +427,10 @@ fig_nums("soilCN_nonparam",display=F)
 ```
 ![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than.](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
 
-<!--Now make a table, this one about asymmetry of tail dependence-->
+We also tested statistically for asymmetry of tail dependence, which seems visible in `r table_nums("soilCNcop",display="c")`. 
+Results (`r table_nums("soilCN_asym",display="c")`) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
+
+<!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}
 atdres<-data.frame(Statistic=c("Corl-Coru","Pl-Pu","D2u-D2l"),
                    Kendall=rep("",3),
@@ -432,11 +438,11 @@ atdres<-data.frame(Statistic=c("Corl-Coru","Pl-Pu","D2u-D2l"),
 fractxt<-function(fracval)
 {
   ptxt<-''
-  if (fracval>.975*numsurrog)
+  if (fracval>.5*numsurrog)
   {
     ptxt<-paste(">",fracval,sep='')
   } 
-  if (fracval<.025*numsurrog)
+  if (fracval<=.5*numsurrog)
   {
     ptxt<-paste("<",numsurrog-fracval,sep='')
   }
@@ -448,7 +454,9 @@ atdres[2,2]<-fractxt(PlmPu_frac_K)
 atdres[2,3]<-fractxt(PlmPu_frac_S)
 atdres[3,2]<-fractxt(D2umD2l_frac_K)
 atdres[3,3]<-fractxt(D2umD2l_frac_S)
-atdres
+
+table_nums("soilCN_asym",display=F)
+knitr::kable(atdres, caption = "Results for tests of whether asymmetry of tail dependence is significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates.")
 ```
 
 ## Aphid abundance data 

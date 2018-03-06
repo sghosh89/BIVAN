@@ -897,12 +897,93 @@ Recall question 3 is: What are the consequences of non-Gaussian copula structure
 ## Aphid count
 
 <!--Shya to add results about skewness of spatial means-->
+```{r skewness_count_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+set.seed(seed)
+pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
+par(mfrow=c(2,1))
+numsurrog<-10000
+loclist<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
+answer1k<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="kendall") 
+
+p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
+
+mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+
+answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="spearman") 
+
+p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
+
+mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+
+
+dev.off()
+```
+
+```{r skewness_count,echo=F}
+fig_nums("skewness_count",display=F)
+```
+![Skewness_count for species : Green spruce aphid](./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf){ width=50%, height=50% }
+
 
 ## Aphid first flight
 
 <!--Shya to add results about skewness of spatial means-->
+```{r skewness_ff_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+set.seed(seed)
+pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
+par(mfrow=c(2,1))
+numsurrog<-10000
+loclist<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
+
+answer2k<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="kendall") 
+p_right<-sum(answer2k$surrogskw > answer2k$realskw)/numsurrog
+mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_right),side=3,line=0.2,col="navyblue")
+
+answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="spearman") 
+p_right<-sum(answer2s$surrogskw > answer2s$realskw)/numsurrog
+mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_right),side=3,line=0.2,col="navyblue")
+
+dev.off()
+```
+
+```{r skewness_ff,echo=F}
+fig_nums("skewness_ff",display=F)
+```
+![Skewness_firstflight for species : Leaf-curling plum aphid](./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf){ width=50%, height=50% }
 
 ## North Sea plankton
 
 <!--Shya to add results about skewness of spatial means-->
+<!--Shya to add results about skewness of spatial means-->
+```{r skewness_pns_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+set.seed(seed)
+pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf")
+par(mfrow=c(2,1))
+numsurrog<-10000
+loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
+answer3k<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="kendall") 
+
+p_left<-sum(answer3k$surrogskw < answer3k$realskw)/numsurrog
+
+mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+
+answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                          corpres="spearman") 
+
+p_left<-sum(answer3s$surrogskw < answer3s$realskw)/numsurrog
+
+mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+
+dev.off()
+```
+
+```{r skewness_pns,echo=F}
+fig_nums("skewness_pns",display=F)
+```
+![Skewness_plankton_north_sea for species : Ceratium_furca](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=50%, height=50% }
 

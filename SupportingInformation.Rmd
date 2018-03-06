@@ -46,7 +46,7 @@ source("copsurrog2d.R")
 ## Soil C and N data
 
 <!--The raw data look like this:-->
-```{r load_data_Loecke, echo=F, fig.cap="plot of the raw soil C and N data.", fig.height=5, fig.width=5}
+```{r load_data_Loecke, echo=F, fig.cap="Plot of the raw soil C and N data.", fig.height=5, fig.width=5}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 fig_nums("soilCNraw",display=F)
@@ -54,10 +54,10 @@ plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 ```
 
 <!--The copula looks like this:-->
-```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data",  fig.height=5, fig.width=5}
+```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data.",  fig.height=5, fig.width=5}
 #convert to a copula and plot
 fig_nums("soilCNcop",display=F)
-v_CN<-getcopula(d=d,rankon=T,ploton=T) #with real data, rankon should be T
+v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 ```
 
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in `r fig_nums("soilCNraw",display="c")`. The copula is shown in `r fig_nums("soilCNcop",display="c")`.
@@ -122,24 +122,23 @@ For our third statistic, we imagine the diagonal line of the box as the major ax
 ## Soil C and N data
 
 ### Model selection approach
+<!--This does the computations for this section-->
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"))}
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20) 
 BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
-The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes`. 
+The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes`. We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (`r table_nums("soilCNfit",display="c")`). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
 
-We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas:
+<!--Display model selection results in a table-->
 ```{r soilCNfit,echo=F}
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 table_nums("soilCNfit",display=F)
 knitr::kable(h, caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=Survival Clayton; SG=Survival Gumbel; SJ=Survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by 180 degrees).")
 ```
 
-`r table_nums("soilCNfit",display="c")` shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
-
-The model-averaged (using AIC) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged (again, AIC) upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
 Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 

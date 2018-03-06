@@ -152,20 +152,12 @@ calcstats<-function(v,f,nm)
 {
   #calculate the stats
   res<-c()
-  #f(v[,1],v[,2],0,.5),
-  #        f(v[,1],v[,2],0.5,1),
-  #        f(v[,1],v[,2],0,.25),
-  #        f(v[,1],v[,2],0.25,.5),
-  #        f(v[,1],v[,2],.5,.75),
-  #        f(v[,1],v[,2],.75,1))
   for (lbd in seq(from=0,to=0.9,by=0.1))
   {
     res<-c(res,f(v[,1],v[,2],lbd,lbd+.1))
   }
   
   #name the result vector
-#  h<-paste(nm,c(0,0.5,0,0.25,0.5,0.75,seq(from=0,to=0.9,by=0.1)),"to",
-#                    c(0.5,1,0.25,0.5,0.75,1,seq(from=0,to=0.9,by=0.1)+.1),sep='')
   h<-paste(nm,c(seq(from=0,to=0.9,by=0.1)),"to",
                     c(seq(from=0,to=0.9,by=0.1)+.1),sep='')
   h<-gsub(".","p",h,fixed=T)
@@ -253,7 +245,7 @@ D2umD2l_frac_S<-sum(D2umD2l_S<D2umD2l_d)
 D2stats_S<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
 ```
 
-<!--Now save the plot to the results folder-->
+<!--Now create the plot and save it to the results folder-->
 ```{r plot_soilCN_graphic_approach, echo=F}
 x<-seq(from=0.05,to=0.95,by=0.1)
 xlimits<-c(0,1)
@@ -267,7 +259,7 @@ panwd<-3
 gap<-.05
 totwd<-ywd+2*panwd+2*gap
 totht<-xht+3*panht+3*gap+titleht
-pdf(file="./Results/stat_results/stat_soilCN//CNdata_NonparamTailDep.pdf",width=totwd,height=totht)
+pdf(file="./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf",width=totwd,height=totht)
   
 #plot kendall results on the left panels, spearman on right,
 #cor in top panels, then P, then D2 on bottom panels
@@ -416,11 +408,21 @@ vlineplot(x,ylimits_D2)
 dev.off()
 ```
 
-<!--Now include the plot in the Rmd output-->
+As described in Methods, each of our statistics, as computed for the 
+ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
+of values of the same statistic (with the same ranges) on 1000 normal-copula 
+surrogate datasets with similar Kendall or Spearman correlations, in different 
+runs (`r figure_nums("soilCN_nonparam",display="c")`). Because the correlation 
+used in the Cor statistic is the Spearman correlation, Spearman-preserving surrogates
+should be used, so the top-left panel of `r figure_nums("soilCN_nonparam",display="c")`
+should be ignored (DAN: need to fix this). Results indicate
+DAN: continue here.
+
+<!--Now give the plot a number so it can be refered to-->
 ```{r show_plot_soildCN,echo=F}
 fig_nums("soilCN_nonparam",display=F)
 ```
-![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than.](./Results/stat_results/stat_soilCN//CNdata_NonparamTailDep.pdf)
+![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than.](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
 
 <!--Now make a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}

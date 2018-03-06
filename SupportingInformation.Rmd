@@ -412,9 +412,9 @@ As described in Methods, each of our statistics, as computed for the
 ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
 of values of the same statistic (with the same ranges) on 1000 normal-copula 
 surrogate datasets with similar Kendall or Spearman correlations, in different 
-runs (`r figure_nums("soilCN_nonparam",display="c")`). Because the correlation 
+runs (`r fig_nums("soilCN_nonparam",display="c")`). Because the correlation 
 used in the Cor statistic is the Spearman correlation, Spearman-preserving surrogates
-should be used, so the top-left panel of `r figure_nums("soilCN_nonparam",display="c")`
+should be used, so the top-left panel of `r fig_nums("soilCN_nonparam",display="c")`
 should be ignored (DAN: need to fix this). Results indicate
 DAN: continue here.
 

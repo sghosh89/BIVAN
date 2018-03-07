@@ -15,7 +15,7 @@ updated on `r Sys.Date()`
 
 <!--Basic setup-->
 ```{r setup, echo=F}
-knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
+knitr::opts_chunk$set(echo = TRUE, fig.pos = "H") #, warning=F)
 
 library(captioner)
 table_nums <- captioner(prefix = "Table")
@@ -39,6 +39,7 @@ source("plankton_north_sea_data_calling.R")
 source("NonParamStat.R")
 source("copsurrog2d.R")
 source("TestStats_multivar_dataset.R")
+source("skewness_multivar_dataset.R")
 ```
 
 # Descriptions of data
@@ -120,7 +121,7 @@ Like we said before, for multivariate dataset we measure $Pl = P$ for $(l_{b}=0,
 For our third statistic, we imagine the diagonal line of the box as the major axis of the copula. We calculate squared distance of each scattered point from $vi-vj=0$ [the dotted diagonal line in `r fig_nums("stat_image",display="c")`] and then take their average. This mean squared distance (say, $D2$) represents the average width of the copula for that shaded region. Similarly, we calculate $D2l$ and $D2u$ for the lower and upper tail of a copula for multivariate dataset with $(l_{b}=0, u_{b}=0.5)$ and $(l_{b}=0.5, u_{b}=1)$ respectively. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
 
 ### Stat-testing of Non-parametric analysis (for limited number of datapoints)
-```{r stat_testing_plot, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
+```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
 
 resultsloc<-"./Results/stat_results/stat_testing/"
@@ -132,13 +133,16 @@ res_pt35_rankT<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=T,mc.co
 res_pt1000_rankF<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=F,mc.cores=ncores)
 res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,mc.cores=ncores)
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
+```
 
+```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"))}
+set.seed(seed)
+resultsloc<-"./Results/stat_results/stat_testing/"
 b<-callfn$paramlist
 plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b)
 plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b)
 plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b)
 plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b)
-
 ```
 
 <!--Now give the plot a number so it can be refered to-->
@@ -280,7 +284,7 @@ D2stats_S<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.25,.975,.995))
 ```
 
 <!--Now create the plot and save it to the results folder-->
-```{r plot_soilCN_graphic_approach, echo=F}
+```{r plot_soilCN_graphic_approach, results='hide', echo=F}
 x<-seq(from=0.05,to=0.95,by=0.1)
 xlimits<-c(0,1)
 
@@ -461,8 +465,8 @@ fig_nums("soilCN_nonparam",display=F)
 ```
 ![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than.](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
 
-We also tested statistically for asymmetry of tail dependence, which seems visible in `r table_nums("soilCNcop",display="c")`. 
-Results (`r table_nums("soilCN_asym",display="c")`) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
+We also tested statistically for asymmetry of tail dependence, which seems visible in `r fig_nums("soilCNcop",display="c")`. 
+Results (`r table_nums("soilCNasym",display="c")`) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}
@@ -931,7 +935,7 @@ Recall question 3 is: What are the consequences of non-Gaussian copula structure
 ## Aphid count
 
 <!--Shya to add results about skewness of spatial means-->
-```{r skewness_count_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_count_plot, results='hide',echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
 par(mfrow=c(2,1))
@@ -964,7 +968,7 @@ fig_nums("skewness_count",display=F)
 ## Aphid first flight
 
 <!--Shya to add results about skewness of spatial means-->
-```{r skewness_ff_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_ff_plot, results='hide',echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
 par(mfrow=c(2,1))
@@ -993,7 +997,7 @@ fig_nums("skewness_ff",display=F)
 
 <!--Shya to add results about skewness of spatial means-->
 <!--Shya to add results about skewness of spatial means-->
-```{r skewness_pns_plot, echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf")
 par(mfrow=c(2,1))

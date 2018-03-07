@@ -38,6 +38,7 @@ source("aphid_data_calling.R")
 source("plankton_north_sea_data_calling.R")
 source("NonParamStat.R")
 source("copsurrog2d.R")
+source("TestStats_multivar_dataset.R")
 ```
 
 # Descriptions of data
@@ -117,6 +118,39 @@ On a second thought, we imagine as if we progress from the diagonal towards the 
 Like we said before, for multivariate dataset we measure $Pl = P$ for $(l_{b}=0, u_{b}=0.5)$ and $Pu = P$ for $(l_{b}=0.5, u_{b}=1)$ and these $Pl$, $Pu$ represent the lower and upper tail statistic respectively. A copula having $(Pl-Pu)>0$ represents more lower tail dependence whereas a copula with negative $(Pl-Pu)$ represents more upper tail dependence. A copula with equal $Pl$ and $Pu$ value is considered as symmetric with no tail-dependence.
 
 For our third statistic, we imagine the diagonal line of the box as the major axis of the copula. We calculate squared distance of each scattered point from $vi-vj=0$ [the dotted diagonal line in `r fig_nums("stat_image",display="c")`] and then take their average. This mean squared distance (say, $D2$) represents the average width of the copula for that shaded region. Similarly, we calculate $D2l$ and $D2u$ for the lower and upper tail of a copula for multivariate dataset with $(l_{b}=0, u_{b}=0.5)$ and $(l_{b}=0.5, u_{b}=1)$ respectively. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
+
+### Stat-testing of Non-parametric analysis (for limited number of datapoints)
+```{r stat_testing_plot, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
+set.seed(seed)
+
+resultsloc<-"./Results/stat_results/stat_testing/"
+callfn<-coplist_with_params(spearvals=seq(from=0,to=0.9,by=0.1))
+coplist<-callfn$coplist
+ncores<-3
+res_pt35_rankF<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=ncores)
+res_pt35_rankT<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=T,mc.cores=ncores)
+res_pt1000_rankF<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=F,mc.cores=ncores)
+res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,mc.cores=ncores)
+save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
+
+b<-callfn$paramlist
+plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b)
+plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b)
+plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b)
+plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b)
+
+```
+
+<!--Now give the plot a number so it can be refered to-->
+```{r stat_testing35,echo=F}
+fig_nums("stat_testing35",display=F)
+```
+![stat_testing_results_datapt_35](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
+
+```{r stat_testing1000,echo=F}
+fig_nums("stat_testing1000",display=F)
+```
+![stat_testing_results_datapt_1000](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
 
 ## Soil C and N data

@@ -1,0 +1,57 @@
+---
+title: "Unit tests"
+author: "Shyamolina Ghosh and Daniel Reuman"
+date: "March 7, 2018"
+output: pdf_document
+---
+
+# Test flexible copula functions
+
+<!--Set up some test data-->
+```{r test_copula_function_flexible_data, echo=T}
+#Set up some test data
+dl<-seq(from=0.1,by=0.1,to=0.9)
+ep<-c(.05,-.03,.02,-.1,-.09,.05,.1,-.08,.05)
+vi<-dl+ep
+vj<-dl-ep
+```
+
+<!--Test the cor stat-->
+```{r test_copula_function_flexible_cor, echo=T}
+#Test the cor stat
+source("CopulaFunctions_flexible.R")
+
+h<-Corbds(vi,vj,lb=.05,ub=.45)
+inds<-1:4
+ht<-sum((vi[inds]-mean(vi))*(vj[inds]-mean(vj)))/((length(vi)-1)*sqrt(var(vi)*var(vj)))
+
+if (abs(h-ht)<1e-12)
+{
+  prin("passed")
+}
+```
+
+<!--Test the D2 stat-->
+```{r test_copula_function_flexible_D2, echo=T}
+#Test the D2 stat
+source("CopulaFunctions_flexible.R")
+
+h<-D2bds(vi,vj,lb=.05,ub=.45)
+if (abs(sum(ep[1:4]^2)/2-h)<1e-12)
+{
+  print("passed")
+}
+```
+
+<!--Test the P stat-->
+```{r test_copula_function_flexible_P, echo=T}
+#Test the P stat
+source("CopulaFunctions_flexible.R")
+
+#Shya to write, see above to get an idea of what kind of test we need
+```
+
+# Test surrogate functions
+
+
+<!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->

@@ -29,7 +29,6 @@ library(parallel)
 worker<-function(cop,numpts,numsims,rank){
   
   res<-matrix(NA,6,numsims)
- # rownames(res)<-c("Bl","Bu","Corl","Coru","Hl","Hu","Pl","Pu","Tl","Tu","D2l","D2u") 
   rownames(res)<-c("Corl","Coru","Pl","Pu","D2l","D2u") 
   
   for (simcount in 1:numsims){
@@ -126,14 +125,11 @@ coplist_with_params<-function(spearvals){
 #reslist<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=ncores)
 #----------------------------------
 
-# This function gives mean,lowCI,upCI of a vector
-mCI<-function(x){
-  m<-mean(x)
-  se<-sd(x)/sqrt(length(x))   # denominator should be sqrt(length(x)-1) ?????
-  return(c(m-1.96*se,m,m+1.96*se))
-}
-
 # This function merges stat for (Corl-Coru), .....etc for all the simulations
+# Input:
+#      1. reslist : A list of 4*length(spearvals) matrices and each is a 6 by numsims matrix, 6 rows are : Corl, Coru, Pl, Pu, D2l, D2u
+#      2. numsims : The number of simulations to do and apply the statistics to
+#      3. j1, j2 :  1 to 6, index of those 6 stats
 stat_list<-function(reslist,numsims,j1,j2){ 
   stat_sms<-matrix(NA,nrow=length(reslist),ncol=numsims)
   for (i in 1:length(reslist)){
@@ -142,9 +138,19 @@ stat_list<-function(reslist,numsims,j1,j2){
   return(stat_sms)
 }
 
+
+# This function gives mean,lowCI,upCI of a vector
+mCI<-function(x){
+  m<-mean(x)
+  se<-sd(x)/sqrt(length(x))   # denominator should be sqrt(length(x)-1) ?????
+  return(c(m-1.96*se,m,m+1.96*se))
+}
+
 #--------------------------------------------------------------------------------------------------
 # This function gives a list of 3 matrices for (Corl-Coru), (Pl-Pu), (D2u-D2l) stat:
-#                         each matrix has 3 columns [lowCI, mean, upCI] for each param for each type of copula
+#                         each matrix has 3 columns [lowCI, mean, upCI] and nrows=4*length(spearvals)
+#                                                   4 : type of copula(C,N,F,SC)
+#                                                   length of spearvals =10 (here)
 #------------------------------------------------------------------------------------------------------------------------
 M1mM2<-function(reslist,numsims){
   
@@ -191,7 +197,7 @@ M1mM2<-function(reslist,numsims){
 ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){ 
   stat_M1mM2<-stat_list(reslist,numsims,j1,j2)
   x<-stat_M1mM2[is:ie,][ispearval,]
-  tr<-t.test(x)
+  tr<-t.test(x) # x is a vector
   t<-tr$statistic
   p<-tr$p.value
   return(p)

@@ -67,7 +67,15 @@ Corbds<-function(vi,vj,lb,ub)
 #lb, ub       Lower and upper bounds between 0 and 1
 #
 #Outputs
-#
+# A list of 7 elements:
+#           [1] dist_S : a vector specifying the x coordinate values in step function drawing plot 
+#           [2] S : a vector specifying the y coordinate values in step function drawing plot 
+#           [3] dist_Si : a vector specifying the x coordinate values in continuous line plot : independence
+#           [4] Si : a vector specifying the y coordinate values in continuous line plot : independence
+#           [5] abs_res : a numeric value for P statistic
+#           [6] Au_S : area under the step function plot
+#           [7] Au_Si : area under the independence line 
+
 Pbds<-function(vi,vj,lb,ub){
   
   if(lb>=ub){cat("error : lb is greater or equal to ub","\n")}
@@ -224,7 +232,9 @@ Pbds<-function(vi,vj,lb,ub){
               S=S,
               dist_Si=dist_Si,
               Si=Si,
-              abs_res=abs(res)))
+              abs_res=abs(res),
+              Au_S=Au_S,
+              Au_Si=Au_Si))
  
 }
 

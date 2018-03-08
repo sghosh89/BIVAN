@@ -15,32 +15,32 @@ source("mtime.R")
 
 # Test flexible copula functions
 
-<!--Set up some test data-->
+Set up some test data:
 ```{r test_copula_function_flexible_data, echo=T}
-#Set up some test data
 dl<-seq(from=0.1,by=0.1,to=0.9)
 ep<-c(.05,-.03,.02,-.1,-.09,.05,.1,-.08,.05)
 vi<-dl+ep
 vj<-dl-ep
 ```
 
+A plot function to use in testing:
 ```{r plot_vivj,echo=T}
 plot_vivj<-function(vi,vj,lb,ub){
- plot(vi,vj,col="red",xlim=c(0,1),ylim=c(0,1),asp=1,cex.axis=0.5)
- axis(1, at = seq(0, 1, by = 0.1),cex.axis=0.5)
- abline(a=2*lb,b=-1,col="blue")
- abline(a=2*ub,b=-1,col="green4")
- abline(a=0,b=1)
- rect(0,0,1,1)
+plot(vi,vj,col="red",xlim=c(0,1),ylim=c(0,1),asp=1,cex.axis=0.5)
+axis(1, at = seq(0, 1, by = 0.1),cex.axis=0.5)
+abline(a=2*lb,b=-1,col="blue")
+abline(a=2*ub,b=-1,col="green4")
+abline(a=0,b=1)
+rect(0,0,1,1)
 }
 ```
 
-<!--Test the cor stat-->
+Test the cor statistic:
 ```{r test_copula_function_flexible_cor, echo=T}
-#Test the cor stat
 source("CopulaFunctions_flexible.R")
 lb=.05
 ub=.45
+plot_vivj(vi,vj,lb,ub)
 h<-Corbds(vi,vj,lb=lb,ub=ub)
 inds<-1:4
 ht<-sum((vi[inds]-mean(vi))*(vj[inds]-mean(vj)))/((length(vi)-1)*sqrt(var(vi)*var(vj)))
@@ -51,9 +51,8 @@ if (abs(h-ht)<1e-12)
 }
 ```
 
-<!--Test the D2 stat-->
+Test the D2 statistic:
 ```{r test_copula_function_flexible_D2, echo=T}
-#Test the D2 stat
 source("CopulaFunctions_flexible.R")
 lb=.05
 ub=.45
@@ -64,21 +63,17 @@ if (abs((sum(ep[1:4]^2)/2)-h)<1e-12)
 }
 ```
 
-<!--Test the P stat-->
+Test the P statistic:
 ```{r test_copula_function_flexible_P, echo=T}
-#Test the P stat
 source("CopulaFunctions_flexible.R")
-lb=0
-ub=.45
+
 vi<-c(vi[3],vi[7],vi[9])
 vj<-c(vj[3],vj[7],vj[9])
 
-# When two parallel boundary line are on the left side of vi+vj=1 line
-
-#(vi,vj) plot in unit box : lower tail
+#Test for when two parallel boundary lines are on the left side of vi+vj=1 line
+lb=0
+ub=.45
 plot_vivj(vi=vi,vj=vj,lb=lb,ub=ub)
-
-#calling P stat for lower tail
 hl<-Pbds(vi,vj,lb=lb,ub=ub)
 
 #plot the step fn
@@ -96,10 +91,9 @@ hl$Au_Si
 #P stat value for lower tail
 (area_S-hl$Au_Si)==hl$abs_res
 
-# When two parallel boundary line are on the right side of vi+vj=1 line
+#Test for when two parallel boundary lines are on the right side of vi+vj=1 line
 lb=0
 ub=.4 # if ub=0.45 then hu$Au_Si = hl$Au_Si : so, it's a check on Au_Si
-#(vi,vj) plot in unit box : upper tail
 plot_vivj(vi=vi,vj=vj,lb=(1-ub),ub=(1-lb))
 
 #calling P stat for upper tail
@@ -123,7 +117,7 @@ hu$Au_Si
 #P stat value for upper tail
 (area_S-hu$Au_Si)==hu$abs_res 
 
-# When two parallel boundary lines are on either side of vi+vj=1 line
+#Test for when two parallel boundary lines are on opposite sides of vi+vj=1 line
 lb=0.3
 ub=0.8
 
@@ -161,10 +155,8 @@ source("SkewnessAnd3CentMom.R")
 
 # Test surrogate functions
 
-<!--Test the copsurrog2d stat-->
+Test the copsurrog2d function:
 ```{r test_copsurrog2d, echo=T}
-#Test copsurrog2d
-
 library("VineCopula")
 source("copsurrog2d.R")
 set.seed(101)
@@ -174,12 +166,13 @@ datcop<-claytonCopula(5,2)
 numpts<-1000
 m<-rCopula(numpts,datcop)
 plot(m[,1],m[,2],type='p')
+rect(0,0,1,1)
 
 tarcop<-gumbelCopula(3,2)
 
 res<-copsurrog2d(m,tarcop,'kendall',3)
 dim(res) 
-if (sum(dim(res)==dim(m))==2)
+if (sum(dim(res)[1:2]==dim(m))==2)
 {
   print("passed")
 } else
@@ -193,6 +186,7 @@ cor(res[,1,2],res[,2,2],method='kendall')
 cor(res[,1,3],res[,2,3],method='kendall')
 
 plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+rect(0,0,1,1)
 BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
@@ -213,7 +207,7 @@ if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
 #basic tests using spearman preserving surrogates
 res<-copsurrog2d(m,tarcop,'spearman',3)
 dim(res)
-if (sum(dim(res)==dim(m))==2)
+if (sum(dim(res)[1:2]==dim(m))==2)
 {
   print("passed")
 } else
@@ -227,6 +221,7 @@ cor(res[,1,2],res[,2,2],method='spearman')
 cor(res[,1,3],res[,2,3],method='spearman')
 
 plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+rect(0,0,1,1)
 BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
@@ -245,13 +240,10 @@ if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
 }
 ```
 
-<!--test to see whether changing the copula
+Test to see whether changing the copula
 markedly influences the distribution
-of the spatial mean-->
+of the spatial mean:
 ```{r test_copsurrog2d_spatmean, echo=T, cache=T, cache.extra=list(mtime("copsurrog2d.R"),mtime("SkewnessAnd3CentMom.R"))}
-#***test to see whether changing the copula
-#markedly influences the distribution
-#of the spatial mean
 set.seed(101)
 
 #make the data

@@ -115,6 +115,10 @@ Like we said before, for multivariate dataset we measure $Pl = P$ for $(l_{b}=0,
 For our third statistic, we imagine the diagonal line of the box as the major axis of the copula. We calculate squared distance of each scattered point from $vi-vj=0$ [the dotted diagonal line in `r fig_nums("stat_image",display="c")`] and then take their average. This mean squared distance (say, $D2$) represents the average width of the copula for that shaded region. Similarly, we calculate $D2l$ and $D2u$ for the lower and upper tail of a copula for multivariate dataset with $(l_{b}=0, u_{b}=0.5)$ and $(l_{b}=0.5, u_{b}=1)$ respectively. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
 
 ### Stat-testing of Non-parametric analysis (for limited number of datapoints)
+
+Here, we want to test our $3$ types of nonparametric tail dependent statistics on both small $(35)$ and large $(1000)$ number of datapoints drawn from $4$ types of bivariate copula, namely, *Clayton* , *Normal*, *Frank* and *Survival Clayton*. Whereas *Normal* and *Frank* have symmetric tail dependence, *Clayton* and *Survival Clayton* have lower and upper tail dependence, respectively.
+First we chose a set of parameters [using *iRho* from *Copula* package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated $(Corl , Coru, Pl, Pu, D2l, D2u)$ stats. We took mean of our statistic $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ over $100$ simulations and In `r fig_nums("stat_testing35", display="c")`, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [`r fig_nums("stat_testing1000", display="c")`]. Statistic $Corl - Coru$, $Pl-Pu$ and $D2u-D2l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
+
 ```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
 
@@ -926,10 +930,16 @@ fig_nums("pns_D2u-D2l",display=F)
 
 Recall question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
 
+**Change of skewness : ** Here, we claim that because of significant tail dependence of the multivariate copula structure, the skewness of the time-series data averaged over all selective locations changed significantly from the individual skewness of time-series data taken at each pairwise location. Spatial mean of the time series data extracts that tail dependence of the multivariate data set, if any, and reflected in the averaged skewness. We tested this with null hypothesis $H_{0}$. If $H_{0}$ is true that means our multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. So, first we generated $10000$ number of surrogate normal copula from our given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we plotted the distribution of spatial mean of each surrogate time series data set and the given multivariate data. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence.
+
+To verify that we use aphid-count data, aphid-firstflight data and plankton-north-sea data. For aphid data we choose only those locations for which atleast $30$ number of data points present in each time series when taken as pairwise locations. For plankton-north-sea data that threshold on number of data points is $45$. 
+
 ## Aphid count
 
+`r fig_nums("skewness_count",display="c")` shows that averaged skewness is much lower than expected if the aphid count data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are lower than the averaged skewness of the given data (red line in `r fig_nums("skewness_count",display="c")`). As $p<0.05$, we reject $H_{0}$. This result is consistent with the non-parametric analysis and model fitting results which indicated lower tail dependence. 
+
 <!--Shya to add results about skewness of spatial means-->
-```{r skewness_count_plot, results='hide',echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
 par(mfrow=c(2,1))
@@ -961,8 +971,10 @@ fig_nums("skewness_count",display=F)
 
 ## Aphid first flight
 
+`r fig_nums("skewness_ff",display="c")` shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in `r fig_nums("skewness_ff",display="c")`). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
+
 <!--Shya to add results about skewness of spatial means-->
-```{r skewness_ff_plot, results='hide',echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
 par(mfrow=c(2,1))
@@ -989,8 +1001,8 @@ fig_nums("skewness_ff",display=F)
 
 ## North Sea plankton
 
-<!--Shya to add results about skewness of spatial means-->
-<!--Shya to add results about skewness of spatial means-->
+`r fig_nums("skewness_pns_plot",display="c")` shows that averaged skewness is lower than expected if the plankton north sea data came from a normal copula. Our previous results on non-parametric analysis and model fitting showed lower tail dependence. Here, as $p>0.05$, we cannot reject $H_{0}$, .......???
+
 ```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf")

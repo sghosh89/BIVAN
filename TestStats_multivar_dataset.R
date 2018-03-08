@@ -61,8 +61,11 @@ worker<-function(cop,numpts,numsims,rank){
 
 # This function takes:
 # Input : spearvals : a sequence of values 0 to 1 which indicates spearman correlation
-# Output : a list of 5 things:
-#            1. 
+# Output : a list of 2 things:
+#            1. coplist : a long list (length=4*length(spearvals)) of 4 types of copula : clayton, normal, frank, survival clayton
+#            2. paramlist : a long list (length=length(coplist)) of parameters of above 4 types of copula, this paramlist
+#                           indicates the parameters for which each copula should have that given specified spearman correlation.
+
 coplist_with_params<-function(spearvals){
   
   taCcop<-claytonCopula(3,2)  # initialize by any old Clayton and Frank and normal copulas
@@ -115,7 +118,13 @@ coplist_with_params<-function(spearvals){
 }
 
 #--------------------------------------------------------------------------------------
-#A plotter function that takes res_pt35_rankF, etc. and makes the appropriate plot
+# check the function
+#------------------------
+#callfn<-coplist_with_params(spearvals=seq(from=0,to=0.9,by=0.1))
+#coplist<-callfn$coplist
+#ncores<-3
+#reslist<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=ncores)
+#----------------------------------
 
 # This function gives mean,lowCI,upCI of a vector
 mCI<-function(x){
@@ -134,8 +143,9 @@ stat_list<-function(reslist,numsims,j1,j2){
 }
 
 #--------------------------------------------------------------------------------------------------
-# This function gives a matrix of [lowCI, mean, upCI] for each param for each type of copula
-
+# This function gives a list of 3 matrices for (Corl-Coru), (Pl-Pu), (D2u-D2l) stat:
+#                         each matrix has 4 columns [lowCI, mean, upCI, se] for each param for each type of copula
+#------------------------------------------------------------------------------------------------------------------------
 M1mM2<-function(reslist,numsims){
   
   
@@ -176,6 +186,8 @@ M1mM2<-function(reslist,numsims){
 }
 
 #-----------------------------------------------------------------------------------------
+# This is a t-test function which returns a p-value
+
 ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){ 
   stat_M1mM2<-stat_list(reslist,numsims,j1,j2)
   x<-stat_M1mM2[is:ie,][ispearval,]
@@ -185,6 +197,8 @@ ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){
   return(p)
 }
 #-------------------------------------------------------------------------------------------------------
+# A plotter function that takes res_pt35_rankF, etc. and makes the appropriate plot
+
 plotter_stat_testing<-function(reslist,filename,xaxparams){
   
   spearvals<-seq(from=0,to=0.9,by=0.1)
@@ -208,19 +222,19 @@ plotter_stat_testing<-function(reslist,filename,xaxparams){
       plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='b',col='orange',ylim=c(-0.25,0.25),xlab='Spearman',ylab='Corl-Coru')
       arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
       lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-      mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col="black")
+      mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
       t_PlmPu<-ttest(reslist,numsims,3,4,is,ie,1)
       plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='b',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab='Pl-Pu')  
       arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
       lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-      mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col="black")
+      mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
       t_D2umD2l<-ttest(reslist,numsims,6,5,is,ie,1)
       plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='b',col='red',ylim=c(-0.05,0.05),xlab='Spearman',ylab='D2u-D2l') 
       arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
       lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
-      mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col="black")
+      mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
     }else{
       

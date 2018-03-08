@@ -1,5 +1,5 @@
-require(copula)
-require(mvtnorm)
+library(copula)
+library(mvtnorm)
 
 #This function takes a bunch of time series measured at the same
 #time in different locations and creates surrogate datasets which

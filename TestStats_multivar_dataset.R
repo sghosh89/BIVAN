@@ -144,7 +144,7 @@ stat_list<-function(reslist,numsims,j1,j2){
 
 #--------------------------------------------------------------------------------------------------
 # This function gives a list of 3 matrices for (Corl-Coru), (Pl-Pu), (D2u-D2l) stat:
-#                         each matrix has 4 columns [lowCI, mean, upCI, se] for each param for each type of copula
+#                         each matrix has 3 columns [lowCI, mean, upCI] for each param for each type of copula
 #------------------------------------------------------------------------------------------------------------------------
 M1mM2<-function(reslist,numsims){
   
@@ -153,11 +153,11 @@ M1mM2<-function(reslist,numsims){
   stat_PlmPu<-stat_list(reslist,numsims,3,4)
   stat_D2umD2l<-stat_list(reslist,numsims,6,5)
   
-  CorlmCoru<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=4)
-  colnames(CorlmCoru)<-c('lowCI','mean','upCI','se')
-  PlmPu<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=4)
+  CorlmCoru<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=3)
+  colnames(CorlmCoru)<-c('lowCI','mean','upCI')
+  PlmPu<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=3)
   colnames(PlmPu)<-colnames(CorlmCoru)
-  D2umD2l<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=4)
+  D2umD2l<-matrix(NA,nrow=dim(stat_CorlmCoru)[1],ncol=3)
   colnames(D2umD2l)<-colnames(CorlmCoru)
   
   for(i in 1:dim(stat_CorlmCoru)[1]){ 

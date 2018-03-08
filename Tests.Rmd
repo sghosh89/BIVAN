@@ -144,7 +144,133 @@ hm$Au_Si
 (area_S-hm$Au_Si)==hm$abs_res
 ```
 
+# Test skewness and third central moment functions
+
+```{r}
+source("SkewnessAnd3CentMom.R")
+#Dan fill in - see if there is testing text in the file itself 
+```
+
 # Test surrogate functions
 
+<!--Test the copsurrog2d stat-->
+```{r test_copsurrog2d, echo=T}
+#Test copsurrog2d
+
+source("copsurrog2d.R")
+set.seed(101)
+
+#***basic tests of the function using kendall-preserving surrogates
+datcop<-claytonCopula(5,2)
+numpts<-1000
+m<-rCopula(numpts,datcop)
+plot(m[,1],m[,2],type='p')
+
+tarcop<-gumbelCopula(3,2)
+
+res<-copsurrog2d(m,tarcop,'kendall',3)
+dim(res) 
+if (sum(dim(res)==dim(m))==2)
+{
+  print("passed")
+} else
+{
+  print("dim of output is wrong")
+}
+
+cor(m[,1],m[,2],method='kendall') #this should be similar to the following 
+cor(res[,1,1],res[,2,1],method='kendall')
+cor(res[,1,2],res[,2,2],method='kendall')
+cor(res[,1,3],res[,2,3],method='kendall')
+
+plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
+
+if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,1])==sort(m[,2]))==numpts &&
+    sum(sort(res[,1,2])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,2])==sort(m[,2]))==numpts &&
+    sum(sort(res[,1,3])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,3])==sort(m[,2]))==numpts)
+{
+  print("passed")
+} else
+{
+  print("Columns of output of copsurrog should be permutations of the corresponding columns of the input")
+}
+
+#basic tests using spearman preserving surrogates
+res<-copsurrog2d(m,tarcop,'spearman',3)
+dim(res)
+if (sum(dim(res)==dim(m))==2)
+{
+  print("passed")
+} else
+{
+  print("dim of output is wrong")
+}
+
+cor(m[,1],m[,2],method='spearman') #this should be similar to the following 
+cor(res[,1,1],res[,2,1],method='spearman')
+cor(res[,1,2],res[,2,2],method='spearman')
+cor(res[,1,3],res[,2,3],method='spearman')
+
+plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
+
+if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,1])==sort(m[,2]))==numpts &&
+    sum(sort(res[,1,2])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,2])==sort(m[,2]))==numpts &&
+    sum(sort(res[,1,3])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,3])==sort(m[,2]))==numpts)
+{
+  print("passed")
+} else
+{
+  print("Columns of output of copsurrog should be permutations of the corresponding columns of the input")
+}
+```
+
+<!--test to see whether changing the copula
+markedly influences the distribution
+of the spatial mean-->
+```{r test_copsurrog2d_spatmean, echo=T, cache=T, cache.extra=list(mtime("copsurrog2d.R"),mtime("SkewnessAnd3CentMom.R"))}
+#***test to see whether changing the copula
+#markedly influences the distribution
+#of the spatial mean
+set.seed(101)
+
+#make the data
+datcop<-rotCopula(claytonCopula(5,2))
+d<-rCopula(10000,datcop)
+d<-qnorm(d,mean=0,sd=1)
+
+#change the copula
+tarcop<-claytonCopula(3,2)
+sur<-copsurrog2d(d,tarcop,"kendall",1000)
+
+#see how the skewness of the spatial average
+#is affected
+source("SkewnessAnd3CentMom.R")
+skdat<-myskns(apply(FUN=mean,X=d,MARGIN=1)) #skewness of spatial mean of data
+mnres<-apply(FUN=mean,X=sur,MARGIN=c(1,3)) 
+sksur<-apply(FUN=myskns,X=mnres,MARGIN=2) #skewnesses of spatial means of surrogate datasets
+sum(sksur<skdat)/length(sksur) #skewnesses of surrogs should be less than that of data
+range(sksur) #these should mostly be negative
+skdat #this should be positive
+
+#now do the same thing but preserve the spearman instead
+sur<-copsurrog2d(d,tarcop,"spearman",1000)
+skdat<-myskns(apply(FUN=mean,X=d,MARGIN=1))
+mnres<-apply(FUN=mean,X=sur,MARGIN=c(1,3))
+sksur<-apply(FUN=myskns,X=mnres,MARGIN=2)
+sum(sksur<skdat)/length(sksur) #skewnesses of surrogs should be less than that of data
+range(sksur) #these should mostly be negative
+```
 
 <!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->

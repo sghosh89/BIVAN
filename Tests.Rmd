@@ -187,7 +187,8 @@ cor(res[,1,3],res[,2,3],method='kendall')
 
 plot(res[,1,1],res[,2,1],type='p',asp=1) #should look like a Gumbel
 rect(0,0,1,1)
-BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit; 
+                                            #family=4 is Gumbel
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
 
@@ -223,7 +224,8 @@ cor(res[,1,3],res[,2,3],method='spearman')
 
 plot(res[,1,1],res[,2,1],type='p',asp=1) #should look like a Gumbel
 rect(0,0,1,1)
-BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit; 
+                                            #family=4 is Gumbel
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,3],res[,2,3],family=4) #should indicate an acceptable fit
 
@@ -241,7 +243,7 @@ if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
 }
 ```
 
-Test to see whether changing the copula
+Test copsurrog2d to see whether changing the copula
 markedly influences the distribution
 of the spatial mean:
 ```{r test_copsurrog2d_spatmean, echo=T, cache=T, cache.extra=list(mtime("copsurrog2d.R"),mtime("SkewnessAnd3CentMom.R"))}
@@ -274,6 +276,68 @@ mnres<-apply(FUN=mean,X=sur,MARGIN=c(1,3))
 sksur<-apply(FUN=myskns,X=mnres,MARGIN=2)
 sum(sksur<skdat)/length(sksur) #skewnesses of surrogs should be less than that of data
 range(sksur) #these should mostly be negative
+```
+
+Test the ncsurrog function:
+```{r test_ncsurrog, echo=T, cache=T, cache.extra=list(mtime("ncsurrog.R"))}
+source("ncsurrog.R")
+set.seed(103)
+
+#test without NAs
+cop<-claytonCopula(5,3)
+numpts<-1000
+m<-rCopula(numpts,cop)
+plot(m[,1],m[,2],type='p',asp=1)
+rect(0,0,1,1)
+plot(m[,1],m[,3],type='p',asp=1)
+rect(0,0,1,1)
+res<-ncsurrog(m,"kendall",3)
+if (sum(dim(res)==c(1000,3,3))==3)
+{
+  print("passed")
+} else
+{
+  print("dimension wrong in ncsurrog output")
+}
+
+plot(res[,1,1],res[,2,1],type='p',asp=1)
+rect(0,0,1,1) #should look like a normal copula
+plot(res[,1,1],res[,3,1],type='p',asp=1)
+rect(0,0,1,1) #should look like a normal copula
+
+#these should show an adequate fit
+ncop<-normalCopula(.5,2)
+BiCopGofTest(res[,1,1],res[,2,1],family=1)
+BiCopGofTest(res[,1,2],res[,2,2],family=1)
+BiCopGofTest(res[,1,3],res[,2,3],family=1)
+
+#test with NAs
+m[sample(1:numpts,5),1]<-NA
+m[sample(1:numpts,5),2]<-NA
+m[sample(1:numpts,5),3]<-NA
+res<-ncsurrog(m,"kendall",3)
+if (sum(dim(res)==c(1000,3,3))==3)
+{
+  print("passed")
+} else
+{
+  print("dimension wrong in ncsurrog output")
+}
+
+sum(is.na(res[,1,1])) #these should all be 5
+sum(is.na(res[,2,1]))
+sum(is.na(res[,1,2]))
+sum(is.na(res[,2,2]))
+
+plot(res[,1,1],res[,2,1],type='p',asp=1)
+rect(0,0,1,1) #should look like a normal copula
+plot(res[,1,1],res[,3,1],type='p',asp=1)
+rect(0,0,1,1) #should look like a normal copula
+
+#these should show an adequate fit
+BiCopGofTest(res[,1,1],res[,2,1],family=1)
+BiCopGofTest(res[,1,2],res[,2,2],family=1)
+BiCopGofTest(res[,1,3],res[,2,3],family=1)
 ```
 
 <!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->

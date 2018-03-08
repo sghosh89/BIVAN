@@ -91,30 +91,3 @@ ncsurrog<-function(m,corpres,numsurrog)
   return(surrogs)
 }
 
-#test without NAs
-#cop<-claytonCopula(5,2)
-#numpts<-1000
-#m<-rCopula(numpts,cop)
-#plot(m[,1],m[,2],type='p')
-#res<-ncsurrog(m,3)
-#dim(res)
-#plot(res[,1,1],res[,2,1],type='p')
-#ncop<-normalCopula(.5,2)
-#BiCopGofTest(res[,1,1],res[,2,1],family=1)
-#BiCopGofTest(res[,1,2],res[,2,2],family=1)
-#BiCopGofTest(res[,1,3],res[,2,3],family=1)
-
-#test with NAs
-#m[sample(1:numpts,5),1]<-NA
-#m[sample(1:numpts,5),2]<-NA
-#res<-ncsurrog(m,3)
-#dim(res)
-#sum(is.na(res[,1,1]))
-#sum(is.na(res[,2,1]))
-#sum(is.na(res[,1,2]))
-#sum(is.na(res[,2,2]))
-#plot(res[,1,1],res[,2,1],type='p')
-#BiCopGofTest(res[,1,1],res[,2,1],family=1)
-#BiCopGofTest(res[,1,2],res[,2,2],family=1)
-#BiCopGofTest(res[,1,3],res[,2,3],family=1)
-

@@ -148,10 +148,30 @@ hm$Au_Si
 
 # Test skewness and third central moment functions
 
-```{r}
+Test for unbiased estimator of third central moment:
+```{r test_myskewness, echo=F, cache=T, cache.extra=list(mtime("SkewnessAnd3CentMom.R"))}
 source("SkewnessAnd3CentMom.R")
-#Dan fill in - see if there is testing text in the file itself 
+set.seed(101)
+
+x<-rnorm(100000)
+my3cm(x) #should be close to 0
+
+x<-rpois(100000,5)
+my3cm(x) #should be close to 5, but not necessarily super close
+#since 3rd moments are hard to estimate accurately
+
+#see if it appears unbaised
+res<-NA*numeric(1000)
+for (counter in 1:1000)
+{
+  x<-rpois(100000,5)
+  res[counter]<-my3cm(x) 
+}
+hist(res)
+mean(res)
 ```
+
+No need to test the accompanying skewness function, since it is such a simple extension of the above.
 
 # Test surrogate functions
 

@@ -2,12 +2,15 @@
 #moment and skewness.
 
 #Computes 3rd central moment of the data using
-#the unbiased estimator.
-#
-#See
+#the unbiased estimator. See
 #http://mathworld.wolfram.com/SampleCentralMoment.html
 #http://mathworld.wolfram.com/h-Statistic.html
 #
+#Args
+#x      A numeric vector
+#
+#Output
+#The estimated third central moment
 my3cm<-function(x,na.rm=F)
 {
   if (na.rm==T)
@@ -22,10 +25,14 @@ my3cm<-function(x,na.rm=F)
 }
 
 #Computes skewness of the data, making use
-#of the function my3cm
-#
-#See
+#of the function my3cm. See
 #https://en.wikipedia.org/wiki/Skewness
+#
+#Args
+#x      A numeric vector
+#
+#Output
+#The estimated skewness
 #
 myskns<-function(x,na.rm=F)
 {

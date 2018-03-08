@@ -16,18 +16,30 @@ vi<-dl+ep
 vj<-dl-ep
 ```
 
+```{r plot_vivj,echo=T}
+plot_vivj<-function(vi,vj,lb,ub){
+ plot(vi,vj,col="red",xlim=c(0,1),ylim=c(0,1),asp=1,cex.axis=0.5)
+ axis(1, at = seq(0, 1, by = 0.1),cex.axis=0.5)
+ abline(a=2*lb,b=-1,col="blue")
+ abline(a=2*ub,b=-1,col="green4")
+ abline(a=0,b=1)
+ rect(0,0,1,1)
+}
+```
+
 <!--Test the cor stat-->
 ```{r test_copula_function_flexible_cor, echo=T}
 #Test the cor stat
 source("CopulaFunctions_flexible.R")
-
-h<-Corbds(vi,vj,lb=.05,ub=.45)
+lb=.05
+ub=.45
+h<-Corbds(vi,vj,lb=lb,ub=ub)
 inds<-1:4
 ht<-sum((vi[inds]-mean(vi))*(vj[inds]-mean(vj)))/((length(vi)-1)*sqrt(var(vi)*var(vj)))
 
 if (abs(h-ht)<1e-12)
 {
-  prin("passed")
+  print("passed")
 }
 ```
 
@@ -35,9 +47,10 @@ if (abs(h-ht)<1e-12)
 ```{r test_copula_function_flexible_D2, echo=T}
 #Test the D2 stat
 source("CopulaFunctions_flexible.R")
-
-h<-D2bds(vi,vj,lb=.05,ub=.45)
-if (abs(sum(ep[1:4]^2)/2-h)<1e-12)
+lb=.05
+ub=.45
+h<-D2bds(vi,vj,lb=lb,ub=ub)
+if (abs((sum(ep[1:4]^2)/2)-h)<1e-12)
 {
   print("passed")
 }
@@ -47,8 +60,88 @@ if (abs(sum(ep[1:4]^2)/2-h)<1e-12)
 ```{r test_copula_function_flexible_P, echo=T}
 #Test the P stat
 source("CopulaFunctions_flexible.R")
+lb=0
+ub=.45
+vi<-c(vi[3],vi[7],vi[9])
+vj<-c(vj[3],vj[7],vj[9])
 
-#Shya to write, see above to get an idea of what kind of test we need
+# When two parallel boundary line are on the left side of vi+vj=1 line
+
+#(vi,vj) plot in unit box : lower tail
+plot_vivj(vi=vi,vj=vj,lb=lb,ub=ub)
+
+#calling P stat for lower tail
+hl<-Pbds(vi,vj,lb=lb,ub=ub)
+
+#plot the step fn
+plot(hl$dist_S,hl$S,type="b")
+
+#calculate the area under the curve 
+vertices<-unique(hl$dist_S[(hl$dist_S!=0)])
+area_S<-(vertices[2]-vertices[1])*1
+area_S
+
+area_S==hl$Au_S # it's a check
+
+hl$Au_Si
+
+#P stat value for lower tail
+(area_S-hl$Au_Si)==hl$abs_res
+
+# When two parallel boundary line are on the right side of vi+vj=1 line
+lb=0
+ub=.4 # if ub=0.45 then hu$Au_Si = hl$Au_Si : so, it's a check on Au_Si
+#(vi,vj) plot in unit box : upper tail
+plot_vivj(vi=vi,vj=vj,lb=(1-ub),ub=(1-lb))
+
+#calling P stat for upper tail
+hu<-Pbds(vi,vj,lb=(1-ub),ub=(1-lb))
+
+#plot the step fn
+plot(hu$dist_S,hu$S,type="b")
+
+#calculate the area under the curve 
+w1<-unique(hu$dist_S[(hu$dist_S!=0)])
+w1  #x-coord where the jump occurs
+h1<-unique(hu$S)
+h1  #y-coord where the jump occurs
+area_S<-((w1[2]-w1[1])*(h1[2]-h1[1]))+((w1[3]-w1[2])*(h1[3]-h1[1]))
+area_S
+
+area_S==hu$Au_S  # it's a check
+
+hu$Au_Si
+
+#P stat value for upper tail
+(area_S-hu$Au_Si)==hu$abs_res 
+
+# When two parallel boundary lines are on either side of vi+vj=1 line
+lb=0.3
+ub=0.8
+
+#calling P stat for middle section
+hm<-Pbds(vi,vj,lb=lb,ub=ub)
+
+#(vi,vj) plot in unit box : middle section
+plot_vivj(vi=vi,vj=vj,lb=lb,ub=ub)
+
+#plot the step fn
+plot(hm$dist_S,hm$S,type="b")
+
+#calculate the area under the curve 
+w1<-unique(hm$dist_S[(hm$dist_S!=0)])
+w1  #x-coord where the jump occurs
+h1<-unique(hm$S)
+h1  #y-coord where the jump occurs
+area_S<-((w1[2]-w1[1])*(h1[2]-h1[1]))+((w1[3]-w1[2])*(h1[3]-h1[1]))
+area_S
+
+area_S==hm$Au_S # it's a check
+
+hm$Au_Si
+
+#P stat value for middle section
+(area_S-hm$Au_Si)==hm$abs_res
 ```
 
 # Test surrogate functions

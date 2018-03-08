@@ -5,6 +5,14 @@ date: "March 7, 2018"
 output: pdf_document
 ---
 
+<!--Basic setup-->
+```{r setup, echo=F}
+#Basic setup
+
+#A function needed for caching
+source("mtime.R")
+```
+
 # Test flexible copula functions
 
 <!--Set up some test data-->
@@ -157,6 +165,7 @@ source("SkewnessAnd3CentMom.R")
 ```{r test_copsurrog2d, echo=T}
 #Test copsurrog2d
 
+library("VineCopula")
 source("copsurrog2d.R")
 set.seed(101)
 

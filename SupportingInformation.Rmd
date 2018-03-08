@@ -24,13 +24,7 @@ fig_nums <- captioner(prefix="Figure")
 seed<-101
 families<-c(1,3:10,13,14,16:20)
 
-#A function needed for caching
-mtime <- function(files)
-{
-  lapply(Sys.glob(files),function(x) X =   
-          file.info(x)$mtime)
-}
-
+source("mtime.R") #A function needed for caching
 source("getcopula.R")
 source("OurBiCopSelect.R")
 source("FittingCopula_selective_loc.R")

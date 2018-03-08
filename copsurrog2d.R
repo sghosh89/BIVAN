@@ -1,4 +1,4 @@
-require(copula)
+library(copula)
 
 #This function takes two time series measured at the same times 
 #in different locations and creates surrogate datasets which

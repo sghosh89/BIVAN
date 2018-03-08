@@ -165,7 +165,7 @@ set.seed(101)
 datcop<-claytonCopula(5,2)
 numpts<-1000
 m<-rCopula(numpts,datcop)
-plot(m[,1],m[,2],type='p')
+plot(m[,1],m[,2],type='p',asp=1)
 rect(0,0,1,1)
 
 tarcop<-gumbelCopula(3,2)
@@ -185,7 +185,7 @@ cor(res[,1,1],res[,2,1],method='kendall')
 cor(res[,1,2],res[,2,2],method='kendall')
 cor(res[,1,3],res[,2,3],method='kendall')
 
-plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+plot(res[,1,1],res[,2,1],type='p',asp=1) #should look like a Gumbel
 rect(0,0,1,1)
 BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
@@ -201,10 +201,11 @@ if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
   print("passed")
 } else
 {
-  print("Columns of output of copsurrog should be permutations of the corresponding columns of the input")
+  print("Columns of output of copsurrog should be permutations of the corresponding 
+        columns of the input")
 }
 
-#basic tests using spearman preserving surrogates
+#***basic tests using spearman preserving surrogates
 res<-copsurrog2d(m,tarcop,'spearman',3)
 dim(res)
 if (sum(dim(res)[1:2]==dim(m))==2)
@@ -220,7 +221,7 @@ cor(res[,1,1],res[,2,1],method='spearman')
 cor(res[,1,2],res[,2,2],method='spearman')
 cor(res[,1,3],res[,2,3],method='spearman')
 
-plot(res[,1,1],res[,2,1],type='p') #should look like a Gumbel
+plot(res[,1,1],res[,2,1],type='p',asp=1) #should look like a Gumbel
 rect(0,0,1,1)
 BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit
 BiCopGofTest(res[,1,2],res[,2,2],family=4) #should indicate an acceptable fit
@@ -260,7 +261,8 @@ sur<-copsurrog2d(d,tarcop,"kendall",1000)
 source("SkewnessAnd3CentMom.R")
 skdat<-myskns(apply(FUN=mean,X=d,MARGIN=1)) #skewness of spatial mean of data
 mnres<-apply(FUN=mean,X=sur,MARGIN=c(1,3)) 
-sksur<-apply(FUN=myskns,X=mnres,MARGIN=2) #skewnesses of spatial means of surrogate datasets
+sksur<-apply(FUN=myskns,X=mnres,MARGIN=2) #skewnesses of spatial means of surrogate 
+                                          #datasets
 sum(sksur<skdat)/length(sksur) #skewnesses of surrogs should be less than that of data
 range(sksur) #these should mostly be negative
 skdat #this should be positive

@@ -441,4 +441,10 @@ BivMS_res_test$GofRes_Normal_CvM
 BivMS_res_test$GofRes_Normal_KS
 ```
 
+We decided not to use the goodness-of-fit tests for normal copulas (`gofnormal=F` henceforth)
+because it takes so long, and the model-selection results give 
+sufficient indication that the normal copula is not well supported. 
+Finally, in other simulations we have discovered the goodness-of-fit
+tests for the normal copula have limited statistical power.
+
 <!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->

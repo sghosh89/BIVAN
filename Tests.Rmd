@@ -14,6 +14,7 @@ source("mtime.R")
 ```
 
 # Test flexible copula functions
+We here test the functions `Corbds`, `Pbds` and `D2bds`.
 
 Set up some test data:
 ```{r test_copula_function_flexible_data, echo=T}
@@ -35,7 +36,7 @@ rect(0,0,1,1)
 }
 ```
 
-Test the cor statistic:
+Test the `Corbds` function:
 ```{r test_copula_function_flexible_cor, echo=T}
 source("CopulaFunctions_flexible.R")
 lb=.05
@@ -51,7 +52,7 @@ if (abs(h-ht)<1e-12)
 }
 ```
 
-Test the D2 statistic:
+Test the `D2bds` function:
 ```{r test_copula_function_flexible_D2, echo=T}
 source("CopulaFunctions_flexible.R")
 lb=.05
@@ -63,63 +64,92 @@ if (abs((sum(ep[1:4]^2)/2)-h)<1e-12)
 }
 ```
 
-Test the P statistic:
+Test the `Pbds` function:
 ```{r test_copula_function_flexible_P, echo=T}
 source("CopulaFunctions_flexible.R")
 
 vi<-c(vi[3],vi[7],vi[9])
 vj<-c(vj[3],vj[7],vj[9])
 
-#Test for when two parallel boundary lines are on the left side of vi+vj=1 line
+#Test the case in which the two parallel boundary lines are on the left side 
+#of the vi+vj=1 line
 lb=0
 ub=.45
 plot_vivj(vi=vi,vj=vj,lb=lb,ub=ub)
 hl<-Pbds(vi,vj,lb=lb,ub=ub)
 
-#plot the step fn
+#plot the step function output - should have one jump at a small distance
+#due to the one data point that is between the bound lines
 plot(hl$dist_S,hl$S,type="b")
 
-#calculate the area under the curve 
+#calculate the area under the curve, compare to what the function returns 
 vertices<-unique(hl$dist_S[(hl$dist_S!=0)])
 area_S<-(vertices[2]-vertices[1])*1
-area_S
+if (abs(area_S-hl$Au_S)<1e-12)
+{
+  print("passed")
+} else
+{
+  print("Au_S incorrectly computed")
+}
+  
+#check P stat value for lower tail
+if (abs(area_S-hl$Au_Si-hl$abs_res)<1e-12)
+{
+  print("passed")
+} else
+{
+  print("Error in Pbds, the P stat")
+}
 
-area_S==hl$Au_S # it's a check
-
-hl$Au_Si
-
-#P stat value for lower tail
-(area_S-hl$Au_Si)==hl$abs_res
-
-#Test for when two parallel boundary lines are on the right side of vi+vj=1 line
+#Test the case in which the two parallel boundary lines are on the right side 
+#of the vi+vj=1 line
 lb=0
-ub=.4 # if ub=0.45 then hu$Au_Si = hl$Au_Si : so, it's a check on Au_Si
+ub=.45 
 plot_vivj(vi=vi,vj=vj,lb=(1-ub),ub=(1-lb))
 
 #calling P stat for upper tail
 hu<-Pbds(vi,vj,lb=(1-ub),ub=(1-lb))
 
-#plot the step fn
+#hl$Au_Si should be the same as hu$Au_Si
+if (abs(hl$Au_Si-hu$Au_Si)<1e-12)
+{
+  print("passed")
+}else
+{
+  print("Error in Pbds, Au_Si")
+}
+
+#plot the step fn - should have two jumps
 plot(hu$dist_S,hu$S,type="b")
 
 #calculate the area under the curve 
 w1<-unique(hu$dist_S[(hu$dist_S!=0)])
-w1  #x-coord where the jump occurs
+w1  #x-coords where the jumps occur, and the max dist
 h1<-unique(hu$S)
-h1  #y-coord where the jump occurs
+h1  #y-coords of the above points
 area_S<-((w1[2]-w1[1])*(h1[2]-h1[1]))+((w1[3]-w1[2])*(h1[3]-h1[1]))
-area_S
-
-area_S==hu$Au_S  # it's a check
-
-hu$Au_Si
+if (abs(area_S-hu$Au_S)<1e-12)  
+{
+  print("passed")
+} else
+{
+  print("Au_S incorrectly computed")
+}
 
 #P stat value for upper tail
-(area_S-hu$Au_Si)==hu$abs_res 
+if (abs(area_S-hu$Au_Si-hu$abs_res)<1e-12)
+{
+  print("passed")
+}else
+{
+  print("P stat incorrectly computed")
+}
 
-#Test for when two parallel boundary lines are on opposite sides of vi+vj=1 line
-lb=0.3
-ub=0.8
+#Test for the case in which the two parallel boundary lines are on opposite 
+#sides of vi+vj=1 line
+lb<-0.28
+ub<-0.8
 
 #calling P stat for middle section
 hm<-Pbds(vi,vj,lb=lb,ub=ub)
@@ -136,19 +166,27 @@ w1  #x-coord where the jump occurs
 h1<-unique(hm$S)
 h1  #y-coord where the jump occurs
 area_S<-((w1[2]-w1[1])*(h1[2]-h1[1]))+((w1[3]-w1[2])*(h1[3]-h1[1]))
-area_S
-
-area_S==hm$Au_S # it's a check
-
-hm$Au_Si
+if (abs(area_S-hm$Au_S)<1e-12) 
+{
+  print("passed")
+}else
+{
+  print("Error")
+}
 
 #P stat value for middle section
-(area_S-hm$Au_Si)==hm$abs_res
+if (abs(area_S-hm$Au_Si-hm$abs_res)<1e-12)
+{
+  print("passed")
+}else
+{
+  print("Error")
+}
 ```
 
 # Test skewness and third central moment functions
 
-Test for unbiased estimator of third central moment:
+We here test the function `my3cm`, which is an unbiased estimator of the 3rd central moment:
 ```{r test_myskewness, echo=T, cache=T, cache.extra=list(mtime("SkewnessAnd3CentMom.R"))}
 source("SkewnessAnd3CentMom.R")
 set.seed(101)
@@ -157,8 +195,9 @@ x<-rnorm(100000)
 my3cm(x) #should be close to 0
 
 x<-rpois(100000,5)
-my3cm(x) #should be close to 5, but not necessarily super close
+#should be close to 5, but not necessarily super close
 #since 3rd moments are hard to estimate accurately
+my3cm(x) 
 
 #see if it appears unbaised
 res<-NA*numeric(1000)
@@ -175,7 +214,7 @@ No need to test the accompanying skewness function, since it is such a simple ex
 
 # Test surrogate functions
 
-Test the copsurrog2d function:
+Test the `copsurrog2d` function:
 ```{r test_copsurrog2d, echo=T}
 library("VineCopula")
 source("copsurrog2d.R")
@@ -263,7 +302,7 @@ if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
 }
 ```
 
-Test copsurrog2d to see whether changing the copula
+Test `copsurrog2d` to see whether changing the copula
 markedly influences the distribution
 of the spatial mean:
 ```{r test_copsurrog2d_spatmean, echo=T, cache=T, cache.extra=list(mtime("copsurrog2d.R"),mtime("SkewnessAnd3CentMom.R"))}
@@ -298,7 +337,7 @@ sum(sksur<skdat)/length(sksur) #skewnesses of surrogs should be less than that o
 range(sksur) #these should mostly be negative
 ```
 
-Test the ncsurrog function:
+Test the `ncsurrog` function:
 ```{r test_ncsurrog, echo=T, cache=T, cache.extra=list(mtime("ncsurrog.R"))}
 source("ncsurrog.R")
 set.seed(103)
@@ -359,5 +398,7 @@ BiCopGofTest(res[,1,1],res[,2,1],family=1)
 BiCopGofTest(res[,1,2],res[,2,2],family=1)
 BiCopGofTest(res[,1,3],res[,2,3],family=1)
 ```
+
+
 
 <!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->

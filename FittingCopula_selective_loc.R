@@ -52,6 +52,18 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
   colnames(gfc_numBS)<-colnames(gfc_p_CvM)
   rownames(gfc_numBS)<-rownames(gfc_p_CvM)
   
+  gfc_numBS_success<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
+  colnames(gfc_numBS_success)<-colnames(gfc_p_CvM)
+  rownames(gfc_numBS_success)<-rownames(gfc_p_CvM)
+  
+  gfc_normal_numBS<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
+  colnames(gfc_normal_numBS)<-colnames(gfc_p_CvM)
+  rownames(gfc_normal_numBS)<-rownames(gfc_p_CvM)
+  
+  gfc_normal_numBS_success<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
+  colnames(gfc_normal_numBS_success)<-colnames(gfc_p_CvM)
+  rownames(gfc_normal_numBS_success)<-rownames(gfc_p_CvM)
+  
   LTdep_AICw<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
   colnames(LTdep_AICw)<-colnames(gfc_p_CvM)
   rownames(LTdep_AICw)<-rownames(gfc_p_CvM)
@@ -105,11 +117,14 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
         
         if(ans$IndepTestRes<level){
           gfc_numBS[i,j]<-ans$Numboot
+          gfc_numBS_success[i,j]<-ans$Numboot_success
           gfc_p_CvM[i,j]<-ans$GofRes_CvM
           gfc_p_KS[i,j]<-ans$GofRes_KS
           gfc_p_CvM_stat[i,j]<-ans$GofRes_CvM_stat
           gfc_p_KS_stat[i,j]<-ans$GofRes_KS_stat
           
+          gfc_normal_numBS[i,j]<-ans$Numboot_Normal
+          gfc_normal_numBS_success[i,j]<-ans$Numboot_success_Normal
           gfc_normal_p_CvM[i,j]<-ans$GofRes_Normal_CvM
           gfc_normal_p_KS[i,j]<-ans$GofRes_Normal_KS
           gfc_normal_p_CvM_stat[i,j]<-ans$GofRes_Normal_CvM_stat
@@ -130,10 +145,13 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
         }else{
           num_indep<-num_indep+1
           gfc_numBS[i,j]<-Inf
+          gfc_numBS_success[i,j]<-Inf
           gfc_p_CvM[i,j]<-Inf         # I just put Inf to see when it's indep?
           gfc_p_KS[i,j]<-Inf
           gfc_p_CvM_stat[i,j]<-Inf         # I just put Inf to see when it's indep?
           gfc_p_KS_stat[i,j]<-Inf
+          gfc_normal_numBS[i,j]<-Inf
+          gfc_normal_numBS_success[i,j]<-Inf
           gfc_normal_p_CvM[i,j]<-Inf  # If gofnormal==F, then gfc_rmal_p matrices also contains Inf at all off-diagonal entries
           gfc_normal_p_KS[i,j]<-Inf
           gfc_normal_p_CvM_stat[i,j]<-Inf
@@ -157,10 +175,13 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
   # Save the results
   RES_sp<-list(num_indep_loc_pair=num_indep/2,
                gfc_numBS=gfc_numBS,
+               gfc_numBS_success=gfc_numBS_success,
                gfc_p_CvM=gfc_p_CvM,
                gfc_p_KS=gfc_p_KS,
                gfc_p_CvM_stat=gfc_p_CvM_stat,
                gfc_p_KS_stat=gfc_p_KS_stat,
+               gfc_normal_numBS=gfc_normal_numBS,
+               gfc_normal_numBS_success=gfc_normal_numBS_success,
                gfc_normal_p_CvM=gfc_normal_p_CvM,
                gfc_normal_p_KS=gfc_normal_p_KS,
                gfc_normal_p_CvM_stat=gfc_normal_p_CvM_stat,

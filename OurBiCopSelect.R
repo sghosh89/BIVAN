@@ -1,5 +1,5 @@
 library(VineCopula)
-
+source("MyBiCopGofTest.R")
 #This function takes a sample from a bivariate distribution
 #consisting of values between 0 and 1 and:
 #a) tests for independence
@@ -43,20 +43,24 @@ library(VineCopula)
 #                   goodness of fit test for top-ranking copula
 #                   by AIC or BIC
 #GofRes_KS        Same, but using a Kolmogorov-Smirnov-based 
-#                   test. See docs for BiCopGofTest in the 
+#                   test. See docs for MyBiCopGofTest in the 
 #                   VineCopula package
 #GofRes_CvM_stat
 #GofRes_KS_stat   Statistics for the tests
 #Numboot          Number of bootstraps (numBSsmall/large)
+#Numboot_success  Number of succeeded bootstraps out of Numboot
 #GofRes_Normal_CvM
 #GofRes_Normal_KS
 #GofRes_Normal_CvM_stat
-#GofRes_Normal_KS_stat    Same as above, but for testing the
-#                           goodness of fit of the normal 
-#                           copula.
-#Numboot_Normal   Number of bootstraps for the normal test 
-#                   (numBSsmall/large)
-#
+#GofRes_Normal_KS_stat    Same as above, but for testing the goodness of fit of the normal copula.
+
+#Numboot_Normal   Number of bootstraps for the normal test (numBSsmall/large)
+#Numboot_success_Normal  Number of succeeded bootstraps out of Numboot_Normal
+#relLTdep_AICw    Model-averaged lower-tail dependence statistic (AIC-weightage based)
+#relUTdep_AICw    Model-averaged upper-tail dependence statistic (AIC-weightage based)
+#relLTdep_BICw    Model-averaged lower-tail dependence statistic (BIC-weightage based)
+#relUTdep_BICw    Model-averaged upper-tail dependence statistic (BIC-weightage based)
+
 OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                          numBSsmall=100,pthresh=0.2,numBSlarge=1000,
                          gofnormal=TRUE,status=TRUE)
@@ -125,17 +129,19 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       stop("Error in OurBiCopSelect: incorrect AICBIC")
     }
     Numboot<-numBSsmall
-    gres<-BiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
+    gres<-MyBiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
                        method="kendall",B=numBSsmall)
     GofRes_CvM<-gres$p.value.CvM
     GofRes_KS<-gres$p.value.KS
+    Numboot_success<-gres$B_success
     if (GofRes_CvM<pthresh || GofRes_KS<pthresh)
     {
       Numboot<-numBSlarge
-      gres<-BiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
+      gres<-MyBiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
                          method="kendall",B=numBSlarge)
       GofRes_CvM<-gres$p.value.CvM
       GofRes_KS<-gres$p.value.KS
+      Numboot_success<-gres$B_success
     }
     GofRes_CvM_stat<-gres$statistic.CvM
     GofRes_KS_stat<-gres$statistic.KS
@@ -145,18 +151,22 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
     if(gofnormal==T){
       if (status) {cat(paste("Starting gof for normal copula: ",Sys.time(),"\n"))}
       Numboot_Normal<-numBSsmall
-      gres_normal_cop<-BiCopGofTest(u1,u2,family=1,method="kendall",B=numBSsmall)
+      gres_normal_cop<-MyBiCopGofTest(u1,u2,family=1,method="kendall",B=numBSsmall)
       GofRes_Normal_CvM<-gres_normal_cop$p.value.CvM
       GofRes_Normal_KS<-gres_normal_cop$p.value.KS
+      Numboot_success_Normal<-gres_normal_cop$B_success
+      
       if (GofRes_Normal_CvM<pthresh || GofRes_Normal_KS<pthresh)
       {      
         Numboot_Normal<-numBSlarge
-        gres_normal_cop<-BiCopGofTest(u1,u2,family=1,method="kendall",B=numBSlarge)
+        gres_normal_cop<-MyBiCopGofTest(u1,u2,family=1,method="kendall",B=numBSlarge)
         GofRes_Normal_CvM<-gres_normal_cop$p.value.CvM
         GofRes_Normal_KS<-gres_normal_cop$p.value.KS
       }
       GofRes_Normal_CvM_stat<-gres_normal_cop$statistic.CvM
       GofRes_Normal_KS_stat<-gres_normal_cop$statistic.KS
+      Numboot_success_Normal<-gres_normal_cop$B_success
+      
       if (status) {cat(paste("Done: ",Sys.time(),"\n"))}
     }else{
       GofRes_Normal_CvM<-NA
@@ -164,6 +174,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       GofRes_Normal_CvM_stat<-NA
       GofRes_Normal_KS_stat<-NA
       Numboot_Normal<-NA
+      Numboot_success_Normal<-NA
     }
   } else {
     InfCritRes<-NA
@@ -172,12 +183,14 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
     GofRes_CvM_stat<-NA
     GofRes_KS_stat<-NA
     Numboot<-NA
+    Numboot_success<-NA
     
     GofRes_Normal_CvM<-NA
     GofRes_Normal_KS<-NA
     GofRes_Normal_CvM_stat<-NA
     GofRes_Normal_KS_stat<-NA
     Numboot_Normal<-NA
+    Numboot_success_Normal<-NA
     
     relLTdep_AICw<-NA
     relUTdep_AICw<-NA
@@ -192,11 +205,13 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
               GofRes_CvM_stat=GofRes_CvM_stat,
               GofRes_KS_stat=GofRes_KS_stat,
               Numboot=Numboot,
+              Numboot_success=Numboot_success,
               GofRes_Normal_CvM=GofRes_Normal_CvM,
               GofRes_Normal_KS=GofRes_Normal_KS,
               GofRes_Normal_CvM_stat=GofRes_Normal_CvM_stat,
               GofRes_Normal_KS_stat=GofRes_Normal_KS_stat,
               Numboot_Normal=Numboot_Normal,
+              Numboot_success_Normal= Numboot_success_Normal,
               relLTdep_AICw=relLTdep_AICw,
               relUTdep_AICw=relUTdep_AICw,
               relLTdep_BICw=relLTdep_BICw,

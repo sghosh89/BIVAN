@@ -1,5 +1,6 @@
 library(mvtnorm)
 library(VineCopula)
+source("preprocessors.R")
 #-------------------------------------
 MyBiCopGofTest<-function (u1, u2, family, par = 0, par2 = 0, method = "white", 
           max.df = 30, B = 100, obj = NULL) 

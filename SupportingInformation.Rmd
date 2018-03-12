@@ -14,6 +14,13 @@ tables: True
 
 updated on `r Sys.Date()`
 
+<!--New latex commands-->
+\newcommand{\mean}{\operatorname{mean}}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\cor}{\operatorname{cor}}
+\newcommand{\P}{\operatorname{P}}
+\newcommand{\D2}{\operatorname{D}^2}
+
 <!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
@@ -117,37 +124,107 @@ formulas
 <!--Shya to add reference to Burnham and Anderson, please-->
 ; likewise for BIC.
 
+<!--Shya please insert some additional material for multivariate datasets - perhaps
+you don't need much because basically you just ran the bivariate analysis on each pair
+of locations, but you need to say that and then maybe a few sentences about how 
+everything was tallied up after having done that-->
+
 ### Non-parametric analysis of tail dependence
 
-<!--Shya to edit this description of the stats. Don't need subsections for each stat.-->
-<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data-->
-<!--Eventually, for the multivariate data, we will need to demonstrate using a similar analysis to what is in mbsyn, that you can detect asymmetry of tail dependence using these stats - we have done this, but it needs to be adapted-->
+![Schematic diagram supporting defintions of nonparametric tail dependence statistics.\label{fig_stat_image}](./stat_image.jpg){ width=30%, height=30% }
+<!--Shya, can you please change this figure so it shows u (horizontal) and v (vertical) on the axis labels instead of vi and vj? Often times computer variables do not make good mathematical notation, so I have changed this, I also made changes for similar reasons to other notation elsewhere.-->
 
-![schematic diagram for npa of tail dependence\label{fig_stat_image}](./stat_image.jpg){ width=30%, height=30% }
+Left- and right-tail dependence quantify the extent to which two ranked
+variables $u_i$, $v_i$ for $i=1,...,n$ 
+(see section REF for defintions of $u_i$ and $v_i$)
+<!--Shya pls insert ref to the section immediately above this one-->
+are related in the left and right tails, respectively, of their 
+distributions (REF). 
+<!--Shya, pls cite the Nelson book-->
+Our nonparametric study of tail dependence uses three
+statistics which can quantify the extent to which $u_i$ and $v_i$ are 
+related in any part of their distributions. We here describe the 
+statistics. The statistics were formulated with positively associated
+variables in mind. All the variables we study are positively associated
+when they are significantly associated. So definitions and associated 
+diagrams will assume positive associations, though generalizations are 
+possible. Given two bounds 
+$0 leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
+$u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
+fall (these are the blue and red lines, respectively, in 
+Figure \ref{fig_stat_image}). Our statistics quantify the dependence
+between $u_i$ and $v_i$ in the region bounded by these lines.
+Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
+dependence in the left parts of the distributions of $u$ and $v$, and 
+using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
+the right parts of the distributions. 
 
-In a given ranking based copula plot of a dataset within a unit square box the data points are scattered according to their joint-marginal distribution. Say, there are total $n$ number of data points and $vi$ and $vj$ are the ranks of the dataset scaled down by factor $(n+1)$ taken at $(i,j)$ location pair or for $(i,j)$ observables. Now, to calculate our statistic we choose an arbitrary region of the box bounded by two parallel lines [blue line : $vi+vj=2l_{b}$, red line : $vi+vj=2u_{b}$ in Figure \ref{fig_stat_image}] where $(l_{b},u_{b})$ has a range $[0,1]$ with the condition that $u_{b}$ must be greater than $l_{b}$. Now we will demonstrate 3 different type of stats : 
-
-$Cor$, the correlation between the ${n}'$ number of points lying in between those two parallel lines, is given by;
-
+The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
+correlation of $u_i$ and $v_i$ that is attributable to the points 
+lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$, i.e.,
 \begin{equation}\label{eq.Cor}
-   Cor = \frac{1}{n-1}\sum_{k=1}^{{n}'} \left [ vi(k)-\left<vi\right> \right ] \left[ vj(k)-\left<vj\right> \right ]
+   \cor_{l_b,u_b}(u,v) = \frac{1}{(n-1)\sqrt{\var(u)\var(v)}}\sum 
+   (u_i-\mean(u)) (v_i-\mean(v)),
 \end{equation}
+where means and variances are computed using all $n$ data 
+points, but the
+sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
+$u_i+v_i < 2u_b$. 
+Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
+between $u$ and $v$ in the region given by the bounds.
 
-where, $\left<vi\right>$ and $\left<vj\right>$ are the arithmatic mean of $vi$ and $vj$ of $n$ data points within the box, respectively.
-
-We can shift that pair of lines along the diagonal line of the box and can get a sense how the points are spread along the diagonal and how the quantity $Cor$ changes.
-
-For multivariate datasets due to limited number of data points this chosen region is broad, i. e., we measured $Cor$ for $(l_{b}=0,u_{b}=0.5)$ and $(l_{b}=0.5,u_{b}=1)$ and stored as $Corl$ and $Coru$ respectively. If we take their difference then that will tell us which end of the copula is with stronger correlation. A copula with $(Corl-Coru)>0$ should have more lower tail dependence whereas $(Corl-Coru)<0$ indicates more upper tail dependence. Symmetric copula, e. g., (Normal or Frannk) has $Corl = Coru$.
-
-On a second thought, we imagine as if we progress from the diagonal towards the sides of the box with $h$ gradually increasing from $0$ to $h_{max}$, where $h_{max}$ is the half-length of the longer one between two parallel lines. Then we take $S$, the ratio of number of points which are within $h$ distance from the diagonal on both side and the total number of points lie within the shaded region. Now, we want to measure that how much $S$ deviates from the standard $Si$ line when they are plotted against $h$ where $Si$ is the ratio of the area covered by distance $h$ on both side and the area of shaded region. This deviation $P$, representing our statistics to measure tail dependence, is given by;
-
+We also defined a statistic $\P_{l_b,u_b}$, using the same bounds
+$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
+$S(h)$ to be the  
+number of points $(u_i,v_i)$ within the bounds 
+and a distance less than $h$ from the line $v=u$, divided by the 
+total number of points within the bounds. This function is
+defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
+is half the longer of the two segments obtained by intersecting the
+bounds with the unit square. It is easy to see $S(0)=0$ and 
+$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
+of $h$, to be the area within the bounds and the unit square
+and within distance $h$ of the line $v=u$, divided by the area
+within the bounds and the unit square. This is the expected value of
+$S(h)$ for independent data. We then defined
 \begin{equation}\label{eq.P}
-   P = \int_0^{h_{max}} \left[ S(h) - Si(h) \right] \,dh
+   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
 \end{equation}
+As for $\cor_{l_b,u_b}$, larger values of $P_{l_b,u_b}$ 
+indicate stronger positive association
+between $u$ and $v$ in the region given by the bounds.
 
-Like we said before, for multivariate dataset we measure $Pl = P$ for $(l_{b}=0, u_{b}=0.5)$ and $Pu = P$ for $(l_{b}=0.5, u_{b}=1)$ and these $Pl$, $Pu$ represent the lower and upper tail statistic respectively. A copula having $(Pl-Pu)>0$ represents more lower tail dependence whereas a copula with negative $(Pl-Pu)$ represents more upper tail dependence. A copula with equal $Pl$ and $Pu$ value is considered as symmetric with no tail-dependence.
+The third statistic, $\D2_{l_b,u_b}(u,v)$, is the average squared 
+distance between points satisfying $u_i+v_i>2l_b$ and 
+$u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
+$\P_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
+$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\D2_{l_b,u_b}$ is 
+then small. 
+Thus large values of $\cor_{l_b,u_b}$ and $\P_{l_b,u_b}$ indicate strong 
+dependence in the portions of the distributions of $u$ and $v$ given by 
+the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
+$\D2_{l_b,u_b}$ indicate strong dependence. 
 
-For our third statistic, we imagine the diagonal line of the box as the major axis of the copula. We calculate squared distance of each scattered point from $vi-vj=0$ [the dotted diagonal line in Figure \ref{fig_stat_image}] and then take their average. This mean squared distance (say, $D2$) represents the average width of the copula for that shaded region. Similarly, we calculate $D2l$ and $D2u$ for the lower and upper tail of a copula for multivariate dataset with $(l_{b}=0, u_{b}=0.5)$ and $(l_{b}=0.5, u_{b}=1)$ respectively. If for a given copula $(D2u-D2l)>0$, then it is with more lower tail dependence as the upper-end points are distantly spaced from the long axis of the copula. Conversely, $(D2u-D2l)<0$ means a copula with more upper tail dependence. If $D2l$ and $D2u$ are equal, then the data come from a symmetric copula.
+For large datasets (i.e., datasets with large $n$),
+we can consider $l_b$ and $u_b$ close together without incurring undue
+sampling variation in our statistics, and we can consider 
+several different bands $(l_b,u_b)$ to understand how dependence
+varies in different parts of the distributions. But for datasets with 
+smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
+We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
+and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\P_l=\P_{0,.5}$,
+$\P_u=\P_{0.5,1}$, $\D2_l=\D2_{0,0.5}$, and $\D2_u=\D2_{0.5,1}$.
+
+The difference $\cor_l-\cor_u$ is expected to be positive if 
+dependence in the left halves of the distributions is stronger 
+than dependence in their right halves; likewise for $\P_l-\P_u$.
+This holds, for instance, for the Clayton copula (REF).
+<!--Shya to cite the Nelson book-->
+On the other hand, the difference $\D2_u-\D2_l$ is expected to be 
+positive under the same conditions, so we use these three differences
+to detect asymmetry of tail dependence.
+
+<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
 
 ### Stat-testing of Non-parametric analysis (for limited number of datapoints)
 
@@ -182,7 +259,6 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b)
 
 ![stat_testing_results_datapt_1000\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
-\newpage
 ## Soil C and N data
 
 ### Model selection approach

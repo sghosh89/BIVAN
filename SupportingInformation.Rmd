@@ -77,6 +77,7 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
 most implemented using tools from the `VineCopula` package. Code combining these tools is in the
 [*OurBiCopSelect*](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [*BIVAN*](https://github.com/sghosh89/BIVAN) repository. 
+<!--Shya, links to code are a good idea! Thanks for figuring this out and adding, we should do something like this in other methods sections.-->
 
 First, we produced ranks 
 $(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set 

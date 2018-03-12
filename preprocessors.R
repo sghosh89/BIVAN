@@ -1,3 +1,5 @@
+#Tools copied from the VineCopula package for use by MyBiCopGofTest.
+
 preproc <- function(args, ..., na.txt = NULL) {
   # augment arguments
   args$na.txt <- na.txt

@@ -46,10 +46,11 @@ plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 ```
 
 <!--The copula looks like this:-->
-```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data.\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
+```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see YYY).\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
 #convert to a copula and plot
 v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 ```
+<!--Shya please insert an automatic reference to the methods section "Model selection approach" at the location YYY above. I could not easily find a way to do section references by number that was consistent with the figure and table reference system you already have, but perhaps I missed it. In the end I think we will need to be able to refer to sections as well as figures and tables by number. I can see there is a package called "bookdown" that may help but there may be something easier using similar tools to what you have already used for figures and tables.-->
 
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_soilCNraw}. The copula is shown in \ref{fig_soilCNcop}.
 
@@ -73,7 +74,47 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 
 ### Model selection approach
 
-Here we intend to study that if for a given bivariate dataset we are able to plot the data within a unit square box based on their rankings then does that data look like totally independent or do they assume a copula structure? If they do show some dependence then at best by which family of copula we can describe their dependence? To answer these questions, we first choose to pass our bivariate dataset through a p-value based independence-test using *BiCopIndTest* function from *VineCopula* package. For that we set the significance level equal to $0.05$. If independence is rejected then we perform a test based on maximum likelihood estimation which returns us estimated parameters and log-likelihood, AIC, BIC, lower and upper tail dependence informations for a specific copula indicated by its familycode. We used *BiCopEst* function from *VineCopula* package for families like **N**ormal/Gaussian*{1}*, **C**layton*{3}*, **G**umbel*{4}*, **F**rank*{5}*, **J**oe*{6}*, **BB1***{7}*, **BB6***{8}*, **BB7***{9}*, **BB8***{10}*, **S**urvival **C**layton*{13}*, **S**urvival **G**umbel*{14}*, **S**urvival **J**oe*{16}*, **S**urvival **BB1***{17}*, **S**urvival **BB6***{18}*, **S**urvival **BB7***{19}* and **S**urvival **BB8***{20}*. The integer within the curly bracket *`{}`* indicates the familycode of a specific copula. We chose a best-fitted copula based on minimum AIC value and to verify that fitted copula-model we performed a goodness-of-fit test of our given data with that best-fitted copula-family by [*MyBiCopGofTest*](https://github.com/sghosh89/BIVAN/blob/master/MyBiCopGofTest.R) function from [*BIVAN*](https://github.com/sghosh89/BIVAN) repository. For the goodness-of-fit test if any of these p-values (based on CvM or KS method) is less than a threshold ($=0.2$) we used $1000$ number of bootstraps and $100$ otherwise. We calculated the Akaike weights for each copula model we chose and used that to find the model averaging lower and upper tail dependence value.  
+For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
+most implemented using tools from the `VineCopula` package. Code combining these tools is in the
+[*OurBiCopSelect*](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [*BIVAN*](https://github.com/sghosh89/BIVAN) repository. 
+
+First, we produced ranks 
+$(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set 
+$\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$ and 
+we set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; further work was with the $u_i$ 
+and $v_i$. Ranks $\tilde{u}_i$ and $\tilde{v}_i$ were $1$, for the 
+smallest element, up to $n$, for the largest. 
+
+Second, we did a test of the independence of the $u_i$ and $v_i$. Subsequent model 
+selection algorithms are ineffective if data could not be distinguished from independent data 
+since most or all bivariate copula families considered include the independent copula in the 
+family or as a boundary case. The independence test was as implemented in the `BiCopIndTest`
+function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. If independence could be rejected ($0.05$ significance level), model selection proceeded.
+
+The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian*{1}*, **C**layton*{3}*, **G**umbel*{4}*, **F**rank*{5}*, **J**oe*{6}*, **BB1***{7}*, **BB6***{8}*, **BB7***{9}*, **BB8***{10}*, **S**urvival **C**layton*{13}*, **S**urvival **G**umbel*{14}*, **S**urvival **J**oe*{16}*, **S**urvival **BB1***{17}*, **S**urvival **BB6***{18}*, **S**urvival **BB7***{19}* and **S**urvival **BB8***{20}* copulas.
+Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC) and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas (REF). 
+<!--Shya, we here need a reference to the Burnham and Anderson book-->
+Descriptions of these copula families can be found in introductory texts on copulas
+<!--Shya to please insert references for both the books on copulas we have-->
+and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
+best-fitting member of each family was also provided by `BiCopEst`.
+
+Model selection methods will give the *relative* support of several models, but will not,
+on their own, indicate whether any of the models selected is an objectively good fit (all 
+models considered might poorly describe the data). To test this, and as the fourth step of
+our procedure, we tested the goodness of fit of our best-AIC copula family using a 
+bootstrapping procedure implemented in `BiCopGofTest` of `VineCopula`. The method performed 
+two tests, one based on a Cramer-von Mises statistic, and one based on a 
+Kolmogorov-Smirnov statistic. For computational efficiency, 
+an initial run using $100$ bootstraps was performed, and if
+the $p$-value resulting from either test was less than $0.2$, tests were re-run with 
+$1000$ boostraps.
+
+Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
+model-averaged lower- and upper-tail dependence values using standard model averaging 
+formulas
+<!--Shya to add reference to Burnham and Anderson, please-->
+; likewise for BIC.
 
 ### Non-parametric analysis of tail dependence
 

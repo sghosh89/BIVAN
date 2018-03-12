@@ -1,6 +1,11 @@
 library(mvtnorm)
 library(VineCopula)
 source("preprocessors.R")
+
+#This is a slight modification of the BiCopGofTest of the VineCopula package,
+#changed to include additional output on numbers of successful bootstraps,
+#generated but not returned by the original function.
+
 #-------------------------------------
 MyBiCopGofTest<-function (u1, u2, family, par = 0, par2 = 0, method = "white", 
           max.df = 30, B = 100, obj = NULL) 

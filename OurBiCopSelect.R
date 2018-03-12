@@ -1,5 +1,6 @@
 library(VineCopula)
 source("MyBiCopGofTest.R")
+
 #This function takes a sample from a bivariate distribution
 #consisting of values between 0 and 1 and:
 #a) tests for independence
@@ -10,8 +11,8 @@ source("MyBiCopGofTest.R")
 #   for the goodness of fit in two ways
 #d) optionally tests for the goodness of fit of the normal copula
 #The function is a re-implementation of the BiCopSelect function
-#in the VineCopula package, re-done to ensure we could control
-#what we were getting.
+#in the VineCopula package, re-done to ensure we could understand and
+#control what we were getting.
 #
 #Args
 #u1, u2       The sample. These can be obtained, for instance, 

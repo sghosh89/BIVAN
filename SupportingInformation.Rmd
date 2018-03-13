@@ -25,6 +25,12 @@ updated on `r Sys.Date()`
 \newcommand{\Dsq}{\operatorname{D}^2}
 <!--\newcommand{\D2}{\operatorname{D}^2} gives error msg : insert $ -->
 
+<!--
+```{r, echo=F}
+options(knitr.table.format = "html")
+```
+-->
+
 <!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
@@ -653,11 +659,13 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 ```
 
 ```{r tab_count_bestcop, echo=F, results='markup'}
+#library(dplyr)
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], 
              format='pandoc',
              caption = "Aphid_count : best fit copula family for each selective location pair\\label{tab_count_bestcop}",
              booktabs=TRUE
-             )
+             )#%>% # only with 'latex'/'html' format
+ # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
 ```
 
 ```{r tab_count_AICw, echo=F, results='markup'}
@@ -922,6 +930,7 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              )
 ```
 
+\newpage
 ```{r tab_pns_AICw,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
              format="pandoc",
@@ -930,6 +939,7 @@ knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
              booktabs=TRUE)
 ```
 
+\newpage
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$gfc_p_CvM,
              format="pandoc",
@@ -1122,6 +1132,9 @@ dev.off()
 
 
 
+
+
+\newpage
 ## References:
 
 

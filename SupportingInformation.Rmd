@@ -1024,16 +1024,21 @@ knitr::kable(stat_plankton_north_sea$numericdf,
 Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
 
 # Question 2 analyses for each dataset
+Recall that question 2 is: What are some possible causes of non-Gaussian copula structure? 
+
+
+
 
 # Question 3 analyses for each dataset
+Recall that question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
 
-Recall question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
+## Skewness of the spatial mean
 
-**Change of skewness : ** Here, we claim that because of significant tail dependence of the multivariate copula structure, the skewness of the time-series data averaged over all selective locations changed significantly from the individual skewness of time-series data taken at each pairwise location. Spatial mean of the time series data extracts that tail dependence of the multivariate data set, if any, and reflected in the averaged skewness. We tested this with null hypothesis $H_{0}$. If $H_{0}$ is true that means our multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. So, first we generated $10000$ number of surrogate normal copula from our given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we plotted the distribution of spatial mean of each surrogate time series data set and the given multivariate data. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence.
+Here, we claim that because of significant tail dependence of the multivariate copula structure, the skewness of the time-series data averaged over all selective locations changed significantly from the individual skewness of time-series data taken at each pairwise location. Spatial mean of the time series data extracts that tail dependence of the multivariate data set, if any, and reflected in the averaged skewness. We tested this with null hypothesis $H_{0}$. If $H_{0}$ is true that means our multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. So, first we generated $10000$ number of surrogate normal copula from our given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we plotted the distribution of spatial mean of each surrogate time series data set and the given multivariate data. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence.
 
 To verify that we use aphid-count data, aphid-firstflight data and plankton-north-sea data. For aphid data we choose only those locations for which atleast $30$ number of data points present in each time series when taken as pairwise locations. For plankton-north-sea data that threshold on number of data points is $45$. 
 
-## Aphid count \label{skewness_count}
+### Aphid count \label{skewness_count}
 
 Figure \ref{fig_skewness_count} shows that averaged skewness is much lower than expected if the aphid count data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_count}). As $p<0.05$, we reject $H_{0}$. This result is consistent with the non-parametric analysis and model fitting results which indicated lower tail dependence. 
 
@@ -1064,7 +1069,7 @@ dev.off()
 ![Skewness_count for species : Green spruce aphid\label{fig_skewness_count}](./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf){ width=50%, height=50% }
 
 
-## Aphid first flight \label{skewness_ff}
+### Aphid first flight \label{skewness_ff}
 
 Figure \ref{fig_skewness_ff} shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_ff}). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
 
@@ -1090,7 +1095,7 @@ dev.off()
 
 ![Skewness_firstflight for species : Leaf-curling plum aphid\label{fig_skewness_ff}](./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf){ width=50%, height=50% }
 
-## North Sea plankton \label{skewness_pns}
+### North Sea plankton \label{skewness_pns}
 
 Figure \ref{fig_skewness_pns} shows that averaged skewness is lower than expected if the plankton north sea data came from a normal copula. Our previous results on non-parametric analysis and model fitting showed lower tail dependence. Here, as $p>0.05$, we cannot reject $H_{0}$, .......???
 
@@ -1119,10 +1124,17 @@ dev.off()
 
 ![Skewness_plankton_north_sea for species : Ceratium_furca\label{fig_skewness_pns}](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=50%, height=50% }
 
+## Extinction risk
 
 
 
-## References:
+## Taylor's law
+
+
+
+
+
+# References:
 
 
 

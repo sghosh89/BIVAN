@@ -3,8 +3,15 @@ library(copula)
 #This function takes two time series measured at the same times 
 #in different locations and creates surrogate datasets which
 #are statistically similar except the copula has been changed 
-#to any specified copula. Any one-parameter 2d copula implemented 
-#in the copula package can be used as the target copula.
+#to a copula in any specified family. Any one-parameter 2d copula family implemented 
+#in the copula package can be used as the target family.
+#"Statistcally similar" means the location
+#marginals are (exactly) the same and the kendall or 
+#spearman correlation of time series between locations is 
+#similar.
+#
+#This is better than ncsurrog because and target copula family can
+#be used, but worse because it is only for 2-location datasets.
 #
 #Args
 #m          A T by 2 matrix, where T is the length of the time 

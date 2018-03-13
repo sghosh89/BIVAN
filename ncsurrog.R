@@ -2,9 +2,16 @@ library(copula)
 library(mvtnorm)
 
 #This function takes a bunch of time series measured at the same
-#time in different locations and creates surrogate datasets which
+#times in different locations and creates surrogate datasets which
 #are statistically similar except the copula has been randomized
-#to a normal copula.
+#to a copula in the normal family. "Statistcally similar" means the location
+#marginals are (exactly) the same and the pairwise kendall or 
+#spearman correlations of time series between locations are 
+#similar.
+#
+#This is better than copsurrod2d because it can do multivariate data
+#but it is worse that copsurrog2d because the target copula can only 
+#be a normal copula.
 #
 #Args
 #m          A N by n matrix, where N is the length of the time series 

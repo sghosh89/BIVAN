@@ -10,6 +10,9 @@ output:
     keep_tex: yes
     fig_caption: yes
 tables: True
+
+csl: science.csl
+bibliography: REF_SI.bib
 ---
 
 updated on `r Sys.Date()`
@@ -19,7 +22,8 @@ updated on `r Sys.Date()`
 \newcommand{\var}{\operatorname{var}}
 \newcommand{\cor}{\operatorname{cor}}
 \newcommand{\Ps}{\operatorname{P}}
-\newcommand{\Dt}{\text{D}^2}
+\newcommand{\Dsq}{\operatorname{D}^2}
+<!--\newcommand{\D2}{\operatorname{D}^2} gives error msg : insert $ -->
 
 <!--Basic setup-->
 ```{r setup, echo=F}
@@ -40,37 +44,44 @@ source("TestStats_multivar_dataset.R")
 source("skewness_multivar_dataset.R")
 ```
 
-# Descriptions of data
+# Descriptions of data \label{Description_data}
 <!--Each data contributor writes one to a few paragraphs about their data.-->
 
-## Soil C and N data
+## Soil C and N data  \label{SoilCN_data}
+
+Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_soilCNraw}. The copula is shown in Figure \ref{fig_soilCNcop}.
 
 <!--The raw data look like this:-->
-```{r load_data_Loecke, echo=F, fig.cap="Plot of the raw soil C and N data.\\label{fig_soilCNraw}", fig.height=5, fig.width=5}
+```{r load_data_Loecke, echo=F, results='hide'}
+#fig.cap="Plot of the raw soil C and N data.\\label{fig_soilCNraw}", fig.height=3, fig.width=3}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
-plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
+pdf("./Results/SoilCNraw.pdf")
+plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1.5,cex.axis=1.5)
+dev.off()
 ```
 
 <!--The copula looks like this:-->
-```{r rankandplot_Loecke, echo=F, fig.cap="Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see YYY).\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
+```{r rankandplot_Loecke, echo=F, results='hide'}
+#fig.cap="Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}).\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
+
 #convert to a copula and plot
+pdf("./Results/SoilCNcop.pdf")
 v_CN<-getcopula(d=d,rankon=T,ploton=T) 
+dev.off()
 ```
-
 <!--Shya please insert an automatic reference to the methods section "Model selection approach" at the location YYY above. I could not easily find a way to do section references by number that was consistent with the figure and table reference system you already have, but perhaps I missed it. In the end I think we will need to be able to refer to sections as well as figures and tables by number. I can see there is a package called "bookdown" that may help but there may be something easier using similar tools to what you have already used for figures and tables.-->
+![Plot of the raw soil C and N data.\label{fig_soilCNraw}](./Results/SoilCNraw.pdf){ width=30%, height=30% }
 
-Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_soilCNraw}. The copula is shown in \ref{fig_soilCNcop}.
+![Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}). \label{fig_soilCNcop}](./Results/SoilCNcop.pdf){ width=30%, height=30% }
 
-<!--Shyamolina, let's not put in newpages and other spacing modifications until possibly at the end, once all the content is essentially settled-->
-
-## Aphid data
+## Aphid data \label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data 
    * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
    * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
    
-## North Sea plankton data
+## North Sea plankton data \label{Pns_data}
    * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
    * We threw out all locations that had fewer than 45 years data
    * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
@@ -78,9 +89,9 @@ Carbon and nitrogen in soil at many locations across CONUS (Terry to augment thi
 # Question 1 analyses for each dataset
 Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
 
-## Details of methods
+## Details of methods \label{Method}
 
-### Model selection approach
+### Model selection approach \label{Model_selection}
 
 For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
 most implemented using tools from the `VineCopula` package. Code combining these tools is in the
@@ -101,9 +112,9 @@ family or as a boundary case. The independence test was as implemented in the `B
 function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. If independence could be rejected ($0.05$ significance level), model selection proceeded.
 
 The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian*{1}*, **C**layton*{3}*, **G**umbel*{4}*, **F**rank*{5}*, **J**oe*{6}*, **BB1***{7}*, **BB6***{8}*, **BB7***{9}*, **BB8***{10}*, **S**urvival **C**layton*{13}*, **S**urvival **G**umbel*{14}*, **S**urvival **J**oe*{16}*, **S**urvival **BB1***{17}*, **S**urvival **BB6***{18}*, **S**urvival **BB7***{19}* and **S**urvival **BB8***{20}* copulas.
-Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC) and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas (REF). 
+Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC) and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas @burnham2003_modelselection. 
 <!--Shya, we here need a reference to the Burnham and Anderson book-->
-Descriptions of these copula families can be found in introductory texts on copulas
+Descriptions of these copula families can be found in introductory texts on copulas @burnham2003_modelselection, @nelsen2007_copula
 <!--Shya to please insert references for both the books on copulas we have-->
 and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
 best-fitting member of each family was also provided by `BiCopEst`.
@@ -121,26 +132,25 @@ $1000$ boostraps.
 
 Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
-formulas
+formulas @burnham2003_modelselection
 <!--Shya to add reference to Burnham and Anderson, please-->
 ; likewise for BIC.
 
 <!--Shya please insert some additional material for multivariate datasets - perhaps
 you don't need much because basically you just ran the bivariate analysis on each pair
 of locations, but you need to say that and then maybe a few sentences about how 
-everything was tallied up after having done that-->
+everything was tallied up after having done that ??? -->
 
-### Non-parametric analysis of tail dependence
+### Non-parametric analysis of tail dependence \label{NPA}
 
-![Schematic diagram supporting defintions of nonparametric tail dependence statistics.\label{fig_stat_image}](./stat_image.jpg){ width=30%, height=30% }
 <!--Shya, can you please change this figure so it shows u (horizontal) and v (vertical) on the axis labels instead of vi and vj? Often times computer variables do not make good mathematical notation, so I have changed this, I also made changes for similar reasons to other notation elsewhere.-->
 
 Left- and right-tail dependence quantify the extent to which two ranked
 variables $u_i$, $v_i$ for $i=1,...,n$ 
-(see section REF for defintions of $u_i$ and $v_i$)
+(see Sec. \ref{Model_selection} for defintions of $u_i$ and $v_i$)
 <!--Shya pls insert ref to the section immediately above this one-->
 are related in the left and right tails, respectively, of their 
-distributions (REF). 
+distributions @nelsen2007_copula. 
 <!--Shya, pls cite the Nelson book-->
 Our nonparametric study of tail dependence uses three
 statistics which can quantify the extent to which $u_i$ and $v_i$ are 
@@ -150,7 +160,7 @@ variables in mind. All the variables we study are positively associated
 when they are significantly associated. So definitions and associated 
 diagrams will assume positive associations, though generalizations are 
 possible. Given two bounds 
-$0 leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
+$0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
 $u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
 fall (these are the blue and red lines, respectively, in 
 Figure \ref{fig_stat_image}). Our statistics quantify the dependence
@@ -159,6 +169,8 @@ Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about
 dependence in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
 the right parts of the distributions. 
+
+![Schematic diagram supporting defintions of nonparametric tail dependence statistics.\label{fig_stat_image}](./stat_image.jpg){ width=25%, height=25% }
 
 The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
@@ -190,20 +202,20 @@ $S(h)$ for independent data. We then defined
 \begin{equation}\label{eq.P}
    P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
 \end{equation}
-As for $\cor_{l_b,u_b}$, larger values of $P_{l_b,u_b}$ 
+As for $\cor_{l_b,u_b}$, larger values of $Ps_{l_b,u_b}$ 
 indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds.
 
-The third statistic, $\Dt_{l_b,u_b}(u,v)$, is the average squared 
+The third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
 distance between points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dt_{l_b,u_b}$ is 
+$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
 then small. 
 Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
 dependence in the portions of the distributions of $u$ and $v$ given by 
 the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
-$\Dt_{l_b,u_b}$ indicate strong dependence. 
+$\Dsq_{l_b,u_b}$ indicate strong dependence. 
 
 For large datasets (i.e., datasets with large $n$),
 we can consider $l_b$ and $u_b$ close together without incurring undue
@@ -213,27 +225,27 @@ varies in different parts of the distributions. But for datasets with
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
 We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
-$\Ps_u=\Ps_{0.5,1}$, $\Dt_l=\Dt_{0,0.5}$, and $\Dt_u=\Dt_{0.5,1}$.
+$\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
 
 The difference $\cor_l-\cor_u$ is expected to be positive if 
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
-This holds, for instance, for the Clayton copula (REF).
+This holds, for instance, for the Clayton copula @nelsen2007_copula.
 <!--Shya to cite the Nelson book-->
-The difference $\Dt_u-\Dt_l$, in which the "upper" and
+The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
 "lower" statistics occur in opposite order, is also expected to be 
 positive under the same conditions. We use these three differences
 to detect asymmetry of tail dependence. Likewise, for large datasets,
 we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
-$\Dt_{1-u_b,1-l_b}-\Dt_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
+$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
 <!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
 
-### Stat-testing of Non-parametric analysis (for limited number of datapoints)
+### Stat-testing of Non-parametric analysis (for limited number of datapoints) \label{Stat_testing}
 
 Here, we want to test our $3$ types of nonparametric tail dependent statistics on both small $(35)$ and large $(1000)$ number of datapoints drawn from $4$ types of bivariate copula, namely, *Clayton* , *Normal*, *Frank* and *Survival Clayton*. Whereas *Normal* and *Frank* have symmetric tail dependence, *Clayton* and *Survival Clayton* have lower and upper tail dependence, respectively.
-First we chose a set of parameters [using *iRho* from *Copula* package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated $(Corl , Coru, Pl, Pu, D2l, D2u)$ stats. We took mean of our statistic $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $Corl - Coru$, $Pl-Pu$ and $D2u-D2l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
+First we chose a set of parameters [using *iRho* from `Copula` package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated $(Corl , Coru, Pl, Pu, D2l, D2u)$ stats. We took mean of our statistic $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $Corl - Coru$, $Pl-Pu$ and $D2u-D2l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
 
 ```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
@@ -263,9 +275,9 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b)
 
 ![stat_testing_results_datapt_1000\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
-## Soil C and N data
+## Soil C and N data \label{Ex_SoilCN}
 
-### Model selection approach
+### Model selection approach \label{Ex_SoilCN_Model_selection}
 <!--This does the computations for this section-->
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"))}
 set.seed(seed)
@@ -290,7 +302,7 @@ The model-averaged (AIC weights used for model averaging) lower-tail dependence 
 
 Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
-### Non-parametric analysis of tail dependence
+### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 <!--Do the intensive part of the analysis, calculating stats on the data and surrogates-->
 ```{r stat_soilCN_graphic_approach, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed) 
@@ -607,10 +619,10 @@ than would be expected based on a normal-copula null model.
 We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_soilCNcop}. 
 Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
 
-## Aphid abundance data for 'Green spruce aphid'
+## Aphid abundance data for 'Green spruce aphid' \label{Ex_count}
 <!--Add common and species name to header-->
 
-### Model selection approach
+### Model selection approach \label{Ex_count_Model_selection}
 
 
 ```{r read_aphid_data, echo=F}
@@ -639,8 +651,6 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 ```{r read_RES_aphid_count, echo=F}
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
-
-<!--\newpage-->
 
 ```{r tab_count_bestcop, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], 
@@ -712,7 +722,7 @@ Table \ref{tab_count_bestcop} shows that several copulas are much better support
 
 The next section looks at tail dependence in a non-parametric way.
 
-### Non-paramtric analysis of tail dependence
+### Non-paramtric analysis of tail dependence \label{Ex_count_NPA}
 
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count)}
 set.seed(seed) 
@@ -752,10 +762,10 @@ knitr::kable(stat_aphid_count$numericdf,
 
 Table \ref{tab_count_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_count_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with positive mean and almost $100$% $fracgt0$ proves that *Green spruce aphid*-count data has significant lower tail dependence.
 
-## Aphid first flight data for 'Leaf-curling plum aphid' 
+## Aphid first flight data for 'Leaf-curling plum aphid' \label{Ex_ff}
 <!--Add species common name and scientific name to header-->
 
-### Model selection approach
+### Model selection approach \label{Ex_ff_Model_selection}
 
 ```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("FittingCopula_selective_loc.R"))} 
 set.seed(seed)
@@ -770,8 +780,6 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
 ```
 
-<!--\newpage-->
-
 ```{r tab_ff_bestcop, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], 
              format='pandoc',
@@ -780,7 +788,7 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1],
              )
 ```
 
-\newpage
+
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
              format='pandoc',
@@ -841,7 +849,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
 Table \ref{tab_ff_bestcop} shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data. Table \ref{tab_ff_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_ff_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_ff_p_KS}] of the goodness of fit with atleast
 `r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_ff_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_ff_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_ff_LTdep_AICw} and Table \ref{tab_ff_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_ff_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)`** out of **`r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-RES_aphid_ff$num_indep_loc_pair`** location pair more upper tail dependence. 
 
-### Non-parametric analysis of tail dependence
+### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
 
 ```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff)}
 set.seed(seed)
@@ -881,11 +889,11 @@ knitr::kable(stat_aphid_ff$numericdf,
 
 Table \ref{tab_ff_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_ff_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with negative mean has all resampled mean less than $0$ for *Leaf-curling plum aphid*-firstflight data. This proves that there is a significant upper tail dependence in *Leaf-curling plum aphid*-firstflight data.
 
-## North sea plankton data for 'Ceratium furca'
+## North sea plankton data for 'Ceratium furca' \label{Ex_pns}
 
 <!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->
 
-### Model selection approach
+### Model selection approach \label{Ex_pns_Model_selection}
 
 ```{r read_plankton_north_sea_data, echo=F}
 d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
@@ -906,7 +914,6 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
 ```
 
-<!--\newpage-->
 ```{r tab_pns_bestcop, echo=F, results='markup'}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              format='pandoc',
@@ -915,7 +922,6 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              )
 ```
 
-\newpage
 ```{r tab_pns_AICw,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
              format="pandoc",
@@ -932,7 +938,6 @@ knitr::kable(RES_plankton_north_sea$gfc_p_CvM,
              booktabs=TRUE)
 ```
 
-<!--\newpage-->
 ```{r tab_pns_p_KS,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$gfc_p_KS,
              format="pandoc",
@@ -965,8 +970,6 @@ knitr::kable(RES_plankton_north_sea$UTdep_AICw,
              booktabs=TRUE)
 ```
 
-<!--\newpage-->
-
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw,
              format="pandoc",
@@ -979,7 +982,7 @@ Table \ref{tab_pns_bestcop} shows that several copulas are much better supported
 `r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_pns_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_pns_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_pns_LTdep_AICw} and Table \ref{tab_pns_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_pns_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having `r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-RES_plankton_north_sea$num_indep_loc_pair` location pair more lower tail dependence. 
 
 
-### Non-paramtric analysis of tail dependence
+### Non-paramtric analysis of tail dependence  \label{Ex_pns_NPA}
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea)}
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_plankton_north_sea/"
@@ -1030,11 +1033,10 @@ Recall question 3 is: What are the consequences of non-Gaussian copula structure
 
 To verify that we use aphid-count data, aphid-firstflight data and plankton-north-sea data. For aphid data we choose only those locations for which atleast $30$ number of data points present in each time series when taken as pairwise locations. For plankton-north-sea data that threshold on number of data points is $45$. 
 
-## Aphid count
+## Aphid count \label{skewness_count}
 
 Figure \ref{fig_skewness_count} shows that averaged skewness is much lower than expected if the aphid count data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_count}). As $p<0.05$, we reject $H_{0}$. This result is consistent with the non-parametric analysis and model fitting results which indicated lower tail dependence. 
 
-<!--Shya to add results about skewness of spatial means-->
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
@@ -1062,11 +1064,10 @@ dev.off()
 ![Skewness_count for species : Green spruce aphid\label{fig_skewness_count}](./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf){ width=50%, height=50% }
 
 
-## Aphid first flight
+## Aphid first flight \label{skewness_ff}
 
 Figure \ref{fig_skewness_ff} shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_ff}). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
 
-<!--Shya to add results about skewness of spatial means-->
 ```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
 set.seed(seed)
 pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
@@ -1089,7 +1090,7 @@ dev.off()
 
 ![Skewness_firstflight for species : Leaf-curling plum aphid\label{fig_skewness_ff}](./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf){ width=50%, height=50% }
 
-## North Sea plankton
+## North Sea plankton \label{skewness_pns}
 
 Figure \ref{fig_skewness_pns} shows that averaged skewness is lower than expected if the plankton north sea data came from a normal copula. Our previous results on non-parametric analysis and model fitting showed lower tail dependence. Here, as $p>0.05$, we cannot reject $H_{0}$, .......???
 
@@ -1117,3 +1118,12 @@ dev.off()
 ```
 
 ![Skewness_plankton_north_sea for species : Ceratium_furca\label{fig_skewness_pns}](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=50%, height=50% }
+
+
+
+
+## References:
+
+
+
+

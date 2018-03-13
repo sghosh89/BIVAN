@@ -10,6 +10,7 @@ output:
     keep_tex: yes
     fig_caption: yes
 tables: True
+link-citations: true
 
 csl: science.csl
 bibliography: REF_SI.bib
@@ -28,6 +29,7 @@ updated on `r Sys.Date()`
 <!--
 ```{r, echo=F}
 options(knitr.table.format = "html")
+
 ```
 -->
 

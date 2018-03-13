@@ -30,7 +30,8 @@ getcopula<-function(d,rankon=T,ploton=F)
   
   #plot
   if(ploton==T){
-    plot(v[,1],v[,2],type="p",col="red",xlab=expression(v[1]),ylab=expression(v[2]),cex.lab=1,
+    plot(v[,1],v[,2],type="p",col="red",xlab="u",ylab="v",
+         cex.lab=2,cex.axis=1.5,
          xlim=c(0,1),ylim=c(0,1),asp=1)
     rect(0,0,1,1)
     lines(c(0,1),c(0,1),type='l')

@@ -19,7 +19,7 @@ updated on `r Sys.Date()`
 \newcommand{\var}{\operatorname{var}}
 \newcommand{\cor}{\operatorname{cor}}
 \newcommand{\Ps}{\operatorname{P}}
-\newcommand{\D2}{\operatorname{D}^2}
+\newcommand{\Dt}{\text{D}^2}
 
 <!--Basic setup-->
 ```{r setup, echo=F}
@@ -57,6 +57,7 @@ plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1)
 #convert to a copula and plot
 v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 ```
+
 <!--Shya please insert an automatic reference to the methods section "Model selection approach" at the location YYY above. I could not easily find a way to do section references by number that was consistent with the figure and table reference system you already have, but perhaps I missed it. In the end I think we will need to be able to refer to sections as well as figures and tables by number. I can see there is a package called "bookdown" that may help but there may be something easier using similar tools to what you have already used for figures and tables.-->
 
 Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_soilCNraw}. The copula is shown in \ref{fig_soilCNcop}.
@@ -175,8 +176,7 @@ between $u$ and $v$ in the region given by the bounds.
 
 We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
 $u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
-$S(h)$ to be the  
-number of points $(u_i,v_i)$ within the bounds 
+$S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
 and a distance less than $h$ from the line $v=u$, divided by the 
 total number of points within the bounds. This function is
 defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
@@ -194,16 +194,16 @@ As for $\cor_{l_b,u_b}$, larger values of $P_{l_b,u_b}$
 indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds.
 
-The third statistic, $\D2_{l_b,u_b}(u,v)$, is the average squared 
+The third statistic, $\Dt_{l_b,u_b}(u,v)$, is the average squared 
 distance between points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\D2_{l_b,u_b}$ is 
+$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dt_{l_b,u_b}$ is 
 then small. 
 Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
 dependence in the portions of the distributions of $u$ and $v$ given by 
 the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
-$\D2_{l_b,u_b}$ indicate strong dependence. 
+$\Dt_{l_b,u_b}$ indicate strong dependence. 
 
 For large datasets (i.e., datasets with large $n$),
 we can consider $l_b$ and $u_b$ close together without incurring undue
@@ -213,20 +213,20 @@ varies in different parts of the distributions. But for datasets with
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
 We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
-$\Ps_u=\Ps_{0.5,1}$, $\D2_l=\D2_{0,0.5}$, and $\D2_u=\D2_{0.5,1}$.
+$\Ps_u=\Ps_{0.5,1}$, $\Dt_l=\Dt_{0,0.5}$, and $\Dt_u=\Dt_{0.5,1}$.
 
 The difference $\cor_l-\cor_u$ is expected to be positive if 
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
 This holds, for instance, for the Clayton copula (REF).
 <!--Shya to cite the Nelson book-->
-The difference $\D2_u-\D2_l$, in which the "upper" and
+The difference $\Dt_u-\Dt_l$, in which the "upper" and
 "lower" statistics occur in opposite order, is also expected to be 
 positive under the same conditions. We use these three differences
 to detect asymmetry of tail dependence. Likewise, for large datasets,
 we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
-$\D2_{1-u_b,1-l_b}-\D2_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
+$\Dt_{1-u_b,1-l_b}-\Dt_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
 <!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
 

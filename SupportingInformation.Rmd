@@ -29,7 +29,6 @@ updated on `r Sys.Date()`
 <!--
 ```{r, echo=F}
 options(knitr.table.format = "html")
-
 ```
 -->
 
@@ -210,7 +209,7 @@ $S(h)$ for independent data. We then defined
 \begin{equation}\label{eq.P}
    P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
 \end{equation}
-As for $\cor_{l_b,u_b}$, larger values of $Ps_{l_b,u_b}$ 
+As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
 indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds.
 

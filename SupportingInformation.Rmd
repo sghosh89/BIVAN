@@ -1141,8 +1141,127 @@ dev.off()
 
 ## Taylor's law
 
+<!--make surrogate datasets for TL analysis to follow-->
+```{r taylors_law_make_surrogs, echo=F, cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
+source("copsurrognd.R")
+set.seed(seed)
 
+#***constants
+N<-100 #length of time series
+n<-25 #number of sampling locations
+numdat<-25 #the number of datasets to get from the normal copula
+rho<-0.7 #normal-copula parameter for dependence between locations
+          #this is a covariance, see below call to rmvnorm
 
+#***generate the starting data, which has normal copula structure
+#because it comes from a multivariate normal
+sig<-matrix(rho,n,n)
+diag(sig)<-1
+m<-rmvnorm(N*numdat,mean=rep(0,n),sigma=sig)
+m<-array(m,c(N,numdat,n))
+m<-aperm(m,c(1,3,2))
+gshape<-7.5
+gscale<-1 #gamma parameters
+cop_to_marg_trans<-function(x)
+{
+  return(qgamma(x,shape=gshape,scale=gscale)) #this is where we choose the marginals,
+                                  #should be something skewed
+}
+marg_to_cop_trans<-function(x) #transforms to copula space
+{
+  return(pgamma(x,shape=gshape,scale=gscale))
+}
+m<-cop_to_marg_trans(pnorm(m))
+
+#***surrogates using a Clayton copula, kendall preserving
+#get the Clayton parameter to use
+ncop<-normalCopula(rho,2)
+ccop<-claytonCopula(2,2)
+cparam<-iTau(ccop,tau(ncop))
+ccop<-claytonCopula(cparam,n)
+
+#generate the surrogates
+csurrog<-array(NA,dim(m))
+for (counter in 1:dim(m)[3])
+{
+  csurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=ccop,numsurrog=1)
+}
+
+# #test to see whether kendalls are similar between m and csurrog - 
+#only works at all as a test if N is large (I used 1000)
+# cor(m[,1,1],m[,2,1],method='kendall')
+# cor(csurrog[,1,1],csurrog[,2,1],method='kendall')
+# cor(m[,3,1],m[,4,1],method='kendall')
+# cor(csurrog[,3,1],csurrog[,4,1],method='kendall')
+# cor(m[,5,1],m[,6,1],method='kendall')
+# cor(csurrog[,5,1],csurrog[,6,1],method='kendall')
+# 
+# cor(m[,1,2],m[,2,2],method='kendall')
+# cor(csurrog[,1,2],csurrog[,2,2],method='kendall')
+# cor(m[,3,2],m[,4,2],method='kendall')
+# cor(csurrog[,3,2],csurrog[,4,2],method='kendall')
+# cor(m[,5,2],m[,6,2],method='kendall')
+# cor(csurrog[,5,2],csurrog[,6,2],method='kendall')
+
+#***surrogates using a Frank copula, kendall preserving
+#get the Frank parameter to use
+fcop<-frankCopula(4,2)
+fparam<-iTau(fcop,tau(ncop))
+fcop<-frankCopula(fparam,n)
+
+#generate the surrogates
+fsurrog<-array(NA,dim(m))
+for (counter in 1:dim(m)[3])
+{
+  fsurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=fcop,numsurrog=1)
+}
+
+#***surrogates using a survival Clayton, kendall preserving
+#take the clayton surrogates and transform them to the 
+#copula space, then flip, then transform back
+scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
+
+# #test: should have identical taus as csurrog
+# cor(csurrog[,1,1],csurrog[,2,1],meth='kendall')
+# cor(scsurrog[,1,1],scsurrog[,2,1],meth='kendall')
+# cor(csurrog[,1,2],csurrog[,2,2],meth='kendall')
+# cor(scsurrog[,1,2],scsurrog[,2,2],meth='kendall')
+
+kend.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
+
+#***surrogates using a Clayton copula, spearman preserving
+#get the Clayton parameter to use
+ccop<-claytonCopula(2,2)
+cparam<-iRho(ccop,rho(ncop))
+ccop<-claytonCopula(cparam,n)
+
+#generate the surrogates
+csurrog<-array(NA,dim(m))
+for (counter in 1:dim(m)[3])
+{
+  csurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=ccop,numsurrog=1)
+}
+
+#***surrogates using a Frank copula, spearman preserving
+#get the Frank parameter to use
+fcop<-frankCopula(4,2)
+fparam<-iRho(fcop,rho(ncop))
+fcop<-frankCopula(fparam,n)
+
+#generate the surrogates
+fsurrog<-array(NA,dim(m))
+for (counter in 1:dim(m)[3])
+{
+  fsurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=fcop,numsurrog=1)
+}
+
+#***surrogates using a survival Clayton, spearman preserving
+#take the clayton surrogates and transform them to the 
+#copula space, then flip, then transform back
+scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
+
+spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
+```
 
 \newpage
 # References:

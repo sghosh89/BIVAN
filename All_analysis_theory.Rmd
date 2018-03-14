@@ -187,7 +187,6 @@ popsim_ml<-function(p0,ns,d)
 
     #growth prior to dispersal
     res[,,tct+1]<-lam*res[,,tct]
-    res[,,tct+1]<-lam*res[,,tct]
     
     #dispersal - a fraction d of the total population 
     #disperses evenly everywhere
@@ -283,4 +282,6 @@ lines(0:(length(risk2)-1),risk2,type='l',col='red')
 This preliminary analysis seems to show copula structure can make a noticable difference on extinction risks, even controlling for marginals and correlations.  
 
 Recode carefully and systematically to explore dependence of the effect on parameters and model setup assumptions within a reasonable space of possibilities. E.g., consider a range of $d$, perhaps a range of numbers of locations. Can shorten runs to 25 years. Look at time series to make sure nothing crazy/unrealistic is happening. Think it through and figure out how to move this from a preliminary result to a real result. Maybe make dispersal different. Also, why is it dispersal is really making no difference, or not much, the way things are? Is this from a bug? If I decide to change how dispersal works in the multi-population model, one way to do it might be to assume the pops are located along a transect and dispersal only occurs to the one or two (depending on whether you are on the end or not) neighbors.
+
+Shyamolina, can you please build on what I have started here in some of the ways listed? Use your judgement and explore whatever results seem promising and at least somewhat biologically relevant. Perhaps a good place to start would be generalizing popsim_ml to take a dispersal matrix which links each location to each other location in a general way. That will make it easier to then experiment with local dispersal, instead of the global dispersal I have implemented. 
 

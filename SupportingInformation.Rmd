@@ -1263,6 +1263,48 @@ scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
 spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 ```
 
+```{r tl_function, echo=F}
+source("TaylorsLawTools.R")
+```
+
+```{r tl_analysis, echo=F, cache=T, cache.extra=list(mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
+#We are only doing spatial taylor's law because we know a priori temporal
+#won't give anything interesting for the surrogates we use
+kend.stats.res<-list()
+kend.points.res<-list()
+spea.stats.res<-list()
+spea.points.res<-list()
+for (counter in 1:length(kend.surrog))
+{
+  ks<-kend.surrog[[counter]]
+  ss<-spea.surrog[[counter]]
+  kend.stats.res[[counter]]<-matrix(NA,5,numdat)
+  spea.stats.res[[counter]]<-matrix(NA,5,numdat)
+  kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
+  spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
+  for (sc in 1:numdat)
+  {
+    khold<-tl_stats(ks[,,sc])
+    kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
+    rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
+    kend.points.res[[counter]][,,sc]<-as.matrix(khold$s.points)
+
+    shold<-tl_stats(ss[,,sc])
+    spea.stats.res[[counter]][,sc]<-shold$s.stats #spatial TL only
+    rownames(spea.stats.res[[counter]])<-names(shold$s.stats)
+    spea.points.res[[counter]][,,sc]<-as.matrix(shold$s.points)
+  }
+}
+names(kend.stats.res)<-names(kend.surrog)
+names(kend.points.res)<-names(kend.surrog)
+names(spea.stats.res)<-names(spea.surrog)
+names(spea.points.res)<-names(spea.surrog)
+
+#DAN: now you want to compare whether tl held, and the slope (statistically and visually)
+#across the different elements of kend.XX.res and spea.XX.res. See drawing of a figure layout on desk.
+
+```
+
 \newpage
 # References:
 

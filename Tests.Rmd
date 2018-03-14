@@ -13,7 +13,7 @@ output: pdf_document
 source("mtime.R")
 ```
 
-# Test flexible copula functions
+# Test flexible copula tail dependency statistics
 We here test the functions `Corbds`, `Pbds` and `D2bds`.
 
 Set up some test data:
@@ -399,7 +399,75 @@ BiCopGofTest(res[,1,2],res[,2,2],family=1)
 BiCopGofTest(res[,1,3],res[,2,3],family=1)
 ```
 
-# Tests to model selection tool
+Test the `copsurrognd` function:
+```{r test_copsurrognd, echo=T, cache=T, cache.extra=list(mtime("copsurrognd.R"))}
+library("VineCopula")
+source("copsurrognd.R")
+set.seed(101)
+
+#basic tests
+datcop<-claytonCopula(3,dim=3)
+numpts<-1000
+m<-rCopula(numpts,datcop)
+plot(m[,1],m[,2],type='p',asp=1)
+rect(0,0,1,1)
+plot(m[,1],m[,3],type='p',asp=1)
+rect(0,0,1,1)
+plot(m[,2],m[,3],type='p',asp=1)
+rect(0,0,1,1)
+
+tarcop<-gumbelCopula(8,dim=3)
+
+res<-copsurrognd(m=m,targetcop=tarcop,numsurrog=5)
+if (sum(dim(res)[1:2]==dim(m))==2)
+{
+  print("passed")
+} else
+{
+  print("dim of output is wrong")
+}
+
+cor(res[,1,1],res[,2,1],method="kendall")
+cor(res[,1,1],res[,3,1],method="kendall")
+cor(res[,2,1],res[,3,1],method="kendall") #these should be similar to each other and to the following... 
+
+gd<-rCopula(1000,tarcop)
+cor(gd[,1],gd[,2],method="kendall")
+cor(gd[,1],gd[,3],method="kendall")
+cor(gd[,2],gd[,3],method="kendall")
+
+#but not to these, because correlations match the target, not the original data
+cor(m[,1],m[,2],method='kendall')  
+cor(m[,1],m[,3],method='kendall')  
+cor(m[,2],m[,3],method='kendall') 
+
+plot(res[,1,1],res[,2,1],type='p',asp=1) #should look like a Gumbel
+rect(0,0,1,1)
+plot(res[,1,1],res[,3,1],type='p',asp=1) #should look like a Gumbel
+rect(0,0,1,1)
+plot(res[,2,1],res[,3,1],type='p',asp=1) #should look like a Gumbel
+rect(0,0,1,1)
+BiCopGofTest(res[,1,1],res[,2,1],family=4) #should indicate an acceptable fit; 
+                                            #family=4 is Gumbel
+BiCopGofTest(res[,1,1],res[,3,1],family=4) #should indicate an acceptable fit
+BiCopGofTest(res[,2,1],res[,3,1],family=4) #should indicate an acceptable fit
+
+if (sum(sort(res[,1,1])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,1])==sort(m[,2]))==numpts &&
+    sum(sort(res[,3,1])==sort(m[,3]))==numpts &&
+    sum(sort(res[,1,2])==sort(m[,1]))==numpts &&
+    sum(sort(res[,2,2])==sort(m[,2]))==numpts &&
+    sum(sort(res[,3,2])==sort(m[,3]))==numpts)
+{
+  print("passed")
+} else
+{
+  print("Columns of output of copsurrog should be permutations of the corresponding 
+        columns of the input")
+}
+```
+
+# Tests of model selection tool
 
 We here test the `OurBiCopSelect` function with simulated data.
 

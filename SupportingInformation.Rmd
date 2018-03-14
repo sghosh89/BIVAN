@@ -1263,13 +1263,13 @@ scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
 spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 ```
 
-```{r tl_function, echo=F}
-source("TaylorsLawTools.R")
-```
-
+<!--do a TL analysis on the data just created-->
 ```{r tl_analysis, echo=F, cache=T, cache.extra=list(mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
+source("TaylorsLawTools.R")
+
 #We are only doing spatial taylor's law because we know a priori temporal
 #won't give anything interesting for the surrogates we use
+
 kend.stats.res<-list()
 kend.points.res<-list()
 spea.stats.res<-list()

@@ -49,6 +49,7 @@ source("NonParamStat.R")
 source("copsurrog2d.R")
 source("TestStats_multivar_dataset.R")
 source("skewness_multivar_dataset.R")
+source("ExtremeTailDep.R")
 ```
 
 # Descriptions of data \label{Description_data}
@@ -252,7 +253,7 @@ $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 ### Stat-testing of Non-parametric analysis (for limited number of datapoints) \label{Stat_testing}
 
 Here, we want to test our $3$ types of nonparametric tail dependent statistics on both small $(35)$ and large $(1000)$ number of datapoints drawn from $4$ types of bivariate copula, namely, *Clayton* , *Normal*, *Frank* and *Survival Clayton*. Whereas *Normal* and *Frank* have symmetric tail dependence, *Clayton* and *Survival Clayton* have lower and upper tail dependence, respectively.
-First we chose a set of parameters [using *iRho* from `Copula` package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated $(Corl , Coru, Pl, Pu, D2l, D2u)$ stats. We took mean of our statistic $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $Corl - Coru$, $Pl-Pu$ and $D2u-D2l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
+First we chose a set of parameters [using *iRho* from `Copula` package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$) stats. We took mean of our statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
 
 ```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
@@ -268,7 +269,7 @@ res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,m
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
 ```
 
-```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"))}
+```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"),mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
 resultsloc<-"./Results/stat_results/stat_testing/"
 b<-callfn$paramlist
@@ -543,7 +544,7 @@ par(fig=c(ywd/totwd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 plot(x,D2stats_d,type='l',col="red",xlim=xlimits,ylim=ylimits_D2)
 mtext(side=1,line=1,text="Diagonal slice")
-mtext(side=2,line=1,text=expression(D[2]))
+mtext(side=2,line=1,text=expression(D^{2}))
 axis(side=1,labels=F)
 lines(x,D2stats_K[1,],type='l',lty='dotted')
 lines(x,D2stats_K[2,],type='l',lty='dashed')
@@ -579,7 +580,7 @@ dev.off()
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}
-atdres<-data.frame(Statistic=c("Corl-Coru","Pl-Pu","D2u-D2l"),
+atdres<-data.frame(Statistic=c("$cor_l-cor_u$","$P_l-P_u$","$D^2_u-D^2_l$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
 fractxt<-function(fracval)
@@ -733,7 +734,7 @@ The next section looks at tail dependence in a non-parametric way.
 
 ### Non-paramtric analysis of tail dependence \label{Ex_count_NPA}
 
-```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count)}
+```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("NonParamStat.R"))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_aphid_count/"
 
@@ -751,7 +752,9 @@ stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_co
 ```
 
 ```{r tab_count_resamp,echo=F,results="markup"}
-knitr::kable(stat_aphid_count$numericdf,
+s<-stat_aphid_count$numericdf[,2:5]
+rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+knitr::kable(s,
              format = "pandoc",
              caption = "Aphid_count : resampling result for stat indicating lower tail dependence\\label{tab_count_resamp}",
              booktabs=TRUE)
@@ -763,13 +766,13 @@ knitr::kable(stat_aphid_count$numericdf,
 
 ![Plot for aphid-count : Kendall vs. Distance\label{fig_count_kend}](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf){ width=50%, height=50% }
 
-![Corl-Coru vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Corl-Coru}](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
+![$cor_l$-$cor_u$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Corl-Coru}](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
-![Pl-Pu vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Pl-Pu}](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
+![$P_l$-$P_u$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Pl-Pu}](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-![D2u-D2l vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-Table \ref{tab_count_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_count_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with positive mean and almost $100$% $fracgt0$ proves that *Green spruce aphid*-count data has significant lower tail dependence.
+Table \ref{tab_count_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_count_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that *Green spruce aphid*-count data has significant lower tail dependence.
 
 ## Aphid first flight data for 'Leaf-curling plum aphid' \label{Ex_ff}
 <!--Add species common name and scientific name to header-->
@@ -860,7 +863,7 @@ Table \ref{tab_ff_bestcop} shows that several copulas are much better supported 
 
 ### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
 
-```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff)}
+```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("NonParamStat.R"))}
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_aphid_ff/"
 
@@ -878,7 +881,9 @@ stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11
 ```
 
 ```{r tab_ff_resamp,echo=F,results="markup"}
-knitr::kable(stat_aphid_ff$numericdf,
+s<-stat_aphid_ff$numericdf[,2:5]
+rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+knitr::kable(s,
              format = "pandoc",
              caption = "Aphid_firstflight : resampling result for stat indicating upper tail dependence\\label{tab_ff_resamp}",
              booktabs=TRUE)
@@ -890,13 +895,13 @@ knitr::kable(stat_aphid_ff$numericdf,
 
 ![Plot for aphid-firstflight : Kendall vs. Distance\label{fig_ff_kend}](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf){ width=50%, height=50% }
 
-![Corl-Coru vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Corl-Coru}](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
+![$cor_l$-$cor_u$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Corl-Coru}](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
-![Pl-Pu vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Pl-Pu}](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
+![$P_l$-$P_u$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Pl-Pu}](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-![D2u-D2l vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-Table \ref{tab_ff_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_ff_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with negative mean has all resampled mean less than $0$ for *Leaf-curling plum aphid*-firstflight data. This proves that there is a significant upper tail dependence in *Leaf-curling plum aphid*-firstflight data.
+Table \ref{tab_ff_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_ff_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with negative mean has all resampled mean less than $0$ for *Leaf-curling plum aphid*-firstflight data. This proves that there is a significant upper tail dependence in *Leaf-curling plum aphid*-firstflight data.
 
 ## North sea plankton data for 'Ceratium furca' \label{Ex_pns}
 
@@ -994,7 +999,7 @@ Table \ref{tab_pns_bestcop} shows that several copulas are much better supported
 
 
 ### Non-paramtric analysis of tail dependence  \label{Ex_pns_NPA}
-```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea)}
+```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("NonParamStat.R"))}
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_plankton_north_sea/"
 
@@ -1014,7 +1019,9 @@ stat_plankton_north_sea<-readRDS("./Results/stat_results/stat_plankton_north_sea
 ```
 
 ```{r tab_pns_resamp,echo=F,results="markup"}
-knitr::kable(stat_plankton_north_sea$numericdf,
+s<-stat_plankton_north_sea$numericdf[,2:5]
+rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+knitr::kable(s,
              format = "pandoc",
              caption = "Plankton_north_sea : resampling result for stat indicating lower tail dependence\\label{tab_pns_resamp}",
              booktabs=TRUE)
@@ -1026,13 +1033,13 @@ knitr::kable(stat_plankton_north_sea$numericdf,
 
 ![Plot for Plankton_north_sea : Kendall vs. Distance\label{fig_pns_kend}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf){ width=50%, height=50% }
 
-![Corl-Coru vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Corl-Coru}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
+![$cor_l$-$cor_u$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Corl-Coru}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
 
-![Pl-Pu vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Pl-Pu}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
+![$P_l$-$P_u$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Pl-Pu}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
 
-![D2u-D2l vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_D2u-D2l}](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+![$D^2_u$-$D^2_l$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_D2u-D2l}](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $Corl-Coru$, $Pl-Pu$ and $D2u-D2l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
+Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
 
 # Question 2 analyses for each dataset
 Recall that question 2 is: What are some possible causes of non-Gaussian copula structure? 
@@ -1077,7 +1084,7 @@ mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",
 dev.off()
 ```
 
-![Skewness_count for species : Green spruce aphid\label{fig_skewness_count}](./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf){ width=50%, height=50% }
+![Skewness_count for species : Green spruce aphid\label{fig_skewness_count}](./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf){ width=40%, height=40% }
 
 
 ### Aphid first flight \label{skewness_ff}
@@ -1104,7 +1111,7 @@ mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",
 dev.off()
 ```
 
-![Skewness_firstflight for species : Leaf-curling plum aphid\label{fig_skewness_ff}](./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf){ width=50%, height=50% }
+![Skewness_firstflight for species : Leaf-curling plum aphid\label{fig_skewness_ff}](./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf){ width=40%, height=40% }
 
 ### North Sea plankton \label{skewness_pns}
 
@@ -1133,11 +1140,163 @@ mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",
 dev.off()
 ```
 
-![Skewness_plankton_north_sea for species : Ceratium_furca\label{fig_skewness_pns}](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=50%, height=50% }
+![Skewness_plankton_north_sea for species : Ceratium_furca\label{fig_skewness_pns}](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=40%, height=40% }
+
 
 ## Extinction risk
+```{r fn_popsim_ml_D, echo=F}
 
+# A function to generate dispersal matrix D (a square matrix : numlocs by numlocs)
+Dispersal_mat<-function(numlocs,d){
+  D<-matrix(0,numlocs,numlocs)
+  # A companion matrix (delta) that indicates how "off" a diagonal is:
+  mat <- matrix(seq_len(numlocs ^ 2), ncol = numlocs)
+  delta <- row(mat) - col(mat)
+  #print(delta)
+  
+  diag(D)<-(1-d)
+  D[delta ==1 | delta==-1] <- d/2
+  
+  D[numlocs-1,numlocs]<-d
+  D[2,1]<-d
+  
+  stopifnot(all(colSums(D)==1)) # this is a check
+  return(D)
+}
+#-----------------------------------------------------------------------------------
+#The simulator of the multi-location model with a dispersal matrix.
+#-------Args--------------------------------------------------
+#p0       A length numlocs vector holding initial populations
+#ns       An numsims by numlocs by numsteps array of the epsilons, 
+#           where numsteps is the number of time steps you want
+#
+#--------Output------------------------------------------------------
+#A numsims by numlocs by numsteps+1 array of populations
+#----------------------------------------------------------------------
+popsim_ml_D<-function(p0,ns,D,r,K){
+  numsims<-dim(ns)[1]
+  numlocs<-dim(ns)[2]
+  numsteps<-dim(ns)[3]
+  
+  #initialization
+  res<-array(NA,c(numsims,numlocs,numsteps+1))
+  res[,,1]<-rep(p0,each=numsims)
+  
+  #step the populations forward
+  for (tct in 1:numsteps){
+    
+    #stochastic ricker model : if r=0 then back to LC model
+    
+    #growth rates based on the noise
+    lam_sto<-exp(ns[,,tct])  #numsims by numlocs matrix
+    lam_ricker<-exp(r*(1-(res[,,tct]/K)))
+      
+    #growth prior to dispersal
+    res[,,tct+1]<-lam_ricker*lam_sto*res[,,tct] #numsims by numlocs matrix
+   
+    #after dispersal
+    tres<-t(res[,,tct+1]) # numlocs by numsims matrix after taking transpose
+    temp<-D%*%tres  # a matrix multiplication (numlocs by numlocs) * (numlocs by numsims)
+    res[,,tct+1]<-t(temp)
+    
+    #see if there is extinction
+    h<-res[,,tct+1]
+    h[h<1]<-0
+    res[,,tct+1]<-h
+  }
+  
+  return(res)
+}
 
+# function to calculate extinction risk
+extrisk<-function(sims){
+  totpop<-apply(FUN=sum,X=sims,MARGIN=c(1,3))
+  return(apply(FUN=sum,X=(totpop==0),MARGIN=2)/dim(sims)[1])
+}
+```
+
+```{r fn_plotter_ext_risk, echo=F}
+# function to optionally plot extinction risk agsinst time and give you back extinction risk after specified numsteps 
+plotter_ext_risk<-function(numsims,numsteps,numlocs,d,r,K,ploton){
+  D<-Dispersal_mat(numlocs = numlocs,d=d)
+  ns1<-retd(n=numsteps*numsims,d=numlocs,rl=1)# a righttail dep matrix(numpoints by numlocs,     
+#                                                      numpoints=numsteps*numsims)
+
+  ns1<-array(ns1,c(numsteps,numsims,numlocs))# convert to an array (numsteps by numsims by numlocs)
+  ns1<-aperm(ns1,c(2,3,1)) # convert to an array (numsims by numlocs by numsteps)
+  pops1<-popsim_ml_D(p0=rep(25,numlocs),ns=ns1,D=D,r=r,K=K)
+  risk_right<-extrisk(pops1)
+  
+  ns2<-(-ns1)
+  pops2<-popsim_ml_D(p0=rep(25,numlocs),ns=ns2,D=D,r=r,K=K)
+  risk_left<-extrisk(pops2)
+
+  if(ploton==T){
+   par(mfrow=c(2,1))
+    plot(0:(length(risk_right)-1),risk_right,type='l',
+         xlab='Time',ylab='Risk',col='blue',panel.first = grid())
+    mtext("blue : right tail-dep")
+    plot(0:(length(risk_left)-1),risk_left,type='l',xlab='Time',ylab='Risk',col='red',panel.first = grid())
+    mtext("red : left tail-dep")
+  }
+  
+  return(list(risk_right_after_numsteps=risk_right[numsteps+1],
+              risk_left_after_numsteps=risk_left[numsteps+1]))
+
+}
+
+```
+
+```{r fn_varying_d, echo=F}
+varying_d<-function(numsims,numsteps,numlocs,r,K){
+  risk_right<-c()
+  risk_left<-c()
+  d_seq<-seq(from=0,to=1,by=0.01)
+  for(d in d_seq){
+    riskrl<- plotter_ext_risk(numsims=numsims,numsteps = numsteps,numlocs = numlocs,d=d,r=r,K=K,ploton=F)
+    risk_r<-riskrl$risk_right_after_numsteps
+    risk_l<-riskrl$risk_left_after_numsteps
+    risk_right<-c(risk_right,risk_r)
+    risk_left<-c(risk_left,risk_l)
+  }
+  par(mfrow=c(1,2))
+  plot(d_seq,risk_right,xlab='d',ylab='Risk_right',ylim=c(0,max(risk_right)),type="b",col="blue",panel.first = grid())
+  plot(d_seq,risk_left,xlab='d',ylab='Risk_left',ylim=c(0,max(risk_left)),type="b",col="red",panel.first = grid())
+  #mtext("red : left tail-dep, blue : right tail-dep")
+}
+```
+
+```{r fig_risk_K50, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=50, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K50}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=50)
+```
+
+```{r fig_risk_K100, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K100}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=100)
+```
+
+```{r fig_risk_K200, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=200, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K200}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=200)
+```
+
+```{r fig_risk_numlocs5, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=5, numsteps=25, numsims=1000.\\label{fig_risk_numlocs5}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=5,r=1,K=100)
+```
+
+```{r fig_risk_numlocs15, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=15, numsteps=25, numsims=1000.\\label{fig_risk_numlocs15}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=100)
+```
+
+```{r fig_risk_numlocs25, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=25, numsteps=25, numsims=1000.\\label{fig_risk_numlocs25}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=15,r=1,K=100)
+```
+
+  * With increasing $K$, extinction risk decreases [for a fixed $d$ , $r$ and $numlocs$] but this effect is more prominent in
+case of left tail-dep data. [see Figure \ref{fig_risk_K50} - Figure \ref{fig_risk_K200}]
+
+  * With increasing $numlocs$, extinction risk decreases [for a fixed $d$ , $r$ and $K$] but this effect is more prominent in
+case of left tail-dep data. [see Figure \ref{fig_risk_numlocs5} - Figure \ref{fig_risk_numlocs25}]
+
+\newpage
 
 ## Taylor's law
 
@@ -1265,40 +1424,40 @@ spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 
 <!--do a TL analysis on the data just created-->
 ```{r tl_analysis, echo=F, cache=T, cache.extra=list(mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
-source("TaylorsLawTools.R")
+#source("TaylorsLawTools.R")
 
 #We are only doing spatial taylor's law because we know a priori temporal
 #won't give anything interesting for the surrogates we use
 
-kend.stats.res<-list()
-kend.points.res<-list()
-spea.stats.res<-list()
-spea.points.res<-list()
-for (counter in 1:length(kend.surrog))
-{
-  ks<-kend.surrog[[counter]]
-  ss<-spea.surrog[[counter]]
-  kend.stats.res[[counter]]<-matrix(NA,5,numdat)
-  spea.stats.res[[counter]]<-matrix(NA,5,numdat)
-  kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
-  spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
-  for (sc in 1:numdat)
-  {
-    khold<-tl_stats(ks[,,sc])
-    kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
-    rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
-    kend.points.res[[counter]][,,sc]<-as.matrix(khold$s.points)
+#kend.stats.res<-list()
+#kend.points.res<-list()
+#spea.stats.res<-list()
+#spea.points.res<-list()
+#for (counter in 1:length(kend.surrog))
+#{
+ # ks<-kend.surrog[[counter]]
+#  ss<-spea.surrog[[counter]]
+ # kend.stats.res[[counter]]<-matrix(NA,5,numdat)
+#  spea.stats.res[[counter]]<-matrix(NA,5,numdat)
+ # kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
+  #spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
+  #for (sc in 1:numdat)
+  #{
+   # khold<-tl_stats(ks[,,sc])
+  #  kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
+   # rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
+    #kend.points.res[[counter]][,,sc]<-as.matrix(khold$s.points)
 
-    shold<-tl_stats(ss[,,sc])
-    spea.stats.res[[counter]][,sc]<-shold$s.stats #spatial TL only
-    rownames(spea.stats.res[[counter]])<-names(shold$s.stats)
-    spea.points.res[[counter]][,,sc]<-as.matrix(shold$s.points)
-  }
-}
-names(kend.stats.res)<-names(kend.surrog)
-names(kend.points.res)<-names(kend.surrog)
-names(spea.stats.res)<-names(spea.surrog)
-names(spea.points.res)<-names(spea.surrog)
+    #shold<-tl_stats(ss[,,sc])
+    #spea.stats.res[[counter]][,sc]<-shold$s.stats #spatial TL only
+    #rownames(spea.stats.res[[counter]])<-names(shold$s.stats)
+    #spea.points.res[[counter]][,,sc]<-as.matrix(shold$s.points)
+  #}
+#}
+#names(kend.stats.res)<-names(kend.surrog)
+#names(kend.points.res)<-names(kend.surrog)
+#names(spea.stats.res)<-names(spea.surrog)
+#names(spea.points.res)<-names(spea.surrog)
 
 #DAN: now you want to compare whether tl held, and the slope (statistically and visually)
 #across the different elements of kend.XX.res and spea.XX.res. See drawing of a figure layout on desk.

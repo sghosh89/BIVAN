@@ -1260,41 +1260,49 @@ varying_d<-function(numsims,numsteps,numlocs,r,K){
     risk_left<-c(risk_left,risk_l)
   }
   par(mfrow=c(1,2))
-  plot(d_seq,risk_right,xlab='d',ylab='Risk_right',ylim=c(0,max(risk_right)),type="b",col="blue",panel.first = grid())
   plot(d_seq,risk_left,xlab='d',ylab='Risk_left',ylim=c(0,max(risk_left)),type="b",col="red",panel.first = grid())
+  plot(d_seq,risk_right,xlab='d',ylab='Risk_right',ylim=c(0,max(risk_right)),type="b",col="blue",panel.first = grid())
   #mtext("red : left tail-dep, blue : right tail-dep")
 }
 ```
 
-```{r fig_risk_K50, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=50, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K50}", fig.height=4, fig.width=8}
-varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=50)
+
+### LC model :
+```{r fig_risk_r0_numlocs5, echo=F, fig.cap="LC model : Plot Extinction risk vs. d(degree of dispersal) for numlocs=5, numsteps=25, numsims=1000.\\label{fig_risk_r0_numlocs5}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=5,r=0,K=50)
 ```
 
-```{r fig_risk_K100, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K100}", fig.height=4, fig.width=8}
+```{r fig_risk_r0_numlocs25, echo=F, fig.cap="LC model : Plot Extinction risk vs. d(degree of dispersal) for numlocs=25, numsteps=25, numsims=1000.\\label{fig_risk_r0_numlocs25}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=25,r=0,K=50)
+```
+
+  *  As expected, when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one. With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] but this effect was more prominent in case of data came from right tail-dep environmental noise. [see Figure \ref{fig_risk_r0_numlocs5} - Figure \ref{fig_risk_r0_numlocs25}]. 
+
+
+### Ricker model :
+
+```{r fig_risk_r1_K100, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_r1_K100}", fig.height=4, fig.width=8}
 varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=100)
 ```
 
-```{r fig_risk_K200, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=200, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_K200}", fig.height=4, fig.width=8}
+```{r fig_risk_r1_K200, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=200, numlocs=10, numsteps=25, numsims=1000.\\label{fig_risk_r1_K200}", fig.height=4, fig.width=8}
 varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=200)
 ```
 
-```{r fig_risk_numlocs5, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=5, numsteps=25, numsims=1000.\\label{fig_risk_numlocs5}", fig.height=4, fig.width=8}
+```{r fig_risk_r1_numlocs5, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=5, numsteps=25, numsims=1000.\\label{fig_risk_r1_numlocs5}", fig.height=4, fig.width=8}
 varying_d(numsims=1000,numsteps =25,numlocs=5,r=1,K=100)
 ```
 
-```{r fig_risk_numlocs15, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=15, numsteps=25, numsims=1000.\\label{fig_risk_numlocs15}", fig.height=4, fig.width=8}
-varying_d(numsims=1000,numsteps =25,numlocs=10,r=1,K=100)
-```
-
-```{r fig_risk_numlocs25, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=25, numsteps=25, numsims=1000.\\label{fig_risk_numlocs25}", fig.height=4, fig.width=8}
-varying_d(numsims=1000,numsteps =25,numlocs=15,r=1,K=100)
+```{r fig_risk_numlocs25, echo=F, fig.cap="Plot Extinction risk vs. d(degree of dispersal) for r=1, K=100, numlocs=25, numsteps=25, numsims=1000.\\label{fig_risk_r1_numlocs25}", fig.height=4, fig.width=8}
+varying_d(numsims=1000,numsteps =25,numlocs=25,r=1,K=100)
 ```
 
   * With increasing $K$, extinction risk decreases [for a fixed $d$ , $r$ and $numlocs$] but this effect is more prominent in
-case of left tail-dep data. [see Figure \ref{fig_risk_K50} - Figure \ref{fig_risk_K200}]
+case of left tail-dep data. [see Figure \ref{fig_risk_r1_K100} - Figure \ref{fig_risk_r1_K200}]
 
   * With increasing $numlocs$, extinction risk decreases [for a fixed $d$ , $r$ and $K$] but this effect is more prominent in
-case of left tail-dep data. [see Figure \ref{fig_risk_numlocs5} - Figure \ref{fig_risk_numlocs25}]
+case of left tail-dep data. [see Figure \ref{fig_risk_r1_numlocs5} - Figure \ref{fig_risk_r1_numlocs25}]
+
 
 \newpage
 

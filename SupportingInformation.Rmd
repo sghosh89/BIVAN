@@ -1299,11 +1299,33 @@ names(kend.stats.res)<-names(kend.surrog)
 names(kend.points.res)<-names(kend.surrog)
 names(spea.stats.res)<-names(spea.surrog)
 names(spea.points.res)<-names(spea.surrog)
-
-#DAN: now you want to compare whether tl held, and the slope (statistically and visually)
-#across the different elements of kend.XX.res and spea.XX.res. See drawing of a figure layout on desk.
-
 ```
+
+<!--Now make some plots-->
+```{r taylor_plots, echo=T}
+#plot TL for clayton
+xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
+ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
+par(mfrow=c(1,1))
+plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+```
+
+```{r, echo=T}
+#plot TL for normal copula
+plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+```
+
+```{r, echo=T}
+#plot TL for frank
+plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+```
+
+```{r, echo=T}
+#plot TL for survival clayton
+plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+```
+
+
 
 \newpage
 # References:

@@ -10,7 +10,7 @@ output:
     keep_tex: yes
     fig_caption: yes
 tables: True
-link-citations: true
+link-citations: True
 
 csl: science.csl
 bibliography: REF_SI.bib
@@ -1432,64 +1432,64 @@ spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 
 <!--do a TL analysis on the data just created-->
 ```{r tl_analysis, echo=F, cache=T, cache.extra=list(mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
-# #source("TaylorsLawTools.R")
+source("TaylorsLawTools.R")
 # 
 # #We are only doing spatial taylor's law because we know a priori temporal
 # #won't give anything interesting for the surrogates we use
 # 
-# kend.stats.res<-list()
-# kend.points.res<-list()
-# spea.stats.res<-list()
-# spea.points.res<-list()
-# for (counter in 1:length(kend.surrog))
-# {
-#   ks<-kend.surrog[[counter]]
-#   ss<-spea.surrog[[counter]]
-#   kend.stats.res[[counter]]<-matrix(NA,5,numdat)
-#   spea.stats.res[[counter]]<-matrix(NA,5,numdat)
-#   kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
-#   spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
-#   for (sc in 1:numdat)
-#   {
-#     khold<-tl_stats(ks[,,sc])
-#     kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
-#     rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
-#     kend.points.res[[counter]][,,sc]<-as.matrix(khold$s.points)
+ kend.stats.res<-list()
+ kend.points.res<-list()
+ spea.stats.res<-list()
+ spea.points.res<-list()
+ for (counter in 1:length(kend.surrog))
+ {
+   ks<-kend.surrog[[counter]]
+   ss<-spea.surrog[[counter]]
+   kend.stats.res[[counter]]<-matrix(NA,5,numdat)
+   spea.stats.res[[counter]]<-matrix(NA,5,numdat)
+   kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
+   spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
+   for (sc in 1:numdat)
+   {
+     khold<-tl_stats(ks[,,sc])
+     kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
+     rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
+     kend.points.res[[counter]][,,sc]<-as.matrix(khold$s.points)
 # 
-#     shold<-tl_stats(ss[,,sc])
-#     spea.stats.res[[counter]][,sc]<-shold$s.stats #spatial TL only
-#     rownames(spea.stats.res[[counter]])<-names(shold$s.stats)
-#     spea.points.res[[counter]][,,sc]<-as.matrix(shold$s.points)
-#   }
-# }
-# names(kend.stats.res)<-names(kend.surrog)
-# names(kend.points.res)<-names(kend.surrog)
-# names(spea.stats.res)<-names(spea.surrog)
-# names(spea.points.res)<-names(spea.surrog)
+     shold<-tl_stats(ss[,,sc])
+     spea.stats.res[[counter]][,sc]<-shold$s.stats #spatial TL only
+     rownames(spea.stats.res[[counter]])<-names(shold$s.stats)
+     spea.points.res[[counter]][,,sc]<-as.matrix(shold$s.points)
+   }
+ }
+ names(kend.stats.res)<-names(kend.surrog)
+ names(kend.points.res)<-names(kend.surrog)
+ names(spea.stats.res)<-names(spea.surrog)
+ names(spea.points.res)<-names(spea.surrog)
 ```
 
 <!--Now make some plots-->
 ```{r taylor_plots, echo=T}
 ##plot TL for clayton
-#xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
-#ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
-#par(mfrow=c(1,1))
-#plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
+ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
+par(mfrow=c(1,1))
+plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
 ```
 
 ```{r, echo=T}
 ##plot TL for normal copula
-#plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
 ```
 
 ```{r, echo=T}
 #plot TL for frank
-#plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
 ```
 
 ```{r, echo=T}
 #plot TL for survival clayton
-#plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
+plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits)  
 ```
 
 

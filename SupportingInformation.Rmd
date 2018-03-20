@@ -705,7 +705,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='pandoc',
-             caption = "Aphid_count : model averaged lower tail dependence statistic for best fit copula family for each selective location pair\\label{tab_count_LTdep_AICw}",
+             caption = "Aphid_count : model averaged lower tail dependence statistic for each selective location pair\\label{tab_count_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -713,7 +713,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='pandoc',
-             caption = "Aphid_count : model averaged upper tail dependence statistic for best fit copula family for each selective location pair\\label{tab_count_UTdep_AICw}",
+             caption = "Aphid_count : model averaged upper tail dependence statistic for each selective location pair\\label{tab_count_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -722,7 +722,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Aphid_count : model averaged lower tail dependence statistic for best fit copula family for each selective location pair\\label{tab_count_LTmUT}",
+             caption = "Aphid_count : model averaged lower tail dependence - model averaged upper tail dependence statistic for each selective location pair\\label{tab_count_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -836,7 +836,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged lower tail dependence statistic for best fit copula family for each selective location pair\\label{tab_ff_LTdep_AICw}",
+             caption = "Aphid_firstflight : model averaged lower tail dependence statistic for each selective location pair\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -844,7 +844,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged upper tail dependence statistic for best fit copula family for each selective location pair\\label{tab_ff_UTdep_AICw}",
+             caption = "Aphid_firstflight : model averaged upper tail dependence statistic for each selective location pair\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -853,7 +853,7 @@ knitr::kable(RES_aphid_ff$UTdep_AICw,
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged lower tail dependence statistic for best fit copula family for each selective location pair\\label{tab_ff_LTmUT}",
+             caption = "Aphid_firstflight : model averaged lower tail dependence - model averaged upper tail dependence statistic for each selective location pair\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -974,7 +974,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_plankton_north_sea),
 knitr::kable(RES_plankton_north_sea$LTdep_AICw,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged lower tail dependence statistic for best fit copula family for each selective location pair\\label{tab_pns_LTdep_AICw}",
+             caption = "Plankton_north_sea : model averaged lower tail dependence statistic for each selective location pair\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -982,7 +982,7 @@ knitr::kable(RES_plankton_north_sea$LTdep_AICw,
 knitr::kable(RES_plankton_north_sea$UTdep_AICw,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged upper tail dependence statistic for best fit copula family for each selective location pair\\label{tab_pns_UTdep_AICw}",
+             caption = "Plankton_north_sea : model averaged upper tail dependence statistic for each selective location pair\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -990,7 +990,7 @@ knitr::kable(RES_plankton_north_sea$UTdep_AICw,
 knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged lower tail - model averaged upper tail dependence statistic for best fit copula family for each of the selective location pair\\label{tab_pns_LTmUT}",
+             caption = "Plankton_north_sea : model averaged lower tail - model averaged upper tail dependence statistic for each of the selective location pair\\label{tab_pns_LTmUT}",
              booktabs=TRUE)
 ```
 

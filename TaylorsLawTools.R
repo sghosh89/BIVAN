@@ -23,12 +23,12 @@
 #
 tl_stats<-function(m)
 {
-  sres<-worker(m)
+  sres<-worker_tl(m)
   s.stats<-sres$stats
   names(s.stats)<-c("s.lin","s.hom","s.rmse","s.int","s.slope")
   s.points<-sres$points
   
-  tres<-worker(t(m))
+  tres<-worker_tl(t(m))
   t.stats<-tres$stats
   names(t.stats)<-c("t.lin","t.hom","t.rmse","t.int","t.slope")
   t.points<-tres$points
@@ -37,7 +37,7 @@ tl_stats<-function(m)
               s.points=s.points,t.points=t.points))
 }
 
-worker<-function(m)
+worker_tl<-function(m)
 {
   N<-dim(m)[1]
   n<-dim(m)[2]

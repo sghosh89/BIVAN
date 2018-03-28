@@ -3,13 +3,8 @@
 library(copula)
 library(parallel)
 
-#resultsloc<-"./Results/stat_results/stat_testing/"
-
-#To do
-#1) Add a horizontal dashed line at p=0.05 for the Frank and Normal plots
-
 #***
-#First do the calculations to test the stats
+#calculations to test the stats
 #***
 
 #This function is the worker for testing the stats. It generates numpts
@@ -24,7 +19,7 @@ library(parallel)
 #rank     T or F, apply the ranking to sims or not?
 #
 #Output
-#A 12 by numsims matrix with all the values of all the stats on each sim
+#A 6 by numsims matrix with all the values of all the stats on each sim
 #
 worker<-function(cop,numpts,numsims,rank){
   
@@ -39,7 +34,6 @@ worker<-function(cop,numpts,numsims,rank){
     
     #if rank==T, rank the simulated points
     if (rank==T){
-      
       vi<-(rank(vi)/(length(vi)+1))   # gives the same value if you write as : vi<-pobs(vi)
       vj<-(rank(vj)/(length(vj)+1))   # gives the same value if you write as : vj<-pobs(vj)
     }
@@ -54,17 +48,18 @@ worker<-function(cop,numpts,numsims,rank){
   
   return(res)
 }
+
 #----------------------------------------------------------------------------------------------
 #set up list of copulas on which to call worker using mclapply, start by finding 
 #the copula parameters
-
+#
 # This function takes:
 # Input : spearvals : a sequence of values 0 to 1 which indicates spearman correlation
 # Output : a list of 2 things:
 #            1. coplist : a long list (length=4*length(spearvals)) of 4 types of copula : clayton, normal, frank, survival clayton
 #            2. paramlist : a long list (length=length(coplist)) of parameters of above 4 types of copula, this paramlist
 #                           indicates the parameters for which each copula should have that given specified spearman correlation.
-
+#
 coplist_with_params<-function(spearvals){
   
   taCcop<-claytonCopula(3,2)  # initialize by any old Clayton and Frank and normal copulas
@@ -82,13 +77,14 @@ coplist_with_params<-function(spearvals){
     Fparams[counter]<-iRho(taFcop,spearvals[counter])
   }
   
-  Cparams[1]<-0
-  Fparams[1]<-0
+  Cparams[spearvals==0]<-0
+  Fparams[spearvals==0]<-0
   Cfparams<-Cparams #for the flipped Clayton, same as the Clayton
   
   #now the copulas themselves
   coplist<-list()
-  
+
+  #Clayton  
   for (counter in 1:length(Cparams)){ 
     coplist<-c(coplist,claytonCopula(Cparams[counter],2))
   } 
@@ -98,11 +94,12 @@ coplist_with_params<-function(spearvals){
     coplist<-c(coplist,normalCopula(Nparams[counter],2,"un"))
   }
   
+  #Frank
   for (counter in 1:length(Fparams)){
     coplist<-c(coplist,frankCopula(Fparams[counter],2))
   }
   
-  #we used to use Gumbel here, but using flipped Clayton now
+  #flipped Claytons
   for (counter in 1:length(Cfparams)){
     coplist<-c(coplist,rotCopula(claytonCopula(Cfparams[counter],2)))
   }
@@ -202,10 +199,11 @@ ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){
   p<-tr$p.value
   return(p)
 }
+
 #-------------------------------------------------------------------------------------------------------
 # A plotter function that takes res_pt35_rankF, etc. and makes the appropriate plot
-
-plotter_stat_testing<-function(reslist,filename,xaxparams){
+#
+plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc){
   
   spearvals<-seq(from=0,to=0.9,by=0.1)
   numsims<-dim(reslist[[1]])[2]

@@ -1,10 +1,10 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# THIS CODE CONTAINS ALL THE STATISTISCAL FUNCTIONS WHICH CAN BE TESTED ON THE TWO RANK VECTORS OF A GIVEN COPULA
+# THIS CODE CONTAINS STATISTICS FOR LOOKING AT TAIL DEPENDENCE
 #-----------------------------------------------------------------------------------------------------------------------
 
 source("CopulaFunctions_flexible.R")
 
-#--------------------------- STATISTICS 2 : correlation based Stat ---------------------------------------------------------
+#--------------------------- correlation based Stat ---------------------------------------------------------
 
 CorlCoru<-function(vi,vj){
   
@@ -14,7 +14,7 @@ CorlCoru<-function(vi,vj){
   return(c(Corl,Coru))
 }
 
-#--------------------------- STATISTICS 4 : Stat based on the distance from right diagonal in lower and upper triangle ---------------------------------------------------------
+#--------------------------- Stat based on counting points a given distance from the diagonal in lower and upper triangle ---------------------------------------------------------
 
 PlPu<-function(vi,vj){
   
@@ -48,9 +48,7 @@ PlPu<-function(vi,vj){
   return(list(Sl_Su_Si_P,Pl,Pu)) 
 }
 
-#--------------------------------------------------------- STATISTICS : 6 -----------------------------------------------------------------------
-# get D2l : average of squared distance of points from the right diagonal of the box for lower triangle
-# get D2u : average of squared distance of points from the right diagonal of the box for upper triangle
+#------------------------------------------------ stat based on distance from the diagonal -----------------------------------------------------------------------
 
 D2lD2u<-function(vi,vj)
 {

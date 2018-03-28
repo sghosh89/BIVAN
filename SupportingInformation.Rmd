@@ -103,7 +103,7 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 
 For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
 most implemented using tools from the `VineCopula` package. Code combining these tools is in the
-[*OurBiCopSelect*](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [*BIVAN*](https://github.com/sghosh89/BIVAN) repository. 
+[`OurBiCopSelect`](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
 <!--Shya, links to code are a good idea! Thanks for figuring this out and adding, we should do something like this in other methods sections.-->
 
 First, we produced ranks 
@@ -119,11 +119,10 @@ since most or all bivariate copula families considered include the independent c
 family or as a boundary case. The independence test was as implemented in the `BiCopIndTest`
 function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. If independence could be rejected ($0.05$ significance level), model selection proceeded.
 
-The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian*{1}*, **C**layton*{3}*, **G**umbel*{4}*, **F**rank*{5}*, **J**oe*{6}*, **BB1***{7}*, **BB6***{8}*, **BB7***{9}*, **BB8***{10}*, **S**urvival **C**layton*{13}*, **S**urvival **G**umbel*{14}*, **S**urvival **J**oe*{16}*, **S**urvival **BB1***{17}*, **S**urvival **BB6***{18}*, **S**urvival **BB7***{19}* and **S**urvival **BB8***{20}* copulas.
-Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC) and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas @burnham2003_modelselection. 
-<!--Shya, we here need a reference to the Burnham and Anderson book-->
-Descriptions of these copula families can be found in introductory texts on copulas @burnham2003_modelselection, @nelsen2007_copula
-<!--Shya to please insert references for both the books on copulas we have-->
+The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian {1}, **C**layton {3}, **G**umbel {4}, **F**rank {5}, **J**oe {6}, **BB1** {7}, **BB6** {8}, **BB7** {9}, **BB8** {10}, **S**urvival **C**layton {13}, **S**urvival **G**umbel {14}, **S**urvival **J**oe {16}, **S**urvival **BB1** {17}, **S**urvival **BB6** {18}, **S**urvival **BB7** {19} and **S**urvival **BB8** {20} copulas.
+Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas @burnham2003_modelselection. 
+Descriptions of these copula families can be found in introductory texts on copulas @nelsen2007_copula
+<!--Shya to please insert references for the book on copulas by Joe - it is on my desk, come get it please-->
 and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
 best-fitting member of each family was also provided by `BiCopEst`.
 
@@ -140,9 +139,7 @@ $1000$ boostraps.
 
 Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
-formulas @burnham2003_modelselection
-<!--Shya to add reference to Burnham and Anderson, please-->
-; likewise for BIC.
+formulas @burnham2003_modelselection; likewise for BIC.
 
 <!--Shya please insert some additional material for multivariate datasets - perhaps
 you don't need much because basically you just ran the bivariate analysis on each pair
@@ -151,15 +148,11 @@ everything was tallied up after having done that ??? -->
 
 ### Non-parametric analysis of tail dependence \label{NPA}
 
-<!--Shya, can you please change this figure so it shows u (horizontal) and v (vertical) on the axis labels instead of vi and vj? Often times computer variables do not make good mathematical notation, so I have changed this, I also made changes for similar reasons to other notation elsewhere.-->
-
 Left- and right-tail dependence quantify the extent to which two ranked
 variables $u_i$, $v_i$ for $i=1,...,n$ 
 (see Sec. \ref{Model_selection} for defintions of $u_i$ and $v_i$)
-<!--Shya pls insert ref to the section immediately above this one-->
 are related in the left and right tails, respectively, of their 
 distributions @nelsen2007_copula. 
-<!--Shya, pls cite the Nelson book-->
 Our nonparametric study of tail dependence uses three
 statistics which can quantify the extent to which $u_i$ and $v_i$ are 
 related in any part of their distributions. We here describe the 
@@ -248,15 +241,21 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
-<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
 
-### Stat-testing of Non-parametric analysis (for limited number of datapoints) \label{Stat_testing}
 
 Here, we want to test our $3$ types of nonparametric tail dependent statistics on both small $(35)$ and large $(1000)$ number of datapoints drawn from $4$ types of bivariate copula, namely, *Clayton* , *Normal*, *Frank* and *Survival Clayton*. Whereas *Normal* and *Frank* have symmetric tail dependence, *Clayton* and *Survival Clayton* have lower and upper tail dependence, respectively.
 First we chose a set of parameters [using *iRho* from `Copula` package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$) stats. We took mean of our statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
 
+<!--Shya, why is message=F and warning=F? This is risky unless you ran it already without these and 
+know what the warnings are and that we can ignore them. If this is the case, please add a comment here
+explaining why it is safe. If you do not have a complete understanding of the warnings and messages,
+please do not suppress them. Even if you do understand them, there are probably better ways to handle 
+it than supressing them.-->
 ```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
 set.seed(seed)
+
+#Shya, there are a lot of functions in TestStats_multivar_dataset, do we still need all of them? Please delete any that 
+#we no longer use! You need to keep code clean!
 
 resultsloc<-"./Results/stat_results/stat_testing/"
 callfn<-coplist_with_params(spearvals=seq(from=0,to=0.9,by=0.1))
@@ -270,18 +269,21 @@ save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(
 ```
 
 ```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"),mtime("TestStats_multivar_dataset.R"))}
-set.seed(seed)
-resultsloc<-"./Results/stat_results/stat_testing/"
+
 b<-callfn$paramlist
-plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b)
-plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b)
-plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b)
-plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b)
+plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc)
+plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b,resultsloc)
+plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc)
+plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc)
 ```
 
 ![stat_testing_results_datapt_35\label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
 
 ![stat_testing_results_datapt_1000\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
+
+<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
+
+
 
 ## Soil C and N data \label{Ex_SoilCN}
 

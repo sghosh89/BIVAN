@@ -319,22 +319,22 @@ families_Loecke<-c(1,3:10,13:14,16:20)
 BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 ```
 
+The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes` (to within the precision available 
+from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+
 <!--Display model selection results in a table-->
 ```{r tab_soilCNfit,echo=F,results='markup'}
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=Survival Clayton; SG=Survival Gumbel; SJ=Survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by 180 degrees).\\label{tab_soilCNfit}",
+             caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
              booktabs=T)
 ```
 
-
-The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes`. We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
-
 The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
-Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 ### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 <!--Do the intensive part of the analysis, calculating stats on the data and surrogates-->
@@ -602,11 +602,27 @@ vlineplot(x,ylimits_D2)
 dev.off()
 ```
 
-![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than.\label{fig_soilCN_nonparam}](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
+As described in Methods, each of our statistics, as computed for the 
+ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
+of values of the same statistic with the same ranges computed on 1000 normal-copula 
+surrogate datasets with similar Kendall or Spearman correlations, in different 
+runs for Kendall and Spearman (Figure \ref{fig_soilCN_nonparam}). Because the correlation 
+used in the $\cor$ statistic is the Spearman correlation, Spearman-preserving surrogates
+should be used, so the top-right panel of Figure \ref{fig_soilCN_nonparam}
+is more reliable than the top left. Results indicate that tail dependence of 
+data is stronger in both the lower and upper tails than would be expected under a 
+null hypothesis of a normal copula. The dependence between C and N is also 
+weaker in the middle of the distributions
+than would be expected based on a normal-copula null model.
+
+![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
+
+We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_soilCNcop}. 
+Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}
-atdres<-data.frame(Statistic=c("$cor_l-cor_u$","$P_l-P_u$","$D^2_u-D^2_l$"),
+atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$","$\\Ps_{0,0.1}-\\Ps_{0.9,1}$","$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
 fractxt<-function(fracval)
@@ -633,28 +649,11 @@ atdres[3,3]<-fractxt(D2umD2l_frac_S)
 ```{r tab_soilCN_asym, echo=F, results="markup"}
 knitr::kable(atdres,
              format="pandoc",
-             caption = "Results for tests of whether asymmetry of tail dependence is significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates.\\label{tab_soilCN_asym}",
+             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence. Recall that Spearman-preserving surrogates are more appropriate for the $\\cor$ statistic (Figure \\ref{fig_soilCN_nonparam} caption).\\label{tab_soilCN_asym}",
              booktabs=T)
 ```
 
-As described in Methods, each of our statistics, as computed for the 
-ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
-of values of the same statistic with the same ranges computed on 1000 normal-copula 
-surrogate datasets with similar Kendall or Spearman correlations, in different 
-runs (Figure \ref{fig_soilCN_nonparam}). Because the correlation 
-used in the Cor statistic is the Spearman correlation, Spearman-preserving surrogates
-should be used, so the top-left panel of Figure \ref{fig_soilCN_nonparam}
-should be ignored (DAN: need to fix this later). Results indicate that tail dependence of 
-data is stronger in both the lower and upper tails than would be expected under a 
-null hypothesis of a normal copula. The dependence between C and N is also 
-weaker in the middle of both marginal distributions
-than would be expected based on a normal-copula null model.
-
-We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_soilCNcop}. 
-Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
-
-## Aphid abundance data for 'Green spruce aphid' \label{Ex_count}
-<!--Add common and species name to header-->
+## Results: aphid abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
 
 ### Model selection approach \label{Ex_count_Model_selection}
 

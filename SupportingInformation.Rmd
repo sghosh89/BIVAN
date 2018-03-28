@@ -233,7 +233,6 @@ The difference $\cor_l-\cor_u$ is expected to be positive if
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
 This holds, for instance, for the Clayton copula @nelsen2007_copula.
-<!--Shya to cite the Nelson book-->
 The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
 "lower" statistics occur in opposite order, is also expected to be 
 positive under the same conditions. We use these three differences
@@ -242,24 +241,44 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
+In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
+also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-Ps_u$, and 
+$\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in data simulated
+from various copulas. Normal and Frank copula families 
+are known to have symmetric tail dependence,
+i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
+in these families @nelsen2007_copula. Clayton copulas are known to have stronger lower- than 
+upper-tail dependence. And survival Clayton copulas, being rotations of Clayton copulas by 
+$180^\circ$, have stronger upper- than lower tail dependence @nelsen2007_copula.  
+Using the `iRho` function from the `copula` package, for each of the four families normal, 
+Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
+Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
+of the selected parameter values we generated  $n$ points, 100 times, and thereby computed 100 values of the 
+statistics $\cor_l-\cor_u$, $\Ps_l-Ps_u$, and $\Dsq_u-\Dsq_u$. This exercise 
+was repeated, separately, 
+for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect asymptotic behavior of the 
+statistics and their behavior on the small datasets which are common in some fields
+of ecology. The mean and standard error of the three difference statistics were computed for 
+each copula family, parameter value, and value of $n$, and results were plotted against 
+Spearman's rho (Figures \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
+the expectation being that the difference statistics would be positive for 
+Clayton copulas and negative for survival Clayton copulas (except for the case of $\rho=0$, a 
+boundary case of these families corresponding to independence), and not significantly different 
+from $0$ (we used a $t$-test with a significance threshold of $0.05$) for Frank and normal 
+copulas. These expectations were fullfilled (Figures \ref{fig_stat_testing35} and 
+\ref{fig_stat_testing1000}).
 
-
-Here, we want to test our $3$ types of nonparametric tail dependent statistics on both small $(35)$ and large $(1000)$ number of datapoints drawn from $4$ types of bivariate copula, namely, *Clayton* , *Normal*, *Frank* and *Survival Clayton*. Whereas *Normal* and *Frank* have symmetric tail dependence, *Clayton* and *Survival Clayton* have lower and upper tail dependence, respectively.
-First we chose a set of parameters [using *iRho* from `Copula` package] for each type of copula for which spearman correlation will be $10$ equispaced number in between [$0,0.9$]. Then for each parameter (or spearman value) of each type of copula we carried out $100$ simulation and calculated ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$) stats. We took mean of our statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ over $100$ simulations and In Figure \ref{fig_stat_testing35}, we plotted those statistic against spearman correlation. We put the standard error bar around each point in the plot and these errors got minimized with increasing numbe of data points [Figure \ref{fig_stat_testing1000}]. Statistic $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ should be $0$ for spearman=$0$ for *Clayton* and *Survival Clayton* and should remain $0$ for all values of spearman for symmetric copula like *Normal* and *Frank*. To verify this, we executed t-test and report the $p$-values for each case and most of the case shows $p>0.05$.
-
-<!--Shya, why is message=F and warning=F? This is risky unless you ran it already without these and 
-know what the warnings are and that we can ignore them. If this is the case, please add a comment here
-explaining why it is safe. If you do not have a complete understanding of the warnings and messages,
-please do not suppress them. Even if you do understand them, there are probably better ways to handle 
-it than supressing them.-->
-```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"))}
+<!--The message=F and warning=F flags are to suppress warnings that come when you pass a parameter
+of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for these families.
+They correspond to the independent copula. The packages we use provide the indepdent copula, but
+issue a warning. Since anyway we want the independent copula, we can suppress the warning. We ran this
+without the warning and it is OK to supress it.-->
+```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopupulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 set.seed(seed)
 
-#Shya, there are a lot of functions in TestStats_multivar_dataset, do we still need all of them? Please delete any that 
-#we no longer use! You need to keep code clean!
-
 resultsloc<-"./Results/stat_results/stat_testing/"
-callfn<-coplist_with_params(spearvals=seq(from=0,to=0.9,by=0.1))
+spearvals<-seq(from=0,to=0.9,by=0.1)
+callfn<-coplist_with_params(spearvals=spearvals)
 coplist<-callfn$coplist
 ncores<-3
 res_pt35_rankF<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=ncores)
@@ -272,21 +291,25 @@ save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(
 ```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"),mtime("TestStats_multivar_dataset.R"))}
 
 b<-callfn$paramlist
-plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc)
-plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b,resultsloc)
-plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc)
-plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc)
+plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc,spearvals)
+plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b,resultsloc,spearvals)
+plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
+plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 ```
 
-![stat_testing_results_datapt_35\label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
+<!--Shya, currently your plotter function displays a p-value for each point for the
+middle two columns of panels, but only a p-value for the left-most point for the left 
+column of panels and for the right-most column. Can you please make the left- and right-most
+columns follow the same format at the middle two columns, i.e., they need to have a right axis label from 0 to 1 showing p-value and then show all the p-value points for all values
+of Spearman's rho. -->
 
-![stat_testing_results_datapt_1000\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
 
-<!--Eventually we will need to add methods on how we use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. So, in particular, Dan will have to insert descriptions of the resampling methods.-->
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
+<!--Eventually we will need to add methods on how we actually use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. Dan will have to insert descriptions of the surrogate and resampling methods.-->
 
-
-## Soil C and N data \label{Ex_SoilCN}
+## Results: soil C and N data \label{Ex_SoilCN}
 
 ### Model selection approach \label{Ex_SoilCN_Model_selection}
 <!--This does the computations for this section-->

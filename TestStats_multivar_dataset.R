@@ -79,7 +79,7 @@ coplist_with_params<-function(spearvals){
   
   Cparams[spearvals==0]<-0
   Fparams[spearvals==0]<-0
-  Cfparams<-Cparams #for the flipped Clayton, same as the Clayton
+  Cfparams<-Cparams #for the survival (flipped) Clayton, same as the Clayton
   
   #now the copulas themselves
   coplist<-list()
@@ -99,7 +99,7 @@ coplist_with_params<-function(spearvals){
     coplist<-c(coplist,frankCopula(Fparams[counter],2))
   }
   
-  #flipped Claytons
+  #flipped/survival Claytons
   for (counter in 1:length(Cfparams)){
     coplist<-c(coplist,rotCopula(claytonCopula(Cfparams[counter],2)))
   }
@@ -127,6 +127,7 @@ coplist_with_params<-function(spearvals){
 #      1. reslist : A list of 4*length(spearvals) matrices and each is a 6 by numsims matrix, 6 rows are : Corl, Coru, Pl, Pu, D2l, D2u
 #      2. numsims : The number of simulations to do and apply the statistics to
 #      3. j1, j2 :  1 to 6, index of those 6 stats
+#
 stat_list<-function(reslist,numsims,j1,j2){ 
   stat_sms<-matrix(NA,nrow=length(reslist),ncol=numsims)
   for (i in 1:length(reslist)){
@@ -135,8 +136,8 @@ stat_list<-function(reslist,numsims,j1,j2){
   return(stat_sms)
 }
 
-
 # This function gives mean,lowCI,upCI of a vector
+#
 mCI<-function(x){
   m<-mean(x)
   se<-sd(x)/sqrt(length(x))   # denominator should be sqrt(length(x)-1) ?????
@@ -149,6 +150,7 @@ mCI<-function(x){
 #                                                   4 : type of copula(C,N,F,SC)
 #                                                   length of spearvals =10 (here)
 #------------------------------------------------------------------------------------------------------------------------
+#
 M1mM2<-function(reslist,numsims){
   
   
@@ -185,12 +187,11 @@ M1mM2<-function(reslist,numsims){
   return(list(CorlmCoru=CorlmCoru,
               PlmPu=PlmPu,
               D2umD2l=D2umD2l))
-  
 }
 
 #-----------------------------------------------------------------------------------------
 # This is a t-test function which returns a p-value
-
+#
 ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){ 
   stat_M1mM2<-stat_list(reslist,numsims,j1,j2)
   x<-stat_M1mM2[is:ie,][ispearval,]
@@ -203,9 +204,8 @@ ttest<-function(reslist,numsims,j1,j2,is,ie,ispearval){
 #-------------------------------------------------------------------------------------------------------
 # A plotter function that takes res_pt35_rankF, etc. and makes the appropriate plot
 #
-plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc){
+plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
   
-  spearvals<-seq(from=0,to=0.9,by=0.1)
   numsims<-dim(reslist[[1]])[2]
   
   a<-M1mM2(reslist,numsims)

@@ -79,7 +79,7 @@ pdf("./Results/SoilCNcop.pdf")
 v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 dev.off()
 ```
-<!--Shya please insert an automatic reference to the methods section "Model selection approach" at the location YYY above. I could not easily find a way to do section references by number that was consistent with the figure and table reference system you already have, but perhaps I missed it. In the end I think we will need to be able to refer to sections as well as figures and tables by number. I can see there is a package called "bookdown" that may help but there may be something easier using similar tools to what you have already used for figures and tables.-->
+
 ![Plot of the raw soil C and N data.\label{fig_soilCNraw}](./Results/SoilCNraw.pdf){ width=30%, height=30% }
 
 ![Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}). \label{fig_soilCNcop}](./Results/SoilCNcop.pdf){ width=30%, height=30% }
@@ -105,7 +105,6 @@ Recall that question 1 is: Do datasets in ecology and related fields have non-Ga
 For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
 most implemented using tools from the `VineCopula` package. Code combining these tools is in the
 [`OurBiCopSelect`](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
-<!--Shya, links to code are a good idea! Thanks for figuring this out and adding, we should do something like this in other methods sections.-->
 
 First, we produced ranks 
 $(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set 
@@ -122,9 +121,7 @@ function in `VineCopula`, the documentation of which reports the test uses the a
 
 The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian {1}, **C**layton {3}, **G**umbel {4}, **F**rank {5}, **J**oe {6}, **BB1** {7}, **BB6** {8}, **BB7** {9}, **BB8** {10}, **S**urvival **C**layton {13}, **S**urvival **G**umbel {14}, **S**urvival **J**oe {16}, **S**urvival **BB1** {17}, **S**urvival **BB6** {18}, **S**urvival **BB7** {19} and **S**urvival **BB8** {20} copulas.
 Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas @burnham2003_modelselection. 
-Descriptions of these copula families can be found in introductory texts on copulas @nelsen2007_copula
-<!--Shya to please insert references for the book on copulas by Joe - it is on my desk, come get it please-->
-and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
+Descriptions of these copula families can be found in introductory texts on copulas @nelsen2007_copula , @joe2014_dependence and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
 best-fitting member of each family was also provided by `BiCopEst`.
 
 Model selection methods will give the *relative* support of several models, but will not,
@@ -273,7 +270,8 @@ of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for 
 They correspond to the independent copula. The packages we use provide the indepdent copula, but
 issue a warning. Since anyway we want the independent copula, we can suppress the warning. We ran this
 without the warning and it is OK to supress it.-->
-```{r stat_testing_save_result, message=F, warning=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopupulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+<!-- The lines you are talking about appeared as message not as warning(actualy no warning appered for this chunk), so we have to set message=F here-->
+```{r stat_testing_save_result, message=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopupulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 set.seed(seed)
 
 resultsloc<-"./Results/stat_results/stat_testing/"
@@ -929,8 +927,6 @@ knitr::kable(s,
 Table \ref{tab_ff_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_ff_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with negative mean has all resampled mean less than $0$ for *Leaf-curling plum aphid*-firstflight data. This proves that there is a significant upper tail dependence in *Leaf-curling plum aphid*-firstflight data.
 
 ## North sea plankton data for 'Ceratium furca' \label{Ex_pns}
-
-<!--Shya to edit the prentation below to make it more parallel to the presentation of the model selection results for C/N data above-->
 
 ### Model selection approach \label{Ex_pns_Model_selection}
 

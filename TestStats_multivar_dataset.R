@@ -218,29 +218,29 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
   t2<-c(length(b[[1]]),length(b[[1]])+length(b[[2]]),length(b[[1]])+length(b[[2]])+length(b[[3]]),length(b[[1]])+length(b[[2]])+length(b[[3]])+length(b[[4]]))
   
   for(i in c(1,2,3,4)){
-    if(i==1 | i==4){
-      is<-t1[i]
-      ie<-t2[i]
+    #if(i==1 | i==4){
+      #is<-t1[i]
+      #ie<-t2[i]
       
-      t_CorlmCoru<-ttest(reslist,numsims,1,2,is,ie,1)
-      plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='b',col='orange',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]))
-      arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-      mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+      #t_CorlmCoru<-ttest(reslist,numsims,1,2,is,ie,1)
+     # plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='b',col='orange',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]))
+    #  arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
+     # mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
-      t_PlmPu<-ttest(reslist,numsims,3,4,is,ie,1)
-      plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='b',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u]))  
-      arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-      mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+     # t_PlmPu<-ttest(reslist,numsims,3,4,is,ie,1)
+     # plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='b',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u]))  
+     # arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
+     # mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
-      t_D2umD2l<-ttest(reslist,numsims,6,5,is,ie,1)
-      plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='b',col='red',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2)) 
-      arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
-      mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+     # t_D2umD2l<-ttest(reslist,numsims,6,5,is,ie,1)
+     # plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='b',col='red',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2)) 
+     # arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
+     # mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
       
-    }else{
+    #}else{
       
       is<-t1[i]
       ie<-t2[i]
@@ -286,7 +286,7 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
       axis(side=4,col='purple2',col.axis="purple2")
       mtext(side = 4, line = 1.5, 'p values', col='purple2')
       
-    }
+    #}
     
   }
   

@@ -24,6 +24,7 @@ updated on `r Sys.Date()`
 \newcommand{\cor}{\operatorname{cor}}
 \newcommand{\Ps}{\operatorname{P}}
 \newcommand{\Dsq}{\operatorname{D}^2}
+\newcommand{\rank}{\operatorname{rank}}
 <!--\newcommand{\D2}{\operatorname{D}^2} gives error msg : insert $ -->
 
 <!--
@@ -238,6 +239,12 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
+<!--Shya, you added a hyperlink that lead to some of our code earlier in this document,
+and I have added one here, and the knitted pdf has the hyperlink, but the text "basic unit tests" 
+is the same color as all the surrounding text. So the only way you can tell that there is a 
+hyperlink there is if you happen to mouse over the words. We need to have a color that all
+text with a hyperlink is rendered in, preferably automatically. Can you figure out how to 
+make that happen, both here and for the earlier hyperlinks?-->
 In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
 also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-Ps_u$, and 
 $\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in data simulated
@@ -246,7 +253,7 @@ are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
 in these families @nelsen2007_copula. Clayton copulas are known to have stronger lower- than 
 upper-tail dependence. And survival Clayton copulas, being rotations of Clayton copulas by 
-$180^\circ$, have stronger upper- than lower tail dependence @nelsen2007_copula.  
+$180^\circ$, have stronger upper- than lower tail dependence @nelsen2007_copula.
 Using the `iRho` function from the `copula` package, for each of the four families normal, 
 Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
@@ -295,17 +302,79 @@ plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
 plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 ```
 
-<!--Shya, currently your plotter function displays a p-value for each point for the
-middle two columns of panels, but only a p-value for the left-most point for the left 
-column of panels and for the right-most column. Can you please make the left- and right-most
-columns follow the same format at the middle two columns, i.e., they need to have a right axis label from 0 to 1 showing p-value and then show all the p-value points for all values
-of Spearman's rho. -->
-
 ![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
 
 ![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
-<!--Eventually we will need to add methods on how we actually use these stats, which is different for multivariate and bivariate data. For bivariate data, it involves surrogates, for multivariate data it involves resampling locations. Dan will have to insert descriptions of the surrogate and resampling methods.-->
+For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same 
+statistics computed on surrogate datasets that 
+were produced from the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
+the same marginal distributions as the empirical data and had very similar Kendall or Spearman correlation, but had
+normal copula structure, and thus our comparisons tested the null hypothesis that our statistics took values on the
+empirical data no different from what would have been expected if the copula structure of the data were normal, but the
+data were otherwise statistically unchanged.
+For bivariate datasets, surrogates were produced as follows.   
+
+- Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
+one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
+Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
+$\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
+study using the `iTau` function of the `VineCopula` package). 
+- Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
+$\mathcal{B}(\theta_\tau)$. 
+- Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
+$(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ has $\rank(x_{\sigma_x(i)})$ equal to $\rank(a_i)$ for all $i$, where 
+$\rank(x_{\sigma_x(i)})$ is the rank of $x_{\sigma_x(i)}$ in the set $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$, and
+$\rank(a_i)$ is the rank of $a_i$ in the set $(a_1,\ldots,a_n)$ (here $\sigma_x$ is a permutation of the 
+indices $1,\ldots,n$). 
+- Likewise permute $(y_1,\ldots,y_n)$
+such that the permutation
+$(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
+another permutation of $1,\ldots,n$).
+- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+
+Our code for this algorithm is [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R) in the 
+[`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
+
+Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
+is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a permutation 
+of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as those of the original data. 
+Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
+Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
+will be close to $\tau$ (differences arising only through sampling variation). If the instead of $\theta_\tau$
+a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
+as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
+sampling variation) the Spearman correlation of the empirical data.  
+
+The comparison of one of the
+statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the empirical data, to the distribution
+of its values computed on many surrogate datasets produced using the normal copula family for $\mathcal{B}(\theta)$
+provides a test of whether dependence in the part of the distribution specified by $l_b$ and $u_b$ is different from
+what would be expected from a null hypothesis of normal copula structure but unchanged marginals and unchanged 
+Kendall (or Spearman)
+correlation. Significant deviations correspond to deviations from normal copula structure. 
+The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, as computed on the 
+empirical data, to the distribution
+of its values computed on many surrogate datasets produced using the normal copula family for $\mathcal{B}(\theta)$
+provides a test of asymmetry of tail dependence. 
+
+For multivariate datasets, e.g., the aphid abundance or first flight data, each of which consists of time series 
+from 10 locations, a spatial resampling scheme was used instead of the surrogate approach described above.
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 as part of a method for 
+performing model selection among matrix regression models. For each pair of locations $i \neq j$, the statistic
+of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
+$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The values $s_{i,j}$ were then arranged in
+a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the average strength of 
+dependence, across all pairs of distinct locations, for data in the portion of the distributions 
+given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
+asymmetry of tail dependence across all pairs of locations. 
+Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a distribution of bootstrapped values.
+Bootstrapping was performed by resampling the locations of measurement, with replacement; this corresponds to 
+resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
+@bjornstadfalck2001, @walteretal2017. 
 
 ## Results: soil C and N data \label{Ex_SoilCN}
 
@@ -770,7 +839,6 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              booktabs=TRUE
              )
 ```
-
 
 
 

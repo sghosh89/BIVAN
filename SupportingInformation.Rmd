@@ -11,6 +11,7 @@ output:
     fig_caption: yes
 tables: True
 link-citations: True
+urlcolor : blue
 
 csl: science.csl
 bibliography: REF_SI.bib
@@ -239,12 +240,7 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
-<!--Shya, you added a hyperlink that lead to some of our code earlier in this document,
-and I have added one here, and the knitted pdf has the hyperlink, but the text "basic unit tests" 
-is the same color as all the surrounding text. So the only way you can tell that there is a 
-hyperlink there is if you happen to mouse over the words. We need to have a color that all
-text with a hyperlink is rendered in, preferably automatically. Can you figure out how to 
-make that happen, both here and for the earlier hyperlinks?-->
+
 In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
 also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-Ps_u$, and 
 $\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in data simulated

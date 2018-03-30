@@ -1,6 +1,6 @@
 ---
 title: "Supporting Information"
-author: "Shyamolina Ghosh and Daniel Reuman"
+author: "S. Ghosh, T. Loecke, C.P. Reid, Daniel Reuman"
 date: "February 12, 2018"
 geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
 
@@ -1074,6 +1074,7 @@ knitr::kable(s,
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
+\newpage
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 
 ### Model selection approach \label{Ex_pns_Model_selection}

@@ -1,6 +1,6 @@
 ---
 title: "Supporting Information"
-author: "Shyamolina Ghosh and Daniel Reuman"
+author: "S. Ghosh, T. Loecke, C.P. Reid, Daniel Reuman"
 date: "February 12, 2018"
 geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
 

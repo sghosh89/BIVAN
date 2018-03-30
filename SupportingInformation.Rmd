@@ -1,6 +1,6 @@
 ---
 title: "Supporting Information"
-author: "S. Ghosh, T. Loecke, C.P. Reid, Daniel Reuman"
+author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
 date: "February 12, 2018"
 geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
 
@@ -26,17 +26,22 @@ updated on `r Sys.Date()`
 \newcommand{\Ps}{\operatorname{P}}
 \newcommand{\Dsq}{\operatorname{D}^2}
 \newcommand{\rank}{\operatorname{rank}}
-<!--\newcommand{\D2}{\operatorname{D}^2} gives error msg : insert $ -->
 
-<!--
-```{r, echo=F}
-options(knitr.table.format = "html")
+<!--checkpoint package-->
+```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
+library(checkpoint)
+checkloc<-"./.checkpoint"
+if (!dir.exists(checkloc))
+{
+  dir.create(checkloc)
+  checkpoint("2018-03-29",checkpointLocation = checkloc)
+}
 ```
--->
 
 <!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
+
 seed<-101
 families<-c(1,3:10,13,14,16:20)
 

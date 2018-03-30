@@ -30,12 +30,17 @@ updated on `r Sys.Date()`
 <!--checkpoint package-->
 ```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
 library(checkpoint)
-checkloc<-"./.checkpoint"
-if (!dir.exists(checkloc))
+#checkloc<-tempdir()
+#if (!dir.exists(paste0(checkloc,"/.checkpoint/")))
+#{
+#  dir.create(paste0(checkloc,"/.checkpoint/"))
+#  checkpoint("2018-03-29",checkpointLocation = checkloc)
+#}
+if (!dir.exists("./.checkpoint/"))
 {
-  dir.create(checkloc)
-  checkpoint("2018-03-29",checkpointLocation = checkloc)
+  dir.create("./.checkpoint/")
 }
+checkpoint("2018-03-29",checkpointLocation = "./")
 ```
 
 <!--Basic setup-->

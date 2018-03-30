@@ -913,14 +913,23 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
 ```
 
-As in section \ref{Ex_count}, results are presented in $10 \times 10$ matrix format with rows
-and columns corresponding to locations. Table \ref{tab_ff_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the 
-
-
-
-several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data. Table \ref{tab_ff_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_ff_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_ff_p_KS}] of the goodness of fit with atleast
-`r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_ff_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_ff_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_ff_LTdep_AICw} and Table \ref{tab_ff_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_ff_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)`** out of **`r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair`** location pair more upper tail dependence. 
-
+As in section \ref{Ex_count_Model_selection}, results are presented in $10 \times 10$ 
+matrix format with rows
+and columns corresponding to locations. Table \ref{tab_ff_bestcop} shows 
+that, for the large majority of location pairs, some non-normal copula 
+was a better fit, according to AIC, than was the normal copula, answering the first part of question 1 for these data. Comparing the AIC weight of the best-fitting 
+(lowest AIC) copula family for each pair
+of sampling locations (Table \ref{tab_ff_AICw}) to the AIC weight of the normal copula 
+family for the same pair (Table \ref{tab_ff_AICw_normal}) confirms that the
+degree of support for normal copulas was usually not comparable to the 
+degree of support for other families. Goodness of fit tests
+based on a Cramer-von Mises statistic (Table \ref{tab_ff_p_CvM}) usually failed to reject the 
+hypothesis that the AIC-best copula family
+was also an objectively adequate description of the data, and likewise for 
+goodness of fit tests based on a Kolmogorov-Smirnov
+statistic (Table \ref{tab_ff_p_KS}). In all cases at least `r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` percent 
+of bootstrap randomizations used for
+goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
 
 ```{r tab_ff_bestcop, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], 
@@ -930,27 +939,10 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1],
              )
 ```
 
-
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
              format='pandoc',
-             caption = "Aphid_firstflight : AICw for best fit copula family for each selective location pair\\label{tab_ff_AICw}",
-             booktabs=TRUE
-             )
-```
-
-```{r tab_ff_p_CvM, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$gfc_p_CvM,
-             format='pandoc',
-             caption = "Aphid_firstflight : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula\\label{tab_ff_p_CvM}",
-             booktabs=TRUE
-             )
-```
-
-```{r tab_ff_p_KS, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$gfc_p_KS,
-             format='pandoc',
-             caption = "Aphid_firstflight : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula\\label{tab_ff_p_KS}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_AICw}",
              booktabs=TRUE
              )
 ```
@@ -958,15 +950,35 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              format='pandoc',
-             caption = "Aphid_firstflight : AICw for 'Normal' copula family for each selective location pair\\label{tab_ff_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for first flight data for the leaf-curlung plum aphid, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
              )
 ```
 
+```{r tab_ff_p_CvM, echo=F, results='markup'}
+knitr::kable(RES_aphid_ff$gfc_p_CvM,
+             format='pandoc',
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for first flight data for the leaf-curling plum aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_CvM}",
+             booktabs=TRUE
+             )
+```
+
+```{r tab_ff_p_KS, echo=F, results='markup'}
+knitr::kable(RES_aphid_ff$gfc_p_KS,
+             format='pandoc',
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for first flight data for the leaf-curling plum aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_KS}",
+             booktabs=TRUE
+             )
+```
+
+The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and 
+the model-averaged (again, AIC based) upper-tail dependence statistic are in 
+Tables \ref{tab_ff_LTdep_AICw} and \ref{tab_ff_UTdep_AICw}, respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., $0$), and answering the second part of question 1 for these data - these data have greater tail dependence (lower and upper) than would be expected from a normal-copula nul hypothesis. 
+
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged lower tail dependence statistic for each selective location pair\\label{tab_ff_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -974,23 +986,32 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged upper tail dependence statistic for each selective location pair\\label{tab_ff_UTdep_AICw}",
+             caption = "Model-averaged upper tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
+
+The difference between the model-averaged lower-tail dependence statistic and the 
+model-averaged upper-tail dependence statistic (lower minus upper), shown in 
+Table \ref{tab_ff_LTmUT}, was negative for `r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)` 
+out of `r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair` location pairs, answering the third 
+part of question 1. We note this result is opposite the analogous result for aphid abundance
+data for the green spruce aphid, i.e., whereas those abundance data showed stronger lower tail 
+dependendence than upper tail dependence, first flights for the leaf-curling plum aphid showed 
+stronger upper tail dependence than lower tail dependence. 
 
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Aphid_firstflight : model averaged lower tail dependence - model averaged upper tail dependence statistic for each selective location pair\\label{tab_ff_LTmUT}",
+             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
 ```
 
-
-
 ### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
+
+
 
 ```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("NonParamStat.R"))}
 set.seed(seed)

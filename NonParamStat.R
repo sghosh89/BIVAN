@@ -169,11 +169,13 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   
   d<-d_allsp[[sp]]
   lenloc<-length(good_loc)
-  #first initialize result receptacles for the output
-  D<-matrix(NA,lenloc,lenloc)
+  
+  #D<-matrix(NA,lenloc,lenloc)
+  D<-gcdist(longs[good_loc],lats[good_loc]) # This good_loc by good_loc matrix with distance btw any two selected among all locations
   colnames(D) <- paste("loc",good_loc, sep="")
   rownames(D) <- paste("loc",good_loc, sep="")
   
+  #first initialize result receptacles for the output
   spear<-matrix(NA,lenloc,lenloc)
   colnames(spear) <- colnames(D)
   rownames(spear) <-rownames(D)
@@ -218,7 +220,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
       j<-good_loc[jj]
       #cat("i,j",i,j,"\n")
       
-      D[ii,jj]<-gcdist(longs[i],lats[i],longs[j],lats[j])
+      #D[ii,jj]<-gcdist(longs[i],lats[i],longs[j],lats[j]) old way of gcdist calling from ncf-version 1.1 to 1.7
    
       m<-vivj_matrix(d_allsp,sp,i,j)
       thisres<-copsync(m)
@@ -280,7 +282,8 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   
   #---------------------- PLOT :  spear_vs_D -------------------------------
   pdf(paste(pfname,"_Spearman_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,spear,xlab="D",ylab="spear",col=rgb(0.5,0,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,spear,xlab="D",ylab="spear",col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(spear)
   #***DAN: fill in one line of numericdf here, the line for spear
@@ -290,12 +293,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<spear>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  kend_vs_D ---------------------------------
   pdf(paste(pfname,"_Kendall_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,kend,xlab="D",ylab="kend",col=rgb(0,0,1,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,kend,xlab="D",ylab="kend",col=rgb(0,0,1,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(kend)
   i_name<-which(numericdf$Stat=="kend")
@@ -304,13 +309,15 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<kend>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   
   #--------------------- PLOT :  Corl_vs_D ---------------------------------
   pdf(paste(pfname,"_Corl_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Corl,xlab="D",ylab=expression(cor[l]),col=rgb(0.5,0,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Corl,xlab="D",ylab=expression(cor[l]),col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Corl)
   i_name<-which(numericdf$Stat=="Corl")
@@ -319,12 +326,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Corl>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  Coru_vs_D ---------------------------------
   pdf(paste(pfname,"_Coru_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Coru,xlab="D",ylab=expression(cor[u]),col=rgb(0,0.5,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Coru,xlab="D",ylab=expression(cor[u]),col=rgb(0,0.5,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Coru)
   i_name<-which(numericdf$Stat=="Coru")
@@ -333,12 +342,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Coru>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  Corl-Coru_vs_D ---------------------------------
   pdf(paste(pfname,"_Corl-Coru_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Corl-Coru,xlab="D",ylab=expression(cor[l]-cor[u]),col=rgb(0,0,0.5,.2),pch=19,ylim=c(-1,1))
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Corl-Coru,xlab="D",ylab=expression(cor[l]-cor[u]),col=rgb(0,0,0.5,.2),pch=19,ylim=c(-1,1),cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Corl-Coru)
   i_name<-which(numericdf$Stat=="Corl-Coru")
@@ -347,12 +358,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Corl-Coru>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
 
   #--------------------- PLOT :  Pl_vs_D ---------------------------------
   pdf(paste(pfname,"_Pl_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Pl,xlab="D",ylab=expression(P[l]),col=rgb(0.5,0,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Pl,xlab="D",ylab=expression(P[l]),col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Pl)
   i_name<-which(numericdf$Stat=="Pl")
@@ -361,12 +374,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Pl>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  Pu_vs_D ---------------------------------
   pdf(paste(pfname,"_Pu_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Pu,xlab="D",ylab=expression(P[u]),col=rgb(0,0,0.5,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Pu,xlab="D",ylab=expression(P[u]),col=rgb(0,0,0.5,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Pu)
   i_name<-which(numericdf$Stat=="Pu")
@@ -375,12 +390,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Pu>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  Pl-Pu_vs_D ---------------------------------
   pdf(paste(pfname,"_Pl-Pu_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,Pl-Pu,xlab="D",ylab=expression(P[l]-P[u]),col=rgb(0,0.5,0,.2),pch=19,ylim=c(-1,1))
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,Pl-Pu,xlab="D",ylab=expression(P[l]-P[u]),col=rgb(0,0.5,0,.2),pch=19,ylim=c(-1,1),cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(Pl-Pu)
   i_name<-which(numericdf$Stat=="Pl-Pu")
@@ -389,12 +406,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<Pl-Pu>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  D2l_vs_D ---------------------------------
   pdf(paste(pfname,"_D2l_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,D2l,xlab="D",ylab=expression(D[l]^2),col=rgb(0.5,0,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,D2l,xlab="D",ylab=expression(D[l]^2),col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(D2l)
   i_name<-which(numericdf$Stat=="D2l")
@@ -403,12 +422,14 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<D2l>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  D2u_vs_D ---------------------------------
   pdf(paste(pfname,"_D2u_vs_D.pdf",sep=""),width=8, height=8)
-  plot(D,D2u,xlab="D",ylab=expression(D[u]^2),col=rgb(0,0.5,0,.2),pch=19)
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,D2u,xlab="D",ylab=expression(D[u]^2),col=rgb(0,0.5,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(D2u)
   i_name<-which(numericdf$Stat=="D2u")
@@ -417,15 +438,15 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<D2u>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
   
   #--------------------- PLOT :  D2u-D2l_vs_D ---------------------------------
   pdf(paste(pfname,"_D2u-D2l_vs_D.pdf",sep=""),width=8, height=8)
-  par(mgp=c(2.5,1,0))
-  plot(D,D2u-D2l,xlab="D",ylab=expression(D[u]^2 - D[l]^2),col=rgb(0,0,0.5,.2),pch=19,ylim=c(-0.3,0.3))
+  op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
+  plot(D,D2u-D2l,xlab="D",ylab=expression(D[u]^2 - D[l]^2),col=rgb(0,0,0.5,.2),pch=19,ylim=c(-0.3,0.3),cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
-  par(mgp=c(3,1,0))
   result<-resampmn(D2u-D2l)
   i_name<-which(numericdf$Stat=="D2u-D2l")
   numericdf$mnvalue[i_name]<-result$datmean
@@ -433,6 +454,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   numericdf$Upper95CI[i_name]<-result$quantiles[2]
   numericdf$fracgt0[i_name]<-result$fracgt0
   #mtext(paste0("<D2u-D2l>=",round(result$datmean,4),", q2.5=",round(result$quantiles[1],4),", q97.5=",round(result$quantiles[2],4),", fracgt0=",result$fracgt0))
+  par(op)
   dev.off()
   #-------------------------------------------------------------------------
 
@@ -447,17 +469,6 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
 #----------------------------------------------------------------------------------------------------------------------------
 #                                                       CODE ENDS HERE
 #-----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -86,16 +86,18 @@ dev.off()
 
 ![Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}). \label{fig_soilCNcop}](./Results/SoilCNcop.pdf){ width=30%, height=30% }
 
-## Aphid data \label{Aphid_data}
+## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data 
    * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
    * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
    
-## North Sea plankton data \label{Pns_data}
+## Abundance data for *Ceratium furca* in UK seas \label{Pns_data}
    * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
    * We threw out all locations that had fewer than 45 years data
    * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
+   * *Ceratium furca* is a dicoflagellate commonly found in UK seas
+   * note, when we edit this, we cannot call it the North Seas since data come from around the UK not only the North Sea, unless Shya threw out all grid cells that were outside the North Sea
    
 # Question 1 analyses for each dataset
 Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
@@ -719,7 +721,7 @@ knitr::kable(atdres,
              booktabs=T)
 ```
 
-## Results: aphid abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
+## Results: abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
 
 ### Model selection approach \label{Ex_count_Model_selection}
 
@@ -895,7 +897,7 @@ please go ahead and delete it and this comment.
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-## Results: aphid first flight data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
+## Results: first flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
 
 ### Model selection approach \label{Ex_ff_Model_selection}
 
@@ -1072,18 +1074,17 @@ knitr::kable(s,
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-<!--Dan stopped editing here 2018 03 30-->
-
-
-## North sea plankton data for 'Ceratium furca' \label{Ex_pns}
+## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 
 ### Model selection approach \label{Ex_pns_Model_selection}
 
+<!--Load the data-->
 ```{r read_plankton_north_sea_data, echo=F}
 d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
 data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
+<!--Do the main analysis-->
 ```{r RES_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"), mtime("FittingCopula_selective_loc.R"))}
 
 set.seed(seed)
@@ -1098,6 +1099,19 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
 ```
 
+As in previous sections (see also Methods) model selection among copulas was done separately for 
+each pair of sampling locations. There were $14$ sampling locations, so results are presented in 
+$14 \times 14$ matrix format, with rows and columns corresponding to locations. 
+Table \ref{tab_pns_bestcop} shows that, for the large majority of location pairs, some 
+non-normal copula was a better fit, according to AIC, than was the normal copula, answering the 
+first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula 
+family for each pair of sampling locations (Table \ref{tab_pns_AICw}) to the AIC weight of
+the normal copula family for the same pair (Table \ref{tab_pns_AICw_normal}) 
+
+ Table \ref{tab_pns_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_pns_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_pns_p_KS}] of the goodness of fit with atleast
+`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_pns_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_pns_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_pns_LTdep_AICw} and Table \ref{tab_pns_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_pns_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)`** out of **`r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`** location pair more lower tail dependence. 
+
+
 ```{r tab_pns_bestcop, echo=F, results='markup'}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              format='pandoc',
@@ -1106,7 +1120,6 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              )
 ```
 
-\newpage
 ```{r tab_pns_AICw,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
              format="pandoc",
@@ -1115,7 +1128,17 @@ knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
              booktabs=TRUE)
 ```
 
-\newpage
+```{r tab_pns_AICw_normal,echo=F,results="markup"}
+knitr::kable(normal_cop_AICw_matrix(r=RES_plankton_north_sea),
+             format="pandoc",
+             digits=3,
+             caption = "Plankton_north_sea : AICw for 'Normal' copula family for each selective location pair\\label{tab_pns_AICw_normal}",
+             booktabs=TRUE)
+```
+
+
+
+
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$gfc_p_CvM,
              format="pandoc",
@@ -1132,13 +1155,6 @@ knitr::kable(RES_plankton_north_sea$gfc_p_KS,
              booktabs=TRUE)
 ```
 
-```{r tab_pns_AICw_normal,echo=F,results="markup"}
-knitr::kable(normal_cop_AICw_matrix(r=RES_plankton_north_sea),
-             format="pandoc",
-             digits=3,
-             caption = "Plankton_north_sea : AICw for 'Normal' copula family for each selective location pair\\label{tab_pns_AICw_normal}",
-             booktabs=TRUE)
-```
 
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$LTdep_AICw,
@@ -1164,8 +1180,6 @@ knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
              booktabs=TRUE)
 ```
 
-Table \ref{tab_pns_bestcop} shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data. Table \ref{tab_pns_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_pns_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_pns_p_KS}] of the goodness of fit with atleast
-`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_pns_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_pns_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_pns_LTdep_AICw} and Table \ref{tab_pns_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_pns_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)`** out of **`r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`** location pair more lower tail dependence. 
 
 
 ### Non-paramtric analysis of tail dependence  \label{Ex_pns_NPA}

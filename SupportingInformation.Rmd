@@ -13,7 +13,7 @@ tables: True
 link-citations: True
 urlcolor : blue
 
-csl: science.csl
+#csl: science.csl
 bibliography: REF_SI.bib
 ---
 
@@ -129,8 +129,8 @@ family or as a boundary case. The independence test was as implemented in the `B
 function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. If independence could be rejected ($0.05$ significance level), model selection proceeded.
 
 The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian {1}, **C**layton {3}, **G**umbel {4}, **F**rank {5}, **J**oe {6}, **BB1** {7}, **BB6** {8}, **BB7** {9}, **BB8** {10}, **S**urvival **C**layton {13}, **S**urvival **G**umbel {14}, **S**urvival **J**oe {16}, **S**urvival **BB1** {17}, **S**urvival **BB6** {18}, **S**urvival **BB7** {19} and **S**urvival **BB8** {20} copulas.
-Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas @burnham2003_modelselection. 
-Descriptions of these copula families can be found in introductory texts on copulas @nelsen2007_copula , @joe2014_dependence and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
+Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas [@burnham2003_modelselection]. 
+Descriptions of these copula families can be found in introductory texts on copulas [@nelsen2007_copula ; @joe2014_dependence]  and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
 best-fitting member of each family was also provided by `BiCopEst`.
 
 Model selection methods will give the *relative* support of several models, but will not,
@@ -146,7 +146,7 @@ $1000$ boostraps.
 
 Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
-formulas @burnham2003_modelselection; likewise for BIC.
+formulas [@burnham2003_modelselection]; likewise for BIC.
 
 <!--Shya please insert some additional material for multivariate datasets - perhaps
 you don't need much because basically you just ran the bivariate analysis on each pair
@@ -159,7 +159,7 @@ Left- and right-tail dependence quantify the extent to which two ranked
 variables $u_i$, $v_i$ for $i=1,...,n$ 
 (see Sec. \ref{Model_selection} for defintions of $u_i$ and $v_i$)
 are related in the left and right tails, respectively, of their 
-distributions @nelsen2007_copula. 
+distributions [@nelsen2007_copula]. 
 Our nonparametric study of tail dependence uses three
 statistics which can quantify the extent to which $u_i$ and $v_i$ are 
 related in any part of their distributions. We here describe the 
@@ -238,7 +238,7 @@ $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
 The difference $\cor_l-\cor_u$ is expected to be positive if 
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
-This holds, for instance, for the Clayton copula @nelsen2007_copula.
+This holds, for instance, for the Clayton copula [@nelsen2007_copula].
 The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
 "lower" statistics occur in opposite order, is also expected to be 
 positive under the same conditions. We use these three differences
@@ -254,9 +254,9 @@ $\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in
 from various copulas. Normal and Frank copula families 
 are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
-in these families @nelsen2007_copula. Clayton copulas are known to have stronger lower- than 
+in these families [@nelsen2007_copula]. Clayton copulas are known to have stronger lower- than 
 upper-tail dependence. And survival Clayton copulas, being rotations of Clayton copulas by 
-$180^\circ$, have stronger upper- than lower tail dependence @nelsen2007_copula.
+$180^\circ$, have stronger upper- than lower tail dependence [@nelsen2007_copula].
 Using the `iRho` function from the `copula` package, for each of the four families normal, 
 Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
@@ -366,8 +366,8 @@ provides a test of asymmetry of tail dependence.
 
 For multivariate datasets, e.g., the aphid abundance or first flight data, each of which consists of time series 
 from 10 locations, a spatial resampling scheme was used instead of the surrogate approach described above.
-The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 as part of a method for 
+The scheme is identical to that proposed by [@bjornstadfalck2001] for application in their now 
+widely used spline correlogram method; the same scheme was also used by [@walteretal2017] as part of a method for 
 performing model selection among matrix regression models. For each pair of locations $i \neq j$, the statistic
 of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
 $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The values $s_{i,j}$ were then arranged in
@@ -379,8 +379,7 @@ asymmetry of tail dependence across all pairs of locations.
 Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a distribution of bootstrapped values.
 Bootstrapping was performed by resampling the locations of measurement, with replacement; this corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
-@bjornstadfalck2001, @walteretal2017. 
-<!--Shya, these citations render as (4), (5), whereas they should render as (4, 5), or better still, (Bjornstad & Falck, 2001; Walter et al, 2017) (the author-date callout style is better when space is not a limitation because it gives the reader more information without having to look in the bibliography). Can you fix this, please?--> 
+[@bjornstadfalck2001 ; @walteretal2017]. 
 
 ## Results: soil C and N data \label{Ex_SoilCN}
 
@@ -886,21 +885,20 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-<!--Shya, I dont think we need this, so I have commented it out. If you disagree, let me know, otherwise
-please go ahead and delete it and this comment.
-![copula plot for aphid-count\label{fig_count_allcop}](./Results/stat_results/stat_aphid_count/Sp_10_AllCops.pdf)
--->
-
 <!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-![Plot for aphid-count : Spearman vs. Distance\label{fig_count_spear}](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf){ width=50%, height=50% }
-
-![Plot for aphid-count : Kendall vs. Distance\label{fig_count_kend}](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf){ width=50%, height=50% }
-
-![$cor_l$-$cor_u$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Corl-Coru}](./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
-
-![$P_l$-$P_u$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_Pl-Pu}](./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
-
-![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+\begin{figure}[!h]
+\begin{center}
+\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (E)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
+\caption{Results for Aphid-count}
+\end{center}\label{fig_aphid_count}
+\end{figure}
 
 ## Results: first flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
 
@@ -1064,20 +1062,20 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-<!--As for the count data, I don't think we need this. If you disagree, let me know, otherwise pls delete the commented text and this comment.
-![copula plot for aphid-firstflight\label{fig_ff_allcop}](./Results/stat_results/stat_aphid_ff/Sp_11_AllCops.pdf)
--->
-
 <!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-![Plot for aphid-firstflight : Spearman vs. Distance\label{fig_ff_spear}](./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf){ width=50%, height=50% }
-
-![Plot for aphid-firstflight : Kendall vs. Distance\label{fig_ff_kend}](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf){ width=50%, height=50% }
-
-![$cor_l$-$cor_u$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Corl-Coru}](./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
-
-![$P_l$-$P_u$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_Pl-Pu}](./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
-
-![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+\begin{figure}[!h]
+\begin{center}
+\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (E)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
+\caption{Results for Aphid-ff}
+\end{center}\label{fig_aphid_ff}
+\end{figure}
 
 \newpage
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}

@@ -871,8 +871,8 @@ structure do not have, providing further evidence answering the third part of qu
 <!--Show the statistical results in a table-->
 ```{r tab_count_resamp,echo=F,results="markup"}
 s<-stat_aphid_count$numericdf[,c(3,2,4)]
-colnames(s)<-c("Statistic","Lower 95\\% CI", "Mean", "Upper 95\\% CI")
-rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Psq_l - \\Psq_u$","$\\Dsq_u - \\Dsq_l$")
+colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
+rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
              caption = "Spatially averaged values of statistics and confidence intervals based on resampling for abundances of the green spruce aphid.\\label{tab_count_resamp}",
@@ -895,15 +895,11 @@ please go ahead and delete it and this comment.
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-## Aphid first flight data for 'Leaf-curling plum aphid' \label{Ex_ff}
-<!--Add species common name and scientific name to header-->
-
-
-
-
+## Results: aphid first flight data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
 
 ### Model selection approach \label{Ex_ff_Model_selection}
 
+<!--Do the analysis-->
 ```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("FittingCopula_selective_loc.R"))} 
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n"))
@@ -917,10 +913,19 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
 ```
 
+As in section \ref{Ex_count}, results are presented in $10 \times 10$ matrix format with rows
+and columns corresponding to locations. Table \ref{tab_ff_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the 
+
+
+
+several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data. Table \ref{tab_ff_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_ff_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_ff_p_KS}] of the goodness of fit with atleast
+`r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_ff_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_ff_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_ff_LTdep_AICw} and Table \ref{tab_ff_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_ff_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)`** out of **`r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair`** location pair more upper tail dependence. 
+
+
 ```{r tab_ff_bestcop, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], 
              format='pandoc',
-             caption = "Aphid_firstflight : best fit copula family for each selective location pair\\label{tab_ff_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in Methods. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -983,8 +988,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              )
 ```
 
-Table \ref{tab_ff_bestcop} shows that several copulas are much better supported than the Gaussian copula, answering the first part of question 1 for these data. Table \ref{tab_ff_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_ff_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_ff_p_KS}] of the goodness of fit with atleast
-`r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_ff_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_ff_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_ff_LTdep_AICw} and Table \ref{tab_ff_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_ff_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)`** out of **`r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair`** location pair more upper tail dependence. 
+
 
 ### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
 

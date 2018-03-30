@@ -342,7 +342,7 @@ is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(
 of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as those of the original data. 
 Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
 Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
-will be close to $\tau$ (differences arising only through sampling variation). If the instead of $\theta_\tau$
+will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
 a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
@@ -353,7 +353,9 @@ of its values computed on many surrogate datasets produced using the normal copu
 provides a test of whether dependence in the part of the distribution specified by $l_b$ and $u_b$ is different from
 what would be expected from a null hypothesis of normal copula structure but unchanged marginals and unchanged 
 Kendall (or Spearman)
-correlation. Significant deviations correspond to deviations from normal copula structure. 
+correlation. Significant deviations correspond to deviations from normal copula structure. In particular, deviations 
+using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence different from that of a normal copula;
+likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different from that of a normal copula.  
 The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, as computed on the 
 empirical data, to the distribution
 of its values computed on many surrogate datasets produced using the normal copula family for $\mathcal{B}(\theta)$
@@ -375,6 +377,7 @@ Confidence intervals for the values of $\mean(S)$ were then computed as quantile
 Bootstrapping was performed by resampling the locations of measurement, with replacement; this corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 @bjornstadfalck2001, @walteretal2017. 
+<!--Shya, these citations render as (4), (5), whereas they should render as (4, 5), or better still, (Bjornstad & Falck, 2001; Walter et al, 2017) (the author-date callout style is better when space is not a limitation because it gives the reader more information without having to look in the bibliography). Can you fix this, please?--> 
 
 ## Results: soil C and N data \label{Ex_SoilCN}
 
@@ -678,14 +681,14 @@ used in the $\cor$ statistic is the Spearman correlation, Spearman-preserving su
 should be used, so the top-right panel of Figure \ref{fig_soilCN_nonparam}
 is more reliable than the top left. Results indicate that tail dependence of 
 data is stronger in both the lower and upper tails than would be expected under a 
-null hypothesis of a normal copula. The dependence between C and N is also 
+null hypothesis of a normal copula, answering the second part of question 1. The dependence between C and N is also 
 weaker in the middle of the distributions
 than would be expected based on a normal-copula null model.
 
 ![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}](./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf)
 
 We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_soilCNcop}. 
-Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data.
+Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r plot_soilCN_asymmtry_taildep, echo=F}
@@ -840,11 +843,9 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              )
 ```
 
-
-
-
 ### Non-paramtric analysis of tail dependence \label{Ex_count_NPA}
 
+<!--Do the main computations for this section-->
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("NonParamStat.R"))}
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_aphid_count/"
@@ -862,17 +863,32 @@ saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep=''))
 stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_count_sp_10.RDS")
 ```
 
+Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
+computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
+resampling scheme, as described in Methods (Table \ref{tab_count_resamp}). Confidence intervals of
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
+indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
+exluded $0$ and were positive, indicating asymmetry of tail dependence, a feature that data with normal copula 
+structure do not have, providing further evidence answering the third part of question 1. 
+
+<!--Show the statistical results in a table-->
 ```{r tab_count_resamp,echo=F,results="markup"}
-s<-stat_aphid_count$numericdf[,2:5]
-rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+s<-stat_aphid_count$numericdf[,c(3,2,4)]
+colnames(s)<-c("Statistic","Lower 95\\% CI", "Mean", "Upper 95\\% CI")
+rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Psq_l - \\Psq_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Aphid_count : resampling result for stat indicating lower tail dependence\\label{tab_count_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for abundances of the green spruce aphid.\\label{tab_count_resamp}",
              booktabs=TRUE)
 ```
 
+<!--Shya, I dont think we need this, so I have commented it out. If you disagree, let me know, otherwise
+please go ahead and delete it and this comment.
 ![copula plot for aphid-count\label{fig_count_allcop}](./Results/stat_results/stat_aphid_count/Sp_10_AllCops.pdf)
+-->
 
+<!--Shya, can you please organize these following plots into one plot with mutliple panels?-->
 ![Plot for aphid-count : Spearman vs. Distance\label{fig_count_spear}](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ![Plot for aphid-count : Kendall vs. Distance\label{fig_count_kend}](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf){ width=50%, height=50% }
@@ -883,10 +899,12 @@ knitr::kable(s,
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-count showing lower tail dependence\label{fig_count_D2u-D2l}](./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-Table \ref{tab_count_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_count_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that *Green spruce aphid*-count data has significant lower tail dependence.
-
 ## Aphid first flight data for 'Leaf-curling plum aphid' \label{Ex_ff}
 <!--Add species common name and scientific name to header-->
+
+
+
+
 
 ### Model selection approach \label{Ex_ff_Model_selection}
 

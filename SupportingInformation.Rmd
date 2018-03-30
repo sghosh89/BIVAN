@@ -884,7 +884,7 @@ please go ahead and delete it and this comment.
 ![copula plot for aphid-count\label{fig_count_allcop}](./Results/stat_results/stat_aphid_count/Sp_10_AllCops.pdf)
 -->
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels?-->
+<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
 ![Plot for aphid-count : Spearman vs. Distance\label{fig_count_spear}](./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ![Plot for aphid-count : Kendall vs. Distance\label{fig_count_kend}](./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf){ width=50%, height=50% }
@@ -1011,8 +1011,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
 
 ### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
 
-
-
+<!--Do the analysis-->
 ```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("NonParamStat.R"))}
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_aphid_ff/"
@@ -1030,17 +1029,39 @@ saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep=''))
 stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11.RDS")
 ```
 
+Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman 
+correlations, were 
+computed across all pairs of sampling locations, and confidence intervals of these means were 
+computed via a spatial
+resampling scheme, as described in Methods (Table \ref{tab_count_resamp}).
+Confidence intervals of
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded 
+zero and mean values were positive,
+indicating tail dependence.
+Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
+exluded $0$ and were negative, indicating asymmetry of tail dependence, a feature 
+that data with normal copula 
+structure do not have, providing further evidence answering the third part of question 1.
+The contrast here with the analogous results for abundances of the green spruce aphid is 
+again illuminating. 
+
+<!--display the main statistical results in a table-->
 ```{r tab_ff_resamp,echo=F,results="markup"}
-s<-stat_aphid_ff$numericdf[,2:5]
-rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+s<-stat_aphid_ff$numericdf[,c(3,2,4)]
+colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
+rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Aphid_firstflight : resampling result for stat indicating upper tail dependence\\label{tab_ff_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for first flight data for the leaf-curling plum aphid.\\label{tab_ff_resamp}",
              booktabs=TRUE)
 ```
 
+<!--As for the count data, I don't think we need this. If you disagree, let me know, otherwise pls delete the commented text and this comment.
 ![copula plot for aphid-firstflight\label{fig_ff_allcop}](./Results/stat_results/stat_aphid_ff/Sp_11_AllCops.pdf)
+-->
 
+<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
 ![Plot for aphid-firstflight : Spearman vs. Distance\label{fig_ff_spear}](./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf){ width=50%, height=50% }
 
 ![Plot for aphid-firstflight : Kendall vs. Distance\label{fig_ff_kend}](./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf){ width=50%, height=50% }
@@ -1051,7 +1072,8 @@ knitr::kable(s,
 
 ![$D^2_u$-$D^2_l$ vs. Distance plot for aphid-firstflight showing upper tail dependence\label{fig_ff_D2u-D2l}](./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
 
-Table \ref{tab_ff_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_ff_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with negative mean has all resampled mean less than $0$ for *Leaf-curling plum aphid*-firstflight data. This proves that there is a significant upper tail dependence in *Leaf-curling plum aphid*-firstflight data.
+<!--Dan stopped editing here 2018 03 30-->
+
 
 ## North sea plankton data for 'Ceratium furca' \label{Ex_pns}
 

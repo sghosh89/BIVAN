@@ -29,18 +29,19 @@ updated on `r Sys.Date()`
 
 <!--checkpoint package-->
 ```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
-library(checkpoint)
+#library(checkpoint)
+#---------------------------------------------------------------
 #checkloc<-tempdir()
 #if (!dir.exists(paste0(checkloc,"/.checkpoint/")))
 #{
 #  dir.create(paste0(checkloc,"/.checkpoint/"))
 #  checkpoint("2018-03-29",checkpointLocation = checkloc)
 #}
-if (!dir.exists("./.checkpoint/"))
-{
-  dir.create("./.checkpoint/")
-}
-checkpoint("2018-03-29",checkpointLocation = "./")
+#---------------------------------------------------------------
+#if (!dir.exists("./.checkpoint/")){
+#  dir.create("./.checkpoint/")
+#}
+#checkpoint("2018-03-29",checkpointLocation = "./")
 ```
 
 <!--Basic setup-->
@@ -1198,7 +1199,7 @@ knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 
 
 
-### Non-paramtric analysis of tail dependence  \label{Ex_pns_NPA}
+### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("NonParamStat.R"))}
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_plankton_north_sea/"

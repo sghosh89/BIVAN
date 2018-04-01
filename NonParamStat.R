@@ -283,7 +283,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   #---------------------- PLOT :  spear_vs_D -------------------------------
   pdf(paste(pfname,"_Spearman_vs_D.pdf",sep=""),width=8, height=8)
   op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
-  plot(D,spear,xlab="D",ylab="spear",col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
+  plot(D,spear,xlab="D",ylab="Spearman",col=rgb(0.5,0,0,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(spear)
   #***DAN: fill in one line of numericdf here, the line for spear
@@ -300,7 +300,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   #--------------------- PLOT :  kend_vs_D ---------------------------------
   pdf(paste(pfname,"_Kendall_vs_D.pdf",sep=""),width=8, height=8)
   op<-par(mgp=c(3.5,1,0),mar=c(7,7,1,1))
-  plot(D,kend,xlab="D",ylab="kend",col=rgb(0,0,1,.2),pch=19,cex.lab=3,cex.axis=2)
+  plot(D,kend,xlab="D",ylab="Kendall",col=rgb(0,0,1,.2),pch=19,cex.lab=3,cex.axis=2)
   lines(range(D),c(0,0),type='l',lty='dashed')
   result<-resampmn(kend)
   i_name<-which(numericdf$Stat=="kend")

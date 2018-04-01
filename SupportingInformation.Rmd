@@ -23,7 +23,7 @@ updated on `r Sys.Date()`
 \newcommand{\mean}{\operatorname{mean}}
 \newcommand{\var}{\operatorname{var}}
 \newcommand{\cor}{\operatorname{cor}}
-\newcommand{\Ps}{\operatorname{P}}
+\newcommand{\Ps}{\operatorname{P}}  
 \newcommand{\Dsq}{\operatorname{D}^2}
 \newcommand{\rank}{\operatorname{rank}}
 
@@ -850,7 +850,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              )
 ```
 
-### Non-paramtric analysis of tail dependence \label{Ex_count_NPA}
+### Non-parametric analysis of tail dependence \label{Ex_count_NPA}
 
 <!--Do the main computations for this section-->
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("NonParamStat.R"))}
@@ -869,6 +869,24 @@ saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep=''))
 ```{r read_stat_aphid_count,echo=F}
 stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_count_sp_10.RDS")
 ```
+
+<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
+\begin{figure}[!h]
+\begin{center}
+\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (E)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
+\caption{Non-parametric tail statistics results for green spruce aphid abundance data plotted against geographical distance $(D)$ between two sampling locations; $\textbf{(A)}$ Spearman correlation vs. $D$, $\textbf{(B)}$ Kendall correlation vs. $D$, $\textbf{(C)}$ $\cor_l-\cor_u$ vs. $D$, $\textbf{(D)}$ $\Ps_l-\Ps_u$ vs. $D$, $\textbf{(E)}$ $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all (10 $\times$ 10 locations) taken pairwise. \label{fig_aphid_count}}
+\end{center}
+\end{figure}
+
+We computed Spearman and Kendall correlation along with our three non-parametric statistics ($\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$) as described in Sec. \ref{NPA} for  green spruce aphid abundance data taken at all $10$ $\times$ $10$ location pairs (code given in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R)). We also constructed a $10$ $\times$ $10$ matrix using `gcdist` from `ncf` package where each element in that matrix represented the geographical distance between any two selected locations. 
+Figure \ref{fig_aphid_count} presented plots for **(A)** Spearman, **(B)** Kendall, **(C)** $\cor_l-\cor_u$, **(D)** $\Ps_l-\Ps_u$ and **(E)** $\Dsq_u-\Dsq_l$ statistics against the geographical distance for all selected sampling location pairs. With increasing the distance *D*, the Spearman and Kendall correlation (hence the synchrony among time series data) between the location pairs decreased as expected. But one cannot conclude the tail dependence of that synchrony from Figure \ref{fig_aphid_count} **(A)** or **(B)**, whereas **(C - E)** clearly showed the lower tail dependence with most of the data points lied in the positive quadrant as described before in Sec. \ref{NPA}.
 
 Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
 $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
@@ -890,20 +908,6 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-\begin{figure}[!h]
-\begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption{Results for Aphid-count}
-\end{center}\label{fig_aphid_count}
-\end{figure}
 
 ## Results: first flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
 
@@ -983,7 +987,7 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
 
 The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and 
 the model-averaged (again, AIC based) upper-tail dependence statistic are in 
-Tables \ref{tab_ff_LTdep_AICw} and \ref{tab_ff_UTdep_AICw}, respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., $0$), and answering the second part of question 1 for these data - these data have greater tail dependence (lower and upper) than would be expected from a normal-copula nul hypothesis. 
+Tables \ref{tab_ff_LTdep_AICw} and \ref{tab_ff_UTdep_AICw}, respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., $0$), and answering the second part of question 1 for these data - these data have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis. 
 
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
@@ -1039,12 +1043,29 @@ saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep=''))
 stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11.RDS")
 ```
 
+<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
+\begin{figure}[!h]
+\begin{center}
+\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (E)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
+\caption{Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data plotted against geographical distance $(D)$ between two sampling locations; $\textbf{(A)}$ Spearman correlation vs. $D$, $\textbf{(B)}$ Kendall correlation vs. $D$, $\textbf{(C)}$ $\cor_l-\cor_u$ vs. $D$, $\textbf{(D)}$ $\Ps_l-\Ps_u$ vs. $D$, $\textbf{(E)}$ $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all (10 $\times$ 10 locations) taken pairwise. \label{fig_aphid_ff}}
+\end{center}
+\end{figure}
+
+Figure \ref{fig_aphid_ff} represented plots for **(A)** Spearman correlation, **(B)** Kendall correlation, **(C)** $\cor_l-\cor_u$, **(D)** $\Ps_l-\Ps_u$ and **(E)** $\Dsq_u-\Dsq_l$ statistics, computed on leaf-curling plum aphid's first flight date data, against the geographical distance for all selected sampling location pairs. Likewise in Figure \ref{fig_aphid_count}, with increasing the distance *D*, the Spearman and Kendall correlation (hence the synchrony among time series data) between the location pairs decreased as expected. But here in contrast, Figure \ref{fig_aphid_ff}  **(C - E)** clearly showed the upper tail dependence with most of the data points lied in the negative quadrant as described before in Sec. \ref{NPA}.
+
 Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
 $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman 
 correlations, were 
 computed across all pairs of sampling locations, and confidence intervals of these means were 
 computed via a spatial
-resampling scheme, as described in Methods (Table \ref{tab_count_resamp}).
+resampling scheme, as described in Methods (Table \ref{tab_ff_resamp}).
 Confidence intervals of
 $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded 
 zero and mean values were positive,
@@ -1067,20 +1088,6 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-\begin{figure}[!h]
-\begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
-\caption{Results for Aphid-ff}
-\end{center}\label{fig_aphid_ff}
-\end{figure}
 
 \newpage
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}

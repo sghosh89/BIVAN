@@ -30,6 +30,7 @@ updated on `r Sys.Date()`
 <!--checkpoint package-->
 ```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
 library(checkpoint)
+library(captioner)
 if (!dir.exists("./.checkpoint/")){
   dir.create("./.checkpoint/")
 }
@@ -886,9 +887,11 @@ knitr::kable(s,
 Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance
 between the locations (Figure \ref{fig_aphid_count} A,B) showed the typical decline of correlation with 
 distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting 
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of  
-locations shows these quantities also decline with distance (Figure \ref{fig_aphid_count} C-H).
-<!--DAN add reference and revisit the text here once Shya add these panels-->
+$\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of 
+locations shows these quantities also decline with distance (Figure \ref{fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows
+these quantities increase with distance (as expected, given the opposite interpretation 
+these
+two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively).
 Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Figure \ref{fig_aphid_count} I-K)
 did not show a decline with distance, but did illustrate visually the statistical
 result of Table \ref{tab_count_resamp} that averages of these quantities across all pairs of sampling locations
@@ -896,11 +899,6 @@ were significantly greater than zero, demonstrating asymmetry of tail dependence
 Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in 
 the [`BIVAN`](https://github.com/sghosh89/BIVAN) package. 
 
-<!--Shya, can you please add panels for corl, coru, Pl, Pu, D2l, D2u vs. distance, following the Spearman and Kendall
-panels? I think it will be the first time anyone has shown these, so we should show the decline with distance
-holds for these as well. That means you'll have 6 new panels, for a total of 11 panels. So it'll be a big figure, 
-possibly taking up a whole page, or most of one. Similar changes, please,
-to the analogous figs for the aphid ff and ceratium furca data.-->
 \begin{figure}[!h]
 \textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
 \begin{center}
@@ -1098,11 +1096,11 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-Plotting Spearman or Kendall correlations between first flight time series for pairs of locations as a function of great circle distance between the locations (Figure \ref{fig_aphid_ff} A, B) showed the typical (though slight, in this case) decline of correlation with increasing distance. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$, and $\Dsq_l$ against distances between pairs of locations shows these quantities also decline with distance (Figure \ref{fig_aphid_ff} C-H).
-<!--DAN: make sure this is true when you see the plots again-->
+Plotting Spearman or Kendall correlations between first flight time series for pairs of locations as a function of great circle distance between the locations (Figure \ref{fig_aphid_ff} A, B) showed the typical (though slight, in this case) decline of correlation with increasing distance. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear in most cases to decline slightly with distance (Figure \ref{fig_aphid_ff} C-F).
+$\Dsq_u$ and $\Dsq_l$ appear to slightly increase with distance, as expected given their
+opposite meaning (Figure \ref{fig_aphid_ff} G-H). 
 Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_aphid_ff} I-K) did not show a decline with distance, but did demonstrate visually the statistical result of Table \ref{tab_ff_resamp} that averages of these quantities across all pairs of sampling locations were significantly less than zero, showing asymmetry of tail dependence. 
 
-<!--Shya, pls add 6 new panels as described in my comment near the analogous figure for aphid count-->
 \begin{figure}[!h]
 \textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
 \begin{center}
@@ -1128,9 +1126,6 @@ Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against dista
 \end{figure}
 
 \newpage
-
-
-<!--DAN: effectively stopped here 2018 04 01 10pm-->
 
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 

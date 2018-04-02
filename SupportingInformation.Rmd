@@ -915,15 +915,25 @@ holds for these as well. That means you'll have 6 new panels, for a total of 11 
 possibly taking up a whole page, or most of one. Similar changes, please,
 to the analogous figs for the aphid ff and ceratium furca data.-->
 \begin{figure}[!h]
+\textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
 \begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Coru_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{2.6 cm} (E) \hspace{3.6 cm} (F) \hspace{3.8 cm} (G) \hspace{3.8 cm} (H)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_D2l_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{4.8 cm} (I) \hspace{3.8 cm} (J) \hspace{4 cm} (K) } \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
 \caption{Non-parametric tail statistics results for green spruce aphid abundance data plotted against geographical distance ($D$) between two sampling locations. (A) Spearman correlation vs. $D$; (B) Kendall correlation vs. $D$; (C) $\cor_l$ vs. $D$; (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; 
 (H) $\Dsq_l$ vs. $D$; 
 (I) $\cor_l-\cor_u$ vs. $D$, (J) $\Ps_l-\Ps_u$ vs. $D$, (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all 
@@ -1101,15 +1111,25 @@ Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against dista
 
 <!--Shya, pls add 6 new panels as described in my comment near the analogous figure for aphid count-->
 \begin{figure}[!h]
+\textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
 \begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Coru_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{2.6 cm} (E) \hspace{3.6 cm} (F) \hspace{3.8 cm} (G) \hspace{3.8 cm} (H)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2l_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{4.8 cm} (I) \hspace{3.8 cm} (J) \hspace{4 cm} (K) } \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
 \caption{Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
@@ -1256,17 +1276,29 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-![copula plot for Plankton_north_sea\label{fig_pns_allcop}](./Results/stat_results/stat_plankton_north_sea/Sp_16_AllCops.pdf)
-
-![Plot for Plankton_north_sea : Spearman vs. Distance\label{fig_pns_spear}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Spearman_vs_D.pdf){ width=50%, height=50% }
-
-![Plot for Plankton_north_sea : Kendall vs. Distance\label{fig_pns_kend}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf){ width=50%, height=50% }
-
-![$cor_l$-$cor_u$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Corl-Coru}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf){ width=50%, height=50% }
-
-![$P_l$-$P_u$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_Pl-Pu}](./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf){ width=50%, height=50% }
-
-![$D^2_u$-$D^2_l$ vs. Distance plot for Plankton_north_sea showing lower tail dependence\label{fig_pns_D2u-D2l}](./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf){ width=50%, height=50% }
+\begin{figure}[!h]
+\textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Spearman_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Kendall_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Coru_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{2.6 cm} (E) \hspace{3.6 cm} (F) \hspace{3.8 cm} (G) \hspace{3.8 cm} (H)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2l_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{4.8 cm} (I) \hspace{3.8 cm} (J) \hspace{4 cm} (K) } \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
+\caption{Non-parametric tail statistics results for Ceratium furca abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
+\end{center}
+\end{figure}
 
 Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
 

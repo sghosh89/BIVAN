@@ -111,7 +111,7 @@ Pbds<-function(vi,vj,lb,ub){
     dist_Si<-c(dist_Si1,dist_Si2[-1])
     Si<-c(Si1,Si2[-1])/deno
     
-    Au_Si<-0.25*h*(a^2)+(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
+    Au_Si<-(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
     Au_Si<-Au_Si/deno
     
   # when two boundary lines are on the left side of vi+vj=1 line  
@@ -144,7 +144,7 @@ Pbds<-function(vi,vj,lb,ub){
     dist_Si<-c(dist_Si1,dist_Si2[-1])
     Si<-c(Si1,Si2[-1])/deno
     
-    Au_Si<-0.25*h*(a^2)+(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
+    Au_Si<-(h*(d_max^2))+((a^3)/24)-((d_max^3)/3)  
     Au_Si<-Au_Si/deno
 
   # when lower boundary lines are on the left side of vi+vj=1 line and upper on the other side    

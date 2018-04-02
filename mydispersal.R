@@ -73,8 +73,8 @@ popsim_ml_D<-function(p0,ns,D,r,K){
     
     #after dispersal
     tres<-t(res[,,tct+1]) # numlocs by numsims matrix after taking transpose
-    temp<-D%*%tres  # a matrix multiplication (numlocs by numlocs) * (numlocs by numsims)
-    res[,,tct+1]<-t(temp)
+    temp<-D%*%tres  # output from a matrix multiplication [(numlocs by numlocs) * (numlocs by numsims)]
+    res[,,tct+1]<-t(temp) # a matrix (numsims by numlocs) 
     
     #see if there is extinction
     h<-res[,,tct+1]

@@ -890,7 +890,6 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
 \begin{figure}[!h]
 \begin{center}
 \textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\

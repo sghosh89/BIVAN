@@ -82,12 +82,10 @@ Pbds<-function(vi,vj,lb,ub){
   
   # when two boundary lines are on the right side of vi+vj=1 line  
   if((2*lb>=1) & (2*ub >=1)){
-    #d_max<-lb*sqrt(2)
-    d_max=abs((lb-1)*sqrt(2))
+    d_max<-abs((lb-1)*sqrt(2))
     a<-abs(2*sqrt(2)*(ub-1))
     b<-2*d_max
     h<-abs(2*(ub-lb))/sqrt(2)
-    #deno<-2*(((lb-1)^2)-((ub-1)^2))
     deno<-0.5*(a+b)*h
     
     dist_Si1<-c()
@@ -120,7 +118,6 @@ Pbds<-function(vi,vj,lb,ub){
     a<-2*sqrt(2)*lb
     b<-2*d_max
     h<-abs(2*(ub-lb))/sqrt(2)
-    #deno<-2*((ub^2)-(lb^2))
     deno<-0.5*(a+b)*h
  
     dist_Si1<-c()

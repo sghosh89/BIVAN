@@ -108,8 +108,10 @@ dev.off()
    * We threw out all locations that had fewer than 45 years data
    * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
    * *Ceratium furca* is a dicoflagellate commonly found in UK seas
-   * note, when we edit this, we cannot call it the North Seas since data come from around the UK not only the North Sea, unless Shya threw out all grid cells that were outside the North Sea
+   * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK 
    
+\newpage
+
 # Question 1 analyses for each dataset
 Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
 
@@ -253,7 +255,6 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
-
 In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
 also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and 
 $\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in data simulated
@@ -386,6 +387,8 @@ Confidence intervals for the values of $\mean(S)$ were then computed as quantile
 Bootstrapping was performed by resampling the locations of measurement, with replacement; this corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
+
+\newpage
 
 ## Results: soil C and N data \label{Ex_SoilCN}
 
@@ -731,6 +734,8 @@ knitr::kable(atdres,
              booktabs=T)
 ```
 
+\newpage
+
 ## Results: abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
 
 ### Model selection approach \label{Ex_count_Model_selection}
@@ -871,24 +876,6 @@ saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep=''))
 stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_count_sp_10.RDS")
 ```
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-\begin{figure}[!h]
-\begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption{Non-parametric tail statistics results for green spruce aphid abundance data plotted against geographical distance $(D)$ between two sampling locations; $\textbf{(A)}$ Spearman correlation vs. $D$, $\textbf{(B)}$ Kendall correlation vs. $D$, $\textbf{(C)}$ $\cor_l-\cor_u$ vs. $D$, $\textbf{(D)}$ $\Ps_l-\Ps_u$ vs. $D$, $\textbf{(E)}$ $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all (10 $\times$ 10 locations) taken pairwise. \label{fig_aphid_count}}
-\end{center}
-\end{figure}
-
-We computed Spearman and Kendall correlation along with our three non-parametric statistics ($\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$) as described in Sec. \ref{NPA} for  green spruce aphid abundance data taken at all $10$ $\times$ $10$ location pairs (code given in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R)). We also constructed a $10$ $\times$ $10$ matrix using `gcdist` from `ncf` package where each element in that matrix represented the geographical distance between any two selected locations. 
-Figure \ref{fig_aphid_count} presented plots for **(A)** Spearman, **(B)** Kendall, **(C)** $\cor_l-\cor_u$, **(D)** $\Ps_l-\Ps_u$ and **(E)** $\Dsq_u-\Dsq_l$ statistics against the geographical distance for all selected sampling location pairs. With increasing the distance *D*, the Spearman and Kendall correlation (hence the synchrony among time series data) between the location pairs decreased as expected. But one cannot conclude the tail dependence of that synchrony from Figure \ref{fig_aphid_count} **(A)** or **(B)**, whereas **(C - E)** clearly showed the lower tail dependence with most of the data points lied in the positive quadrant as described before in Sec. \ref{NPA}.
-
 Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
 $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
 computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
@@ -909,6 +896,24 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
+Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance
+between the locations (Figure \ref{fig_aphid_count} A,B) showed the typical decline of correlation with 
+distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting 
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of  
+locations shows these quantities also decline with distance (Figure \ref{fig_aphid_count} C-H).
+<!--DAN add reference and revisit the text here once Shya add these panels-->
+Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Figure \ref{fig_aphid_count} I-K)
+did not show a decline with distance, but did illustrate visually the statistical
+result of Table \ref{tab_count_resamp} that averages of these quantities across all pairs of sampling locations
+were significantly greater than zero, demonstrating asymmetry of tail dependence.
+Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in 
+the [`BIVAN`](https://github.com/sghosh89/BIVAN) package. 
+
+<!--Shya, can you please add panels for corl, coru, Pl, Pu, D2l, D2u vs. distance, following the Spearman and Kendall
+panels? I think it will be the first time anyone has shown these, so we should show the decline with distance
+holds for these as well. That means you'll have 6 new panels, for a total of 11 panels. So it'll be a big figure, 
+possibly taking up a whole page, or most of one. Similar changes, please,
+to the analogous figs for the aphid ff and ceratium furca data.-->
 \begin{figure}[!h]
 \begin{center}
 \textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
@@ -919,9 +924,14 @@ knitr::kable(s,
 \includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}\\
 \textbf{\;\;\;\;\;\;\;\ (E)} \\
 \includegraphics[width=2in]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption{Results for Aphid-count}
-\end{center}\label{fig_aphid_count}
+\caption{Non-parametric tail statistics results for green spruce aphid abundance data plotted against geographical distance ($D$) between two sampling locations. (A) Spearman correlation vs. $D$; (B) Kendall correlation vs. $D$; (C) $\cor_l$ vs. $D$; (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; 
+(H) $\Dsq_l$ vs. $D$; 
+(I) $\cor_l-\cor_u$ vs. $D$, (J) $\Ps_l-\Ps_u$ vs. $D$, (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all 
+pairs of locations. \label{fig_aphid_count}}
+\end{center}
 \end{figure}
+
+\newpage
 
 ## Results: first flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
 
@@ -1057,23 +1067,6 @@ saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep=''))
 stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11.RDS")
 ```
 
-<!--Shya, can you please organize these following plots into one plot with mutliple panels? Once that is done, please add some text describing these results.-->
-\begin{figure}[!h]
-\begin{center}
-\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
-\textbf{\;\;\;\;\;\;\;\ (E)} \\
-\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
-\caption{Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data plotted against geographical distance $(D)$ between two sampling locations; $\textbf{(A)}$ Spearman correlation vs. $D$, $\textbf{(B)}$ Kendall correlation vs. $D$, $\textbf{(C)}$ $\cor_l-\cor_u$ vs. $D$, $\textbf{(D)}$ $\Ps_l-\Ps_u$ vs. $D$, $\textbf{(E)}$ $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all (10 $\times$ 10 locations) taken pairwise. \label{fig_aphid_ff}}
-\end{center}
-\end{figure}
-
-Figure \ref{fig_aphid_ff} represented plots for **(A)** Spearman correlation, **(B)** Kendall correlation, **(C)** $\cor_l-\cor_u$, **(D)** $\Ps_l-\Ps_u$ and **(E)** $\Dsq_u-\Dsq_l$ statistics, computed on leaf-curling plum aphid's first flight date data, against the geographical distance for all selected sampling location pairs. Likewise in Figure \ref{fig_aphid_count}, with increasing the distance *D*, the Spearman and Kendall correlation (hence the synchrony among time series data) between the location pairs decreased as expected. But here in contrast, Figure \ref{fig_aphid_ff}  **(C - E)** clearly showed the upper tail dependence with most of the data points lied in the negative quadrant as described before in Sec. \ref{NPA}.
-
 Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
 $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman 
 correlations, were 
@@ -1102,8 +1095,30 @@ knitr::kable(s,
              booktabs=TRUE)
 ```
 
+Plotting Spearman or Kendall correlations between first flight time series for pairs of locations as a function of great circle distance between the locations (Figure \ref{fig_aphid_ff} A, B) showed the typical (though slight, in this case) decline of correlation with increasing distance. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$, and $\Dsq_l$ against distances between pairs of locations shows these quantities also decline with distance (Figure \ref{fig_aphid_ff} C-H).
+<!--DAN: make sure this is true when you see the plots again-->
+Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_aphid_ff} I-K) did not show a decline with distance, but did demonstrate visually the statistical result of Table \ref{tab_ff_resamp} that averages of these quantities across all pairs of sampling locations were significantly less than zero, showing asymmetry of tail dependence. 
+
+<!--Shya, pls add 6 new panels as described in my comment near the analogous figure for aphid count-->
+\begin{figure}[!h]
+\begin{center}
+\textbf{\;\;\;\;\;\;\;\ (A) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (B)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Spearman_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Kendall_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (C) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\ (D)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}\\
+\textbf{\;\;\;\;\;\;\;\ (E)} \\
+\includegraphics[width=2in]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
+\caption{Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_aphid_ff}}
+\end{center}
+\end{figure}
 
 \newpage
+
+
+<!--DAN: effectively stopped here 2018 04 01 10pm-->
+
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 
 ### Model selection approach \label{Ex_pns_Model_selection}
@@ -1255,11 +1270,14 @@ knitr::kable(s,
 
 Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
 
+\newpage
+
 # Question 2 analyses for each dataset
 Recall that question 2 is: What are some possible causes of non-Gaussian copula structure? 
 
 
 
+\newpage
 
 # Question 3 analyses for each dataset
 Recall that question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
@@ -1821,6 +1839,7 @@ plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75
 
 
 \newpage
+
 # References:
 
 

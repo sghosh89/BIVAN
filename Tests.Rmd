@@ -516,3 +516,94 @@ Finally, in other simulations we have discovered the goodness-of-fit
 tests for the normal copula have limited statistical power.
 
 <!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->
+
+# Tests for retd() function from ExtremeTailDep.R
+<!--DCR to add this section-->
+
+# Tests for mydispersal.R
+
+**Test for `Dispersal_mat` function** 
+
+```{r test_for_Dispersal_mat}
+source("mydispersal.R")
+set.seed(101)
+D1<-Dispersal_mat(numlocs=3,d=0.4,disp_everywhere=F)
+D1  #matrix for dispersion between nearest neighbours in a linear chain model
+D2<-Dispersal_mat(numlocs=3,d=0.4,disp_everywhere=T) 
+D2  #matrix for dispersion between any nodes in a linear chain model
+if((isSymmetric.matrix(D1)==F) & (isSymmetric.matrix(D2)==T)){print("Dispersal_mat : passed")} 
+```
+
+**Test for `popsim_ml_D`  and `extrisk` function**
+<!-- I assume here that retd() function is already checked and passed the test
+#-------Args--------------------------------------------------
+#p0       A length numlocs vector holding initial populations
+#ns       An numsims by numlocs by numsteps array of the epsilons, 
+#           where numsteps is the number of time steps you want
+#
+#--------Output------------------------------------------------------
+#A numsims by numlocs by numsteps+1 array of populations
+#----------------------------------------------------------------------
+popsim_ml_D<-function(p0,ns,D,r,K)
+-->
+```{r test_for_popsim_ml_D, echo=T}
+source("mydispersal.R")
+set.seed(101)
+numsteps<-15
+numsims<-4
+numlocs<-3
+  
+ns1<-retd(n=numsteps*numsims,d=numlocs,rl=1) # output from ExtremeTailDep.R : 
+#                                                      a righttail dep matrix(numpoints by numlocs,     
+#                                                      numpoints=numsteps*numsims)
+dim(ns1)
+ns1<-array(ns1,c(numsteps,numsims,numlocs))# convert to an array (numsteps by numsims by numlocs)
+if(all(dim(ns1)==c(numsteps,numsims,numlocs))==T){print("passed")}
+ns1<-aperm(ns1,c(2,3,1)) # convert to an array (numsims by numlocs by numsteps)
+if(all(dim(ns1)==c(numsims,numlocs,numsteps))==T){print("passed")}
+
+D<-D1
+r<-0.5
+K<-10
+res<-popsim_ml_D(p0=rep(K,numlocs),ns=ns1,D=D1,r=r,K=K)
+res[,,1]
+res[,,2]
+res[,,numsteps+1]
+if(all(dim(res)==c(numsims,numlocs,numsteps+1))==T){print("popsim_ml_D : passed")}
+
+# test for extrisk function
+totpop<-apply(FUN=sum,X=res,MARGIN=c(1,3))
+totpop # numsims by numsteps+1 matrix
+if(all(totpop[,1]==(numlocs*K))==T){print("passed")}
+ext<-(apply(FUN=sum,X=(totpop==0),MARGIN=2)/dim(res)[1])
+ext
+if(length(ext)==numsteps+1){print("passed")}
+
+ans<-extrisk(sims=res)
+if(all(ext==ans)==T){print("extrisk : passed")}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

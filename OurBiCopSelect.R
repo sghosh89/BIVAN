@@ -89,31 +89,45 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                     AICw=NA,
                     BICw=NA)
     for (counter in 1:(dim(InfCritRes)[1])){
-      tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
-      InfCritRes$par1[counter]<-tres$par
-      InfCritRes$par2[counter]<-tres$par2
-      InfCritRes$logLik[counter]<-tres$logLik
-      InfCritRes$AIC[counter]<-tres$AIC
-      InfCritRes$BIC[counter]<-tres$BIC
-      InfCritRes$LTdep[counter]<-tres$taildep$lower
-      InfCritRes$UTdep[counter]<-tres$taildep$upper
+      if ((InfCritRes[counter,1]==9 || InfCritRes[counter,1]==19) && cor(u1,u2,method="kendall")<0)
+      {
+        #this is to prevent the warning "The BB7 or survival BB7 copula cannot be used for negatively dependent data."
+        InfCritRes$par1[counter]<-NA
+        InfCritRes$par2[counter]<-NA
+        InfCritRes$logLik[counter]<-NA
+        InfCritRes$AIC[counter]<-NA
+        InfCritRes$BIC[counter]<-NA
+        InfCritRes$LTdep[counter]<-NA
+        InfCritRes$UTdep[counter]<-NA
+        
+      } else
+      {
+        tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
+        InfCritRes$par1[counter]<-tres$par
+        InfCritRes$par2[counter]<-tres$par2
+        InfCritRes$logLik[counter]<-tres$logLik
+        InfCritRes$AIC[counter]<-tres$AIC
+        InfCritRes$BIC[counter]<-tres$BIC
+        InfCritRes$LTdep[counter]<-tres$taildep$lower
+        InfCritRes$UTdep[counter]<-tres$taildep$upper
+      }
     }
     
     for(counter in 1:(dim(InfCritRes)[1])){
-      InfCritRes$AICw[counter]<-exp(-0.5*(InfCritRes$AIC[counter]-min(InfCritRes$AIC)))
-      InfCritRes$BICw[counter]<-exp(-0.5*(InfCritRes$BIC[counter]-min(InfCritRes$BIC)))
+      InfCritRes$AICw[counter]<-exp(-0.5*(InfCritRes$AIC[counter]-min(InfCritRes$AIC,na.rm=T)))
+      InfCritRes$BICw[counter]<-exp(-0.5*(InfCritRes$BIC[counter]-min(InfCritRes$BIC,na.rm=T)))
     }
 
-    InfCritRes$AICw<-InfCritRes$AICw/sum(InfCritRes$AICw)
-    InfCritRes$BICw<-InfCritRes$BICw/sum(InfCritRes$BICw)
+    InfCritRes$AICw<-InfCritRes$AICw/sum(InfCritRes$AICw,na.rm=T)
+    InfCritRes$BICw<-InfCritRes$BICw/sum(InfCritRes$BICw,na.rm=T)
 
     # check : sum(InfCritRes$AICw)=1, sum(InfCritRes$BICw)=1
       
-    relLTdep_AICw<-sum((InfCritRes$LTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
-    relUTdep_AICw<-sum((InfCritRes$UTdep*InfCritRes$AICw)/sum(InfCritRes$AICw))
+    relLTdep_AICw<-sum((InfCritRes$LTdep*InfCritRes$AICw)/sum(InfCritRes$AICw,na.rm=T),na.rm=T)
+    relUTdep_AICw<-sum((InfCritRes$UTdep*InfCritRes$AICw)/sum(InfCritRes$AICw,na.rm=T),na.rm=T)
     
-    relLTdep_BICw<-sum((InfCritRes$LTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
-    relUTdep_BICw<-sum((InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw))
+    relLTdep_BICw<-sum((InfCritRes$LTdep*InfCritRes$BICw)/sum(InfCritRes$BICw,na.rm=T),na.rm=T)
+    relUTdep_BICw<-sum((InfCritRes$UTdep*InfCritRes$BICw)/sum(InfCritRes$BICw,na.rm=T),na.rm=T)
     
     
     if (status) {cat(paste("Done: ",Sys.time(),"\n"))}

@@ -48,6 +48,10 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
   colnames(gfc_normal_p_KS_stat)<-colnames(gfc_p_CvM)
   rownames(gfc_normal_p_KS_stat)<-rownames(gfc_p_CvM)
   
+  copdata_cor_Kend<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
+  colnames(copdata_cor_Kend)<-colnames(gfc_p_CvM)
+  rownames(copdata_cor_Kend)<-rownames(gfc_p_CvM)
+  
   gfc_numBS<-matrix(NA,nrow=lengoodloc,ncol=lengoodloc)
   colnames(gfc_numBS)<-colnames(gfc_p_CvM)
   rownames(gfc_numBS)<-rownames(gfc_p_CvM)
@@ -101,6 +105,7 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
 #  cat("sp=",sp,"\n")
   
   num_indep<-0
+  num_neg_cor<-0
   
   for(i in c(1:lengoodloc)){
     for(j in c(1:lengoodloc)){
@@ -115,7 +120,9 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
                             numBSsmall=100,pthresh=0.2,numBSlarge=1000,
                             gofnormal=FALSE,status=FALSE)
         
-        if(ans$IndepTestRes<level){
+        copdata_cor_Kend[i,j]<-ans$TauVal
+        
+        if(ans$IndepTestRes<level && ans$TauVal>0){
           gfc_numBS[i,j]<-ans$Numboot
           gfc_numBS_success[i,j]<-ans$Numboot_success
           gfc_p_CvM[i,j]<-ans$GofRes_CvM
@@ -141,6 +148,29 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
           info_ord_LTdep[i,j,]<-info_ord$LTdep
           info_ord_UTdep[i,j,]<-info_ord$UTdep
           info_ord_AICw[i,j,]<-info_ord$AICw
+ 
+        }else if(ans$IndepTestRes<level && ans$TauVal<0){
+          num_neg_cor<-num_neg_cor+1
+          gfc_numBS[i,j]<- -Inf  # I just put -Inf to see when it's -vely correlated data?
+          gfc_numBS_success[i,j]<- -Inf
+          gfc_p_CvM[i,j]<- -Inf         
+          gfc_p_KS[i,j]<- -Inf
+          gfc_p_CvM_stat[i,j]<- -Inf         
+          gfc_p_KS_stat[i,j]<- -Inf
+          gfc_normal_numBS[i,j]<- -Inf
+          gfc_normal_numBS_success[i,j]<- -Inf
+          gfc_normal_p_CvM[i,j]<- -Inf  
+          gfc_normal_p_KS[i,j]<- -Inf
+          gfc_normal_p_CvM_stat[i,j]<- -Inf
+          gfc_normal_p_KS_stat[i,j]<- -Inf
+          info_ord_AIC[i,j,]<- -Inf
+          info_ord_copcode[i,j,]<- -Inf
+          info_ord_copname[i,j,]<-"NegCor"
+          info_ord_LTdep[i,j,]<- -Inf
+          info_ord_UTdep[i,j,]<- -Inf
+          info_ord_AICw[i,j,]<- -Inf
+          LTdep_AICw[i,j]<- -Inf
+          UTdep_AICw[i,j]<- -Inf
           
         }else{
           num_indep<-num_indep+1
@@ -164,7 +194,6 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
           info_ord_AICw[i,j,]<-Inf
           LTdep_AICw[i,j]<-Inf
           UTdep_AICw[i,j]<-Inf
-          
         }
         
       }
@@ -174,6 +203,7 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
   #-----------------------------------------------------------------------------------------------
   # Save the results
   RES_sp<-list(num_indep_loc_pair=num_indep/2,
+               num_neg_cor_loc_pair=num_neg_cor/2,
                gfc_numBS=gfc_numBS,
                gfc_numBS_success=gfc_numBS_success,
                gfc_p_CvM=gfc_p_CvM,
@@ -193,7 +223,8 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
                info_ord_UTdep=info_ord_UTdep,
                info_ord_AICw=info_ord_AICw,
                LTdep_AICw=LTdep_AICw,
-               UTdep_AICw=UTdep_AICw)
+               UTdep_AICw=UTdep_AICw,
+               copdata_cor_Kend=copdata_cor_Kend)
   
   return(RES_sp)
   

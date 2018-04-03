@@ -6,4 +6,5 @@
 *.csv
 *.RData
 .Rhistory
+Tests_cache
 

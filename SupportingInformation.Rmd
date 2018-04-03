@@ -40,23 +40,9 @@ checkpoint("2018-03-29",checkpointLocation = "./")
 <!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
-
 seed<-101
-families<-c(1,3:10,13,14,16:20)
-
+# families<-c(1,3:10,13,14,16:20)
 source("mtime.R") #A function needed for caching
-source("getcopula.R")
-source("OurBiCopSelect.R")
-source("FittingCopula_selective_loc.R")
-source("normal_cop_AICw.R")
-source("aphid_data_calling.R")
-source("plankton_north_sea_data_calling.R")
-source("NonParamStat.R")
-source("copsurrog2d.R")
-source("TestStats_multivar_dataset.R")
-source("skewness_multivar_dataset.R")
-source("ExtremeTailDep.R")
-source("mydispersal.R")
 ```
 
 # Descriptions of data \label{Description_data}
@@ -79,7 +65,7 @@ dev.off()
 <!--The copula looks like this:-->
 ```{r rankandplot_Loecke, echo=F, results='hide'}
 #fig.cap="Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}).\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
-
+source("getcopula.R")
 #convert to a copula and plot
 pdf("./Results/SoilCNcop.pdf")
 v_CN<-getcopula(d=d,rankon=T,ploton=T) 
@@ -281,7 +267,8 @@ They correspond to the independent copula. The packages we use provide the indep
 issue a warning. Since anyway we want the independent copula, we can suppress the warning. We ran this
 without the warning and it is OK to supress it.-->
 <!-- The lines you are talking about appeared as message not as warning(actualy no warning appered for this chunk), so we have to set message=F here-->
-```{r stat_testing_save_result, message=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopupulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r stat_testing_save_and_plot_result, message=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+source("TestStats_multivar_dataset.R")
 set.seed(seed)
 
 resultsloc<-"./Results/stat_results/stat_testing/"
@@ -294,9 +281,6 @@ res_pt35_rankT<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=T,mc.co
 res_pt1000_rankF<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=F,mc.cores=ncores)
 res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,mc.cores=ncores)
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
-```
-
-```{r stat_testing_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,callfn,mtime("StatTestNumericResults.RData"),mtime("TestStats_multivar_dataset.R"))}
 
 b<-callfn$paramlist
 plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc,spearvals)
@@ -387,7 +371,8 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 
 ### Model selection approach \label{Ex_SoilCN_Model_selection}
 <!--This does the computations for this section-->
-```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"))}
+```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("OurBiCopSelect.R")
 set.seed(seed)
 families_Loecke<-c(1,3:10,13:14,16:20) 
 BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loecke,level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
@@ -413,6 +398,8 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 ### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 <!--Do the intensive part of the analysis, calculating stats on the data and surrogates-->
 ```{r stat_soilCN_graphic_approach, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+source("CopulaFunctions_flexible.R")
+source("copsurrog2d.R")
 set.seed(seed) 
 
 #utility function for calculating all the stats we want
@@ -735,6 +722,8 @@ knitr::kable(atdres,
 
 <!--Load the raw data-->
 ```{r read_aphid_data, echo=F}
+source("aphid_data_calling.R")
+
 # Aphid raw data for count
 d0_count<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
 data_aphid_count<-d_allsp_data(d0_count)     
@@ -748,7 +737,9 @@ data_aphid_ff<-d_allsp_data(d0_firstflight)
 ```
 
 <!--Do the calculations-->
-```{r RES_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("FittingCopula_selective_loc.R"))}
+```{r RES_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+
+source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n")) 
 RES_aphid_count<-RES_single_sp(d_allsp=data_aphid_count,sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
@@ -797,6 +788,7 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
 ```
 
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
+source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
              format='pandoc',
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for abundances of the green spruce aphid, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
@@ -852,7 +844,10 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
 ### Non-parametric analysis of tail dependence \label{Ex_count_NPA}
 
 <!--Do the main computations for this section-->
-```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("NonParamStat.R"))}
+```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+source("good_loclist.R")
+source("NonParamStat.R")
 set.seed(seed) 
 resloc<-"./Results/stat_results/stat_aphid_count/"
 
@@ -938,7 +933,9 @@ pairs of locations. \label{fig_aphid_count}}
 ### Model selection approach \label{Ex_ff_Model_selection}
 
 <!--Do the analysis-->
-```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("FittingCopula_selective_loc.R"))} 
+```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+
+source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n"))
 RES_aphid_ff<-RES_single_sp(d_allsp=data_aphid_ff,sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
@@ -986,6 +983,7 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
 ```
 
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
+source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              format='pandoc',
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for first flight data for the leaf-curlung plum aphid, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
@@ -1050,7 +1048,10 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
 ### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
 
 <!--Do the analysis-->
-```{r stat_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("NonParamStat.R"))}
+```{r stat_aphid_ff, echo=F, cache=T,  cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+source("good_loclist.R")
+source("NonParamStat.R")
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_aphid_ff/"
 
@@ -1135,12 +1136,15 @@ Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against dista
 
 <!--Load the data-->
 ```{r read_plankton_north_sea_data, echo=F}
+source("plankton_north_sea_data_calling.R")
 d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
 data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
 <!--Do the main analysis-->
-```{r RES_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"), mtime("FittingCopula_selective_loc.R"))}
+```{r RES_plankton_north_sea, echo=F, cache=T, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+
+source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n")) 
@@ -1184,15 +1188,13 @@ knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
 ```
 
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
+source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_plankton_north_sea),
              format="pandoc",
              digits=3,
              caption = "Plankton_north_sea : AICw for 'Normal' copula family for each selective location pair\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
-
-
-
 
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$gfc_p_CvM,
@@ -1209,7 +1211,6 @@ knitr::kable(RES_plankton_north_sea$gfc_p_KS,
              caption = "Plankton_north_sea : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
-
 
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 knitr::kable(RES_plankton_north_sea$LTdep_AICw,
@@ -1238,7 +1239,10 @@ knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 
 
 ### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
-```{r stat_plankton_north_sea, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("NonParamStat.R"))}
+```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+source("good_loclist.R")
+source("NonParamStat.R")
 set.seed(seed)
 resloc<-"./Results/stat_results/stat_plankton_north_sea/"
 
@@ -1314,8 +1318,12 @@ To verify that we use aphid-count data, aphid-firstflight data and plankton-nort
 
 Figure \ref{fig_skewness_count} shows that averaged skewness is much lower than expected if the aphid count data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_count}). As $p<0.05$, we reject $H_{0}$. This result is consistent with the non-parametric analysis and model fitting results which indicated lower tail dependence. 
 
-```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
 set.seed(seed)
+
 pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
 par(mfrow=c(2,1))
 numsurrog<-10000
@@ -1345,8 +1353,12 @@ dev.off()
 
 Figure \ref{fig_skewness_ff} shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_ff}). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
 
-```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
 set.seed(seed)
+
 pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
 par(mfrow=c(2,1))
 numsurrog<-10000
@@ -1371,8 +1383,12 @@ dev.off()
 
 Figure \ref{fig_skewness_pns} shows that averaged skewness is lower than expected if the plankton north sea data came from a normal copula. Our previous results on non-parametric analysis and model fitting showed lower tail dependence. Here, as $p>0.05$, we cannot reject $H_{0}$, .......???
 
-```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,mtime("ncsurrog.R"),mtime("skewness_multivar_dataset.R"))}
+```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
 set.seed(seed)
+
 pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf")
 par(mfrow=c(2,1))
 numsurrog<-10000
@@ -1401,6 +1417,7 @@ dev.off()
 
 ### LC model :
 ```{r fig_risk_r0_numlocs5, echo=F, cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="LC model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0_numlocs5}", fig.height=3.5, fig.width=8}
+source("mydispersal.R")
 set.seed(seed)
 varying_d(numsims=10000,numsteps =25,numlocs=5,r=0,K=50,disp_everywhere=F)
 ```
@@ -1422,6 +1439,7 @@ varying_d(numsims=10000,numsteps =25,numlocs=25,r=0,K=50,disp_everywhere=F)
  
 
 ```{r fig_risk_r0.05, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05}", fig.height=3.5, fig.width=8}
+source("mydispersal.R")
 set.seed(seed)
 r<-0.05
 numlocs<-5
@@ -1552,6 +1570,7 @@ varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
  * With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Figure \ref{fig_risk_r0.05_disp_everywhere} and Figure \ref{fig_risk_r0.05_numlocs25_disp_everywhere}]. 
 
 ```{r fig_risk_r0.05_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05_disp_everywhere}", fig.height=3.5, fig.width=8}
+source("mydispersal.R")
 set.seed(seed)
 r<-0.05
 numlocs<-5
@@ -1798,6 +1817,7 @@ spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 
 <!--do a TL analysis on the data just created-->
 ```{r tl_analysis, echo=F, cache=T, cache.extra=list(mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
+source("copsurrognd.R")
 source("TaylorsLawTools.R")
 # 
 # #We are only doing spatial taylor's law because we know a priori temporal

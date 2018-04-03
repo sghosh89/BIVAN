@@ -2,7 +2,7 @@
 
 library(copula)
 library(parallel)
-
+source("CopulaFunctions.R")
 #***
 #calculations to test the stats
 #***

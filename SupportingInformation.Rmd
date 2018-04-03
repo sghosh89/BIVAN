@@ -267,7 +267,7 @@ They correspond to the independent copula. The packages we use provide the indep
 issue a warning. Since anyway we want the independent copula, we can suppress the warning. We ran this
 without the warning and it is OK to supress it.-->
 <!-- The lines you are talking about appeared as message not as warning(actualy no warning appered for this chunk), so we have to set message=F here-->
-```{r stat_testing_save_and_plot_result, message=F, echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 source("TestStats_multivar_dataset.R")
 set.seed(seed)
 

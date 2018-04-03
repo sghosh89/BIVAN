@@ -3,13 +3,14 @@ source("MyBiCopGofTest.R")
 
 #This function takes a sample from a bivariate distribution
 #consisting of values between 0 and 1 and:
-#a) tests for independence
-#b) if independence can be rejected, it fit a series of bivariate 
-#   copula models and provides fitted parameters, log likelihood, 
-#   AIC and BIC for each
+#a) tests for independence and for positive correlation
+#b) if independence can be rejected and correlation is positive, it 
+#   fit a series of bivariate copula models and provides fitted 
+#   parameters, log likelihood, AIC and BIC for each, and other info
 #c) for the best copula model (by AIC or BIC), the function tests
 #   for the goodness of fit in two ways
 #d) optionally tests for the goodness of fit of the normal copula
+#
 #The function is a re-implementation of the BiCopSelect function
 #in the VineCopula package, re-done to ensure we could understand and
 #control what we were getting.
@@ -38,6 +39,7 @@ source("MyBiCopGofTest.R")
 #
 #Output: a list with these elements
 #IndepTestRes     p-value result of the independence test
+#TauVal           Kendall correlation
 #InfCritRes       data frame of results from the information-
 #                   criterion-based model fitting and selection
 #GofRes_CvM       p-value result for Cramer-von-Mises-based 
@@ -70,10 +72,11 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
   if (status) {cat(paste("Starting independence test: ",Sys.time(),"\n"))}
   IndepTestRes<-BiCopIndTest(u1,u2)$p.value
   if (status) {cat(paste("Done:",Sys.time(),"\n"))}
+  tauval<-cor(u1,u2,method="kendall")
   
-  #if independence rejected, then get AICs for copulas and do 
+  #if independence rejected and tau>0, then get AICs for copulas and do 
   #goodness of fit stuff
-  if (IndepTestRes<level){
+  if (IndepTestRes<level && tauval>0){
     
     #AIC/BIC stuff
     if (status) {cat(paste("Starting A/BIC model selection: ",Sys.time(),"\n"))}
@@ -89,28 +92,14 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                     AICw=NA,
                     BICw=NA)
     for (counter in 1:(dim(InfCritRes)[1])){
-      if ((InfCritRes[counter,1]==9 || InfCritRes[counter,1]==19) && cor(u1,u2,method="kendall")<0)
-      {
-        #this is to prevent the warning "The BB7 or survival BB7 copula cannot be used for negatively dependent data."
-        InfCritRes$par1[counter]<-NA
-        InfCritRes$par2[counter]<-NA
-        InfCritRes$logLik[counter]<-NA
-        InfCritRes$AIC[counter]<-NA
-        InfCritRes$BIC[counter]<-NA
-        InfCritRes$LTdep[counter]<-NA
-        InfCritRes$UTdep[counter]<-NA
-        
-      } else
-      {
-        tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
-        InfCritRes$par1[counter]<-tres$par
-        InfCritRes$par2[counter]<-tres$par2
-        InfCritRes$logLik[counter]<-tres$logLik
-        InfCritRes$AIC[counter]<-tres$AIC
-        InfCritRes$BIC[counter]<-tres$BIC
-        InfCritRes$LTdep[counter]<-tres$taildep$lower
-        InfCritRes$UTdep[counter]<-tres$taildep$upper
-      }
+      tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
+      InfCritRes$par1[counter]<-tres$par
+      InfCritRes$par2[counter]<-tres$par2
+      InfCritRes$logLik[counter]<-tres$logLik
+      InfCritRes$AIC[counter]<-tres$AIC
+      InfCritRes$BIC[counter]<-tres$BIC
+      InfCritRes$LTdep[counter]<-tres$taildep$lower
+      InfCritRes$UTdep[counter]<-tres$taildep$upper
     }
     
     for(counter in 1:(dim(InfCritRes)[1])){
@@ -214,6 +203,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
   }
   
   return(list(IndepTestRes=IndepTestRes,
+              TauVal=tauval,
               InfCritRes=InfCritRes,
               GofRes_CvM=GofRes_CvM,
               GofRes_KS=GofRes_KS,

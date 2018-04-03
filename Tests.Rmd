@@ -484,12 +484,17 @@ v<-getcopula(d=d,rankon=F,ploton=T) #with real data, rankon should be T
 Now apply the function:
 ```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(d,mtime("OurBiCopSelect.R"))}
 families<-c(1,3,4,5,13)
-BivMS_res_test<-OurBiCopSelect(d[,1],d[,2],families=families,gofnormal=TRUE,status=TRUE)
+BivMS_res_test<-OurBiCopSelect(d[,1],d[,2],families=families,gofnormal=F,status=TRUE)
 ```
 
 Independence should be rejected (low $p$ value):
 ```{r echo=T}
 BivMS_res_test$IndepTestRes
+```
+
+Tau value should be positive:
+```{r echo=T}
+BivMS_res_test$TauVal
 ```
 
 Model selection should support the actual model (Clayton):
@@ -515,7 +520,29 @@ sufficient indication that the normal copula is not well supported.
 Finally, in other simulations we have discovered the goodness-of-fit
 tests for the normal copula have limited statistical power.
 
-<!--Shya to add headers for other things that need to be tested, and let's discuss before you add the tests themselves-->
+Now test with negatively correlated data, which happens ocassionally:
+
+Data are simulated from a normal copula with parameter $-0.2$:
+```{r get_neg_dat, echo=T}
+set.seed(101)
+cop<-normalCopula(-0.2,2,dispstr="un")
+d<-rCopula(1000,cop)
+v<-getcopula(d=d,rankon=F,ploton=T) #with real data, rankon should be T
+```
+
+Make sure the correlatation is negative for these data:
+```{r test_neg_dat, echo=T}
+cor(v[,1],v[,2],method="kendall")
+```
+
+Call `OurBiCopSelect` - all is should do is test independence, reject independence,
+get tau and find it negative and then stop:
+```{r test_OurBiCopSelect_neg, echo=T, cache=T, cache.extra=list(v,mtime("OurBiCopSelect.R"))}
+res<-OurBiCopSelect(v[,1],v[,2],families=c(1,3,9),level=0.05,AICBIC="AIC",
+                         numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                         gofnormal=F,status=TRUE)
+res
+```
 
 # Tests for retd() function from ExtremeTailDep.R
 <!--DCR to add this section-->

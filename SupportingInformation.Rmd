@@ -1126,6 +1126,9 @@ Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against dista
 
 \newpage
 
+
+
+
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 
 ### Model selection approach \label{Ex_pns_Model_selection}

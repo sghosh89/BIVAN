@@ -76,6 +76,49 @@ dev.off()
 
 ![Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}). \label{fig_soilCNcop}](./Results/SoilCNcop.pdf){ width=30%, height=30% }
 
+
+## Phylogenetic data  \label{Phylo_data}
+```{r calculation_phylo_data, echo=F, results="hide"}
+source("getcopula.R")
+phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = F)
+# Input :
+#        data : a dataframe : phylo_dat with dim.=[99 x 14]
+#        i, j : column indices of data frame to get bivariate data set, should be (i,j)<=13
+#        ploton : logical for option plots of raw data and it's copula representation
+# Output : 
+#        a cop rank matrix for the raw data
+phylo_dat_fn<-function(data,i,j,ploton=T){
+  
+  data<-data[,2:dim(phylo_dat)[2]]
+  d<-data[,c(i,j)]
+  
+  v_phylo<-getcopula(d=d,rankon = T,ploton = F)
+  
+  if(ploton==T){
+    op<-par(mfrow=c(1,2))
+    plot(d[,1],d[,2],col="blue")
+    getcopula(d=d,rankon = T,ploton = T)
+    par(op)
+  }
+  return(v_phylo)
+}
+
+# This plot I create on temporary basis to see the copula structure between various column of the raw data
+# After I know which variables should I look into, I will modify this chunk and add model selection and NPA on that
+pdf("./Results/temp_phylo_plot.pdf",width=20, height=20)
+op<-par(mfrow=c(13,13))
+for(i in c(1:13)){
+  for(j in c(1:13)){
+    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = F)
+    plot(v_phylo[,1],v_phylo[,2],col="red")
+    #mtext("(i,j)=(",i,", ",j,")")
+    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
+  } 
+}
+par(op)
+dev.off()
+```
+
 ## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data 

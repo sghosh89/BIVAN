@@ -1458,278 +1458,138 @@ dev.off()
 
 ## Extinction risk
 
-### LC model :
-```{r fig_risk_r0_numlocs5, echo=F, cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="LC model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0_numlocs5}", fig.height=3.5, fig.width=8}
+```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
+
 source("mydispersal.R")
 set.seed(seed)
-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0,K=50,disp_everywhere=F)
-```
 
-```{r fig_risk_r0_numlocs25, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="LC model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0_numlocs25}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-varying_d(numsims=10000,numsteps =25,numlocs=25,r=0,K=50,disp_everywhere=F)
-```
+rlist<-c(0,0.05,0.25,0.5,0.7,0.75,0.9,1.0,1.25,1.5,1.75,1.95)
 
-  *  As expected, when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one. With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Figure \ref{fig_risk_r0_numlocs5} - Figure \ref{fig_risk_r0_numlocs25}]. 
+# plot for local dispersal in D matrix ; r=0 for LC model, r!=0 for Ricker model
+pdf("./Results/ext_risk_local_disp.pdf",heigh=6,width=10)
+op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
+for(r in rlist){
+    #cat("r=",r,"\n")
+    s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
+    plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
+    lines(s$d_seq,s$risk_right,type="b",col="blue")
+    legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
+    mtext(paste0("r = ", r))
+}
+par(op)
+dev.off()
+
+
+# plot for global dispersal in D matrix ; r=0 for LC model, r!=0 for Ricker model
+pdf("./Results/ext_risk_global_disp.pdf",heigh=6,width=10)
+op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
+for(r in rlist){
+  #cat("r=",r,"\n")
+  s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
+  plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
+  lines(s$d_seq,s$risk_right,type="b",col="blue")
+  legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
+  mtext(paste0("r = ", r))
+}
+par(op)
+dev.off()
+
+# plot to show the effect of increasing numlocs for r=0 (LC model), r=0.25 (Ricker model)
+pdf("./Results/ext_risk_numlocs_effect_local_disp.pdf",heigh=6,width=6)
+op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+for(r in c(0,0.25)){
+  #cat("r=",r,"\n")
+  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
+  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=F,ploton=F)
   
-### Ricker model :
-
- *  For ricker model when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one upto $r=0.7$. For $r>0.7$, extinction risk is greater for data came from right tail dependent environmental fluctuations.
- 
-  * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_r0.05} - Figure \ref{fig_risk_r0.05_K200}]
-
- * With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Figure \ref{fig_risk_r0.05} and Figure \ref{fig_risk_r0.05_numlocs25}]. 
- 
-
-```{r fig_risk_r0.05, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05}", fig.height=3.5, fig.width=8}
-source("mydispersal.R")
-set.seed(seed)
-r<-0.05
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-```{r fig_risk_r0.05_K200, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05_K200}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.05
-numlocs<-5
-K<-200
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-```{r fig_risk_r0.05_numlocs25, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05_numlocs25}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.05
-numlocs<-25
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-```{r fig_risk_r0.25, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.25}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.25
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-```{r fig_risk_r0.5, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.5}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.5
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-
-```{r fig_risk_r0.6, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.6}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.6
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-```{r fig_risk_r0.7, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.7}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.7
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-   
-```{r fig_risk_r0.75, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.75}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.75
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-    
-  
-```{r fig_risk_r0.9, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.9}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.9
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-  
-  
-```{r fig_risk_r1.0, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.0}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.0
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
+  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
+  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
  
   
-```{r fig_risk_r1.25, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.25}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.25
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
+  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
+       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
+  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+  #mtext(paste0("B",1))
+}
+par(op)
+dev.off()
 
+# plot to show the effect of increasing numlocs for r=0 (LC model), r=0.25 (Ricker model)
+pdf("./Results/ext_risk_numlocs_effect_global_disp.pdf",heigh=6,width=6)
+op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+for(r in c(0,0.25)){
+  #cat("r=",r,"\n")
+  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
+  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=T,ploton=F)
   
-```{r fig_risk_r1.5, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.5}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.5
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-   
-```{r fig_risk_r1.75, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.75}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.75
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-   
-```{r fig_risk_r1.95, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.95}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.95
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=F)
-```
-
-
-# Explore equal_dispersal everywhere
-
-### LC model :
-    
-    * No effect here.
-    
-### Ricker model :
-
-  * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_r0.05_disp_everywhere} - Figure \ref{fig_risk_r0.05_K200_disp_everywhere}]
-
- * With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Figure \ref{fig_risk_r0.05_disp_everywhere} and Figure \ref{fig_risk_r0.05_numlocs25_disp_everywhere}]. 
-
-```{r fig_risk_r0.05_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.05_disp_everywhere}", fig.height=3.5, fig.width=8}
-source("mydispersal.R")
-set.seed(seed)
-r<-0.05
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-```{r fig_risk_r0.05_K200_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal); With increasing K from 50 to 200, extinction risk decreases.\\label{fig_risk_r0.05_K200_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.05
-numlocs<-5
-K<-200
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-```{r fig_risk_r0.05_numlocs25_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal); With increasing numlocs from 5 to 25, extinction risk decreases.\\label{fig_risk_r0.05_numlocs25_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.05
-numlocs<-25
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-
-```{r fig_risk_r0.25_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.25_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.25
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-```{r fig_risk_r0.5_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.5_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.5
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-
-```{r fig_risk_r0.6_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.6_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.6
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-
-```{r fig_risk_r0.7_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.7_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.7
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-   
-```{r fig_risk_r0.75_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.75_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.75
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-    
-  
-```{r fig_risk_r0.9_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r0.9_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-0.9
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-  
-  
-```{r fig_risk_r1.0_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.0_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.0
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
+  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
+  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
  
   
-```{r fig_risk_r1.25_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.25_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.25
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
+  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
+       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
+  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+  #mtext(paste0("B",1))
+}
+par(op)
+dev.off()
+
+# plot to see the effect of K for r=0.25 (Ricker model)
+pdf("./Results/ext_risk_K_effect.pdf",heigh=6,width=6)
+op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+
+s1<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=F,ploton=F)
+s2<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=F,ploton=F)
+  
+s3<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=T,ploton=F)
+s4<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=T,ploton=F)
+  
+plot(s1$d_seq,s1$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+lines(s2$d_seq,s2$risk_left,type="b",col="orange")
+legend("topleft",title=("Noise : left tail dep., local disp."), c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
+  
+plot(s1$d_seq,s1$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+lines(s2$d_seq,s2$risk_right,type="b",col="skyblue")
+legend("topleft",title=("Noise : right tail dep., local disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+ 
+plot(s3$d_seq,s3$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+lines(s4$d_seq,s4$risk_left,type="b",col="orange")
+legend("topleft",title= ("Noise : left tail dep., global disp."),c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
+  
+plot(s3$d_seq,s3$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+lines(s4$d_seq,s4$risk_right,type="b",col="skyblue")
+legend("topleft",title=("Noise : right tail dep., global disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+ 
+par(op)
+dev.off()
 ```
 
-```{r fig_risk_r1.5_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.5_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.5
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-   
-```{r fig_risk_r1.75_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.75_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.75
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
-   
-```{r fig_risk_r1.95_disp_everywhere, echo=F,  cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R")), fig.cap="Ricker model_disp_everywhere : Plot Extinction risk vs. d(degree of dispersal).\\label{fig_risk_r1.95_disp_everywhere}", fig.height=3.5, fig.width=8}
-set.seed(seed)
-r<-1.95
-numlocs<-5
-K<-50
-varying_d(numsims=10000,numsteps =25,numlocs=numlocs,r=r,K=K,disp_everywhere=T)
-```
+### LC model (r=0) :
 
+  * For LC model, as expected, when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one. [see first plot of Figure \ref{fig_risk_local_disp} and Figure \ref{fig_risk_global_disp}]
+
+### Ricker model (r $\neq$ 0):
+
+ *  For ricker model when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one upto $r=0.7$. For $r>0.7$, extinction risk is greater for data came from right tail dependent environmental fluctuations. [see Figure \ref{fig_risk_local_disp} - \ref{fig_risk_global_disp}]
+ 
+  * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_K_effect}]
+  
+With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Figure \ref{fig_risk_numlocs_effect_local_disp} - Figure \ref{fig_risk_numlocs_effect_global_disp}] for both model. 
+
+
+![Extinction_Risk_local_dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp}](./Results/ext_risk_local_disp.pdf){ width=40%, height=40% }
+
+![Extinction_Risk_global_dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp}](./Results/ext_risk_global_disp.pdf){ width=40%, height=40% }
+
+![Extinction_Risk_numlocs_effect_local_disp; numsteps=25, numsims=10000\label{fig_risk_numlocs_effect_local_disp}](./Results/ext_risk_numlocs_effect_local_disp.pdf){ width=40%, height=40% }
+
+![Extinction_Risk_numlocs_effect_global_disp; numsteps=25, numsims=10000\label{fig_risk_numlocs_effect_global_disp}](./Results/ext_risk_numlocs_effect_global_disp.pdf){ width=40%, height=40% }
+
+![Extinction_Risk_K_effect on Ricker model; r=0.25, numsteps=25, numsims=10000\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 
 
 \newpage

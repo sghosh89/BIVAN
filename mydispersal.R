@@ -144,8 +144,9 @@ plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,ploton){
 #       6) disp_everywhere :logical:
 #             if T : gives D for linear chain model with equal dispersal everywhere
 #             if F : gives D for linear chain model with equal dispersal only to nearest neighbor location
+#       7) ploton : logical to get optional plot
 
-varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere){
+varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere,ploton){
   risk_right<-c()
   risk_left<-c()
   d_seq<-seq(from=0,to=1,by=0.1)
@@ -158,14 +159,21 @@ varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere){
     risk_left<-c(risk_left,risk_l)
   }
   
-  op<-par(mfrow=c(1,2))
-  plot(d_seq,risk_left,xlab='d',ylab='Risk_left',xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid())
-  plot(d_seq,risk_right,xlab='d',ylab='Risk_right',xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid())
-  par(op)
-  mtext(paste0("r = ", r," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps," , K = ",K),side=3,line=0.2,col="navyblue")
+  if(ploton==T){
+    op<-par(mfrow=c(1,2))
+    plot(d_seq,risk_left,xlab='d',ylab='Risk_left',xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid())
+    plot(d_seq,risk_right,xlab='d',ylab='Risk_right',xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid())
+    par(op)
+    mtext(paste0("r = ", r," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps," , K = ",K),side=3,line=0.2,col="navyblue")
+  }
+  
+  return(data.frame(d_seq=d_seq,
+                    risk_left=risk_left,
+                    risk_right=risk_right))
+  
+
 }
 #------------------------------------------------------------------------------------------------------------
-
 
 
 #varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.05,K=200,disp_everywhere=T)

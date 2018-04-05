@@ -116,9 +116,12 @@ RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
         #plot(u1,u2)
 #        cat("[i, j]=[",i," ,",j,"]","(good_loc[i],good_loc[j])=(",good_loc[i],",",good_loc[j],")","\n")
         
+#        print(paste("i=",i,"; j=",j,sep=""))
+#        print("About to call OurBiCopGofTest")
         ans<-OurBiCopSelect(u1,u2,families,level=0.05,AICBIC="AIC",
                             numBSsmall=100,pthresh=0.2,numBSlarge=1000,
                             gofnormal=FALSE,status=FALSE)
+#        print("Finished OurBiCopGofTest")
         
         copdata_cor_Kend[i,j]<-ans$TauVal
         

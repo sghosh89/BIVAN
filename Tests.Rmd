@@ -484,7 +484,7 @@ v<-getcopula(d=d,rankon=F,ploton=T) #with real data, rankon should be T
 Now apply the function:
 ```{r bivmodselect_test, echo=F, cache=T, cache.extra=list(d,mtime("OurBiCopSelect.R"))}
 families<-c(1,3,4,5,13)
-BivMS_res_test<-OurBiCopSelect(d[,1],d[,2],families=families,gofnormal=F,status=TRUE)
+BivMS_res_test<-OurBiCopSelect(d[,1],d[,2],families=families,gofnormal=T,status=TRUE)
 ```
 
 Independence should be rejected (low $p$ value):

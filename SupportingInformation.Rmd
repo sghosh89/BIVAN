@@ -1185,7 +1185,7 @@ data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
 <!--Do the main analysis-->
-```{r RES_plankton_north_sea, echo=F, cache=T, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+```{r RES_plankton_north_sea, echo=F, cache=T, results="hide", cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 

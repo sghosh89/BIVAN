@@ -73,10 +73,14 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
   IndepTestRes<-BiCopIndTest(u1,u2)$p.value
   if (status) {cat(paste("Done:",Sys.time(),"\n"))}
   tauval<-cor(u1,u2,method="kendall")
+
+#  print(paste0("IndepTestRes=",IndepTestRes,"; tauval=",tauval))
   
   #if independence rejected and tau>0, then get AICs for copulas and do 
   #goodness of fit stuff
   if (IndepTestRes<level && tauval>0){
+
+#    print("Entering main work if statement in BiCopGofTest")    
     
     #AIC/BIC stuff
     if (status) {cat(paste("Starting A/BIC model selection: ",Sys.time(),"\n"))}
@@ -92,6 +96,7 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
                     AICw=NA,
                     BICw=NA)
     for (counter in 1:(dim(InfCritRes)[1])){
+#      print(paste0("About to call BiCopEst for counter=",counter))
       tres<-BiCopEst(u1,u2,family=InfCritRes[counter,1])
       InfCritRes$par1[counter]<-tres$par
       InfCritRes$par2[counter]<-tres$par2
@@ -133,16 +138,20 @@ OurBiCopSelect<-function(u1,u2,families,level=0.05,AICBIC="AIC",
       stop("Error in OurBiCopSelect: incorrect AICBIC")
     }
     Numboot<-numBSsmall
+#    print("About to call MyBiCopGofTest")
     gres<-MyBiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
                        method="kendall",B=numBSsmall)
+#    print("Finished calling MyBiCopGofTest")
     GofRes_CvM<-gres$p.value.CvM
     GofRes_KS<-gres$p.value.KS
     Numboot_success<-gres$B_success
     if (GofRes_CvM<pthresh || GofRes_KS<pthresh)
     {
       Numboot<-numBSlarge
+#      print("About to call MyBiCopGofTest second time")
       gres<-MyBiCopGofTest(u1,u2,family=InfCritRes$copcode[ind],
                          method="kendall",B=numBSlarge)
+#      print("Finished calling MyBiCopGofTest second time")
       GofRes_CvM<-gres$p.value.CvM
       GofRes_KS<-gres$p.value.KS
       Numboot_success<-gres$B_success

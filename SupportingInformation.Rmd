@@ -1083,7 +1083,7 @@ stronger upper tail dependence than lower tail dependence.
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTmUT}",
+             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -1198,7 +1198,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
 ```
 
-As in previous sections (see also Methods) model selection among copulas was done separately for 
+As described in Methods and as in previous sections, model selection among copulas was done separately for 
 each pair of sampling locations. There were $14$ sampling locations, so results are presented in 
 $14 \times 14$ matrix format, with rows and columns corresponding to locations. 
 Table \ref{tab_pns_bestcop} shows that, for the large majority of location pairs, some 
@@ -1206,77 +1206,105 @@ non-normal copula was a better fit, according to AIC, than was the normal copula
 first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula 
 family for each pair of sampling locations (Table \ref{tab_pns_AICw}) to the AIC weight of
 the normal copula family for the same pair (Table \ref{tab_pns_AICw_normal}) 
-
- Table \ref{tab_pns_AICw} represents the Akaike weights of the best-fit copula for each location pair. Our fitting results are supported by the lowest-AIC copula *p*-value in the Cramer-von Mises-based test [Table \ref{tab_pns_p_CvM}] of the goodness of its fit, and in the Kolmogorov-Smirnov-based test [Table \ref{tab_pns_p_KS}] of the goodness of fit with atleast
-`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` % successful bootstrap. Table \ref{tab_pns_AICw_normal} represents the Akaike weights of the normal copula for each location pair and by comparing with Table \ref{tab_pns_AICw}, one can verify that for most of the locations a normal copula is not a good fit based on minimum AIC. The model-averaged (using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are presented in Table \ref{tab_pns_LTdep_AICw} and Table \ref{tab_pns_UTdep_AICw} respectively, and these values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper) in Table \ref{tab_pns_LTmUT} indicates it is different from $0$ for most of the locations, answering the third part of question 1. These results do convincingly show non-Gaussian copula structure, having **`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)`** out of **`r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`** location pair more lower tail dependence. 
-
+confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
+Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{tab_pns_p_CvM}) usually failed to reject the hypothesis that 
+the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a
+Kolmogorov-Smirnov statistic (Table \ref{tab_pns_p_KS}). In all cases at least
+`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit
+tests successfully lead to values of the statistic for comparison with its value on the real data.
 
 ```{r tab_pns_bestcop, echo=F, results='markup'}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1],
              format='pandoc',
-             caption = "Plankton_north_sea : Best fit copula family for each selective location pair\\label{tab_pns_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for *Ceratium furca* in UK seas. See previous sections for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_pns_AICw,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$info_ord_AICw[,,1],
+h<-RES_plankton_north_sea$info_ord_AICw[,,1]
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : AICw for best fit copula family for each selective location pair\\label{tab_pns_AICw}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_plankton_north_sea),
+h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : AICw for 'Normal' copula family for each selective location pair\\label{tab_pns_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$gfc_p_CvM,
+h<-RES_plankton_north_sea$gfc_p_CvM
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : p-values (Cramer-von Mises-based test) for lowest AIC based best fit copula\\label{tab_pns_p_CvM}",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for abundance data for *Ceratium furca* in UK seas. Tests were based on bootstrapping as described in Methods.\\label{tab_pns_p_CvM}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_p_KS,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$gfc_p_KS,
+h<-RES_plankton_north_sea$gfc_p_KS
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : p-values (Kolmogorov-Smirnov-based test) for lowest AIC based best fit copula\\label{tab_pns_p_KS}",
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
+the goodness of fit of the lowest-AIC copula family for each pair of
+locations for abundance data for *Ceratium furca* in UK seas. Tests
+were based on bootstrapping as described in Methods.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
 
+The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{tab_pns_LTdep_AICw} and\ref{tab_pns_UTdep_AICw}, respectively. These values were exclusively positive, thereby
+differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
+have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
+
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$LTdep_AICw,
+h<-RES_plankton_north_sea$LTdep_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged lower tail dependence statistic for each selective location pair\\label{tab_pns_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_UTdep_AICw,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$UTdep_AICw,
+h<-RES_plankton_north_sea$UTdep_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged upper tail dependence statistic for each selective location pair\\label{tab_pns_UTdep_AICw}",
+             caption = "Model-averaged upper tail dependence statistic for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
 ```
+
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
+(lower minus upper), shown in Table \ref{tab_pns_LTmUT}, was positive for some
+location pairs and negative for others, but was positive for 
+`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`
+locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
 
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
-knitr::kable(RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw,
+h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
+h[is.nan(h)]<-NA
+knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Plankton_north_sea : model averaged lower tail - model averaged upper tail dependence statistic for each of the selective location pair\\label{tab_pns_LTmUT}",
+             caption = "Model averaged lower tail dependence minus model
+averaged upper tail dependence statistic for each location pair for *Ceratium furca* in UK seas.\\label{tab_pns_LTmUT}",
              booktabs=TRUE)
 ```
-
-
 
 ### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -1301,14 +1329,33 @@ saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16
 stat_plankton_north_sea<-readRDS("./Results/stat_results/stat_plankton_north_sea/stat_plankton_north_sea_sp_16.RDS")
 ```
 
+Mean values of our statistics, as well as mean Kendall and Spearman
+correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
+spatial resampling scheme, as described in Methods (Table \ref{tab_pns_resamp}).
+Confidence intervals of $\cor_l$","$\cor_u$","$\Ps_l$","$\Ps_u$","$\Dsq_l$","$\Dsq_u$"
+always excluded $0$ and mean values were positive, indicating tail dependence.
+Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
+also all were strictly positive, indicating asymmetry of tail dependence, a feature that data with normal copula
+structure do not have, providing further evidence answering the third part of question 1.
+
+<!--display the main statistical results in a table-->
 ```{r tab_pns_resamp,echo=F,results="markup"}
-s<-stat_plankton_north_sea$numericdf[,2:5]
-rownames(s)<-c("spear","kend","cor~l~","cor~u~","P~l~","P~u~","$D^2$~l~","$D^2$~u~","cor~l~ - cor~u~","P~l~ - P~u~","$D^2$~u~ - $D^2$~l~")
+s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
+colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
+rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Plankton_north_sea : resampling result for stat indicating lower tail dependence\\label{tab_pns_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_resamp}",
              booktabs=TRUE)
 ```
+
+Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
+between the locations (Figure \ref{fig_pns} A, B) showed the typical decline of correlation with increasing
+distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Figure \ref{fig_pns} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given
+their opposite meaning (Figure \ref{fig_pns} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_pns} I-K) did not show a decline with distance, but did demonstrate visuaally the 
+statistical result of Table \ref{tab_pns_resamp} that averages of these 
+quantities across all pairs of sampling locations were significantly greater 
+than zero, showing asymmetry of tail dependence.
 
 \begin{figure}[!h]
 \textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
@@ -1330,11 +1377,12 @@ knitr::kable(s,
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption{Non-parametric tail statistics results for Ceratium furca abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
+\caption{Non-parametric tail statistics results for *Ceratium furca* abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
 \end{center}
 \end{figure}
 
-Table \ref{tab_pns_resamp} shows the mean of each non-parametric statistic taken from all pairwise locations and then based on a resampling results how the resampled mean distributed from or around the real mean. Fourth column named $fracgt0$ in Table \ref{tab_pns_resamp} indicates the fraction of resampled mean greater then zero. $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ statistic with positive mean and almost $100$% $fracgt0$ proves that plankton species data for *Ceratium furca* has significant lower tail dependence.
+
+<!--***DAN: stopped here 2018 04 07-->
 
 \newpage
 

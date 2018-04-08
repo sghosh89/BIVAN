@@ -128,7 +128,7 @@ dev.off()
 ## Abundance data for *Ceratium furca* in UK seas \label{Pns_data}
    * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
    * We threw out all locations that had fewer than 45 years data
-   * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
+   * We use species=16 [Name : "Ceratium furca"] for Plankton_North_Sea data
    * *Ceratium furca* is a dicoflagellate commonly found in UK seas
    * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK 
    
@@ -1377,7 +1377,7 @@ than zero, showing asymmetry of tail dependence.
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption{Non-parametric tail statistics results for *Ceratium furca* abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
+\caption{Non-parametric tail statistics results for \textit{Ceratium furca} abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
 \end{center}
 \end{figure}
 

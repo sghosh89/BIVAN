@@ -128,7 +128,7 @@ dev.off()
 ## Abundance data for *Ceratium furca* in UK seas \label{Pns_data}
    * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
    * We threw out all locations that had fewer than 45 years data
-   * We use species=16 [Name : "Ceratium_furca"] for Plankton_North_Sea data
+   * We use species=16 [Name : "Ceratium furca"] for Plankton_North_Sea data
    * *Ceratium furca* is a dicoflagellate commonly found in UK seas
    * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK 
    
@@ -332,9 +332,9 @@ plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
 plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 ```
 
-![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
 
-![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_l-\Dsq_u$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
 For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
 $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same 
@@ -1265,7 +1265,7 @@ were based on bootstrapping as described in Methods.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
 
-The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{tab_pns_LTdep_AICw} and\ref{tab_pns_UTdep_AICw}, respectively. These values were exclusively positive, thereby
+The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{tab_pns_LTdep_AICw} and \ref{tab_pns_UTdep_AICw}, respectively. These values were exclusively positive, thereby
 differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
 have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
 
@@ -1332,7 +1332,7 @@ stat_plankton_north_sea<-readRDS("./Results/stat_results/stat_plankton_north_sea
 Mean values of our statistics, as well as mean Kendall and Spearman
 correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
 spatial resampling scheme, as described in Methods (Table \ref{tab_pns_resamp}).
-Confidence intervals of $\cor_l$","$\cor_u$","$\Ps_l$","$\Ps_u$","$\Dsq_l$","$\Dsq_u$"
+Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
 always excluded $0$ and mean values were positive, indicating tail dependence.
 Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
 also all were strictly positive, indicating asymmetry of tail dependence, a feature that data with normal copula
@@ -1352,7 +1352,7 @@ knitr::kable(s,
 Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
 between the locations (Figure \ref{fig_pns} A, B) showed the typical decline of correlation with increasing
 distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Figure \ref{fig_pns} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given
-their opposite meaning (Figure \ref{fig_pns} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_pns} I-K) did not show a decline with distance, but did demonstrate visuaally the 
+their opposite meaning (Figure \ref{fig_pns} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_pns} I-K) did not show a decline with distance, but did demonstrate visually the 
 statistical result of Table \ref{tab_pns_resamp} that averages of these 
 quantities across all pairs of sampling locations were significantly greater 
 than zero, showing asymmetry of tail dependence.
@@ -1377,7 +1377,7 @@ than zero, showing asymmetry of tail dependence.
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=1.8in]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption{Non-parametric tail statistics results for *Ceratium furca* abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
+\caption{Non-parametric tail statistics results for \textit{Ceratium furca} abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
 \end{center}
 \end{figure}
 

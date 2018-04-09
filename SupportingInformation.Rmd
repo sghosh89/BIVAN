@@ -80,7 +80,7 @@ dev.off()
 ## Phylogenetic data  \label{Phylo_data}
 ```{r calculation_phylo_data, echo=F, results="hide"}
 source("getcopula.R")
-phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = F)
+phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
 # Input :
 #        data : a dataframe : phylo_dat with dim.=[99 x 14]
 #        i, j : column indices of data frame to get bivariate data set, should be (i,j)<=13

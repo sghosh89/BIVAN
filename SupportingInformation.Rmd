@@ -279,7 +279,7 @@ $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
 In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
 also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and 
-$\Dsq_u-\Dsq_u$ revealed the asymmetry of tail dependence known to be present in data simulated
+$\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated
 from various copulas. Normal and Frank copula families 
 are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
@@ -290,7 +290,7 @@ Using the `iRho` function from the `copula` package, for each of the four famili
 Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
 of the selected parameter values we generated  $n$ points, 100 times, and thereby computed 100 values of the 
-statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_u$. This exercise 
+statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$. This exercise 
 was repeated, separately, 
 for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect asymptotic behavior of the 
 statistics and their behavior on the small datasets which are common in some fields

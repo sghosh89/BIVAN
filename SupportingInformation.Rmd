@@ -1386,9 +1386,23 @@ than zero, showing asymmetry of tail dependence.
 
 \newpage
 
-# Question 2 analyses for each dataset
+# Question 2 analyses 
 Recall that question 2 is: What are some possible causes of non-Gaussian copula structure? 
 
+
+## The Moran effect and copula structure in populations 
+
+We show here that if a non-normal copula structure describes the dependence of an environmental
+variable between two locations, then there can be a non-normal copula structure for the
+dependence of populations in the locations that are influenced by the environmental variables.
+
+<!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
+
+## Asymmetric sensitivity and copula structure in populations
+
+<!--Another model, distinct from the above, Dan and Shya to discuss-->
+
+## Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 
 \newpage

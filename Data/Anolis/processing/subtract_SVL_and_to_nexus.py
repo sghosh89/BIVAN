@@ -36,7 +36,9 @@ BEGIN DATA;
 # Write CharLabels...
 out.write('CharLabels')
 sys.stderr.write('contrast,path length')
-for label in header [1:]:
+for col_ind, label in enumerate(header):
+    if col_ind == 0 or col_ind in avoid:
+        continue
     corrected_lab = label + ' minus SVL'
     out.write('\n    {}'.format(escape_nexus_token(corrected_lab)))
     sys.stderr.write(',{}'.format(corrected_lab))

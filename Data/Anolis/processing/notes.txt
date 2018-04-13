@@ -20,5 +20,6 @@ For the sake of simplicity in our data expoloration analyses, MTH
     value from every non-SVL character.
 This is the log of the length ratio between the trait and the SVL.
 
-   python subtract_SVL_and_to_nexus.py GA_Anolis_traits.csv  > trait_minus_svl.nexus
+    python subtract_SVL_and_to_nexus.py GA_Anolis_traits.csv  >trait_minus_svl.nexus 2>trait_minus_svl_contrasts.csv
+    python pic1.py trait_minus_svl.nexus GA_Anolis_MCC.nex  >>trait_minus_svl_contrasts.csv
 

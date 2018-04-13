@@ -9,7 +9,7 @@ library(VineCopula)
 #        method : a character of spearman or kendall
 #        ploton : logical to genarate an optional plot
 # Output :
-#       list of two : a N by 2 noise matrix and parameter of the copula
+#       list of two : a N by 2 noise matrix , it's qnorm transformed form and parameter of the copula
 #---------------------------------------------------------------------------------------
 GetNoise<-function(N,fcode,corcoef,method,ploton){
 
@@ -45,7 +45,7 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 # apply qnorm on noisecop to get normal distribution of each marginal
   noise_q<-qnorm(noisecop)
   
-  return(list(noise_q=noise_q,param=param))
+  return(list(noise=noisecop,noise_q=noise_q,param=param))
 }
 
 # Check the function
@@ -65,7 +65,8 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 #Args
 #cons         An autocorrelation coefficient for the model (one number, |cons|<1)
 #p0           Initial conditions - length 2 vector, default c(0,0)
-#noises       An N by 2 matrix of environment variables in two habitat patches through time
+#noise       An N by 2 matrix of environment variables in two habitat patches through time 
+#                             (this should be noise_q from output of GetNoise function)
 #burnin       The number of population times to throw away to get rid of transient behavior in the
 #               dynamics. Default 500.
 

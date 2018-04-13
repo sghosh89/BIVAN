@@ -1397,6 +1397,65 @@ variable between two locations, then there can be a non-normal copula structure 
 dependence of populations in the locations that are influenced by the environmental variables.
 
 <!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
+```{r cause4copula}
+source("Cause4copula.R")
+set.seed(seed)
+#--------------------------------------------------------------------------------
+#function to get a comparison table 
+comp<-function(s,s2_p){
+  
+  comp<-matrix(NA,nrow=3,ncol=2)
+  rownames(comp)<-c("spearman","kendall","pearson")
+  colnames(comp)<-c("noise_q","pop_p")
+  # Now compare between two correlations coming from noise_q and s2_p
+  comp[1,1]<-unname(cor.test(s$noise_q[,1],s$noise_q[,2],method = "spearman")$estimate)
+  comp[1,2]<-unname(cor.test(s2_p[,1],s2_p[,2],method = "spearman")$estimate)
+  
+  comp[2,1]<-unname(cor.test(s$noise_q[,1],s$noise_q[,2],method = "kendall")$estimate)
+  comp[2,2]<-unname(cor.test(s2_p[,1],s2_p[,2],method = "kendall")$estimate)
+  
+  comp[3,1]<-unname(cor.test(s$noise_q[,1],s$noise_q[,2],method = "pearson")$estimate)
+  comp[3,2]<-unname(cor.test(s2_p[,1],s2_p[,2],method = "pearson")$estimate)
+  
+  return(comp)
+}
+#--------------------------------------------------------------------------------
+# when noise comes from a clayton cop with spearmancor=0.8
+s<-GetNoise(N=10000,fcode=3,corcoef=0.8,method="spearman",ploton=T)
+s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+#hist(s2[,1],breaks=1000) # it's normal
+s2_p<-pnorm(s2)
+#hist(s2_p[,1],breaks=1000) # it's uniform
+points(s2_p[,1],s2_p[,2],col="red")
+comp(s=s,s2_p=s2_p)
+#-----------------------------------------------------------------------------------------
+# when noise comes from a clayton cop with kendallcor=0.8
+s<-GetNoise(N=10000,fcode=3,corcoef=0.8,method="kendall",ploton=T)
+s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+#hist(s2[,1],breaks=1000) # it's normal
+s2_p<-pnorm(s2)
+#hist(s2_p[,1],breaks=1000) # it's uniform
+points(s2_p[,1],s2_p[,2],col="red")
+comp(s=s,s2_p=s2_p)
+#----------------------------------------------------------------------------------
+# when noise comes from a gumbel cop with spearmancor=0.8
+s<-GetNoise(N=10000,fcode=4,corcoef=0.8,method="spearman",ploton=T)
+s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+#hist(s2[,1],breaks=1000) # it's normal
+s2_p<-pnorm(s2)
+#hist(s2_p[,1],breaks=1000) # it's uniform
+points(s2_p[,1],s2_p[,2],col="red")
+comp(s=s,s2_p=s2_p)
+#------------------------------------------------------------------------------------
+# when noise comes from a gumbel cop with kendallcor=0.8
+s<-GetNoise(N=10000,fcode=4,corcoef=0.8,method="kendall",ploton=T)
+s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+#hist(s2[,1],breaks=1000) # it's normal
+s2_p<-pnorm(s2)
+#hist(s2_p[,1],breaks=1000) # it's uniform
+points(s2_p[,1],s2_p[,2],col="red")
+comp(s=s,s2_p=s2_p)
+```
 
 ## Asymmetric sensitivity and copula structure in populations
 

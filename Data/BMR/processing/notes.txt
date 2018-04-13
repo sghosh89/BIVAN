@@ -1,0 +1,7 @@
+select-species-mass-bmr.csv is the mass and BMR columns of all of 
+species in the "SELECT" dataset of Genoud, Isler, and Martin (2018)
+https://onlinelibrary.wiley.com/doi/full/10.1111/brv.12350
+
+tree.nex was produced from 
+Tree in NEXUS in pdf from https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Fbrv.12350&attachmentId=212161481
+

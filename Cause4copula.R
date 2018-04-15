@@ -69,13 +69,13 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 #noise       An N by 2 matrix of environment variables in two habitat patches through time 
 #                             (this should be noise_q from output of GetNoise function)
 #burnin       The number of population times to throw away to get rid of transient behavior in the
-#               dynamics. Default 1000.
+#               dynamics. Default 500.
 
 #Output
 #An N+1 by 2 matrix of populations through time, p0 is the first row in copula space : pop_c
 # pop_q : this is similar but with normal distribution marginal
 
-Simulator_Cause4copula<-function(cons,p0=c(0,0),noise,burnin=1000){
+Simulator_Cause4copula<-function(cons,p0=c(0,0),noise,burnin=500){
   
   N<-dim(noise)[1]
   cons2<-sqrt(1-cons^2)
@@ -130,7 +130,81 @@ comp<-function(s,s2){
 #hist(s2$pop_c[,1],breaks=1000) # it's uniform
 #points(s2$pop_c[,1],s2$pop_c[,2],col="red")
 #comp(s=s,s2=s2)
+#---------------------------------------------------------
+#-----------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------
+Plotter_Cause4copula_GOF<-function(fcode,method){
+  
+  corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
+  
+  # initialize
+  par_noise<-c()
+  par_pop<-c()
+  pval_min<-c()
+  
+  for(corcoef in corcoef_list){
+    
+    #cat("corcoef=",corcoef,"\n")
+    
+    # generate noise copula 
+    s<-GetNoise(N=5000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
+    # generate pop_copula
+    s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=500)
+    
+    # compare btw s$noise_c and s2$pop_c
+    z<-BiCopEst(u1=s2$pop_c[,1],u2=s2$pop_c[,2],family=fcode)
+    
+    u1<-s2$pop_c[,1]
+    u2<-s2$pop_c[,2]
+    zf<-BiCopGofTest(u1,u2,family=fcode,method = "kendall",B=100)
+    
+    par_noise<-c(par_noise,s$param)
+    par_pop<-c(par_pop,z$par)
+    pval_min<-c(pval_min,min(zf$p.value.CvM,zf$p.value.KS))
+    
+  }
+  
+  if(method=="spearman"){
+    xlabel<-"Spearman's Rho"
+  }else if(method=="kendall"){
+    xlabel<-"Kendall's Tau"
+  }else{
+    warning("specify method",immediate.=T,call.=T)
+  }
+  
+  ## add extra space to right margin of plot within frame
+  op<-par(mar=c(5, 4, 4, 6) + 0.1)
+  
+  ## Plot first set of data and draw its axis
+  plot(corcoef_list, par_noise, pch=2, axes=FALSE, ylim=c(0,ceiling(max(par_noise,par_pop))), xlab="", ylab="", 
+       type="b",col="red")#,main=BiCopName(family = fcode,short=F))
+  points(corcoef_list,par_pop,pch=6,col="blue",type="b")
+  axis(2, col="black",las=1)  ## las=1 makes horizontal labels
+  mtext("Parameters",side=2,line=2.5)
+  mtext(BiCopName(family = fcode,short=F),side=3,line=0.3)
+  box()
+  
+  ## Allow a second plot on the same graph
+  par(new=TRUE)
+  
+  ## Plot the second plot and put axis scale on right
+  plot(corcoef_list, pval_min, pch=16,  xlab="", ylab="", ylim=c(0,1), 
+       axes=FALSE, type="p", col="purple")
+  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
+  ## a little farther out (line=3) to make room for labels
+  mtext("p values",side=4,col="purple",line=3) 
+  axis(4, ylim=c(0,1), col="purple",col.axis="purple",las=1)
+  
+  ## Draw the x axis
+  axis(1,corcoef_list)
+  mtext(xlabel,side=1,col="black",line=2.5)  
+  par(op)
+  
+}
 
+#--------------------------------------------------------------------------------------
+
+#----------------------------------------------------------
 #
 # Input :
 #       numsim : a number over which desired stat (Spearman, Kendall, Pearson) called for 
@@ -198,7 +272,7 @@ Plotter_Cause4copula_stat<-function(numsim,fcode,method,lb=0,ub=0.1){
     for(i in 1:numsim){
       #cat("i=",i,"\n")
       s<-GetNoise(N=10000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
-      s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+      s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=500)
       z<-as.data.frame(comp(s=s,s2=s2))
       S_noise<-c(S_noise,z$cor_noise[1])
       K_noise<-c(K_noise,z$cor_noise[2])
@@ -274,7 +348,6 @@ Plotter_Cause4copula_stat<-function(numsim,fcode,method,lb=0,ub=0.1){
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
   axis(side=4,col='purple',col.axis="purple")
   mtext(side = 4, line = 1.5, 'p values', col='purple')
-  #  legend("topleft", c("noise","population"), fill=c('red', 'blue'), horiz=T, bty='n')
   
   plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1))
   arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='red')

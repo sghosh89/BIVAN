@@ -1400,38 +1400,61 @@ dependence of populations in the locations that are influenced by the environmen
 ```{r cause4copula, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"))}
 source("Cause4copula.R")
 set.seed(seed)
+#---------------------------------------
+pdf("./Results/Cause4copula_results/compare_params_pGOF.pdf", width=12, height=6)
+op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
 
-pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=3,method="spearman",lb=0,ub=0.1)
-dev.off()
+Plotter_Cause4copula_GOF(fcode=3,method = "spearman")
+Plotter_Cause4copula_GOF(fcode=13,method="spearman")
+Plotter_Cause4copula_GOF(fcode=4,method = "spearman")
+Plotter_Cause4copula_GOF(fcode=14,method="spearman")
 
-pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=3,method="spearman",lb=0,ub=0.1)
-dev.off()
+Plotter_Cause4copula_GOF(fcode=3,method = "kendall")
+Plotter_Cause4copula_GOF(fcode=13,method="kendall")
+Plotter_Cause4copula_GOF(fcode=4,method = "kendall")
+Plotter_Cause4copula_GOF(fcode=14,method="kendall")
 
-pdf("./Results/Cause4copula_results/Gumbel_spearman.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=4,method="spearman",lb=0,ub=0.1)
-dev.off()
+par(op)
 
-pdf("./Results/Cause4copula_results/Gumbel_kendall.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=4,method="kendall",lb=0,ub=0.1)
+op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+legend("top", c("noise","population"), col = c("red", "blue"),
+       cex = 0.8, pch = c(2, 6), lty = c(1, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+       bty = "n") 
+par(op2)
 dev.off()
+#-------------------------------------------------------------
+#pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=3,method="spearman",lb=0,ub=0.1)
+#dev.off()
 
-pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=13,method="spearman",lb=0,ub=0.1)
-dev.off()
+#pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=3,method="spearman",lb=0,ub=0.1)
+#dev.off()
 
-pdf("./Results/Cause4copula_results/SClayton_kendall.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=13,method="kendall",lb=0,ub=0.1)
-dev.off()
+#pdf("./Results/Cause4copula_results/Gumbel_spearman.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=4,method="spearman",lb=0,ub=0.1)
+#dev.off()
 
-pdf("./Results/Cause4copula_results/SGumbel_spearman.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=14,method="spearman",lb=0,ub=0.1)
-dev.off()
+#pdf("./Results/Cause4copula_results/Gumbel_kendall.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=4,method="kendall",lb=0,ub=0.1)
+#dev.off()
 
-pdf("./Results/Cause4copula_results/SGumbel_kendall.pdf")
-Plotter_Cause4copula_stat(numsim=500,fcode=14,method="kendall",lb=0,ub=0.1)
-dev.off()
+#pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=13,method="spearman",lb=0,ub=0.1)
+#dev.off()
+
+#pdf("./Results/Cause4copula_results/SClayton_kendall.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=13,method="kendall",lb=0,ub=0.1)
+#dev.off()
+
+#pdf("./Results/Cause4copula_results/SGumbel_spearman.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=14,method="spearman",lb=0,ub=0.1)
+#dev.off()
+
+#pdf("./Results/Cause4copula_results/SGumbel_kendall.pdf")
+#Plotter_Cause4copula_stat(numsim=500,fcode=14,method="kendall",lb=0,ub=0.1)
+#dev.off()
 ```
 
 ## Asymmetric sensitivity and copula structure in populations

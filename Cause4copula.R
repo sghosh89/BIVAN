@@ -10,7 +10,10 @@ source("CopulaFunctions_flexible.R")
 #        method : a character of spearman or kendall
 #        ploton : logical to genarate an optional plot
 # Output :
-#       list of two : a N by 2 noise matrix , it's qnorm transformed form and parameter of the copula
+#       list of 3 : 
+#                  noise_c : a N by 2 noise matrix ,
+#                  noise_q : it's qnorm transformed form 
+#                  param : parameter of the copula from where that noise is generated
 #---------------------------------------------------------------------------------------
 GetNoise<-function(N,fcode,corcoef,method,ploton){
 
@@ -48,7 +51,7 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
   
   return(list(noise_c=noisecop,noise_q=noise_q,param=param))
 }
-
+#------------------------------------------------------------------------------
 # Check the function
 #s<-GetNoise(N=100,fcode=3,corcoef=0.5,method="kendall",ploton=T)
 
@@ -68,14 +71,13 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 #p0           Initial conditions - length 2 vector, default c(0,0)
 #noise       An N by 2 matrix of environment variables in two habitat patches through time 
 #                             (this should be noise_q from output of GetNoise function)
-#burnin       The number of population times to throw away to get rid of transient behavior in the
-#               dynamics. Default 500.
 
 #Output
-#An N+1 by 2 matrix of populations through time, p0 is the first row in copula space : pop_c
-# pop_q : this is similar but with normal distribution marginal
+# list of 2 : 
+#           pop_c : An N+1 by 2 matrix of populations through time, p0 is the first row in copula space
+#           pop_q : this is similar but with normal distribution marginal
 
-Simulator_Cause4copula<-function(cons,p0=c(0,0),noise,burnin=500){
+Simulator_Cause4copula<-function(cons,p0=c(0,0),noise){
   
   N<-dim(noise)[1]
   cons2<-sqrt(1-cons^2)
@@ -84,10 +86,6 @@ Simulator_Cause4copula<-function(cons,p0=c(0,0),noise,burnin=500){
   
   for (counter in 2:(N+1)){
     res[counter,]<-(res[counter-1,]*cons)+(noise[counter-1,]*cons2)
-  }
-  
-  if (burnin>0){
-    res<-res[-(1:burnin),]
   }
   
   res2<-pnorm(res) # convert into copula space
@@ -103,44 +101,61 @@ MCI<-function(x){
   se<-sd(x)/sqrt(length(x))   
   return(c(m-1.96*se,m,m+1.96*se))
 }
-#--------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------
 #function to get a comparison table 
-comp<-function(s,s2){
+# Input:
+#      s : gives you [s$noise_c, s$noise_q : each is a N by 2 noise matrix] , param
+#      s2 : gives you [s2$pop_c, s2$pop_q : each is a N+1 by 2 noise matrix] 
+#     num_keep_last : number of rows you want to keep from bottom 
+#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix : (default 500)
+comp<-function(s,s2,num_keep_last=500){
+  
+  s$noise_c<-tail(s$noise_c,num_keep_last)
+  s$noise_q<-tail(s$noise_q,num_keep_last)
+  s2$pop_c<-tail(s2$pop_c,num_keep_last)
+  s2$pop_q<-tail(s2$pop_q,num_keep_last)
   
   comp<-matrix(NA,nrow=3,ncol=2)
   rownames(comp)<-c("spearman","kendall","pearson")
   colnames(comp)<-c("cor_noise","cor_pop")
-  # Now compare between two correlations coming from noise_q and s2_p
+  
+  # Now compare between spearman corln btw noise_c and pop_c
   comp[1,1]<-cor(s$noise_c[,1],s$noise_c[,2],method = "spearman")
   comp[1,2]<-cor(s2$pop_c[,1],s2$pop_c[,2],method = "spearman")
   
+  # Now compare between kendall corln btw noise_c and pop_c
   comp[2,1]<-cor(s$noise_c[,1],s$noise_c[,2],method = "kendall")
   comp[2,2]<-cor(s2$pop_c[,1],s2$pop_c[,2],method = "kendall")
   
+  # Now compare between pearson corln btw noise_q and pop_q
   comp[3,1]<-cor(s$noise_q[,1],s$noise_q[,2],method = "pearson")
   comp[3,2]<-cor(s2$pop_q[,1],s2$pop_q[,2],method = "pearson")
   
   return(comp)
 }
-
+#-------------------------------------------------------------------
 # when noise comes from a clayton cop with spearmancor=0.8
 #s<-GetNoise(N=10000,fcode=3,corcoef=0.8,method="spearman",ploton=T)
-#s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=1000)
+#s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
 #hist(s2$pop_q[,1],breaks=1000) # it's normal
 #hist(s2$pop_c[,1],breaks=1000) # it's uniform
 #points(s2$pop_c[,1],s2$pop_c[,2],col="red")
 #comp(s=s,s2=s2)
 #---------------------------------------------------------
 #-----------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------
-Plotter_Cause4copula_GOF<-function(fcode,method){
+# This function will generate a plot for C, SC, G and SG copula (or any other as the case may be) : 
+#  parameter of noise copula vs. correln coef (spearman/kendall)
+
+Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
   # initialize
   par_noise<-c()
   par_pop<-c()
-  pval_min<-c()
+  se_par_pop<-c()
+  pval_CvM<-c()
+  pval_KS<-c()
   
   for(corcoef in corcoef_list){
     
@@ -149,18 +164,21 @@ Plotter_Cause4copula_GOF<-function(fcode,method){
     # generate noise copula 
     s<-GetNoise(N=5000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
     # generate pop_copula
-    s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q,burnin=500)
+    s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
     
-    # compare btw s$noise_c and s2$pop_c
-    z<-BiCopEst(u1=s2$pop_c[,1],u2=s2$pop_c[,2],family=fcode)
+    # compare btw parameters of s$noise_c and s2$pop_c
     
-    u1<-s2$pop_c[,1]
-    u2<-s2$pop_c[,2]
-    zf<-BiCopGofTest(u1,u2,family=fcode,method = "kendall",B=100)
+    u1<-tail(s2$pop_c[,1],num_keep_last)  # take last num_keep_last # of rows of s2$pop_c matrix
+    u2<-tail(s2$pop_c[,2],num_keep_last)
+    
+    z<-BiCopEst(u1,u2,family=fcode,se=T) # apply BiCopEst to get par_pop and se_par_pop for sample estimation
+    zf<-BiCopGofTest(u1,u2,family=fcode,method = "kendall",B=100) # to get p-values(CvM, KS) of GOF test
     
     par_noise<-c(par_noise,s$param)
     par_pop<-c(par_pop,z$par)
-    pval_min<-c(pval_min,min(zf$p.value.CvM,zf$p.value.KS))
+    se_par_pop<-c(se_par_pop,z$se)
+    pval_CvM<-c(pval_CvM,zf$p.value.CvM)
+    pval_KS<-c(pval_KS,zf$p.value.KS)
     
   }
   
@@ -176,9 +194,10 @@ Plotter_Cause4copula_GOF<-function(fcode,method){
   op<-par(mar=c(5, 4, 4, 6) + 0.1)
   
   ## Plot first set of data and draw its axis
-  plot(corcoef_list, par_noise, pch=2, axes=FALSE, ylim=c(0,ceiling(max(par_noise,par_pop))), xlab="", ylab="", 
-       type="b",col="red")#,main=BiCopName(family = fcode,short=F))
-  points(corcoef_list,par_pop,pch=6,col="blue",type="b")
+  plot(corcoef_list, par_pop, pch=2, axes=FALSE, ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))), xlab="", ylab="", 
+       type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
+  arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
+  points(corcoef_list,par_noise,pch=6,col="red",type="b")
   axis(2, col="black",las=1)  ## las=1 makes horizontal labels
   mtext("Parameters",side=2,line=2.5)
   mtext(BiCopName(family = fcode,short=F),side=3,line=0.3)
@@ -188,8 +207,9 @@ Plotter_Cause4copula_GOF<-function(fcode,method){
   par(new=TRUE)
   
   ## Plot the second plot and put axis scale on right
-  plot(corcoef_list, pval_min, pch=16,  xlab="", ylab="", ylim=c(0,1), 
-       axes=FALSE, type="p", col="purple")
+  plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), 
+       axes=FALSE, type="p", col="magenta")
+  points(corcoef_list, pval_KS, pch=16, col="green2")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
   ## a little farther out (line=3) to make room for labels
   mtext("p values",side=4,col="purple",line=3) 
@@ -207,13 +227,13 @@ Plotter_Cause4copula_GOF<-function(fcode,method){
 #----------------------------------------------------------
 #
 # Input :
-#       numsim : a number over which desired stat (Spearman, Kendall, Pearson) called for 
+#       numsim : a number over which desired stat (Spearman, Kendall, Pearson) called for (default:50)
 #       fcode : family of copula from where noise is genarated initially [within c(3:6,13,14,16)]
 #       method : a character : either "spearman" or "kendall"
 #       lb : lower bound for Non-parametric stat function (Default=0)
 #       ub : upper bound for Non-parametric stat function (Default =0.1)
 
-Plotter_Cause4copula_stat<-function(numsim,fcode,method,lb=0,ub=0.1){
+Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -446,4 +466,7 @@ Plotter_Cause4copula_stat<-function(numsim,fcode,method,lb=0,ub=0.1){
   par(op2)
   
 }
+
+
+
 

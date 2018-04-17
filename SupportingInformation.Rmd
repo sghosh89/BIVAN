@@ -311,9 +311,9 @@ plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
 plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 ```
 
-![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}](./Results/stat_results/stat_testing/res_pt35_rankT.pdf)
 
-![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the know asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
+![Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}](./Results/stat_results/stat_testing/res_pt1000_rankT.pdf)
 
 For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
 $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same 
@@ -485,7 +485,7 @@ knitr::kable(tab_soilCN_asym,
 
 ## Results: BMR data \label{Ex_BMR}
 
-```{r read_plot_BMR_data, echo=FALSE}
+```{r read_plot_BMR_data, echo=FALSE, results="hide"}
 set.seed(seed=101)
 source("phylo_dat_fn.R")
 #---------------------------------------------------------

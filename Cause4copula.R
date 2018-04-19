@@ -215,7 +215,9 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
     op<-par(mar=c(5, 4, 4, 6) + 0.1)
     
     ## Plot first set of data and draw its axis
-    plot(corcoef_list, par_pop, pch=6, axes=FALSE, ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))), xlab="", ylab="", 
+    plot(corcoef_list, par_pop, pch=6, axes=FALSE, 
+         ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))),xlim=c(0,1),
+         xlab="", ylab="", 
          type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
     arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
     points(corcoef_list,par_noise,pch=2,col="red",type="b")
@@ -228,7 +230,7 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
     par(new=TRUE)
     
     ## Plot the second plot and put axis scale on right
-    plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), 
+    plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), xlim=c(0,1),
          axes=FALSE, type="p", col="magenta")
     points(corcoef_list, pval_KS, pch=16, col="green2")
     lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
@@ -604,7 +606,6 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   par(op2)
   
 }
-
 
 
 

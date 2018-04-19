@@ -1330,6 +1330,7 @@ dependence of populations in the locations that are influenced by the environmen
 <!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
 ```{r cause4copula, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
+#-----------------
 set.seed(seed=101)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=12, height=6)
@@ -1345,15 +1346,16 @@ Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=500,BS=1000)
 Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=500,BS=1000)
 Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=500,BS=1000)
 
-par(op)
+#par(op)
 
-op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "magenta", "green2"),
-       cex = 0.8, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+       cex = 1.5, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
        bty = "n") 
-par(op2)
+par(op)
 dev.off()
+
 #----------------------------
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=12, height=6)
 op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
@@ -1368,14 +1370,14 @@ Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=2500,BS=1000)
 Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
 Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
-par(op)
+#par(op)
 
-op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "magenta", "green2"),
-       cex = 0.8, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+       cex = 1.5, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
        bty = "n") 
-par(op2)
+par(op)
 dev.off()
 
 #-------------------------------------------------------------

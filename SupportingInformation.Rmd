@@ -50,21 +50,22 @@ source("mtime.R") #A function needed for caching
 
 ## Soil C and N data  \label{SoilCN_data}
 
-Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_soilCNraw}. The copula is shown in Figure \ref{fig_soilCNcop}.
+Carbon and nitrogen in soil at many locations across CONUS (Terry to augment this description). The raw data are shown in Figure \ref{fig_raw_cop_soilCN}(A). The copula is shown in Figure \ref{fig_raw_cop_soilCN}(B).
 
 <!--The raw data look like this:-->
 ```{r load_data_Loecke, echo=F, results='hide'}
-#fig.cap="Plot of the raw soil C and N data.\\label{fig_soilCNraw}", fig.height=3, fig.width=3}
+#fig.cap="Plot of the raw soil C and N data.\\label{fig_raw_cop_soilCN}(A)", fig.height=3, fig.width=3}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 pdf("./Results/SoilCNraw.pdf")
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
 plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1.5,cex.axis=1.5)
+par(op)
 dev.off()
 ```
 
 <!--The copula looks like this:-->
 ```{r rankandplot_Loecke, echo=F, results='hide'}
-#fig.cap="Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}).\\label{fig_soilCNcop}",  fig.height=5, fig.width=5}
 source("getcopula.R")
 #convert to a copula and plot
 pdf("./Results/SoilCNcop.pdf")
@@ -72,31 +73,103 @@ v_CN<-getcopula(d=d,rankon=T,ploton=T)
 dev.off()
 ```
 
-![Plot of the raw soil C and N data.\label{fig_soilCNraw}](./Results/SoilCNraw.pdf){ width=30%, height=30% }
+\begin{figure}[!h]
+\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
+\begin{center}
+\includegraphics[width=3 in]{./Results/SoilCNraw.pdf}
+\includegraphics[width=3 in]{./Results/SoilCNcop.pdf}
+\caption{\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n = `r nrow(d)` $ is the number of sampling locations (see Sec. \ref{Model_selection}).\label{fig_raw_cop_soilCN}}
+\end{center}
+\end{figure}
 
-![Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations (see Sec. \ref{Model_selection}). \label{fig_soilCNcop}](./Results/SoilCNcop.pdf){ width=30%, height=30% }
+## BMR data  \label{BMR_data}
 
+```{r read_plot_BMR_data, echo=FALSE, results="hide"}
+set.seed(seed)
+source("phylo_dat_fn.R")
+#---------------------------------------------------------
+BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
+#class(BMR_dat)
+
+# Generating raw data plot btw ln(mass) and BMR from bmr-contrasts.csv
+pdf("./Results/BMR_results/rawdataplot_BMR_vs_lnmass.pdf")
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(BMR_dat$ln.mass,BMR_dat$BMR,type="p",col="red",xlab="ln(mass)",ylab="BMR",
+     cex.lab=1.5,cex.axis=1.5)
+par(op)
+dev.off()
+#--------------------------------------------------------------------------------------------
+# Generating raw data plot btw ln(mass) and BMR from bmr-contrasts.csv
+pdf("./Results/BMR_results/copula_BMR_vs_lnmass.pdf")
+v_BMR<-phylo_dat_fn(data=BMR_dat,i=4,j=3,ploton = T) 
+#plot(v_BMR[,1],v_BMR[,2],type="p",col="red",xlab="ln(mass)",ylab="BMR",
+#     cex.lab=1.5,cex.axis=1.5)
+dev.off()
+```
+
+\begin{figure}[!h]
+\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
+\begin{center}
+\includegraphics[width=3 in]{./Results/BMR_results/rawdataplot_BMR_vs_lnmass.pdf}
+\includegraphics[width=3 in]{./Results/BMR_results/copula_BMR_vs_lnmass.pdf}
+\caption{\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see Sec. \ref{Model_selection}).\label{fig_BMR_raw_cop}}
+\end{center}
+\end{figure}
 
 ## Phylogenetic data  \label{Phylo_data}
+
 ```{r calculation_phylo_data, echo=F, results="hide"}
 source("phylo_dat_fn.R")
 phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
-
-# This plot I create on temporary basis to see the copula structure between various column of the raw data
-# After I know which variables should I look into, I will modify this chunk and add model selection and NPA on that
-pdf("./Results/temp_phylo_plot.pdf",width=20, height=20)
-op<-par(mfrow=c(13,13))
-for(i in c(1:13)){
+#class(phylo_dat) #it's a data.frame
+#----------------------------------------------------------------------------------------------------
+# Generating all copula plots between different pathlength and traits 
+pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_pathlength_traits_cop_plot.pdf",width=20, height = 20)
+op<-par(mfrow=c(4,4))
+i<-1
   for(j in c(1:13)){
-    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = F)
-    plot(v_phylo[,1],v_phylo[,2],col="red")
+    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
+    #plot(v_phylo[,1],v_phylo[,2],col="green4")
     #mtext("(i,j)=(",i,", ",j,")")
+    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
+  } 
+par(op)
+dev.off()
+#------------------------------------------------------------------------------------------------------------
+# Generating all 12 by 12 copula plots between different traits
+pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_btw_traits_cop_plot.pdf",width=20, height = 20)
+op<-par(mfrow=c(12,12))
+for(i in c(2:13)){
+  for(j in c(2:13)){
+    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
     mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
   } 
 }
 par(op)
 dev.off()
+#----------------------------------------------------------------------------------------
+# Generating raw data plot btw AVG.humerus and AVG.radius from contrasts.csv
+pdf("./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_humerus_radius.pdf")
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(phylo_dat$AVG.humerus,phylo_dat$AVG.radius,type="p",col="red",xlab="AVG.humerus",ylab="AVG.radius",
+     cex.lab=1.5,cex.axis=1.5)
+par(op)
+dev.off()
+#--------------------------------------------------------------------------------------------
+# Generating copula plot btw AVG.humerus and AVG.radius from contrasts.csv
+pdf("./Results/Anolis_results/contrasts_csv_results/copula_AVG_humerus_radius.pdf")
+v_contrasts_67<-phylo_dat_fn(data=phylo_dat,i=6,j=7,ploton = T)
+dev.off()
 ```
+
+\begin{figure}[!h]
+\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
+\begin{center}
+\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_humerus_radius.pdf}
+\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_humerus_radius.pdf}
+\caption{\textbf{(A)} Plot of the raw AVG.radius vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.radius vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see Sec. \ref{Model_selection}). \label{fig_raw_cop_AVG_humerus_radius}}
+\end{center}
+\end{figure}
 
 ## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
@@ -440,7 +513,7 @@ than would be expected based on a normal-copula null model.
 
 ![Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}](./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf)
 
-We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_soilCNcop}. 
+We also tested statistically for asymmetry of tail dependence, which seems visible in Figure \ref{fig_raw_cop_soilCN}(B). 
 Results (Table \ref{tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
@@ -459,12 +532,12 @@ fractxt<-function(fracval,numsurrog=1000){
 
 make_table_stat_fn<-function(data){
   
- atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$",
-                                "$\\Ps_{0,0.1}-\\Ps_{0.9,1}$",
-                                "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
- #atdres<-data.frame(Statistic=c("$\\cor_{first.slice}-\\cor_{last.slice}$",
- #                              "$\\Ps_{first.slice}-\\Ps_{last.slice}$",
- #                               "$\\Dsq_{first.slice}-\\Dsq_{last.slice}$"),
+ #atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$",
+ #                               "$\\Ps_{0,0.1}-\\Ps_{0.9,1}$",
+ #                               "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
+ atdres<-data.frame(Statistic=c("$\\cor_{first.slice}-\\cor_{last.slice}$",
+                               "$\\Ps_{first.slice}-\\Ps_{last.slice}$",
+                                "$\\Dsq_{first.slice}-\\Dsq_{last.slice}$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
  
@@ -488,24 +561,9 @@ knitr::kable(tab_soilCN_asym,
              booktabs=T)
 ```
 
+\newpage
+
 ## Results: BMR data \label{Ex_BMR}
-
-```{r read_plot_BMR_data, echo=FALSE, results="hide"}
-set.seed(seed)
-source("phylo_dat_fn.R")
-#---------------------------------------------------------
-BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
-#class(BMR_dat)
-v_BMR<-phylo_dat_fn(data=BMR_dat,i=4,j=3,ploton = F) 
-
-pdf("./Results/BMR_results/BMR_vs_lnmass.pdf")
-op<-par(mar=c(5,5,5,5))
-plot(v_BMR[,1],v_BMR[,2],col="red",xlab="ln(mass)",ylab="BMR",cex.lab=2,cex.axis=2) # copula plot btw ln(Mass) vs. BMR
-par(op)
-dev.off()
-```
-
-![Copula plot for BMR dataset \label{fig_BMR_cop}](./Results/BMR_results/BMR_vs_lnmass.pdf){ width=30%, height=30% }
 
 ### Model selection approach \label{Ex_BMR_Model_selection}
 
@@ -518,6 +576,10 @@ BivMS_BMR<-OurBiCopSelect(u1=v_BMR[,1],u2=v_BMR[,2],families=c(1,3:10,13:14,16:2
 saveRDS(BivMS_BMR,file="./Results/BMR_results/BivMS_BMR_lnmass.RDS")
 ```
 
+The test of indepedence gave $p=$ `r BivMS_BMR$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{tab_BMRfit}). The table shows that Frank is much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+
+
 <!--Display model selection results for BMR data in a table-->
 ```{r tab_BMRfit, echo=F, results='markup'}
 h<-BivMS_BMR$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -526,6 +588,15 @@ knitr::kable(h,
              caption = "Fitting info for BMR dataset. \\label{tab_BMRfit}",
              booktabs=T)
 ```
+
+
+The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was $0$ as expected, because the contributions came from Frank and SBB8 which are both symmetric copula.
+<!--$`r BivMS_BMR$relLTdep_AICw`$ and the model-averaged upper-tail dependence statistic was 
+$`r BivMS_BMR$relUTdep_AICw`$. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), 
+$`r BivMS_BMR$relLTdep_AICw-BivMS_BMR$relUTdep_AICw`$, was different from 0, answering the third part of question 1. 
+-->
+We also tested that lowest-AIC copula Frank was a good-enough fit, giving $p$-value 
+$`r BivMS_BMR$GofRes_CvM`$ (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value $`r BivMS_BMR$GofRes_KS`$ in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 ### Non-parametric analysis of tail dependence \label{Ex_BMR_NPA}
 
@@ -536,17 +607,85 @@ set.seed(seed)
 # If "F"/"SBB8" is the best fit : then it should be symmetric tail dep (0) : Then still I need to do NPA ?
 # May be : because it will also tell me how they are different from "N" copula in different sections?
 source("bivfunctionplot.R")
-stat_BMR_ga<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR",numbin = 10)
+stat_BMR_ga<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_10",numbin = 10)
+stat_BMR_ga_numbin5<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_5",numbin = 5)
 ```
 
-![Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam}](./Results/BMR_results/BMR_bivfunctionplot.pdf)
+![Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam}](./Results/BMR_results/BMR_numbin_10_bivfunctionplot.pdf)
+
+
+![Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in Methods, each statistic was computed on the data using the ranges $0-0.2$, $0.2-0.4$, ..., $0.8-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam5}](./Results/BMR_results/BMR_numbin_5_bivfunctionplot.pdf)
+
 
 
 ```{r tab_BMR_asym, echo=F, results="markup"}
 tab_BMR_asym<-make_table_stat_fn(data=stat_BMR_ga)
+tab_BMR_asym_numbin5<-make_table_stat_fn(data=stat_BMR_ga_numbin5)
 knitr::kable(tab_BMR_asym,
              format="pandoc",
-             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)? \\label{tab_BMR_asym}",
+             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=10 \\label{tab_BMR_asym}",
+             booktabs=T)
+
+knitr::kable(tab_BMR_asym_numbin5,
+             format="pandoc",
+             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=5 \\label{tab_BMR_asym_numbin5}",
+             booktabs=T)
+```
+
+\newpage
+
+## Results: contrasts.csv data \label{Ex_contrasts}
+
+### Model selection approach \label{Ex_contrasts_Model_selection}
+
+```{r bivMS_contrasts_67, echo=F, cache=T, cache.extra=list(seed,v_contrasts_67,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+set.seed(seed)
+# Now do Model Selection for [i,j]=[6,7]
+# 6 : AVG. humerus
+# 7 : AVG. radius
+source("OurBiCopSelect.R")
+families<-c(1,3:10,13:14,16:20)
+BivMS_contrasts_67<-OurBiCopSelect(u1=v_contrasts_67[,1],u2=v_contrasts_67[,2],families=families,
+                          level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                          gofnormal=F,status=F)
+saveRDS(BivMS_contrasts_67,file="./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
+```
+
+The test of indepedence gave $p=$ `r BivMS_contrasts_67$IndepTestRes` (to within the precision available 
+from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{tab_contrasts_67fit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+
+<!--Display model selection results for contrasts data in a table-->
+```{r tab_contrasts_67fit, echo=F, results='markup'}
+h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+knitr::kable(h,
+             format='pandoc',
+             caption = "Fitting info for contrasts between AVG.humerus and AVG.radius dataset. \\label{tab_contrasts_67fit}",
+             booktabs=T)
+```
+
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+
+These results do convincingly show non-Gaussian copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+
+### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
+
+```{r stat_contrasts_67_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+source("bivfunctionplot.R")
+set.seed(seed) 
+# Now do NPA for v_contrasts_67
+source("bivfunctionplot.R")
+stat_contrasts_67_ga<-bivfunctionplot(v=v_contrasts_67,resloc="./Results/Anolis_results/contrasts_csv_results/",
+                                      nametag="contrasts_67",numbin = 4)
+```
+
+![Nonparametric tests for tail dependence and other deviations from a normal copula for contrasts_67 data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam}](./Results/Anolis_results/contrasts_csv_results/contrasts_67_bivfunctionplot.pdf)
+
+```{r tab_contrasts_67_asym, echo=F, results="markup"}
+tab_contrasts_67_asym<-make_table_stat_fn(data=stat_contrasts_67_ga)
+knitr::kable(tab_contrasts_67_asym,
+             format="pandoc",
+             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_contrasts_67_asym}",
              booktabs=T)
 ```
 

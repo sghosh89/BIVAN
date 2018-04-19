@@ -221,7 +221,7 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
     points(corcoef_list,par_noise,pch=2,col="red",type="b")
     axis(2, col="black",las=1)  ## las=1 makes horizontal labels
     mtext("Parameters",side=2,line=2.5)
-    mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3)
+    mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3,cex=0.8)
     box()
     
     ## Allow a second plot on the same graph

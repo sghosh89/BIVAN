@@ -1,6 +1,7 @@
 library(copula)
 library(VineCopula)
 source("CopulaFunctions_flexible.R")
+source("MyBiCopGofTest.R")
 #---------------------------------------------------------------------------------------
 # This function GetNoise generates noises with a copula structure as you specified
 # Input :
@@ -107,7 +108,8 @@ MCI<-function(x){
 #      s : gives you [s$noise_c, s$noise_q : each is a N by 2 noise matrix] , param
 #      s2 : gives you [s2$pop_c, s2$pop_q : each is a N+1 by 2 noise matrix] 
 #     num_keep_last : number of rows you want to keep from bottom 
-#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix : (default 500)
+#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix : Default=500
+#
 comp<-function(s,s2,num_keep_last=500){
   
   mod_s_noise_c<-tail(s$noise_c,num_keep_last)
@@ -160,7 +162,7 @@ comp<-function(s,s2,num_keep_last=500){
 #  parameter of noise copula vs. correln coef (spearman/kendall)
 # BS : number of bootstrapps used for BiCopGOFTest
 
-Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500,BS){
+Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -170,6 +172,7 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500,BS){
   se_par_pop<-c()
   pval_CvM<-c()
   pval_KS<-c()
+  BS_success<-c()
   
   for(corcoef in corcoef_list){
     
@@ -186,15 +189,18 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500,BS){
     u2<-tail(s2$pop_c[,2],num_keep_last)
     
     z<-BiCopEst(u1,u2,family=fcode,se=T) # apply BiCopEst to get par_pop and se_par_pop for sample estimation
-    zf<-BiCopGofTest(u1,u2,family=fcode,method = "kendall",B=BS) # to get p-values(CvM, KS) of GOF test
+    zf<-MyBiCopGofTest(u1,u2,family=fcode,method = "kendall",B=BS) # to get p-values(CvM, KS) of GOF test
     
     par_noise<-c(par_noise,s$param)
     par_pop<-c(par_pop,z$par)
     se_par_pop<-c(se_par_pop,z$se)
     pval_CvM<-c(pval_CvM,zf$p.value.CvM)
     pval_KS<-c(pval_KS,zf$p.value.KS)
+    BS_success<-c(BS_success,zf$B_success)
     
   }
+  
+  BS_success_percentage<-((min(BS_success))/BS)*100
   
   if(method=="spearman"){
     xlabel<-"Spearman's Rho"
@@ -204,35 +210,40 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500,BS){
     warning("specify method",immediate.=T,call.=T)
   }
   
-  ## add extra space to right margin of plot within frame
-  op<-par(mar=c(5, 4, 4, 6) + 0.1)
+#  if(ploton==T){
+    ## add extra space to right margin of plot within frame
+    op<-par(mar=c(5, 4, 4, 6) + 0.1)
+    
+    ## Plot first set of data and draw its axis
+    plot(corcoef_list, par_pop, pch=6, axes=FALSE, ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))), xlab="", ylab="", 
+         type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
+    arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
+    points(corcoef_list,par_noise,pch=2,col="red",type="b")
+    axis(2, col="black",las=1)  ## las=1 makes horizontal labels
+    mtext("Parameters",side=2,line=2.5)
+    mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3)
+    box()
+    
+    ## Allow a second plot on the same graph
+    par(new=TRUE)
+    
+    ## Plot the second plot and put axis scale on right
+    plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), 
+         axes=FALSE, type="p", col="magenta")
+    points(corcoef_list, pval_KS, pch=16, col="green2")
+    lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
+    ## a little farther out (line=3) to make room for labels
+    mtext("p values",side=4,col="purple",line=3) 
+    axis(4, ylim=c(0,1), col="purple",col.axis="purple",las=1)
+    
+    ## Draw the x axis
+    axis(1,corcoef_list)
+    mtext(xlabel,side=1,col="black",line=2.5)  
+    par(op)
+#  }
+
   
-  ## Plot first set of data and draw its axis
-  plot(corcoef_list, par_pop, pch=6, axes=FALSE, ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))), xlab="", ylab="", 
-       type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
-  arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
-  points(corcoef_list,par_noise,pch=2,col="red",type="b")
-  axis(2, col="black",las=1)  ## las=1 makes horizontal labels
-  mtext("Parameters",side=2,line=2.5)
-  mtext(BiCopName(family = fcode,short=F),side=3,line=0.3)
-  box()
-  
-  ## Allow a second plot on the same graph
-  par(new=TRUE)
-  
-  ## Plot the second plot and put axis scale on right
-  plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), 
-       axes=FALSE, type="p", col="magenta")
-  points(corcoef_list, pval_KS, pch=16, col="green2")
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  ## a little farther out (line=3) to make room for labels
-  mtext("p values",side=4,col="purple",line=3) 
-  axis(4, ylim=c(0,1), col="purple",col.axis="purple",las=1)
-  
-  ## Draw the x axis
-  axis(1,corcoef_list)
-  mtext(xlabel,side=1,col="black",line=2.5)  
-  par(op)
+#  return(min_BS_success_percentage)
   
 }
 
@@ -252,6 +263,8 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last=500,BS){
 #       method : a character : either "spearman" or "kendall"
 #       lb : lower bound for Non-parametric stat function (Default=0)
 #       ub : upper bound for Non-parametric stat function (Default =0.1)
+#       num_keep_last : number of rows you want to keep from bottom 
+#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix
 #-----------------------------------------------------------------------------------------------
 Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   
@@ -269,14 +282,20 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   Corl_pop_mat<-S_noise_mat
   Coru_noise_mat<-S_noise_mat # Coru stat matrix for noise
   Coru_pop_mat<-S_noise_mat
+  CorlmCoru_noise_mat<-S_noise_mat # Corl-Coru stat matrix for noise
+  CorlmCoru_pop_mat<-S_noise_mat   # Corl-Coru stat matrix for pop
   Pl_noise_mat<-S_noise_mat 
   Pl_pop_mat<-S_noise_mat    # Pl stat matrix for population
   Pu_noise_mat<-S_noise_mat
   Pu_pop_mat<-S_noise_mat
+  PlmPu_noise_mat<-S_noise_mat # Pl-Pu stat matrix for noise
+  PlmPu_pop_mat<-S_noise_mat   # Pl-Pu stat matrix for pop
   D2u_noise_mat<-S_noise_mat # D2u stat matrix for noise
   D2u_pop_mat<-S_noise_mat
   D2l_noise_mat<-S_noise_mat # D2u stat matrix for noise
   D2l_pop_mat<-S_noise_mat
+  D2umD2l_noise_mat<-S_noise_mat # D2u-D2l stat matrix for noise
+  D2umD2l_pop_mat<-S_noise_mat
   
   pval_S<-c() # an empty vector to store p values from t test of Spearman Cor. from noise and population
   pval_K<-c()
@@ -287,6 +306,9 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   pval_Pu<-c()
   pval_D2u<-c()
   pval_D2l<-c()
+  pval_CorlmCoru<-c()
+  pval_PlmPu<-c()
+  pval_D2umD2l<-c()
   
   for(counter in c(1:length(corcoef_list))){
     corcoef<-corcoef_list[counter]
@@ -301,14 +323,21 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
     Corl_pop<-c()
     Coru_noise<-c()
     Coru_pop<-c()
+    CorlmCoru_noise<-c()
+    CorlmCoru_pop<-c()
     Pl_noise<-c()
     Pl_pop<-c()
     Pu_noise<-c()
     Pu_pop<-c()
+    PlmPu_noise<-c()
+    PlmPu_pop<-c()
     D2u_noise<-c()
     D2u_pop<-c()
     D2l_noise<-c()
     D2l_pop<-c()
+    D2umD2l_noise<-c()
+    D2umD2l_pop<-c()
+    
     for(i in 1:numsim){
       #cat("i=",i,"\n")
       s<-GetNoise(N=5000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
@@ -320,43 +349,64 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
       S_pop<-c(S_pop,z$comp$cor_pop[1])
       K_pop<-c(K_pop,z$comp$cor_pop[2])
       P_pop<-c(P_pop,z$comp$cor_pop[3])
-
-      Corl_noise<-c(Corl_noise,Corbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                      vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub))
-      
-      Corl_pop<-c(Corl_pop,Corbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                                  vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub))
       
       
-      Coru_noise<-c(Coru_noise,Corbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                      vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb))
+      temp_Corl_noise<-Corbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                              vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub)
+      Corl_noise<-c(Corl_noise,temp_Corl_noise)
       
-      Coru_pop<-c(Coru_pop,Corbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                                  vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb))
+      temp_Corl_pop<-Corbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                              vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub)
+      Corl_pop<-c(Corl_pop,temp_Corl_pop)
       
-      Pl_noise<-c(Pl_noise,Pbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub)$abs_res)
+      temp_Coru_noise<-Corbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                              vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb)
+      Coru_noise<-c(Coru_noise,temp_Coru_noise)
       
-      Pl_pop<-c(Pl_pop,Pbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                            vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub)$abs_res)
+      temp_Coru_pop<-Corbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                            vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb)
+      Coru_pop<-c(Coru_pop,temp_Coru_pop)
       
-      Pu_noise<-c(Pu_noise,Pbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb)$abs_res)
+      CorlmCoru_noise<-c(CorlmCoru_noise,temp_Corl_noise-temp_Coru_noise)
+      CorlmCoru_pop<-c(CorlmCoru_pop,temp_Corl_pop-temp_Coru_pop)
       
-      Pu_pop<-c(Pu_pop,Pbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                            vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb)$abs_res)
+      temp_Pl_noise<-Pbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                          vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub)$abs_res
+      Pl_noise<-c(Pl_noise,temp_Pl_noise)
       
-      D2u_noise<-c(D2u_noise,D2bds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                   vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb))
+      temp_Pl_pop<-Pbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                        vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub)$abs_res
+      Pl_pop<-c(Pl_pop,temp_Pl_pop)
       
-      D2u_pop<-c(D2u_pop,D2bds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                               vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb))
+      temp_Pu_noise<-Pbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                          vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb)$abs_res
+      Pu_noise<-c(Pu_noise,temp_Pu_noise)
       
-      D2l_noise<-c(D2l_noise,D2bds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
-                                   vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub))
+      temp_Pu_pop<-Pbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                        vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb)$abs_res
+      Pu_pop<-c(Pu_pop,temp_Pu_pop)
       
-      D2l_pop<-c(D2l_pop,D2bds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
-                               vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub))
+      PlmPu_noise<-c(PlmPu_noise,temp_Pl_noise-temp_Pu_noise)
+      PlmPu_pop<-c(PlmPu_pop,temp_Pl_pop-temp_Pu_pop)
+      
+      temp_D2u_noise<-D2bds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                            vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = 1-ub,ub = 1-lb)
+      D2u_noise<-c(D2u_noise,temp_D2u_noise)
+      
+      temp_D2u_pop<-D2bds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                          vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = 1-ub,ub = 1-lb)
+      D2u_pop<-c(D2u_pop,temp_D2u_pop)
+      
+      temp_D2l_noise<-D2bds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
+                            vj = z$last_num_keep_noise$last_num_keep_noise_c[,2],lb = lb,ub = ub)
+      D2l_noise<-c(D2l_noise,temp_D2l_noise)
+      
+      temp_D2l_pop<-D2bds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
+                          vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub)
+      D2l_pop<-c(D2l_pop,temp_D2l_pop)
+      
+      D2umD2l_noise<-c(D2umD2l_noise,temp_D2u_noise-temp_D2l_noise)
+      D2umD2l_pop<-c(D2umD2l_pop,temp_D2u_pop-temp_D2l_pop)
       
     }
     S_noise_mat[counter,]<-MCI(S_noise)
@@ -369,24 +419,33 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
     Corl_pop_mat[counter,]<-MCI(Corl_pop)
     Coru_noise_mat[counter,]<-MCI(Coru_noise)
     Coru_pop_mat[counter,]<-MCI(Coru_pop)
+    CorlmCoru_noise_mat[counter,]<-MCI(CorlmCoru_noise)
+    CorlmCoru_pop_mat[counter,]<-MCI(CorlmCoru_pop)
     Pl_noise_mat[counter,]<-MCI(Pl_noise)
     Pl_pop_mat[counter,]<-MCI(Pl_pop)
     Pu_noise_mat[counter,]<-MCI(Pu_noise)
     Pu_pop_mat[counter,]<-MCI(Pu_pop)
+    PlmPu_noise_mat[counter,]<-MCI(PlmPu_noise)
+    PlmPu_pop_mat[counter,]<-MCI(PlmPu_pop)
     D2u_noise_mat[counter,]<-MCI(D2u_noise)
     D2u_pop_mat[counter,]<-MCI(D2u_pop)
     D2l_noise_mat[counter,]<-MCI(D2l_noise)
     D2l_pop_mat[counter,]<-MCI(D2l_pop)
+    D2umD2l_noise_mat[counter,]<-MCI(D2umD2l_noise)
+    D2umD2l_pop_mat[counter,]<-MCI(D2umD2l_pop)
     
     pval_S<-c(pval_S,t.test(S_noise,S_pop,alternative="two.sided",paired=T)$p.value)
     pval_K<-c(pval_K,t.test(K_noise,K_pop,alternative="two.sided",paired=T)$p.value)
     pval_P<-c(pval_P,t.test(P_noise,P_pop,alternative="two.sided",paired=T)$p.value)
     pval_Corl<-c(pval_Corl,t.test(Corl_noise,Corl_pop,alternative="two.sided",paired=T)$p.value)
     pval_Coru<-c(pval_Coru,t.test(Coru_noise,Coru_pop,alternative="two.sided",paired=T)$p.value)
+    pval_CorlmCoru<-c(pval_CorlmCoru,t.test(CorlmCoru_noise,CorlmCoru_pop,alternative="two.sided",paired=T)$p.value)
     pval_Pl<-c(pval_Pl,t.test(Pl_noise,Pl_pop,alternative="two.sided",paired=T)$p.value)
     pval_Pu<-c(pval_Pu,t.test(Pu_noise,Pu_pop,alternative="two.sided",paired=T)$p.value)
+    pval_PlmPu<-c(pval_PlmPu,t.test(PlmPu_noise,PlmPu_pop,alternative="two.sided",paired=T)$p.value)
     pval_D2u<-c(pval_D2u,t.test(D2u_noise,D2u_pop,alternative="two.sided",paired=T)$p.value)
     pval_D2l<-c(pval_D2l,t.test(D2l_noise,D2l_pop,alternative="two.sided",paired=T)$p.value)
+    pval_D2umD2l<-c(pval_D2umD2l,t.test(D2umD2l_noise,D2umD2l_pop,alternative="two.sided",paired=T)$p.value)
     
   }
   
@@ -398,7 +457,7 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
     warning("specify method",immediate.=T,call.=T)
   }
   
-  op<-par(mfrow=c(3,3),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mfrow=c(4,3),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
   plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1))
   arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,S_pop_mat[,2],cex=0.5,col="blue")
@@ -495,12 +554,52 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   axis(side=4,col='purple',col.axis="purple")
   mtext(side = 4, line = 1.5, 'p values', col='purple')
   
+  plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
+       xlim=c(0,1),ylim=c(-0.2,0.2))
+  arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  points(corcoef_list,CorlmCoru_pop_mat[,2],cex=0.5,col="blue")
+  arrows(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  par(new = TRUE)
+  plot(corcoef_list,pval_CorlmCoru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
+       xlim=c(0,1),ylim=c(0,1))
+  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
+  axis(side=4,col='purple',col.axis="purple")
+  mtext(side = 4, line = 1.5, 'p values', col='purple')
+  
+  plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
+       xlim=c(0,1),ylim=c(-0.1,0.1))
+  arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  points(corcoef_list,PlmPu_pop_mat[,2],cex=0.5,col="blue")
+  arrows(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  par(new = TRUE)
+  plot(corcoef_list,pval_PlmPu,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
+       xlim=c(0,1),ylim=c(0,1))
+  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
+  axis(side=4,col='purple',col.axis="purple")
+  mtext(side = 4, line = 1.5, 'p values', col='purple')
+  
+  plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
+       xlim=c(0,1),ylim=c(-0.01,0.01)) 
+       #ylim=c(0,0.002+max(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2])))
+  arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  points(corcoef_list,D2umD2l_pop_mat[,2],cex=0.5,col="blue")
+  arrows(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  par(new = TRUE)
+  plot(corcoef_list,pval_D2umD2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
+       xlim=c(0,1),ylim=c(0,1))
+  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
+  axis(side=4,col='purple',col.axis="purple")
+  mtext(side = 4, line = 1.5, 'p values', col='purple')
+  
   par(op)
   
   op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
   plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise","population"), col = c("red", "blue"),
-         cex = 0.8,lwd = 1, pch = c(16, 16), lty = c(1, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+  legend("top", c("noise","population", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
+         cex = 0.8,lwd = 1, pch = c(16, 16, 1), lty = c(1, 1, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
          bty = "n") 
   par(op2)
   

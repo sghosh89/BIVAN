@@ -122,6 +122,7 @@ dev.off()
 source("phylo_dat_fn.R")
 phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
 #class(phylo_dat) #it's a data.frame
+# no NA/missing value in this dataset
 #----------------------------------------------------------------------------------------------------
 # Generating all copula plots between different pathlength and traits 
 pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_pathlength_traits_cop_plot.pdf",width=20, height = 20)
@@ -129,8 +130,6 @@ op<-par(mfrow=c(4,4))
 i<-1
   for(j in c(1:13)){
     v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
-    #plot(v_phylo[,1],v_phylo[,2],col="green4")
-    #mtext("(i,j)=(",i,", ",j,")")
     mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
   } 
 par(op)
@@ -142,22 +141,22 @@ op<-par(mfrow=c(12,12))
 for(i in c(2:13)){
   for(j in c(2:13)){
     v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
-    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
+    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 4,col="blue",line=0.01)
   } 
 }
 par(op)
 dev.off()
 #----------------------------------------------------------------------------------------
-# Generating raw data plot btw AVG.humerus and AVG.radius from contrasts.csv
-pdf("./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_humerus_radius.pdf")
+# Generating raw data plot btw AVG.ltoe.IV and AVG.humerus from contrasts.csv
+pdf("./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf")
 op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(phylo_dat$AVG.humerus,phylo_dat$AVG.radius,type="p",col="red",xlab="AVG.humerus",ylab="AVG.radius",
+plot(phylo_dat$AVG.ltoe.IV,phylo_dat$AVG.humerus,type="p",col="red",xlab="AVG.ltoe.IV",ylab="AVG.humerus",
      cex.lab=1.5,cex.axis=1.5)
 par(op)
 dev.off()
 #--------------------------------------------------------------------------------------------
-# Generating copula plot btw AVG.humerus and AVG.radius from contrasts.csv
-pdf("./Results/Anolis_results/contrasts_csv_results/copula_AVG_humerus_radius.pdf")
+# Generating copula plot btw AVG.ltoe.IV and AVG.humerus from contrasts.csv
+pdf("./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf")
 v_contrasts_67<-phylo_dat_fn(data=phylo_dat,i=6,j=7,ploton = T)
 dev.off()
 ```
@@ -165,9 +164,9 @@ dev.off()
 \begin{figure}[!h]
 \textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
 \begin{center}
-\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_humerus_radius.pdf}
-\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_humerus_radius.pdf}
-\caption{\textbf{(A)} Plot of the raw AVG.radius vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.radius vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see Sec. \ref{Model_selection}). \label{fig_raw_cop_AVG_humerus_radius}}
+\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
+\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
+\caption{\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see Sec. \ref{Model_selection}). \label{fig_raw_cop_AVG_humerus_ltoe}}
 \end{center}
 \end{figure}
 
@@ -641,8 +640,8 @@ knitr::kable(tab_BMR_asym_numbin5,
 ```{r bivMS_contrasts_67, echo=F, cache=T, cache.extra=list(seed,v_contrasts_67,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 set.seed(seed)
 # Now do Model Selection for [i,j]=[6,7]
-# 6 : AVG. humerus
-# 7 : AVG. radius
+# 6 : AVG. ltoe.IV
+# 7 : AVG. humerus
 source("OurBiCopSelect.R")
 families<-c(1,3:10,13:14,16:20)
 BivMS_contrasts_67<-OurBiCopSelect(u1=v_contrasts_67[,1],u2=v_contrasts_67[,2],families=families,
@@ -660,7 +659,7 @@ and got AIC values and upper- and lower-tail dependency estimates based on the f
 h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for contrasts between AVG.humerus and AVG.radius dataset. \\label{tab_contrasts_67fit}",
+             caption = "Fitting info for contrasts between AVG.ltoe.IV and AVG.humerus dataset. \\label{tab_contrasts_67fit}",
              booktabs=T)
 ```
 
@@ -674,7 +673,6 @@ These results do convincingly show non-Gaussian copula structure, giving $p$-val
 source("bivfunctionplot.R")
 set.seed(seed) 
 # Now do NPA for v_contrasts_67
-source("bivfunctionplot.R")
 stat_contrasts_67_ga<-bivfunctionplot(v=v_contrasts_67,resloc="./Results/Anolis_results/contrasts_csv_results/",
                                       nametag="contrasts_67",numbin = 4)
 ```
@@ -1321,6 +1319,7 @@ than zero, showing asymmetry of tail dependence.
 # Question 2 analyses 
 Recall that question 2 is: What are some possible causes of non-Gaussian copula structure? 
 
+Q1/2: How are copula structure of ecologically influential climate variables changing as part of climate change? We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the pops, but we don’t really know how a change in the environment cop structure would make what kind of change in the pop cop structure. How?
 
 ## The Moran effect and copula structure in populations 
 
@@ -1329,22 +1328,45 @@ variable between two locations, then there can be a non-normal copula structure 
 dependence of populations in the locations that are influenced by the environmental variables.
 
 <!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
-```{r cause4copula, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r cause4copula, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 set.seed(seed=101)
 #---------------------------------------
-pdf("./Results/Cause4copula_results/compare_params_pGOF.pdf", width=12, height=6)
+pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=12, height=6)
 op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
 
-Plotter_Cause4copula_GOF(fcode=3,method = "spearman",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=13,method="spearman",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=4,method = "spearman",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=14,method="spearman",num_keep_last=500,BS=100)
+Plotter_Cause4copula_GOF(fcode=3,method = "spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=13,method="spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=4,method = "spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=14,method="spearman",num_keep_last=500,BS=1000)
 
-Plotter_Cause4copula_GOF(fcode=3,method = "kendall",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=500,BS=100)
-Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=500,BS=100)
+Plotter_Cause4copula_GOF(fcode=3,method = "kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=500,BS=1000)
+
+par(op)
+
+op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "magenta", "green2"),
+       cex = 0.8, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+       bty = "n") 
+par(op2)
+dev.off()
+#----------------------------
+pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=12, height=6)
+op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+
+Plotter_Cause4copula_GOF(fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=13,method="spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=14,method="spearman",num_keep_last=2500,BS=1000)
+
+Plotter_Cause4copula_GOF(fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
 par(op)
 
@@ -1390,7 +1412,9 @@ Plotter_Cause4copula_stat(numsim=50,fcode=14,method="kendall",lb=0,ub=0.1)
 dev.off()
 ```
 
-![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF.pdf)
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
+
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
 
 ![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)
 

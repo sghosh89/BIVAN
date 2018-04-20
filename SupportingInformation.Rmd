@@ -84,12 +84,23 @@ dev.off()
 
 ## BMR data  \label{BMR_data}
 
-```{r read_plot_BMR_data, echo=FALSE, results="hide"}
+**bmr-contrasts.csv** : 
+
+```{r read_BMR_data, echo=FALSE, results="markup"}
 set.seed(seed)
-source("phylo_dat_fn.R")
 #---------------------------------------------------------
 BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
 #class(BMR_dat)
+knitr::kable(head(BMR_dat,3),format='pandoc',
+             caption = "First few rows of raw BMR data.\\label{tab_rawdata_BMR}",
+             booktabs=T) # display first few rows
+```
+
+This data contains BMR and ln(mass) for total `r nrow(BMR_dat)` contrasts. Table \ref{tab_rawdata_BMR} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_BMR}(A). The copula is shown in Figure \ref{fig_raw_cop_BMR}(B).
+
+```{r plot_BMR_data, echo=FALSE, results="hide"}
+set.seed(seed)
+source("phylo_dat_fn.R")
 
 # Generating raw data plot btw ln(mass) and BMR from bmr-contrasts.csv
 pdf("./Results/BMR_results/rawdataplot_BMR_vs_lnmass.pdf")
@@ -112,17 +123,31 @@ dev.off()
 \begin{center}
 \includegraphics[width=3 in]{./Results/BMR_results/rawdataplot_BMR_vs_lnmass.pdf}
 \includegraphics[width=3 in]{./Results/BMR_results/copula_BMR_vs_lnmass.pdf}
-\caption{\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see Sec. \ref{Model_selection}).\label{fig_BMR_raw_cop}}
+\caption{\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see Sec. \ref{Model_selection}).\label{fig_raw_cop_BMR}}
 \end{center}
 \end{figure}
 
-## Phylogenetic data  \label{Phylo_data}
+## Phylogenetic data : Anolis  \label{Phylo_data}
 
-```{r calculation_phylo_data, echo=F, results="hide"}
-source("phylo_dat_fn.R")
+**contrasts.csv** : 
+
+```{r read_phylo_data, echo=F, results="markup"}
+set.seed(seed)
 phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
 #class(phylo_dat) #it's a data.frame
 # no NA/missing value in this dataset
+tab_phylo<-phylo_dat[,c(1,7,8)] 
+knitr::kable(head(tab_phylo,3),format='pandoc',
+             caption = "First few rows of raw phylo data.\\label{tab_rawdata_phylo}",
+             booktabs=T) # display first few rows
+```
+
+This data contains path length and different traits for total `r nrow(phylo_dat)` contrasts. Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
+
+
+```{r plot_phylo_data, echo=F, results="hide"}
+set.seed(seed)
+source("phylo_dat_fn.R")
 #----------------------------------------------------------------------------------------------------
 # Generating all copula plots between different pathlength and traits 
 pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_pathlength_traits_cop_plot.pdf",width=20, height = 20)
@@ -496,6 +521,7 @@ source("bivfunctionplot.R")
 set.seed(seed) 
 stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",nametag="soilCN",numbin=10)
 ```
+<!--****DAN: DAN suspects a bug in the code that generates this fig. because the red dot should appear outside the x's iff the text > 999 (or so,mething like that) appears in the bin, also check make_table_stat_fn r chunk-->
 
 As described in Methods, each of our statistics, as computed for the 
 ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
@@ -536,7 +562,7 @@ make_table_stat_fn<-function(data){
  #                               "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
  atdres<-data.frame(Statistic=c("$\\cor_{first.slice}-\\cor_{last.slice}$",
                                "$\\Ps_{first.slice}-\\Ps_{last.slice}$",
-                                "$\\Dsq_{first.slice}-\\Dsq_{last.slice}$"),
+                                "$\\Dsq_{last.slice}-\\Dsq_{first.slice}$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
  
@@ -1328,7 +1354,7 @@ variable between two locations, then there can be a non-normal copula structure 
 dependence of populations in the locations that are influenced by the environmental variables.
 
 <!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
-```{r cause4copula, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
 set.seed(seed=101)
@@ -1355,68 +1381,138 @@ legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "
        bty = "n") 
 par(op)
 dev.off()
+```
 
+```{r cause4copula_pGOF_2500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#---------------------------------------
+# I need to fix that SG_kendall ylimit error
 #----------------------------
-pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=12, height=6)
-op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=12, height=6)
+#op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
 
-Plotter_Cause4copula_GOF(fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=13,method="spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=14,method="spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=13,method="spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=14,method="spearman",num_keep_last=2500,BS=1000)
 
-Plotter_Cause4copula_GOF(fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=13,method="kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
+#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+#legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "magenta", "green2"),
+#       cex = 1.5, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+#       bty = "n") 
 #par(op)
+#dev.off()
+```
 
-op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
-plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("top", c("noise","population", "p_CvM", "p_KS"), col = c("red", "blue", "magenta", "green2"),
-       cex = 1.5, pch = c(2, 6, 16, 16), lty = c(1, 1, NA, NA), xpd = TRUE, horiz = TRUE, inset = c(0,0), 
-       bty = "n") 
-par(op)
-dev.off()
+cause4copula_stat_C_spear chunk: `r Sys.time()`
 
-#-------------------------------------------------------------
+```{r cause4copula_stat_C_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=3,method="spearman",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_C_kend chunk: `r Sys.time()`
+
+```{r cause4copula_stat_C_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=3,method="spearman",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_SC_spear chunk: `r Sys.time()`
+
+```{r cause4copula_stat_SC_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#---------------------------------------
 pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=13,method="spearman",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_SC_kend chunk: `r Sys.time()`
+
+```{r cause4copula_stat_SC_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#----------------------
 pdf("./Results/Cause4copula_results/SClayton_kendall.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=13,method="kendall",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_G_spear chunk: `r Sys.time()`
+
+```{r cause4copula_stat_G_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#----------------------
 pdf("./Results/Cause4copula_results/Gumbel_spearman.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=4,method="spearman",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_G_kend chunk: `r Sys.time()`
+
+```{r cause4copula_stat_G_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#----------------------
 pdf("./Results/Cause4copula_results/Gumbel_kendall.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=4,method="kendall",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_SG_spear chunk: `r Sys.time()`
+
+```{r cause4copula_stat_SG_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#----------------------
 pdf("./Results/Cause4copula_results/SGumbel_spearman.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=14,method="spearman",lb=0,ub=0.1)
 dev.off()
+```
 
+cause4copula_stat_SG_kend chunk: `r Sys.time()`
+
+```{r cause4copula_stat_SG_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed=101)
+#----------------------
 pdf("./Results/Cause4copula_results/SGumbel_kendall.pdf")
 Plotter_Cause4copula_stat(numsim=50,fcode=14,method="kendall",lb=0,ub=0.1)
 dev.off()
 ```
 
+
 ![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
 
 ![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
+
 
 ![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)
 

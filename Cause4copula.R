@@ -107,10 +107,10 @@ MCI<-function(x){
 # Input:
 #      s : gives you [s$noise_c, s$noise_q : each is a N by 2 noise matrix] , param
 #      s2 : gives you [s2$pop_c, s2$pop_q : each is a N+1 by 2 noise matrix] 
-#     num_keep_last : number of rows you want to keep from bottom 
-#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix : Default=500
+#     num_keep_last : an integer : number of rows you want to keep from bottom 
+#                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix 
 #
-comp<-function(s,s2,num_keep_last=500){
+comp<-function(s,s2,num_keep_last){
   
   mod_s_noise_c<-tail(s$noise_c,num_keep_last)
   mod_s_noise_q<-tail(s$noise_q,num_keep_last)
@@ -162,7 +162,7 @@ comp<-function(s,s2,num_keep_last=500){
 #  parameter of noise copula vs. correln coef (spearman/kendall)
 # BS : number of bootstrapps used for BiCopGOFTest
 
-Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
+Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -174,12 +174,13 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
   pval_KS<-c()
   BS_success<-c()
   
+ 
   for(corcoef in corcoef_list){
     
     #cat("corcoef=",corcoef,"\n")
     
     # generate noise copula 
-    s<-GetNoise(N=5000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
+    s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
     # generate pop_copula
     s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
     
@@ -200,6 +201,7 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
     
   }
   
+ 
   BS_success_percentage<-((min(BS_success))/BS)*100
   
   if(method=="spearman"){
@@ -268,7 +270,7 @@ Plotter_Cause4copula_GOF<-function(fcode,method,num_keep_last,BS,ploton){
 #       num_keep_last : number of rows you want to keep from bottom 
 #                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix
 #-----------------------------------------------------------------------------------------------
-Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
+Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_keep_last){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -342,9 +344,9 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
     
     for(i in 1:numsim){
       #cat("i=",i,"\n")
-      s<-GetNoise(N=5000,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
+      s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
       s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
-      z<-comp(s=s,s2=s2)
+      z<-comp(s=s,s2=s2,num_keep_last = num_keep_last)
       S_noise<-c(S_noise,z$comp$cor_noise[1])
       K_noise<-c(K_noise,z$comp$cor_noise[2])
       P_noise<-c(P_noise,z$comp$cor_noise[3])
@@ -606,6 +608,10 @@ Plotter_Cause4copula_stat<-function(numsim=50,fcode,method,lb=0,ub=0.1){
   par(op2)
   
 }
+#-----------------------------------------------
+#pdf("./mytestplot_SG_kend.pdf")
+#Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=2500,BS=10)
+#dev.off()
 
 
 

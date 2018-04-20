@@ -161,14 +161,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   ylimits_cor<-range(corstats_d,corstats_K,corstats_K)
   ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
   plot(x,corstats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_cor,
-       xaxt='n')
+       xaxt='n',cex=0.8)
   mtext(side=3,line=0,text="Kendall-preserving surrogates")
   mtext(side=2,line=1,text="Partial correlation")
   axis(side=1,labels=F)
-  #lines(x,corstats_K[1,],type='l',lty='dotted')
-  points(x,corstats_K[2,],pch=6,col="blue")
-  points(x,corstats_K[3,],pch=2,col="blue")
-  #lines(x,corstats_K[4,],type='l',lty='dotted')
+  #segments(x0=x,y0=corstats_K[2,],x1=x,y1=corstats_K[3,],col="blue")
+     #lines(x,corstats_K[1,],type='l',lty='dotted')
+  points(x,corstats_K[2,],pch=4,col="blue") # low CI 0.025
+  points(x,corstats_K[3,],pch=4,col="green") # up CI 0.975
+    #lines(x,corstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='A',cex=1.5,adj=c(.5,0))
   fracplot(x=x,corstats_frac_K,ylimits_cor)
   vlineplot(x,ylimits_cor)
@@ -180,13 +181,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
   plot(x,corstats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_cor,
-       xaxt='n',yaxt='n')
+       xaxt='n',yaxt='n',cex=0.8)
   mtext(side=3,line=0,text="Spearman-preserving surrogates")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
   #lines(x,corstats_S[1,],type='l',lty='dotted')
-  points(x,corstats_S[2,],pch=6,col="blue")
-  points(x,corstats_S[3,],pch=2,col="blue")
+  points(x,corstats_S[2,],pch=4,col="blue")
+  points(x,corstats_S[3,],pch=4,col="green")
   #lines(x,corstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='B',cex=1.5,adj=c(.5,0))
   fracplot(x=x,corstats_frac_S,ylimits_cor)
@@ -202,12 +203,12 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
   ylimits_P<-range(Pstats_d,Pstats_K,Pstats_K)
   ylimits_P[2]<-ylimits_P[2]+.3*diff(ylimits_P)
-  plot(x,Pstats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n')
+  plot(x,Pstats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=0.8)
   axis(side=1,labels=F)
   mtext(side=2,line=1,text="P")
   #lines(x,Pstats_K[1,],type='l',lty='dotted')
-  points(x,Pstats_K[2,],pch=6,col="blue")
-  points(x,Pstats_K[3,],pch=2,col="blue")
+  points(x,Pstats_K[2,],pch=4,col="blue")
+  points(x,Pstats_K[3,],pch=4,col="green")
   #lines(x,Pstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='C',cex=1.5,adj=c(.5,0))
   fracplot(x=x,Pstats_frac_K,ylimits_P)
@@ -220,12 +221,12 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+2*panht+gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
   plot(x,Pstats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_P,
-       xaxt='n',yaxt='n')
+       xaxt='n',yaxt='n',cex=0.8)
   axis(side=1,labels=F)
   axis(side=2,labels=F)
   #lines(x,Pstats_S[1,],type='l',lty='dotted')
-  points(x,Pstats_S[2,],pch=6,col="blue")
-  points(x,Ptats_S[3,],pch=2,col="blue")
+  points(x,Pstats_S[2,],pch=4,col="blue")
+  points(x,Pstats_S[3,],pch=4,col="green")
   #lines(x,Pstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='D',cex=1.5,adj=c(.5,0))
   fracplot(x=x,Pstats_frac_S,ylimits_P)
@@ -237,13 +238,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht)/totht,
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  plot(x,D2stats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_D2)
+  plot(x,D2stats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_D2,cex=0.8)
   mtext(side=1,line=1,text="Diagonal slice")
   mtext(side=2,line=1,text=expression(D^{2}))
   axis(side=1,labels=F)
   #lines(x,D2stats_K[1,],type='l',lty='dotted')
-  points(x,D2stats_K[2,],pch=6,col="blue")
-  points(x,D2stats_K[3,],pch=2,col="blue")
+  points(x,D2stats_K[2,],pch=4,col="blue")
+  points(x,D2stats_K[3,],pch=4,col="green")
   #lines(x,D2stats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='E',cex=1.5,adj=c(.5,0))
   fracplot(x=x,D2stats_frac_K,ylimits_D2)
@@ -256,13 +257,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
   plot(x,D2stats_d,type='p',pch=16,col="red",xlim=xlimits,ylim=ylimits_D2,
-       yaxt='n')
+       yaxt='n',cex=0.8)
   mtext(side=1,line=1,text="Diagonal slice")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
   #lines(x,D2stats_S[1,],type='l',lty='dotted')
-  points(x,D2stats_S[2,],pch=6,col="blue")
-  points(x,D2stats_S[3,],pch=2,col="blue")
+  points(x,D2stats_S[2,],pch=4,col="blue")
+  points(x,D2stats_S[3,],pch=4,col="green")
   #lines(x,D2stats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='F',cex=1.5,adj=c(.5,0))
   fracplot(x=x,D2stats_frac_S,ylimits_D2)
@@ -284,7 +285,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
 #d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 #d<-d[,c("SOCstock100","TSNstock100")]
 #v_CN<-getcopula(d=d,rankon=T,ploton=T) 
-#xxx<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",numbin=10)
+#xxx<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",nametag="trial",numbin=10)
 
 
 

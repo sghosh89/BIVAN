@@ -1362,15 +1362,15 @@ set.seed(seed=101)
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=12, height=6)
 op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
 
-Plotter_Cause4copula_GOF(N=10000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=13,method="spearman",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=4,method = "spearman",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=14,method="spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=10000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=13,method="kendall",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=4,method = "kendall",num_keep_last=500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=14,method="kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=500,BS=1000)
 
 #par(op)
 
@@ -1393,15 +1393,15 @@ set.seed(seed=101)
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=12, height=6)
 op<-par(mfrow=c(2,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
 
-Plotter_Cause4copula_GOF(N=10000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=14,method="spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=2500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=10000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=13,method="kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
-Plotter_Cause4copula_GOF(N=10000,fcode=14,method="kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
+Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
 op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
@@ -1420,7 +1420,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1432,7 +1432,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1444,7 +1444,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1456,7 +1456,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #----------------------
 pdf("./Results/Cause4copula_results/SClayton_kendall.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1468,7 +1468,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #----------------------
 pdf("./Results/Cause4copula_results/Gumbel_spearman.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=4,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1480,7 +1480,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #----------------------
 pdf("./Results/Cause4copula_results/Gumbel_kendall.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=4,method="kendall",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1492,7 +1492,7 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #----------------------
 pdf("./Results/Cause4copula_results/SGumbel_spearman.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=14,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
@@ -1504,14 +1504,14 @@ source("Cause4copula.R")
 set.seed(seed=101)
 #----------------------
 pdf("./Results/Cause4copula_results/SGumbel_kendall.pdf")
-Plotter_Cause4copula_stat(N=10000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
 
-![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 10000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
 
-![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 10000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
 
 
 ![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)

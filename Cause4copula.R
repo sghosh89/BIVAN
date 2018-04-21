@@ -215,10 +215,10 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
 #  if(ploton==T){
     ## add extra space to right margin of plot within frame
     op<-par(mar=c(5, 4, 4, 6) + 0.1)
-    
+    se_par_pop_lim<-max(se_par_pop,na.rm=T) # to remove NA from ylim
     ## Plot first set of data and draw its axis
     plot(corcoef_list, par_pop, pch=6, axes=FALSE, 
-         ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop)),ceiling(max(par_noise,par_pop+1.96*se_par_pop))),xlim=c(0,1),
+         ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop_lim)),ceiling(max(par_noise,par_pop+1.96*se_par_pop_lim))),xlim=c(0,1),
          xlab="", ylab="", 
          type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
     arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')

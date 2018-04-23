@@ -94,6 +94,13 @@ Simulator_Cause4copula<-function(cons,p0=c(0,0),noise){
   
 } 
 #-----------------------------------------------------------------------------------------------
+# The following lines are examples to draw error bar without calling arrows
+#plot(x=c(1:5),y=c(1:5),ylim=c(0,6))
+#se<-c(1,0.5,NA,0,0.8)
+#segments(x,y-se,x,y+se)
+#epsilon <- 0.02
+#segments(x-epsilon,y-se,x+epsilon,y-se)
+#segments(x-epsilon,y+se,x+epsilon,y+se)
 #----------------------------------------------------------
 # This function gives mean,lowCI,upCI of a vector
 #
@@ -212,17 +219,21 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
     warning("specify method",immediate.=T,call.=T)
   }
   
-#  if(ploton==T){
     ## add extra space to right margin of plot within frame
-    op<-par(mar=c(5, 4, 4, 6) + 0.1)
+    op<-par(mar=c(3.5, 4, 4, 6) + 0.1)
     se_par_pop_lim<-max(se_par_pop,na.rm=T) # to remove NA from ylim
     ## Plot first set of data and draw its axis
     plot(corcoef_list, par_pop, pch=6, axes=FALSE, 
-         ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop_lim)),ceiling(max(par_noise,par_pop+1.96*se_par_pop_lim))),xlim=c(0,1),
+         #ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop_lim)),
+         ylim=c(0,ceiling(max(par_noise,par_pop+1.96*se_par_pop_lim))),xlim=c(0,1),
          xlab="", ylab="", 
-         type="b",col="blue")#,main=BiCopName(family = fcode,short=F))
-    arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
-    points(corcoef_list,par_noise,pch=2,col="red",type="b")
+         col="blue")#,main=BiCopName(family = fcode,short=F))
+    segments(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,col='blue')
+    bar_len<-0.02
+    segments(corcoef_list-bar_len,par_pop-1.96*se_par_pop,corcoef_list+bar_len,par_pop-1.96*se_par_pop,col='blue')
+    segments(corcoef_list-bar_len,par_pop+1.96*se_par_pop,corcoef_list+bar_len,par_pop+1.96*se_par_pop,col='blue')
+    #arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
+    points(corcoef_list,par_noise,pch=2,col="red")
     axis(2, col="black",las=1)  ## las=1 makes horizontal labels
     mtext("Parameters",side=2,line=2.5)
     mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3,cex=0.8)
@@ -244,11 +255,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
     axis(1,corcoef_list)
     mtext(xlabel,side=1,col="black",line=2.5)  
     par(op)
-#  }
 
-  
-#  return(min_BS_success_percentage)
-  
 }
 
 #--------------------------------------------------------------------------------------
@@ -463,27 +470,46 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   op<-par(mfrow=c(4,3),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
   plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1))
-  arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='red')
+  bar_len<-0.02
+  segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,3],col='red')
+  #arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,S_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,S_pop_mat[,1],corcoef_list+bar_len,S_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,S_pop_mat[,1],corcoef_list+bar_len,S_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_S,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
   axis(side=4,col='purple',col.axis="purple")
   mtext(side = 4, line = 1.5, 'p values', col='purple')
   
   plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1))
-  arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,3],col='red')
+  #arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,K_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,K_pop_mat[,1],corcoef_list+bar_len,K_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,K_pop_mat[,1],corcoef_list+bar_len,K_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_K,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
   axis(side=4,col='purple',col.axis="purple")
   mtext(side = 4, line = 1.5, 'p values', col='purple')
   
   plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1))
-  arrows(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,3],col='red')
+  #arrows(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,P_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,P_pop_mat[,1],corcoef_list+bar_len,P_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,P_pop_mat[,1],corcoef_list+bar_len,P_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_P,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
   axis(side=4,col='purple',col.axis="purple")
@@ -491,9 +517,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]),
        xlim=c(0,1),ylim=c(0,0.1+max(Corl_noise_mat[,2],Corl_pop_mat[,2])))
-  arrows(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,3],col='red')
+  #arrows(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,Corl_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Corl_pop_mat[,1],corcoef_list+bar_len,Corl_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Corl_pop_mat[,1],corcoef_list+bar_len,Corl_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_Corl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
@@ -502,9 +534,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["u"]),
        xlim=c(0,1),ylim=c(0,0.1+max(Coru_noise_mat[,2],Coru_pop_mat[,2])))
-  arrows(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,3],col='red')
+  #arrows(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,Coru_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Coru_pop_mat[,1],corcoef_list+bar_len,Coru_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Coru_pop_mat[,1],corcoef_list+bar_len,Coru_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_Coru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
@@ -513,9 +551,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]),
        xlim=c(0,1),ylim=c(0,0.02+max(Pl_noise_mat[,2],Pl_pop_mat[,2])))
-  arrows(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,3],col='red')
+  #arrows(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,Pl_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Pl_pop_mat[,1],corcoef_list+bar_len,Pl_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Pl_pop_mat[,1],corcoef_list+bar_len,Pl_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_Pl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
@@ -524,9 +568,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["u"]),
        xlim=c(0,1),ylim=c(0,0.02+max(Pu_noise_mat[,2],Pu_pop_mat[,2])))
-  arrows(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,3],col='red')
+  #arrows(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,Pu_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Pu_pop_mat[,1],corcoef_list+bar_len,Pu_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,Pu_pop_mat[,1],corcoef_list+bar_len,Pu_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_Pu,col="purple",type="p",axes = FALSE,
        bty = "n", xlab = "", ylab = "",ylim=c(0,1),xlim=c(0,1))
@@ -536,9 +586,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[u]^2),
        xlim=c(0,1),ylim=c(0,0.002+max(D2u_noise_mat[,2],D2u_pop_mat[,2])))
-  arrows(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,3],col='red')
+  #arrows(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,D2u_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2u_pop_mat[,1],corcoef_list+bar_len,D2u_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2u_pop_mat[,1],corcoef_list+bar_len,D2u_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_D2u,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
@@ -548,9 +604,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[l]^2),
        xlim=c(0,1),ylim=c(0,0.002+max(D2l_noise_mat[,2],D2l_pop_mat[,2])))
-  arrows(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,3],col='red')
+  #arrows(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,D2l_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2l_pop_mat[,1],corcoef_list+bar_len,D2l_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2l_pop_mat[,1],corcoef_list+bar_len,D2l_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   par(new = TRUE)
   plot(corcoef_list,pval_D2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
@@ -560,9 +622,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
        xlim=c(0,1),ylim=c(-0.2,0.2))
-  arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,3],col='red')
+  #arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,CorlmCoru_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,1],corcoef_list+bar_len,CorlmCoru_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,1],corcoef_list+bar_len,CorlmCoru_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
   par(new = TRUE)
   plot(corcoef_list,pval_CorlmCoru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
@@ -573,9 +641,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
        xlim=c(0,1),ylim=c(-0.1,0.1))
-  arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,3],col='red')
+  #arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,PlmPu_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,PlmPu_pop_mat[,1],corcoef_list+bar_len,PlmPu_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,PlmPu_pop_mat[,1],corcoef_list+bar_len,PlmPu_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
   par(new = TRUE)
   plot(corcoef_list,pval_PlmPu,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
@@ -587,9 +661,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
        xlim=c(0,1),ylim=c(-0.01,0.01)) 
        #ylim=c(0,0.002+max(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2])))
-  arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
+  segments(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,1],corcoef_list+bar_len,D2umD2l_noise_mat[,3],col='red')
+  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,1],corcoef_list+bar_len,D2umD2l_noise_mat[,3],col='red')
+  #arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
   points(corcoef_list,D2umD2l_pop_mat[,2],cex=0.5,col="blue")
-  arrows(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
+  segments(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2umD2l_pop_mat[,1],corcoef_list+bar_len,D2umD2l_pop_mat[,3],col='blue')
+  segments(corcoef_list-bar_len,D2umD2l_pop_mat[,1],corcoef_list+bar_len,D2umD2l_pop_mat[,3],col='blue')
+  #arrows(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
   par(new = TRUE)
   plot(corcoef_list,pval_D2umD2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",

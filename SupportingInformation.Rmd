@@ -9,6 +9,7 @@ output:
     number_sections: yes
     keep_tex: yes
     fig_caption: yes
+    
 tables: True
 link-citations: True
 urlcolor : blue
@@ -16,6 +17,10 @@ urlcolor : blue
 #csl: science.csl
 bibliography: REF_SI.bib
 ---
+
+\tableofcontents
+\listoftables
+\listoffigures
 
 updated on `r Sys.Date()`
 
@@ -84,7 +89,7 @@ dev.off()
 
 ## BMR data  \label{BMR_data}
 
-**bmr-contrasts.csv** : 
+**bmr-contrasts.csv** : Prof. M. T. Holder to add description here about this dataset.
 
 ```{r read_BMR_data, echo=FALSE, results="markup"}
 set.seed(seed)
@@ -129,7 +134,7 @@ dev.off()
 
 ## Phylogenetic data : Anolis  \label{Phylo_data}
 
-**contrasts.csv** : 
+**contrasts.csv** : Prof. M. T. Holder to add description here about this dataset.
 
 ```{r read_phylo_data, echo=F, results="markup"}
 set.seed(seed)

@@ -1413,9 +1413,7 @@ dev.off()
 ```
 
 
-cause4copula_stat_C_spear chunk: `r Sys.time()`
-
-```{r cause4copula_stat_C_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+```{r cause4copula_stat, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
 set.seed(seed=101)
@@ -1423,97 +1421,39 @@ set.seed(seed=101)
 pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_C_kend chunk: `r Sys.time()`
-
-```{r cause4copula_stat_C_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_SC_spear chunk: `r Sys.time()`
-
-```{r cause4copula_stat_SC_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#---------------------------------------
 pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_SC_kend chunk: `r Sys.time()`
-
-```{r cause4copula_stat_SC_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#----------------------
 pdf("./Results/Cause4copula_results/SClayton_kendall.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_G_spear chunk: `r Sys.time()`
-
-```{r cause4copula_stat_G_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#----------------------
 pdf("./Results/Cause4copula_results/Gumbel_spearman.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_G_kend chunk: `r Sys.time()`
-
-```{r cause4copula_stat_G_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#----------------------
 pdf("./Results/Cause4copula_results/Gumbel_kendall.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_SG_spear chunk: `r Sys.time()`
-
-```{r cause4copula_stat_SG_spear, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#----------------------
 pdf("./Results/Cause4copula_results/SGumbel_spearman.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="spearman",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
-```
 
-cause4copula_stat_SG_kend chunk: `r Sys.time()`
-
-```{r cause4copula_stat_SG_kend, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
-#-----------------
-set.seed(seed=101)
-#----------------------
 pdf("./Results/Cause4copula_results/SGumbel_kendall.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 ```
 
-
 ![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
 
 ![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
-
 
 ![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)
 
@@ -1523,13 +1463,6 @@ dev.off()
 
 ![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Clayton** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}](./Results/Cause4copula_results/SClayton_kendall.pdf)
 
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Gumbel** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_G_spear}](./Results/Cause4copula_results/Gumbel_spearman.pdf)
-
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Gumbel** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_G_kend}](./Results/Cause4copula_results/Gumbel_kendall.pdf)
-
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Gumbel** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SG_spear}](./Results/Cause4copula_results/SGumbel_spearman.pdf)
-
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Gumbel** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SG_kend}](./Results/Cause4copula_results/SGumbel_kendall.pdf)
 
 ## Asymmetric sensitivity and copula structure in populations
 

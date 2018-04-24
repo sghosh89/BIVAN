@@ -545,7 +545,8 @@ res
 ```
 
 # Tests for retd() function from ExtremeTailDep.R
-<!--DCR to add this section-->
+
+DCR to add this section
 
 # Tests for mydispersal.R
 
@@ -610,9 +611,52 @@ ans<-extrisk(sims=res)
 if(all(ext==ans)==T){print("extrisk : passed")}
 ```
 
+# Tests for Cause4copula.R
 
+**Test for `GetNoise` function**
 
+```{r test_GetNoise, echo=T}
+set.seed(seed=101)
+source("Cause4copula.R")
+# Here we generate noise with 5000 points drawn from Clayton copula with Kendall's tau=0.5 
+s<-GetNoise(N=5000,fcode=3,corcoef=0.5,method="kendall",ploton=T) # plot in copula space
+s1<-s$noise_q
+hist(s1[,1],breaks=1000) # This should be normal distribution
+hist(s1[,2],breaks=1000) # This should be normal distribution
+plot(s1[,1],s1[,2],col="red") # plot after qnorm
 
+# Here we also checked C or SC copula 
+# with same spearman's rho/ kendall's tau have same parameter
+tgcop<-claytonCopula(3,2)
+tgcop2<-rotCopula(tgcop)
+iRho(tgcop,0.5)==iRho(tgcop2,0.5) # check if it is True?
+iTau(tgcop,0.5)==iTau(tgcop2,0.5) # check if it is True?
+```
+
+**Test for `Simulator_Cause4copula` and `comp` function**
+
+```{r test_Simulator_Cause4copula, echo=T}
+set.seed(seed=101)
+source("Cause4copula.R")
+# when noise comes from a clayton cop with spearmancor=0.8
+s<-GetNoise(N=5000,fcode=3,corcoef=0.8,method="spearman",ploton=T) # noise copula
+s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
+points(s2$pop_c[,1],s2$pop_c[,2],col="green") # population copula
+hist(s2$pop_q[,1],breaks=1000) # check if it's normal
+hist(s2$pop_c[,1],breaks=1000) # check if it's uniform
+num_keep_last<-500
+zz<-comp(s=s,s2=s2,num_keep_last=num_keep_last)
+zz$comp
+x<-c(dim(zz$last_num_keep_noise$last_num_keep_noise_c)[1],
+     dim(zz$last_num_keep_noise$last_num_keep_noise_q)[1],
+     dim(zz$last_num_keep_pop$last_num_keep_pop_c)[1],
+     dim(zz$last_num_keep_pop$last_num_keep_pop_c)[1])
+if(all(x==num_keep_last)){
+  print("passed")
+}else{
+  print("failed")
+}
+```
 
 
 

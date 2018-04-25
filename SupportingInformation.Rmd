@@ -202,17 +202,30 @@ dev.off()
 
 ## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
-   * We threw out all locations that had fewer than 30 years data 
-   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data 
-   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data   
+   * We threw out all locations that had fewer than 30 years data. 
+   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data. 
+   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data.   
    
 ## Abundance data for *Ceratium furca* in UK seas \label{Pns_data}
    * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
-   * We threw out all locations that had fewer than 45 years data
-   * We use species=16 [Name : "Ceratium furca"] for Plankton_North_Sea data
-   * *Ceratium furca* is a dicoflagellate commonly found in UK seas
-   * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK 
-   
+   * We threw out all locations that had fewer than 45 years data.
+   * We use species=16 [Name : "Ceratium furca"] for Plankton_North_Sea data.
+   * *Ceratium furca* is a dicoflagellate commonly found in UK seas.
+   * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK. 
+
+## Methane-flux data  \label{Methane_data}
+   * Methane-flux at many locations (Prof. Terry to augment this description).
+   * We threw out all locations that had fewer than 50 dates data.
+
+```{r read_methane_data, echo=F, results="markup"}
+set.seed(seed)
+methane_raw<-readRDS("./Data/methane_data_for_Shyamolina.rds")
+#class(methane_raw) #it's a data.frame for multivariable data
+#knitr::kable(head(methane_raw,3),format='pandoc',
+#             caption = "First few rows of raw methane data.\\label{tab_rawdata_methane}",
+#             booktabs=T) # display first few rows
+```
+
 \newpage
 
 # Question 1 analyses for each dataset
@@ -1344,6 +1357,148 @@ than zero, showing asymmetry of tail dependence.
 
 
 <!--***DAN: stopped here 2018 04 07-->
+\newpage
+
+## Results: methane flux data \label{Ex_methane}
+
+### Model selection approach \label{Ex_methane_Model_selection}
+
+<!--Load and format the data-->
+```{r read_format_methane_data, echo=F}
+
+methane_raw<-readRDS("./Data/methane_data_for_Shyamolina.rds")
+
+myls <- vector("list", length = dim(methane_raw)[2]-1)
+for(i in 2:dim(methane_raw)[2]){
+  temp<-methane_raw[,c(1,i)]
+  colnames(temp)<-c("Year","Dat")
+  myls[[i-1]]<-temp
+}
+methane_data<-list(myls=myls)
+``` 
+
+<!--Do the main analysis-->
+```{r RES_methane, echo=F, cache=T, results="hide", cache.extra=list(seed,methane_data,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+
+source("FittingCopula_selective_loc.R")  # top most hierarchy source file
+
+set.seed(seed)
+#cat(paste("start-time: ",Sys.time(),"\n")) 
+RES_methane<-RES_single_sp(d_allsp=methane_data,sp=1,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=50)
+#cat(paste("stop-time: ",Sys.time(),"\n"))    
+resloc<-"./Results/fitting_results/"
+saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.RDS",sep=""))
+```
+
+```{r read_RES_methane,echo=F}
+RES_methane<-readRDS("./Results/fitting_results/MethaneFluxFit_selecloc_data_pt_thrs_50.RDS")
+```
+
+As described in Methods and as in previous sections, model selection among copulas was done separately for 
+each pair of sampling locations. There were $13$ sampling locations, so results are presented in 
+$13 \times 13$ matrix format, with rows and columns corresponding to locations. 
+Table \ref{tab_methane_bestcop} shows that, for the large majority of location pairs, some 
+non-normal copula was a better fit, according to AIC, than was the normal copula, answering the 
+first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula 
+family for each pair of sampling locations (Table \ref{tab_methane_AICw}) to the AIC weight of
+the normal copula family for the same pair (Table \ref{tab_methane_AICw_normal}) 
+confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
+Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{tab_methane_p_CvM}) usually failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{tab_methane_p_KS}). In all cases at least
+`r min((RES_methane$gfc_numBS_success/RES_methane$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
+
+```{r tab_methane_bestcop, echo=F, results='markup'}
+knitr::kable(RES_methane$info_ord_copname[,,1],
+             format='pandoc',
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See previous sections for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             booktabs=TRUE
+             )
+```
+
+```{r tab_methane_AICw,echo=F,results="markup"}
+h<-RES_methane$info_ord_AICw[,,1]
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane-flux data.\\label{tab_methane_AICw}",
+             booktabs=TRUE)
+```
+
+```{r tab_methane_AICw_normal,echo=F,results="markup"}
+source("normal_cop_AICw.R")
+h<-normal_cop_AICw_matrix(r=RES_methane)
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for methane-flux data.\\label{tab_methane_AICw_normal}",
+             booktabs=TRUE)
+```
+
+```{r tab_methane_p_CvM,echo=F,results="markup"}
+h<-RES_methane$gfc_p_CvM
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane-flux data. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_CvM}",
+             booktabs=TRUE)
+```
+
+```{r tab_methane_p_KS,echo=F,results="markup"}
+h<-RES_methane$gfc_p_KS
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
+the goodness of fit of the lowest-AIC copula family for each pair of
+locations for methane-flux data. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_KS}",
+             booktabs=TRUE)
+```
+
+The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{tab_methane_LTdep_AICw} and \ref{tab_methane_UTdep_AICw}, respectively. These values were exclusively positive, thereby
+differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
+have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
+
+```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
+h<-RES_methane$LTdep_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "Model-averaged lower tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_LTdep_AICw}",
+             booktabs=TRUE)
+```
+
+```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
+h<-RES_methane$UTdep_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "Model-averaged upper tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_UTdep_AICw}",
+             booktabs=TRUE)
+```
+
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
+(lower minus upper), shown in Table \ref{tab_methane_LTmUT}, was positive for some
+location pairs and negative for others, but was positive for 
+`r sum((RES_methane$LTdep_AICw-RES_methane$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_methane$gfc_p_CvM)[1]^2-dim(RES_methane$gfc_p_CvM)[1])-2*RES_methane$num_indep_loc_pair`
+locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
+
+```{r tab_methane_LTmUT,echo=F,results="markup"}
+h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
+h[is.nan(h)]<-NA
+knitr::kable(h,
+             format="pandoc",
+             digits=3,
+             caption = "Model averaged lower tail dependence minus model
+averaged upper tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_LTmUT}",
+             booktabs=TRUE)
+```
+
+
 
 \newpage
 
@@ -1585,6 +1740,36 @@ dev.off()
 
 ![Skewness_plankton_north_sea for species : Ceratium_furca\label{fig_skewness_pns}](./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf){ width=40%, height=40% }
 
+### Methane-flux data \label{skewness_methane}
+
+Figure \ref{fig_skewness_methane} shows that averaged skewness is lower than expected if the plankton north sea data came from a normal copula. Our previous results on non-parametric analysis and model fitting showed lower tail dependence. As $p<0.05$, we reject $H_{0}$. This result is consistent with the non-parametric analysis and model fitting results which indicated lower tail dependence. 
+
+
+```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
+set.seed(seed)
+
+pdf("./Results/skewness_results/skewness_methane/skewness_methane.pdf")
+par(mfrow=c(2,1))
+numsurrog<-10000
+loclist<-good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=50)
+
+answer1k<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                           corpres="kendall") 
+p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
+mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+
+answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
+                           corpres="spearman") 
+p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
+mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+
+dev.off()
+```
+
+![Skewness_methane-flux data\label{fig_skewness_methane}](./Results/skewness_results/skewness_methane/skewness_methane.pdf){ width=40%, height=40% }
 
 ## Extinction risk
 

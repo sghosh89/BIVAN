@@ -1,5 +1,5 @@
 ---
-title: "Supporting Information"
+title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
 date: "February 12, 2018"
 geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
@@ -219,7 +219,7 @@ dev.off()
 
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)
-methane_raw<-readRDS("./Data/methane_data_for_Shyamolina.rds")
+methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 #class(methane_raw) #it's a data.frame for multivariable data
 #knitr::kable(head(methane_raw,3),format='pandoc',
 #             caption = "First few rows of raw methane data.\\label{tab_rawdata_methane}",
@@ -1366,7 +1366,7 @@ than zero, showing asymmetry of tail dependence.
 <!--Load and format the data-->
 ```{r read_format_methane_data, echo=F}
 
-methane_raw<-readRDS("./Data/methane_data_for_Shyamolina.rds")
+methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 
 myls <- vector("list", length = dim(methane_raw)[2]-1)
 for(i in 2:dim(methane_raw)[2]){
@@ -1498,6 +1498,87 @@ averaged upper tail dependence statistic for each location pair for methane-flux
              booktabs=TRUE)
 ```
 
+### Non-parametric analysis of tail dependence  \label{Ex_methane_NPA}
+```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+source("good_loclist.R")
+source("NonParamStat.R")
+set.seed(seed)
+resloc<-"./Results/stat_results/stat_methane/"
+
+data_pt_thrs<-50
+good_loc <- good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=data_pt_thrs)
+
+latlon<-readRDS("./Data/Methane_data/chamberLocations.rds")
+chamber_name<-colnames(methane_raw[,c(2:dim(methane_raw)[2])])
+ndim<-length(chamber_name)
+
+latlon_arranged<-data.frame(chamber_name=chamber_name,lat=NA*numeric(ndim),lon=NA*numeric(ndim))
+for(i in 1:ndim){
+  if (chamber_name[i] %in% latlon$chamber){
+    ind<-which(latlon$chamber==chamber_name[i])
+    latlon_arranged[i,2:3]<-unname(latlon[ind,2:3])
+  }
+}
+
+stat_methane<-multcall(d_allsp=methane_data,sp=1,lats=latlon_arranged$lat,longs=latlon_arranged$lon,
+                           pfname=paste(resloc,"data_pt_thrs",data_pt_thrs,sep=''),good_loc=good_loc)
+
+saveRDS(stat_methane,paste(resloc,file="stat_methane.RDS",sep='')) 
+```
+
+```{r read_stat_methane,echo=F}
+stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
+```
+
+Mean values of our statistics, as well as mean Kendall and Spearman
+correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
+spatial resampling scheme, as described in Methods (Table \ref{tab_methane_resamp}).
+Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
+always excluded $0$ and mean values were positive, indicating tail dependence. But the confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ were marginal, indicating no significant asymmetry of tail dependence.
+
+<!--display the main statistical results in a table-->
+```{r tab_methane_resamp,echo=F,results="markup"}
+s<-stat_methane$numericdf[,c(3,2,4)]
+colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
+rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
+knitr::kable(s,
+             format = "pandoc",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for methane-flux data.\\label{tab_methane_resamp}",
+             booktabs=TRUE)
+```
+
+Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
+between the locations (Figure \ref{fig_methane} A, B) showed the typical decline of correlation with increasing
+distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Figure \ref{fig_methane} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given
+their opposite meaning (Figure \ref{fig_methane} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Figure \ref{fig_methane} I-K) did not show a decline with distance, but did demonstrate visually the 
+statistical result of Table \ref{tab_methane_resamp} that averages of these 
+quantities across all pairs of sampling locations were more or less equally dispersed around the zero-line, showing no significant asymmetry of tail dependence.
+
+\begin{figure}[!h]
+\textbf{ \hspace{2.6 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.8 cm} (D)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Spearman_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Kendall_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Corl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Coru_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{2.6 cm} (E) \hspace{3.6 cm} (F) \hspace{3.8 cm} (G) \hspace{3.8 cm} (H)} \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Pl_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_D2u_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_D2l_vs_D.pdf}\\
+\end{center}
+\textbf{ \hspace{4.8 cm} (I) \hspace{3.8 cm} (J) \hspace{4 cm} (K) } \\
+\begin{center}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Corl-Coru_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_Pl-Pu_vs_D.pdf}
+\includegraphics[width=1.8in]{./Results/stat_results/stat_methane/data_pt_thrs50_D2u-D2l_vs_D.pdf}
+\caption{Non-parametric tail statistics results for \textit{Ceratium furca} abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_methane}}
+\end{center}
+\end{figure}
+
 
 
 \newpage
@@ -1512,6 +1593,18 @@ Q1/2: How are copula structure of ecologically influential climate variables cha
 We show here that if a non-normal copula structure describes the dependence of an environmental
 variable between two locations, then there can be a non-normal copula structure for the
 dependence of populations in the locations that are influenced by the environmental variables.
+
+To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
+
+\begin{equation}\label{eq.AR1}
+P_{i}(t+1)=\beta P_{i}(t)+\alpha \epsilon_{i}(t)
+\end{equation}
+
+To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in terms of AR coefficient $\beta$ as $\alpha = \sqrt(1-\beta^2)$. We were interested to explore the basic idea of Moran's theorem that if noise $\epsilon_{1}(t)$ and $\epsilon_{2}(t)$ at two different habitat patches had some specific assymetric tail dependence and then what will be the outcome dependence in the populations at those habitat patches. Should their dependence be exactly the same as of the noises or not ? 
+
+To test that our approach is of two way : first, we calculated the parameters of the noise-copula (for example, we chose Clayton with lower tail dependence and Survival Clayton with upper tail dependence here) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome which was a bivariate population-copula, with last $500$ simulated points for each habitat patch (see Figure \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for population-copula and its standard error due to sample size and reported p-values for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Figure \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Figure \ref{fig_Cause4copula_params_GOF_2500} represents similar figure as of Figure \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+
+Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see Sec. \ref{NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Spearman's Rho (or Kendall's Tau) of the noise copula family. Figure \ref{fig_Cause4copula_C_spear} and Figure \ref{fig_Cause4copula_C_kend} represent this picture for noise generating from a lower tail dependent Clayton copula whereas for Figure \ref{fig_Cause4copula_SC_spear} and Figure \ref{fig_Cause4copula_SC_kend} noise came from a upper tail dependent Survival Clayton family. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 <!--Shya to implement the modelling we discussed on 2018 04 12 and make results appear here!-->
 ```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -1583,7 +1676,7 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1
 dev.off()
 
 pdf("./Results/Cause4copula_results/Clayton_kendall.pdf")
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500)
 dev.off()
 
 pdf("./Results/Cause4copula_results/SClayton_spearman.pdf")
@@ -1611,17 +1704,17 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1
 dev.off()
 ```
 
-![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF_500}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf)
 
-![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
+![Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last **2500** points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF_2500}](./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf)
 
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)
+![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}](./Results/Cause4copula_results/Clayton_spearman.pdf)
 
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_kend}](./Results/Cause4copula_results/Clayton_kendall.pdf)
+![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Clayton** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_C_kend}](./Results/Cause4copula_results/Clayton_kendall.pdf)
 
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SC_spear}](./Results/Cause4copula_results/SClayton_spearman.pdf)
+![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Clayton** copula and of the affected populations for 9 equidistant **Spearman's Rho** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SC_spear}](./Results/Cause4copula_results/SClayton_spearman.pdf)
 
-![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Clayton** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 10000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}](./Results/Cause4copula_results/SClayton_kendall.pdf)
+![Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from **Survival Clayton** copula and of the affected populations for 9 equidistant **Kendall's Tau** values in a range (0.1 to 0.9) (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}](./Results/Cause4copula_results/SClayton_kendall.pdf)
 
 
 ## Asymmetric sensitivity and copula structure in populations

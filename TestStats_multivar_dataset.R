@@ -290,10 +290,12 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
     
   }
   
-  op<-par(fig=c(0,1,0,1),mar=c(0,0,1.5,0),new=T,col="white")
-  plot(NA,xlim=c(0,1),ylim=c(0,1))
-  mtext(paste0("1st column : Clayton, 2nd column : Normal, 3rd column : Frank, 4th column : Survival Clayton"),side = 3, line=0.1, adj=0.5, col="grey50")
-  par(op)
+  op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+  legend("top", "1st column : Clayton, 2nd column : Normal, 3rd column : Frank, 4th column : Survival Clayton", 
+         cex = 1.5, xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+         bty = "n") 
+  par(op2)
   dev.off()
 }
 

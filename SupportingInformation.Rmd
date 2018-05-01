@@ -9,18 +9,27 @@ output:
     number_sections: yes
     keep_tex: yes
     fig_caption: yes
-    
+    includes:
+      in_header: head_supp.sty
+      
 tables: True
 link-citations: True
 urlcolor : blue
 
-#csl: science.csl
-bibliography: REF_SI.bib
+csl: ecology-letters.csl
+bibliography: REF_ALL.bib
 ---
 
 \tableofcontents
 \listoftables
 \listoffigures
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{section}{0}
+\renewcommand{\thesection}{S\arabic{section}}
 
 updated on `r Sys.Date()`
 
@@ -2252,8 +2261,7 @@ for (counter in 2:dim(s.slope)[1])
 
 
 \newpage
-
-# References:
+# References
 
 
 

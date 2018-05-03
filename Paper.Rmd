@@ -243,10 +243,7 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
-In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
-also tested our statistics in Fig. \ref{fig_stat_image}(B - D) by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and 
-$\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated
-from Clayton copulas (for details see Appendix \ref{SM-Test_npa_stat}).
+In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas. Fig. \ref{fig_stat_image}(B - D) represent the results for Clayton copulas with $n=35$ data points and $100$ simulations (for details see Appendix \ref{SM-Test_npa_stat}). 
 
 For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
 $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same statistics computed on surrogate datasets that were produced from the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly the same marginal distributions as the empirical data and had very similar Kendall or Spearman correlation, but had normal copula structure, and thus our comparisons tested the null hypothesis that our statistics took values on the empirical data no different from what would have been expected if the copula structure of the data were normal, but the data were otherwise statistically unchanged.

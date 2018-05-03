@@ -20,7 +20,12 @@ csl: ecology-letters.csl
 bibliography: REF_ALL.bib
 ---
 updated on `r Sys.Date()`
-
+```{r setup_Paper, echo=F}
+knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
+seed<-101
+# families<-c(1,3:10,13,14,16:20)
+source("mtime.R") #A function needed for caching
+```
 # Front matter
 
 *Affiliations:*
@@ -129,15 +134,47 @@ possible. Given two bounds
 $0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
 $u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
 fall (these are the blue and red lines, respectively, in 
-Fig. \ref{fig_stat_image}). Our statistics quantify the dependence
+Fig. \ref{fig_stat_image}(A)). Our statistics quantify the dependence
 between $u_i$ and $v_i$ in the region bounded by these lines.
 Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
 dependence in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
 the right parts of the distributions. 
 
-![Schematic diagram supporting defintions of nonparametric tail dependence statistics.\label{fig_stat_image}](./stat_image.jpg){ width=25%, height=25% }
+```{r fig_stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"),mtime("StatTestNumericResults.RData"))}
+set.seed(seed) 
+source("fig_Paper_stat_testing.R")
+load("./Results/stat_results/stat_testing/StatTestNumericResults.RData")
+resultsloc<-"./Results/stat_results/stat_testing/"
 
+copname<-"C"
+reslist<-res_pt35_rankT
+
+statname<-"CorlmCoru"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+statname<-"PlmPu"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+statname<-"D2umD2l"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+```
+
+\begin{figure}[!h]
+\textbf{ \hspace{6 cm} (A) \hspace{5.6 cm} (B)} \\
+\vspace{-0.6 cm}
+\begin{center}
+\hspace{0.5 cm}
+\includegraphics[width=5 cm,height=4.3 cm]{./stat_image.jpg} \hspace{0.6 cm}
+\includegraphics[width=6 cm]{./Results/stat_results/stat_testing/CorlmCoru_C.pdf}
+\end{center}
+\textbf{ \hspace{6 cm} (C) \hspace{5.7 cm} (D)} \\
+\vspace{-0.6 cm}
+\begin{center}
+\hspace{0.2 cm}
+\includegraphics[width=6 cm]{./Results/stat_results/stat_testing/PlmPu_C.pdf} \hspace{0.3 cm}
+\includegraphics[width=6 cm]{./Results/stat_results/stat_testing/D2umD2l_C.pdf}
+\caption{(A) Schematic diagram supporting defintions of nonparametric tail dependence statistics; (B) Results of tests of $\cor_l-\cor_u$, (C) $\Ps_l-\Ps_u$, and (D) $\Dsq_u-\Dsq_l$ reveal the known asymmetry (more lower tail than upper) of tail dependence of the Clayton copula with $n=35$ data points. \label{fig_stat_image}}
+\end{center}
+\end{figure}
 
 The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
@@ -207,18 +244,12 @@ $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
 In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we 
-also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and 
+also tested our statistics in Fig. \ref{fig_stat_image}(B - D) by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and 
 $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated
-from various copulas (for details see Appendix \ref{SM-Test_npa_stat}).
+from Clayton copulas (for details see Appendix \ref{SM-Test_npa_stat}).
 
 For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same 
-statistics computed on surrogate datasets that 
-were produced from the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
-the same marginal distributions as the empirical data and had very similar Kendall or Spearman correlation, but had
-normal copula structure, and thus our comparisons tested the null hypothesis that our statistics took values on the
-empirical data no different from what would have been expected if the copula structure of the data were normal, but the
-data were otherwise statistically unchanged.
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same statistics computed on surrogate datasets that were produced from the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly the same marginal distributions as the empirical data and had very similar Kendall or Spearman correlation, but had normal copula structure, and thus our comparisons tested the null hypothesis that our statistics took values on the empirical data no different from what would have been expected if the copula structure of the data were normal, but the data were otherwise statistically unchanged.
 For bivariate datasets, surrogates were produced as follows.   
 
 - Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 

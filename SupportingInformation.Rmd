@@ -317,16 +317,15 @@ BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loeck
 saveRDS(BivMS_res_Loecke,file="./Results/fitting_results/BivMS_soilCN.RDS")
 ```
 
-\newpage
-
 <!--Display model selection results in a table-->
-```{r tab_soilCNfit,echo=F}
-knitr::opts_knit$set(kable.force.latex = TRUE)
+```{r tab_soilCNfit, echo=F, results="markup"}
+#knitr::opts_knit$set(kable.force.latex = TRUE)
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
-knitr::kable(h, longtable = T, booktabs = T, 
-             format = "latex",
-      caption.short = "Fitting info for soil C and N dataset",
-      caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}")
+knitr::kable(h, #longtable = T, 
+             format = "pandoc",
+      #caption.short = "Fitting info for soil C and N dataset",
+      caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
+      booktabs = TRUE)
 ```
 
 <!--This chunk is for npa testing results of soilCN dataset-->
@@ -363,9 +362,9 @@ make_table_stat_fn<-function(data){
  #atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$",
  #                               "$\\Ps_{0,0.1}-\\Ps_{0.9,1}$",
  #                               "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
- atdres<-data.frame(Statistic=c("$\cor_{\text{first slice}}-\cor_{\text{last slice}}$",
-                               "$\\Ps_{first.slice}-\\Ps_{last.slice}$",
-                                "$\\Dsq_{last.slice}-\\Dsq_{first.slice}$"),
+ atdres<-data.frame(Statistic=c("$\\cor_\\text{first slice}-\\cor_\\text{last slice}$",
+                               "$\\Ps_\\text{first slice}-\\Ps_\\text{last slice}$",
+                                "$\\Dsq_\\text{last slice}-\\Dsq_\\text{first slice}$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
  
@@ -382,12 +381,12 @@ make_table_stat_fn<-function(data){
 ```
 
 
-```{r tab_soilCN_asym,echo=F}
-knitr::opts_knit$set(kable.force.latex = TRUE)
+```{r tab_soilCN_asym,echo=F,results="markup"}
+#knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
 knitr::kable(tab_soilCN_asym, booktabs = T, 
-             format = "latex",
-      caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence. Recall that Spearman-preserving surrogates are more appropriate for the $\\cor$ statistic (Figure \\ref{fig_soilCN_nonparam} caption).\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
 ```
@@ -412,7 +411,7 @@ BivMS_BMR<-OurBiCopSelect(u1=v_BMR[,1],u2=v_BMR[,2],families=c(1,3:10,13:14,16:2
 saveRDS(BivMS_BMR,file="./Results/BMR_results/BivMS_BMR_lnmass.RDS")
 ```
 
-\newpage
+
 <!--Display model selection results for BMR data in a table-->
 ```{r tab_BMRfit, echo=F, results='markup'}
 h<-BivMS_BMR$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -484,6 +483,7 @@ BivMS_contrasts_67<-OurBiCopSelect(u1=v_contrasts_67[,1],u2=v_contrasts_67[,2],f
 saveRDS(BivMS_contrasts_67,file="./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
 ```
 
+\newpage
 <!--Display model selection results for contrasts data in a table-->
 ```{r tab_contrasts_67fit, echo=F, results='markup'}
 h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -559,12 +559,12 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
 ```
 
-```{r tab_count_bestcop, echo=F}
+```{r tab_count_bestcop, echo=F, results="markup"}
 #library(dplyr)
-knitr::opts_knit$set(kable.force.latex = TRUE)
-knitr::kable(RES_aphid_count$info_ord_copname[,,1], longtable = T,
-             format='latex',
-             caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid.",
+#knitr::opts_knit$set(kable.force.latex = TRUE)
+knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
+             format='pandoc',
+             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid. Copulas 
 considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
 survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
@@ -709,10 +709,10 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
 ```
 
-```{r tab_ff_bestcop, echo=F}
-knitr::kable(RES_aphid_ff$info_ord_copname[,,1], longtable = T,
-             format='latex',
-             caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
+```{r tab_ff_bestcop, echo=F, results="markup"}
+knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
+             format='pandoc',
+             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
@@ -859,10 +859,10 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS",sep=""))
 ```
 
-```{r tab_pns_bestcop, echo=F}
-knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], longtable=T,
-             format='latex', 
-             caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas.",
+```{r tab_pns_bestcop, echo=F, results="markup"}
+knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
+             format='pandoc', 
+             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
@@ -1038,10 +1038,10 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.RDS",sep=""))
 ```
 
-```{r tab_methane_bestcop, echo=F}
-knitr::kable(RES_methane$info_ord_copname[,,1], longtable=T,
-             format='latex',
-             caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data.",
+```{r tab_methane_bestcop, echo=F, results="markup"}
+knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
+             format='pandoc',
+             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )

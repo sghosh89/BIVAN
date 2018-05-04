@@ -363,7 +363,7 @@ make_table_stat_fn<-function(data){
  #atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$",
  #                               "$\\Ps_{0,0.1}-\\Ps_{0.9,1}$",
  #                               "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
- atdres<-data.frame(Statistic=c("$\\cor_{first.slice}-\\cor_{last.slice}$",
+ atdres<-data.frame(Statistic=c("$\cor_{\text{first slice}}-\cor_{\text{last slice}}$",
                                "$\\Ps_{first.slice}-\\Ps_{last.slice}$",
                                 "$\\Dsq_{last.slice}-\\Dsq_{first.slice}$"),
                    Kendall=rep("",3),

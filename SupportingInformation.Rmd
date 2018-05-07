@@ -1201,7 +1201,7 @@ knitr::kable(s,
 ```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
-set.seed(seed=101)
+set.seed(seed)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=6)
 op<-par(mfrow=c(2,2))
@@ -1230,7 +1230,7 @@ dev.off()
 ```{r cause4copula_pGOF_2500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
-set.seed(seed=101)
+set.seed(seed)
 #---------------------------------------
 # I need to fix that SG_kendall ylimit error : I think I fixed it
 #----------------------------
@@ -1259,7 +1259,7 @@ dev.off()
 ```{r cause4copula_stat, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
-set.seed(seed=101)
+set.seed(seed)
 #---------------------------------------
 pdf("./Results/Cause4copula_results/Clayton_spearman.pdf")
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500)
@@ -1343,6 +1343,134 @@ dev.off()
 ## Asymmetric sensitivity and copula structure in populations
 
 <!--Another model, distinct from the above, Dan and Shya to discuss-->
+```{r asym_sens_beta_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+set.seed(seed)
+source("asym_sensitivity.R")
+
+#-----------------------------------------------------------------------------------
+# This function takes 
+# Input :
+#       N : number of global and local noise points you want
+#       rho : covariance of global noise matrix
+#       alpha : a number : local noise coeeficient
+#       beta : growth factor of pop
+#       decrease : logical (controls the nature of global noise)
+#       numkeep_last : number of points you want to keep for the pop matrix from the end
+#       ploton : logical for optional plot
+
+# Output :
+#     a list of 4 pop matrices 
+#                         1. (for beta=+ve, decrease=F)
+#                         2. (for beta=+ve, decrease=T)
+#                         3. (for beta=-ve, decrease=F)
+#                         4. (for beta=-ve, decrease=T)
+
+plotter_asym_sens_beta_varn<-function(N,rho,alpha,beta,numkeep_last,ploton){
+
+  pop<-Simulator_asym_sens(N=N,rho=rho,alpha=alpha,beta=beta,p0=c(0,0),decrease=F,numkeep_last=numkeep_last)
+  pop_d<-Simulator_asym_sens(N=N,rho=rho,alpha=alpha,beta=beta,p0=c(0,0),decrease=T,numkeep_last=numkeep_last)
+  
+  neg_beta<- -beta
+  pop_neg_beta<-Simulator_asym_sens(N=N,rho=rho,alpha=alpha,beta=neg_beta,p0=c(0,0),decrease=F,numkeep_last=numkeep_last)
+  pop_d_neg_beta<-Simulator_asym_sens(N=N,rho=rho,alpha=alpha,beta=neg_beta,p0=c(0,0),decrease=T,numkeep_last=numkeep_last)
+  
+  if(ploton==T){
+    op<-par(mfrow=c(2,2),mar=c(4,3,1.5,1),mgp=c(2,1,0))
+    
+    plot(pop[,1],pop[,2],col="red",main = bquote(beta ==.(beta)))
+    mtext(paste0("(A)"),side = 3, line=0.3, adj=0.3, col="black")
+    plot(pop_d[,1],pop_d[,2],col="blue",main = bquote(beta ==.(beta)))
+    mtext(paste0("(B)"),side = 3, line=0.3, adj=0.3, col="black")
+    plot(pop_neg_beta[,1],pop_neg_beta[,2],col="orange",main = bquote(beta ==.(neg_beta)))
+    mtext(paste0("(C)"),side = 3, line=0.3, adj=0.3, col="black")
+    plot(pop_d_neg_beta[,1],pop_d_neg_beta[,2],col="skyblue",main = bquote(beta ==.(neg_beta)))
+    mtext(paste0("(D)"),side = 3, line=0.3, adj=0.3, col="black")
+    
+    par(op)
+  }
+  
+  return(list(pop=pop,
+              pop_d=pop_d,
+              pop_neg_beta=pop_neg_beta,
+              pop_d_neg_beta=pop_d_neg_beta))
+  
+}
+#--------------------------------------------------------------
+N<-10000
+rho<-0.8
+alpha<-0.2
+numkeep_last<-1000
+
+pdf("./Results/asym_sens_results/beta_0.1_asym_sens.pdf")
+ans_beta_0.1<-plotter_asym_sens_beta_varn(N=N,rho=rho,alpha=alpha,beta=0.1,numkeep_last=numkeep_last,ploton=T)
+dev.off()
+
+pdf("./Results/asym_sens_results/beta_0.9_asym_sens.pdf")
+ans_beta_0.9<-plotter_asym_sens_beta_varn(N=N,rho=rho,alpha=alpha,beta=0.9,numkeep_last=numkeep_last,ploton=T)
+dev.off()
+
+vlist_beta_0.1_beta_0.9<-c(ans_beta_0.1,ans_beta_0.9) # a list of 8 matrices
+
+summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
+rownames(summary_stat)<-c("bestcop_AICw","N_AIC_w","relLTdep_AICw","relUTdep_AIC_w","p_CvM","p_KS","Numboot_success")
+bg <- intToUtf8(0x03B2) 
+cnm<-c("_0.1","_0.1_decrease_T","_-0.1","_-0.1_decrease_T","_0.9","_0.9_decrease_T","_-0.9","_-0.9_decrease_T")
+cname<-paste0(bg,cnm)
+colnames(summary_stat)<-cname
+
+stat_npa_asym_beta_0.1_beta_0.9<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible beta variation
+names(stat_npa_asym_beta_0.1_beta_0.9)<-cname
+
+for(ic in c(1:8)){
+  v<-vlist_beta_0.1_beta_0.9[[ic]]
+  res<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=c(1,3:10,13:14,16:20),level=0.05,
+                      AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                      gofnormal=F,status=F)
+  
+  
+  summary_stat[1,ic]<-max(res$InfCritRes$AICw)
+  summary_stat[2,ic]<-res$InfCritRes$AICw[1]
+  summary_stat[3,ic]<-res$relLTdep_AICw
+  summary_stat[4,ic]<-res$relUTdep_AICw
+  summary_stat[5,ic]<-res$GofRes_CvM
+  summary_stat[6,ic]<-res$GofRes_KS
+  summary_stat[7,ic]<-res$Numboot_success
+  
+  stat_npa_asym_beta_0.1_beta_0.9[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cname[ic],numbin=10)
+  
+}
+
+saveRDS(summary_stat,"./Results/asym_sens_results/beta_variation_summary_stat.RDS")
+saveRDS(stat_npa_asym_beta_0.1_beta_0.9,"./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")
+```
+
+![results for model selection \label{fig_ms_asym_beta_0.1}](./Results/asym_sens_results/beta_0.1_asym_sens.pdf){ width=40%, height=40% }
+
+![results for model selection \label{fig_ms_asym_beta_0.9}](./Results/asym_sens_results/beta_0.9_asym_sens.pdf){ width=40%, height=40% }
+
+```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
+
+knitr::kable(summary_stat, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption="summary of model selection results for asym. sensitivity \\label{tab_summary_stat_asym_sens}")
+```
+
+```{r tab_stat_npa_asym,echo=F,results="asis"}
+#knitr::opts_knit$set(kable.force.latex = TRUE)
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")
+
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  temp2<-knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste("beta",cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
+  print(temp2)
+  cat("\\newpage")
+}
+```
+
 
 ## Need to think about mechanisms for biogeochemical, evolutionary, and community data
 

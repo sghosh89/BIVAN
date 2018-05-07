@@ -1449,13 +1449,16 @@ saveRDS(stat_npa_asym_beta_0.1_beta_0.9,"./Results/asym_sens_results/stat_npa_as
 ![results for model selection \label{fig_ms_asym_beta_0.9}](./Results/asym_sens_results/beta_0.9_asym_sens.pdf){ width=40%, height=40% }
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
-
+cnm2<-c("b_0.1","b_0.1d_T","b_-0.1","b_-0.1d_T","b_0.9","b_0.9d_T","b_-0.9","b_-0.9d_T")
+colnames(summary_stat)<-cnm2
 knitr::kable(summary_stat, booktabs = T, 
              format = "pandoc",
+             digits=3,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption="summary of model selection results for asym. sensitivity \\label{tab_summary_stat_asym_sens}")
 ```
 
+\newpage
 ```{r tab_stat_npa_asym,echo=F,results="asis"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")

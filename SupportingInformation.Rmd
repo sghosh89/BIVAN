@@ -1401,7 +1401,7 @@ rho<-0.8
 alpha<-0.2
 numkeep_last<-1000
 
-pdf("./Results/asym_sens_results/beta_0.1_asym_sen.pdf")
+pdf("./Results/asym_sens_results/beta_0.1_asym_sens.pdf")
 ans_beta_0.1<-plotter_asym_sens_beta_varn(N=N,rho=rho,alpha=alpha,beta=0.1,numkeep_last=numkeep_last,ploton=T)
 dev.off()
 
@@ -1414,10 +1414,12 @@ vlist_beta_0.1_beta_0.9<-c(ans_beta_0.1,ans_beta_0.9) # a list of 8 matrices
 summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
 rownames(summary_stat)<-c("bestcop_AICw","N_AIC_w","relLTdep_AICw","relUTdep_AIC_w","p_CvM","p_KS","Numboot_success")
 bg <- intToUtf8(0x03B2) 
-cname<-paste0(bg, c("_0.1","_0.1_decrease_T","_-0.1","_-0.1_decrease_T","_0.9","_0.9_decrease_T","_-0.9","_-0.9_decrease_T"))
+cnm<-c("_0.1","_0.1_decrease_T","_-0.1","_-0.1_decrease_T","_0.9","_0.9_decrease_T","_-0.9","_-0.9_decrease_T")
+cname<-paste0(bg,cnm)
 colnames(summary_stat)<-cname
 
 stat_npa_asym_beta_0.1_beta_0.9<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible beta variation
+names(stat_npa_asym_beta_0.1_beta_0.9)<-cname
 
 for(ic in c(1:8)){
   v<-vlist_beta_0.1_beta_0.9[[ic]]
@@ -1441,6 +1443,34 @@ for(ic in c(1:8)){
 saveRDS(summary_stat,"./Results/asym_sens_results/beta_variation_summary_stat.RDS")
 saveRDS(stat_npa_asym_beta_0.1_beta_0.9,"./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")
 ```
+
+![results for model selection \label{fig_ms_asym_beta_0.1}](./Results/asym_sens_results/beta_0.1_asym_sens.pdf){ width=40%, height=40% }
+
+![results for model selection \label{fig_ms_asym_beta_0.9}](./Results/asym_sens_results/beta_0.9_asym_sens.pdf){ width=40%, height=40% }
+
+```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
+
+knitr::kable(summary_stat, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption="summary of model selection results for asym. sensitivity \\label{tab_summary_stat_asym_sens}")
+```
+
+```{r tab_stat_npa_asym,echo=F,results="asis"}
+#knitr::opts_knit$set(kable.force.latex = TRUE)
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")
+
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  temp2<-knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste("beta",cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
+  print(temp2)
+  cat("\\newpage")
+}
+```
+
 
 ## Need to think about mechanisms for biogeochemical, evolutionary, and community data
 

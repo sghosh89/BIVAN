@@ -84,7 +84,20 @@ dev.off()
 
 ## BMR data  \label{BMR_data}
 
-**bmr-contrasts.csv** : Prof. M. T. Holder to add description here about this dataset.
+**bmr-contrasts.csv** : This contains the trait contrasts
+from phylogenetically independent contrasts [@SukumaranH2010] 
+of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR)
+and mass of mammals species.
+Specifically, the "SELECT" BMR data in their database were used for
+ those species for which data were available.
+A phylogeny in NEXUS [@NEXUS] format was extracted from the 
+ supplementary information of [@GenoudIM2017].
+Version 4.3 of the DendroPy library [@SukumaranH2010] was used to calculate 
+  phylogenetic independent contrasts.
+For each contrast, the path length spanned by the contrast (sum of the branch
+  lengths) and the contrast for the mass, BMR and natural
+  logarithm of the mass were written as a row in the bmr-contrasts.csv file. 
+
 
 ```{r read_BMR_data, echo=FALSE, results="markup"}
 set.seed(seed)

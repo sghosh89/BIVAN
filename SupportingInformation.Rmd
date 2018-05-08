@@ -207,6 +207,8 @@ v_contrasts_67<-phylo_dat_fn(data=phylo_dat,i=6,j=7,ploton = T)
 dev.off()
 ```
 
+\newpage 
+
 \begin{figure}[!h]
 \textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
 \begin{center}
@@ -241,6 +243,7 @@ methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 #             caption = "First few rows of raw methane data.\\label{tab_rawdata_methane}",
 #             booktabs=T) # display first few rows
 ```
+
 
 \newpage
 
@@ -2021,8 +2024,8 @@ for (counter in 2:dim(s.slope)[1])
 
 
 
-
 \newpage
+
 # References
 <div id="refs"></div>
 

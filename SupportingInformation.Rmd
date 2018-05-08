@@ -92,8 +92,8 @@ Specifically, the "SELECT" BMR data in their database were used for
  those species for which data were available.
 A phylogeny in NEXUS [@NEXUS] format was extracted from the 
  supplementary information of [@GenoudIM2017].
-Version 4.3 of the DendroPy library [@SukumaranH2010] was used to calculate 
-  phylogenetic independent contrasts.
+Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate 
+  phylogenetic independent contrasts using Python 2.7.
 For each contrast, the path length spanned by the contrast (sum of the branch
   lengths) and the contrast for the mass, BMR and natural
   logarithm of the mass were written as a row in the bmr-contrasts.csv file. 
@@ -142,7 +142,15 @@ dev.off()
 
 ## Phylogenetic data : Anolis  \label{Phylo_data}
 
-**contrasts.csv** : Prof. M. T. Holder to add description here about this dataset.
+**contrasts.csv** : Raw data on measurements of anatomical
+features of several species of *Anolis* lizards was downloaded
+from the Dryad data package [@MahlerIRL2013Data] associated with
+[@MahlerIRL2013].
+The contrasts.csv file was produced by using version 4.4.0 of the DendroPy 
+  library [@SukumaranH2010]  to calculate 
+  phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv
+  file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex)
+  as the phylogeny.
 
 ```{r read_phylo_data, echo=F, results="markup"}
 set.seed(seed)

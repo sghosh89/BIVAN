@@ -5,3 +5,4 @@ https://onlinelibrary.wiley.com/doi/full/10.1111/brv.12350
 tree.nex was produced from 
 Tree in NEXUS in pdf from https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Fbrv.12350&attachmentId=212161481
 
+python contrast_for_those_having_data.py select-species-mass-bmr.csv tree.nex  > ../bmr-contrasts.csv

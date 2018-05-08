@@ -43,5 +43,5 @@ for cidx in range(chars.vector_size):
 out = sys.stdout
 for cind, crow in enumerate(crows):
     out.write('c{},'.format(cind))
-    out.write(','.join([str(i) for i in crow]))
+    out.write(','.join(['{:8.6f}'.format(i) for i in crow]))
     out.write('\n')

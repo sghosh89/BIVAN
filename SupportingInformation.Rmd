@@ -1447,6 +1447,9 @@ cnm<-c("_0.1","_0.1_decrease_T","_-0.1","_-0.1_decrease_T","_0.9","_0.9_decrease
 cname<-paste0(bg,cnm)
 colnames(summary_stat)<-cname
 
+ms_asym_beta_0.1_beta_0.9<-vector(mode = "list", length = 8) # initializing list to store model selection results for all possible beta variation
+names(ms_asym_beta_0.1_beta_0.9)<-cname
+
 stat_npa_asym_beta_0.1_beta_0.9<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible beta variation
 names(stat_npa_asym_beta_0.1_beta_0.9)<-cname
 
@@ -1456,6 +1459,7 @@ for(ic in c(1:8)){
                       AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
                       gofnormal=F,status=F)
   
+  ms_asym_beta_0.1_beta_0.9[[ic]]<-res
   
   summary_stat[1,ic]<-max(res$InfCritRes$AICw)
   summary_stat[2,ic]<-res$InfCritRes$AICw[1]
@@ -1470,6 +1474,7 @@ for(ic in c(1:8)){
 }
 
 saveRDS(summary_stat,"./Results/asym_sens_results/beta_variation_summary_stat.RDS")
+saveRDS(ms_asym_beta_0.1_beta_0.9,"./Results/asym_sens_results/ms_asym_beta_0.1_beta_0.9.RDS")
 saveRDS(stat_npa_asym_beta_0.1_beta_0.9,"./Results/asym_sens_results/stat_npa_asym_beta_0.1_beta_0.9.RDS")
 ```
 

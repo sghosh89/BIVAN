@@ -1405,13 +1405,17 @@ plotter_asym_sens_b_varn<-function(mg,ml,a,b,numkeep_last,ploton){
     
     #plot(pop[,1],pop[,2],col="red",main = bquote(beta ==.(beta)))
     plot(pop[,1],pop[,2],col="red",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])))
-    mtext(expression(paste("(A) ","b = ",b,", g = ",g[1])),side = 3, line=0.3, adj=0.5, col="black")
+    title(expression(paste("(A) g = ",g[1]," , ")), adj=0.4)
+    mtext(paste("b = ",b),side = 3, line=0.2, adj=0.72, col="black")
     plot(pop_d[,1],pop_d[,2],col="blue",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])))
-    mtext(expression(paste("(B) ","b = ",b,", g = ",g[2])),side = 3, line=0.3, adj=0.5, col="black")
+    title(expression(paste("(B) g = ",g[2]," , ")), adj=0.4)
+    mtext(paste("b = ",b),side = 3, line=0.2, adj=0.72, col="black")
     plot(pop_neg_b[,1],pop_neg_b[,2],col="orange",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])))
-    mtext(expression(paste("(C) ","b = ",b,", g = ",g[1])),side = 3, line=0.3, adj=0.5, col="black")
+    title(expression(paste("(C) g = ",g[1]," , ")), adj=0.4)
+    mtext(paste("b = ",neg_b),side = 3, line=0.2, adj=0.75, col="black")
     plot(pop_d_neg_b[,1],pop_d_neg_b[,2],col="skyblue",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])))
-    mtext(expression(paste("(D) ","b = ",b,", g = ",g[2])),side = 3, line=0.3, adj=0.5, col="black")
+    title(expression(paste("(D) g = ",g[2]," , ")), adj=0.4)
+    mtext(paste("b = ",neg_b),side = 3, line=0.2, adj=0.75, col="black")
     
     par(op)
   }

@@ -587,8 +587,44 @@ To test that our approach is of two way : first, we calculated the parameters of
 Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \nameref{NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Spearman's Rho (or Kendall's Tau) of the noise copula family. Fig. \ref{SM-fig_Cause4copula_C_spear} and Fig. \ref{SM-fig_Cause4copula_C_kend} represent this picture for noise generating from a lower tail dependent Clayton copula whereas for Fig. \ref{SM-fig_Cause4copula_SC_spear} and Fig. \ref{SM-fig_Cause4copula_SC_kend} noise came from a upper tail dependent Survival Clayton family. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 ### Asymmetric sensitivity and copula structure in populations
-
 <!--Another model, distinct from the above, Dan and Shya to discuss-->
+Here we intend to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) beyond a certain expectation threshold. To test this assymetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
+
+\begin{equation}\label{eq.AS}
+P_{i}(t+1) = b P_{i}(t) + g(\epsilon_{i}(t)) + h(\delta_{i}(t))
+\end{equation}
+
+$b$ was the linear growth rate. Global environmental fluctuation function $g(\epsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}) where $\epsilon=(\epsilon_{1}, \epsilon_{2})$ was an iid through time with mean zero and covariance matrix $\Sigma_{\epsilon}$.
+
+\begin{align}
+g(\epsilon) = \begin{cases} 
+g_{1} = \begin{cases}
+\epsilon & \text{if $\epsilon< 0$}; \\
+0 & \text{otherwise}.
+\end{cases}\\ \\
+g_{2} = \begin{cases}
+\epsilon & \text{if $\epsilon> 0$}; \\
+0 & \text{otherwise}\label{eq.AS_g}.
+\end{cases}
+\end{cases} \text{where } \epsilon = N(\textbf{0},\Sigma_{\epsilon})\;\ \text{with} \;\ \Sigma_{\epsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
+\end{align}
+
+Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and covariance matrix $\Sigma_{\delta}$.
+
+\begin{equation}\label{eq.AS_h}
+h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+\end{equation}
+
+We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $r=0.8$. $N=10000$ points were generated from each local and global fluctuations to apply on the initial populations and then after simulation we kept only last $1000$ populations to plot the copula for a specific $b$ and a specific functional form of $g$. Fig. \ref{SM-fig_ms_asym_b_0.1} and Fig. \ref{SM-fig_ms_asym_b_0.9} show these results. We also carried out model selection and non-parametric statistical analysis with each copula of those figures and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_8}. Table \ref{SM-tab_summary_stat_asym_sens} shows that according to our model selection approach for $b=\pm0.1$, non-normal copula (with higher AIC weights) were always best-fit with some asymetric tail dependence. 
+
+
+
+
+
+
+
+
+
 
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
@@ -607,7 +643,7 @@ Figure \ref{SM-fig_skewness_count} shows that averaged skewness is much lower th
 
 - Aphid first flight \label{skewness_ff}
 
-Figure \ref{fig_skewness_ff} shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in Figure \ref{SM-fig_skewness_ff}). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
+Figure \ref{SM-fig_skewness_ff} shows that averaged skewness is much higher than expected if the aphid first flight data came from a normal copula. Here, $p$ value indicates the fraction of surrogate-skewness which are greater than the averaged skewness of the given data (red line in Figure \ref{SM-fig_skewness_ff}). As $p<0.05$, we reject $H_{0}$ in support for upper tail dependence. 
 
 
 - UK Sea plankton \label{skewness_pns}
@@ -628,7 +664,7 @@ Figure \ref{SM-fig_skewness_methane} shows that averaged skewness is lower than 
 
     * For ricker model when extinction risk calculated after $25$ years, was plotted against each $d$ (=degree of dispersion) we varied, we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one upto $r=0.7$. For $r>0.7$, extinction risk is greater for data came from right tail dependent environmental fluctuations. [see Fig. \ref{SM-fig_risk_local_disp} - \ref{SM-fig_risk_global_disp}]
  
-    * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_K_effect}]
+    * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{SM-fig_risk_K_effect}]
   
 With increasing $numlocs$ from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_numlocs_effect_global_disp}] for both model. 
 

@@ -78,7 +78,7 @@ dev.off()
 \begin{center}
 \includegraphics[width=3 in]{./Results/SoilCNraw.pdf}
 \includegraphics[width=3 in]{./Results/SoilCNcop.pdf}
-\caption[\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data]{\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n = `r nrow(d)` $ is the number of sampling locations (see Sec. \ref{Model_selection}).\label{fig_raw_cop_soilCN}}
+\caption[\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data]{\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n = `r nrow(d)` $ is the number of sampling locations (see \nameref{MT-Model_selection} of manuscript).\label{fig_raw_cop_soilCN}}
 \end{center}
 \end{figure}
 
@@ -136,7 +136,7 @@ dev.off()
 \begin{center}
 \includegraphics[width=3 in]{./Results/BMR_results/rawdataplot_BMR_vs_lnmass.pdf}
 \includegraphics[width=3 in]{./Results/BMR_results/copula_BMR_vs_lnmass.pdf}
-\caption[\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset]{\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see Sec. \ref{Model_selection}).\label{fig_raw_cop_BMR}}
+\caption[\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset]{\textbf{(A)} Plot of the raw BMR vs. ln(mass) data \textbf{(B)} Copula plot for BMR dataset. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript).\label{fig_raw_cop_BMR}}
 \end{center}
 \end{figure}
 
@@ -214,7 +214,7 @@ dev.off()
 \begin{center}
 \includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
 \includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
-\caption[\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits]{\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see Sec. \ref{Model_selection}). \label{fig_raw_cop_AVG_humerus_ltoe}}
+\caption[\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits]{\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_AVG_humerus_ltoe}}
 \end{center}
 \end{figure}
 
@@ -1360,13 +1360,11 @@ dev.off()
 \end{center}
 \end{figure}
 
-
-
-\newpage
-
+<!--
 ## Asymmetric sensitivity and copula structure in populations
+           ----moved to Paper.Rmd----
+-->
 
-<!--Another model, distinct from the above, Dan and Shya to discuss-->
 ```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed)
 #-----------------------------------------------------------------------------------
@@ -1446,7 +1444,7 @@ dev.off()
 vlist_b_0.1_b_0.9<-c(ans_b_0.1,ans_b_0.9) # a list of 8 matrices
 
 summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
-rownames(summary_stat)<-c("bestcop_AICw","N_AICw","relLTdep_AICw","relUTdep_AICw","p_CvM","p_KS","Numboot_success")
+rownames(summary_stat)<-c("bestcop_AICw","N_AICw","relLTdep_AICw","relUTdep_AICw","p_CvM","p_KS","BS_success%")
 #bg <- intToUtf8(0x03B2) 
 cnm<-c("b_0.1_g~1~","b_0.1_g~2~","b_-0.1_g~1~","b_-0.1_g~2~","b_0.9_g~1~","b_0.9_g~2~","b_-0.9_g~1~","b_-0.9_g~2~")
 #cname<-paste0(bg,cnm)
@@ -1472,7 +1470,7 @@ for(ic in c(1:8)){
   summary_stat[4,ic]<-res$relUTdep_AICw
   summary_stat[5,ic]<-res$GofRes_CvM
   summary_stat[6,ic]<-res$GofRes_KS
-  summary_stat[7,ic]<-res$Numboot_success
+  summary_stat[7,ic]<-(res$Numboot_success/res$Numboot)*100
   
   stat_npa_asym_b_0.1_b_0.9[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cnm[ic],numbin=10)
   
@@ -1483,9 +1481,19 @@ saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS
 saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
-![results for model selection \label{fig_ms_asym_b_0.1}](./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf){ width=40%, height=40% }
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
+\caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.1}}
+\end{center}
+\end{figure}
 
-![results for model selection \label{fig_ms_asym_b_0.9}](./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf){ width=40%, height=40% }
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
+\caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.9}}
+\end{center}
+\end{figure}
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 knitr::kable(summary_stat, booktabs = T, 
@@ -1495,22 +1503,88 @@ knitr::kable(summary_stat, booktabs = T,
       caption="summary of model selection results for asym. sensitivity \\label{tab_summary_stat_asym_sens}")
 ```
 
-\newpage
-```{r tab_stat_npa_asym,echo=F,results="asis"}
+```{r read_tab_stat_npa_asym,echo=F,results="asis"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 
-for(i in c(1:8)){
-  temp<-make_table_stat_fn(data=tab_asym[[i]])
-  temp2<-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
+#for(i in c(1:8)){
+#  temp<-make_table_stat_fn(data=tab_asym[[i]])
+#  temp2<-knitr::kable(temp, booktabs = T, 
+#             format = "pandoc",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
-  print(temp2)
-  cat("\\newpage")
-}
+#      caption =paste(cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
+#  print(temp2)
+#  cat("\\newpage")
+#}
 ```
 
+```{r tab_stat_npa_asym_1,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[1]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[1]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}"))
+```
+
+\newpage
+```{r tab_stat_npa_asym_2,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[2]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[2]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}"))
+```
+
+\newpage
+```{r tab_stat_npa_asym_3,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[3]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[3]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_3}"))
+```
+
+\newpage
+
+```{r tab_stat_npa_asym_4,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[4]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[4]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_4}"))
+```
+
+```{r tab_stat_npa_asym_5,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[5]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[5]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_5}"))
+```
+
+```{r tab_stat_npa_asym_6,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[6]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[6]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_6}"))
+```
+
+```{r tab_stat_npa_asym_7,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[7]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[7]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_7}"))
+```
+
+```{r tab_stat_npa_asym_8,echo=F,results="markup"}
+temp<-make_table_stat_fn(data=tab_asym[[8]])
+knitr::kable(temp, booktabs = T, 
+             format = "pandoc",
+      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
+      caption =paste(cnm[8]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_8}"))
+```
 
 ## Need to think about mechanisms for biogeochemical, evolutionary, and community data
 

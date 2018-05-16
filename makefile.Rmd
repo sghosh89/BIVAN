@@ -1,9 +1,19 @@
 ---
-title: "Makefile_linux, compiliation notes"
+title: "Makefile, compiliation notes"
 author: "Daniel Reuman"
 date: ""
 output: pdf_document
 ---
+<!--checkpoint package-->
+```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
+library(checkpoint)
+library(captioner)
+library(rmarkdown)
+if (!dir.exists("./.checkpoint/")){
+  dir.create("./.checkpoint/")
+}
+checkpoint("2018-03-29",checkpointLocation = "./")
+```
 
 # Get tex files and pdf files for the supp mat, but the pdf files 
 #are missing the external references 

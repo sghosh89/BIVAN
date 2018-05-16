@@ -22,9 +22,8 @@ bibliography: REF_ALL.bib
 updated on `r Sys.Date()`
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
-seed<-101
-# families<-c(1,3:10,13,14,16:20)
-source("mtime.R") #A function needed for caching
+#seed<-101
+#source("mtime.R") #A function needed for caching
 ```
 # Front matter
 
@@ -140,23 +139,6 @@ Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about
 dependence in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
 the right parts of the distributions. 
-
-```{r fig_stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"),mtime("StatTestNumericResults.RData"))}
-set.seed(seed) 
-source("fig_Paper_stat_testing.R")
-load("./Results/stat_results/stat_testing/StatTestNumericResults.RData")
-resultsloc<-"./Results/stat_results/stat_testing/"
-
-copname<-"C"
-reslist<-res_pt35_rankT
-
-statname<-"CorlmCoru"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-statname<-"PlmPu"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-statname<-"D2umD2l"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-```
 
 \begin{figure}[!h]
 \textbf{ \hspace{6 cm} (A) \hspace{5.6 cm} (B)} \\
@@ -615,15 +597,7 @@ Local environmental fluctuation function $h(\delta)$ varied according to Eq. \re
 h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
 \end{equation}
 
-We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $r=0.8$. $N=10000$ points were generated from each local and global fluctuations to apply on the initial populations and then after simulation we kept only last $1000$ populations to plot the copula for a specific $b$ and a specific functional form of $g$. Fig. \ref{SM-fig_ms_asym_b_0.1} and Fig. \ref{SM-fig_ms_asym_b_0.9} show these results. We also carried out model selection and non-parametric statistical analysis with each copula of those figures and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_8}. Table \ref{SM-tab_summary_stat_asym_sens} shows that according to our model selection approach for $b=\pm0.1$, non-normal copula (with higher AIC weights) were always best-fit with some asymetric tail dependence. 
-
-
-
-
-
-
-
-
+We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $r=0.8$. $10000$ points were generated from each local and global fluctuations to apply on the initial populations and then after simulation we kept only last $1000$ time step of simulation to plot the population-copula for a specific $b$ and a specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). Fig. \ref{SM-fig_ms_asym_b_0.1} and Fig. \ref{SM-fig_ms_asym_b_0.9} show these results for $b=\pm0.1$ and $b=\pm0.9$, respectively. We also carried out model selection and non-parametric statistical analysis with each copula of those figures and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_8}. Table \ref{SM-tab_summary_stat_asym_sens} represent the model selection results with AIC weights for best fitted copula and normal copula, model averaged lower and upper tail dependence, p-values (both Cramer-von Mises statistic and Kolmogorov-Smirnov statistic) for goodness of fit test. In each case, successful bootstrap was $100\%$. According to our model selection approach, for $b=\pm0.1$, non-normal copula (with higher AIC weights) were always best-fit with some asymetric tail dependence whereas for $b\pm0.9$, most of the time normal was best. It is probably because the populations get long-time exposure to environmental changes for slower growth(or decay) rate and so global fluctuation can affect them more efficiently. Our non-parametric analysis results (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_8}) are consistent with this model selection approach. 
 
 
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data

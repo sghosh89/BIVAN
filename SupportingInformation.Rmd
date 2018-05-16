@@ -26,15 +26,7 @@ bibliography: REF_ALL.bib
 
 updated on `r Sys.Date()`
 
-<!--checkpoint package-->
-```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
-library(checkpoint)
-library(captioner)
-if (!dir.exists("./.checkpoint/")){
-  dir.create("./.checkpoint/")
-}
-checkpoint("2018-03-29",checkpointLocation = "./")
-```
+<!--checkpoint chunk is moved to makefile.Rmd-->
 
 <!--Basic setup-->
 ```{r setup, echo=F}
@@ -314,6 +306,25 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \caption[Testing non-parametric statistics with datapoints $n=1000$]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
+
+<!--This r-chunk generates figure necessary for maintext Paper-->
+```{r fig_stat_testing_for_maintext, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"),mtime("StatTestNumericResults.RData"))}
+set.seed(seed) 
+source("fig_Paper_stat_testing.R")
+#load("./Results/stat_results/stat_testing/StatTestNumericResults.RData")
+resultsloc<-"./Results/stat_results/stat_testing/"
+
+copname<-"C"
+reslist<-res_pt35_rankT
+
+statname<-"CorlmCoru"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+statname<-"PlmPu"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+statname<-"D2umD2l"
+call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
+```
+
 
 <!--
 # Question 1 analyses for each dataset

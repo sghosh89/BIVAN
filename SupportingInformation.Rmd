@@ -485,6 +485,7 @@ stat_BMR_ga_numbin5<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nam
 ```{r tab_BMR_asym, echo=F, results="markup"}
 tab_BMR_asym<-make_table_stat_fn(data=stat_BMR_ga)
 tab_BMR_asym_numbin5<-make_table_stat_fn(data=stat_BMR_ga_numbin5)
+
 knitr::kable(tab_BMR_asym,
              format="pandoc",
              caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=10 \\label{tab_BMR_asym}",

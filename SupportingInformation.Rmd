@@ -188,7 +188,7 @@ dev.off()
 # Generating raw data plot btw AVG.ltoe.IV and AVG.humerus from contrasts.csv
 pdf("./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf")
 op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(phylo_dat$AVG.ltoe.IV,phylo_dat$AVG.humerus,type="p",col="red",xlab="AVG.ltoe.IV",ylab="AVG.humerus",
+plot(phylo_dat$AVG.ltoe.IV,phylo_dat$AVG.humerus,type="p",col="red",xlab="contrasts for AVG.ltoe.IV",ylab="contrasts for AVG.humerus",
      cex.lab=1.5,cex.axis=1.5)
 par(op)
 dev.off()
@@ -206,7 +206,7 @@ dev.off()
 \begin{center}
 \includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
 \includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
-\caption[\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits]{\textbf{(A)} Plot of the raw AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_AVG_humerus_ltoe}}
+\caption[\textbf{(A)} Plot of the contrasts for AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits]{\textbf{(A)} Plot of the contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_AVG_humerus_ltoe}}
 \end{center}
 \end{figure}
 
@@ -359,7 +359,7 @@ h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h, #longtable = T, 
              format = "pandoc",
       #caption.short = "Fitting info for soil C and N dataset",
-      caption = "Fitting info for soil C and N dataset. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
+      caption = "Fitting info for **soil C and N dataset**. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 
@@ -374,7 +374,7 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for soilCN data]{Nonparametric tests for tail dependence and other deviations from a normal copula for soil C and N data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Testing non-parametric statistics for soilCN data]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{soil C and N data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles).  When red lines were outside dashed lines, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -422,7 +422,7 @@ tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
 knitr::kable(tab_soilCN_asym, booktabs = T, 
              format = "pandoc",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence. Recall that Spearman-preserving surrogates are more appropriate for the $\\cor$ statistic (Figure \\ref{fig_soilCN_nonparam} caption).\\label{tab_soilCN_asym}")
+      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (Methods). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
 ```
 
@@ -471,16 +471,18 @@ stat_BMR_ga_numbin5<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/BMR_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam}}
+\caption[Testing non-parametric statistics for BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam}}
 \end{center}
 \end{figure}
 
+<!--
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/BMR_numbin_5_bivfunctionplot.pdf}
 \caption[Testing non-parametric statistics for BMR data with $numbin=5$]{Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.2$, $0.2-0.4$, ..., $0.8-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam5}}
 \end{center}
 \end{figure}
+-->
 
 ```{r tab_BMR_asym, echo=F, results="markup"}
 tab_BMR_asym<-make_table_stat_fn(data=stat_BMR_ga)
@@ -488,13 +490,13 @@ tab_BMR_asym_numbin5<-make_table_stat_fn(data=stat_BMR_ga_numbin5)
 
 knitr::kable(tab_BMR_asym,
              format="pandoc",
-             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=10 \\label{tab_BMR_asym}",
+             caption = "**BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. \\label{tab_BMR_asym}",
              booktabs=T)
 
-knitr::kable(tab_BMR_asym_numbin5,
-             format="pandoc",
-             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=5 \\label{tab_BMR_asym_numbin5}",
-             booktabs=T)
+#knitr::kable(tab_BMR_asym_numbin5,
+#             format="pandoc",
+#             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=5 \\label{tab_BMR_asym_numbin5}",
+#             booktabs=T)
 ```
 
 <!--
@@ -530,12 +532,38 @@ knitr::kable(h,
 ```
 
 <!--This chunk is for npa testing results of anolis dataset-->
-```{r stat_contrasts_67_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+```{r stat_contrasts_67_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}   
+source("bivfunctionplot.R")  
+set.seed(seed) 
+# Now do NPA for v_contrasts_67 with numbin=4
+stat_contrasts_67_ga<-bivfunctionplot(v=v_contrasts_67,resloc="./Results/Anolis_results/contrasts_csv_results/",
+                                      nametag="contrasts_67",numbin = 4) 
+``` 
+
+```{r stat_contrasts_67_graphic_approach2, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
 set.seed(seed) 
 # Now do NPA for v_contrasts_67
-stat_contrasts_67_ga<-bivfunctionplot(v=v_contrasts_67,resloc="./Results/Anolis_results/contrasts_csv_results/",
-                                      nametag="contrasts_67",numbin = 4)
+
+stat_contrasts_67_ga_numbin2<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin2",numbin = 2)
+
+stat_contrasts_67_ga_numbin3<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin2",numbin = 3)
+
+stat_contrasts_67_ga_numbin6<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin6",numbin = 6)
+
+stat_contrasts_67_ga_numbin7<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin7",numbin = 7)
+
+stat_contrasts_67_ga_numbin10<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin10",numbin = 10)
 ```
 
 \begin{figure}[!h]
@@ -558,6 +586,50 @@ knitr::kable(tab_contrasts_67_asym,
              caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_contrasts_67_asym}",
              booktabs=T)
 ```
+
+<!--
+This chunks are just to see the tables for all numbin variation for anolis data set: It appears that numbin=4 is optimized, when numbin=2, >= 7, there is no significant asymetry in tail dep in all 3 types of stats.
+```{r tab_contrasts_67_asym67_numbin2, echo=F, results="markup"}
+#tab_contrasts_67_asym2<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin2)
+#knitr::kable(tab_contrasts_67_asym2,
+#            format="pandoc",
+#             caption = "numbin_2,anolis \\label{tab_contrasts_67_asym2}",
+#             booktabs=T)
+```
+
+```{r tab_contrasts_67_asym67_numbin3, echo=F, results="markup"}
+#tab_contrasts_67_asym3<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin3)
+#knitr::kable(tab_contrasts_67_asym3,
+#             format="pandoc",
+#             caption = "numbin_3,anolis \\label{tab_contrasts_67_asym3}",
+#             booktabs=T)
+```
+
+```{r tab_contrasts_67_asym67_numbin6, echo=F, results="markup"}
+#tab_contrasts_67_asym6<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin6)
+#knitr::kable(tab_contrasts_67_asym6,
+#             format="pandoc",
+#             caption = "numbin_6,anolis \\label{tab_contrasts_67_asym6}",
+#             booktabs=T)
+```
+
+```{r tab_contrasts_67_asym67_numbin7, echo=F, results="markup"}
+#tab_contrasts_67_asym7<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin7)
+#knitr::kable(tab_contrasts_67_asym7,
+#             format="pandoc",
+#             caption = "numbin_7,anolis \\label{tab_contrasts_67_asym7}",
+#             booktabs=T)
+```
+
+```{r tab_contrasts_67_asym67_numbin10, echo=F, results="markup"}
+#tab_contrasts_67_asym10<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin10)
+#knitr::kable(tab_contrasts_67_asym10,
+#             format="pandoc",
+#             caption = "numbin_10,anolis \\label{tab_contrasts_67_asym10}",
+#             booktabs=T)
+```
+
+-->
 
 <!--
 \newpage

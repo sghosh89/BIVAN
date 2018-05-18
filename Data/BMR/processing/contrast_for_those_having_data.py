@@ -39,7 +39,7 @@ def main(char_csv, tree_fn):
 
         if label in data_dict:
             sys.exit('label "{}" is repeated\n'.format(label))
-        data_dict[label] = (mass, bmr, math.log(mass))
+        data_dict[label] = (mass, math.log(bmr), math.log(mass))
     to_prune = [i.taxon for i in tree.leaf_node_iter() if i.taxon.label not in data_dict]
     # print('to_prune = {}'.format(len(to_prune)))
     # print('to_keep = {}'.format(len(taxa) - len(to_prune)))
@@ -54,7 +54,9 @@ def main(char_csv, tree_fn):
     
     cm = dendropy.ContinuousCharacterMatrix(taxon_namespace=taxa)
     for taxon in taxa:
-        cm.new_sequence(taxon, data_dict[taxon.label])
+        row = data_dict[taxon.label]
+        cm.new_sequence(taxon, row)
+        sys.stderr.write('{}\t{}\n'.format(taxon.label, '\t'.join([str(i) for i in row])))
 
     crows = []
     for cind, nd in enumerate(tree.postorder_internal_node_iter()):
@@ -77,7 +79,7 @@ def main(char_csv, tree_fn):
             crow.append(nd.pic_contrast_standardized)
 
     out = sys.stdout
-    out.write('contrast,path length,mass,BMR,ln mass\n')
+    out.write('contrast,path length,mass,ln BMR,ln mass\n')
     for cind, crow in enumerate(crows):
         out.write('c{},'.format(cind))
         out.write(','.join(['{:8.6f}'.format(i) for i in crow]))

@@ -87,7 +87,7 @@ A phylogeny in NEXUS [@NEXUS] format was extracted from the
 Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate 
   phylogenetic independent contrasts using Python 2.7.
 For each contrast, the path length spanned by the contrast (sum of the branch
-  lengths) and the contrast for the mass, BMR and natural
+  lengths) and the contrast for the mass, natural logarithm of the BMR and natural
   logarithm of the mass were written as a row in the bmr-contrasts.csv file. 
 
 

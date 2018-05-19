@@ -322,14 +322,18 @@ Although these results do convincingly show non-Gaussian copula structure, we sh
 
 #### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 
-As described in Methods, each of our statistics, as computed for the 
-ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$, was compared to the distributions 
+As described in \nameref{Methods}, each of our statistics, as computed for the 
+ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions 
 of values of the same statistic with the same ranges computed on 1000 normal-copula 
 surrogate datasets with similar Kendall or Spearman correlations, in different 
-runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). Because the correlation 
+runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). 
+<!--
+Because the correlation 
 used in the $\cor$ statistic is the Spearman correlation, Spearman-preserving surrogates
 should be used, so the top-right panel of Fig. \ref{SM-fig_soilCN_nonparam}
-is more reliable than the top left. Results indicate that tail dependence of 
+is more reliable than the top left.
+--> 
+Results indicate that tail dependence of 
 data is stronger in both the lower and upper tails than would be expected under a 
 null hypothesis of a normal copula, answering the second part of question 1. The dependence between C and N is also 
 weaker in the middle of the distributions
@@ -341,18 +345,22 @@ Results (Table \ref{SM-tab_soilCN_asym}) show that upper-tail dependence was, in
 ### BMR data \label{Ex_BMR}
 
 ```{r read_BivMS_BMR_data,echo=F}
-BivMS_BMR<-readRDS("./Results/BMR_results/BivMS_BMR_lnmass.RDS")
+BivMS_BMR<-readRDS("./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
 ```
 
 #### Model selection approach \label{Ex_BMR_Model_selection}
 
 The test of indepedence gave $p=$ `r BivMS_BMR$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that Frank is much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that BB1 and SBB1 are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
 
-The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was $0$ as expected, because the contributions came from Frank and SBB8 which are both symmetric copula. We also tested that lowest-AIC copula Frank was a good-enough fit, giving $p$-value $`r BivMS_BMR$GofRes_CvM`$ (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value $`r BivMS_BMR$GofRes_KS`$ in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was `r BivMS_BMR$relLTdep_AICw - BivMS_BMR$relUTdep_AICw`, indicating nearly symmetric tail dependence. BB1, being as a two parameter copula,  has both lower and upper tail dependence and depending upon which parameter is greater it shows comparatively greater lower or upper tail dependence. SBB1 is just opposite of BB1 in tail dependency. So, the result was expected, because the contributions came from more or less equally weighted BB1 and SBB1. We also tested that lowest-AIC copula BB1 was a good-enough fit, giving $p$-value `r BivMS_BMR$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_BMR$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 #### Non-parametric analysis of tail dependence \label{Ex_BMR_NPA}
-<!--we have to add description here after DAN fixes bug(?) in bivfunctionplot.R-->
+
+As described in \nameref{Methods}, each of our statistics, as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_BMR_nonparam}). 
+
+Results indicate that dependence of data is different in some bins than would be expected under a 
+null hypothesis of a normal copula, answering the second part of question 1. But Table \ref{SM-tab_BMR_asym} indicates that tail dependence for the BMR data copula is significantly (95% CI) not different from symmetric normal copula and thus consistent with model selection results.
 
 ### Anolis data \label{Ex_contrasts}
 

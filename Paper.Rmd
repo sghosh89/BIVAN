@@ -379,7 +379,17 @@ The model-averaged (AIC weights used for model averaging) lower-tail dependence 
 These results do convincingly show non-Gaussian copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 #### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
-<!--we have to add description here after DAN fixes bug(?) in bivfunctionplot.R-->
+
+As described in \nameref{Methods}, each of our statistics, are computed for $(l_b,u_b)$ in the 
+ranges $0-0.25$, $0.25-0.5$, $0.5-0.75$, $0.75-1$ (with $4$ number of bins). Anolis data set has lesser number of data compared to other two bivariate data set, so fewer number of bins were chosen to measure tail-dependence.
+Those statistics were compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different 
+runs for Kendall and Spearman (Fig. \ref{SM-fig_contrasts_67_nonparam}). 
+
+Results indicate that tail dependence of 
+data is stronger in both the lower and upper tails than would be expected under a 
+null hypothesis of a normal copula, answering the second part of question 1. 
+
+We also tested statistically for asymmetry of tail dependence, which seems visible in Fig. \ref{SM-fig_raw_cop_AVG_humerus_ltoe}(B). Results (Table \ref{SM-tab_contrasts_67_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
 
 ### Abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
 

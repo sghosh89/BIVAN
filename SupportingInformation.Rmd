@@ -77,8 +77,7 @@ dev.off()
 ## BMR data  \label{BMR_data}
 
 [**bmr-contrasts.csv**](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) : 
-This contains the trait contrasts
-from phylogenetically independent contrasts [@SukumaranH2010] 
+This contains the trait contrasts from phylogenetically independent contrasts [@SukumaranH2010] 
 of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR)
 and mass of mammals species.
 Specifically, the "SELECT" BMR data in their database were used for
@@ -135,8 +134,8 @@ dev.off()
 
 ## Phylogenetic data : Anolis  \label{Phylo_data}
 
-**contrasts.csv** : Raw data on measurements of anatomical
-features of several species of *Anolis* lizards was downloaded
+[**contrasts.csv**](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) : 
+Raw data on measurements of anatomical features of several species of *Anolis* lizards was downloaded
 from the Dryad data package [@MahlerIRL2013Data] associated with
 [@MahlerIRL2013].
 The contrasts.csv file was produced by using version 4.4.0 of the DendroPy 
@@ -156,7 +155,7 @@ knitr::kable(head(tab_phylo,3),format='pandoc',
              booktabs=T) # display first few rows
 ```
 
-This data contains path length and different traits for total `r nrow(phylo_dat)` contrasts. Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
+This data contains path length and different traits for total `r nrow(phylo_dat)` contrasts. Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts for two selective phylogenetic traits, namely, AVG.ltoe.IV (average length of fourth hindtoe) and AVG.humerus (average length of humerus). The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
 
 
 ```{r plot_phylo_data, echo=F, results="hide"}
@@ -453,7 +452,7 @@ saveRDS(BivMS_BMR,file="./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
 h<-BivMS_BMR$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for BMR dataset. \\label{tab_BMRfit}",
+             caption = "Fitting info for **BMR dataset**. \\label{tab_BMRfit}",
              booktabs=T)
 ```
 
@@ -526,7 +525,7 @@ saveRDS(BivMS_contrasts_67,file="./Results/Anolis_results/contrasts_csv_results/
 h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for contrasts between AVG.ltoe.IV and AVG.humerus dataset. \\label{tab_contrasts_67fit}",
+             caption = "Fitting info for **Anolis data set** with contrasts for AVG.ltoe.IV and AVG.humerus phylogenetic traits. \\label{tab_contrasts_67fit}",
              booktabs=T)
 ```
 
@@ -552,6 +551,10 @@ stat_contrasts_67_ga_numbin3<-bivfunctionplot(v=v_contrasts_67,
                             resloc="./Results/Anolis_results/contrasts_csv_results/",
                             nametag="contrasts_67_numbin2",numbin = 3)
 
+stat_contrasts_67_ga_numbin5<-bivfunctionplot(v=v_contrasts_67,
+                            resloc="./Results/Anolis_results/contrasts_csv_results/",
+                            nametag="contrasts_67_numbin5",numbin = 5)
+
 stat_contrasts_67_ga_numbin6<-bivfunctionplot(v=v_contrasts_67,
                             resloc="./Results/Anolis_results/contrasts_csv_results/",
                             nametag="contrasts_67_numbin6",numbin = 6)
@@ -568,26 +571,24 @@ stat_contrasts_67_ga_numbin10<-bivfunctionplot(v=v_contrasts_67,
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Anolis_results/contrasts_csv_results/contrasts_67_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for anolis data]{Nonparametric tests for tail dependence and other deviations from a normal copula for anolis data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_contrasts_67_nonparam}}
+\caption[Testing non-parametric statistics for anolis data]{Nonparametric tests for tail dependence and other deviations from a normal copula for anolis data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.25$, $0.25-0.5$, $0.5-0.75$, $0.75-1$ for $4$ number of bins (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results). \label{fig_contrasts_67_nonparam}}
 \end{center}
 \end{figure}
 
-<!--
-{Nonparametric tests for tail dependence and other deviations from a normal copula for anolis data. As described in Methods, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red lines), and was also computed using the same ranges for $1000$ normal-copula surrogate datasets (dashed lines show $0.025$ and $0.975$ quantiles of these results and dotted lines show $0.005$ and $0.995$ quantiles). \label{fig_contrasts_67_nonparam}}
-\end{center}
-\end{figure}
--->
+
 
 ```{r tab_contrasts_67_asym, echo=F, results="markup"}
 tab_contrasts_67_asym<-make_table_stat_fn(data=stat_contrasts_67_ga)
 knitr::kable(tab_contrasts_67_asym,
              format="pandoc",
-             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_contrasts_67_asym}",
+             caption = "**Anolis data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_contrasts_67_asym}",
              booktabs=T)
 ```
 
+
 <!--
 This chunks are just to see the tables for all numbin variation for anolis data set: It appears that numbin=4 is optimized, when numbin=2, >= 7, there is no significant asymetry in tail dep in all 3 types of stats.
+
 ```{r tab_contrasts_67_asym67_numbin2, echo=F, results="markup"}
 #tab_contrasts_67_asym2<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin2)
 #knitr::kable(tab_contrasts_67_asym2,
@@ -603,6 +604,15 @@ This chunks are just to see the tables for all numbin variation for anolis data 
 #             caption = "numbin_3,anolis \\label{tab_contrasts_67_asym3}",
 #             booktabs=T)
 ```
+
+```{r tab_contrasts_67_asym67_numbin5, echo=F, results="markup"}
+#tab_contrasts_67_asym5<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin5)
+#knitr::kable(tab_contrasts_67_asym5,
+#            format="pandoc",
+#             caption = "numbin_5,anolis \\label{tab_contrasts_67_asym5}",
+#             booktabs=T)
+```
+
 
 ```{r tab_contrasts_67_asym67_numbin6, echo=F, results="markup"}
 #tab_contrasts_67_asym6<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin6)
@@ -672,7 +682,7 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
              format='pandoc',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid. Copulas 
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundances of the green spruce aphid**. Copulas 
 considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
 survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
              booktabs=TRUE
@@ -683,7 +693,7 @@ survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Ab
 ```{r tab_count_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
              format='pandoc',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for abundances of the green spruce aphid.\\label{tab_count_AICw}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_AICw}",
              booktabs=TRUE
              )
 ```
@@ -692,7 +702,7 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
              format='pandoc',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for abundances of the green spruce aphid, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundances of the green spruce aphid**, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
              booktabs=TRUE
              )
 ```
@@ -700,7 +710,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
 ```{r tab_count_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_CvM,
              format='pandoc',
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for abundances of the green spruce aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_CvM}",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_CvM}",
              booktabs=TRUE
              )
 ```
@@ -708,7 +718,7 @@ knitr::kable(RES_aphid_count$gfc_p_CvM,
 ```{r tab_count_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_KS,
              format='pandoc',
-             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for abundances of the green spruce aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_KS}",
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_KS}",
              booktabs=TRUE
              )
 ```
@@ -716,7 +726,7 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='pandoc',
-             caption = "Model-averaged lower tail dependence statistic for each location pair for abundances of the green spruce aphid.\\label{tab_count_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -724,7 +734,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='pandoc',
-             caption = "Model averaged upper tail dependence statistic for each location pair for abundances of the green spruce aphid.\\label{tab_count_UTdep_AICw}",
+             caption = "Model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -733,7 +743,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for abundances of the green spruce aphid.\\label{tab_count_LTmUT}",
+             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -762,7 +772,7 @@ colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for abundances of the green spruce aphid.\\label{tab_count_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundances of the green spruce aphid**.\\label{tab_count_resamp}",
              booktabs=TRUE)
 ```
 
@@ -820,7 +830,7 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='pandoc',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **first flight data for the leaf-curling plum aphid**. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -828,7 +838,7 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
              format='pandoc',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_AICw}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_AICw}",
              booktabs=TRUE
              )
 ```
@@ -837,15 +847,16 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              format='pandoc',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for first flight data for the leaf-curlung plum aphid, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **first flight data for the leaf-curlung plum aphid**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
              )
 ```
 
+\newpage
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_CvM,
              format='pandoc',
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for first flight data for the leaf-curling plum aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_CvM}",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_CvM}",
              booktabs=TRUE
              )
 ```
@@ -853,7 +864,7 @@ knitr::kable(RES_aphid_ff$gfc_p_CvM,
 ```{r tab_ff_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_KS,
              format='pandoc',
-             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for first flight data for the leaf-curling plum aphid. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_KS}",
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_KS}",
              booktabs=TRUE
              )
 ```
@@ -861,7 +872,7 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
              format='pandoc',
-             caption = "Model-averaged lower tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -869,7 +880,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
              format='pandoc',
-             caption = "Model-averaged upper tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_UTdep_AICw}",
+             caption = "Model-averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
@@ -878,7 +889,7 @@ knitr::kable(RES_aphid_ff$UTdep_AICw,
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 5,
              format='pandoc',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for first flight data for the leaf-curling plum aphid.\\label{tab_ff_LTmUT}",
+             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -907,7 +918,7 @@ colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for first flight data for the leaf-curling plum aphid.\\label{tab_ff_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_resamp}",
              booktabs=TRUE)
 ```
 
@@ -970,7 +981,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='pandoc', 
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundance data for \\textit{Ceratium furca} in UK seas**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -981,7 +992,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_AICw}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw}",
              booktabs=TRUE)
 ```
 
@@ -992,7 +1003,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
 
@@ -1002,7 +1013,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for abundance data for *Ceratium furca* in UK seas. Tests were based on bootstrapping as described in Methods.\\label{tab_pns_p_CvM}",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundance data for *Ceratium furca* in UK seas**. Tests were based on bootstrapping as described in Methods.\\label{tab_pns_p_CvM}",
              booktabs=TRUE)
 ```
 
@@ -1014,7 +1025,7 @@ knitr::kable(h,
              digits=3,
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
-locations for abundance data for *Ceratium furca* in UK seas. Tests
+locations for **abundance data for *Ceratium furca* in UK seas**. Tests
 were based on bootstrapping as described in Methods.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
@@ -1025,7 +1036,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Model-averaged lower tail dependence statistic for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1035,7 +1046,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Model-averaged upper tail dependence statistic for each location pair for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_UTdep_AICw}",
+             caption = "Model-averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1046,7 +1057,7 @@ knitr::kable(h,
              format="pandoc",
              digits=3,
              caption = "Model averaged lower tail dependence minus model
-averaged upper tail dependence statistic for each location pair for *Ceratium furca* in UK seas.\\label{tab_pns_LTmUT}",
+averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTmUT}",
              booktabs=TRUE)
 ```
 
@@ -1076,7 +1087,7 @@ colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for abundance data for *Ceratium furca* in UK seas.\\label{tab_pns_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_resamp}",
              booktabs=TRUE)
 ```
 
@@ -1149,7 +1160,7 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='pandoc',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **methane-flux data**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1160,7 +1171,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane-flux data.\\label{tab_methane_AICw}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1171,7 +1182,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for methane-flux data.\\label{tab_methane_AICw_normal}",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
 ```
 
@@ -1181,7 +1192,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane-flux data. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_CvM}",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **methane-flux data**. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_CvM}",
              booktabs=TRUE)
 ```
 
@@ -1193,7 +1204,7 @@ knitr::kable(h,
              digits=3,
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
-locations for methane-flux data. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_KS}",
+locations for **methane-flux data**. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_KS}",
              booktabs=TRUE)
 ```
 
@@ -1203,7 +1214,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Model-averaged lower tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_LTdep_AICw}",
+             caption = "Model-averaged lower tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1213,7 +1224,7 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="pandoc",
              digits=3,
-             caption = "Model-averaged upper tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_UTdep_AICw}",
+             caption = "Model-averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1224,7 +1235,7 @@ knitr::kable(h,
              format="pandoc",
              digits=3,
              caption = "Model averaged lower tail dependence minus model
-averaged upper tail dependence statistic for each location pair for methane-flux data.\\label{tab_methane_LTmUT}",
+averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTmUT}",
              booktabs=TRUE)
 ```
 
@@ -1268,7 +1279,7 @@ colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
              format = "pandoc",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for methane-flux data.\\label{tab_methane_resamp}",
+             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **methane-flux data**.\\label{tab_methane_resamp}",
              booktabs=TRUE)
 ```
 

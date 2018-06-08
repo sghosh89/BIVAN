@@ -45,7 +45,7 @@ source("mtime.R") #A function needed for caching
 To explore the correlation of soil organic C and total soil N across a wide geographic range (conterminous
 US), ecosystem type, and traceable methodology we used the RaCA (Rapid Carbon Assessment)
 database [@Wills2014, **or Wills and Loecke pending???**]. Specifically, the soil organic C and total soil N
-stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the **6???** sites were included in this
+stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the 5930 sites were included in this
 study.
 
 The raw data are shown in Figure \ref{fig_raw_cop_soilCN}(A). The copula is shown in Figure \ref{fig_raw_cop_soilCN}(B).
@@ -232,7 +232,7 @@ dev.off()
 ## Methane-flux data  \label{Methane_data}
 
 Methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
-Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at **???(check after filtering to 50 fluxes)** locations across a hydrologic gradient (upland to seasonal wetland) at
+Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at
 daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site.
 

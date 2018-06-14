@@ -102,12 +102,12 @@ set.seed(seed)
 #---------------------------------------------------------
 BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
 #class(BMR_dat)
-knitr::kable(head(BMR_dat,3),format='pandoc',
+knitr::kable(head(BMR_dat[,c(1,4,5)] ,3),format='pandoc',
              caption = "First few rows of raw BMR data.\\label{tab_rawdata_BMR}",
              booktabs=T) # display first few rows
 ```
 
-This data contains BMR and ln(mass) for total `r nrow(BMR_dat)` contrasts. Table \ref{tab_rawdata_BMR} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_BMR}(A). The copula is shown in Figure \ref{fig_raw_cop_BMR}(B).
+Table \ref{tab_rawdata_BMR} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_BMR}(A). The copula [using absolute values of each column in Table \ref{tab_rawdata_BMR}] is shown in Figure \ref{fig_raw_cop_BMR}(B).
 
 ```{r plot_BMR_data, echo=FALSE, results="hide"}
 set.seed(seed)
@@ -161,7 +161,7 @@ knitr::kable(head(tab_phylo,3),format='pandoc',
              booktabs=T) # display first few rows
 ```
 
-This data contains path length and different traits for total `r nrow(phylo_dat)` contrasts. Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts for two selective phylogenetic traits, namely, AVG.ltoe.IV (average length of fourth hindtoe) and AVG.humerus (average length of humerus). The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
+Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts for two selective phylogenetic traits, namely, AVG.ltoe.IV (average length of fourth hindtoe) and AVG.humerus (average length of humerus). The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula [taking absolute values of each column in Table \ref{tab_rawdata_phylo}] is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
 
 
 ```{r plot_phylo_data, echo=F, results="hide"}

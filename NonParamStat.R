@@ -1,3 +1,5 @@
+# THIS CODE CALCULATES NON-PARAMETRIC STATS FOR MULTIVARIATE COPULAS (PAIRWISE)
+# This code is written to test synchrony between different LOCATIONS pair for a specific SPECIES
 #---------------------------------------------------------------
 source("CopulaFunctions.R")
 source("vivj_matrix.R")
@@ -142,17 +144,18 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
 #above function on all pairs of time series, organize the results, 
 #and make plots.
 #
-#Args
-#d_allsp            A list of data frames, each with columns Year and Dat
+#------------Input---------------------------------------------------------
+#d_allsp         d_allsp[[species]][[location]]$Year or $Dat format
+#                A list of data frames, each with columns Year and Dat
 #               The years are assumed to be sequential and all included,
 #               though there may be NAs in Dat and the years may not
 #               be all the same for ds1 and ds2.
 #sp             species number
-#lats, longs  Vectors of latitudes and longitudes for the locations from
-#               which data in d were gathered, both length equal to length(d)
+#lats, longs  Vectors of latitudes and longitudes for the locations.
 #pfname       Filename (without extension) prepended to plot files saved.
+#good_loc    a vector of chosen locations (say, of length d)
 #
-#Output - A list with these elements
+#---------------Output - A list with these elements--------------------------
 #D        A matrix of geographic distances between sampling locations
 #spear    A matrix of spearman results, length(d) by length(d)
 #kend     A matrix of kendall results, length(d) by length(d)
@@ -160,14 +163,13 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
 #Coru       A matrix of Cu results, length(d) by length(d)
 #Pl    A matrix of Shy_lt results, length(d) by length(d)
 #Pu   A matrix of Shy_ut results, length(d) by length(d)
-
-#D2l    A matrix of R_l results, length(d) by length(d)
-#D2u    A matrix of R_u results, length(d) by length(d)
+#D2l    A matrix of D2l results, length(d) by length(d)
+#D2u    A matrix of D2u results, length(d) by length(d)
 #numericdf    A dataframe containing all the statistical data
 
 multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   
-  d<-d_allsp[[sp]]
+#  d<-d_allsp[[sp]]
   lenloc<-length(good_loc)
   
   #D<-matrix(NA,lenloc,lenloc)
@@ -222,7 +224,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
       
       #D[ii,jj]<-gcdist(longs[i],lats[i],longs[j],lats[j]) old way of gcdist calling from ncf-version 1.1 to 1.7
    
-      m<-vivj_matrix(d_allsp,sp,i,j)
+      m<-vivj_matrix(d_allsp=d_allsp,sp=sp,i=i,j=j)
       thisres<-copsync(m)
       
       spear[ii,jj]<-thisres$spear
@@ -256,7 +258,7 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
       
       i<-good_loc[ii]
       j<-good_loc[jj]
-      m<-vivj_matrix(d_allsp,sp,i,j)
+      m<-vivj_matrix(d_allsp=d_allsp,sp=sp,i=i,j=j)
       thisres<-copsync(m)
       
       if(is.na(thisres$Sl_Su_Si_P$Sl_P[1]) == F){    

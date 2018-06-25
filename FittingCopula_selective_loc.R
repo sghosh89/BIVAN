@@ -1,4 +1,6 @@
 # THIS CODE TESTS FOR A GIVEN COPULA WHICH ARE THE POSSIBLE BEST FIT MODELS ?
+# It fits MULTIVARIATE COPULAS (PAIRWISE) based on MODEL SELECTION APPROACH
+# This code is written to test SPATIAL SYNCHRONY between different lacation pair for a specific species
 #----------------
 library(copula)
 library(VineCopula)

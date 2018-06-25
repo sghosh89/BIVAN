@@ -1,5 +1,6 @@
 # Select any two location pair [i,j] for a copula of species sp
 # This function gives you a matrix with vi and vj as two columns
+library(VineCopula)
 vivj_matrix<-function(d_allsp,sp,i,j){
   
   ds1<-d_allsp[[sp]][[i]]
@@ -34,8 +35,8 @@ vivj_matrix<-function(d_allsp,sp,i,j){
     d2<-ds2
   }
   #get ranks modified now
-  vi<-pobs(d1$Dat)
-  vj<-pobs(d2$Dat)
+  vi<-VineCopula::pobs(d1$Dat)
+  vj<-VineCopula::pobs(d2$Dat)
   Years<-d1$Year
   #-------------------------
   #n_datapt<-length(vi)

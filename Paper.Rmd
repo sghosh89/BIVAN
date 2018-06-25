@@ -22,6 +22,7 @@ bibliography: REF_ALL.bib
 updated on `r Sys.Date()`
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
+options(scipen = 1, digits = 5) #This option round all numbers appeared in the inline r code upto 5th digit
 #seed<-101
 #source("mtime.R") #A function needed for caching
 ```
@@ -374,7 +375,7 @@ The test of indepedence gave $p=0$ <!--`r BivMS_contrasts_67$IndepTestRes` this 
 from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
 and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_contrasts_67fit}). The table shows that several copulas (mostly J and SC) are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
 
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was <!--$\num{1e-10}$--> `r round(BivMS_contrasts_67$relLTdep_AICw,3)` <!--`r BivMS_contrasts_67$relLTdep_AICw` this is e-4 could not compile latex--> and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
 These results do convincingly show non-Gaussian copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 

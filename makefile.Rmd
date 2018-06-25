@@ -4,6 +4,7 @@ author: "Daniel Reuman"
 date: ""
 output: pdf_document
 ---
+
 <!--checkpoint package-->
 ```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
 library(checkpoint)

@@ -26,8 +26,6 @@ bibliography: REF_ALL.bib
 
 updated on `r Sys.Date()`
 
-<!--checkpoint chunk is moved to makefile.Rmd-->
-
 <!--Basic setup-->
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")

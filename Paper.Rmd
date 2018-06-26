@@ -1,6 +1,6 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamolina Ghosh, other authors, Daniel Reuman"
+author: "Shyamolina Ghosh, Mark T. Holder, Terrance E. Loecke, Daniel C. Reuman"
 date: "February 18, 2018"
 geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
 
@@ -19,20 +19,32 @@ urlcolor : blue
 csl: ecology-letters.csl
 bibliography: REF_ALL.bib
 ---
+
+<!--**DAN: right now we sometimes use the terminology "normal copula" and sometimes 
+"Gaussin copula". Let's choose one and be consistent across the whole ms, including 
+main text and supp mat. I am leaning toward "Gaussin copula" but could be convinced 
+otherwise, it is just the consistency that I want to be sure we get to.-->
+
 updated on `r Sys.Date()`
+
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 options(scipen = 1, digits = 5) #This option round all numbers appeared in the inline r code upto 5th digit
 #seed<-101
 #source("mtime.R") #A function needed for caching
 ```
+
 # Front matter
 
 *Affiliations:*
 
-Reuman: 
+Ghosh: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
 
-Ghosh:
+Holder: Department of Ecology and Evolutionary Biology and Biodiversity Institute, University of Kansas, Lawrence, KS, 66045, USA
+
+Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
+
+Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA. 
 
 *Possible alternative titles:*
 
@@ -70,11 +82,19 @@ We address the following questions. 1) Do datasets in ecology and related fields
 ## Datasets
 
 
-## Statistical methods  \label{Methods}
+## Statistical methods for detecting copula structure \label{Methods}
+
+Question 1 from the Introduction was answered via statistical analysis of the
+data described above, using both model selection and nonparametric approaches.
 
 ### Model selection approach \label{Model_selection}
 
-For a bivariate dataset $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps, 
+A model-selection approach based on likelihood and the Akaike Information Criterion (AIC) 
+and Bayesian Information Criterion (BIC) was used to
+help answer question 1 from the Introduction. 
+
+For bivariate datasets 
+$(x_i,y_i)$ for $i=1,...,n$ such as the soil C and N data, model selection involved several steps, 
 most implemented using tools from the `VineCopula` package. Code combining these tools is in the
 [`OurBiCopSelect`](https://github.com/sghosh89/BIVAN/blob/master/OurBiCopSelect.R) function and its dependencies in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
 
@@ -92,8 +112,9 @@ family or as a boundary case. The independence test was as implemented in the `B
 function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. If independence could be rejected ($0.05$ significance level), model selection proceeded.
 
 The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations and numeric codes here indicated) included the **N**ormal/Gaussian {1}, **C**layton {3}, **G**umbel {4}, **F**rank {5}, **J**oe {6}, **BB1** {7}, **BB6** {8}, **BB7** {9}, **BB8** {10}, **S**urvival **C**layton {13}, **S**urvival **G**umbel {14}, **S**urvival **J**oe {16}, **S**urvival **BB1** {17}, **S**urvival **BB6** {18}, **S**urvival **BB7** {19} and **S**urvival **BB8** {20} copulas.
-Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas [@burnham2003_modelselection]. 
-Descriptions of these copula families can be found in introductory texts on copulas [@nelsen2007_copula ; @joe2014_dependence]  and in references cited in `VineCopula`. The lower- and upper-tail dependence of the 
+AIC and BIC values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas [@burnham2003_modelselection]. 
+Descriptions of these copula families can be found in introductory texts on copulas [@nelsen2007_copula ; @joe2014_dependence]  and in `VineCopula` documentation. 
+The lower- and upper-tail dependence of the 
 best-fitting member of each family was also provided by `BiCopEst`.
 
 Model selection methods will give the *relative* support of several models, but will not,
@@ -111,18 +132,34 @@ Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
 formulas [@burnham2003_modelselection]; likewise for BIC.
 
-<!--Shya please insert some additional material for multivariate datasets - perhaps
-you don't need much because basically you just ran the bivariate analysis on each pair
-of locations, but you need to say that and then maybe a few sentences about how 
-everything was tallied up after having done that ??? -->
+The first part or question 1 from the Introduction was answered for a bivariate dataset 
+$(x_i,y_i)$ for $i=1,...,n$ by comparing the AIC weights of the non-Gaussian copula
+families with that of the Gaussian family. The same was also done using BIC.
+The second part of question 1 was answered by comparing 
+the model-averaged lower- and upper-tail dependence
+values to the lower- and upper-tail dependence values of a Gaussian copula, both of which 
+are 0. The third part of question 1
+was answered by comparing the difference of the model-averaged lower- and upper-tail 
+dependence values to the analogous difference for a Gaussian copula, again 0.
 
-### Non-parametric analysis of tail dependence \label{NPA}
+For multivariate datasets, e.g., the aphid abundance or first flight data, 
+each of which consists of time series 
+from 10 locations...
+<!--***DAN: need to fill this in, prrobably enough to be brief, since these were just done 
+pairwise-->
+
+### Nonparametric analysis of tail dependence \label{NPA}
+
+In addition to the model selection approach described above, nonparametric 
+approaches were also used to answer question 1 from the introduction.
+Using two distinct methods, when results are consistent, provides greater confidence 
+that results are robust. 
 
 Left- and right-tail dependence quantify the extent to which two ranked
 variables $u_i$, $v_i$ for $i=1,...,n$ 
 (see \nameref{Model_selection} for defintions of $u_i$ and $v_i$)
-are related in the left and right tails, respectively, of their 
-distributions [@nelsen2007_copula]. 
+are related to each other in the left and right tails, respectively, of their 
+distributions [@nelsen2007_copula, @joe2014_dependence]. 
 Our nonparametric study of tail dependence uses three
 statistics which can quantify the extent to which $u_i$ and $v_i$ are 
 related in any part of their distributions. We here describe the 
@@ -226,10 +263,36 @@ we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$,
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
-In addition to [basic unit tests](https://github.com/sghosh89/BIVAN/blob/master/Tests.Rmd), we also tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas. Fig. \ref{fig_stat_image}(B - D) represent the results for Clayton copulas with $n=35$ data points and $100$ simulations (for details see Appendix \ref{SM-Test_npa_stat}). 
+<!--I deleted the phrase about unit testing because unit testing should be mentioned in the supp mat-->
+We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas. Fig. \ref{fig_stat_image}(B - D) represent the results for Clayton copulas with $n=35$ data points and $100$ simulations (for details see Appendix \ref{SM-Test_npa_stat}). 
+<!--***DAN: There is either too little or too much here in this 
+paragraph. The reader cannot get the main
+idea, really, of what was done for these tests, from this paragraph alone - they will have to
+look at the appendix. They need to be able to get the main idea. So you could either add detail,
+or else take away detail and just say something like "We tested our statistics by testing whether 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed asymmetry of tail dependence 
+known to be present in data simulated from various copulas (Appendix X)" and then stop there.
+Then you would remove panels B-D from Fig. 1. At the moment I prefer this second option, but 
+my preference is not strong, so if you prefer to keep the material and add detail that would be 
+fine.-->
 
-For bivariate datasets such as the soil C and N data, we compared values of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to distributions of values of the same statistics computed on surrogate datasets that were produced from the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly the same marginal distributions as the empirical data and had very similar Kendall or Spearman correlation, but had normal copula structure, and thus our comparisons tested the null hypothesis that our statistics took values on the empirical data no different from what would have been expected if the copula structure of the data were normal, but the data were otherwise statistically unchanged.
+For bivariate datasets, we compared values 
+of the statistics $\cor_{l_b,u_b}$,
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to 
+distributions of values of the same statistics computed on surrogate datasets that were produced from 
+the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
+the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
+correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
+but had Gaussian copula structure. Thus our comparisons tested the null hypothesis 
+that our statistics took values on the empirical data no different from what would have been expected 
+if the copula structure of the data were Gaussian, but the data were otherwise 
+statistically unchanged.
+Details of how surrogates were prroduced are in XYZ, and code is in ABC.
+<!--***DAN: I think the below material belongs in supp mat, because the reader can get the
+main idea via the above text, and only some readers will be interested in the detailed 
+algorithm. Please move it there, and then make the above links XYZ and ABC into live links
+to the appropriate locations in the sup mat.
+
 For bivariate datasets, surrogates were produced as follows.   
 
 - Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
@@ -254,47 +317,74 @@ Our code for this algorithm is [`copsurrog2d`](https://github.com/sghosh89/BIVAN
 [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
 
 Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
-is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a permutation 
-of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as those of the original data. 
+is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
+permutation 
+of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
+those of the original data. 
 Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
 Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
 will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
 a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
+-->
 
 The comparison of one of the
-statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the empirical data, to the distribution
-of its values computed on many surrogate datasets produced using the normal copula family for $\mathcal{B}(\theta)$
-provides a test of whether dependence in the part of the distribution specified by $l_b$ and $u_b$ is different from
-what would be expected from a null hypothesis of normal copula structure but unchanged marginals and unchanged 
-Kendall (or Spearman)
-correlation. Significant deviations correspond to deviations from normal copula structure. In particular, deviations 
-using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence different from that of a normal copula;
-likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different from that of a normal copula.  
-The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, as computed on the 
+statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
 empirical data, to the distribution
-of its values computed on many surrogate datasets produced using the normal copula family for $\mathcal{B}(\theta)$
-provides a test of asymmetry of tail dependence. 
+of its values computed on many surrogate datasets 
+provides a test of whether dependence in the part of the distribution specified 
+by $l_b$ and $u_b$ is different from
+what would be expected from a null hypothesis of normal copula structure but 
+unchanged marginals and unchanged 
+Kendall (or Spearman)
+correlation. Thus the comparison helps answer the first two parts of question 1 
+from the Introduction for bivariate datasets. 
+Significant deviations correspond to deviations from normal 
+copula structure. In particular, deviations 
+using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
+different from that of a normal copula;
+likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
+from that of a normal copula.  
 
-For multivariate datasets, e.g., the aphid abundance or first flight data, each of which consists of time series 
-from 10 locations, a spatial resampling scheme was used instead of the surrogate approach described above.
-The scheme is identical to that proposed by [@bjornstadfalck2001] for application in their now 
-widely used spline correlogram method; the same scheme was also used by [@walteretal2017] as part of a method for 
-performing model selection among matrix regression models. For each pair of locations $i \neq j$, the statistic
-of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
-$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The values $s_{i,j}$ were then arranged in
+The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, 
+as computed on the 
+empirical data, to the distribution
+of its values on many surrogate datasets 
+provides a test of asymmetry of tail dependence. Thus this comparison helps answer the
+third part of question 1 from the Introduction for bivariate datasets.
+
+For multivariate datasets, a spatial resampling scheme was used instead of the surrogate 
+approach described above.
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+as part of a method for 
+performing model selection among matrix regression models. For each pair of 
+locations $i \neq j$, the statistic
+of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
+$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
+$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
+values $s_{ij}$ were then arranged in
 a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
-$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the average strength of 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the 
+average strength of 
 dependence, across all pairs of distinct locations, for data in the portion of the distributions 
 given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
 asymmetry of tail dependence across all pairs of locations. 
-Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a distribution of bootstrapped values.
-Bootstrapping was performed by resampling the locations of measurement, with replacement; this corresponds to 
+Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a 
+distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
+revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
+or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
+Gaussian null hypothesis, and answering question 1 from the Introduction.
+Bootstrapping was performed by resampling the locations of measurement, with replacement. 
+This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
 
-<!--Dan to insert a description of the surrogate approach here.-->
+## Theoretical models
+
+Question 2 from the Introduction was explored using simple population models.
+
 
 
 # Results

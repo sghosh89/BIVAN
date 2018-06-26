@@ -25,6 +25,9 @@ bibliography: REF_ALL.bib
 main text and supp mat. I am leaning toward "Gaussin copula" but could be convinced 
 otherwise, it is just the consistency that I want to be sure we get to.-->
 
+<!--**SG: I think normal copula would be better as "N" is the abbreviation for that but for "G" means gumbel not gaussian.
+If you agree with me, then I will made all "gaussian" as "normal" copula in both main and supmat.-->
+
 updated on `r Sys.Date()`
 
 ```{r setup_Paper, echo=F}
@@ -171,13 +174,21 @@ possible. Given two bounds
 $0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
 $u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
 fall (these are the blue and red lines, respectively, in 
-Fig. \ref{fig_stat_image}(A)). Our statistics quantify the dependence
+Fig. \ref{fig_stat_image}). Our statistics quantify the dependence
 between $u_i$ and $v_i$ in the region bounded by these lines.
 Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
 dependence in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
 the right parts of the distributions. 
 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
+\caption{Schematic diagram supporting defintions of nonparametric tail dependence statistics \label{fig_stat_image}}
+\end{center}
+\end{figure}
+
+<!--
 \begin{figure}[!h]
 \textbf{ \hspace{6 cm} (A) \hspace{5.6 cm} (B)} \\
 \vspace{-0.6 cm}
@@ -195,6 +206,7 @@ the right parts of the distributions.
 \caption{(A) Schematic diagram supporting defintions of nonparametric tail dependence statistics; (B) Results of tests of $\cor_l-\cor_u$, (C) $\Ps_l-\Ps_u$, and (D) $\Dsq_u-\Dsq_l$ reveal the known asymmetry (more lower tail than upper) of tail dependence of the Clayton copula with $n=35$ data points. \label{fig_stat_image}}
 \end{center}
 \end{figure}
+-->
 
 The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
@@ -264,7 +276,7 @@ $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
 
 <!--I deleted the phrase about unit testing because unit testing should be mentioned in the supp mat-->
-We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas. Fig. \ref{fig_stat_image}(B - D) represent the results for Clayton copulas with $n=35$ data points and $100$ simulations (for details see Appendix \ref{SM-Test_npa_stat}). 
+We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas (for details see Appendix \ref{SM-Test_npa_stat}). 
 <!--***DAN: There is either too little or too much here in this 
 paragraph. The reader cannot get the main
 idea, really, of what was done for these tests, from this paragraph alone - they will have to
@@ -275,6 +287,7 @@ known to be present in data simulated from various copulas (Appendix X)" and the
 Then you would remove panels B-D from Fig. 1. At the moment I prefer this second option, but 
 my preference is not strong, so if you prefer to keep the material and add detail that would be 
 fine.-->
+<!--**SG: Agreed with 2nd option and did things as necessary-->
 
 For bivariate datasets, we compared values 
 of the statistics $\cor_{l_b,u_b}$,
@@ -287,7 +300,7 @@ but had Gaussian copula structure. Thus our comparisons tested the null hypothes
 that our statistics took values on the empirical data no different from what would have been expected 
 if the copula structure of the data were Gaussian, but the data were otherwise 
 statistically unchanged.
-Details of how surrogates were prroduced are in XYZ, and code is in ABC.
+Details of how surrogates were prroduced are in Appendix \ref{SM-surrog_test}, and code is in [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R).
 <!--***DAN: I think the below material belongs in supp mat, because the reader can get the
 main idea via the above text, and only some readers will be interested in the detailed 
 algorithm. Please move it there, and then make the above links XYZ and ABC into live links
@@ -328,6 +341,7 @@ a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
 -->
+<!--**SG: Done-->
 
 The comparison of one of the
 statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 

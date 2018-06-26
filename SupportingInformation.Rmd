@@ -334,6 +334,42 @@ statname<-"D2umD2l"
 call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
 ```
 
+# Surrogate testing with bivariate datasets for non-parametric statistics \label{surrog_test}
+
+For bivariate datasets, surrogates were produced as follows.   
+
+- Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
+one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
+Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
+$\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
+study using the `iTau` function of the `VineCopula` package). 
+- Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
+$\mathcal{B}(\theta_\tau)$. 
+- Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
+$(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ has $\rank(x_{\sigma_x(i)})$ equal to $\rank(a_i)$ for all $i$, where 
+$\rank(x_{\sigma_x(i)})$ is the rank of $x_{\sigma_x(i)}$ in the set $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$, and
+$\rank(a_i)$ is the rank of $a_i$ in the set $(a_1,\ldots,a_n)$ (here $\sigma_x$ is a permutation of the 
+indices $1,\ldots,n$). 
+- Likewise permute $(y_1,\ldots,y_n)$
+such that the permutation
+$(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
+another permutation of $1,\ldots,n$).
+- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+
+Our code for this algorithm is [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R) in the 
+[`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
+
+Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
+is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
+permutation 
+of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
+those of the original data. 
+Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
+Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
+will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
+a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
+as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
+sampling variation) the Spearman correlation of the empirical data.  
 
 <!--
 # Question 1 analyses for each dataset

@@ -100,6 +100,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   surv_K<-temp$surv_K
   surv_S<-temp$surv_S
   
+  #Cor stats
   corstats_d<-calcstats(v=v,f=Corbds,nm="Cor",numbin=numbin)
   corstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Corbds,nm="Cor",numbin=numbin)
   corstats_frac_K<-fracwork(corstats_d,corstats_K)
@@ -115,8 +116,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   corlmcoru_S<-corstats_S[1,]-corstats_S[length(corstats_d),]
   corlmcoru_frac_S<-sum(corlmcoru_S<corlmcoru_d)
   corstats_Sq<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
-  
-  
+
+  #P stats
   Pstats_d<-calcstats(v=v,f=Pbds_wrap,nm="P",numbin=numbin)
   Pstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Pbds_wrap,nm="P",numbin=numbin)
   Pstats_frac_K<-fracwork(Pstats_d,Pstats_K)
@@ -132,6 +133,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   PlmPu_S<-Pstats_S[1,]-Pstats_S[length(Pstats_d),]
   PlmPu_frac_S<-sum(PlmPu_S<PlmPu_d)
   Pstats_Sq<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  
+  #-------------------------------Ranking--------------------------
+  Rank_Pl_K<-unname((numsurrog-Pstats_frac_K)[1])
+  Rank_Pl_S<-unname((numsurrog-Pstats_frac_S)[1])
+  Rank_Pu_K<-unname((numsurrog-Pstats_frac_K)[length(Pstats_frac_K)])
+  Rank_Pu_S<-unname((numsurrog-Pstats_frac_S)[length(Pstats_frac_K)])
+  Rank_PlmPu_S<-numsurrog-PlmPu_frac_S
+  Rank_PlmPu_K<-numsurrog-PlmPu_frac_K
+  #---------------------------------------------------------------------
   
   #now work with the D2 stats
   D2stats_d<-calcstats(v=v,f=D2bds,nm="Dtwo",numbin=numbin)
@@ -178,7 +188,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+2*panht+2*gap)/totht,
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-  ylimits_cor<-range(corstats_d,corstats_K,corstats_K)
+  ylimits_cor<-range(corstats_d,corstats_S,corstats_K)#??? should it be range(corstats_d,corstats_S,corstats_K)???
   ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
   plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',cex=1.5)
@@ -223,9 +233,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+panht+gap)/totht,
             (xht+2*panht+gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  ylimits_D2<-range(D2stats_d,D2stats_K,D2stats_K)
-  ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
-  ylimits_P<-range(Pstats_d,Pstats_K,Pstats_K)
+  ylimits_P<-range(Pstats_d,Pstats_S,Pstats_K)
   ylimits_P[2]<-ylimits_P[2]+.3*diff(ylimits_P)
   plot(x,Pstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=1.5)
   axis(side=1,labels=F)
@@ -266,6 +274,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht)/totht,
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
+  ylimits_D2<-range(D2stats_d,D2stats_S,D2stats_K)
+  ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
   plot(x,D2stats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_D2,cex=1.5)
   mtext(side=1,line=1,text="Diagonal slice")
   mtext(side=2,line=1,text=expression(D^{2}))
@@ -308,7 +318,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
               PlmPu_frac_K=PlmPu_frac_K,
               PlmPu_frac_S=PlmPu_frac_S,
               D2umD2l_frac_K=D2umD2l_frac_K,
-              D2umD2l_frac_S=D2umD2l_frac_S))
+              D2umD2l_frac_S=D2umD2l_frac_S,
+              Rank_Pl_K=Rank_Pl_K,
+              Rank_Pl_S=Rank_Pl_S,
+              Rank_Pu_K=Rank_Pu_K,
+              Rank_Pu_S=Rank_Pu_S,
+              Rank_PlmPu_K=Rank_PlmPu_K,
+              Rank_PlmPu_S=Rank_PlmPu_S))
   
 }
 #-------------------------------------------------------------------------
@@ -318,8 +334,6 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
 #d<-d[,c("SOCstock100","TSNstock100")]
 #v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 #xxx<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",nametag="trial",numbin=10)
-
-
 
 
 

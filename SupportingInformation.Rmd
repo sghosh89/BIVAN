@@ -1356,13 +1356,13 @@ knitr::kable(s,
 \end{figure}
 
 ```{r bivar_tab_summary_fn,echo=F}
-bivar_tab_summary_fn<-function(r,rs){
+bivar_tab_summary_fn<-function(r){
   
   m<-matrix(NA,1,12)
   colnames(m)<-c("Indep.p","AIC-best.copula","Highest.AICw",
                  "N.AICw","p.CvM","p.KS",
                  "LT_model.avg","UT_model.avg","(LT-UT)_model.avg",
-                 "Rank_Pl_surrog","Rank_Pu_surrog","Rank_Pl-Pu_surrog")
+                 "Rank_Pl_K","Rank_Pu_K","Rank_Pl-Pu_K")
   m<-as.data.frame(m)
   
   m$Indep.p<-round(r$IndepTestRes,3)
@@ -1374,9 +1374,9 @@ bivar_tab_summary_fn<-function(r,rs){
   m$LT_model.avg<-round(r$relLTdep_AICw,3)
   m$UT_model.avg<-round(r$relUTdep_AICw,3)
   m$`(LT-UT)_model.avg`<-m$LT_model.avg-m$UT_model.avg
-  m$Rank_Pl_surrog<-NA
-  m$Rank_Pu_surrog<-NA
-  m$`Rank_Pl-Pu_surrog`<-NA
+  m$Rank_Pl_K<-r$Rank_Pl_K
+  m$Rank_Pu_K<-r$Rank_Pu_K
+  m$`Rank_Pl-Pu_K`<-r$Rank_PlmPu_K
   mt<-as.data.frame(t(m))
   return(mt)
   

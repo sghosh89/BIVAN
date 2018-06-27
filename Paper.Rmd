@@ -668,6 +668,24 @@ their opposite meaning (Fig. \ref{SM-fig_methane} G-H). Plotting $\cor_l - \cor_
 statistical result of Table \ref{SM-tab_methane_resamp} that averages of these 
 quantities across all pairs of sampling locations were more or less equally dispersed around the zero-line, showing no significant asymmetry of tail dependence.
 
+```{r tab_bivar_summary, echo=F, results='markup'}
+
+tab_multivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
+knitr::kable(tab_bivar_summary, 
+             format='pandoc',
+             caption = "Summary of results for bivariate data-sets.\\label{tab_bivar_summary}",
+             booktabs=TRUE)
+```
+
+```{r tab_multivar_summary, echo=F, results='markup'}
+
+tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
+knitr::kable(tab_multivar_summary, 
+             format='pandoc',
+             caption = "Summary of results for multivariate data-sets.\\label{tab_multivar_summary}",
+             booktabs=TRUE)
+```
+
 <!--Question 2 analyses-->
 ## Some possible causes of non-Gaussian copula structure 
 

@@ -1355,6 +1355,94 @@ knitr::kable(s,
 \end{center}
 \end{figure}
 
+```{r bivar_tab_summary_fn,echo=F}
+bivar_tab_summary_fn<-function(r,rs){
+  
+  m<-matrix(NA,1,12)
+  colnames(m)<-c("Indep.p","AIC-best.copula","Highest.AICw",
+                 "N.AICw","p.CvM","p.KS",
+                 "LT_model.avg","UT_model.avg","(LT-UT)_model.avg",
+                 "Rank_Pl_surrog","Rank_Pu_surrog","Rank_Pl-Pu_surrog")
+  m<-as.data.frame(m)
+  
+  m$Indep.p<-round(r$IndepTestRes,3)
+  m$`AIC-best.copula`<-r$InfCritRes$copname[which.min(r$InfCritRes$AIC)]
+  m$Highest.AICw<-round(max(r$InfCritRes$AICw),3)
+  m$N.AICw<-round(r$InfCritRes$AICw[1],3)
+  m$p.CvM<-r$GofRes_CvM
+  m$p.KS<-r$GofRes_KS
+  m$LT_model.avg<-round(r$relLTdep_AICw,3)
+  m$UT_model.avg<-round(r$relUTdep_AICw,3)
+  m$`(LT-UT)_model.avg`<-m$LT_model.avg-m$UT_model.avg
+  m$Rank_Pl_surrog<-NA
+  m$Rank_Pu_surrog<-NA
+  m$`Rank_Pl-Pu_surrog`<-NA
+  mt<-as.data.frame(t(m))
+  return(mt)
+  
+}
+#----------------------------------
+#calling the above function on 3 multivariable datasets
+m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke)
+m2<-bivar_tab_summary_fn(r=BivMS_BMR)
+m3<-bivar_tab_summary_fn(r=BivMS_contrasts_67)
+tab_bivar_summary<-cbind(m1,m2,m3)
+colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis")
+saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
+```
+```
+
+```{r multivar_tab_summary_fn,echo=F}
+source("normal_cop_AICw.R")
+
+multivar_tab_summary_fn<-function(r,rs){
+  
+  m<-matrix(NA,1,12)
+  colnames(m)<-c("#pairs","#non-indep","#non-N",
+                 "Avg.best.AICw","Avg.N.AICw","#good.fit",
+                 "#LT>0","#UT>0","#LT-UT>0",
+                 "CI_Pl","CI_Pu","CI_Pl-Pu")
+  m<-as.data.frame(m)
+  
+  normal_AICw<-normal_cop_AICw_matrix(r=r)
+  
+  d<-dim(r$gfc_numBS)[1]
+  m$`#pairs`<-(d^2)-d
+  m$`#non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
+  m$`#non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
+  r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN
+  m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
+  normal_AICw[normal_AICw==Inf]<-NaN
+  m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
+  temp<-which((r$gfc_p_CvM>0.01) & (r$gfc_p_KS>0.01),arr.ind=T)
+  m$`#good.fit`<-dim(temp)[1]
+  m$`#LT>0`<-sum(r$LTdep_AICw>0,na.rm=T)
+  m$`#UT>0`<-sum(r$UTdep_AICw>0,na.rm=T)
+  m$`#LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
+  m$CI_Pl<-list(c(round(rs$numericdf[5,3],3),round(rs$numericdf[5,4],3)))
+  m$CI_Pu<-list(c(round(rs$numericdf[6,3],3),round(rs$numericdf[6,4],3)))
+  m$`CI_Pl-Pu`<-list(c(round(rs$numericdf[10,3],3),round(rs$numericdf[10,4],3)))
+  
+  mt<-as.data.frame(t(m))
+  return(mt)
+  
+}
+#----------------------------------
+#calling the above function on 4 multivariable datasets
+m1<-multivar_tab_summary_fn(r=RES_aphid_count,rs=stat_aphid_count)
+m2<-multivar_tab_summary_fn(r=RES_aphid_ff,rs=stat_aphid_ff)
+m3<-multivar_tab_summary_fn(r=RES_plankton_north_sea,rs=stat_plankton_north_sea)
+m4<-multivar_tab_summary_fn(r=RES_methane,rs=stat_methane)
+tab_multivar_summary<-cbind(m1,m2,m3,m4)
+colnames(tab_multivar_summary)<-c("Aphid_abundance","Aphid_firstflight","Plankton","Methane-flux")
+saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
+```
+
+
+
+
+
+
 <!--
 # Question 2 analyses 
 ## The Moran effect and copula structure in populations 

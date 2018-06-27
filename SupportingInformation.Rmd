@@ -373,7 +373,7 @@ sampling variation) the Spearman correlation of the empirical data.
 
 <!--
 # Question 1 analyses for each dataset
-Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Gaussian copula? In particular do they show asymmetric tail dependence?
+Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Normal copula? In particular do they show asymmetric tail dependence?
 
 ## Details of methods \label{Method}
 ### Model selection approach \label{Model_selection}
@@ -1874,7 +1874,7 @@ knitr::kable(temp, booktabs = T,
 
 <!--
 # Question 3 analyses for each dataset and theoretical analyses
-Recall that question 3 is: What are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
+Recall that question 3 is: What are the consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications?
 ## Skewness of the spatial mean
 ### Aphid count \label{skewness_count}
 ### Aphid first flight \label{skewness_ff}

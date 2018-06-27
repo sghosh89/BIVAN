@@ -26,7 +26,7 @@ main text and supp mat. I am leaning toward "Gaussin copula" but could be convin
 otherwise, it is just the consistency that I want to be sure we get to.-->
 
 <!--**SG: I think normal copula would be better as "N" is the abbreviation for that but for "G" means gumbel not gaussian.
-If you agree with me, then I will made all "gaussian" as "normal" copula in both main and supmat.-->
+I made all "Gaussian" as "Normal" copula in both main and supmat.-->
 
 updated on `r Sys.Date()`
 
@@ -78,7 +78,7 @@ Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Sur
 # Introduction
 
 *Goes in the last paragraph of the intro:*
-We address the following questions. 1) Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Gaussian copula, and in particular do they show asymmetric tail dependence? 2) If so, what are some possible causes of non-Gaussian copula structure? And 3) what are the consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
+We address the following questions. 1) Do datasets in ecology and related fields have non-Gausian copula srtructure? Do they show tail dependence distinct from that of a Normal copula, and in particular do they show asymmetric tail dependence? 2) If so, what are some possible causes of non-Normal copula structure? And 3) what are the consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications?
 
 # Material and methods
 
@@ -136,20 +136,21 @@ model-averaged lower- and upper-tail dependence values using standard model aver
 formulas [@burnham2003_modelselection]; likewise for BIC.
 
 The first part or question 1 from the Introduction was answered for a bivariate dataset 
-$(x_i,y_i)$ for $i=1,...,n$ by comparing the AIC weights of the non-Gaussian copula
-families with that of the Gaussian family. The same was also done using BIC.
+$(x_i,y_i)$ for $i=1,...,n$ by comparing the AIC weights of the non-Normal copula
+families with that of the Normal family. The same was also done using BIC.
 The second part of question 1 was answered by comparing 
 the model-averaged lower- and upper-tail dependence
-values to the lower- and upper-tail dependence values of a Gaussian copula, both of which 
+values to the lower- and upper-tail dependence values of a Normal copula, both of which 
 are 0. The third part of question 1
 was answered by comparing the difference of the model-averaged lower- and upper-tail 
-dependence values to the analogous difference for a Gaussian copula, again 0.
+dependence values to the analogous difference for a Normal copula, again 0.
 
 For multivariate datasets, e.g., the aphid abundance or first flight data, 
-each of which consists of time series 
-from 10 locations...
+each of which consists of time series from 10 locations, we carried out the same bivariate analysis
+for all possible pairwise combinations of those locations and compared AIC-weights and tail-dependence of best-fit(minimum AIC) copula with that of the Normal copula. We also counted for how many location pairs model -averaged lower tail dependence is greater than model-averaged upper-tail dependence or vice-versa. For example, for green-spruce aphid abundance data we found major lower tail dependence whereas leaf-curling plum aphid's first flight data had significant upper tail dependence at all location pairs (for details see Table \ref{tab_multivar_summary}).
 <!--***DAN: need to fill this in, prrobably enough to be brief, since these were just done 
 pairwise-->
+<!--**SG: done-->
 
 ### Nonparametric analysis of tail dependence \label{NPA}
 
@@ -296,9 +297,9 @@ distributions of values of the same statistics computed on surrogate datasets th
 the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
 the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
 correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
-but had Gaussian copula structure. Thus our comparisons tested the null hypothesis 
+but had Normal copula structure. Thus our comparisons tested the null hypothesis 
 that our statistics took values on the empirical data no different from what would have been expected 
-if the copula structure of the data were Gaussian, but the data were otherwise 
+if the copula structure of the data were Normal, but the data were otherwise 
 statistically unchanged.
 Details of how surrogates were prroduced are in Appendix \ref{SM-surrog_test}, and code is in [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R).
 <!--***DAN: I think the below material belongs in supp mat, because the reader can get the
@@ -389,7 +390,7 @@ Confidence intervals for the values of $\mean(S)$ were then computed as quantile
 distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
 revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
 or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-Gaussian null hypothesis, and answering question 1 from the Introduction.
+Normal null hypothesis, and answering question 1 from the Introduction.
 Bootstrapping was performed by resampling the locations of measurement, with replacement. 
 This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
@@ -439,8 +440,8 @@ Lower panel \textbf{(D - F)} shows copula plots for the corresponding datasets o
 
 ## question 1
 
-- Do datasets in ecology and related fields have non-Gausian copula structure?
-- Do they show tail dependence distinct from that of a Gaussian copula?
+- Do datasets in ecology and related fields have non-Normal copula structure?
+- Do they show tail dependence distinct from that of a Normal copula?
 - In particular do they show asymmetric tail dependence?
 
 ### soil C and N data \label{Ex_SoilCN}
@@ -453,11 +454,11 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 
 The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes` (to within the precision available 
 from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
 
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
-Although these results do convincingly show non-Gaussian copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+Although these results do convincingly show non-Normal copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 #### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 
@@ -490,7 +491,7 @@ BivMS_BMR<-readRDS("./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
 #### Model selection approach \label{Ex_BMR_Model_selection}
 
 The test of indepedence gave $p=$ `r BivMS_BMR$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that BB6 and BB8 are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that BB6 and BB8 are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
 
 The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was `r BivMS_BMR$relLTdep_AICw - BivMS_BMR$relUTdep_AICw`, indicating more upper tail dependence. We also tested that lowest-AIC copula BB8 was a good-enough fit, giving $p$-value `r BivMS_BMR$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_BMR$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
@@ -511,11 +512,11 @@ BivMS_contrasts_67<-readRDS("./Results/Anolis_results/contrasts_csv_results/BivM
 
 The test of indepedence gave $p=0$ <!--`r BivMS_contrasts_67$IndepTestRes` this is e-15 could not compile latex--> (to within the precision available 
 from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_contrasts_67fit}). The table shows that several copulas (mostly J and SC) are much better supported (higher AIC and BIC weights) than the Gaussian copula, answering the first part of question 1 for these data.
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_contrasts_67fit}). The table shows that several copulas (mostly J and SC) are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
 
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Gaussian copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
 
-These results do convincingly show non-Gaussian copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+These results do convincingly show non-Normal copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
 
 #### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
 
@@ -721,7 +722,7 @@ knitr::kable(tab_multivar_summary,
 ```
 
 <!--Question 2 analyses-->
-## Some possible causes of non-Gaussian copula structure 
+## Some possible causes of non-Normal copula structure 
 
 Q1/2: How are copula structure of ecologically influential climate variables changing as part of climate change? We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the pops, but we don’t really know how a change in the environment cop structure would make what kind of change in the pop cop structure. How?
 
@@ -778,7 +779,7 @@ We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 <!--Question 3 analyses-->
-## Consequences of non-Gaussian copula structure and tail dependence for our understanding of biology and for applications?
+## Consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications?
 
 ### Effect on skewness of the spatial mean
 
@@ -805,7 +806,7 @@ Figure \ref{SM-fig_skewness_methane} shows that averaged skewness is lower than 
 
 ### Effect on extinction risk
 
-In order to study the effects of non-gaussian copula structure on extinction risk for population of a species at different locations with different dispersal rules, we examined the following generalized multiple patch model where local population dynamics at each patch were governed by the Lewton-Cohen model ($r=0$) or Ricker model ($r \neq 0$) as the case may be;
+In order to study the effects of non-Normal copula structure on extinction risk for population of a species at different locations with different dispersal rules, we examined the following generalized multiple patch model where local population dynamics at each patch were governed by the Lewton-Cohen model ($r=0$) or Ricker model ($r \neq 0$) as the case may be;
 <!--did I write correct spelling for lewton model?-->
 
 \begin{equation}\label{eq.extrisk_model}

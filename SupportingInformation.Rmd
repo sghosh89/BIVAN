@@ -1390,18 +1390,18 @@ tab_bivar_summary<-cbind(m1,m2,m3)
 colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis")
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
-```
 
 ```{r multivar_tab_summary_fn,echo=F}
 source("normal_cop_AICw.R")
 
 multivar_tab_summary_fn<-function(r,rs){
   
-  m<-matrix(NA,1,12)
+  m<-matrix(NA,1,17)
   colnames(m)<-c("#pairs","#non-indep","#non-N",
                  "Avg.best.AICw","Avg.N.AICw","#good.fit",
-                 "#LT>0","#UT>0","#LT-UT>0",
-                 "CI_Pl","CI_Pu","CI_Pl-Pu")
+                 "CI0.025_LT","CI0.975_LT","CI0.025_UT","CI0.975_UT",
+                 "#LT-UT>0",
+                 "CI0.025_Pl","CI0.975_Pl","CI0.025_Pu","CI0.975_Pu","CI0.025_Pl-Pu","CI0.975_Pl-Pu")
   m<-as.data.frame(m)
   
   normal_AICw<-normal_cop_AICw_matrix(r=r)
@@ -1416,12 +1416,25 @@ multivar_tab_summary_fn<-function(r,rs){
   m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
   temp<-which((r$gfc_p_CvM>0.01) & (r$gfc_p_KS>0.01),arr.ind=T)
   m$`#good.fit`<-dim(temp)[1]
-  m$`#LT>0`<-sum(r$LTdep_AICw>0,na.rm=T)
-  m$`#UT>0`<-sum(r$UTdep_AICw>0,na.rm=T)
+  t<-r$LTdep_AICw[is.finite(r$LTdep_AICw)]
+  CI_LT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
+  m$CI0.025_LT<-round(CI_LT[1],3)
+  m$CI0.975_LT<-round(CI_LT[2],3)
+  t<-r$UTdep_AICw[is.finite(r$UTdep_AICw)]
+  CI_UT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
+  m$CI0.025_UT<-round(CI_UT[1],3)
+  m$CI0.975_UT<-round(CI_UT[2],3)
   m$`#LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
-  m$CI_Pl<-list(c(round(rs$numericdf[5,3],3),round(rs$numericdf[5,4],3)))
-  m$CI_Pu<-list(c(round(rs$numericdf[6,3],3),round(rs$numericdf[6,4],3)))
-  m$`CI_Pl-Pu`<-list(c(round(rs$numericdf[10,3],3),round(rs$numericdf[10,4],3)))
+  m$CI0.025_Pl<-round(rs$numericdf[5,3],3)
+  m$CI0.975_Pl<-round(rs$numericdf[5,4],3)
+  m$CI0.025_Pu<-round(rs$numericdf[6,3],3)
+  m$CI0.975_Pu<-round(rs$numericdf[6,4],3)
+  m$`CI0.025_Pl-Pu`<-round(rs$numericdf[10,3],3)
+  m$`CI0.975_Pl-Pu`<-list(round(rs$numericdf[10,4],3))
+  #m$`CI0.975_Pl-Pu`<-round(rs$numericdf[10,4],3)
+  #m$CI_Pl<-list(c(round(rs$numericdf[5,3],3),round(rs$numericdf[5,4],3)))
+  #m$CI_Pu<-list(c(round(rs$numericdf[6,3],3),round(rs$numericdf[6,4],3)))
+  #m$`CI_Pl-Pu`<-list(c(round(rs$numericdf[10,3],3),round(rs$numericdf[10,4],3)))
   
   mt<-as.data.frame(t(m))
   return(mt)
@@ -1438,10 +1451,52 @@ colnames(tab_multivar_summary)<-c("Aphid_abundance","Aphid_firstflight","Plankto
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
+```{r sample_plot_aphid_count_ff,echo=F,results="hide"}
+#-------------------------------------------------------------------------------
+# code to plot raw data and copula plot for aphid count @location pair (4,11)
+# bestfit cop : SJ
 
+d1<-data_aphid_count$`Green spruce aphid`[[4]]
+d2<-data_aphid_count$`Green spruce aphid`[[11]]
+pdf("./Results/Aphid_count_raw_loc_4_11.pdf",height = 8,width=8)
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Aphid abundance from location 4",ylab="Aphid abundance from location 11",cex.lab=1.5,cex.axis=1.5)
+par(op)
+dev.off()
 
+source("./vivj_matrix.R")
+m<-vivj_matrix(d_allsp = data_aphid_count,sp=10,i=4,j=11)
+pdf("./Results/Aphid_count_cop_loc_4_11.pdf",height = 8,width=8)
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
+     cex.lab=2,cex.axis=1.5,
+     xlim=c(0,1),ylim=c(0,1),asp=1)
+rect(0,0,1,1)
+lines(c(0,1),c(0,1),type='l')
+par(op)
+dev.off()
 
+# code to plot raw data and copula plot for aphid ff @location pair (2,5)
+# bestfit cop : J
+d1<-data_aphid_ff$`Leaf-curling plum aphid`[[2]]
+d2<-data_aphid_ff$`Leaf-curling plum aphid`[[5]]
+pdf("./Results/Aphid_ff_raw_loc_2_5.pdf",height = 8,width=8)
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Aphid first-flight from location 2",ylab="Aphid first-flight from location 5",cex.lab=1.5,cex.axis=1.5)
+par(op)
+dev.off()
 
+m<-vivj_matrix(d_allsp = data_aphid_ff,sp=11,i=2,j=5)
+pdf("./Results/Aphid_ff_cop_loc_2_5.pdf",height = 8,width=8)
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
+     cex.lab=2,cex.axis=1.5,
+     xlim=c(0,1),ylim=c(0,1),asp=1)
+rect(0,0,1,1)
+lines(c(0,1),c(0,1),type='l')
+par(op)
+dev.off()
+```
 
 <!--
 # Question 2 analyses 

@@ -399,7 +399,41 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 
 Question 2 from the Introduction was explored using simple population models.
 
+\begin{figure}[!h]
+\textbf{ \hspace{4.3 cm} (A) \hspace{4.3 cm} (B) \hspace{4 cm} (C) } \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=5 cm]{./Results/SoilCNraw.pdf}
+\includegraphics[width=5 cm]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=5 cm]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}\\
+\end{center}
+\textbf{ \hspace{4.3 cm} (D) \hspace{4.3 cm} (E) \hspace{4 cm} (F) } \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=5 cm]{./Results/SoilCNcop.pdf}
+\includegraphics[width=5 cm]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=5 cm]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} ln(BMR) of contrasts vs. ln(mass) of contrasts, \textbf{(C)} contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits.
+Lower panel \textbf{(D - F)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of contrasts for last two datasets (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
+\end{center}
+\end{figure}
 
+
+\begin{figure}[!h]
+\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
+\end{center}
+\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
+\end{center}
+\end{figure}
 
 # Results
 
@@ -670,7 +704,7 @@ quantities across all pairs of sampling locations were more or less equally disp
 
 ```{r tab_bivar_summary, echo=F, results='markup'}
 
-tab_multivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
+tab_biivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
 knitr::kable(tab_bivar_summary, 
              format='pandoc',
              caption = "Summary of results for bivariate data-sets.\\label{tab_bivar_summary}",

@@ -135,12 +135,12 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   Pstats_Sq<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
   
   #-------------------------------Ranking--------------------------
-  Rank_Pl_K<-unname((numsurrog-Pstats_frac_K)[1])
-  Rank_Pl_S<-unname((numsurrog-Pstats_frac_S)[1])
-  Rank_Pu_K<-unname((numsurrog-Pstats_frac_K)[length(Pstats_frac_K)])
-  Rank_Pu_S<-unname((numsurrog-Pstats_frac_S)[length(Pstats_frac_K)])
-  Rank_PlmPu_S<-numsurrog-PlmPu_frac_S
-  Rank_PlmPu_K<-numsurrog-PlmPu_frac_K
+  Rank_Pl_K<-unname((1+Pstats_frac_K)[1])
+  Rank_Pl_S<-unname((1+Pstats_frac_S)[1])
+  Rank_Pu_K<-unname((1+Pstats_frac_K)[length(Pstats_frac_K)])
+  Rank_Pu_S<-unname((1+Pstats_frac_S)[length(Pstats_frac_S)])
+  Rank_PlmPu_S<-1+PlmPu_frac_S
+  Rank_PlmPu_K<-1+PlmPu_frac_K
   #---------------------------------------------------------------------
   
   #now work with the D2 stats

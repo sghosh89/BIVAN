@@ -94,7 +94,7 @@ vlineplot<-function(x,ylims){
 }
 #---------------------------------------------------------------------
 # This is the plotter function as well as it returns the stats as a list of 6
-bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
+bivfunctionplot<-function(v,resloc,nametag,numbin){
   
   temp<-makeSurrog(v=v)
   surv_K<-temp$surv_K

@@ -1356,7 +1356,7 @@ knitr::kable(s,
 \end{figure}
 
 ```{r bivar_tab_summary_fn,echo=F}
-bivar_tab_summary_fn<-function(r){
+bivar_tab_summary_fn<-function(r,rs){
   
   m<-matrix(NA,1,12)
   colnames(m)<-c("Indep.p","AIC-best.copula","Highest.AICw",
@@ -1374,18 +1374,18 @@ bivar_tab_summary_fn<-function(r){
   m$LT_model.avg<-round(r$relLTdep_AICw,3)
   m$UT_model.avg<-round(r$relUTdep_AICw,3)
   m$`(LT-UT)_model.avg`<-m$LT_model.avg-m$UT_model.avg
-  m$Rank_Pl_K<-r$Rank_Pl_K
-  m$Rank_Pu_K<-r$Rank_Pu_K
-  m$`Rank_Pl-Pu_K`<-r$Rank_PlmPu_K
+  m$Rank_Pl_K<-rs$Rank_Pl_K
+  m$Rank_Pu_K<-rs$Rank_Pu_K
+  m$`Rank_Pl-Pu_K`<-rs$Rank_PlmPu_K
   mt<-as.data.frame(t(m))
   return(mt)
   
 }
 #----------------------------------
 #calling the above function on 3 multivariable datasets
-m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke)
-m2<-bivar_tab_summary_fn(r=BivMS_BMR)
-m3<-bivar_tab_summary_fn(r=BivMS_contrasts_67)
+m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
+m2<-bivar_tab_summary_fn(r=BivMS_BMR,rs=stat_BMR_ga)
+m3<-bivar_tab_summary_fn(r=BivMS_contrasts_67,rs=stat_contrasts_67_ga)
 tab_bivar_summary<-cbind(m1,m2,m3)
 colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis")
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")

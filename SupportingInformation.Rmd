@@ -1499,6 +1499,265 @@ dev.off()
 ```
 
 <!--
+#Results section detailed description
+### soil C and N data \label{Ex_SoilCN}
+
+```{r read_BivMS_soilCN_data,echo=F}
+BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
+```
+
+#### Model selection approach \label{Ex_SoilCN_Model_selection}
+
+The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes` (to within the precision available 
+from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
+
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+
+Although these results do convincingly show non-Normal copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+
+#### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
+
+As described in \nameref{Methods}, each of our statistics, as computed for the 
+ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions 
+of values of the same statistic with the same ranges computed on 1000 normal-copula 
+surrogate datasets with similar Kendall or Spearman correlations, in different 
+runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). 
+
+Results indicate that tail dependence of 
+data is stronger in both the lower and upper tails than would be expected under a 
+null hypothesis of a normal copula, answering the second part of question 1. The dependence between C and N is also 
+weaker in the middle of the distributions
+than would be expected based on a normal-copula null model.
+
+We also tested statistically for asymmetry of tail dependence, which seems visible in Fig. \ref{SM-fig_raw_cop_soilCN}(B). 
+Results (Table \ref{SM-tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
+
+### BMR data \label{Ex_BMR}
+
+```{r read_BivMS_BMR_data,echo=F}
+BivMS_BMR<-readRDS("./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
+```
+
+#### Model selection approach \label{Ex_BMR_Model_selection}
+
+The test of indepedence gave $p=$ `r BivMS_BMR$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that BB6 and BB8 are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
+
+The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was `r BivMS_BMR$relLTdep_AICw - BivMS_BMR$relUTdep_AICw`, indicating more upper tail dependence. We also tested that lowest-AIC copula BB8 was a good-enough fit, giving $p$-value `r BivMS_BMR$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_BMR$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+
+#### Non-parametric analysis of tail dependence \label{Ex_BMR_NPA}
+
+As described in \nameref{Methods}, each of our statistics, as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_BMR_nonparam}). 
+
+Results indicate that dependence of data is different in some bins than would be expected under a 
+null hypothesis of a normal copula, answering the second part of question 1. Table \ref{SM-tab_BMR_asym} indicates stronger upper tail dependence for the BMR data copula which is significantly (95% CI) different from that of the symmetric normal copula and thus consistent with model selection results.
+
+### Anolis data \label{Ex_contrasts}
+
+```{r read_BivMS_contrasts_67_data,echo=F}
+BivMS_contrasts_67<-readRDS("./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
+```
+
+#### Model selection approach \label{Ex_contrasts_Model_selection}
+
+The test of indepedence gave $p=0$  (to within the precision available 
+from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
+and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_contrasts_67fit}). The table shows that several copulas (mostly J and SC) are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
+
+The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
+
+These results do convincingly show non-Normal copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
+
+#### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
+
+As described in \nameref{Methods}, each of our statistics, are computed for $(l_b,u_b)$ in the 
+ranges $0-0.25$, $0.25-0.5$, $0.5-0.75$, $0.75-1$ (with $4$ number of bins). Anolis data set has lesser number of data compared to other two bivariate data set, so fewer number of bins were chosen to measure tail-dependence.
+Those statistics were compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different 
+runs for Kendall and Spearman (Fig. \ref{SM-fig_contrasts_67_nonparam}). 
+
+Results indicate that tail dependence of 
+data is stronger in both the lower and upper tails than would be expected under a 
+null hypothesis of a normal copula, answering the second part of question 1. 
+
+We also tested statistically for asymmetry of tail dependence, which seems visible in Fig. \ref{SM-fig_raw_cop_AVG_humerus_ltoe}(B). Results (Table \ref{SM-tab_contrasts_67_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
+
+
+
+### Abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
+
+```{r read_RES_aphid_count, echo=F}
+RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
+```
+
+#### Model selection approach \label{Ex_count_Model_selection}
+
+As described in Methods, model selection among copulas was done separately for each pair of the 10 
+sampling locations, thus results are presented in $10 \times 10$ matrix format with rows and columns 
+corresponding to locations. Table \ref{SM-tab_count_bestcop} shows that, for the large majority of location 
+pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of 
+question 1 for these data. Comparing the 
+AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_count_AICw}) 
+to the AIC weight 
+of the normal copula family for the same pair (Table \ref{SM-tab_count_AICw_normal}) confirms that the degree of support for normal copulas was usually not
+comparable to the degree of support for other families.
+Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_count_p_CvM}) in every case 
+failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of 
+the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_count_p_KS}),
+demonstrating that the collection of copula families we used was sufficiently broad that the copulas of 
+all pairs of locations could be characterized by at least one of them. In all cases at least `r min((RES_aphid_count$gfc_numBS_success/RES_aphid_count$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
+
+The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are in Tables \ref{SM-tab_count_LTdep_AICw} and \ref{SM-tab_count_UTdep_AICw} respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data. Apparently these aphid data have greater tail dependence (both lower and upper) than would be expected from a normal-copula null hypothesis. 
+
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic (lower minus upper), shown in Table \ref{SM-tab_count_LTmUT}, is positive for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`), answering the third part of question 1. 
+
+#### Non-parametric analysis of tail dependence \label{Ex_count_NPA}
+
+Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
+computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
+resampling scheme, as described in Methods (Table \ref{SM-tab_count_resamp}). Confidence intervals of
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
+indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
+exluded $0$ and were positive, indicating asymmetry of tail dependence, a feature that data with normal copula 
+structure do not have, providing further evidence answering the third part of question 1. 
+
+Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{SM-fig_aphid_count} A,B) showed the typical decline of correlation with 
+distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting 
+$\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of locations shows these quantities also decline with distance (Fig. \ref{SM-fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows
+these quantities increase with distance (as expected, given the opposite interpretation these two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Fig. \ref{SM-fig_aphid_count} I-K) did not show a decline with distance, but did illustrate visually the statistical
+result of Table \ref{SM-tab_count_resamp} that averages of these quantities across all pairs of sampling locations
+were significantly greater than zero, demonstrating asymmetry of tail dependence. Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in the [`BIVAN`](https://github.com/sghosh89/BIVAN) package. 
+
+### First flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
+
+```{r read_RES_aphid_ff,echo=F}
+RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
+```
+
+#### Model selection approach \label{Ex_ff_Model_selection}
+
+As in section \nameref{Ex_count_Model_selection}, results are presented in $10 \times 10$ matrix format with rows
+and columns corresponding to locations. Table \ref{SM-tab_ff_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of question 1 for these data. Comparing the AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_ff_AICw}) to the AIC weight of the normal copula family for the same pair (Table \ref{SM-tab_ff_AICw_normal}) confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families. Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_ff_p_CvM}) usually failed to reject the 
+hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for 
+goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_ff_p_KS}). In all cases at least `r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for
+goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
+
+The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and 
+the model-averaged (again, AIC based) upper-tail dependence statistic are in 
+Tables \ref{SM-tab_ff_LTdep_AICw} and \ref{SM-tab_ff_UTdep_AICw}, respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., $0$), and answering the second part of question 1 for these data - these data have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis. 
+
+The difference between the model-averaged lower-tail dependence statistic and the 
+model-averaged upper-tail dependence statistic (lower minus upper), shown in 
+Table \ref{SM-tab_ff_LTmUT}, was negative for `r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)` 
+out of `r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair` location pairs, answering the third part of question 1. We note this result is opposite the analogous result for aphid abundance
+data for the green spruce aphid, i.e., whereas those abundance data showed stronger lower tail dependendence than upper tail dependence, first flights for the leaf-curling plum aphid showed stronger upper tail dependence than lower tail dependence. 
+
+#### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
+
+Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman 
+correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were 
+computed via a spatial resampling scheme, as described in \nameref{Methods} (Table \ref{SM-tab_ff_resamp}).
+Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded 
+zero and mean values were positive, indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always exluded $0$ and were negative, indicating asymmetry of tail dependence, a feature 
+that data with normal copula structure do not have, providing further evidence answering the third part of question 1.
+The contrast here with the analogous results for abundances of the green spruce aphid is again illuminating. 
+
+Plotting Spearman or Kendall correlations between first flight time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{SM-fig_aphid_ff} A, B) showed the typical (though slight, in this case) decline of correlation with increasing distance. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear in most cases to decline slightly with distance (Fig. \ref{SM-fig_aphid_ff} C-F).
+$\Dsq_u$ and $\Dsq_l$ appear to slightly increase with distance, as expected given their
+opposite meaning (Fig. \ref{SM-fig_aphid_ff} G-H). 
+Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_aphid_ff} I-K) did not show a decline with distance, but did demonstrate visually the statistical result of Table \ref{SM-tab_ff_resamp} that averages of these quantities across all pairs of sampling locations were significantly less than zero, showing asymmetry of tail dependence. 
+
+### Abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
+
+```{r read_RES_plankton_north_sea,echo=F}
+RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
+```
+
+#### Model selection approach \label{Ex_pns_Model_selection}
+
+As described in Methods and as in previous sections, model selection among copulas was done separately for 
+each pair of sampling locations. There were $14$ sampling locations, so results are presented in $14 \times 14$ matrix format, with rows and columns corresponding to locations. Table \ref{SM-tab_pns_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula family for each pair of sampling locations (Table \ref{SM-tab_pns_AICw}) to the AIC weight of the normal copula family for the same pair (Table \ref{SM-tab_pns_AICw_normal}) 
+confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
+Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_pns_p_CvM}) usually failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_pns_p_KS}). In all cases at least
+`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
+
+The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{SM-tab_pns_LTdep_AICw} and \ref{SM-tab_pns_UTdep_AICw}, respectively. These values were exclusively positive, thereby
+differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
+have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
+
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
+(lower minus upper), shown in Table \ref{SM-tab_pns_LTmUT}, was positive for some
+location pairs and negative for others, but was positive for 
+`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`
+locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
+
+#### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
+
+Mean values of our statistics, as well as mean Kendall and Spearman
+correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
+spatial resampling scheme, as described in Methods (Table \ref{SM-tab_pns_resamp}).
+Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
+always excluded $0$ and mean values were positive, indicating tail dependence.
+Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
+also all were strictly positive, indicating asymmetry of tail dependence, a feature that data with normal copula
+structure do not have, providing further evidence answering the third part of question 1.
+
+Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
+between the locations (Fig. \ref{SM-fig_pns} A, B) showed the typical decline of correlation with increasing
+distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Fig. \ref{SM-fig_pns} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given their opposite meaning (Fig. \ref{SM-fig_pns} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_pns} I-K) did not show a decline with distance, but did demonstrate visually the 
+statistical result of Table \ref{SM-tab_pns_resamp} that averages of these 
+quantities across all pairs of sampling locations were significantly greater 
+than zero, showing asymmetry of tail dependence.
+
+### Methane flux data \label{Ex_methane}
+
+```{r read_RES_methane,echo=F}
+RES_methane<-readRDS("./Results/fitting_results/MethaneFluxFit_selecloc_data_pt_thrs_50.RDS")
+```
+
+#### Model selection approach \label{Ex_methane_Model_selection}
+
+As described in Methods and as in previous sections, model selection among copulas was done separately for 
+each pair of sampling locations. There were $13$ sampling locations, so results are presented in 
+$13 \times 13$ matrix format, with rows and columns corresponding to locations. 
+Table \ref{SM-tab_methane_bestcop} shows that, for the large majority of location pairs, some 
+non-normal copula was a better fit, according to AIC, than was the normal copula, answering the 
+first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula 
+family for each pair of sampling locations (Table \ref{SM-tab_methane_AICw}) to the AIC weight of
+the normal copula family for the same pair (Table \ref{SM-tab_methane_AICw_normal}) 
+confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
+Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_methane_p_CvM}) usually failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_methane_p_KS}). In all cases at least
+`r min((RES_methane$gfc_numBS_success/RES_methane$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
+
+The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{SM-tab_methane_LTdep_AICw} and \ref{SM-tab_methane_UTdep_AICw}, respectively. These values were exclusively positive, thereby
+differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
+have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
+
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
+(lower minus upper), shown in Table \ref{SM-tab_methane_LTmUT}, was positive for some
+location pairs and negative for others, but was positive for 
+`r sum((RES_methane$LTdep_AICw-RES_methane$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_methane$gfc_p_CvM)[1]^2-dim(RES_methane$gfc_p_CvM)[1])-2*RES_methane$num_indep_loc_pair`
+locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
+
+#### Non-parametric analysis of tail dependence  \label{Ex_methane_NPA}
+
+Mean values of our statistics, as well as mean Kendall and Spearman
+correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
+spatial resampling scheme, as described in Methods (Table \ref{SM-tab_methane_resamp}).
+Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
+always excluded $0$ and mean values were positive, indicating tail dependence. But the confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ were marginal, indicating no significant asymmetry of tail dependence.
+
+Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
+between the locations (Fig. \ref{SM-fig_methane} A, B) showed the typical decline of correlation with increasing
+distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Fig. \ref{SM-fig_methane} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given
+their opposite meaning (Fig. \ref{SM-fig_methane} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_methane} I-K) did not show a decline with distance, but did demonstrate visually the 
+statistical result of Table \ref{SM-tab_methane_resamp} that averages of these 
+quantities across all pairs of sampling locations were more or less equally dispersed around the zero-line, showing no significant asymmetry of tail dependence.
+-->
+
+<!--
 # Question 2 analyses 
 ## The Moran effect and copula structure in populations 
            ----moved to Paper.Rmd----

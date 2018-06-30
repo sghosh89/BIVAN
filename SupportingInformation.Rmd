@@ -419,7 +419,7 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for soilCN data]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{soil C and N data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Testing non-parametric statistics for soilCN data]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{soil C and N data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was above (or below) the blue and green cross, text at the top of plots indicates the actual statistics was greater than (or less than) by those number of surrogate values. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -467,7 +467,7 @@ tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
 knitr::kable(tab_soilCN_asym, booktabs = T, 
              format = "pandoc",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (\\nameref{MT-Methods}). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
+      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (see \\nameref{MT-NPA} in the manuscript). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
 ```
 
@@ -1397,25 +1397,25 @@ source("normal_cop_AICw.R")
 multivar_tab_summary_fn<-function(r,rs){
   
   m<-matrix(NA,1,17)
-  colnames(m)<-c("#pairs","#non-indep","#non-N",
-                 "Avg.best.AICw","Avg.N.AICw","#good.fit",
+  colnames(m)<-c("num_pairs","num_non-indep","num_non-N",
+                 "Avg.best.AICw","Avg.N.AICw","num_good.fit",
                  "CI0.025_LT","CI0.975_LT","CI0.025_UT","CI0.975_UT",
-                 "#LT-UT>0",
+                 "num_LT-UT>0",
                  "CI0.025_Pl","CI0.975_Pl","CI0.025_Pu","CI0.975_Pu","CI0.025_Pl-Pu","CI0.975_Pl-Pu")
   m<-as.data.frame(m)
   
   normal_AICw<-normal_cop_AICw_matrix(r=r)
   
   d<-dim(r$gfc_numBS)[1]
-  m$`#pairs`<-(d^2)-d
-  m$`#non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
-  m$`#non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
+  m$num_pairs<-(d^2)-d 
+  m$`num_non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
+  m$`num_non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
   r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN
   m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
   normal_AICw[normal_AICw==Inf]<-NaN
   m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
   temp<-which((r$gfc_p_CvM>0.01) & (r$gfc_p_KS>0.01),arr.ind=T)
-  m$`#good.fit`<-dim(temp)[1]
+  m$num_good.fit<-dim(temp)[1]
   t<-r$LTdep_AICw[is.finite(r$LTdep_AICw)]
   CI_LT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
   m$CI0.025_LT<-round(CI_LT[1],3)
@@ -1424,7 +1424,7 @@ multivar_tab_summary_fn<-function(r,rs){
   CI_UT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
   m$CI0.025_UT<-round(CI_UT[1],3)
   m$CI0.975_UT<-round(CI_UT[2],3)
-  m$`#LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
+  m$`num_LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
   m$CI0.025_Pl<-round(rs$numericdf[5,3],3)
   m$CI0.975_Pl<-round(rs$numericdf[5,4],3)
   m$CI0.025_Pu<-round(rs$numericdf[6,3],3)

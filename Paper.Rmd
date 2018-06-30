@@ -525,7 +525,7 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 #### Model selection approach \label{Ex_count_Model_selection}
 
 As described in \nameref{Model_selection}, for multivariable dataset like green-spruce aphid abundance data, model selection among copulas was done separately for each pair of the 10 sampling locations, thus results are presented in $10 \times 10$ matrix format with rows and columns corresponding to locations. Table \ref{SM-tab_count_bestcop} shows that, for the large majority of location pairs, some non-Normal copula was a better fit, according to maximum AIC-weights, than was the Normal copula, answering the first part of question 1 for these data. Comparing the 
-AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_count_AICw}) to the AIC weight of the normal copula family for the same pair (Table \ref{SM-tab_count_AICw_normal}) confirms that the degree of support for Normal copulas was usually not
+AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_count_AICw}) to the AIC weight of the Normal copula family for the same pair (Table \ref{SM-tab_count_AICw_normal}) confirms that the degree of support for Normal copulas was usually not
 comparable to the degree of support for other families.
 Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_count_p_CvM}) in every case 
 failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of 
@@ -561,17 +561,28 @@ We summarized our results columnwise in Table \ref{tab_multivar_summary} for all
 (i.e., abundance data for green spruce aphid from `r nrow(RES_aphid_count$gfc_numBS)` sampling locations, 
 firstflight date data for leaf-curling plum aphid from `r nrow(RES_aphid_count$gfc_numBS)` sampling locations, 
 abundance data for plankton from UK seas from $14$ sampling locations, 
-methane flux data from $13$ sampling locations). We counted for how many location pair (excluding self-comparison)
-copula are non-independent.
+methane flux data from $13$ sampling locations). First $11$ rows in Table \ref{tab_multivar_summary} represent
+model selection results :
+(1) total number of location pairs (excluding self-comparison) considered, 
+(2) how many location pair copula are non-independent among them, 
+(3) number of non-Normal copula as best fit (based on highest AIC-weight),
+(4) average AIC-weights of best fit copula from all location pair,
+(5) average AIC-weights of Normal copula from all location pair,
+(6) number of location pair for which best fit copula have p-values > 0.01 
+(both Cramer-von Mises and Kolmogorov-Smirnov method)
+(7) lower and (8) upper quantile ($95\%$CI) of model averaged (AIC-weight based) lower tail dependence from all location pair,
+(9) lower and (10) upper quantile ($95\%$CI) of model averaged (AIC-weight based) upper tail dependence from all location pair,
+(11) number of location pair which showed stronger lower tail dependence than upper.
 
+Last $6$ rows of Table \ref{tab_multivar_summary} summarized the non-parametric analysis results 
+for $\Ps$ statistics : lower and upper quantile ($95\%$CI) of $\Ps_l$, $\Ps_u$, $\Ps_l-\Ps_u$ based on resampling
+location pair.
 
-
-
-
-
-
-
-
+Likewise, green-spruce aphid abundance data ($1^{st}$ column in Table \ref{tab_multivar_summary}), 
+plankton data from UK seas also showed major lower tail dependent spatial synchrony 
+($3^{rd}$ column in Table \ref{tab_multivar_summary}), whereas firstflight data for leaf-curling plum aphid 
+showed stronger upper tail dependence at every location pair ($2^{nd}$ column in Table \ref{tab_multivar_summary}).
+Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
 
 
 <!--Question 2 analyses-->

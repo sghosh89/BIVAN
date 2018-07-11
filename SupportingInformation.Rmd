@@ -290,6 +290,8 @@ cop_HB<-function(db,dp,year,rawplot,ploton){
 }
 #-----------------------------
 r_ple<-read.delim("./Data/Ceder_creek_e120/edited_ple120.txt")
+names(r_ple)[36]<-"Biomass"
+
 r_pce<-read.delim("./Data/Ceder_creek_e120/edited_pce120.txt")
 
 y1<-unique(r_ple$Year)
@@ -626,7 +628,6 @@ knitr::kable(h,
 source("bivfunctionplot.R")
 set.seed(seed) 
 # Now do NPA for v_BMR
-source("bivfunctionplot.R")
 stat_BMR_ga<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_10",numbin = 10)
 stat_BMR_ga_numbin5<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_5",numbin = 5)
 ```
@@ -819,6 +820,7 @@ for(i in 1:length(BivMS_res_cc)){
                                     numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
 }
 saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
+BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```
 
 ```{r stat_cc_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}

@@ -42,7 +42,7 @@ fracwork<-function(dvals,surrvals){
   frac<-NA*numeric(length(dvals))
   names(frac)<-names(dvals)
   for (counter in 1:length(frac)){
-    frac[counter]<-sum(surrvals[counter,]<dvals[counter])
+    frac[counter]<-sum(surrvals[counter,]<dvals[counter],na.rm=T) # to handle NA's
   }
   return(frac)
 }
@@ -107,15 +107,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   
   corlmcoru_d<-unname(corstats_d[1]-corstats_d[length(corstats_d)])
   corlmcoru_K<-corstats_K[1,]-corstats_K[length(corstats_d),]
-  corlmcoru_frac_K<-sum(corlmcoru_K<corlmcoru_d)
-  corstats_Kq<-apply(FUN=quantile,X=corstats_K,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  corlmcoru_frac_K<-sum(corlmcoru_K<corlmcoru_d,na.rm=T)
+  corstats_Kq<-apply(FUN=quantile,X=corstats_K,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
   corstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Corbds,nm="Cor",numbin=numbin)
   corstats_frac_S<-fracwork(corstats_d,corstats_S)
   
   corlmcoru_S<-corstats_S[1,]-corstats_S[length(corstats_d),]
-  corlmcoru_frac_S<-sum(corlmcoru_S<corlmcoru_d)
-  corstats_Sq<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  corlmcoru_frac_S<-sum(corlmcoru_S<corlmcoru_d,na.rm=T)
+  corstats_Sq<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
 
   #P stats
   Pstats_d<-calcstats(v=v,f=Pbds_wrap,nm="P",numbin=numbin)
@@ -124,15 +124,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   
   PlmPu_d<-unname(Pstats_d[1]-Pstats_d[length(Pstats_d)])
   PlmPu_K<-Pstats_K[1,]-Pstats_K[length(Pstats_d),]
-  PlmPu_frac_K<-sum(PlmPu_K<PlmPu_d)
-  Pstats_Kq<-apply(FUN=quantile,X=Pstats_K,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  PlmPu_frac_K<-sum(PlmPu_K<PlmPu_d,na.rm=T)
+  Pstats_Kq<-apply(FUN=quantile,X=Pstats_K,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
   Pstats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=Pbds_wrap,nm="P",numbin=numbin)
   Pstats_frac_S<-fracwork(Pstats_d,Pstats_S)
   
   PlmPu_S<-Pstats_S[1,]-Pstats_S[length(Pstats_d),]
-  PlmPu_frac_S<-sum(PlmPu_S<PlmPu_d)
-  Pstats_Sq<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  PlmPu_frac_S<-sum(PlmPu_S<PlmPu_d,na.rm=T)
+  Pstats_Sq<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
   #-------------------------------Ranking--------------------------
   Rank_Pl_K<-unname((1+Pstats_frac_K)[1])
@@ -150,15 +150,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   
   D2umD2l_d<-D2stats_d[length(D2stats_d)]-D2stats_d[1]
   D2umD2l_K<-D2stats_K[length(D2stats_d),]-D2stats_K[1,]
-  D2umD2l_frac_K<-sum(D2umD2l_K<D2umD2l_d)
-  D2stats_Kq<-apply(FUN=quantile,X=D2stats_K,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  D2umD2l_frac_K<-sum(D2umD2l_K<D2umD2l_d,na.rm=T)
+  D2stats_Kq<-apply(FUN=quantile,X=D2stats_K,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
   D2stats_S<-apply(FUN=calcstats,X=surv_S,MARGIN=3,f=D2bds,nm="Dtwo",numbin=numbin)
   D2stats_frac_S<-fracwork(D2stats_d,D2stats_S)
   
   D2umD2l_S<-D2stats_S[length(D2stats_d),]-D2stats_S[1,]
-  D2umD2l_frac_S<-sum(D2umD2l_S<D2umD2l_d)
-  D2stats_Sq<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.025,.975,.995))
+  D2umD2l_frac_S<-sum(D2umD2l_S<D2umD2l_d,na.rm=T)
+  D2stats_Sq<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
   # -----------------Plot---------------------------------------------------------------------
   bingap<-1/numbin

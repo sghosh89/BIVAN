@@ -56,9 +56,12 @@ Corbds<-function(vi,vj,lb,ub)
   #compute the indices of the points between the bounds
   inds<-which(vi+vj>2*lb & vi+vj<2*ub)
   
+  if(length(inds)!=0){ 
   #get the portion of the Spearman
   res<-sum((vi[inds]-vi_mean)*(vj[inds]-vj_mean))/((length(vi)-1)*sqrt(var_vi*var_vj))
-
+  }else{
+   res<-NA
+  }
   return(res)  
 }
 
@@ -198,32 +201,45 @@ Pbds<-function(vi,vj,lb,ub){
   #---------------------------------------------------------
   
   inds<-which(vi+vj>2*lb & vi+vj<2*ub)
-  dist_sort<-sort(abs(vi[inds]-vj[inds])/sqrt(2))
   
-  dpt_c<-0
-  dpt_uniq<-c(0)
-  dist_sort_df<-as.data.frame(table(dist_sort))
-  for (i in 1:length(dist_sort_df$Freq)){
-    dpt_c<-dpt_c+(dist_sort_df$Freq[i]/length(dist_sort))
-    dpt_uniq<-c(dpt_uniq,dpt_c)
+  if(length(inds)!=0){
+    
+    dist_sort<-sort(abs(vi[inds]-vj[inds])/sqrt(2))
+    
+    dpt_c<-0
+    dpt_uniq<-c(0)
+    dist_sort_df<-as.data.frame(table(dist_sort))
+    for (i in 1:length(dist_sort_df$Freq)){
+      dpt_c<-dpt_c+(dist_sort_df$Freq[i]/length(dist_sort))
+      dpt_uniq<-c(dpt_uniq,dpt_c)
+    }
+    dpt_uniq<-c(dpt_uniq,1)
+    dist_dpt_uniq<-c(0,as.numeric(as.character(dist_sort_df$dist_sort)),d_max)
+    
+    nrep<-2
+    S<-rep(dpt_uniq,each=nrep)
+    dist_S<-rep(dist_dpt_uniq[2:length(dist_dpt_uniq)],each=nrep)
+    dist_S<-c(0,dist_S,d_max)
+    #plot(dist_S,S,type="l",col="red")
+    
+    #integrals under the functions S
+    Au_S<-0
+    
+    for(i in 1:(length(dpt_uniq)-1)){
+      Au_S<-Au_S+(dpt_uniq[i]*(dist_dpt_uniq[i+1]-dist_dpt_uniq[i]))
+    }
+    
+    res<-Au_S-Au_Si
+    
+  }else{
+    dist_S<-NA
+    S<-NA
+    Au_S<-NA
+    res<-NA
   }
-  dpt_uniq<-c(dpt_uniq,1)
-  dist_dpt_uniq<-c(0,as.numeric(as.character(dist_sort_df$dist_sort)),d_max)
   
-  nrep<-2
-  S<-rep(dpt_uniq,each=nrep)
-  dist_S<-rep(dist_dpt_uniq[2:length(dist_dpt_uniq)],each=nrep)
-  dist_S<-c(0,dist_S,d_max)
-  #plot(dist_S,S,type="l",col="red")
-  
-  #integrals under the functions S
-  Au_S<-0
-  
-  for(i in 1:(length(dpt_uniq)-1)){
-    Au_S<-Au_S+(dpt_uniq[i]*(dist_dpt_uniq[i+1]-dist_dpt_uniq[i]))
-  }
   #-----------------------------------------------------------------------
-  res<-Au_S-Au_Si
+  
   
   return(list(dist_S=dist_S,
               S=S,

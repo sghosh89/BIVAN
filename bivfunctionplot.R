@@ -54,7 +54,7 @@ Pbds_wrap<-function(vi,vj,lb,ub){
   return(Pbds(vi,vj,lb,ub)$abs_res)
 }
 #----------------------------------------------------
-fracplot<-function(x,fracs,ylims,numsurrog=1000){
+fracplot<-function(x,fracs,ylims,numsurrog){
   for (counter in 1:length(fracs)){
     ptxt<-''
     if ((fracs[counter]>.975*numsurrog)==T){
@@ -69,7 +69,7 @@ fracplot<-function(x,fracs,ylims,numsurrog=1000){
 }
 #-----------------------------
 #This function will do the same thing as of fracplot
-myfracplot<-function(x,stats_d,surrog_statsq,stats_frac,ylims,numsurrog=1000){
+myfracplot<-function(x,stats_d,surrog_statsq,stats_frac,ylims,numsurrog){
   for (counter in 1:length(x)){
     ptxt<-''
     if(stats_d[counter]>surrog_statsq[3,][counter]){
@@ -94,7 +94,7 @@ vlineplot<-function(x,ylims){
 }
 #---------------------------------------------------------------------
 # This is the plotter function as well as it returns the stats as a list of 6
-bivfunctionplot<-function(v,resloc,nametag,numbin){
+bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   
   temp<-makeSurrog(v=v)
   surv_K<-temp$surv_K
@@ -116,7 +116,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   corlmcoru_S<-corstats_S[1,]-corstats_S[length(corstats_d),]
   corlmcoru_frac_S<-sum(corlmcoru_S<corlmcoru_d,na.rm=T)
   corstats_Sq<-apply(FUN=quantile,X=corstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
-
+  #------------------------------------------------------
+  indna_K<-which(is.na(corlmcoru_K))
+  lindna_K<-length(indna_K)   # number of kendall preserving surrogates which gives NA as tail statistic results
+  numsurrog_success_K<-numsurrog-lindna_K
+  
+  indna_S<-which(is.na(corlmcoru_S))
+  lindna_S<-length(indna_S)   # number of spearman preserving surrogates which gives NA as tail statistic results
+  numsurrog_success_S<-numsurrog-lindna_S
+  #---------------------------------------------------------
   #P stats
   Pstats_d<-calcstats(v=v,f=Pbds_wrap,nm="P",numbin=numbin)
   Pstats_K<-apply(FUN=calcstats,X=surv_K,MARGIN=3,f=Pbds_wrap,nm="P",numbin=numbin)
@@ -188,7 +196,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+2*panht+2*gap)/totht,
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-  ylimits_cor<-range(corstats_d,corstats_S,corstats_K)#??? should it be range(corstats_d,corstats_S,corstats_K)???
+  ylimits_cor<-range(corstats_d,corstats_S,corstats_K,na.rm = T)#??? should it be range(corstats_d,corstats_S,corstats_K)???
   ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
   plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',cex=1.5)
@@ -202,8 +210,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,corstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='A',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = corstats_d,surrog_statsq = corstats_Kq,stats_frac = corstats_frac_K,
-  #          ylims = ylimits_cor,numsurrog = 1000)
-  fracplot(x=x,corstats_frac_K,ylimits_cor)
+  #          ylims = ylimits_cor,numsurrog = numsurrog_success_K)
+  fracplot(x=x,corstats_frac_K,ylimits_cor,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_cor)
   
   #spearman, cor
@@ -223,8 +231,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,corstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='B',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = corstats_d,surrog_statsq = corstats_Sq,stats_frac = corstats_frac_S,
-  #           ylims = ylimits_cor,numsurrog = 1000)
-  fracplot(x=x,corstats_frac_S,ylimits_cor)
+  #           ylims = ylimits_cor,numsurrog = numsurrog_success_S)
+  fracplot(x=x,corstats_frac_S,ylimits_cor,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_cor)
   
   #kendall, P
@@ -233,7 +241,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht+panht+gap)/totht,
             (xht+2*panht+gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  ylimits_P<-range(Pstats_d,Pstats_S,Pstats_K)
+  ylimits_P<-range(Pstats_d,Pstats_S,Pstats_K,na.rm = T)
   ylimits_P[2]<-ylimits_P[2]+.3*diff(ylimits_P)
   plot(x,Pstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=1.5)
   axis(side=1,labels=F)
@@ -244,8 +252,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,Pstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='C',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = Pstats_d,surrog_statsq = Pstats_Kq,stats_frac = Pstats_frac_K,
-  #           ylims = ylimits_P,numsurrog = 1000)
-  fracplot(x=x,Pstats_frac_K,ylimits_P)
+  #           ylims = ylimits_P,numsurrog = numsurrog_success_K)
+  fracplot(x=x,Pstats_frac_K,ylimits_P,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_P)
   
   #spearman, p
@@ -264,8 +272,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,Pstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='D',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = Pstats_d,surrog_statsq = Pstats_Sq,stats_frac = Pstats_frac_S,
-  #           ylims = ylimits_P,numsurrog = 1000)
-  fracplot(x=x,Pstats_frac_S,ylimits_P)
+  #           ylims = ylimits_P,numsurrog = numsurrog_success_S)
+  fracplot(x=x,Pstats_frac_S,ylimits_P,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_P)
   
   #kendall, D2
@@ -274,7 +282,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
             (xht)/totht,
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  ylimits_D2<-range(D2stats_d,D2stats_S,D2stats_K)
+  ylimits_D2<-range(D2stats_d,D2stats_S,D2stats_K,na.rm = T)
   ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
   plot(x,D2stats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_D2,cex=1.5)
   mtext(side=1,line=1,text="Diagonal slice")
@@ -286,8 +294,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,D2stats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='E',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = D2stats_d,surrog_statsq = D2stats_Kq,stats_frac = D2stats_frac_K,
-  #           ylims = ylimits_D2,numsurrog = 1000)
-  fracplot(x=x,D2stats_frac_K,ylimits_D2)
+  #           ylims = ylimits_D2,numsurrog = numsurrog_success_K)
+  fracplot(x=x,D2stats_frac_K,ylimits_D2,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_D2)
   
   #spearman, D2
@@ -307,8 +315,8 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
   #lines(x,D2stats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='F',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = D2stats_d,surrog_statsq = D2stats_Sq,stats_frac = D2stats_frac_S,
-  #           ylims = ylimits_D2,numsurrog = 1000)
-  fracplot(x=x,D2stats_frac_S,ylimits_D2)
+  #           ylims = ylimits_D2,numsurrog = numsurrog_success_S)
+  fracplot(x=x,D2stats_frac_S,ylimits_D2,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_D2)
   
   dev.off()
@@ -324,7 +332,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin){
               Rank_Pu_K=Rank_Pu_K,
               Rank_Pu_S=Rank_Pu_S,
               Rank_PlmPu_K=Rank_PlmPu_K,
-              Rank_PlmPu_S=Rank_PlmPu_S))
+              Rank_PlmPu_S=Rank_PlmPu_S,
+              numsurrog_success_S=numsurrog_success_S,
+              numsurrog_success_K=numsurrog_success_K))
   
 }
 #-------------------------------------------------------------------------

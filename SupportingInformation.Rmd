@@ -214,6 +214,126 @@ dev.off()
 \end{center}
 \end{figure}
 
+## Ceder-creek data for e120 \label{ceder-creek_data}
+
+```{r read_ceder_creek_data, echo=F, results="hide"}
+set.seed(seed)
+#-------------------------------------------------
+# This function takes 
+# Input :
+#       db : a dataframe : smaller subset of ple_120 data to calculate avg. biomass for each plot
+#       dp : a dataframe : smaller subset of pce_120 data to calculate avg. shannon's H for those plots
+#       year : the year for which you want to calculate biomass and shannon's index data
+#       rawplot : logical : T for rawdata plot, F for copula plot
+#       ploton : logical for optional plotting
+
+# Output :
+#       a list of two data-frame:
+#                   tab_dbp : a data-frame with 3 column : (plot no , avg.H, avg.Biomass(g/m2))
+#                   cop_tab_dbp : a data-frame with 3 column : (plot no, pobs(avg.H), pobs(avg.Biomass(g/m2)))
+
+cop_HB<-function(db,dp,year,rawplot,ploton){
+  # db : biomass dataset for a specific year
+  # dp : percent cover dataset for a specific year
+  
+  plots<-sort(intersect(db$Plot,dp$Plot)) # common plots for both datasets for a specific year
+  db<-subset(db,Plot%in%plots)
+  dp<-subset(dp,Plot%in%plots)
+  
+  
+  tab_dbp<-data.frame(Plot=plots,avg.H=NA,avg.Biomass=NA)
+  for(i in 1:length(plots)){
+    # calculate biomass for each plot (averaged over all strips for that plot)
+    x<-subset(db,Plot==plots[i])
+    tab_dbp$avg.Biomass[i]<-mean(x$Biomass) 
+    
+    # calculate shannon's index H for each plot (averaged over all Quadrates for that plot)
+    x<-subset(dp,Plot==plots[i])
+    uniq_sp<-sort(as.character(unique(x$Species)))  # These are the species in a particular plot
+    Q<-as.character(unique(x$Quadrat))
+    
+    tab_each_sp<-data.frame(sp=uniq_sp,avg_cov=0,rel_avg_cov=0)
+    
+    for(sp in 1:length(uniq_sp)){
+      my_sp<-uniq_sp[sp]
+      tab_temp<-data.frame(Q=Q,abs_cov=0)
+      ind<-which(x$Species==my_sp)
+      li<-length(ind)
+      tab_temp$abs_cov[1:li]<-x$Abscover[ind]
+      tab_each_sp$avg_cov[[sp]]<-mean(tab_temp$abs_cov) # avg. over 4Quadrates for a sp.
+    }
+    
+    tab_each_sp$rel_avg_cov<-tab_each_sp$avg_cov/sum(tab_each_sp$avg_cov)
+    tab_dbp$avg.H[i]<- -sum((tab_each_sp$rel_avg_cov)*log(tab_each_sp$rel_avg_cov))
+
+  }
+  
+  tab_dbp<-na.omit(tab_dbp)
+  
+  cop_tab_dbp<-data.frame(Plot=tab_dbp$Plot,avg.H=NA,avg.Biomass=NA)
+  cop_tab_dbp$avg.H<-VineCopula::pobs(tab_dbp$avg.H)
+  cop_tab_dbp$avg.Biomass<-VineCopula::pobs(tab_dbp$avg.Biomass)
+  
+  
+  if(ploton==T){
+    if(rawplot==T){
+      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col=rgb(0,0,1,0.3),pch=19,cex.lab=1.5)
+      mtext(paste0("Year=",year))
+    }else{
+      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col=rgb(1,0,0,0.3),pch=19,cex.lab=1.5)
+      mtext(paste0("Year=",year))
+    }
+  }
+  
+  return(list(tab_dbp=tab_dbp,
+         cop_tab_dbp=cop_tab_dbp))
+}
+#-----------------------------
+r_ple<-read.delim("./Data/Ceder_creek_e120/edited_ple120.txt")
+r_pce<-read.delim("./Data/Ceder_creek_e120/edited_pce120.txt")
+
+y1<-unique(r_ple$Year)
+y2<-unique(r_pce$Year)
+yr<-sort(intersect(y1,y2))
+
+a<-as.data.frame(table(sort(r_pce$Species)))
+b<-as.character(a$Var1)
+bad_sp<-c(b[51:53],b[156:158])
+
+ind<-which(r_pce$Species%in%bad_sp)
+r_pce_clean<-r_pce[-ind,]
+#--------------------------------------------------------------------------------------------
+pdf("./Results/Ceder_creek_results/raw_HB_all_yr.pdf",height = 6,width = 10)
+op<-par(mfrow=c(2,3),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
+for(i in 1:length(yr)){
+  db<-subset(r_ple,Year==yr[i])
+  dp<-subset(r_pce_clean,Year==yr[i])
+  
+  sr<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=T,ploton = T)
+}
+par(op)
+dev.off()
+#----------------------------------------------------------------------------------------
+cop_HB_all_yr<-vector("list",length(yr))
+names(cop_HB_all_yr)<-yr
+
+pdf("./Results/Ceder_creek_results/cop_HB_all_yr.pdf",height = 6,width = 10)
+op<-par(mfrow=c(2,3),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
+for(i in 1:length(yr)){
+  db<-subset(r_ple,Year==yr[i])
+  dp<-subset(r_pce_clean,Year==yr[i])
+  
+  s<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=F,ploton = T)
+  cop_HB_all_yr[[i]]<-s$cop_tab_dbp[,2:3]
+}
+par(op)
+dev.off()
+
+saveRDS(cop_HB_all_yr,"./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
+#---------------------------------------------------------------------------------------
+cop_HB_all_yr<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
+```
+
 ## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
    * We threw out all locations that had fewer than 30 years data. 
@@ -684,6 +804,40 @@ This chunks are just to see the tables for all numbin variation for anolis data 
 ```
 
 -->
+
+```{r bivmodselect_cc, echo=F, cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("OurBiCopSelect.R")
+set.seed(seed)
+
+BivMS_res_cc<-vector("list",length(cop_HB_all_yr))
+names(BivMS_res_cc)<-names(cop_HB_all_yr)
+
+for(i in 1:length(BivMS_res_cc)){
+  BivMS_res_cc[[i]]<-OurBiCopSelect(u1=cop_HB_all_yr[[i]]$avg.H,u2=cop_HB_all_yr[[i]]$avg.Biomass,
+                                    families=c(1,3:10,13:14,16:20),
+                                    level=0.05,AICBIC="AIC",
+                                    numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
+}
+saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
+```
+
+```{r stat_cc_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+source("bivfunctionplot.R")
+set.seed(seed)
+
+stat_cc_ga<-vector("list",length(cop_HB_all_yr))
+names(stat_cc_ga)<-names(cop_HB_all_yr)
+
+for(i in 1:length(stat_cc_ga)){
+  temp<-bivfunctionplot(v=cop_HB_all_yr[[i]],
+                             resloc="./Results/Ceder_creek_results/",
+                             nametag=paste0(names(cop_HB_all_yr)[i],"cc_numbin_10",sep=""),
+                             numbin = 10)
+  stat_cc_ga[[i]]<-temp
+}
+
+saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
+```
 
 <!--
 \newpage

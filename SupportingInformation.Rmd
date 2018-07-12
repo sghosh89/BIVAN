@@ -548,7 +548,7 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r make_table_stat_fn, echo=F}
 
-fractxt<-function(fracval,numsurrog=1000){
+fractxt<-function(fracval,numsurrog){
   ptxt<-''
   if (fracval>.5*numsurrog){                        # ?DCR why 0.5 factor?
     ptxt<-paste(">",fracval,sep='')
@@ -570,12 +570,12 @@ make_table_stat_fn<-function(data){
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
  
- atdres[1,2]<-fractxt(data$corlmcoru_frac_K)
- atdres[1,3]<-fractxt(data$corlmcoru_frac_S)
- atdres[2,2]<-fractxt(data$PlmPu_frac_K)
- atdres[2,3]<-fractxt(data$PlmPu_frac_S)
- atdres[3,2]<-fractxt(data$D2umD2l_frac_K)
- atdres[3,3]<-fractxt(data$D2umD2l_frac_S)
+ atdres[1,2]<-fractxt(data$corlmcoru_frac_K,numsurrog = data$numsurrog_success_K)
+ atdres[1,3]<-fractxt(data$corlmcoru_frac_S,numsurrog = data$numsurrog_success_S)
+ atdres[2,2]<-fractxt(data$PlmPu_frac_K,numsurrog = data$numsurrog_success_K)
+ atdres[2,3]<-fractxt(data$PlmPu_frac_S,numsurrog = data$numsurrog_success_S)
+ atdres[3,2]<-fractxt(data$D2umD2l_frac_K,numsurrog = data$numsurrog_success_K)
+ atdres[3,3]<-fractxt(data$D2umD2l_frac_S,numsurrog = data$numsurrog_success_S)
 
  return(atdres)
   

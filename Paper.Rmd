@@ -401,21 +401,23 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 Question 2 from the Introduction was explored using simple population models.
 
 \begin{figure}[!h]
-\textbf{ \hspace{4.3 cm} (A) \hspace{4.3 cm} (B) \hspace{4 cm} (C) } \\
-\vspace{-0.4 cm}
+\textbf{ \hspace{3.2 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
+\vspace{-0.35 cm}
 \begin{center}
-\includegraphics[width=5 cm]{./Results/SoilCNraw.pdf}
-\includegraphics[width=5 cm]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
-\includegraphics[width=5 cm]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}\\
+\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
 \end{center}
-\textbf{ \hspace{4.3 cm} (D) \hspace{4.3 cm} (E) \hspace{4 cm} (F) } \\
-\vspace{-0.4 cm}
+\textbf{ \hspace{3.2 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
+\vspace{-0.35 cm}
 \begin{center}
-\includegraphics[width=5 cm]{./Results/SoilCNcop.pdf}
-\includegraphics[width=5 cm]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
-\includegraphics[width=5 cm]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} ln(BMR) of contrasts vs. ln(mass) of contrasts, \textbf{(C)} contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits.
-Lower panel \textbf{(D - F)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of contrasts for last two datasets (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
+\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} ln(BMR) of contrasts vs. ln(mass) of contrasts, \textbf{(C)} contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
+Lower panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of contrasts for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
 \end{center}
 \end{figure}
 
@@ -496,20 +498,20 @@ preserving $1000$ Normal surrogates and calculated the rank for actual data as t
 arranged in ascending order. So, whenever those ranks are $>975$ or $<25$, that indicate a significantly ($95\%$ CI) different 
 tail-dependence measures based on Normal-null hypothesis. 
 
-For all $3$ bivariate-datasets indicated by each column name (SoilCN, BMR, Anolis) 
+For all $4$ bivariate-datasets indicated by each column name (SoilCN, BMR, Anolis, Ceder-creek) 
 in Table \ref{tab_bivar_summary}, Normal copula were always a poor fit compared to 
 highest AIC-weight based asymmetric copulas - which answers the first part of Q1. 
-Each dataset presented there, has significant upper tail dependence 
-compared to Normal as indicated by negative AIC-weights model averaged 
+Among four datasets presented there, first three have significant upper tail dependence whereas the last one has significant lower tail dependence compared to Normal. It was indicated by negative AIC-weights model averaged 
 (lower-upper) tail dependence and very low ranks of actual copula 
-data for $\Ps_l - \Ps_u$ statistics, which answers the second and third part of Q1
-(For detailed results of each dataset see Tables \ref{SM-tab_soilCN_asym} - \ref{SM-tab_contrasts_67_asym} and 
-Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_contrasts_67_nonparam}). 
-
+data for $\Ps_l - \Ps_u$ statistics for first three datasets and positive AIC-weights model averaged 
+(lower-upper) tail dependence and very high ranks of actual copula 
+data for $\Ps_l - \Ps_u$ statistics for the last one, which answers the second and third part of Q1
+(For detailed results of each dataset see Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and 
+Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}). 
 
 ```{r tab_bivar_summary, echo=F, results='markup'}
 
-tab_biivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
+tab_bivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
 knitr::kable(tab_bivar_summary, 
              format='pandoc',
              caption = "Summary of results for bivariate data-sets.\\label{tab_bivar_summary}",

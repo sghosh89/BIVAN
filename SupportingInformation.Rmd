@@ -216,6 +216,9 @@ dev.off()
 
 ## Ceder-creek data for e120 \label{ceder-creek_data}
 
+These biodiversity experiment data sets, for [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and for [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120), are collected by Tilman et al. over many years. We used thsese datasets [@Tilman2001; @Tilman2006] to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
+for year 2000. 
+
 ```{r read_ceder_creek_data, echo=F, results="hide"}
 set.seed(seed)
 #-------------------------------------------------
@@ -277,11 +280,18 @@ cop_HB<-function(db,dp,year,rawplot,ploton){
   
   if(ploton==T){
     if(rawplot==T){
-      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col=rgb(0,0,1,0.3),pch=19,cex.lab=1.5)
-      mtext(paste0("Year=",year))
+      op<-par(mar=c(5.1, 4.1, 1.5, 2.1))
+      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col="red",pch=1,cex.lab=1.6,cex.axis=1.5)
+      mtext(paste0("Year=",year),cex=1.5)
+      par(op)
     }else{
-      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col=rgb(1,0,0,0.3),pch=19,cex.lab=1.5)
-      mtext(paste0("Year=",year))
+      op<-par(mar=c(5.1, 4.1, 1.5, 2.1))
+      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",col="red",pch=1,cex.lab=2,cex.axis=1.5,
+         xlim=c(0,1),ylim=c(0,1),asp=1)
+      rect(0,0,1,1)
+      lines(c(0,1),c(0,1),type='l')
+      mtext(paste0("Year=",year),cex=1.5)
+      par(op)
     }
   }
   
@@ -315,6 +325,14 @@ for(i in 1:length(yr)){
 }
 par(op)
 dev.off()
+#-----------------------
+#raw data plot for year2000
+pdf("./Results/Ceder_creek_results/raw_HB_2000.pdf",height = 6,width = 6)
+i<-5
+db<-subset(r_ple,Year==yr[i])
+dp<-subset(r_pce_clean,Year==yr[i])
+sr<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=T,ploton = T)
+dev.off()
 #----------------------------------------------------------------------------------------
 cop_HB_all_yr<-vector("list",length(yr))
 names(cop_HB_all_yr)<-yr
@@ -330,11 +348,32 @@ for(i in 1:length(yr)){
 }
 par(op)
 dev.off()
+#-------------------------
+#cop data plot for year2000
+pdf("./Results/Ceder_creek_results/cop_HB_2000.pdf",height = 6,width = 6)
+i<-5
+db<-subset(r_ple,Year==yr[i])
+dp<-subset(r_pce_clean,Year==yr[i])
+s<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=F,ploton = T)
+cc_cop_2000<-s$cop_tab_dbp[,2:3]
+dev.off()
+#------------------
 
 saveRDS(cop_HB_all_yr,"./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 #---------------------------------------------------------------------------------------
 cop_HB_all_yr<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
+
+\begin{figure}[!h]
+\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
+\vspace{-0.2 cm}
+\begin{center}
+\includegraphics[width=3 in]{./Results/Ceder_creek_results/raw_HB_2000.pdf}
+\includegraphics[width=3 in]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
+\caption[\textbf{(A)} Plot of the plant-aboveground avg. Biomass vs. avg. Shannon's index (H). \textbf{(B)} Copula plot of plant-aboveground avg. Biomass vs. avg. Shannon's index.]{\textbf{(A)} Plot of the plant-aboveground avg. Biomass vs. avg. Shannon's index (H). \textbf{(B)} Copula plot of plant-aboveground avg. Biomass vs. avg. Shannon's index. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(cc_cop_2000)`$ is the number of (9m by 9m)plots. (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_cc2000}}
+\end{center}
+\end{figure}
+
 
 ## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
    * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
@@ -823,6 +862,15 @@ saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```
 
+<!--Display model selection results for Ceder-creek data for year 2000 in a table-->
+```{r tab_cc2000fit, echo=F, results='markup'}
+h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+knitr::kable(h,
+             format='pandoc',
+             caption = "Fitting info for **Ceder-creek dataset** for year 2000. \\label{tab_cc2000fit}",
+             booktabs=T)
+```
+
 ```{r stat_cc_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
 set.seed(seed)
@@ -839,6 +887,21 @@ for(i in 1:length(stat_cc_ga)){
 }
 
 saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
+```
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
+\caption[Testing non-parametric statistics for Ceder-creek data with $numbin=10$ for year 2000]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{Ceder-creek data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_cc2000_nonparam}}
+\end{center}
+\end{figure}
+
+```{r tab_cc_asym_2000, echo=F, results="markup"}
+tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
+knitr::kable(tab_cc_asym_2000,
+             format="pandoc",
+             caption = "**Ceder-creek data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis on year 2000 \\label{tab_cc_asym_2000}",
+             booktabs=T)
 ```
 
 <!--
@@ -1542,8 +1605,9 @@ bivar_tab_summary_fn<-function(r,rs){
 m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
 m2<-bivar_tab_summary_fn(r=BivMS_BMR,rs=stat_BMR_ga)
 m3<-bivar_tab_summary_fn(r=BivMS_contrasts_67,rs=stat_contrasts_67_ga)
-tab_bivar_summary<-cbind(m1,m2,m3)
-colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis")
+m4<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
+tab_bivar_summary<-cbind(m1,m2,m3,m4)
+colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis","Ceder-creek")
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
 

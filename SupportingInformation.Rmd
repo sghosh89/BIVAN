@@ -2631,9 +2631,9 @@ source("copsurrognd.R")
 set.seed(seed)
 
 #***constants
-N<-100 #length of time series
+N<-50 #length of time series
 n<-25 #number of sampling locations
-numdat<-25 #the number of datasets to get from the normal copula
+numdat<-10 #the number of datasets to get from the normal copula
 rho<-0.7 #normal-copula parameter for dependence between locations
           #this is a covariance, see below call to rmvnorm
 
@@ -2642,23 +2642,27 @@ rho<-0.7 #normal-copula parameter for dependence between locations
 #transformation
 sig<-matrix(rho,n,n)
 diag(sig)<-1
-m<-rmvnorm(N*numdat,mean=rep(0,n),sigma=sig)
+m<-rmvnorm(N*numdat,mean=rep(0,n),sigma=sig) # each column of m has normal histogram
 m<-array(m,c(N,numdat,n))
-m<-aperm(m,c(1,3,2))
+m<-aperm(m,c(1,3,2)) # 2nd dim is normally distributed e.g. hist(m[,1,])
 gshape<-7.5
 gscale<-1 #gamma parameters
-cop_to_marg_trans<-function(x)
-{
+
+cop_to_marg_trans<-function(x){
   return(qgamma(x,shape=gshape,scale=gscale)) #this is where we choose the marginals,
                                   #should be something skewed
 }
-marg_to_cop_trans<-function(x) #transforms to copula space
-{
+
+marg_to_cop_trans<-function(x){ #transforms to copula space
   return(pgamma(x,shape=gshape,scale=gscale))
 }
+
+# pnorm(m) makes normal to uniform
+# then qgamma(...) makes uniform to gamma distributed
 m<-cop_to_marg_trans(pnorm(m))
 
 #***surrogates using a Clayton copula, kendall preserving
+
 #get the Clayton parameter to use
 ncop<-normalCopula(rho,2)
 ccop<-claytonCopula(2,2)
@@ -2667,8 +2671,7 @@ ccop<-claytonCopula(cparam,n)
 
 #generate the surrogates
 csurrog<-array(NA,dim(m))
-for (counter in 1:dim(m)[3])
-{
+for (counter in 1:dim(m)[3]){
   csurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=ccop,numsurrog=1)
 }
 
@@ -2696,8 +2699,7 @@ fcop<-frankCopula(fparam,n)
 
 #generate the surrogates
 fsurrog<-array(NA,dim(m))
-for (counter in 1:dim(m)[3])
-{
+for (counter in 1:dim(m)[3]){
   fsurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=fcop,numsurrog=1)
 }
 
@@ -2705,6 +2707,8 @@ for (counter in 1:dim(m)[3])
 #take the clayton surrogates and transform them to the 
 #copula space, then flip, then transform back
 scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
+
+# check : plot(csurrog[,1,1],csurrog[,2,1]) and plot(scsurrog[,1,1],scsurrog[,2,1])
 
 # #test: should have identical taus as csurrog
 # cor(csurrog[,1,1],csurrog[,2,1],meth='kendall')
@@ -2722,8 +2726,7 @@ ccop<-claytonCopula(cparam,n)
 
 #generate the surrogates
 csurrog<-array(NA,dim(m))
-for (counter in 1:dim(m)[3])
-{
+for (counter in 1:dim(m)[3]){
   csurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=ccop,numsurrog=1)
 }
 
@@ -2735,8 +2738,7 @@ fcop<-frankCopula(fparam,n)
 
 #generate the surrogates
 fsurrog<-array(NA,dim(m))
-for (counter in 1:dim(m)[3])
-{
+for (counter in 1:dim(m)[3]){
   fsurrog[,,counter]<-copsurrognd(m[,,counter],targetcop=fcop,numsurrog=1)
 }
 
@@ -2760,16 +2762,14 @@ kend.stats.res<-list()
 kend.points.res<-list()
 spea.stats.res<-list()
 spea.points.res<-list()
-for (counter in 1:length(kend.surrog))
-{
+for (counter in 1:length(kend.surrog)){
  ks<-kend.surrog[[counter]]
  ss<-spea.surrog[[counter]]
- kend.stats.res[[counter]]<-matrix(NA,5,numdat)
+ kend.stats.res[[counter]]<-matrix(NA,5,numdat) # to keep spatial TL stats
  spea.stats.res[[counter]]<-matrix(NA,5,numdat)
- kend.points.res[[counter]]<-array(NA,c(N,2,numdat))
+ kend.points.res[[counter]]<-array(NA,c(N,2,numdat)) # to keep log(mu), log(var) of spatial TL as a dataframe
  spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
- for (sc in 1:numdat)
- {
+ for (sc in 1:numdat){
    khold<-tl_stats(ks[,,sc])
    kend.stats.res[[counter]][,sc]<-khold$s.stats #spatial TL only
    rownames(kend.stats.res[[counter]])<-names(khold$s.stats)
@@ -2788,34 +2788,47 @@ names(spea.points.res)<-names(spea.surrog)
 ```
 
 <!--Now make some plots, these one for kendall surrogates-->
-```{r taylor_plots, echo=F}
-##plot TL for clayton
+```{r taylor_plots, echo=F, results="hide"}
 xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
 ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
-par(mfrow=c(1,1),mar=c(4,4,1,1) + 0.1)
+
+pdf("./Results/taylorslaw_results/SpatialTL_CNFSC.pdf",height=4,width=16)
+op<-op<-par(mfrow=c(1,4),mar=c(4,5,1,1),mgp=c(3,1,0))
+##plot TL for clayton
 plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
-     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")))  
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
 points(kend.points.res[[1]][,1,1],kend.points.res[[1]][,2,1],type='p',pch=20,cex=.75,col='red')
 points(kend.points.res[[1]][,1,2],kend.points.res[[1]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Clayton"),side = 3, line=-2, adj=0.1, col="black")
 
 ##plot TL for normal copula
 plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
-     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")))  
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
 points(kend.points.res[[2]][,1,1],kend.points.res[[2]][,2,1],type='p',pch=20,cex=.75,col='red')
 points(kend.points.res[[2]][,1,2],kend.points.res[[2]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Normal"),side = 3, line=-2, adj=0.1, col="black")
 
 #plot TL for frank
 plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
-     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")))  
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
 points(kend.points.res[[3]][,1,1],kend.points.res[[3]][,2,1],type='p',pch=20,cex=.75,col='red')
 points(kend.points.res[[3]][,1,2],kend.points.res[[3]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black")
 
 #plot TL for survival clayton
 plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
-     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")))  
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
 points(kend.points.res[[4]][,1,1],kend.points.res[[4]][,2,1],type='p',pch=20,cex=.75,col='red')
 points(kend.points.res[[4]][,1,2],kend.points.res[[4]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Survival Clayton"),side=3, line=-2, adj=0.1, col="black")
 
+par(op)
+dev.off()
+#---------------------------------------------------
 #prepare for plots coming below
 s.lin<-cbind(kend.stats.res[[1]][1,],kend.stats.res[[2]][1,],kend.stats.res[[3]][1,],kend.stats.res[[4]][1,])
 s.hom<-cbind(kend.stats.res[[1]][2,],kend.stats.res[[2]][2,],kend.stats.res[[3]][2,],kend.stats.res[[4]][2,])
@@ -2823,53 +2836,88 @@ s.rmse<-cbind(kend.stats.res[[1]][3,],kend.stats.res[[2]][3,],kend.stats.res[[3]
 s.int<-cbind(kend.stats.res[[1]][4,],kend.stats.res[[2]][4,],kend.stats.res[[3]][4,],kend.stats.res[[4]][4,])
 s.slope<-cbind(kend.stats.res[[1]][5,],kend.stats.res[[2]][5,],kend.stats.res[[3]][5,],kend.stats.res[[4]][5,])
 
-#plot s.lin distr for each set of surrogates
+pdf("./Results/taylorslaw_results/SpatialTL_5stats.pdf",height=3,width=15)
+op<-par(mfrow=c(1,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
-par(mfrow=c(1,1),mar=c(4,4,1,1) + 0.1)
+
 x<-1:4
-plot(x,s.lin[1,],type="b",ylim=range(s.lin),xlab="Set of surrogates",ylab="Linearity test p-vals")
-for (counter in 2:dim(s.lin)[1])
-{
-  lines(x,s.lin[counter,],type='b')
+x2<-c("C", "N", "F", "SC")
+plot(x,s.lin[1,],type="l",col="grey",ylim=range(s.lin),xlab="Set of surrogates",ylab="Linearity test p-vals",
+     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+points(x,s.lin[1,],col="red")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+for (counter in 2:dim(s.lin)[1]){
+  lines(x,s.lin[counter,],col="grey")
+  points(x,s.lin[counter,],col="red")
 }
 
 #plot s.hom distr for each set of surrogates
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
 x<-1:4
-plot(x,s.hom[1,],type="b",ylim=range(s.hom),xlab="Set of surrogates",ylab="Homoskedasticity test p-vals")
-for (counter in 2:dim(s.slope)[1])
-{
-  lines(x,s.hom[counter,],type='b')
+plot(x,s.hom[1,],type="l",col="grey",ylim=range(s.hom),xlab="Set of surrogates",
+     ylab="Homoskedasticity test p-vals",
+     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+points(x,s.hom[1,],col="red")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+for (counter in 2:dim(s.slope)[1]){
+  lines(x,s.hom[counter,],col="grey")
+  points(x,s.hom[counter,],col="red")
 }
 
 #plot s.rmse distr for each set of surrogates
-#***DAN: x axis needs to be redone to show the copula names used in the surrogates
 x<-1:4
-plot(x,s.rmse[1,],type="b",ylim=range(s.rmse),xlab="Set of surrogates",ylab="Spatial TL rmse")
-for (counter in 2:dim(s.rmse)[1])
-{
-  lines(x,s.rmse[counter,],type='b')
+plot(x,s.rmse[1,],type="l",col="grey",ylim=range(s.rmse),xlab="Set of surrogates",ylab="Spatial TL rmse",
+     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+points(x,s.rmse[1,],col="red")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+for (counter in 2:dim(s.rmse)[1]){
+  lines(x,s.rmse[counter,],col="grey")
+  points(x,s.rmse[counter,],col="red")
 }
 
 #plot s.int distr for each set of surrogates
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
 x<-1:4
-plot(x,s.int[1,],type="b",ylim=range(s.int),xlab="Set of surrogates",ylab="Spatial TL intercept")
-for (counter in 2:dim(s.int)[1])
-{
-  lines(x,s.int[counter,],type='b')
+plot(x,s.int[1,],type="l",col="grey",ylim=range(s.int),xlab="Set of surrogates",
+     ylab="Spatial TL intercept",
+     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+points(x,s.int[counter,],col="red")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+for (counter in 2:dim(s.int)[1]){
+  lines(x,s.int[counter,],col="grey")
+  points(x,s.int[counter,],col="red")
 }
 
 #plot s.slope distr for each set of surrogates
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
 x<-1:4
-plot(x,s.slope[1,],type="b",ylim=range(s.slope),xlab="Set of surrogates",ylab="Spatial TL slope")
-for (counter in 2:dim(s.slope)[1])
-{
-  lines(x,s.slope[counter,],type='b')
+plot(x,s.slope[1,],type="l",col="grey",ylim=range(s.slope),xlab="Set of surrogates",
+     ylab="Spatial TL slope",
+     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+points(x,s.slope[counter,],col="red")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+for (counter in 2:dim(s.slope)[1]){
+  lines(x,s.slope[counter,],col="grey")
+  points(x,s.slope[counter,],col="red")
 }
+par(op)
+dev.off()
 ```
 
+
+\begin{figure}[!h]
+\textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.1 cm} (D)} \\
+\vspace{-0.5 cm} 
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC.pdf}\\
+\end{center}
+\textbf{ \hspace{3.1 cm} (E) \hspace{2.4 cm} (F) \hspace{2.3 cm} (G) \hspace{2.3 cm} (H) \hspace{2.3 cm} (I)}\\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_5stats.pdf}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results (A) hjghj ; (B) fgjfgjfg. \label{fig_spTL}}
+\end{center}
+\end{figure}
 
 
 \newpage

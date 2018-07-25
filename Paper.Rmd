@@ -694,6 +694,23 @@ $r$ is the liner growth rate and $K$ is the carrying capacity of the environment
   
 With increasing number of patches from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_numlocs_effect_global_disp}] for both model. 
 
+### Effects on Taylor's law
+
+Spatial Taylor's law, which shows linear relationship between `log`(variance) and `log`(mean) of population densities of a species taken from different locations, is a well-known pattern found in ecology and related fields. Here, we want to examine the nature of the slope and how it changes if population time series (taken as $50$ years) from different locations (say, $numloc=25$) have some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ ns) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,ns=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
+
+\begin{figure}[!h]
+\textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.1 cm} (D)} \\
+\vspace{-0.5 cm} 
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC.pdf}\\
+\end{center}
+\textbf{ \hspace{3.1 cm} (E) \hspace{2.4 cm} (F) \hspace{2.3 cm} (G) \hspace{2.3 cm} (H) \hspace{2.3 cm} (I)}\\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_5stats.pdf}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of hhomoskedasticity, (G) root mean square error, (H) intercept, (I) slope of the first panel plots. \label{fig_spTL}}
+\end{center}
+\end{figure}
 
 
 # Discussion

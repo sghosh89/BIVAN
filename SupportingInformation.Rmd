@@ -2622,8 +2622,7 @@ dev.off()
 
 \newpage
 
-<!-- Taylor's law section need to move to Paper.Rmd once it's completed-->
-## Taylor's law
+<!-- Taylor's law section moved to Paper.Rmd -->
 
 <!--make surrogate datasets for TL analysis to follow-->
 ```{r taylors_law_make_surrogs, echo=F, cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
@@ -2903,21 +2902,6 @@ for (counter in 2:dim(s.slope)[1]){
 par(op)
 dev.off()
 ```
-
-
-\begin{figure}[!h]
-\textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.1 cm} (D)} \\
-\vspace{-0.5 cm} 
-\begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC.pdf}\\
-\end{center}
-\textbf{ \hspace{3.1 cm} (E) \hspace{2.4 cm} (F) \hspace{2.3 cm} (G) \hspace{2.3 cm} (H) \hspace{2.3 cm} (I)}\\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_5stats.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results (A) hjghj ; (B) fgjfgjfg. \label{fig_spTL}}
-\end{center}
-\end{figure}
 
 
 \newpage

@@ -34,6 +34,50 @@ seed<-101
 source("mtime.R") #A function needed for caching
 ```
 
+```{r call_cop_pedag_fig,echo=F,results="hide",cache=T, cache.extra=list(seed,mtime("copula_pedag_fig.R"))}
+set.seed(seed)
+source("./copula_pedag_fig.R")
+
+#cat(paste("start-time: ",Sys.time(),"\n"))
+df<-cop_est_2par(fam=7,p1range = c(0.01:7),p2range = c(1:7),incr = 0.005)
+saveRDS(df,"./Results/df_fam7_incr_0.005.RDS")
+#cat(paste("stop-time: ",Sys.time(),"\n"))
+
+df_fam7<-readRDS("./Results/df_fam7_incr_0.005.RDS")
+#range(df_fam7$LTmUT)
+
+pdf("copula_pedagog_fig_BB1_incr_0.005.pdf",height=8,width=20)
+op<-par(mfrow=c(2,5),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
+
+df_fam7_scr<-screening_df(df=df_fam7,ncut=5,Tau0=0.4,eps=1e-3,
+                               LTmUT_vector_given = F,my_LTmUT_vector = NA)
+
+df_fam7_screened<-df_fam7_scr$df_screened
+df_fam7_LTmUT_vector<-df_fam7_scr$LTmUT_vector
+
+for(i in 1:length(df_fam7_screened$LTmUT)){
+  c<-BiCopSim(500,family=7,par=df_fam7_screened$par[i],par2=df_fam7_screened$par2[i])
+  plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
+  mtext(paste0("tau = ",round(df_fam7_screened$Tau[i],4),
+               ", LTmUT = ",round(df_fam7_screened$LTmUT[i],4),sep=""),side=3)
+}
+
+df_fam7_scr<-screening_df(df=df_fam7,ncut=5,Tau0=0.8,eps=1e-3,
+                               LTmUT_vector_given = T,my_LTmUT_vector = df_fam7_LTmUT_vector)
+df_fam7_screened<-df_fam7_scr$df_screened
+
+for(i in 1:length(df_fam7_screened$LTmUT)){
+  c<-BiCopSim(500,family=7,par=df_fam7_screened$par[i],par2=df_fam7_screened$par2[i])
+  plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
+  mtext(paste0("tau = ",round(df_fam7_screened$Tau[i],4),
+               ", LTmUT = ",round(df_fam7_screened$LTmUT[i],4),sep=""),side=3)
+}
+
+par(op)
+dev.off()
+```
+
+
 \newpage
 # Descriptions of data \label{Description_data}
 <!--Each data contributor writes one to a few paragraphs about their data.-->

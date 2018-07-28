@@ -34,17 +34,13 @@ seed<-101
 source("mtime.R") #A function needed for caching
 ```
 
-```{r call_cop_pedag_fig,echo=F,cache=T, cache.extra=list(seed,mtime("copula_pedag_fig.R"))}
+```{r call_cop_pedag_fig,echo=F,cache=T, cache.extra=list(seed,mtime("copula_pedag_fig.R")),results="hide"}
 set.seed(seed)
 source("./copula_pedag_fig.R")
 
-#cat(paste("start-time: ",Sys.time(),"\n"))
 df<-cop_est_2par(fam=7,p1range = c(0.01:7),p2range = c(1:7),incr = 0.005)
-saveRDS(df,"./Results/df_fam7_incr_0.005.RDS")
-#cat(paste("stop-time: ",Sys.time(),"\n"))
-```
+saveRDS(df,"./Results/df_fam7_incr_0.01.RDS")
 
-```{r cop_pedag_fig,echo=F,results="hide"}
 df_fam7<-readRDS("./Results/df_fam7_incr_0.005.RDS")
 #range(df_fam7$LTmUT)
 
@@ -78,7 +74,6 @@ for(i in 1:length(df_fam7_screened$LTmUT)){
 par(op)
 dev.off()
 ```
-
 
 \newpage
 # Descriptions of data \label{Description_data}

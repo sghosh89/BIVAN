@@ -34,41 +34,53 @@ seed<-101
 source("mtime.R") #A function needed for caching
 ```
 
-```{r call_cop_pedag_fig,echo=F,cache=T, cache.extra=list(seed,mtime("copula_pedag_fig.R")),results="hide"}
+```{r cop_pedag_fig,echo=F,results="hide"}
 set.seed(seed)
-source("./copula_pedag_fig.R")
-
-df<-cop_est_2par(fam=7,p1range = c(0.01:7),p2range = c(1:7),incr = 0.005)
-saveRDS(df,"./Results/df_fam7_incr_0.01.RDS")
-
-df_fam7<-readRDS("./Results/df_fam7_incr_0.005.RDS")
-#range(df_fam7$LTmUT)
-
-pdf("copula_pedagog_fig_BB1_incr_0.005.pdf",height=8,width=20)
+library(VineCopula)
+f<-function(par,destau,desLTmUT,fam){
+  cop<-BiCop(family=fam,par=par[1],par2=par[2])
+  tau<-cop$tau
+  LT<-cop$taildep$lower
+  UT<-cop$taildep$upper
+  LTmUT<-LT-UT
+  z<-(tau-destau)^2
+  z<-z+(LTmUT-desLTmUT)^2
+  return(z)
+}
+#----------------------------------------------------------
+pdf("./Results/copula_pedagog_fig_BB1.pdf",height=8,width=20)
 op<-par(mfrow=c(2,5),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
 
-df_fam7_scr<-screening_df(df=df_fam7,ncut=5,Tau0=0.4,eps=1e-3,
-                               LTmUT_vector_given = F,my_LTmUT_vector = NA)
+desLTmUT_vector<-c(-0.4,-0.2,0,0.2,0.4)
+#parlist<-list(c(0.2,1.5),c(0.2,1.1),c(0.2,1.5),c(0.5,1.1),c(0.5,1.5))
+#for(i in 1:length(desLTmUT_vector)){
+#  print(i)
+#  iLmU<-desLTmUT_vector[i]
+#  call_optim<-optim(par=parlist[[i]],fn=f,destau=0.4,desLTmUT=iLmU,fam=7,method = "BFGS")
+#  call_optim$par
+#  c<-BiCopSim(N=500,family=7,par=call_optim$par[1],par2=call_optim$par[2])
+#  plot(c[,1],c[,2],col="blue",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
+#  mtext(paste0("tau = 0.4", ", LTmUT = ",iLmU,sep=""),side=3)
+#}
 
-df_fam7_screened<-df_fam7_scr$df_screened
-df_fam7_LTmUT_vector<-df_fam7_scr$LTmUT_vector
-
-for(i in 1:length(df_fam7_screened$LTmUT)){
-  c<-BiCopSim(500,family=7,par=df_fam7_screened$par[i],par2=df_fam7_screened$par2[i])
-  plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
-  mtext(paste0("tau = ",round(df_fam7_screened$Tau[i],4),
-               ", LTmUT = ",round(df_fam7_screened$LTmUT[i],4),sep=""),side=3)
+for(i in desLTmUT_vector){
+  # print(i)
+  destau<-0.5
+  call_optim<-optim(par=c(0.2,1.5),fn=f,destau=destau,desLTmUT=i,fam=7,method = "BFGS")
+  obj<-BiCop(family=7,par=call_optim$par[1],par2=call_optim$par[2])
+  c<-BiCopSim(N=500,obj)
+  plot(c[,1],c[,2],col="blue",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
+  mtext(paste0("tau = ",round(obj$tau,5),", LTmUT = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
 }
 
-df_fam7_scr<-screening_df(df=df_fam7,ncut=5,Tau0=0.8,eps=1e-3,
-                               LTmUT_vector_given = T,my_LTmUT_vector = df_fam7_LTmUT_vector)
-df_fam7_screened<-df_fam7_scr$df_screened
-
-for(i in 1:length(df_fam7_screened$LTmUT)){
-  c<-BiCopSim(500,family=7,par=df_fam7_screened$par[i],par2=df_fam7_screened$par2[i])
-  plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
-  mtext(paste0("tau = ",round(df_fam7_screened$Tau[i],4),
-               ", LTmUT = ",round(df_fam7_screened$LTmUT[i],4),sep=""),side=3)
+for(i in desLTmUT_vector){
+ # print(i)
+  destau<-0.8
+ call_optim<-optim(par=c(0.2,1.5),fn=f,destau=destau,desLTmUT=i,fam=7,method = "BFGS")
+ obj<-BiCop(family=7,par=call_optim$par[1],par2=call_optim$par[2])
+ c<-BiCopSim(N=500,obj)
+ plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
+ mtext(paste0("tau = ",round(obj$tau,5),", LTmUT = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
 }
 
 par(op)

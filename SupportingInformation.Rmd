@@ -39,7 +39,7 @@ set.seed(seed)
 library(VineCopula)
 f<-function(par,destau,desLTmUT,fam){
   cop<-BiCop(family=fam,par=par[1],par2=par[2])
-  tau<-cop$tau
+  tau<-cop$tau 
   LT<-cop$taildep$lower
   UT<-cop$taildep$upper
   LTmUT<-LT-UT
@@ -70,7 +70,9 @@ for(i in desLTmUT_vector){
   obj<-BiCop(family=7,par=call_optim$par[1],par2=call_optim$par[2])
   c<-BiCopSim(N=500,obj)
   plot(c[,1],c[,2],col="blue",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
-  mtext(paste0("tau = ",round(obj$tau,5),", LTmUT = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
+  mtext(paste0("tau = ",round(obj$tau,5),", ( LT - UT ) = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
+  legend("topleft",paste0("UT=",round(obj$taildep$upper,5)),bty="n",cex=1.5,text.col="magenta")
+  legend("bottomright",paste0("LT=",round(obj$taildep$lower,5)),bty="n",cex=1.5,text.col="magenta")
 }
 
 for(i in desLTmUT_vector){
@@ -80,7 +82,9 @@ for(i in desLTmUT_vector){
  obj<-BiCop(family=7,par=call_optim$par[1],par2=call_optim$par[2])
  c<-BiCopSim(N=500,obj)
  plot(c[,1],c[,2],col="red",xlab="u",ylab="v",cex.lab=2,cex.axis=1.5)
- mtext(paste0("tau = ",round(obj$tau,5),", LTmUT = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
+ mtext(paste0("tau = ",round(obj$tau,5),", ( LT - UT ) = ",round((obj$taildep$lower - obj$taildep$upper),5),sep=""),side=3)
+ legend("topleft",paste0("UT=",round(obj$taildep$upper,5)),bty="n",cex=1.5,text.col="magenta")
+ legend("bottomright",paste0("LT=",round(obj$taildep$lower,5)),bty="n",cex=1.5,text.col="magenta")
 }
 
 par(op)

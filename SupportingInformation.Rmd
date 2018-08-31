@@ -25,6 +25,7 @@ bibliography: REF_ALL.bib
 \listoffigures
 
 updated on `r Sys.Date()`
+\pagebreak
 
 <!--Basic setup-->
 ```{r setup, echo=F}
@@ -47,7 +48,7 @@ f<-function(par,destau,desLTmUT,fam){
   z<-z+(LTmUT-desLTmUT)^2
   return(z)
 }
-#----------------------------------------------------------
+
 pdf("./Results/copula_pedagog_fig_BB1.pdf",height=8,width=20)
 op<-par(mfrow=c(2,5),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
 
@@ -91,20 +92,6 @@ par(op)
 dev.off()
 ```
 
-\newpage
-# Descriptions of data \label{Description_data}
-<!--Each data contributor writes one to a few paragraphs about their data.-->
-
-## Soil C and N data  \label{SoilCN_data}
-
-To explore the correlation of soil organic C and total soil N across a wide geographic range (conterminous
-US), ecosystem type, and traceable methodology we used the RaCA (Rapid Carbon Assessment)
-database [@Wills2014, **or Wills and Loecke pending???**]. Specifically, the soil organic C and total soil N
-stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the 5930 sites were included in this
-study.
-
-The raw data are shown in Figure \ref{fig_raw_cop_soilCN}(A). The copula is shown in Figure \ref{fig_raw_cop_soilCN}(B).
-
 <!--The raw data look like this:-->
 ```{r load_data_Loecke, echo=F, results='hide'}
 #fig.cap="Plot of the raw soil C and N data.\\label{fig_raw_cop_soilCN}(A)", fig.height=3, fig.width=3}
@@ -126,43 +113,15 @@ v_CN<-getcopula(d=d,rankon=T,ploton=T)
 dev.off()
 ```
 
-\begin{figure}[!h]
-\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
-\begin{center}
-\includegraphics[width=3 in]{./Results/SoilCNraw.pdf}
-\includegraphics[width=3 in]{./Results/SoilCNcop.pdf}
-\caption[\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data]{\textbf{(A)} Plot of the raw soil C and N data, \textbf{(B)} Copula plot of soil C and N data. Obtained by applying ranks separately to the C and N data, and then dividing the ranks by $n+1$ where $n = `r nrow(d)` $ is the number of sampling locations (see \nameref{MT-Model_selection} of manuscript).\label{fig_raw_cop_soilCN}}
-\end{center}
-\end{figure}
-
-## BMR data  \label{BMR_data}
-
-[**bmr-contrasts.csv**](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) : 
-This contains the trait contrasts from phylogenetically independent contrasts [@SukumaranH2010] 
-of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR)
-and mass of mammals species.
-Specifically, the "SELECT" BMR data in their database were used for
- those species for which data were available.
-A phylogeny in NEXUS [@NEXUS] format was extracted from the 
- supplementary information of [@GenoudIM2017].
-Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate 
-  phylogenetic independent contrasts using Python 2.7.
-For each contrast, the path length spanned by the contrast (sum of the branch
-  lengths) and the contrast for the mass, natural logarithm of the BMR and natural
-  logarithm of the mass were written as a row in the bmr-contrasts.csv file. 
-
-
 ```{r read_BMR_data, echo=FALSE, results="markup"}
 set.seed(seed)
 #---------------------------------------------------------
 BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
 #class(BMR_dat)
-knitr::kable(head(BMR_dat[,c(1,4,5)] ,3),format='pandoc',
-             caption = "First few rows of raw BMR data.\\label{tab_rawdata_BMR}",
-             booktabs=T) # display first few rows
+#knitr::kable(head(BMR_dat[,c(1,4,5)] ,3),format='pandoc',
+#             caption = "First few rows of raw BMR data.\\label{tab_rawdata_BMR}",
+#             booktabs=T) # display first few rows
 ```
-
-Table \ref{tab_rawdata_BMR} displays the raw data for first few contrasts. The raw data are shown in Figure \ref{fig_raw_cop_BMR}(A). The copula [using absolute values of each column in Table \ref{tab_rawdata_BMR}] is shown in Figure \ref{fig_raw_cop_BMR}(B).
 
 ```{r plot_BMR_data, echo=FALSE, results="hide"}
 set.seed(seed)
@@ -184,40 +143,15 @@ v_BMR<-phylo_dat_fn(data=BMR_dat,i=4,j=3,ploton = T)
 dev.off()
 ```
 
-\begin{figure}[!h]
-\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
-\begin{center}
-\includegraphics[width=3 in]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
-\includegraphics[width=3 in]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
-\caption[\textbf{(A)} Plot of the raw ln(BMR) of contrasts vs. ln(mass) of contrasts \textbf{(B)} Copula plot for ln(BMR) vs. ln(mass) contrasts taken as their absolute values]{\textbf{(A)} Plot of the raw ln(BMR) of contrasts vs. ln(mass) of contrasts \textbf{(B)} Copula plot for absolute values of ln(BMR) vs. ln(mass) for all $`r nrow(v_BMR)`$ contrasts. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_BMR)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript).\label{fig_raw_cop_BMR}}
-\end{center}
-\end{figure}
-
-## Phylogenetic data : Anolis  \label{Phylo_data}
-
-[**contrasts.csv**](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) : 
-Raw data on measurements of anatomical features of several species of *Anolis* lizards was downloaded
-from the Dryad data package [@MahlerIRL2013Data] associated with
-[@MahlerIRL2013].
-The contrasts.csv file was produced by using version 4.4.0 of the DendroPy 
-  library [@SukumaranH2010]  to calculate 
-  phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv
-  file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex)
-  as the phylogeny.
-
 ```{r read_phylo_data, echo=F, results="markup"}
 set.seed(seed)
 phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
-#class(phylo_dat) #it's a data.frame
-# no NA/missing value in this dataset
-tab_phylo<-phylo_dat[,c(1,7,8)] 
-knitr::kable(head(tab_phylo,3),format='pandoc',
-             caption = "First few rows of raw phylo data.\\label{tab_rawdata_phylo}",
-             booktabs=T) # display first few rows
+#class(phylo_dat) #it's a data.frame : no NA/missing value in this dataset
+#tab_phylo<-phylo_dat[,c(1,7,8)] 
+#knitr::kable(head(tab_phylo,3),format='pandoc',
+#             caption = "First few rows of raw phylo data.\\label{tab_rawdata_phylo}",
+#             booktabs=T) # display first few rows
 ```
-
-Table \ref{tab_rawdata_phylo} displays the raw data for first few contrasts for two selective phylogenetic traits, namely, AVG.ltoe.IV (average length of fourth hindtoe) and AVG.humerus (average length of humerus). The raw data are shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(A). The copula [taking absolute values of each column in Table \ref{tab_rawdata_phylo}] is shown in Figure \ref{fig_raw_cop_AVG_humerus_ltoe}(B).
-
 
 ```{r plot_phylo_data, echo=F, results="hide"}
 set.seed(seed)
@@ -259,22 +193,6 @@ pdf("./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf"
 v_contrasts_67<-phylo_dat_fn(data=phylo_dat,i=6,j=7,ploton = T)
 dev.off()
 ```
-
-\newpage 
-
-\begin{figure}[!h]
-\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
-\begin{center}
-\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
-\includegraphics[width=3 in]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
-\caption[\textbf{(A)} Plot of the contrasts for AVG.ltoe.IV vs. AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits(taken as absolute values)]{\textbf{(A)} Plot of the contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. \textbf{(B)} Copula plot of absolute values of contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(v_contrasts_67)`$ is the number of contrasts (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_AVG_humerus_ltoe}}
-\end{center}
-\end{figure}
-
-## Ceder-creek data for e120 \label{ceder-creek_data}
-
-These biodiversity experiment data sets, for [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and for [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120), are collected by Tilman et al. over many years. We used thsese datasets [@Tilman2001; @Tilman2006] to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
-for year 2000. 
 
 ```{r read_ceder_creek_data, echo=F, results="hide"}
 set.seed(seed)
@@ -421,30 +339,82 @@ saveRDS(cop_HB_all_yr,"./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 cop_HB_all_yr<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
+```{r map_plot_aphid_plankton,results="hide",echo=F}
+source("aphid_data_calling.R")
+source("good_loclist.R")
+library(maps)
+
+#----------------- Aphid map--------------------------------------------
+d0_count<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtscount141117.csv",header=F))
+data_aphid_count<-d_allsp_data(d0_count)
+
+d0_firstflight<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
+data_aphid_ff<-d_allsp_data(d0_firstflight)
+
+selective_loc1<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
+selective_loc2<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
+all(selective_loc1==selective_loc2)==T
+
+longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
+
+locno<-length(longs)
+df_loc_info_org<-data.frame(loc_no=c(1:length(lats)),longs=longs,lats=lats)
+df_loc_info<-df_loc_info_org[selective_loc1,]
+xlim=c(-10,2)
+ylim=c(50, 60)
+
+pdf("./Results/aphid_map_plot.pdf")
+map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
+map.axes(cex.axis=2.5)
+points(x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",pch=16)
+points(x = df_loc_info$longs, y = df_loc_info$lats, col="blue", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",  pos=1)
+dev.off()
+
+#--------------Plankton map----------------------------
+
+source("plankton_north_sea_data_calling.R")
+d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
+data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
+
+longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
+lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
+longs<-longs[[1]]
+lats<-lats[[1]]
+
+df_loc_info_org<-data.frame(loc_no=c(1:length(lats)),longs=longs,lats=lats)
+selective_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
+df_loc_info<-df_loc_info_org[selective_loc,]
+xlim=c(-12,10)
+ylim=c(48, 60)
+
+pdf("./Results/plankton_map_plot.pdf")
+map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
+map.axes(cex.axis=2.5)
+abline(h=seq(from=ylim[1],to=ylim[2],by=2), v=seq(from=xlim[1],to=xlim[2],by=2), col="black", lty=2)
+points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",pch=16)
+points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="blue", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",  pos=1)
+dev.off()
+```
+
 \begin{figure}[!h]
-\textbf{ \hspace{5.5 cm} (A) \hspace{7 cm} (B)  } \\
-\vspace{-0.2 cm}
 \begin{center}
-\includegraphics[width=3 in]{./Results/Ceder_creek_results/raw_HB_2000.pdf}
-\includegraphics[width=3 in]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
-\caption[\textbf{(A)} Plot of the plant-aboveground avg. Biomass vs. avg. Shannon's index (H). \textbf{(B)} Copula plot of plant-aboveground avg. Biomass vs. avg. Shannon's index.]{\textbf{(A)} Plot of the plant-aboveground avg. Biomass vs. avg. Shannon's index (H). \textbf{(B)} Copula plot of plant-aboveground avg. Biomass vs. avg. Shannon's index. Obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n=`r nrow(cc_cop_2000)`$ is the number of (9m by 9m)plots. (see \nameref{MT-Model_selection} of manuscript). \label{fig_raw_cop_cc2000}}
+\includegraphics[width=8 cm,height=8 cm]{./Results/aphid_map_plot.pdf} 
+\caption{Locations of Rothamsted Insect Survey suction-trap across UK are indicated by the red circles 
+out of which only blue boxes are considered for our study based on having atleast 30 annual data points. \label{fig_aphid_map}}
 \end{center}
 \end{figure}
 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8 cm,height=8 cm]{./Results/plankton_map_plot.pdf} 
+\caption{CPR data collected from 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ on map) around UK sea (indicated by the red circles) but out of which only blue boxes are considered for our study based on having atleast 45 annual data points. \label{fig_plankton_map}}
+\end{center}
+\end{figure}
 
-## Abundance data for the green spruce aphid and first flight date data for the leaf-curling plum aphid in the UK\label{Aphid_data}
-   * Aphid data contains 3 measurements [count, firstflight, flight-duration] at 11 locations for 20 species and for 35 years.
-   * We threw out all locations that had fewer than 30 years data. 
-   * We use species=10 [Name : "Green spruce aphid"] for aphid-count data. 
-   * We use species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data.   
-   
-## Abundance data for *Ceratium furca* in UK seas \label{Pns_data}
-   * Plankton North sea dataset collects data at 26 locations for 22 species and for 56 years.
-   * We threw out all locations that had fewer than 45 years data.
-   * We use species=16 [Name : "Ceratium furca"] for Plankton_North_Sea data.
-   * *Ceratium furca* is a dicoflagellate commonly found in UK seas.
-   * note, when we edit this, we cannot call it the North Seas since data come also from other seas around the UK. 
-
+<!--
 ## Methane-flux data  \label{Methane_data}
 
 Methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
@@ -452,7 +422,7 @@ Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^
 daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site.
 
-* We threw out all locations that had fewer than 50 dates data.
+* We threw out all locations that had fewer than 50 dates data.-->
 
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)

@@ -95,8 +95,77 @@ In \nameref{Material&Methods}, we described briefly about each datasets we used 
 
 # Material and methods \label{Material&Methods}
 
-## Datasets
-<!-- each dataset's description is in suppmat file-->
+## Data \label{Data}  
+
+For bivariate analysis we used four datasets which are briefly described as follows;
+to begin with **Soil C and N data**, to explore the correlation of soil organic C and total soil N across a wide geographic range (conterminous US), ecosystem type, and traceable methodology we used the RaCA (Rapid Carbon Assessment)
+database [@Wills2014, **or Wills and Loecke pending???**]. Specifically, the soil organic C and total soil N
+stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the 5930 sites were included in this
+study.
+
+Next, the [**BMR data**](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) contains the trait contrasts from phylogenetically independent contrasts [@SukumaranH2010] of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR) and mass of mammals species. Specifically, the "SELECT" BMR data in their database were used for those species for which data were available. A phylogeny in NEXUS [@NEXUS] format was extracted from the supplementary information of [@GenoudIM2017]. Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate phylogenetic independent contrasts using Python 2.7. For each contrast, the path length spanned by the contrast (sum of the branch lengths) and the contrast for the mass, natural logarithm of the BMR and natural logarithm of the mass were written as a row in the bmr-contrasts.csv file. 
+
+[**Third dataset**](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was a raw data on measurements of anatomical features of several species of *Anolis* lizards, which was downloaded
+from the Dryad data package [@MahlerIRL2013Data] associated with [@MahlerIRL2013].
+The [contrasts.csv file](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was produced by using version 4.4.0 of the DendroPy library [@SukumaranH2010]  to calculate phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex) as the phylogeny.
+
+Absolute values of traits for each contrast are considered to construct corresponding copula for second and third datasets.
+
+Fourth, we used **Ceder-creek data for e120** which resulted from a biodiversity experiment, carried out by Tilman and his co-warkers [@Tilman2001; @Tilman2006] over many years to collect [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120) data. These datasets were used to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
+for year 2000. 
+
+The raw data and copula for each four datasets are shown along each column of Figure \ref{fig_biv_raw_cop}. 
+
+For multivariate analysis, we applied four datasets; first two data sets [for aphid-count and aphid-firstflight date] were extracted from the Rothamsted Insect Survey suction-trap data [@Macaulay1988, @Harrington2014]. These two annual timesries (1976-2010) measurements are from 11 locations acroos UK for 20 aphid species. We used the same data format as used by @Sheppard2016 for their analysis on the impact of climate on aphids' spatial synchrony. In our case, we chose species=10 [Name : "Green spruce aphid"] for aphid-abundance data and species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data and considered only those locations which had atleast 30 years of data (see Figure \ref{SM-fig_aphid_map}). Figure \ref{fig_aphid_raw_cop} represents raw and copula data plot for aphid count ("Green spruce aphid") and aphid-firstflight date ("Leaf-curling plum aphid") taken from two locations.
+
+Our third dataset for multivariate analysis is a plankton-count data collected at 26 locations over the areas of the North Sea and British seas for 22 species and for 56 years (1958-2013). These data were obtained from the Continuous Plankton Recorder (CPR) data set and maintained by the Sir Alistair Hardy Foundation for Ocean Science (SAHFOS). The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
+unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and
+location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
+averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available). Monthly values were converted to yearly values by averaging over all months. This approach was used by [@Sheppard2017] earlier. But here we only allowed maximum 4 months in a year with missing data which were replaced by those medians. If a year got 5 or more missing monthly data value then we set NA value for that particular year. We used data for species=16 [Name : "Ceratium furca"] which is a dicoflagellate commonly found in UK seas. Among 26 locations, only those having atleast 45 years time series data, were considered (see Figure \ref{SM-fig_plankton_map}).
+
+Finally, methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
+Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at
+daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
+additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.
+
+
+\begin{figure}[!h]
+\textbf{ \hspace{3.2 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
+\end{center}
+\textbf{ \hspace{3.2 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
+\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} ln(BMR) of contrasts vs. ln(mass) of contrasts, \textbf{(C)} contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
+Lower panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of contrasts for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
+\end{center}
+\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
+\end{center}
+\end{figure}
 
 ## Statistical methods for detecting copula structure \label{Methods}
 
@@ -412,43 +481,6 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 <!--Theoretical models
 Question 2 from the Introduction was explored using simple population models.-->
 
-\begin{figure}[!h]
-\textbf{ \hspace{3.2 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
-\vspace{-0.35 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf}
-\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
-\end{center}
-\textbf{ \hspace{3.2 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
-\vspace{-0.35 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf}
-\includegraphics[width=4 cm]{./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} ln(BMR) of contrasts vs. ln(mass) of contrasts, \textbf{(C)} contrasts for AVG.ltoe.IV vs. contrasts for AVG.humerus phylogenetic traits. \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
-Lower panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of contrasts for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[!h]
-\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
-\vspace{-0.4 cm}
-\begin{center}
-\includegraphics[width=7 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
-\includegraphics[width=7 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
-\end{center}
-\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
-\vspace{-0.4 cm}
-\begin{center}
-\includegraphics[width=7 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
-\includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
-\end{center}
-\end{figure}
 
 # Results \label{Results}
 

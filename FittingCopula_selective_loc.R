@@ -10,10 +10,15 @@ source("good_loclist.R")
 source(file="OurBiCopSelect.R")
 #---------------------------------------------------------------------------------------
 # This function generates result for single species
-RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs){
+RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs,good_loc_given,good_loc){
   
   len<-length(families)
-  good_loc<-good_loclist(d_allsp=d_allsp,sp=sp,data_pt_thrs=data_pt_thrs)
+  if(good_loc_given==F){
+    good_loc<-good_loclist(d_allsp=d_allsp,sp=sp,data_pt_thrs=data_pt_thrs)
+  }else{
+    good_loc<-good_loc
+  }
+  
   #cat("good_loc=",good_loc,"\n")
   
   lengoodloc<-length(good_loc)

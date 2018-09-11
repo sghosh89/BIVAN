@@ -1161,7 +1161,8 @@ data_aphid_ff<-d_allsp_data(d0_firstflight)
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n")) 
-RES_aphid_count<-RES_single_sp(d_allsp=data_aphid_count,sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+RES_aphid_count<-RES_single_sp(d_allsp=data_aphid_count,sp=10,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
+                               good_loc_given=F,good_loc=NA)
 #cat(paste("stop-time: ",Sys.time(),"\n"))
 resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
@@ -1311,7 +1312,8 @@ pairs of locations. \label{fig_aphid_count}}
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n"))
-RES_aphid_ff<-RES_single_sp(d_allsp=data_aphid_ff,sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30)
+RES_aphid_ff<-RES_single_sp(d_allsp=data_aphid_ff,sp=11,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
+                            good_loc_given=F,good_loc=NA)
 #cat(paste("stop-time: ",Sys.time(),"\n")) 
 resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
@@ -1462,7 +1464,8 @@ source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n")) 
-RES_plankton_north_sea<-RES_single_sp(d_allsp=data_plankton_north_sea,sp=16,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45)
+RES_plankton_north_sea<-RES_single_sp(d_allsp=data_plankton_north_sea,sp=16,families=c(1,3:10,13,14,16:20),level=0.05,
+                                      data_pt_thrs=45,good_loc_given=F,good_loc=NA)
 #cat(paste("stop-time: ",Sys.time(),"\n"))    
 resloc<-"./Results/fitting_results/"
 saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS",sep=""))
@@ -1641,7 +1644,8 @@ source("FittingCopula_selective_loc.R")  # top most hierarchy source file
 
 set.seed(seed)
 #cat(paste("start-time: ",Sys.time(),"\n")) 
-RES_methane<-RES_single_sp(d_allsp=methane_data,sp=1,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=50)
+RES_methane<-RES_single_sp(d_allsp=methane_data,sp=1,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=50,
+                           good_loc_given=F,good_loc=NA)
 #cat(paste("stop-time: ",Sys.time(),"\n"))    
 resloc<-"./Results/fitting_results/"
 saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.RDS",sep=""))

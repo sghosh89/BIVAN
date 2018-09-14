@@ -81,7 +81,7 @@ Identifying and quantifying dependencies is the core of modelling in many applic
 finance and risk management. For many years, measuring and modeling dependencies has focused on the
 Pearson correlation because of its ease in use. But correlation can provide little information about the underlying dependence structure in the case of asymmetric dependence because it is a measure of linear association between two random variables. Therefore, it is better to use rank-based correlation measures such as Kendall’s tau and Spearman’s rho instead of Pearson correlation. However, using copula-based approach as a dependence measure reflects more knowledge about the dependence structure instead of summarizing in just a single number. The flexibility of copulas allows us to model more complex dependence structures by isolating its marginal from its joint distribution structures, with the capability in modeling a rich variety of tail behavior, such as tail dependence versus tail independence, and reflection symmetry versus reflection asymmetry. Tail dependence occurs when the correlation between two variables increases as we get "further" in the tail (either or both) of the distribution. For example, in the upper panel of Fig. \ref{fig_cop_pedag}, different dependence structures, with same Kendall correlation $\tau = 0.5$, were shown which became dominantly lower tail dependent (lower tail - upper tail dependence being positive) from dominantly upper tail dependent (lower tail - upper tail dependence being negative) as we moved along the row. Lower panel represents the similar scenario but with stronger correlation (Kendall's $\tau = 0.8$). To implement this, we need to select candidate bivariate copulas from many existing parametric copula families. A very flexible bivariate copula can itself become a welcome candidate in the pool of bivariate copulas to be selected from. Here, throughout our studies for different datasets we used a universal pool of 16 bivariate copula families (having exclusively lower, exclusively upper, both or neither tail dependence), mentioned in the \nameref{Methods}. 
 
-Though a few examples have been found which shows copula approach to model dependencies in bioinformatics [@Kim2008], medical research [@Emura2016], a short period study of intersite dependence of rainfall data [@Serinaldi2008], a recent study on characterizing and assessing risks in drought management [@She2018] or monitoring changes in precipitation-extremes [@Goswami2018], the multivariate copula approach still, we believe, remains unexplored in ecology or related field and thus have potential scope to better capture the evolution of ecological time series data. So, in ecological perspective, when we find a dominantly lower (upper) tail dependence structure, it means both incidence are rare (abundant) synchronously. If any one of them be environmental variable and the other is an observable (like abundance of a species) then it can also explain the causal relationship between them. Here, we analyzed the dependence structure for several bivariate and multivariate ecological, community and biogeochemical datasets. In addition to a copula based \nameref{Model_selection}, we also carried out a \ref{SM-NPA} with three different statistics to verify our model selection based results. 
+Though a few examples have been found which shows copula approach to model dependencies in bioinformatics [@Kim2008], medical research [@Emura2016], a short period study of intersite dependence of rainfall data [@Serinaldi2008], a recent study on characterizing and assessing risks in drought management [@She2018] or monitoring changes in precipitation-extremes [@Goswami2018], the multivariate copula approach still, we believe, remains unexplored in ecology or related field and thus have potential scope to better capture the evolution of ecological time series data. So, in ecological perspective, when we find a dominantly lower (upper) tail dependence structure, it means both incidence are rare (abundant) synchronously. If any one of them be environmental variable and the other is an observable (like abundance of a species) then it can also explain the causal relationship between them. Here, we analyzed the dependence structure for several bivariate and multivariate ecological, community and biogeochemical datasets. In addition to a copula based \nameref{Model_selection}, we also carried out a \nameref{NPA} with three different statistics to verify our model selection based results. 
 
 Basically, we want to address the following questions. \textbf{(Q1)} Do datasets in ecology and related fields have non-Normal copula srtructure? Do they show tail dependence distinct from that of a Normal copula, and in particular do they show asymmetric tail dependence? \textbf{(Q2)} If so, what are some possible causes of non-Normal copula structure? And \textbf{(Q3)} what are the consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications? 
 In \nameref{Material&Methods}, we described briefly about each bivariate and multivariate datasets we used to answer these questions and provided a detailed descriptions of implemented methods. In the \nameref{Results} section, we summarized our finidings for each datasets. Next two sections and are focused on possible causes and consequences of non-Normal copula structure in ecology and related field. Finally, we concluded in the \nameref{Discussion} section. 
@@ -97,7 +97,8 @@ In \nameref{Material&Methods}, we described briefly about each bivariate and mul
 
 ## Data \label{Data}  
 
-We used four datasets in each category of bivariate (soil C and N data, BMR data, Anolis data, Ceder-creek experiment data) and multivariate (aphid-abundance data, aphid-firstflight data, plankton-abundance data and methane-flux data) examples. Details of each datasets used were given in \ref{SM-Data_detailed}.
+Considered datasets were ranged widely from population ecology, community ecology , evolutionery and biogeochemical sphere. 
+We used four datasets in each category of bivariate (soil C and N data, BMR data, Anolis data, Ceder-creek experiment data) and multivariate (aphid-abundance data, aphid-firstflight data, plankton-abundance data and methane-flux data) examples. Details of each dataset used were given in \ref{SM-Data_detailed}.
 
 \begin{figure}[!h]
 \textbf{ \hspace{3.2 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
@@ -204,65 +205,176 @@ for all possible pairwise combinations of those locations and compared AIC-weigh
 pairwise-->
 <!--**SG: done-->
 
-<!--### Nonparametric analysis of tail dependence \label{NPA}-->
+### Nonparametric analysis of tail dependence \label{NPA}
 
-In addition to the model selection approach described above, **nonparametric approaches** (for details see Appendix \ref{SM-NPA}) to quantify lower ($\cor_l$, $\Ps_l$ and $\Dsq_l$ statistics) and upper tail dependence ($\cor_u$, $\Ps_u$ and $\Dsq_u$ statistics) were also used to answer \hyperref[Intro]{\textbf{(Q1)}}.
-Using two distinct methods, when results are consistent, provides greater confidence 
+In addition to the model selection approach described above, **nonparametric approaches** to quantify lower ($\cor_l$, $\Ps_l$ and $\Dsq_l$ statistics) and upper tail dependence ($\cor_u$, $\Ps_u$ and $\Dsq_u$ statistics) were also used to answer \hyperref[Intro]{\textbf{(Q1)}}. Using two distinct methods, when results are consistent, provides greater confidence 
 that results are robust. 
  
-<!--***DAN: There is either too little or too much here in this 
-paragraph. The reader cannot get the main
-idea, really, of what was done for these tests, from this paragraph alone - they will have to
-look at the appendix. They need to be able to get the main idea. So you could either add detail,
-or else take away detail and just say something like "We tested our statistics by testing whether 
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed asymmetry of tail dependence 
-known to be present in data simulated from various copulas (Appendix X)" and then stop there.
-Then you would remove panels B-D from Fig. 1. At the moment I prefer this second option, but 
-my preference is not strong, so if you prefer to keep the material and add detail that would be 
-fine.-->
-<!--**SG: Agreed with 2nd option and did things as necessary-->
+Left (or lower)- and right (or upper)-tail dependence quantify the extent to which two ranked
+variables $u_i$, $v_i$ for $i=1,...,n$ 
+(see \nameref{Model_selection} for defintions of $u_i$ and $v_i$)
+are related to each other in the left and right tails, respectively, of their 
+distributions [@nelsen2007_copula, @joe2014_dependence]. 
+Our nonparametric study of tail dependence uses three
+statistics which can quantify the extent to which $u_i$ and $v_i$ are 
+related in any part of their distributions. We here describe the 
+statistics. The statistics were formulated with positively associated
+variables in mind. All the variables we study are positively associated
+when they are significantly associated. So definitions and associated 
+diagrams will assume positive associations, though generalizations are 
+possible. Given two bounds 
+$0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
+$u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
+fall (these are the blue and red lines, respectively, in 
+Fig. \ref{fig_stat_image}). Our statistics quantify the dependence
+between $u_i$ and $v_i$ in the region bounded by these lines.
+Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
+dependence in the left parts of the distributions of $u$ and $v$, and 
+using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
+the right parts of the distributions. 
 
-<!--***DAN: I think the below material belongs in supp mat, because the reader can get the
-main idea via the above text, and only some readers will be interested in the detailed 
-algorithm. Please move it there, and then make the above links XYZ and ABC into live links
-to the appropriate locations in the sup mat.
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
+\caption{Schematic diagram supporting defintions of nonparametric tail dependence statistics \label{fig_stat_image}}
+\end{center}
+\end{figure}
 
-For bivariate datasets, surrogates were produced as follows.   
 
-- Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
-one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
-Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
-$\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
-study using the `iTau` function of the `VineCopula` package). 
-- Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
-$\mathcal{B}(\theta_\tau)$. 
-- Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
-$(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ has $\rank(x_{\sigma_x(i)})$ equal to $\rank(a_i)$ for all $i$, where 
-$\rank(x_{\sigma_x(i)})$ is the rank of $x_{\sigma_x(i)}$ in the set $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$, and
-$\rank(a_i)$ is the rank of $a_i$ in the set $(a_1,\ldots,a_n)$ (here $\sigma_x$ is a permutation of the 
-indices $1,\ldots,n$). 
-- Likewise permute $(y_1,\ldots,y_n)$
-such that the permutation
-$(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
-another permutation of $1,\ldots,n$).
-- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
+correlation of $u_i$ and $v_i$ that is attributable to the points 
+lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$, i.e.,
+\begin{equation}\label{eq.Cor}
+   \cor_{l_b,u_b}(u,v) = \frac{1}{(n-1)\sqrt{\var(u)\var(v)}}\sum 
+   (u_i-\mean(u)) (v_i-\mean(v)),
+\end{equation}
+where means and variances are computed using all $n$ data 
+points, but the
+sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
+$u_i+v_i < 2u_b$. 
+Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
+between $u$ and $v$ in the region given by the bounds.
 
-Our code for this algorithm is [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R) in the 
-[`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
+We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
+$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
+$S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
+and a distance less than $h$ from the line $v=u$, divided by the 
+total number of points within the bounds. This function is
+defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
+is half the longer of the two segments obtained by intersecting the
+bounds with the unit square. It is easy to see $S(0)=0$ and 
+$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
+of $h$, to be the area within the bounds and the unit square
+and within distance $h$ of the line $v=u$, divided by the area
+within the bounds and the unit square. This is the expected value of
+$S(h)$ for independent data. We then defined
+\begin{equation}\label{eq.P}
+   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
+\end{equation}
+As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
+indicate stronger positive association
+between $u$ and $v$ in the region given by the bounds.
 
-Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
-is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
-permutation 
-of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
-those of the original data. 
-Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
-Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
-will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
-a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
-as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
-sampling variation) the Spearman correlation of the empirical data.  
--->
-<!--**SG: Done-->
+The third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
+distance between points satisfying $u_i+v_i>2l_b$ and 
+$u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
+$\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
+$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
+then small. 
+Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
+dependence in the portions of the distributions of $u$ and $v$ given by 
+the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
+$\Dsq_{l_b,u_b}$ indicate strong dependence. 
+
+For large datasets (i.e., datasets with large $n$),
+we can consider $l_b$ and $u_b$ close together without incurring undue
+sampling variation in our statistics, and we can consider 
+several different bands $(l_b,u_b)$ to understand how dependence
+varies in different parts of the distributions. But for datasets with 
+smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
+We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
+and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
+$\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
+
+The difference $\cor_l-\cor_u$ is expected to be positive if 
+dependence in the left halves of the distributions is stronger 
+than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
+This holds, for instance, for the Clayton copula [@nelsen2007_copula].
+The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
+"lower" statistics occur in opposite order, is also expected to be 
+positive under the same conditions. We use these three differences
+to detect asymmetry of tail dependence. Likewise, for large datasets,
+we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
+$\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
+$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
+
+We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas (for details see Appendix \ref{SM-Test_npa_stat}).
+
+For bivariate datasets, we compared values 
+of the statistics $\cor_{l_b,u_b}$,
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to 
+distributions of values of the same statistics computed on surrogate datasets that were produced from 
+the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
+the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
+correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
+but had Normal copula structure. Thus our comparisons tested the null hypothesis 
+that our statistics took values on the empirical data no different from what would have been expected 
+if the copula structure of the data were Normal, but the data were otherwise 
+statistically unchanged.
+Details of how surrogates were produced are in Appendix \ref{SM-surrog_test}, and code is in [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R).
+
+The comparison of one of the
+statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
+empirical data, to the distribution
+of its values computed on many surrogate datasets 
+provides a test of whether dependence in the part of the distribution specified 
+by $l_b$ and $u_b$ is different from
+what would be expected from a null hypothesis of normal copula structure but 
+unchanged marginals and unchanged 
+Kendall (or Spearman)
+correlation. Thus the comparison helps answer the first two parts of question \hyperref[Intro]{\textbf{(Q1)}} 
+from the \nameref{Intro} for bivariate datasets. 
+Significant deviations correspond to deviations from normal 
+copula structure. In particular, deviations 
+using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
+different from that of a normal copula;
+likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
+from that of a normal copula.  
+
+The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, 
+as computed on the 
+empirical data, to the distribution
+of its values on many surrogate datasets 
+provides a test of asymmetry of tail dependence. Thus this comparison helps answer the
+third part of question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} for bivariate datasets.
+
+For multivariate datasets, a spatial resampling scheme was used instead of the surrogate 
+approach described above.
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+as part of a method for 
+performing model selection among matrix regression models. For each pair of 
+locations $i \neq j$, the statistic
+of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
+$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
+$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
+values $s_{ij}$ were then arranged in
+a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the 
+average strength of 
+dependence, across all pairs of distinct locations, for data in the portion of the distributions 
+given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
+asymmetry of tail dependence across all pairs of locations. 
+Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a 
+distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
+revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
+or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
+Normal null hypothesis, and answering question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro}.
+Bootstrapping was performed by resampling the locations of measurement, with replacement. 
+This corresponds to 
+resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
+[@bjornstadfalck2001 ; @walteretal2017]. 
+
 
 <!--Theoretical models
 Question 2 from the Introduction was explored using simple population models.-->
@@ -302,7 +414,7 @@ Although these results do convincingly show non-Normal copula structure, we shou
 
 #### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
 
-As described in Appendix \ref{SM-NPA}, each of our statistics, as computed for the 
+As described in \nameref{NPA}, each of our statistics, as computed for the 
 ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions 
 of values of the same statistic with the same ranges computed on 1000 Normal-copula 
 surrogate datasets with similar Kendall or Spearman correlations, in different 
@@ -370,7 +482,7 @@ The difference between the model-averaged lower-tail dependence statistic and th
 Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
 $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
 computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
-resampling scheme, as described in \ref{SM-NPA} (Table \ref{SM-tab_count_resamp}). Confidence intervals of
+resampling scheme, as described in \nameref{NPA} (Table \ref{SM-tab_count_resamp}). Confidence intervals of
 $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
 indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
 exluded $0$ and were positive, indicating asymmetry of tail dependence (stronger lower tail dependence than upper), a feature that data with Normal copula structure do not have, providing further evidence answering the third part of question \hyperref[Intro]{\textbf{(Q1)}}. 
@@ -418,15 +530,17 @@ Methane flux data (last column of Table \ref{tab_multivar_summary}) did show tha
 <!--Question 2 analyses-->
 ## Some possible causes of non-Normal copula structure \label{Causes}
 
+```{r read_RES_temp_aphid, echo=F}
+RES_temp_aphid<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_winter_neg_temp.RDS")
+```
+
 This section is dedicated to explore question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. We wanted to find how are copula structure of ecologically influential climate variables changing as part of climate change? 
 <!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
 <!--### The Moran effect and copula structure in populations-->
 Firstly, Our hypothesis was if a non-normal copula structure describes the dependence of an environmental
 variable between two locations, then there can be a non-normal copula structure for the
-dependence of populations in the locations that are influenced by the environmental variables. This assumption was inspired by the the idea of Moran-effect [@Moran1953] which was originally used to explain synchronization of widely dispersed populations. We tested our hypothesis with a two habitat patch model (1st order AR method) in noisy environment and described our findings in Appendix \ref{SM-Cause_Moran}.
-<!--
-### Asymmetric sensitivity and copula structure in populations
-Another model, distinct from the above, Dan and Shya to discuss-->
+dependence of populations in the locations that are influenced by the environmental variables. This assumption was inspired by the the idea of Moran-effect [@Moran1953] which was originally used to explain synchronization of widely dispersed populations. We tested our hypothesis with a two habitat patch model (1st order AR method) in noisy environment (having non-Normal copula structure) and found that populations were shaped by similar copula structure as that of local noises ( for details see Appendix \ref{SM-Cause_Moran}). We also found the Moran effect on leaf-plum curling aphid's firstflight data induced by average winter temperature for the period of 56 years (1958-2013). We did pair wise model selection with negative average winter temperature (averaged over (n-1)$^{th}$ December to n$^{th}$ March temperature) from the selected 10 locations for which we did model selection with aphid-firstflight data. Negative winter temperature was considered for simulation to compare the aphid's firstflight results with temparature copula (aphid's firstflight date were negatively correlated with temperature or in other words positively correlated with negative temparature). Model selection results for negative average winter temperature in 10 $\times$ 10 matrices were represented in Table \ref{SM-tab_temp_aphid_bestcop} - Table \ref{SM-tab_temp_aphid_LTmUT}. In all cases `r min((RES_temp_aphid$gfc_numBS_success/RES_temp_aphid$gfc_numBS),na.rm=T)*100` $\%$ of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data. Table \ref{SM-tab_temp_aphid_LTmUT} showed `r sum(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw <0, na.rm=T)` out of `r (dim(RES_temp_aphid$gfc_p_CvM)[1]^2-dim(RES_temp_aphid$gfc_p_CvM)[1])-2*RES_temp_aphid$num_indep_loc_pair` location pair showed upper tail dependence in temperature copula, which can be considered as the Moran effect results causing dominant upper tail dependence in the copulas with aphid's firstflight date (Table \ref{SM-tab_ff_LTmUT}). 
+
 On a second note, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) when it is beyond a certain expectation threshold. So, we considered another two-habitat patch model which was influenced by both local and global noises and found that a long time exposure to assymetric copula for global fluctuation shaped the population copula accordingly (for details, see Appendix \ref{SM-Cause_asym_sens}). 
 
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
@@ -434,7 +548,18 @@ On a second note, we intended to see if any specific (lower or upper) tail depen
 <!--Question 3 analyses-->
 ## Consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications? \label{Consequences}
 
-This section is attributed to analyze of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We found that asymmetric tail dependence had **(i)** effects on skewness of spatially averaged time series data : we tested with four multivariate datasets and found results consistent with model selection and nonparametric approach (For details see Appendix \ref{SM-Consequence_skewness}). We then showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL}). Finally, we studied **(iii)** the effects of non-Normal copula on extinction risk with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). 
+This section is attributed to analyze of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We found that asymmetric tail dependence had **(i)** effects on skewness of spatially averaged time series data. Spatial mean of the time series data extracted that tail dependence from the multivariate data set, if any, and reflected in the averaged skewness. We tested null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula (for details see Appendix \ref{SM-Consequence_skewness}). If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness). Figure \ref{fig_skewness_methane_maintext} showed asymmetric copula structure's effect on spatial skewness for biogeochemical methane-flux data.
+The result, showing significantly different skewness of spatial mean from that of Normal surrogates, was consistent with model selection and nonparametric approach which supported lower tail dependence copula for methane-flux data. 
+
+We then showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL}). Finally, we studied **(iii)** the effects of non-Normal copula on extinction risk with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/skewness_results/skewness_methane/skewness_methane.pdf}
+\caption[Skewness-methane-flux data]{Skewness of spatially averaged methane-flux data (red line) was compared with respect to that of 10000 Normal surrogates preserving $(A)$ Kendall correlation, and $(B)$ Spearman correlation. p-value < 0.05 in both case showed significant difference in skewness (as expected for lower tail dependent methane flux data from model selection results) from Normal surrogates. \label{fig_skewness_methane_maintext}}
+\end{center}
+\end{figure}
+
 
 # Discussion \label{Discussion}
 

@@ -20,11 +20,12 @@ csl: ecology-letters.csl
 bibliography: REF_ALL.bib
 ---
 
+updated on `r Sys.Date()`
+
 \tableofcontents
 \listoftables
 \listoffigures
 
-updated on `r Sys.Date()`
 \pagebreak
 
 <!--Basic setup-->
@@ -468,7 +469,7 @@ Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^
 daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.
 
-# Nonparametric analysis of tail dependence \label{NPA}
+<!--# Nonparametric analysis of tail dependence \label{NPA}
 
 Left (or lower)- and right (or upper)-tail dependence quantify the extent to which two ranked
 variables $u_i$, $v_i$ for $i=1,...,n$ 
@@ -633,7 +634,7 @@ Normal null hypothesis, and answering question \hyperref[MT-Intro]{\textbf{(Q1)}
 Bootstrapping was performed by resampling the locations of measurement, with replacement. 
 This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
-[@bjornstadfalck2001 ; @walteretal2017]. 
+[@bjornstadfalck2001 ; @walteretal2017].-->
 
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
@@ -855,7 +856,7 @@ tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
 knitr::kable(tab_soilCN_asym, booktabs = T, 
              format = "pandoc",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (see \\ref{NPA}). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
+      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (see \\nameref{MT-NPA}). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
 ```
 
@@ -951,7 +952,6 @@ BivMS_contrasts_67<-OurBiCopSelect(u1=v_contrasts_67[,1],u2=v_contrasts_67[,2],f
 saveRDS(BivMS_contrasts_67,file="./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
 ```
 
-\newpage
 <!--Display model selection results for contrasts data in a table-->
 ```{r tab_contrasts_67fit, echo=F, results='markup'}
 h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -1089,6 +1089,7 @@ saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```
 
+\newpage
 <!--Display model selection results for Ceder-creek data for year 2000 in a table-->
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -1153,6 +1154,43 @@ data_aphid_ff<-d_allsp_data(d0_firstflight)
 
 # Aphid raw data for flight duration   
 #d0_flightduration<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsflightduration141117.csv",header=F))
+
+# Time series analysis aphids winter avg temp (here taken as -ve)
+temp_aphid_raw<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidmonthlytempdata.csv",header = F))
+
+temp_aphid<-vector("list",dim(temp_aphid_raw)[1])
+names(temp_aphid)<-paste("loc",c(1:dim(temp_aphid_raw)[1]),sep="")
+
+for(il in 1:length(temp_aphid)){
+  
+  s<-matrix(temp_aphid_raw[il,],36,12,byrow = T)
+  rownames(s)<-c(1975:2010)
+  colnames(s)<-c("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
+  
+  temp_aphid[[il]]<-s
+}
+
+winter_avg_temp<-matrix(NA,11,35)
+rownames(winter_avg_temp)<-paste("loc",c(1:dim(temp_aphid_raw)[1]),sep="")
+colnames(winter_avg_temp)<-c(1976:2010)
+
+for(il in 1:length(temp_aphid)){
+  temploc<-temp_aphid[[il]]
+  for(i in 2:dim(temploc)[1]){
+    t<-c(temploc[i-1,12],temploc[i,1:3]) # previous yr dec to present year march averaging temp.
+    winter_avg_temp[il,i-1]<-mean(t,na.rm = T)
+  }
+}
+
+aphid_winter_neg_temp<-vector("list",11) #initializing
+names(aphid_winter_neg_temp)<-rownames(winter_avg_temp)
+
+for(i in 1:11){
+  aphid_winter_neg_temp[[i]]<-data.frame(Year=c(1976:2010),Dat=-winter_avg_temp[i,])
+}
+
+temp_aphid<-list(aphid_winter_neg_temp)
+names(temp_aphid)<-"aphid_winter_neg_temp"
 ```
 
 <!--Do the model selection for aphid count data and then showing results in Tables-->
@@ -1336,6 +1374,8 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              )
 ```
 
+\newpage
+
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
@@ -1345,7 +1385,6 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              )
 ```
 
-\newpage
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_CvM,
              format='pandoc',
@@ -2352,6 +2391,97 @@ dev.off()
 \end{center}
 \end{figure}
 
+```{r moran_effect_on_aphid_ff, echo=F, results="hide", cache=T, cache.extra=list(seed,temp_aphid,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+set.seed(seed)
+source("FittingCopula_selective_loc.R")  # top most hierarchy source file
+
+
+#cat(paste("start-time: ",Sys.time(),"\n"))
+RES_temp_aphid<-RES_single_sp(d_allsp=temp_aphid,sp=1,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
+                              good_loc_given=T,good_loc=c(2:11))
+#cat(paste("stop-time: ",Sys.time(),"\n")) 
+resloc<-"./Results/fitting_results/"
+saveRDS(RES_temp_aphid,paste(resloc,file="AphidCopulaFit_selecloc_winter_neg_temp.RDS",sep=""))
+
+LTmUT_temp<-(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw)
+
+sum(LTmUT_temp>0,na.rm = T)
+sum(LTmUT_temp<0,na.rm = T) #66 out of 90 : suggests UT in leaf-plum curling aphids firstflight data (90 out of 90 UT)
+```
+
+```{r tab_temp_aphid_bestcop, echo=F, results="markup"}
+knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
+             format='pandoc',
+             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **negative average winter temperature data (1958-2013)**. Copulas' abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_temp_aphid_bestcop}",
+             booktabs=TRUE
+             )
+```
+
+\newpage 
+
+```{r tab_temp_aphid_AICw, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$info_ord_AICw[,,1], 
+             format='pandoc',
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_AICw}",
+             booktabs=TRUE
+             )
+```
+
+\newpage 
+
+```{r tab_temp_aphid_AICw_normal, echo=F, results='markup'}
+source("normal_cop_AICw.R")
+knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
+             format='pandoc',
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **negative average winter temperature data**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_temp_aphid_AICw_normal}",
+             booktabs=TRUE
+             )
+```
+
+\newpage
+```{r tab_temp_aphid_p_CvM, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$gfc_p_CvM,
+             format='pandoc',
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_CvM}",
+             booktabs=TRUE
+             )
+```
+
+\newpage
+```{r tab_temp_aphid_p_KS, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$gfc_p_KS,
+             format='pandoc',
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_KS}",
+             booktabs=TRUE
+             )
+```
+
+```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$LTdep_AICw,
+             format='pandoc',
+             caption = "Model-averaged lower tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTdep_AICw}",
+             booktabs=TRUE
+             )
+```
+
+```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$UTdep_AICw,
+             format='pandoc',
+             caption = "Model-averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_UTdep_AICw}",
+             booktabs=TRUE
+             )
+```
+
+```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
+knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
+             digits = 5,
+             format='pandoc',
+             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTmUT}",
+             booktabs=TRUE
+             )
+```
+
 # Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}
 
 To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
@@ -2364,7 +2494,7 @@ To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in t
 
 To test that our approach is of two way : first, we calculated the parameters of the noise-copula (for example, we chose Clayton with lower tail dependence and Survival Clayton with upper tail dependence here) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome which was a bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for population-copula and its standard error due to sample size and reported p-values for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
-Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \ref{NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Spearman's Rho (or Kendall's Tau) of the noise copula family. Fig. \ref{fig_Cause4copula_C_spear} and Fig. \ref{fig_Cause4copula_C_kend} represent this picture for noise generating from a lower tail dependent Clayton copula whereas for Fig. \ref{fig_Cause4copula_SC_spear} and Fig. \ref{fig_Cause4copula_SC_kend} noise came from a upper tail dependent Survival Clayton family. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \nameref{MT-NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Spearman's Rho (or Kendall's Tau) of the noise copula family. Fig. \ref{fig_Cause4copula_C_spear} and Fig. \ref{fig_Cause4copula_C_kend} represent this picture for noise generating from a lower tail dependent Clayton copula whereas for Fig. \ref{fig_Cause4copula_SC_spear} and Fig. \ref{fig_Cause4copula_SC_kend} noise came from a upper tail dependent Survival Clayton family. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 <!--
 ## Asymmetric sensitivity and copula structure in populations
@@ -2644,8 +2774,8 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf")
-par(mfrow=c(2,1))
+pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf",height=6,width=16)
+par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
@@ -2653,14 +2783,14 @@ answer1k<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loc
 
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
 
-mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
 
-mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 
 dev.off()
@@ -2668,7 +2798,7 @@ dev.off()
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf}
+\includegraphics[width=16 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf}
 \caption[Skewness count for species Green spruce aphid]{Skewness count for species Green spruce aphid\label{fig_skewness_count}}
 \end{center}
 \end{figure}
@@ -2680,27 +2810,27 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf")
-par(mfrow=c(2,1))
+pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf",height=6,width=16)
+par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
 
 answer2k<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
 p_right<-sum(answer2k$surrogskw > answer2k$realskw)/numsurrog
-mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_right),side=3,line=0.2,col="navyblue")
+mtext(paste0("(A) p = ",p_right," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 p_right<-sum(answer2s$surrogskw > answer2s$realskw)/numsurrog
-mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_right),side=3,line=0.2,col="navyblue")
+mtext(paste0("(B) p = ",p_right," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 dev.off()
 ```
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf}
+\includegraphics[width=16 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf}
 \caption[Skewness firstflight for species Leaf-curling plum aphid]{Skewness firstflight for species Leaf-curling plum aphid\label{fig_skewness_ff}}
 \end{center}
 \end{figure}
@@ -2711,8 +2841,8 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf")
-par(mfrow=c(2,1))
+pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf",height=6,width=16)
+par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
 answer3k<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
@@ -2720,21 +2850,21 @@ answer3k<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_s
 
 p_left<-sum(answer3k$surrogskw < answer3k$realskw)/numsurrog
 
-mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 
 p_left<-sum(answer3s$surrogskw < answer3s$realskw)/numsurrog
 
-mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 dev.off()
 ```
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf}
+\includegraphics[width=16 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf}
 \caption[Skewness-plankton for species Ceratium furca]{Skewness-plankton for species Ceratium furca\label{fig_skewness_pns}}
 \end{center}
 \end{figure}
@@ -2745,30 +2875,31 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_methane/skewness_methane.pdf")
-par(mfrow=c(2,1))
+pdf("./Results/skewness_results/skewness_methane/skewness_methane.pdf",height=6,width=16)
+par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=50)
 
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="kendall") 
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
-mtext(paste0("(A) result based on kendall preserving normal surrogates, p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="spearman") 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
-mtext(paste0("(B) result based on spearman preserving normal surrogates , p = ",p_left),side=3,line=0.2,col="navyblue")
+mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
 
 dev.off()
 ```
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane.pdf}
+\includegraphics[width=16 cm]{./Results/skewness_results/skewness_methane/skewness_methane.pdf}
 \caption[Skewness-methane-flux data]{Skewness-methane-flux data\label{fig_skewness_methane}}
 \end{center}
 \end{figure}
+
 
 <!-- Taylor's law section moved to Paper.Rmd -->
 
@@ -3061,7 +3192,7 @@ dev.off()
 \vspace{-0.5 cm}
 \begin{center}
 \includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_5stats.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of hhomoskedasticity, (G) root mean square error, (H) intercept, (I) slope of the first panel plots. \label{fig_spTL}}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope of the first panel plots. \label{fig_spTL}}
 \end{center}
 \end{figure}
 
@@ -3193,7 +3324,7 @@ dev.off()
 
 # Consequence of non-Normal copula structure : effect on skewness of the spatial mean \label{Consequence_skewness}
 
-Because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, changed significantly from the individual skewness of time-series data. Spatial mean of the time series data extracted that tail dependence from the multivariate data set, if any, and reflected in the averaged skewness. We tested null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. So, first we generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R). We made a histogram of surragate skewness and found if actual skewness were within $95\%$ quantile or not. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness).
+Because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, changed significantly from the individual skewness of time-series data. To test null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure, we generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R). We made a histogram of surragate skewness and found if actual skewness were within $95\%$ quantile or not. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness).
 
 To verify that we used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data. Figure \ref{fig_skewness_count} showed that averaged skewness was much lower than expected if the aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_count}). As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results. On the other hand, Figure \ref{fig_skewness_ff} demonstrated that averaged skewness was much higher than expected if the aphid first flight data came from a normal copula. As $p$ value (the fraction of surrogate-skewness which were greater than the averaged skewness of the given data - red line in Figure \ref{fig_skewness_ff}) was less than $0.05$, we reject $H_{0}$ in support of upper tail dependence. Figure \ref{fig_skewness_pns} showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence. But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was lower than expected if the data came from a normal copula (Figure \ref{fig_skewness_methane}). As $p<0.05$, we rejected $H_{0}$ and that result was consistent with the non-parametric analysis and model selection results which also favored lower tail dependence. 
 

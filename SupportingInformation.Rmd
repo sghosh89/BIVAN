@@ -9,6 +9,7 @@ output:
     number_sections: yes
     keep_tex: yes
     fig_caption: yes
+    toc: True
     includes:
       in_header: head_supp.sty
       
@@ -22,7 +23,7 @@ bibliography: REF_ALL.bib
 
 updated on `r Sys.Date()`
 
-\tableofcontents
+<!--\tableofcontents-->
 \listoftables
 \listoffigures
 
@@ -114,84 +115,28 @@ v_CN<-getcopula(d=d,rankon=T,ploton=T)
 dev.off()
 ```
 
-```{r read_BMR_data, echo=FALSE, results="markup"}
+```{r read_BMR_birds_and_copulaplot, echo=F, results='hide'}
 set.seed(seed)
-#---------------------------------------------------------
-BMR_dat<-read.csv("./Data/BMR/bmr-contrasts.csv",header = T)
-#class(BMR_dat)
-#knitr::kable(head(BMR_dat[,c(1,4,5)] ,3),format='pandoc',
-#             caption = "First few rows of raw BMR data.\\label{tab_rawdata_BMR}",
-#             booktabs=T) # display first few rows
-```
+raw_b<-readxl::read_xls("./Data/BMR/BirdBodyMassesMetabolicRates/BirdMassesAndMetabolicRatesMcNab2008.xls")
+raw_b<-raw_b[,1:3]
+raw_b<-na.omit(raw_b)
+raw_b<-raw_b[,2:3]
+raw_b<-as.data.frame(raw_b)
+raw_b[303,2]<-0.66  #to convert as numeric
+raw_b[,2]<-as.numeric(raw_b[,2])
+raw_b<-raw_b[-which(raw_b[,1]<0),]  # omit -ve mass?
 
-```{r plot_BMR_data, echo=FALSE, results="hide"}
-set.seed(seed)
-source("phylo_dat_fn.R")
-
-# Generating raw data plot btw ln(mass) and BMR from bmr-contrasts.csv
-pdf("./Results/BMR_results/rawdataplot_lnBMR_vs_lnmass.pdf")
+b<-log10(raw_b)
+colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
+pdf("./Results/BMR_results/birds/raw_birds_BMR.pdf")
 op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(BMR_dat$ln.mass,BMR_dat$ln.BMR,type="p",col="red",xlab="ln(mass) of contrasts",ylab="ln(BMR) of contrasts",
-     cex.lab=1.5,cex.axis=1.5)
+plot(b[,1],b[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=1.5,cex.axis=1.5)
 par(op)
 dev.off()
-#--------------------------------------------------------------------------------------------
-# Generating copula plot btw ln(mass) and ln(BMR) from bmr-contrasts.csv
-pdf("./Results/BMR_results/copula_lnBMR_vs_lnmass.pdf")
-v_BMR<-phylo_dat_fn(data=BMR_dat,i=4,j=3,ploton = T) 
-#plot(v_BMR[,1],v_BMR[,2],type="p",col="red",xlab="ln(mass)",ylab="BMR",
-#     cex.lab=1.5,cex.axis=1.5)
-dev.off()
-```
 
-```{r read_phylo_data, echo=F, results="markup"}
-set.seed(seed)
-phylo_dat<-read.csv("./Data/Anolis/contrasts.csv",header = T)
-#class(phylo_dat) #it's a data.frame : no NA/missing value in this dataset
-#tab_phylo<-phylo_dat[,c(1,7,8)] 
-#knitr::kable(head(tab_phylo,3),format='pandoc',
-#             caption = "First few rows of raw phylo data.\\label{tab_rawdata_phylo}",
-#             booktabs=T) # display first few rows
-```
-
-```{r plot_phylo_data, echo=F, results="hide"}
-set.seed(seed)
-source("phylo_dat_fn.R")
-#----------------------------------------------------------------------------------------------------
-# Generating all copula plots between different pathlength and traits 
-pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_pathlength_traits_cop_plot.pdf",width=20, height = 20)
-op<-par(mfrow=c(4,4))
-i<-1
-  for(j in c(1:13)){
-    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
-    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 3,col="blue")
-  } 
-par(op)
-dev.off()
-#------------------------------------------------------------------------------------------------------------
-# Generating all 12 by 12 copula plots between different traits
-pdf("./Results/Anolis_results/contrasts_csv_results/contrasts_csv_btw_traits_cop_plot.pdf",width=20, height = 20)
-op<-par(mfrow=c(12,12))
-for(i in c(2:13)){
-  for(j in c(2:13)){
-    v_phylo<-phylo_dat_fn(data=phylo_dat,i=i,j=j,ploton = T)
-    mtext(paste0(" [",i,",",j,"] ", ","," n=",dim(v_phylo)[1]),side = 4,col="blue",line=0.01)
-  } 
-}
-par(op)
-dev.off()
-#----------------------------------------------------------------------------------------
-# Generating raw data plot btw AVG.ltoe.IV and AVG.humerus from contrasts.csv
-pdf("./Results/Anolis_results/contrasts_csv_results/rawdataplot_AVG_ltoe_humerus.pdf")
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(phylo_dat$AVG.ltoe.IV,phylo_dat$AVG.humerus,type="p",col="red",xlab="contrasts for AVG.ltoe.IV",ylab="contrasts for AVG.humerus",
-     cex.lab=1.5,cex.axis=1.5)
-par(op)
-dev.off()
-#--------------------------------------------------------------------------------------------
-# Generating copula plot btw AVG.ltoe.IV and AVG.humerus from contrasts.csv
-pdf("./Results/Anolis_results/contrasts_csv_results/copula_AVG_ltoe_humerus.pdf")
-v_contrasts_67<-phylo_dat_fn(data=phylo_dat,i=6,j=7,ploton = T)
+source("getcopula.R")
+pdf("./Results/BMR_results/birds/copula_birds_BMR.pdf")
+cop_b<-getcopula(d=b,rankon=T,ploton=T) #convert to a copula and plot
 dev.off()
 ```
 
@@ -469,173 +414,6 @@ Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^
 daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.
 
-<!--# Nonparametric analysis of tail dependence \label{NPA}
-
-Left (or lower)- and right (or upper)-tail dependence quantify the extent to which two ranked
-variables $u_i$, $v_i$ for $i=1,...,n$ 
-(see \nameref{MT-Model_selection} for defintions of $u_i$ and $v_i$ in the manuscript)
-are related to each other in the left and right tails, respectively, of their 
-distributions [@nelsen2007_copula, @joe2014_dependence]. 
-Our nonparametric study of tail dependence uses three
-statistics which can quantify the extent to which $u_i$ and $v_i$ are 
-related in any part of their distributions. We here describe the 
-statistics. The statistics were formulated with positively associated
-variables in mind. All the variables we study are positively associated
-when they are significantly associated. So definitions and associated 
-diagrams will assume positive associations, though generalizations are 
-possible. Given two bounds 
-$0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
-$u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
-fall (these are the blue and red lines, respectively, in 
-Fig. \ref{fig_stat_image}). Our statistics quantify the dependence
-between $u_i$ and $v_i$ in the region bounded by these lines.
-Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
-dependence in the left parts of the distributions of $u$ and $v$, and 
-using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
-the right parts of the distributions. 
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption{Schematic diagram supporting defintions of nonparametric tail dependence statistics \label{fig_stat_image}}
-\end{center}
-\end{figure}
-
-
-The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
-correlation of $u_i$ and $v_i$ that is attributable to the points 
-lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$, i.e.,
-\begin{equation}\label{eq.Cor}
-   \cor_{l_b,u_b}(u,v) = \frac{1}{(n-1)\sqrt{\var(u)\var(v)}}\sum 
-   (u_i-\mean(u)) (v_i-\mean(v)),
-\end{equation}
-where means and variances are computed using all $n$ data 
-points, but the
-sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
-$u_i+v_i < 2u_b$. 
-Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
-between $u$ and $v$ in the region given by the bounds.
-
-We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
-$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
-$S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
-and a distance less than $h$ from the line $v=u$, divided by the 
-total number of points within the bounds. This function is
-defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
-is half the longer of the two segments obtained by intersecting the
-bounds with the unit square. It is easy to see $S(0)=0$ and 
-$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
-of $h$, to be the area within the bounds and the unit square
-and within distance $h$ of the line $v=u$, divided by the area
-within the bounds and the unit square. This is the expected value of
-$S(h)$ for independent data. We then defined
-\begin{equation}\label{eq.P}
-   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
-\end{equation}
-As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
-indicate stronger positive association
-between $u$ and $v$ in the region given by the bounds.
-
-The third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
-distance between points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
-$\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
-then small. 
-Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
-dependence in the portions of the distributions of $u$ and $v$ given by 
-the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
-$\Dsq_{l_b,u_b}$ indicate strong dependence. 
-
-For large datasets (i.e., datasets with large $n$),
-we can consider $l_b$ and $u_b$ close together without incurring undue
-sampling variation in our statistics, and we can consider 
-several different bands $(l_b,u_b)$ to understand how dependence
-varies in different parts of the distributions. But for datasets with 
-smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
-We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
-and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
-$\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
-
-The difference $\cor_l-\cor_u$ is expected to be positive if 
-dependence in the left halves of the distributions is stronger 
-than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
-This holds, for instance, for the Clayton copula [@nelsen2007_copula].
-The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
-"lower" statistics occur in opposite order, is also expected to be 
-positive under the same conditions. We use these three differences
-to detect asymmetry of tail dependence. Likewise, for large datasets,
-we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
-$\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
-$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$.
-
-We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulas (for details see Appendix \ref{Test_npa_stat}).
-
-For bivariate datasets, we compared values 
-of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to 
-distributions of values of the same statistics computed on surrogate datasets that were produced from 
-the empirical data by randomizing it in a special way. The surrogate/randomized datasets had exactly 
-the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
-correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
-but had Normal copula structure. Thus our comparisons tested the null hypothesis 
-that our statistics took values on the empirical data no different from what would have been expected 
-if the copula structure of the data were Normal, but the data were otherwise 
-statistically unchanged.
-Details of how surrogates were prroduced are in Appendix \ref{surrog_test}, and code is in [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R).
-
-The comparison of one of the
-statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
-empirical data, to the distribution
-of its values computed on many surrogate datasets 
-provides a test of whether dependence in the part of the distribution specified 
-by $l_b$ and $u_b$ is different from
-what would be expected from a null hypothesis of normal copula structure but 
-unchanged marginals and unchanged 
-Kendall (or Spearman)
-correlation. Thus the comparison helps answer the first two parts of question \hyperref[MT-Intro]{\textbf{(Q1)}} 
-from the \nameref{MT-Intro} for bivariate datasets. 
-Significant deviations correspond to deviations from normal 
-copula structure. In particular, deviations 
-using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
-different from that of a normal copula;
-likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
-from that of a normal copula.  
-
-The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, 
-as computed on the 
-empirical data, to the distribution
-of its values on many surrogate datasets 
-provides a test of asymmetry of tail dependence. Thus this comparison helps answer the
-third part of question \hyperref[MT-Intro]{\textbf{(Q1)}} from the \nameref{MT-Intro} for bivariate datasets.
-
-For multivariate datasets, a spatial resampling scheme was used instead of the surrogate 
-approach described above.
-The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 
-as part of a method for 
-performing model selection among matrix regression models. For each pair of 
-locations $i \neq j$, the statistic
-of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
-$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
-$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
-values $s_{ij}$ were then arranged in
-a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
-$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the 
-average strength of 
-dependence, across all pairs of distinct locations, for data in the portion of the distributions 
-given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
-asymmetry of tail dependence across all pairs of locations. 
-Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a 
-distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
-revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
-or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-Normal null hypothesis, and answering question \hyperref[MT-Intro]{\textbf{(Q1)}} from the \nameref{MT-Intro}.
-Bootstrapping was performed by resampling the locations of measurement, with replacement. 
-This corresponds to 
-resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
-[@bjornstadfalck2001 ; @walteretal2017].-->
-
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
 
@@ -760,23 +538,6 @@ a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
 
-<!--
-# Question 1 analyses for each dataset
-Recall that question 1 is: Do datasets in ecology and related fields have non-Gausian copula structure? Do they show tail dependence distinct from that of a Normal copula? In particular do they show asymmetric tail dependence?
-
-## Details of methods \label{Method}
-### Model selection approach \label{Model_selection}
-### Non-parametric analysis of tail dependence \label{NPA}
-moved to Paper.Rmd
--->
-
-<!--
-## Results: soil C and N data \label{Ex_SoilCN}
-### Model selection approach \label{Ex_SoilCN_Model_selection} 
-### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
-                    [[[[moved to Paper.Rmd]]]]
--->
-
 <!--This chunk is for model selection results of soilCN dataset-->
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
@@ -860,217 +621,44 @@ knitr::kable(tab_soilCN_asym, booktabs = T,
 #kable_styling(, position = "float_left")
 ```
 
-
-
-<!--
-\newpage
-## Results: BMR data \label{Ex_BMR}
-### Model selection approach \label{Ex_BMR_Model_selection}
-### Non-parametric analysis of tail dependence \label{Ex_BMR_NPA}
-                  ----moved to Paper.Rmd----
--->
-
-<!--This chunk is for model selection results of BMR data-->
-```{r bivMS_BMR, echo=F, cache=T, cache.extra=list(seed,v_BMR,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-set.seed(seed) 
+```{r bivmodselect_birds_BMR, echo=F, cache=T, cache.extra=list(seed,cop_b,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
-#families<-c(1,3:10,13:14,16:20) 
-BivMS_BMR<-OurBiCopSelect(u1=v_BMR[,1],u2=v_BMR[,2],families=c(1,3:10,13:14,16:20),
-                          level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,gofnormal=F,status=F)
-saveRDS(BivMS_BMR,file="./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
-```
-
-
-<!--Display model selection results for BMR data in a table-->
-```{r tab_BMRfit, echo=F, results='markup'}
-h<-BivMS_BMR$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
-knitr::kable(h,
-             format='pandoc',
-             caption = "Fitting info for **BMR dataset**. \\label{tab_BMRfit}",
-             booktabs=T)
-```
-
-<!--This chunk is for npa testing results of BMR dataset-->
-```{r stat_BMR_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,v_BMR,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
-source("bivfunctionplot.R")
-set.seed(seed) 
-# Now do NPA for v_BMR
-stat_BMR_ga<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_10",numbin = 10)
-stat_BMR_ga_numbin5<-bivfunctionplot(v=v_BMR,resloc="./Results/BMR_results/",nametag="BMR_numbin_5",numbin = 5)
-```
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/BMR_results/BMR_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_BMR_nonparam}}
-\end{center}
-\end{figure}
-
-<!--
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/BMR_results/BMR_numbin_5_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for BMR data with $numbin=5$]{Nonparametric tests for tail dependence and other deviations from a normal copula for BMR data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.2$, $0.2-0.4$, ..., $0.8-1$ (red lines), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (dashed lines show 0.025 and 0.975 quantiles of these results and dotted lines show 0.005 and 0.995 quantiles). \label{fig_BMR_nonparam5}}
-\end{center}
-\end{figure}
--->
-
-```{r tab_BMR_asym, echo=F, results="markup"}
-tab_BMR_asym<-make_table_stat_fn(data=stat_BMR_ga)
-tab_BMR_asym_numbin5<-make_table_stat_fn(data=stat_BMR_ga_numbin5)
-
-knitr::kable(tab_BMR_asym,
-             format="pandoc",
-             caption = "**BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. \\label{tab_BMR_asym}",
-             booktabs=T)
-
-#knitr::kable(tab_BMR_asym_numbin5,
-#             format="pandoc",
-#             caption = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis (best fit is here Frank with symmetric tail dep)?, numbin=5 \\label{tab_BMR_asym_numbin5}",
-#             booktabs=T)
-```
-
-<!--
-\newpage
-## Results: contrasts.csv data \label{Ex_contrasts}
-### Model selection approach \label{Ex_contrasts_Model_selection}
-### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
-                 ----moved to Paper.Rmd----
--->
-
-<!--This chunk is for model selection results of anolis data-->
-```{r bivMS_contrasts_67, echo=F, cache=T, cache.extra=list(seed,v_contrasts_67,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 set.seed(seed)
-# Now do Model Selection for [i,j]=[6,7]
-# 6 : AVG. ltoe.IV
-# 7 : AVG. humerus
-source("OurBiCopSelect.R")
-families<-c(1,3:10,13:14,16:20)
-BivMS_contrasts_67<-OurBiCopSelect(u1=v_contrasts_67[,1],u2=v_contrasts_67[,2],families=families,
-                          level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
-                          gofnormal=F,status=F)
-saveRDS(BivMS_contrasts_67,file="./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
+BivMS_birds<-OurBiCopSelect(u1=cop_b[,1],u2=cop_b[,2],families=c(1,3:10,13:14,16:20),
+                              level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                              gofnormal=F,status=F)
+saveRDS(BivMS_birds,file="./Results/BMR_results/birds/BivMS_birds.RDS")
 ```
 
-<!--Display model selection results for contrasts data in a table-->
-```{r tab_contrasts_67fit, echo=F, results='markup'}
-h<-BivMS_contrasts_67$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+<!--Display model selection results for BMR:birds data in a table-->
+```{r tab_bmr_birds_fit, echo=F, results='markup'}
+h<-BivMS_birds$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for **Anolis data set** with contrasts for AVG.ltoe.IV and AVG.humerus phylogenetic traits. \\label{tab_contrasts_67fit}",
+             caption = "Fitting info for **birds' BMR dataset** . \\label{tab_bmr_birds_fit}",
              booktabs=T)
 ```
 
-<!--This chunk is for npa testing results of anolis dataset-->
-```{r stat_contrasts_67_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}   
-source("bivfunctionplot.R")  
-set.seed(seed) 
-# Now do NPA for v_contrasts_67 with numbin=4
-stat_contrasts_67_ga<-bivfunctionplot(v=v_contrasts_67,resloc="./Results/Anolis_results/contrasts_csv_results/",
-                                      nametag="contrasts_67",numbin = 4) 
-``` 
-
-```{r stat_contrasts_67_graphic_approach2, echo=F, results="hide", cache=T, cache.extra=list(seed,v_contrasts_67,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+```{r stat_bmr_birds_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_b,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
-set.seed(seed) 
-# Now do NPA for v_contrasts_67
-
-stat_contrasts_67_ga_numbin2<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin2",numbin = 2)
-
-stat_contrasts_67_ga_numbin3<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin3",numbin = 3)
-
-stat_contrasts_67_ga_numbin5<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin5",numbin = 5)
-
-stat_contrasts_67_ga_numbin6<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin6",numbin = 6)
-
-stat_contrasts_67_ga_numbin7<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin7",numbin = 7)
-
-stat_contrasts_67_ga_numbin10<-bivfunctionplot(v=v_contrasts_67,
-                            resloc="./Results/Anolis_results/contrasts_csv_results/",
-                            nametag="contrasts_67_numbin10",numbin = 10)
+set.seed(seed)
+stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nametag="birds_numbin_10",numbin = 10)
 ```
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/Anolis_results/contrasts_csv_results/contrasts_67_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for anolis data]{Nonparametric tests for tail dependence and other deviations from a normal copula for anolis data. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.25$, $0.25-0.5$, $0.5-0.75$, $0.75-1$ for $4$ number of bins (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results). \label{fig_contrasts_67_nonparam}}
+\includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
+\caption[Testing non-parametric statistics for Ceder-creek data with $numbin=10$ for year 2000]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{birds' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
-
-
-```{r tab_contrasts_67_asym, echo=F, results="markup"}
-tab_contrasts_67_asym<-make_table_stat_fn(data=stat_contrasts_67_ga)
-knitr::kable(tab_contrasts_67_asym,
+```{r tab_bmr_birds_asym, echo=F, results="markup"}
+tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
+knitr::kable(tab_bmr_birds_asym,
              format="pandoc",
-             caption = "**Anolis data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_contrasts_67_asym}",
+             caption = "**Birds' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis on year 2000 \\label{tab_bmr_birds_asym}",
              booktabs=T)
 ```
-
-
-<!--
-This chunks are just to see the tables for all numbin variation for anolis data set: It appears that numbin=4 is optimized, when numbin=2, >= 7, there is no significant asymetry in tail dep in all 3 types of stats.
-
-```{r tab_contrasts_67_asym67_numbin2, echo=F, results="markup"}
-#tab_contrasts_67_asym2<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin2)
-#knitr::kable(tab_contrasts_67_asym2,
-#            format="pandoc",
-#             caption = "numbin_2,anolis \\label{tab_contrasts_67_asym2}",
-#             booktabs=T)
-```
-
-```{r tab_contrasts_67_asym67_numbin3, echo=F, results="markup"}
-#tab_contrasts_67_asym3<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin3)
-#knitr::kable(tab_contrasts_67_asym3,
-#             format="pandoc",
-#             caption = "numbin_3,anolis \\label{tab_contrasts_67_asym3}",
-#             booktabs=T)
-```
-
-```{r tab_contrasts_67_asym67_numbin5, echo=F, results="markup"}
-#tab_contrasts_67_asym5<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin5)
-#knitr::kable(tab_contrasts_67_asym5,
-#            format="pandoc",
-#             caption = "numbin_5,anolis \\label{tab_contrasts_67_asym5}",
-#             booktabs=T)
-```
-
-
-```{r tab_contrasts_67_asym67_numbin6, echo=F, results="markup"}
-#tab_contrasts_67_asym6<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin6)
-#knitr::kable(tab_contrasts_67_asym6,
-#             format="pandoc",
-#             caption = "numbin_6,anolis \\label{tab_contrasts_67_asym6}",
-#             booktabs=T)
-```
-
-```{r tab_contrasts_67_asym67_numbin7, echo=F, results="markup"}
-#tab_contrasts_67_asym7<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin7)
-#knitr::kable(tab_contrasts_67_asym7,
-#             format="pandoc",
-#             caption = "numbin_7,anolis \\label{tab_contrasts_67_asym7}",
-#             booktabs=T)
-```
-
-```{r tab_contrasts_67_asym67_numbin10, echo=F, results="markup"}
-#tab_contrasts_67_asym10<-make_table_stat_fn(data=stat_contrasts_67_ga_numbin10)
-#knitr::kable(tab_contrasts_67_asym10,
-#             format="pandoc",
-#             caption = "numbin_10,anolis \\label{tab_contrasts_67_asym10}",
-#             booktabs=T)
-```
-
--->
 
 ```{r bivmodselect_cc, echo=F, cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
@@ -1089,7 +677,6 @@ saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```
 
-\newpage
 <!--Display model selection results for Ceder-creek data for year 2000 in a table-->
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -1132,13 +719,6 @@ knitr::kable(tab_cc_asym_2000,
              booktabs=T)
 ```
 
-<!--
-\newpage
-## Results: abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
-### Model selection approach \label{Ex_count_Model_selection}
-### Non-parametric analysis of tail dependence \label{Ex_count_NPA}
-                  ----moved to Paper.Rmd----
--->
 
 <!--Load the raw data-->
 ```{r read_aphid_data, echo=F}
@@ -1336,14 +916,6 @@ pairs of locations. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
 
-<!--
-\newpage
-## Results: first flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
-### Model selection approach \label{Ex_ff_Model_selection}
-### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
-                          ----moved to Paper.Rmd----
--->
-
 <!--Do the model selection for aphid ff data and then showing results in Tables-->
 ```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
@@ -1373,8 +945,6 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              booktabs=TRUE
              )
 ```
-
-\newpage
 
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
@@ -1654,14 +1224,6 @@ knitr::kable(s,
 
 <!--***DAN: stopped here 2018 04 07-->
 
-<!--
-\newpage
-## Results: methane flux data \label{Ex_methane}
-### Model selection approach \label{Ex_methane_Model_selection}
-### Non-parametric analysis of tail dependence  \label{Ex_methane_NPA}
-                 ----moved to Paper.Rmd----
--->
-
 <!--Load and format the data-->
 ```{r read_format_methane_data, echo=F}
 
@@ -1850,8 +1412,8 @@ bivar_tab_summary_fn<-function(r,rs){
   m<-matrix(NA,1,12)
   colnames(m)<-c("Indep.p","AIC-best.copula","Highest.AICw",
                  "N.AICw","p.CvM","p.KS",
-                 "LT_model.avg","UT_model.avg","(LT-UT)_model.avg",
-                 "Rank_Pl_K","Rank_Pu_K","Rank_Pl-Pu_K")
+                 "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
+                 "Rank.Pl.K","Rank.Pu.K","Rank.Pl-Pu.K")
   m<-as.data.frame(m)
   
   m$Indep.p<-round(r$IndepTestRes,3)
@@ -1860,24 +1422,23 @@ bivar_tab_summary_fn<-function(r,rs){
   m$N.AICw<-round(r$InfCritRes$AICw[1],3)
   m$p.CvM<-r$GofRes_CvM
   m$p.KS<-r$GofRes_KS
-  m$LT_model.avg<-round(r$relLTdep_AICw,3)
-  m$UT_model.avg<-round(r$relUTdep_AICw,3)
-  m$`(LT-UT)_model.avg`<-m$LT_model.avg-m$UT_model.avg
-  m$Rank_Pl_K<-rs$Rank_Pl_K
-  m$Rank_Pu_K<-rs$Rank_Pu_K
-  m$`Rank_Pl-Pu_K`<-rs$Rank_PlmPu_K
+  m$LT.model.avg<-round(r$relLTdep_AICw,3)
+  m$UT.model.avg<-round(r$relUTdep_AICw,3)
+  m$`(LT-UT).model.avg`<-m$LT.model.avg-m$UT.model.avg
+  m$Rank.Pl.K<-rs$Rank_Pl_K
+  m$Rank.Pu.K<-rs$Rank_Pu_K
+  m$`Rank.Pl-Pu.K`<-rs$Rank_PlmPu_K
   mt<-as.data.frame(t(m))
   return(mt)
   
 }
 #----------------------------------
-#calling the above function on 3 multivariable datasets
+#calling the above function on bivariable datasets
 m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
-m2<-bivar_tab_summary_fn(r=BivMS_BMR,rs=stat_BMR_ga)
-m3<-bivar_tab_summary_fn(r=BivMS_contrasts_67,rs=stat_contrasts_67_ga)
-m4<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
-tab_bivar_summary<-cbind(m1,m2,m3,m4)
-colnames(tab_bivar_summary)<-c("SoilCN","BMR","Anolis","Ceder-creek")
+m2<-bivar_tab_summary_fn(r=BivMS_birds,rs=stat_birds_ga)
+m3<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
+tab_bivar_summary<-cbind(m1,m2,m3)
+colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Ceder-creek")
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
 
@@ -1887,40 +1448,40 @@ source("normal_cop_AICw.R")
 multivar_tab_summary_fn<-function(r,rs){
   
   m<-matrix(NA,1,17)
-  colnames(m)<-c("num_pairs","num_non-indep","num_non-N",
-                 "Avg.best.AICw","Avg.N.AICw","num_good.fit",
-                 "CI0.025_LT","CI0.975_LT","CI0.025_UT","CI0.975_UT",
-                 "num_LT-UT>0",
-                 "CI0.025_Pl","CI0.975_Pl","CI0.025_Pu","CI0.975_Pu","CI0.025_Pl-Pu","CI0.975_Pl-Pu")
+  colnames(m)<-c("num.pairs","num.non-indep","num.non-N",
+                 "Avg.best.AICw","Avg.N.AICw","num.good.fit",
+                 "0.025-CI.LT","0.975-CI.LT","0.025-CI.UT","0.975-CI.UT",
+                 "num.LT-UT>0",
+                 "0.025-CI.Pl","0.975-CI-Pl","0.025-CI.Pu","0.975-CI.Pu","0.025-CI.Pl-Pu","0.975-CI.Pl-Pu")
   m<-as.data.frame(m)
   
   normal_AICw<-normal_cop_AICw_matrix(r=r)
   
   d<-dim(r$gfc_numBS)[1]
-  m$num_pairs<-(d^2)-d 
-  m$`num_non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
-  m$`num_non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
+  m$num.pairs<-(d^2)-d 
+  m$`num.non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
+  m$`num.non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
   r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN
   m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
   normal_AICw[normal_AICw==Inf]<-NaN
   m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
   temp<-which((r$gfc_p_CvM>0.01) & (r$gfc_p_KS>0.01),arr.ind=T)
-  m$num_good.fit<-dim(temp)[1]
+  m$num.good.fit<-dim(temp)[1]
   t<-r$LTdep_AICw[is.finite(r$LTdep_AICw)]
   CI_LT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
-  m$CI0.025_LT<-round(CI_LT[1],3)
-  m$CI0.975_LT<-round(CI_LT[2],3)
+  m$`0.025-CI.LT`<-round(CI_LT[1],3)
+  m$`0.975-CI.LT`<-round(CI_LT[2],3)
   t<-r$UTdep_AICw[is.finite(r$UTdep_AICw)]
   CI_UT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
-  m$CI0.025_UT<-round(CI_UT[1],3)
-  m$CI0.975_UT<-round(CI_UT[2],3)
-  m$`num_LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
-  m$CI0.025_Pl<-round(rs$numericdf[5,3],3)
-  m$CI0.975_Pl<-round(rs$numericdf[5,4],3)
-  m$CI0.025_Pu<-round(rs$numericdf[6,3],3)
-  m$CI0.975_Pu<-round(rs$numericdf[6,4],3)
-  m$`CI0.025_Pl-Pu`<-round(rs$numericdf[10,3],3)
-  m$`CI0.975_Pl-Pu`<-list(round(rs$numericdf[10,4],3))
+  m$`0.025-CI.UT`<-round(CI_UT[1],3)
+  m$`0.975-CI.UT`<-round(CI_UT[2],3)
+  m$`num.LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
+  m$`0.025-CI.Pl`<-round(rs$numericdf[5,3],3)
+  m$`0.975-CI-Pl`<-round(rs$numericdf[5,4],3)
+  m$`0.025-CI.Pu`<-round(rs$numericdf[6,3],3)
+  m$`0.975-CI.Pu`<-round(rs$numericdf[6,4],3)
+  m$`0.025-CI.Pl-Pu`<-round(rs$numericdf[10,3],3)
+  m$`0.975-CI.Pl-Pu`<-list(round(rs$numericdf[10,4],3))
   #m$`CI0.975_Pl-Pu`<-round(rs$numericdf[10,4],3)
   #m$CI_Pl<-list(c(round(rs$numericdf[5,3],3),round(rs$numericdf[5,4],3)))
   #m$CI_Pu<-list(c(round(rs$numericdf[6,3],3),round(rs$numericdf[6,4],3)))
@@ -1988,270 +1549,6 @@ par(op)
 dev.off()
 ```
 
-<!--
-#Results section detailed description
-### soil C and N data \label{Ex_SoilCN}
-
-```{r read_BivMS_soilCN_data,echo=F}
-BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
-```
-
-#### Model selection approach \label{Ex_SoilCN_Model_selection}
-
-The test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes` (to within the precision available 
-from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_soilCNfit}). The table shows that several copulas are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
-
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
-
-Although these results do convincingly show non-Normal copula structure, we should take the tail dependence results with a grain of salt because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
-
-#### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}
-
-As described in \nameref{Methods}, each of our statistics, as computed for the 
-ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions 
-of values of the same statistic with the same ranges computed on 1000 normal-copula 
-surrogate datasets with similar Kendall or Spearman correlations, in different 
-runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). 
-
-Results indicate that tail dependence of 
-data is stronger in both the lower and upper tails than would be expected under a 
-null hypothesis of a normal copula, answering the second part of question 1. The dependence between C and N is also 
-weaker in the middle of the distributions
-than would be expected based on a normal-copula null model.
-
-We also tested statistically for asymmetry of tail dependence, which seems visible in Fig. \ref{SM-fig_raw_cop_soilCN}(B). 
-Results (Table \ref{SM-tab_soilCN_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
-
-### BMR data \label{Ex_BMR}
-
-```{r read_BivMS_BMR_data,echo=F}
-BivMS_BMR<-readRDS("./Results/BMR_results/BivMS_lnBMR_vs_lnmass.RDS")
-```
-
-#### Model selection approach \label{Ex_BMR_Model_selection}
-
-The test of indepedence gave $p=$ `r BivMS_BMR$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_BMRfit}). The table shows that BB6 and BB8 are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
-
-The model-averaged (AIC weights used for model averaging) lower-tail and upper-tail dependence statistic was `r BivMS_BMR$relLTdep_AICw - BivMS_BMR$relUTdep_AICw`, indicating more upper tail dependence. We also tested that lowest-AIC copula BB8 was a good-enough fit, giving $p$-value `r BivMS_BMR$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_BMR$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
-
-#### Non-parametric analysis of tail dependence \label{Ex_BMR_NPA}
-
-As described in \nameref{Methods}, each of our statistics, as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_BMR_nonparam}). 
-
-Results indicate that dependence of data is different in some bins than would be expected under a 
-null hypothesis of a normal copula, answering the second part of question 1. Table \ref{SM-tab_BMR_asym} indicates stronger upper tail dependence for the BMR data copula which is significantly (95% CI) different from that of the symmetric normal copula and thus consistent with model selection results.
-
-### Anolis data \label{Ex_contrasts}
-
-```{r read_BivMS_contrasts_67_data,echo=F}
-BivMS_contrasts_67<-readRDS("./Results/Anolis_results/contrasts_csv_results/BivMS_contrasts_67.RDS")
-```
-
-#### Model selection approach \label{Ex_contrasts_Model_selection}
-
-The test of indepedence gave $p=0$  (to within the precision available 
-from `BiCopIndTest` in the `VineCopula` package). We fitted several copulas
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulas (Table \ref{SM-tab_contrasts_67fit}). The table shows that several copulas (mostly J and SC) are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of question 1 for these data.
-
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_contrasts_67$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_contrasts_67$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of question 1 for these data. Furthermore, the difference of these two quantities (lower minus upper), `r BivMS_contrasts_67$relLTdep_AICw-BivMS_contrasts_67$relUTdep_AICw`, was different from 0, answering the third part of question 1. 
-
-These results do convincingly show non-Normal copula structure, giving $p$-value `r BivMS_contrasts_67$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_contrasts_67$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. The next section looks at tail dependence in a non-parametric way.
-
-#### Non-parametric analysis of tail dependence \label{Ex_contrasts_67_NPA}
-
-As described in \nameref{Methods}, each of our statistics, are computed for $(l_b,u_b)$ in the 
-ranges $0-0.25$, $0.25-0.5$, $0.5-0.75$, $0.75-1$ (with $4$ number of bins). Anolis data set has lesser number of data compared to other two bivariate data set, so fewer number of bins were chosen to measure tail-dependence.
-Those statistics were compared to the distributions of values of the same statistic with the same ranges computed on 1000 normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different 
-runs for Kendall and Spearman (Fig. \ref{SM-fig_contrasts_67_nonparam}). 
-
-Results indicate that tail dependence of 
-data is stronger in both the lower and upper tails than would be expected under a 
-null hypothesis of a normal copula, answering the second part of question 1. 
-
-We also tested statistically for asymmetry of tail dependence, which seems visible in Fig. \ref{SM-fig_raw_cop_AVG_humerus_ltoe}(B). Results (Table \ref{SM-tab_contrasts_67_asym}) show that upper-tail dependence was, indeed, significantly stronger than lower-tail dependence in these data, answering the third part of question 1.
-
-
-
-### Abundance data for the green spruce aphid, *Elatobium abietinum* \label{Ex_count}
-
-```{r read_RES_aphid_count, echo=F}
-RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
-```
-
-#### Model selection approach \label{Ex_count_Model_selection}
-
-As described in Methods, model selection among copulas was done separately for each pair of the 10 
-sampling locations, thus results are presented in $10 \times 10$ matrix format with rows and columns 
-corresponding to locations. Table \ref{SM-tab_count_bestcop} shows that, for the large majority of location 
-pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of 
-question 1 for these data. Comparing the 
-AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_count_AICw}) 
-to the AIC weight 
-of the normal copula family for the same pair (Table \ref{SM-tab_count_AICw_normal}) confirms that the degree of support for normal copulas was usually not
-comparable to the degree of support for other families.
-Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_count_p_CvM}) in every case 
-failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of 
-the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_count_p_KS}),
-demonstrating that the collection of copula families we used was sufficiently broad that the copulas of 
-all pairs of locations could be characterized by at least one of them. In all cases at least `r min((RES_aphid_count$gfc_numBS_success/RES_aphid_count$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
-
-The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are in Tables \ref{SM-tab_count_LTdep_AICw} and \ref{SM-tab_count_UTdep_AICw} respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data. Apparently these aphid data have greater tail dependence (both lower and upper) than would be expected from a normal-copula null hypothesis. 
-
-The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic (lower minus upper), shown in Table \ref{SM-tab_count_LTmUT}, is positive for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`), answering the third part of question 1. 
-
-#### Non-parametric analysis of tail dependence \label{Ex_count_NPA}
-
-Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
-computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
-resampling scheme, as described in Methods (Table \ref{SM-tab_count_resamp}). Confidence intervals of
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
-indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
-exluded $0$ and were positive, indicating asymmetry of tail dependence, a feature that data with normal copula 
-structure do not have, providing further evidence answering the third part of question 1. 
-
-Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{SM-fig_aphid_count} A,B) showed the typical decline of correlation with 
-distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting 
-$\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of locations shows these quantities also decline with distance (Fig. \ref{SM-fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows
-these quantities increase with distance (as expected, given the opposite interpretation these two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Fig. \ref{SM-fig_aphid_count} I-K) did not show a decline with distance, but did illustrate visually the statistical
-result of Table \ref{SM-tab_count_resamp} that averages of these quantities across all pairs of sampling locations
-were significantly greater than zero, demonstrating asymmetry of tail dependence. Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in the [`BIVAN`](https://github.com/sghosh89/BIVAN) package. 
-
-### First flight date data for the leaf-curling plum aphid, *Brachycaudus helichrysi* \label{Ex_ff}
-
-```{r read_RES_aphid_ff,echo=F}
-RES_aphid_ff<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_firstflight_species_11.RDS")
-```
-
-#### Model selection approach \label{Ex_ff_Model_selection}
-
-As in section \nameref{Ex_count_Model_selection}, results are presented in $10 \times 10$ matrix format with rows
-and columns corresponding to locations. Table \ref{SM-tab_ff_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of question 1 for these data. Comparing the AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_ff_AICw}) to the AIC weight of the normal copula family for the same pair (Table \ref{SM-tab_ff_AICw_normal}) confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families. Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_ff_p_CvM}) usually failed to reject the 
-hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for 
-goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_ff_p_KS}). In all cases at least `r min((RES_aphid_ff$gfc_numBS_success/RES_aphid_ff$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for
-goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
-
-The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and 
-the model-averaged (again, AIC based) upper-tail dependence statistic are in 
-Tables \ref{SM-tab_ff_LTdep_AICw} and \ref{SM-tab_ff_UTdep_AICw}, respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., $0$), and answering the second part of question 1 for these data - these data have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis. 
-
-The difference between the model-averaged lower-tail dependence statistic and the 
-model-averaged upper-tail dependence statistic (lower minus upper), shown in 
-Table \ref{SM-tab_ff_LTmUT}, was negative for `r sum((RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw)<0,na.rm=T)` 
-out of `r (dim(RES_aphid_ff$gfc_p_CvM)[1]^2-dim(RES_aphid_ff$gfc_p_CvM)[1])-2*RES_aphid_ff$num_indep_loc_pair` location pairs, answering the third part of question 1. We note this result is opposite the analogous result for aphid abundance
-data for the green spruce aphid, i.e., whereas those abundance data showed stronger lower tail dependendence than upper tail dependence, first flights for the leaf-curling plum aphid showed stronger upper tail dependence than lower tail dependence. 
-
-#### Non-parametric analysis of tail dependence  \label{Ex_ff_NPA}
-
-Mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman 
-correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were 
-computed via a spatial resampling scheme, as described in \nameref{Methods} (Table \ref{SM-tab_ff_resamp}).
-Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded 
-zero and mean values were positive, indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always exluded $0$ and were negative, indicating asymmetry of tail dependence, a feature 
-that data with normal copula structure do not have, providing further evidence answering the third part of question 1.
-The contrast here with the analogous results for abundances of the green spruce aphid is again illuminating. 
-
-Plotting Spearman or Kendall correlations between first flight time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{SM-fig_aphid_ff} A, B) showed the typical (though slight, in this case) decline of correlation with increasing distance. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear in most cases to decline slightly with distance (Fig. \ref{SM-fig_aphid_ff} C-F).
-$\Dsq_u$ and $\Dsq_l$ appear to slightly increase with distance, as expected given their
-opposite meaning (Fig. \ref{SM-fig_aphid_ff} G-H). 
-Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_aphid_ff} I-K) did not show a decline with distance, but did demonstrate visually the statistical result of Table \ref{SM-tab_ff_resamp} that averages of these quantities across all pairs of sampling locations were significantly less than zero, showing asymmetry of tail dependence. 
-
-### Abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
-
-```{r read_RES_plankton_north_sea,echo=F}
-RES_plankton_north_sea<-readRDS("./Results/fitting_results/Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS")
-```
-
-#### Model selection approach \label{Ex_pns_Model_selection}
-
-As described in Methods and as in previous sections, model selection among copulas was done separately for 
-each pair of sampling locations. There were $14$ sampling locations, so results are presented in $14 \times 14$ matrix format, with rows and columns corresponding to locations. Table \ref{SM-tab_pns_bestcop} shows that, for the large majority of location pairs, some non-normal copula was a better fit, according to AIC, than was the normal copula, answering the first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula family for each pair of sampling locations (Table \ref{SM-tab_pns_AICw}) to the AIC weight of the normal copula family for the same pair (Table \ref{SM-tab_pns_AICw_normal}) 
-confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
-Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_pns_p_CvM}) usually failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_pns_p_KS}). In all cases at least
-`r min((RES_plankton_north_sea$gfc_numBS_success/RES_plankton_north_sea$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
-
-The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{SM-tab_pns_LTdep_AICw} and \ref{SM-tab_pns_UTdep_AICw}, respectively. These values were exclusively positive, thereby
-differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
-have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
-
-The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
-(lower minus upper), shown in Table \ref{SM-tab_pns_LTmUT}, was positive for some
-location pairs and negative for others, but was positive for 
-`r sum((RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_plankton_north_sea$gfc_p_CvM)[1]^2-dim(RES_plankton_north_sea$gfc_p_CvM)[1])-2*RES_plankton_north_sea$num_indep_loc_pair`
-locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
-
-#### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
-
-Mean values of our statistics, as well as mean Kendall and Spearman
-correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
-spatial resampling scheme, as described in Methods (Table \ref{SM-tab_pns_resamp}).
-Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
-always excluded $0$ and mean values were positive, indicating tail dependence.
-Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
-also all were strictly positive, indicating asymmetry of tail dependence, a feature that data with normal copula
-structure do not have, providing further evidence answering the third part of question 1.
-
-Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
-between the locations (Fig. \ref{SM-fig_pns} A, B) showed the typical decline of correlation with increasing
-distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Fig. \ref{SM-fig_pns} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given their opposite meaning (Fig. \ref{SM-fig_pns} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_pns} I-K) did not show a decline with distance, but did demonstrate visually the 
-statistical result of Table \ref{SM-tab_pns_resamp} that averages of these 
-quantities across all pairs of sampling locations were significantly greater 
-than zero, showing asymmetry of tail dependence.
-
-### Methane flux data \label{Ex_methane}
-
-```{r read_RES_methane,echo=F}
-RES_methane<-readRDS("./Results/fitting_results/MethaneFluxFit_selecloc_data_pt_thrs_50.RDS")
-```
-
-#### Model selection approach \label{Ex_methane_Model_selection}
-
-As described in Methods and as in previous sections, model selection among copulas was done separately for 
-each pair of sampling locations. There were $13$ sampling locations, so results are presented in 
-$13 \times 13$ matrix format, with rows and columns corresponding to locations. 
-Table \ref{SM-tab_methane_bestcop} shows that, for the large majority of location pairs, some 
-non-normal copula was a better fit, according to AIC, than was the normal copula, answering the 
-first part of question 1 for these data. Comparing the AIC weight of the lowest-AIC copula 
-family for each pair of sampling locations (Table \ref{SM-tab_methane_AICw}) to the AIC weight of
-the normal copula family for the same pair (Table \ref{SM-tab_methane_AICw_normal}) 
-confirms that the degree of support for normal copulas was usually not comparable to the degree of support for other families.
-Goodness of fit tests based on a Cramer-von Mises statistic (Table \ref{SM-tab_methane_p_CvM}) usually failed to reject the hypothesis that the AIC-best copula family was also an objectively adequate description of the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov statistic (Table \ref{SM-tab_methane_p_KS}). In all cases at least
-`r min((RES_methane$gfc_numBS_success/RES_methane$gfc_numBS),na.rm=T)*100` percent of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data.
-
-The model-averaged (averaging performed using AIC) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistics are in Tables \ref{SM-tab_methane_LTdep_AICw} and \ref{SM-tab_methane_UTdep_AICw}, respectively. These values were exclusively positive, thereby
-differing from what a normal copula would give (i.e., 0), and answering the second part of question 1 for these data - these data
-have greater tail dependence (lower and upper) than would be expected from a normal-copula null hypothesis.
-
-The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic
-(lower minus upper), shown in Table \ref{SM-tab_methane_LTmUT}, was positive for some
-location pairs and negative for others, but was positive for 
-`r sum((RES_methane$LTdep_AICw-RES_methane$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_methane$gfc_p_CvM)[1]^2-dim(RES_methane$gfc_p_CvM)[1])-2*RES_methane$num_indep_loc_pair`
-locations pairs. Thus lower tail dependence tended to be stronger than upper tail dependence, answering the third part of question 1. 
-
-#### Non-parametric analysis of tail dependence  \label{Ex_methane_NPA}
-
-Mean values of our statistics, as well as mean Kendall and Spearman
-correlations, were computed across all pairs of sampling locations, and confidence intervals of these means were computed via a
-spatial resampling scheme, as described in Methods (Table \ref{SM-tab_methane_resamp}).
-Confidence intervals of $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$
-always excluded $0$ and mean values were positive, indicating tail dependence. But the confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ were marginal, indicating no significant asymmetry of tail dependence.
-
-Plotting Spearman or Kendall correlations between time series for pairs of locations as a function of great circle distance
-between the locations (Fig. \ref{SM-fig_methane} A, B) showed the typical decline of correlation with increasing
-distance. Plotting $\cor_l$ , $\cor_u$ , $\Ps_l$, and $\Ps_u$ against distances between pairs of locations shows these quantities also appear to decline with distance (Fig. \ref{SM-fig_methane} C-F). $\Dsq_u$ and $\Dsq_l$ appear to increase with distance, as expected given
-their opposite meaning (Fig. \ref{SM-fig_methane} G-H). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ against distance (Fig. \ref{SM-fig_methane} I-K) did not show a decline with distance, but did demonstrate visually the 
-statistical result of Table \ref{SM-tab_methane_resamp} that averages of these 
-quantities across all pairs of sampling locations were more or less equally dispersed around the zero-line, showing no significant asymmetry of tail dependence.
--->
-
-<!--
-# Question 2 analyses 
-## The Moran effect and copula structure in populations 
-           ----moved to Paper.Rmd----
--->
 
 ```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
@@ -2349,12 +1646,6 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1
 dev.off()
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf}
-\caption[Testing GOF between noise-copula parameters and estimated population copula parameters with $500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{500} points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF_500}}
-\end{center}
-\end{figure}
 
 \begin{figure}[!h]
 \begin{center}
@@ -2372,24 +1663,11 @@ dev.off()
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/Clayton_kendall.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_C_kend}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_spearman.pdf}
 \caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_spear}}
 \end{center}
 \end{figure}
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_kendall.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}}
-\end{center}
-\end{figure}
 
 ```{r moran_effect_on_aphid_ff, echo=F, results="hide", cache=T, cache.extra=list(seed,temp_aphid,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 set.seed(seed)
@@ -2418,8 +1696,6 @@ knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
              )
 ```
 
-\newpage 
-
 ```{r tab_temp_aphid_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$info_ord_AICw[,,1], 
              format='pandoc',
@@ -2427,8 +1703,6 @@ knitr::kable(RES_temp_aphid$info_ord_AICw[,,1],
              booktabs=TRUE
              )
 ```
-
-\newpage 
 
 ```{r tab_temp_aphid_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
@@ -2457,6 +1731,7 @@ knitr::kable(RES_temp_aphid$gfc_p_KS,
              )
 ```
 
+\newpage
 ```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw,
              format='pandoc',
@@ -2465,6 +1740,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw,
              )
 ```
 
+\newpage
 ```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$UTdep_AICw,
              format='pandoc',
@@ -2473,6 +1749,7 @@ knitr::kable(RES_temp_aphid$UTdep_AICw,
              )
 ```
 
+\newpage
 ```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              digits = 5,
@@ -2482,19 +1759,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              )
 ```
 
-# Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}
-
-To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
-
-\begin{equation}\label{eq.AR1}
-P_{i}(t+1)=\beta P_{i}(t)+\alpha \epsilon_{i}(t)
-\end{equation}
-
-To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in terms of AR coefficient $\beta$ as $\alpha = \sqrt(1-\beta^2)$. We were interested to explore the basic idea of Moran's theorem that if noise $\epsilon_{1}(t)$ and $\epsilon_{2}(t)$ at two different habitat patches had some specific assymetric tail dependence and then what will be the outcome dependence in the populations at those habitat patches. Should their dependence be exactly the same as of the noises or not ? 
-
-To test that our approach is of two way : first, we calculated the parameters of the noise-copula (for example, we chose Clayton with lower tail dependence and Survival Clayton with upper tail dependence here) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome which was a bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for population-copula and its standard error due to sample size and reported p-values for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
-
-Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \nameref{MT-NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Spearman's Rho (or Kendall's Tau) of the noise copula family. Fig. \ref{fig_Cause4copula_C_spear} and Fig. \ref{fig_Cause4copula_C_kend} represent this picture for noise generating from a lower tail dependent Clayton copula whereas for Fig. \ref{fig_Cause4copula_SC_spear} and Fig. \ref{fig_Cause4copula_SC_kend} noise came from a upper tail dependent Survival Clayton family. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+<!--# Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}-->
 
 <!--
 ## Asymmetric sensitivity and copula structure in populations
@@ -2689,6 +1954,8 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[4]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_4}"))
 ```
 
+\newpage
+
 ```{r tab_stat_npa_asym_5,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[5]])
 knitr::kable(temp, booktabs = T, 
@@ -2697,6 +1964,7 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[5]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_5}"))
 ```
 
+\newpage
 ```{r tab_stat_npa_asym_6,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[6]])
 knitr::kable(temp, booktabs = T, 
@@ -2705,6 +1973,7 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[6]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_6}"))
 ```
 
+\newpage
 ```{r tab_stat_npa_asym_7,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[7]])
 knitr::kable(temp, booktabs = T, 
@@ -2756,17 +2025,6 @@ We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $
 #  Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 \newpage
-
-<!--
-# Question 3 analyses for each dataset and theoretical analyses
-Recall that question 3 is: What are the consequences of non-Normal copula structure and tail dependence for our understanding of biology and for applications?
-## Skewness of the spatial mean
-### Aphid count \label{skewness_count}
-### Aphid first flight \label{skewness_ff}
-### UK Sea plankton \label{skewness_pns}
-### Methane-flux data \label{skewness_methane}
-                   ----moved to Paper.Rmd----
--->
 
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -3360,7 +2618,7 @@ With increasing number of patches from $5$ to $25$, extinction risk decreased [f
 
 \newpage
 
-# References
+#  References
 <div id="refs"></div>
 
 

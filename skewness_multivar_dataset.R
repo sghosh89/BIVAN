@@ -56,7 +56,7 @@ skewness_testing<-function(ts_matrix,loclist,numsurrog,ploton,corpres){
   surrogskw<-apply(FUN=myskns,X=ts_surrog_avg,MARGIN=2)
   
   if(ploton==T){
-    hist(surrogskw,breaks=100,main="",xlab="surrogate_skewness")
+    hist(surrogskw,breaks=100,main="",xlab="surrogate_skewness",ylab="frequency",cex.lab=2)
     abline(v=realskw,col="red")
   }
   

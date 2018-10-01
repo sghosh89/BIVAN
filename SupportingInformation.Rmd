@@ -771,6 +771,7 @@ for(i in 1:11){
 
 temp_aphid<-list(aphid_winter_neg_temp)
 names(temp_aphid)<-"aphid_winter_neg_temp"
+saveRDS(temp_aphid,"./Results/temp_aphid_winter_neg_temp_avg_data.RDS")
 ```
 
 <!--Do the model selection for aphid count data and then showing results in Tables-->
@@ -2032,34 +2033,28 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf",height=6,width=16)
-par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
+
+pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_kendall.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
-
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
+dev.off()
 
-mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
+pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
-
-mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
-
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
 dev.off()
 ```
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10.pdf}
-\caption[Skewness count for species Green spruce aphid]{Skewness count for species Green spruce aphid\label{fig_skewness_count}}
-\end{center}
-\end{figure}
 
 
 ```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
@@ -2068,30 +2063,29 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf",height=6,width=16)
-par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
 
+
+pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_kendall.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer2k<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
 p_right<-sum(answer2k$surrogskw > answer2k$realskw)/numsurrog
-mtext(paste0("(A) p = ",p_right," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
+mtext(paste0("p = ",p_right),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
+dev.off()
 
+pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 p_right<-sum(answer2s$surrogskw > answer2s$realskw)/numsurrog
-mtext(paste0("(B) p = ",p_right," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
+mtext(paste0("p = ",p_right),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
 dev.off()
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11.pdf}
-\caption[Skewness firstflight for species Leaf-curling plum aphid]{Skewness firstflight for species Leaf-curling plum aphid\label{fig_skewness_ff}}
-\end{center}
-\end{figure}
 
 ```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -2099,33 +2093,28 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf",height=6,width=16)
-par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
+
+pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_kendall.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer3k<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
-
 p_left<-sum(answer3k$surrogskw < answer3k$realskw)/numsurrog
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
+dev.off()
 
-mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
+pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
-
 p_left<-sum(answer3s$surrogskw < answer3s$realskw)/numsurrog
-
-mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
 dev.off()
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16.pdf}
-\caption[Skewness-plankton for species Ceratium furca]{Skewness-plankton for species Ceratium furca\label{fig_skewness_pns}}
-\end{center}
-\end{figure}
 
 ```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -2133,31 +2122,44 @@ source("good_loclist.R")
 source("skewness_multivar_dataset.R")
 set.seed(seed)
 
-pdf("./Results/skewness_results/skewness_methane/skewness_methane.pdf",height=6,width=16)
-par(mfrow=c(1,2))
 numsurrog<-10000
 loclist<-good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=50)
 
+pdf("./Results/skewness_results/skewness_methane/skewness_methane_kendall.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="kendall") 
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
-mtext(paste0("(A) p = ",p_left," (for Kendall preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
+dev.off()
 
+pdf("./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf",height=6,width=8)
+op<-par(mar=c(3.5,3.5,1.8,0.1), mgp=c(2, 1, 0))
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="spearman") 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
-mtext(paste0("(B) p = ",p_left," (for Spearman preserving Normal surrogates)"),side=3,line=0.2,col="navyblue")
-
+mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+par(op)
 dev.off()
 ```
 
 \begin{figure}[!h]
+\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
+\vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=16 cm]{./Results/skewness_results/skewness_methane/skewness_methane.pdf}
-\caption[Skewness-methane-flux data]{Skewness-methane-flux data\label{fig_skewness_methane}}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
+\end{center}
+\vspace{0.2 cm}
+\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
+\vspace{-0.1 cm}
+\begin{center}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
+\caption{Skewness of spatially averaged $(A)$ green-spruce aphid's abundance, $(B)$ leaf-curling plum aphid's firstflight date, $(C)$ ceratium furca's abundance and $(D)$ methane-flux data, were indicated by red line in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Spearman correlation). \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
-
 
 <!-- Taylor's law section moved to Paper.Rmd -->
 
@@ -2169,7 +2171,8 @@ set.seed(seed)
 #***constants
 N<-50 #length of time series
 n<-25 #number of sampling locations
-numdat<-10 #the number of datasets to get from the normal copula
+#numdat<-10 #the number of datasets to get from the normal copula
+numdat<-1000 #the number of datasets to get from the normal copula
 rho<-0.7 #normal-copula parameter for dependence between locations
           #this is a covariance, see below call to rmvnorm
 
@@ -2301,8 +2304,8 @@ spea.points.res<-list()
 for (counter in 1:length(kend.surrog)){
  ks<-kend.surrog[[counter]]
  ss<-spea.surrog[[counter]]
- kend.stats.res[[counter]]<-matrix(NA,5,numdat) # to keep spatial TL stats
- spea.stats.res[[counter]]<-matrix(NA,5,numdat)
+ kend.stats.res[[counter]]<-matrix(NA,6,numdat) # to keep spatial TL stats
+ spea.stats.res[[counter]]<-matrix(NA,6,numdat)
  kend.points.res[[counter]]<-array(NA,c(N,2,numdat)) # to keep log(mu), log(var) of spatial TL as a dataframe
  spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
  for (sc in 1:numdat){
@@ -2324,11 +2327,11 @@ names(spea.points.res)<-names(spea.surrog)
 ```
 
 <!--Now make some plots, these one for kendall surrogates-->
-```{r taylor_plots, echo=F, results="hide"}
+```{r taylor_plots_kendall, echo=F, results="hide"}
 xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
 ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_CNFSC.pdf",height=4,width=16)
+pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.pdf",height=4,width=16)
 op<-op<-par(mfrow=c(1,4),mar=c(4,5,1,1),mgp=c(3,1,0))
 ##plot TL for clayton
 plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
@@ -2371,71 +2374,127 @@ s.hom<-cbind(kend.stats.res[[1]][2,],kend.stats.res[[2]][2,],kend.stats.res[[3]]
 s.rmse<-cbind(kend.stats.res[[1]][3,],kend.stats.res[[2]][3,],kend.stats.res[[3]][3,],kend.stats.res[[4]][3,])
 s.int<-cbind(kend.stats.res[[1]][4,],kend.stats.res[[2]][4,],kend.stats.res[[3]][4,],kend.stats.res[[4]][4,])
 s.slope<-cbind(kend.stats.res[[1]][5,],kend.stats.res[[2]][5,],kend.stats.res[[3]][5,],kend.stats.res[[4]][5,])
+s.quadcoeff<-cbind(kend.stats.res[[1]][6,],kend.stats.res[[2]][6,],kend.stats.res[[3]][6,],kend.stats.res[[4]][6,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_5stats.pdf",height=3,width=15)
-op<-par(mfrow=c(1,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+pdf("./Results/taylorslaw_results/SpatialTL_6stats_kendall.pdf",height=3,width=18)
+op<-par(mfrow=c(1,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
 
-x<-1:4
+#x<-1:4
 x2<-c("C", "N", "F", "SC")
-plot(x,s.lin[1,],type="l",col="grey",ylim=range(s.lin),xlab="Set of surrogates",ylab="Linearity test p-vals",
-     cex.axis=1.5,cex.lab=1.5,xaxt="n")
-points(x,s.lin[1,],col="red")
+#plot(x,s.lin[1,],type="l",col="grey",ylim=range(s.lin),xlab="Set of surrogates",ylab="Linearity test p-vals",
+#     cex.axis=1.5,cex.lab=1.5,xaxt="n")
+#points(x,s.lin[1,],col="red")
+#axis(1, at = c(1:4), x2, cex.axis=1.5)
+#for (counter in 2:dim(s.lin)[1]){
+#  lines(x,s.lin[counter,],col="grey")
+#  points(x,s.lin[counter,],col="red")
+#}
+boxplot(s.lin , col=rainbow(4), xlab="Copula family", ylab="Linearity test p-vals", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
-for (counter in 2:dim(s.lin)[1]){
-  lines(x,s.lin[counter,],col="grey")
-  points(x,s.lin[counter,],col="red")
-}
 
 #plot s.hom distr for each set of surrogates
-#***DAN: x axis needs to be redone to show the copula names used in the surrogates
-x<-1:4
-plot(x,s.hom[1,],type="l",col="grey",ylim=range(s.hom),xlab="Set of surrogates",
-     ylab="Homoskedasticity test p-vals",
-     cex.axis=1.5,cex.lab=1.5,xaxt="n")
-points(x,s.hom[1,],col="red")
+boxplot(s.hom , col=rainbow(4), xlab="Copula family", ylab="Homoskedasticity test p-vals", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
-for (counter in 2:dim(s.slope)[1]){
-  lines(x,s.hom[counter,],col="grey")
-  points(x,s.hom[counter,],col="red")
-}
 
 #plot s.rmse distr for each set of surrogates
-x<-1:4
-plot(x,s.rmse[1,],type="l",col="grey",ylim=range(s.rmse),xlab="Set of surrogates",ylab="Spatial TL rmse",
-     cex.axis=1.5,cex.lab=1.5,xaxt="n")
-points(x,s.rmse[1,],col="red")
+boxplot(s.rmse , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL rmse", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
-for (counter in 2:dim(s.rmse)[1]){
-  lines(x,s.rmse[counter,],col="grey")
-  points(x,s.rmse[counter,],col="red")
-}
 
 #plot s.int distr for each set of surrogates
-#***DAN: x axis needs to be redone to show the copula names used in the surrogates
-x<-1:4
-plot(x,s.int[1,],type="l",col="grey",ylim=range(s.int),xlab="Set of surrogates",
-     ylab="Spatial TL intercept",
-     cex.axis=1.5,cex.lab=1.5,xaxt="n")
-points(x,s.int[counter,],col="red")
+boxplot(s.int , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL intercept", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
-for (counter in 2:dim(s.int)[1]){
-  lines(x,s.int[counter,],col="grey")
-  points(x,s.int[counter,],col="red")
-}
 
 #plot s.slope distr for each set of surrogates
-#***DAN: x axis needs to be redone to show the copula names used in the surrogates
-x<-1:4
-plot(x,s.slope[1,],type="l",col="grey",ylim=range(s.slope),xlab="Set of surrogates",
-     ylab="Spatial TL slope",
-     cex.axis=1.5,cex.lab=1.5,xaxt="n")
-points(x,s.slope[counter,],col="red")
+boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL slope", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
-for (counter in 2:dim(s.slope)[1]){
-  lines(x,s.slope[counter,],col="grey")
-  points(x,s.slope[counter,],col="red")
-}
+
+#plot s.quadcoeff distr for each set of surrogates
+boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+par(op)
+dev.off()
+```
+
+<!--Now make some plots, these one for spearman surrogates-->
+```{r taylor_plots_spearman, echo=F, results="hide"}
+xlimits<-range(spea.points.res[[1]][,1,],spea.points.res[[2]][,1,],spea.points.res[[3]][,1,],spea.points.res[[4]][,1,])
+ylimits<-range(spea.points.res[[1]][,2,],spea.points.res[[2]][,2,],spea.points.res[[3]][,2,],spea.points.res[[4]][,2,])
+
+pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.pdf",height=4,width=16)
+op<-op<-par(mfrow=c(1,4),mar=c(4,5,1,1),mgp=c(3,1,0))
+##plot TL for clayton
+plot(spea.points.res[[1]][,1,],spea.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
+points(spea.points.res[[1]][,1,1],spea.points.res[[1]][,2,1],type='p',pch=20,cex=.75,col='red')
+points(spea.points.res[[1]][,1,2],spea.points.res[[1]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Clayton"),side = 3, line=-2, adj=0.1, col="black")
+
+##plot TL for normal copula
+plot(spea.points.res[[2]][,1,],spea.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
+points(spea.points.res[[2]][,1,1],spea.points.res[[2]][,2,1],type='p',pch=20,cex=.75,col='red')
+points(spea.points.res[[2]][,1,2],spea.points.res[[2]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Normal"),side = 3, line=-2, adj=0.1, col="black")
+
+#plot TL for frank
+plot(spea.points.res[[3]][,1,],spea.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
+points(spea.points.res[[3]][,1,1],spea.points.res[[3]][,2,1],type='p',pch=20,cex=.75,col='red')
+points(spea.points.res[[3]][,1,2],spea.points.res[[3]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black")
+
+#plot TL for survival clayton
+plot(spea.points.res[[4]][,1,],spea.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+     xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)  
+points(spea.points.res[[4]][,1,1],spea.points.res[[4]][,2,1],type='p',pch=20,cex=.75,col='red')
+points(spea.points.res[[4]][,1,2],spea.points.res[[4]][,2,2],type='p',pch=20,cex=.75,col='green')
+mtext(paste("Survival Clayton"),side=3, line=-2, adj=0.1, col="black")
+
+par(op)
+dev.off()
+#---------------------------------------------------
+#prepare for plots coming below
+s.lin<-cbind(spea.stats.res[[1]][1,],spea.stats.res[[2]][1,],spea.stats.res[[3]][1,],spea.stats.res[[4]][1,])
+s.hom<-cbind(spea.stats.res[[1]][2,],spea.stats.res[[2]][2,],spea.stats.res[[3]][2,],spea.stats.res[[4]][2,])
+s.rmse<-cbind(spea.stats.res[[1]][3,],spea.stats.res[[2]][3,],spea.stats.res[[3]][3,],spea.stats.res[[4]][3,])
+s.int<-cbind(spea.stats.res[[1]][4,],spea.stats.res[[2]][4,],spea.stats.res[[3]][4,],spea.stats.res[[4]][4,])
+s.slope<-cbind(spea.stats.res[[1]][5,],spea.stats.res[[2]][5,],spea.stats.res[[3]][5,],spea.stats.res[[4]][5,])
+s.quadcoeff<-cbind(spea.stats.res[[1]][6,],spea.stats.res[[2]][6,],spea.stats.res[[3]][6,],spea.stats.res[[4]][6,])
+
+pdf("./Results/taylorslaw_results/SpatialTL_6stats_spearman.pdf",height=3,width=18)
+op<-par(mfrow=c(1,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+x2<-c("C", "N", "F", "SC")
+
+#plot s.lin distr for each set of surrogates
+boxplot(s.lin , col=rainbow(4), xlab="Copula family", ylab="Linearity test p-vals", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.hom distr for each set of surrogates
+boxplot(s.hom , col=rainbow(4), xlab="Copula family", ylab="Homoskedasticity test p-vals", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.rmse distr for each set of surrogates
+boxplot(s.rmse , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL rmse", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.int distr for each set of surrogates
+boxplot(s.int , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL intercept", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.slope distr for each set of surrogates
+boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL slope", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.quadcoeff distr for each set of surrogates
+boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
 par(op)
 dev.off()
 ```
@@ -2444,13 +2503,13 @@ dev.off()
 \textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.1 cm} (D)} \\
 \vspace{-0.5 cm} 
 \begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC.pdf}\\
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.pdf}\\
 \end{center}
-\textbf{ \hspace{3.1 cm} (E) \hspace{2.4 cm} (F) \hspace{2.3 cm} (G) \hspace{2.3 cm} (H) \hspace{2.3 cm} (I)}\\
+\textbf{ \hspace{2.8 cm} (E) \hspace{1.8 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.6 cm} (I) \hspace{2 cm} (J)}\\
 \vspace{-0.5 cm}
 \begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_5stats.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope of the first panel plots. \label{fig_spTL}}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_6stats_kendall.pdf}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient of regression line for first panel plot. \label{fig_spTL}}
 \end{center}
 \end{figure}
 
@@ -2579,12 +2638,6 @@ dev.off()
 
 ![Extinction_Risk_K_effect on Ricker model; r=0.25, numsteps=25, numsims=10000\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 
-
-# Consequence of non-Normal copula structure : effect on skewness of the spatial mean \label{Consequence_skewness}
-
-Because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, changed significantly from the individual skewness of time-series data. To test null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure, we generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same. Then we calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R). We made a histogram of surragate skewness and found if actual skewness were within $95\%$ quantile or not. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness).
-
-To verify that we used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data. Figure \ref{fig_skewness_count} showed that averaged skewness was much lower than expected if the aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_count}). As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results. On the other hand, Figure \ref{fig_skewness_ff} demonstrated that averaged skewness was much higher than expected if the aphid first flight data came from a normal copula. As $p$ value (the fraction of surrogate-skewness which were greater than the averaged skewness of the given data - red line in Figure \ref{fig_skewness_ff}) was less than $0.05$, we reject $H_{0}$ in support of upper tail dependence. Figure \ref{fig_skewness_pns} showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence. But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was lower than expected if the data came from a normal copula (Figure \ref{fig_skewness_methane}). As $p<0.05$, we rejected $H_{0}$ and that result was consistent with the non-parametric analysis and model selection results which also favored lower tail dependence. 
 
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL}
 

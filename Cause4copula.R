@@ -468,7 +468,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
     warning("specify method",immediate.=T,call.=T)
   }
   
-  op<-par(mfrow=c(4,3),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mfrow=c(4,3),mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
   plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1))
   segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='red')
   bar_len<-0.02

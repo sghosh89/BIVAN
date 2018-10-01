@@ -25,12 +25,12 @@ tl_stats<-function(m)
 {
   sres<-worker_tl(m)
   s.stats<-sres$stats
-  names(s.stats)<-c("s.lin","s.hom","s.rmse","s.int","s.slope")
+  names(s.stats)<-c("s.lin","s.hom","s.rmse","s.int","s.slope","s.quad.coeff")
   s.points<-sres$points
   
   tres<-worker_tl(t(m))
   t.stats<-tres$stats
-  names(t.stats)<-c("t.lin","t.hom","t.rmse","t.int","t.slope")
+  names(t.stats)<-c("t.lin","t.hom","t.rmse","t.int","t.slope","t.quad.coeff")
   t.points<-tres$points
   
   return(list(s.stats=s.stats,t.stats=t.stats,
@@ -58,7 +58,8 @@ worker_tl<-function(m)
          unname(hhet[5][1,1]), #the p-value for a test of homoskedasticity
          sqrt(mean(resid(mod1)^2)), #the root mean squared error for the TL model
          unname(mod1$coefficients[1]), #the intercept
-         unname(mod1$coefficients[2])) #the slope
+         unname(mod1$coefficients[2]), #the slope
+         unname(mod2$coefficients[2]))  # the coefficient of quadratic term
   
   return(list(stats=res,points=data.frame(log10m=lms,log10v=lvs)))
 }

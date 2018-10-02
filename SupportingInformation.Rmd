@@ -2027,6 +2027,170 @@ We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $
 
 \newpage
 
+```{r skewness_aphidcount_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
+set.seed(seed)
+
+numsurrog<-10000
+
+splist<-c(1:20)
+skw_aphid_count_spearman<-as.data.frame(matrix(NA,nrow=length(splist),ncol=3))
+colnames(skw_aphid_count_spearman)<-c("realskw","p_left","p_right")
+rownames(skw_aphid_count_spearman)<-paste("sp",splist,sep="")
+pdf("./Results/skewness_results/skewness_aphid_count/aphid_count_allsp_skewness_spearman.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_aphid_count,sp=i,data_pt_thrs=30)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_aphid_count),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="spearman") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_aphid_count_spearman$realskw[i]<-ans$realskw
+  skw_aphid_count_spearman$p_left[i]<-p_left
+  skw_aphid_count_spearman$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_aphid_count_spearman,"./Results/skewness_results/skewness_aphid_count/skw_aphid_count_spearman.RDS")
+
+skw_aphid_count_kendall<-as.data.frame(matrix(NA,nrow=length(splist),ncol=3))
+colnames(skw_aphid_count_kendall)<-c("realskw","p_left","p_right")
+rownames(skw_aphid_count_kendall)<-paste("sp",splist,sep="")
+pdf("./Results/skewness_results/skewness_aphid_count/aphid_count_allsp_skewness_kendall.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  #cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_aphid_count,sp=i,data_pt_thrs=30)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_aphid_count),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="kendall") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_aphid_count_kendall$realskw[i]<-ans$realskw
+  skw_aphid_count_kendall$p_left[i]<-p_left
+  skw_aphid_count_kendall$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_aphid_count_kendall,"./Results/skewness_results/skewness_aphid_count/skw_aphid_count_kendall.RDS")
+```
+
+```{r skewness_aphidff_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
+set.seed(seed)
+
+numsurrog<-10000
+
+splist<-c(1:20)
+skw_aphid_ff_spearman<-as.data.frame(matrix(NA,nrow=length(splist),ncol=3))
+colnames(skw_aphid_ff_spearman)<-c("realskw","p_left","p_right")
+rownames(skw_aphid_ff_spearman)<-paste("sp",splist,sep="")
+pdf("./Results/skewness_results/skewness_aphid_ff/aphid_ff_allsp_skewness_spearman.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_aphid_ff,sp=i,data_pt_thrs=30)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_aphid_ff),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="spearman") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_aphid_ff_spearman$realskw[i]<-ans$realskw
+  skw_aphid_ff_spearman$p_left[i]<-p_left
+  skw_aphid_ff_spearman$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_aphid_ff_spearman,"./Results/skewness_results/skewness_aphid_ff/skw_aphid_ff_spearman.RDS")
+
+skw_aphid_ff_kendall<-as.data.frame(matrix(NA,nrow=length(splist),ncol=3))
+colnames(skw_aphid_ff_kendall)<-c("realskw","p_left","p_right")
+rownames(skw_aphid_ff_kendall)<-paste("sp",splist,sep="")
+pdf("./Results/skewness_results/skewness_aphid_ff/aphid_ff_allsp_skewness_kendall.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_aphid_ff,sp=i,data_pt_thrs=30)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_aphid_ff),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="kendall") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_aphid_ff_kendall$realskw[i]<-ans$realskw
+  skw_aphid_ff_kendall$p_left[i]<-p_left
+  skw_aphid_ff_kendall$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_aphid_ff_kendall,"./Results/skewness_results/skewness_aphid_ff/skw_aphid_ff_kendall.RDS")
+```
+
+```{r skewness_plankton_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+source("good_loclist.R")
+source("skewness_multivar_dataset.R")
+set.seed(seed)
+
+splist<-c(1:22)
+skw_plankton_spearman<-as.data.frame(matrix(NA,nrow=length(splist),ncol=3))
+colnames(skw_plankton_spearman)<-c("realskw","p_left","p_right")
+rownames(skw_plankton_spearman)<-paste("sp",splist,sep="")
+skw_plankton_kendall<-skw_plankton_spearman
+pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_spearman.pdf",height=24,width=24)
+op<-par(mfrow=c(4,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  #cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=i,data_pt_thrs=45)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_plankton_north_sea),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="spearman") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_plankton_spearman$realskw[i]<-ans$realskw
+  skw_plankton_spearman$p_left[i]<-p_left
+  skw_plankton_spearman$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_plankton_spearman,"./Results/skewness_results/skewness_plankton_north_sea/skw_plankton_spearman.RDS")
+
+pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_kendall.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  #cat("sp=",i,"\n")
+  loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=i,data_pt_thrs=45)
+  ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_plankton_north_sea),loclist=loclist,
+                        numsurrog=numsurrog,
+                        ploton=T,
+                        corpres="kendall") 
+  p_left<-sum(ans$surrogskw < ans$realskw)/numsurrog
+  p_right<-sum(ans$surrogskw > ans$realskw)/numsurrog
+  skw_plankton_kendall$realskw[i]<-ans$realskw
+  skw_plankton_kendall$p_left[i]<-p_left
+  skw_plankton_kendall$p_right[i]<-p_right
+  mtext(paste0("sp = ",i,", p_left = ",p_left,", p_right = ",p_right),side=3,line=-0.5,col="navyblue",cex = 1)
+}
+par(op)
+dev.off()
+saveRDS(skw_plankton_kendall,"./Results/skewness_results/skewness_plankton_north_sea/skw_plankton_kendall.RDS")
+```
+
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 source("good_loclist.R")
@@ -2055,7 +2219,6 @@ mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
 par(op)
 dev.off()
 ```
-
 
 ```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 

@@ -774,6 +774,64 @@ names(temp_aphid)<-"aphid_winter_neg_temp"
 saveRDS(temp_aphid,"./Results/temp_aphid_winter_neg_temp_avg_data.RDS")
 ```
 
+```{r modelsel_and_npa_aphid_count_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+set.seed(seed)
+library(parallel)
+source("FittingCopula_selective_loc.R")
+RES_all_sp_aphid_count<-mclapply(X=c(1:20),FUN=RES_single_sp,d_allsp=data_aphid_count,
+                                 families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=35,
+                                 good_loc_given=F,good_loc=NA,mc.cores=3)
+saveRDS(RES_all_sp_aphid_count,"./Results/fitting_results/RES_all_sp_aphid_count.RDS")
+
+source("good_loclist.R")
+source("NonParamStat.R")
+resloc<-"./Results/stat_results/stat_aphid_count/"
+longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
+
+stat_aphid_count_allsp<-vector("list",20)
+
+for(sp in 1:20){
+  nm<-paste("sp_",sp,sep="")
+  resloc2<-paste(resloc,nm,sep="")
+   if (!dir.exists(resloc2)){
+    dir.create(resloc2)
+  }
+  good_loc<-good_loclist(d_allsp=data_aphid_count,sp=sp,data_pt_thrs=30)
+  
+  temp<-multcall(d_allsp=data_aphid_count,sp=sp,lats=lats,longs=longs,
+                 pfname=paste(resloc2,"/","Sp_",sp,sep=''),good_loc=good_loc)
+  stat_aphid_count_allsp[[sp]]<-temp
+}
+saveRDS(stat_aphid_count_allsp,paste(resloc,file="stat_aphid_count_all_sp.RDS",sep=''))
+
+
+summary_aphid_count_allsp<-as.data.frame(matrix(NA,nrow=20,ncol=8))
+colnames(summary_aphid_count_allsp)<-c("species","#LTmUT>0","#LTmUT<0","val_LTmUT>0","val_LTmUT<0",
+                                     "CorlmCoru_mean_CI","PlmPu_mean_CI","D2umD2l_mean_CI")
+
+for(sp in c(1:20)){
+  #cat("sp=",sp,"\n")
+  summary_aphid_count_allsp$species[sp]<-sp
+  LTmUT<-(RES_all_sp_aphid_count[[sp]]$LTdep_AICw - RES_all_sp_aphid_count[[sp]]$UTdep_AICw) # total loc pair 182
+  summary_aphid_count_allsp$`#LTmUT>0`[sp]<-sum(LTmUT>0,na.rm=T)
+  summary_aphid_count_allsp$`#LTmUT<0`[sp]<-sum(LTmUT<0,na.rm=T)
+  ind_LTmUT_pos<-which(LTmUT>0,arr.ind = T)
+  summary_aphid_count_allsp$`val_LTmUT>0`[sp]<-sum(LTmUT[ind_LTmUT_pos])
+  ind_LTmUT_neg<-which(LTmUT<0,arr.ind = T)
+  summary_aphid_count_allsp$`val_LTmUT<0`[sp]<-sum(LTmUT[ind_LTmUT_neg])
+  
+  summary_aphid_count_allsp$CorlmCoru_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_count_allsp[[sp]]$numericdf[9,c(2:4)],3))))
+  summary_aphid_count_allsp$PlmPu_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_count_allsp[[sp]]$numericdf[10,c(2:4)],3))))
+  summary_aphid_count_allsp$D2umD2l_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_count_allsp[[sp]]$numericdf[11,c(2:4)],3))))
+}
+saveRDS(summary_aphid_count_allsp,"./Results/summary_aphid_count_allsp.RDS")
+```
+
 <!--Do the model selection for aphid count data and then showing results in Tables-->
 ```{r RES_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
@@ -2026,8 +2084,10 @@ We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $
 #  Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 \newpage
+<!--results='hide'-->
+```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
-```{r skewness_aphidcount_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+# For sp =1, sp=4 and sp=6 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite : you can see those msg by deleting results="hide" and warning=F option in r chunk
 
 source("good_loclist.R")
 source("skewness_multivar_dataset.R")
@@ -2041,6 +2101,7 @@ colnames(skw_aphid_count_spearman)<-c("realskw","p_left","p_right")
 rownames(skw_aphid_count_spearman)<-paste("sp",splist,sep="")
 pdf("./Results/skewness_results/skewness_aphid_count/aphid_count_allsp_skewness_spearman.pdf",height=20,width=20)
 op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+cat("Now for spearman preserving surrogs : aphid count","\n")
 for(i in splist){
   cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_aphid_count,sp=i,data_pt_thrs=30)
@@ -2064,8 +2125,9 @@ colnames(skw_aphid_count_kendall)<-c("realskw","p_left","p_right")
 rownames(skw_aphid_count_kendall)<-paste("sp",splist,sep="")
 pdf("./Results/skewness_results/skewness_aphid_count/aphid_count_allsp_skewness_kendall.pdf",height=20,width=20)
 op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+cat("Now for kendall preserving surrogs : aphid count","\n")
 for(i in splist){
-  #cat("sp=",i,"\n")
+  cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_aphid_count,sp=i,data_pt_thrs=30)
   ans<-skewness_testing(ts_matrix=sp_data(sp=i,d_allsp=data_aphid_count),loclist=loclist,
                         numsurrog=numsurrog,
@@ -2083,7 +2145,9 @@ dev.off()
 saveRDS(skw_aphid_count_kendall,"./Results/skewness_results/skewness_aphid_count/skw_aphid_count_kendall.RDS")
 ```
 
-```{r skewness_aphidff_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+```{r skewness_aphidff_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+# For sp =12 and sp=16 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite : you can see those msg by deleting results="hide" and warning=F option in r chunk
 
 source("good_loclist.R")
 source("skewness_multivar_dataset.R")
@@ -2097,6 +2161,7 @@ colnames(skw_aphid_ff_spearman)<-c("realskw","p_left","p_right")
 rownames(skw_aphid_ff_spearman)<-paste("sp",splist,sep="")
 pdf("./Results/skewness_results/skewness_aphid_ff/aphid_ff_allsp_skewness_spearman.pdf",height=20,width=20)
 op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+cat("Now for spearman preserving surrogs : aphid ff","\n")
 for(i in splist){
   cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_aphid_ff,sp=i,data_pt_thrs=30)
@@ -2120,6 +2185,7 @@ colnames(skw_aphid_ff_kendall)<-c("realskw","p_left","p_right")
 rownames(skw_aphid_ff_kendall)<-paste("sp",splist,sep="")
 pdf("./Results/skewness_results/skewness_aphid_ff/aphid_ff_allsp_skewness_kendall.pdf",height=20,width=20)
 op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+cat("Now for kendall preserving surrogs : aphid ff","\n")
 for(i in splist){
   cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_aphid_ff,sp=i,data_pt_thrs=30)
@@ -2139,7 +2205,10 @@ dev.off()
 saveRDS(skw_aphid_ff_kendall,"./Results/skewness_results/skewness_aphid_ff/skw_aphid_ff_kendall.RDS")
 ```
 
-```{r skewness_plankton_allsp_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+```{r skewness_plankton_allsp_plot, echo=F, results="hide", cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+
+# There is no error msg or warning coming from ncsurrog : ncov semidefinite matrix for any species with spearman
+# or kendall preserving surrogates.
 
 source("good_loclist.R")
 source("skewness_multivar_dataset.R")
@@ -2152,6 +2221,7 @@ rownames(skw_plankton_spearman)<-paste("sp",splist,sep="")
 skw_plankton_kendall<-skw_plankton_spearman
 pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_spearman.pdf",height=24,width=24)
 op<-par(mfrow=c(4,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+#cat("Now for spearman preserving surrogs : pns","\n")
 for(i in splist){
   #cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=i,data_pt_thrs=45)
@@ -2172,6 +2242,7 @@ saveRDS(skw_plankton_spearman,"./Results/skewness_results/skewness_plankton_nort
 
 pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_kendall.pdf",height=20,width=20)
 op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+#cat("Now for kendall preserving surrogs : pns","\n")
 for(i in splist){
   #cat("sp=",i,"\n")
   loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=i,data_pt_thrs=45)
@@ -2453,7 +2524,7 @@ spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 ```
 
 <!--do a TL analysis on the data just created-->
-```{r tl_analysis, echo=F, cache=T, cache.extra=list(kend.surrog,spea.surrog,mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
+```{r tl_analysis, echo=F, cache=T, cache.extra=list(kend.surrog,spea.surrog,mtime("mncurvat.R"),mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
 source("copsurrognd.R")
 source("TaylorsLawTools.R")
  
@@ -2467,8 +2538,8 @@ spea.points.res<-list()
 for (counter in 1:length(kend.surrog)){
  ks<-kend.surrog[[counter]]
  ss<-spea.surrog[[counter]]
- kend.stats.res[[counter]]<-matrix(NA,6,numdat) # to keep spatial TL stats
- spea.stats.res[[counter]]<-matrix(NA,6,numdat)
+ kend.stats.res[[counter]]<-matrix(NA,7,numdat) # to keep spatial TL stats
+ spea.stats.res[[counter]]<-matrix(NA,7,numdat)
  kend.points.res[[counter]]<-array(NA,c(N,2,numdat)) # to keep log(mu), log(var) of spatial TL as a dataframe
  spea.points.res[[counter]]<-array(NA,c(N,2,numdat))
  for (sc in 1:numdat){
@@ -2538,9 +2609,10 @@ s.rmse<-cbind(kend.stats.res[[1]][3,],kend.stats.res[[2]][3,],kend.stats.res[[3]
 s.int<-cbind(kend.stats.res[[1]][4,],kend.stats.res[[2]][4,],kend.stats.res[[3]][4,],kend.stats.res[[4]][4,])
 s.slope<-cbind(kend.stats.res[[1]][5,],kend.stats.res[[2]][5,],kend.stats.res[[3]][5,],kend.stats.res[[4]][5,])
 s.quadcoeff<-cbind(kend.stats.res[[1]][6,],kend.stats.res[[2]][6,],kend.stats.res[[3]][6,],kend.stats.res[[4]][6,])
+s.mncurv<-cbind(kend.stats.res[[1]][7,],kend.stats.res[[2]][7,],kend.stats.res[[3]][7,],kend.stats.res[[4]][7,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_6stats_kendall.pdf",height=3,width=18)
-op<-par(mfrow=c(1,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+pdf("./Results/taylorslaw_results/SpatialTL_7stats_kendall.pdf",height=3,width=21)
+op<-par(mfrow=c(1,7),mar=c(4.2,5,1,1),mgp=c(3,1,0))
 #***DAN: x axis needs to be redone to show the copula names used in the surrogates
 
 #x<-1:4
@@ -2573,7 +2645,11 @@ boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL slope"
 axis(1, at = c(1:4), x2, cex.axis=1.5)
 
 #plot s.quadcoeff distr for each set of surrogates
-boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+boxplot(s.quadcoeff , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.mncurv distr for each set of surrogates
+boxplot(s.mncurv , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL mean curvature", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
 
 par(op)
@@ -2629,9 +2705,10 @@ s.rmse<-cbind(spea.stats.res[[1]][3,],spea.stats.res[[2]][3,],spea.stats.res[[3]
 s.int<-cbind(spea.stats.res[[1]][4,],spea.stats.res[[2]][4,],spea.stats.res[[3]][4,],spea.stats.res[[4]][4,])
 s.slope<-cbind(spea.stats.res[[1]][5,],spea.stats.res[[2]][5,],spea.stats.res[[3]][5,],spea.stats.res[[4]][5,])
 s.quadcoeff<-cbind(spea.stats.res[[1]][6,],spea.stats.res[[2]][6,],spea.stats.res[[3]][6,],spea.stats.res[[4]][6,])
+s.mncurv<-cbind(spea.stats.res[[1]][7,],spea.stats.res[[2]][7,],spea.stats.res[[3]][7,],spea.stats.res[[4]][7,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_6stats_spearman.pdf",height=3,width=18)
-op<-par(mfrow=c(1,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+pdf("./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf",height=3,width=21)
+op<-par(mfrow=c(1,7),mar=c(4.2,5,1,1),mgp=c(3,1,0))
 x2<-c("C", "N", "F", "SC")
 
 #plot s.lin distr for each set of surrogates
@@ -2655,7 +2732,11 @@ boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL slope"
 axis(1, at = c(1:4), x2, cex.axis=1.5)
 
 #plot s.quadcoeff distr for each set of surrogates
-boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+boxplot(s.quadcoeff , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL quadratic coefficient", cex.axis=1.5,cex.lab=1.5,xaxt="n")
+axis(1, at = c(1:4), x2, cex.axis=1.5)
+
+#plot s.mncurv distr for each set of surrogates
+boxplot(s.mncurv , col=rainbow(4) , xlab="Copula family", ylab="Spatial TL mean curvature", cex.axis=1.5,cex.lab=1.5,xaxt="n")
 axis(1, at = c(1:4), x2, cex.axis=1.5)
 
 par(op)
@@ -2671,7 +2752,7 @@ dev.off()
 \textbf{ \hspace{2.8 cm} (E) \hspace{1.8 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.6 cm} (I) \hspace{2 cm} (J)}\\
 \vspace{-0.5 cm}
 \begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_6stats_kendall.pdf}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
 \caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient of regression line for first panel plot. \label{fig_spTL}}
 \end{center}
 \end{figure}

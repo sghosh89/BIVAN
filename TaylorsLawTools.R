@@ -21,6 +21,7 @@
 #for spatial TL
 #4) similar for temporal
 #
+source("mncurvat.R")
 tl_stats<-function(m)
 {
   sres<-worker_tl(m)
@@ -54,12 +55,17 @@ worker_tl<-function(m)
   mod3<-lm(absresids~predicts)
   hhet<-anova(mod3)
   
+  cs<-unname(mod2$coefficients) #intercept,quadcoeff,lineartermcoef
+  coefs<-cs[c(2,3,1)]
+  mn_curv<-mncurvat(coefs = coefs,xvals=lms)
+  
   res<-c(unname(hlin[6][2,1]), #the p-value for the quadratic comparison
          unname(hhet[5][1,1]), #the p-value for a test of homoskedasticity
          sqrt(mean(resid(mod1)^2)), #the root mean squared error for the TL model
          unname(mod1$coefficients[1]), #the intercept
          unname(mod1$coefficients[2]), #the slope
-         unname(mod2$coefficients[2]))  # the coefficient of quadratic term
+         unname(mod2$coefficients[2]), #the coefficient of quadratic term
+         mn_curv)  #mean curvature of fitted quadratic polynomial
   
   return(list(stats=res,points=data.frame(log10m=lms,log10v=lvs)))
 }

@@ -24,13 +24,11 @@ library(mvtnorm)
 #A N by n by numsurrog array, surrogs. The ith surrogate is stored
 #surrog[,,i].
 #
-ncsurrog<-function(m,corpres,numsurrog)
-{
+ncsurrog<-function(m,corpres,numsurrog){
   N<-dim(m)[1]
   n<-dim(m)[2]
   
-  if (corpres=="kendall")
-  {
+  if (corpres=="kendall"){
     #get the kendall correlation matrix of the data
     kcor<-cor(m,use="pairwise.complete.obs",method="kendall")
   
@@ -39,8 +37,7 @@ ncsurrog<-function(m,corpres,numsurrog)
     #kcor
     ncov<-iTau(normalCopula(0,2),kcor)
   }
-  if (corpres=="spearman")
-  {
+  if (corpres=="spearman"){
     #get spearman correlation matrix of the data
     scor<-cor(m,use="pairwise.complete.obs",method="spearman")
     
@@ -49,9 +46,12 @@ ncsurrog<-function(m,corpres,numsurrog)
     #scor
     ncov<-iRho(normalCopula(0,2),scor)
   }
-  if (corpres!="kendall" && corpres!="spearman")
-  {
+  if (corpres!="kendall" && corpres!="spearman"){
     stop("Error in ncsurrog: corpres must be 'kendall' or 'spearman'")
+  }
+  
+  if((any(eigen(ncov)$value<0))==T){
+    warning("Error in ncsurrog: ncov is not positive semidefinite",call.=T,immediate.=T)
   }
   
   #generate a bunch of mv normals in the shape of the final
@@ -64,13 +64,11 @@ ncsurrog<-function(m,corpres,numsurrog)
   #The nth-smallest element of each time series surrog[,a,b] 
   #is replaced by the nth-smallest element of m[,a], for all n.
   #NAs are omitted.
-  for (ca in 1:n)
-  {
+  for (ca in 1:n){
     goodlocs<-is.finite(m[,ca])
     mgl<-m[goodlocs,ca]
     omgl<-order(mgl)
-    for (cb in 1:numsurrog)
-    {
+    for (cb in 1:numsurrog){
       sgl<-surrogs[goodlocs,ca,cb]
       osgl<-order(sgl)
       sgl[osgl]<-mgl[omgl]

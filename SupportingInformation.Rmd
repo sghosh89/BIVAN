@@ -140,6 +140,29 @@ cop_b<-getcopula(d=b,rankon=T,ploton=T) #convert to a copula and plot
 dev.off()
 ```
 
+```{r read_BMR_mammals_and_copulaplot, echo=F, results='hide'}
+set.seed(seed)
+raw_m<-readxl::read_xls("./Data/BMR/MammalianBodyMassesMetabolicRates/MammalianMassesAndMetabolicRatesMcNab2008.xls")
+raw_m<-raw_m[,1:3]
+raw_m<-na.omit(raw_m)
+raw_m<-raw_m[,2:3]
+
+m<-log10(raw_m)
+colnames(m)<-c("log10M(g)","log10BMR(KJ/h)")
+m<-as.data.frame(m)
+
+pdf("./Results/BMR_results/mammals/raw_mammals_BMR.pdf")
+op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+plot(m[,1],m[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=1.5,cex.axis=1.5)
+par(op)
+dev.off()
+
+source("getcopula.R")
+pdf("./Results/BMR_results/mammals/copula_mammals_BMR.pdf")
+cop_m<-getcopula(d=m,rankon=T,ploton=T) #convert to a copula and plot
+dev.off()
+```
+
 ```{r read_ceder_creek_data, echo=F, results="hide"}
 set.seed(seed)
 #-------------------------------------------------
@@ -648,7 +671,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for Ceder-creek data with $numbin=10$ for year 2000]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{birds' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_birds_nonparam}}
+\caption[Testing non-parametric statistics for birds' BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{birds' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -656,7 +679,46 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
 knitr::kable(tab_bmr_birds_asym,
              format="pandoc",
-             caption = "**Birds' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis on year 2000 \\label{tab_bmr_birds_asym}",
+             caption = "**Birds' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_birds_asym}",
+             booktabs=T)
+```
+
+```{r bivmodselect_mammals_BMR, echo=F, cache=T, cache.extra=list(seed,cop_m,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("OurBiCopSelect.R")
+set.seed(seed)
+BivMS_mammals<-OurBiCopSelect(u1=cop_m[,1],u2=cop_m[,2],families=c(1,3:10,13:14,16:20),
+                              level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                              gofnormal=F,status=F)
+saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
+```
+
+<!--Display model selection results for BMR:birds data in a table-->
+```{r tab_bmr_mammals_fit, echo=F, results='markup'}
+h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+knitr::kable(h,
+             format='pandoc',
+             caption = "Fitting info for **mammals' BMR dataset** . \\label{tab_bmr_birds_fit}",
+             booktabs=T)
+```
+
+```{r stat_bmr_mammals_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_m,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+source("bivfunctionplot.R")
+set.seed(seed)
+stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/",nametag="mammals_numbin_10",numbin = 10)
+```
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
+\caption[Testing non-parametric statistics for mammals' BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{mammals' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_mammals_nonparam}}
+\end{center}
+\end{figure}
+
+```{r tab_bmr_mammals_asym, echo=F, results="markup"}
+tab_bmr_mammals_asym<-make_table_stat_fn(data=stat_mammals_ga)
+knitr::kable(tab_bmr_mammals_asym,
+             format="pandoc",
+             caption = "**Mammals' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_mammals_asym}",
              booktabs=T)
 ```
 
@@ -780,7 +842,7 @@ set.seed(seed)
 library(parallel)
 source("FittingCopula_selective_loc.R")
 RES_all_sp_aphid_count<-mclapply(X=c(1:20),FUN=RES_single_sp,d_allsp=data_aphid_count,
-                                 families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=35,
+                                 families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
                                  good_loc_given=F,good_loc=NA,mc.cores=3)
 saveRDS(RES_all_sp_aphid_count,"./Results/fitting_results/RES_all_sp_aphid_count.RDS")
 
@@ -814,7 +876,7 @@ colnames(summary_aphid_count_allsp)<-c("species","#LTmUT>0","#LTmUT<0","val_LTmU
 for(sp in c(1:20)){
   #cat("sp=",sp,"\n")
   summary_aphid_count_allsp$species[sp]<-sp
-  LTmUT<-(RES_all_sp_aphid_count[[sp]]$LTdep_AICw - RES_all_sp_aphid_count[[sp]]$UTdep_AICw) # total loc pair 182
+  LTmUT<-(RES_all_sp_aphid_count[[sp]]$LTdep_AICw - RES_all_sp_aphid_count[[sp]]$UTdep_AICw) 
   summary_aphid_count_allsp$`#LTmUT>0`[sp]<-sum(LTmUT>0,na.rm=T)
   summary_aphid_count_allsp$`#LTmUT<0`[sp]<-sum(LTmUT<0,na.rm=T)
   ind_LTmUT_pos<-which(LTmUT>0,arr.ind = T)
@@ -974,6 +1036,64 @@ knitr::kable(s,
 pairs of locations. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
+
+```{r modelsel_and_npa_aphid_ff_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+set.seed(seed)
+library(parallel)
+source("FittingCopula_selective_loc.R")
+RES_all_sp_aphid_ff<-mclapply(X=c(1:20),FUN=RES_single_sp,d_allsp=data_aphid_ff,
+                                 families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
+                                 good_loc_given=F,good_loc=NA,mc.cores=3)
+saveRDS(RES_all_sp_aphid_ff,"./Results/fitting_results/RES_all_sp_aphid_ff.RDS")
+
+source("good_loclist.R")
+source("NonParamStat.R")
+resloc<-"./Results/stat_results/stat_aphid_ff/"
+longs<-c(-4.567,0.57,-3.069,-3.312,-2.637,-1.682,-2.763,-0.356,-3.454,0.427,0.939)
+lats<-c(55.477,52.26,56.457,55.949,52.125,55.213,53.854,51.807,50.628,51.733,51.185)
+
+stat_aphid_ff_allsp<-vector("list",20)
+
+for(sp in 1:20){
+  nm<-paste("sp_",sp,sep="")
+  resloc2<-paste(resloc,nm,sep="")
+   if (!dir.exists(resloc2)){
+    dir.create(resloc2)
+  }
+  good_loc<-good_loclist(d_allsp=data_aphid_ff,sp=sp,data_pt_thrs=30)
+  
+  temp<-multcall(d_allsp=data_aphid_ff,sp=sp,lats=lats,longs=longs,
+                 pfname=paste(resloc2,"/","Sp_",sp,sep=''),good_loc=good_loc)
+  stat_aphid_ff_allsp[[sp]]<-temp
+}
+saveRDS(stat_aphid_ff_allsp,paste(resloc,file="stat_aphid_ff_all_sp.RDS",sep=''))
+
+
+summary_aphid_ff_allsp<-as.data.frame(matrix(NA,nrow=20,ncol=8))
+colnames(summary_aphid_ff_allsp)<-c("species","#LTmUT>0","#LTmUT<0","val_LTmUT>0","val_LTmUT<0",
+                                     "CorlmCoru_mean_CI","PlmPu_mean_CI","D2umD2l_mean_CI")
+
+for(sp in c(1:20)){
+  #cat("sp=",sp,"\n")
+  summary_aphid_ff_allsp$species[sp]<-sp
+  LTmUT<-(RES_all_sp_aphid_ff[[sp]]$LTdep_AICw - RES_all_sp_aphid_ff[[sp]]$UTdep_AICw) 
+  summary_aphid_ff_allsp$`#LTmUT>0`[sp]<-sum(LTmUT>0,na.rm=T)
+  summary_aphid_ff_allsp$`#LTmUT<0`[sp]<-sum(LTmUT<0,na.rm=T)
+  ind_LTmUT_pos<-which(LTmUT>0,arr.ind = T)
+  summary_aphid_ff_allsp$`val_LTmUT>0`[sp]<-sum(LTmUT[ind_LTmUT_pos])
+  ind_LTmUT_neg<-which(LTmUT<0,arr.ind = T)
+  summary_aphid_ff_allsp$`val_LTmUT<0`[sp]<-sum(LTmUT[ind_LTmUT_neg])
+  
+  summary_aphid_ff_allsp$CorlmCoru_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_ff_allsp[[sp]]$numericdf[9,c(2:4)],3))))
+  summary_aphid_ff_allsp$PlmPu_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_ff_allsp[[sp]]$numericdf[10,c(2:4)],3))))
+  summary_aphid_ff_allsp$D2umD2l_mean_CI[sp]<-list(
+    c(unname(round(stat_aphid_ff_allsp[[sp]]$numericdf[11,c(2:4)],3))))
+}
+saveRDS(summary_aphid_ff_allsp,"./Results/summary_aphid_ff_allsp.RDS")
+```
 
 <!--Do the model selection for aphid ff data and then showing results in Tables-->
 ```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -1495,9 +1615,10 @@ bivar_tab_summary_fn<-function(r,rs){
 #calling the above function on bivariable datasets
 m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
 m2<-bivar_tab_summary_fn(r=BivMS_birds,rs=stat_birds_ga)
-m3<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
-tab_bivar_summary<-cbind(m1,m2,m3)
-colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Ceder-creek")
+m3<-bivar_tab_summary_fn(r=BivMS_mammals,rs=stat_mammals_ga)
+m4<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
+tab_bivar_summary<-cbind(m1,m2,m3,m4)
+colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Mammals' BMR","Ceder-creek")
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
 

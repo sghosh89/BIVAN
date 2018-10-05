@@ -350,10 +350,10 @@ data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 
 longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
 lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
-longs<-longs[[1]]
-lats<-lats[[1]]
+longs_pns<-longs[[1]]
+lats_pns<-lats[[1]]
 
-df_loc_info_org<-data.frame(loc_no=c(1:length(lats)),longs=longs,lats=lats)
+df_loc_info_org<-data.frame(loc_no=c(1:length(lats_pns)),longs=longs_pns,lats=lats_pns)
 selective_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
 df_loc_info<-df_loc_info_org[selective_loc,]
 xlim=c(-12,10)
@@ -1246,7 +1246,7 @@ d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/plankt
 data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
-```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
 library(parallel)
@@ -1260,11 +1260,6 @@ source("good_loclist.R")
 source("NonParamStat.R")
 resloc<-"./Results/stat_results/stat_plankton_north_sea/"
 
-longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
-lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
-longs<-longs[[1]] 
-lats<-lats[[1]]
-
 stat_plankton_north_sea_allsp<-vector("list",22)
 
 for(sp in 1:22){
@@ -1275,7 +1270,7 @@ for(sp in 1:22){
   }
   good_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=sp,data_pt_thrs=45)
   
-  temp<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats,longs=longs,
+  temp<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats_pns,longs=longs_pns,
                                       pfname=paste(resloc2,"/","Sp_",sp,sep=''),good_loc=good_loc)
   stat_plankton_north_sea_allsp[[sp]]<-temp
 }
@@ -1406,7 +1401,7 @@ averaged upper tail dependence statistic for each location pair for **abundance 
 ```
 
 <!--Do the main computations for non-parametric analysis of plankton data-->
-```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
 source("NonParamStat.R")
@@ -1415,12 +1410,9 @@ resloc<-"./Results/stat_results/stat_plankton_north_sea/"
 
 sp<-16
 good_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=sp,data_pt_thrs=45)
-longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
-lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
-longs<-longs[[1]] 
-lats<-lats[[1]]
 
-stat_plankton_north_sea<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats,longs=longs,pfname=paste(resloc,"Sp_",sp,sep=''),good_loc=good_loc) 
+stat_plankton_north_sea<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats_pns,longs=longs_pns,
+                                  pfname=paste(resloc,"Sp_",sp,sep=''),good_loc=good_loc) 
 saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16.RDS",sep=''))
 ```
 

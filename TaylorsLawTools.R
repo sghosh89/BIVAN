@@ -26,12 +26,12 @@ tl_stats<-function(m)
 {
   sres<-worker_tl(m)
   s.stats<-sres$stats
-  names(s.stats)<-c("s.lin","s.hom","s.rmse","s.int","s.slope","s.quad.coeff")
+  names(s.stats)<-c("s.lin","s.hom","s.rmse","s.int","s.slope","s.quad.coeff","s.mncurv")
   s.points<-sres$points
   
   tres<-worker_tl(t(m))
   t.stats<-tres$stats
-  names(t.stats)<-c("t.lin","t.hom","t.rmse","t.int","t.slope","t.quad.coeff")
+  names(t.stats)<-c("t.lin","t.hom","t.rmse","t.int","t.slope","t.quad.coeff","t.mncurv")
   t.points<-tres$points
   
   return(list(s.stats=s.stats,t.stats=t.stats,

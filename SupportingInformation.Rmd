@@ -9,7 +9,6 @@ output:
     number_sections: yes
     keep_tex: yes
     fig_caption: yes
-    toc: True
     includes:
       in_header: head_supp.sty
       
@@ -23,11 +22,13 @@ bibliography: REF_ALL.bib
 
 updated on `r Sys.Date()`
 
-<!--\tableofcontents-->
+\pagenumbering{roman}
+\tableofcontents
 \listoftables
 \listoffigures
 
 \pagebreak
+\pagenumbering{arabic}
 
 <!--Basic setup-->
 ```{r setup, echo=F}
@@ -1245,6 +1246,67 @@ d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/plankt
 data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
+```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+
+set.seed(seed)
+library(parallel)
+source("FittingCopula_selective_loc.R")
+RES_all_sp_pns<-mclapply(X=c(1:22),FUN=RES_single_sp,d_allsp=data_plankton_north_sea,
+                              families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45,
+                              good_loc_given=F,good_loc=NA,mc.cores=3)
+saveRDS(RES_all_sp_pns,"./Results/fitting_results/RES_all_sp_pns.RDS")
+
+source("good_loclist.R")
+source("NonParamStat.R")
+resloc<-"./Results/stat_results/stat_plankton_north_sea/"
+
+longs<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlongs201117.csv",header=F)
+lats<-read.csv("./Data/Plankton_North_Sea_data/boxcornerlats201117.csv",header=F)
+longs<-longs[[1]] 
+lats<-lats[[1]]
+
+stat_plankton_north_sea_allsp<-vector("list",22)
+
+for(sp in 1:22){
+  nm<-paste("sp_",sp,sep="")
+  resloc2<-paste(resloc,nm,sep="")
+   if (!dir.exists(resloc2)){
+    dir.create(resloc2)
+  }
+  good_loc<-good_loclist(d_allsp=data_plankton_north_sea,sp=sp,data_pt_thrs=45)
+  
+  temp<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lats,longs=longs,
+                                      pfname=paste(resloc2,"/","Sp_",sp,sep=''),good_loc=good_loc)
+  stat_plankton_north_sea_allsp[[sp]]<-temp
+}
+saveRDS(stat_plankton_north_sea_allsp,paste(resloc,file="stat_plankton_north_sea_allsp.RDS",sep=''))
+
+
+summary_pns_allsp<-as.data.frame(matrix(NA,nrow=22,ncol=8))
+colnames(summary_pns_allsp)<-c("species","#LTmUT>0","#LTmUT<0","val_LTmUT>0","val_LTmUT<0",
+                                     "CorlmCoru_mean_CI","PlmPu_mean_CI","D2umD2l_mean_CI")
+
+for(sp in c(1:22)){
+  #cat("sp=",sp,"\n")
+  summary_pns_allsp$species[sp]<-sp
+  LTmUT<-(RES_all_sp_pns[[sp]]$LTdep_AICw - RES_all_sp_pns[[sp]]$UTdep_AICw) 
+  summary_pns_allsp$`#LTmUT>0`[sp]<-sum(LTmUT>0,na.rm=T)
+  summary_pns_allsp$`#LTmUT<0`[sp]<-sum(LTmUT<0,na.rm=T)
+  ind_LTmUT_pos<-which(LTmUT>0,arr.ind = T)
+  summary_pns_allsp$`val_LTmUT>0`[sp]<-sum(LTmUT[ind_LTmUT_pos])
+  ind_LTmUT_neg<-which(LTmUT<0,arr.ind = T)
+  summary_pns_allsp$`val_LTmUT<0`[sp]<-sum(LTmUT[ind_LTmUT_neg])
+  
+  summary_pns_allsp$CorlmCoru_mean_CI[sp]<-list(
+    c(unname(round(stat_plankton_north_sea_allsp[[sp]]$numericdf[9,c(2:4)],3))))
+  summary_pns_allsp$PlmPu_mean_CI[sp]<-list(
+    c(unname(round(stat_plankton_north_sea_allsp[[sp]]$numericdf[10,c(2:4)],3))))
+  summary_pns_allsp$D2umD2l_mean_CI[sp]<-list(
+    c(unname(round(stat_plankton_north_sea_allsp[[sp]]$numericdf[11,c(2:4)],3))))
+}
+saveRDS(summary_pns_allsp,"./Results/summary_pns_allsp.RDS")
+```
+
 <!--Do the model selection for plankton data and then showing results in Tables-->
 ```{r RES_plankton_north_sea, echo=F, cache=T, results="hide", cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
@@ -1836,6 +1898,13 @@ dev.off()
 
 \begin{figure}[!h]
 \begin{center}
+\includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_kendall.pdf}
+\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/Clayton_spearman.pdf}
 \caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}}
 \end{center}
@@ -2062,22 +2131,16 @@ saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS
 saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
-\caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.1}}
-\end{center}
-\end{figure}
-
+<!--
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
 \caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.9}}
 \end{center}
-\end{figure}
+\end{figure}-->
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
-knitr::kable(summary_stat, booktabs = T, 
+knitr::kable(summary_stat[,c(1:4)], booktabs = T, 
              format = "pandoc",
              digits=3,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
@@ -2134,8 +2197,7 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[4]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_4}"))
 ```
 
-\newpage
-
+<!--
 ```{r tab_stat_npa_asym_5,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[5]])
 knitr::kable(temp, booktabs = T, 
@@ -2144,7 +2206,6 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[5]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_5}"))
 ```
 
-\newpage
 ```{r tab_stat_npa_asym_6,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[6]])
 knitr::kable(temp, booktabs = T, 
@@ -2153,7 +2214,6 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[6]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_6}"))
 ```
 
-\newpage
 ```{r tab_stat_npa_asym_7,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[7]])
 knitr::kable(temp, booktabs = T, 
@@ -2169,37 +2229,10 @@ knitr::kable(temp, booktabs = T,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption =paste(cnm[8]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_8}"))
 ```
-
+-->
+<!--
 # Cause of non-Normal copula structure : Asymmetric sensitivity and copula structure in populations \label{Cause_asym_sens}
-
-To test the assymetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
-
-\begin{equation}\label{eq.AS}
-P_{i}(t+1) = b P_{i}(t) + g(\epsilon_{i}(t)) + h(\delta_{i}(t))
-\end{equation}
-
-$b$ was the linear growth rate. Global environmental fluctuation function $g(\epsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}) where $\epsilon=(\epsilon_{1}, \epsilon_{2})$ was an iid through time with mean zero and covariance matrix $\Sigma_{\epsilon}$.
-
-\begin{align}
-g(\epsilon) = \begin{cases} 
-g_{1} = \begin{cases}
-\epsilon & \text{if $\epsilon< 0$}; \\
-0 & \text{otherwise}.
-\end{cases}\\ \\
-g_{2} = \begin{cases}
-\epsilon & \text{if $\epsilon> 0$}; \\
-0 & \text{otherwise}\label{eq.AS_g}.
-\end{cases}
-\end{cases} \text{where } \epsilon = N(\textbf{0},\Sigma_{\epsilon})\;\ \text{with} \;\ \Sigma_{\epsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
-\end{align}
-
-Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and covariance matrix $\Sigma_{\delta}$.
-
-\begin{equation}\label{eq.AS_h}
-h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
-\end{equation}
-
-We simulated our model (\ref{eq.AS}) for different values of $b$ with $a=0.2$, $r=0.8$. $10000$ points were generated from each local and global fluctuations to apply on the initial populations and then after simulation we kept only last $1000$ time step of simulated points to plot the population-copula for a specific $b$ and a specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). Fig. \ref{fig_ms_asym_b_0.1} and Fig. \ref{fig_ms_asym_b_0.9} show these results for $b=\pm0.1$ and $b=\pm0.9$, respectively. We also carried out model selection and non-parametric statistical analysis with each copula of those figures and summarized our results in Tables \ref{tab_summary_stat_asym_sens} - \ref{tab_stat_npa_asym_8}. Table \ref{tab_summary_stat_asym_sens} represent the model selection results with AIC weights for best fitted copula and normal copula, model averaged lower and upper tail dependence, p-values (both Cramer-von Mises statistic and Kolmogorov-Smirnov statistic) for goodness of fit test. In each case, successful bootstrap was $100\%$. According to our model selection approach, for $b=\pm0.1$, non-normal copula (with higher AIC weights) were always best-fit with some asymetric tail dependence whereas for $b\pm0.9$, most of the time normal was best. It is probably because the populations get long-time exposure to environmental changes for slower growth(or decay) rate and so global fluctuation can affect them more efficiently. Our non-parametric analysis results (Tables \ref{tab_stat_npa_asym_1} -\ref{tab_stat_npa_asym_8}) are consistent with this model selection approach. 
+-->
 
 
 #  Need to think about mechanisms for biogeochemical, evolutionary, and community data
@@ -2503,18 +2536,19 @@ dev.off()
 \textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_kendall.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_kendall.pdf}\\
 \end{center}
 \vspace{0.2 cm}
 \textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
-\caption{Skewness of spatially averaged $(A)$ green-spruce aphid's abundance, $(B)$ leaf-curling plum aphid's firstflight date, $(C)$ ceratium furca's abundance and $(D)$ methane-flux data, were indicated by red line in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Spearman correlation). \label{fig_skewness_spearman}}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_kendall.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_kendall.pdf}
+\caption{Skewness of spatially averaged $(A)$ Green-spruce aphid's abundance, $(B)$ Leaf-plum curling aphid's firstflight date, $(C)$ Ceratium furca's abundance and $(D)$ methane-flux data, were indicated by red dot in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Kendall correlation). \label{fig_skewness_kendall}}
 \end{center}
 \end{figure}
+
 
 <!-- Taylor's law section moved to Paper.Rmd -->
 
@@ -2865,19 +2899,206 @@ dev.off()
 ```
 
 \begin{figure}[!h]
-\textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.1 cm} (D)} \\
+\textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
 \vspace{-0.5 cm} 
 \begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.pdf}\\
+\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.pdf}\\
 \end{center}
-\textbf{ \hspace{2.8 cm} (E) \hspace{1.8 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.6 cm} (I) \hspace{2 cm} (J)}\\
+\textbf{ \hspace{1.8 cm} (E) \hspace{1.6 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.8 cm} (I) \hspace{1.8 cm} (J) \hspace{1.8 cm} (K)}\\
 \vspace{-0.5 cm}
 \begin{center}
-\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient of regression line for first panel plot. \label{fig_spTL}}
+\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient, (K) mean curvature of regression line from first panel-plots. \label{fig_spTL}}
 \end{center}
 \end{figure}
 
+```{r spatialTL_on_realdata_aphid_count, results="hide", echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("TaylorsLawTools.R"),mtime("mncurvat.R"),mtime("ncsurrog.R"))}
+
+set.seed(seed)
+source("ncsurrog.R")
+source("TaylorsLawTools.R")
+source("good_loclist.R")
+
+TL_on_realdata<-function(data,numsurrog=1000,sp,data_pt_thrs,ploton,tag,labelon=T){
+  
+  loclist<-good_loclist(d_allsp=data,sp=sp,data_pt_thrs=data_pt_thrs)
+  data<-data[[sp]]
+  df<-c()
+  for(i in loclist){
+    tem<-data[[i]]$Dat
+    df<-cbind(df,tem)
+  }
+  colnames(df)<-paste("loc",loclist,sep="")
+  df<-na.omit(df)
+  
+  mat_real<-as.matrix(df)
+  check_rep<-function(y){all( abs(y - mean(y)) < 1e-8 )} #This fn checks for repeatation of same values in a vector
+  call_check_rep<-apply(mat_real,1,check_rep) # checks the same for mat_real matrix along all row
+  
+  if(all(call_check_rep==F)==T){
+    
+    realTL_stats<-tl_stats(m = mat_real)
+    real_spatialTLslope<-unname(realTL_stats$s.stats[5])
+    real_sTL_quadcoeff<-unname(realTL_stats$s.stats[6])
+    real_sTL_mncurv<-unname(realTL_stats$s.stats[7])
+    
+    #generate the normal surrogates with spearman correlation preserving
+    array_surrog<-ncsurrog(m=mat_real,corpres="spearman",numsurrog=numsurrog)
+    
+    bad_id<-c()
+    for(i in 1:numsurrog){
+      m<-array_surrog[,,i]
+      mean_m<-apply(X=m, MARGIN = 1, FUN = mean)
+      var_m<-apply(X=m, MARGIN = 1, FUN = var)
+      if(any(mean_m==0) | any(var_m==0)){
+        bad_id<-c(bad_id,i)
+      }
+    }
+    
+    m<-array_surrog
+    if(length(bad_id)!=0){
+      m<-array_surrog[,,-bad_id]
+    }
+    ts<-apply(m,3,tl_stats)
+    
+    good_surrog_slope<-c()
+    good_surrog_quadcoeff<-c()
+    good_surrog_mncurv<-c()
+    for(i in c(1:length(ts))){
+      good_surrog_slope<-c(good_surrog_slope,unname(ts[[i]]$s.stats[5]))
+      good_surrog_quadcoeff<-c(good_surrog_quadcoeff,unname(ts[[i]]$s.stats[6]))
+      good_surrog_mncurv<-c(good_surrog_mncurv,unname(ts[[i]]$s.stats[7]))
+    }
+    
+    numsurrog_good<- numsurrog - length(bad_id)
+    
+    p_left<-sum(good_surrog_slope < real_spatialTLslope)/numsurrog_good
+    p_right<-sum(good_surrog_slope > real_spatialTLslope)/numsurrog_good
+    
+    p_left_quadcoeff<-sum(good_surrog_quadcoeff < real_sTL_quadcoeff)/numsurrog_good
+    p_right_quadcoeff<-sum(good_surrog_quadcoeff > real_sTL_quadcoeff)/numsurrog_good
+    
+    p_left_mncurv<-sum(good_surrog_mncurv < real_sTL_mncurv)/numsurrog_good
+    p_right_mncurv<-sum(good_surrog_mncurv > real_sTL_mncurv)/numsurrog_good
+    
+    if(ploton==T & tag=="slope"){
+      hist(good_surrog_slope,breaks=100,main="",xlab="surrogate_TL_slope",cex.axis=1.5,cex.lab=1.5)
+      points(x=real_spatialTLslope,y=0,col="red",pch=15)
+      if(labelon==T){
+        mtext(paste0("sp= ",sp,", p_left= ",round(p_left,3),", p_right=",round(p_right,3),sep=""),
+              side = 3, line=-2, adj=0, col="blue")
+      }
+    }
+    
+    if(ploton==T & tag=="quadcoeff"){
+      hist(good_surrog_quadcoeff,breaks=100,main="",xlab="surrogate_TL_quadcoeff",cex.axis=1.5,cex.lab=1.5)
+      points(x=real_sTL_quadcoeff,y=0,col="red",pch=15)
+      if(labelon==T){
+        mtext(paste0("sp= ",sp,", p_left= ",round(p_left_quadcoeff,3),", p_right=",round(p_right_quadcoeff,3),sep=""),
+              side = 3, line=-2, adj=0, col="blue")
+      }
+    }
+    
+    if(ploton==T & tag=="mncurv"){
+      hist(good_surrog_mncurv,breaks=100,main="",xlab="surrogate_TL_meanCurvature",cex.axis=1.5,cex.lab=1.5)
+      points(x=real_sTL_mncurv,y=0,col="red",pch=15)
+      if(labelon==T){
+        mtext(paste0("sp= ",sp,", p_left= ",round(p_left_mncurv,3),", p_right=",round(p_right_mncurv,3),sep=""),
+              side = 3, line=-2, adj=0, col="blue")
+      }
+    }
+    
+  }else{
+    real_spatialTLslope<-NA
+    p_left<-NA
+    p_right<-NA
+    numsurrog_good<-NA
+    real_sTL_quadcoeff<-NA
+    p_left_quadcoeff<-NA
+    p_right_quadcoeff<-NA
+    real_sTL_mncurv<-NA
+    p_left_mncurv<-NA
+    p_right_mncurv<-NA
+  }
+  return(list(realTL_stats=realTL_stats,
+              real_spatialTLslope=real_spatialTLslope,
+              p_left=p_left,
+              p_right=p_right,
+              numsurrog_good=numsurrog_good,
+              real_sTL_quadcoeff=real_sTL_quadcoeff,
+              p_left_quadcoeff=p_left_quadcoeff,
+              p_right_quadcoeff=p_right_quadcoeff,
+              real_sTL_mncurv=real_sTL_mncurv,
+              p_left_mncurv=p_left_mncurv,
+              p_right_mncurv=p_right_mncurv,
+              surrogTL_stats=ts,
+              good_surrog_mncurv=good_surrog_mncurv))
+}
+
+#call on real data
+# For all sp
+splist<-c(1:20)
+tl_aphid_count<-as.data.frame(matrix(NA,nrow=length(splist),ncol=10))
+colnames(tl_aphid_count)<-c("real_sTL_slope","p_left","p_right","numsurrog_good",
+                            "real_sTL_quadcoeff","p_left_quadcoeff","p_right_quadcoeff",
+                            "real_sTL_mncurv","p_left_mncurv","p_right_mncurv")
+rownames(tl_aphid_count)<-paste("sp",splist,sep="")
+#pdf("aphid_count_allsp_spTLslope.pdf",height=20,width=20)
+#pdf("./Results/taylorslaw_results/aphid_count_allsp_sTL_quadcoeff.pdf",height=20,width=20)
+pdf("./Results/taylorslaw_results/aphid_count_allsp_sTL_mncurv.pdf",height=20,width=20)
+op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+for(i in splist){
+  #cat("sp=",i,"\n")
+  #ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="slope",labelon=T)
+  #ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="quadcoeff",labelon=T)
+  ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon=T)
+  tl_aphid_count$real_sTL_slope[i]<-ans$real_spatialTLslope
+  tl_aphid_count$p_left[i]<-ans$p_left
+  tl_aphid_count$p_right[i]<-ans$p_right
+  tl_aphid_count$numsurrog_good[i]<-ans$numsurrog_good
+  tl_aphid_count$real_sTL_quadcoeff[i]<-ans$real_sTL_quadcoeff
+  tl_aphid_count$p_left_quadcoeff[i]<-ans$p_left_quadcoeff
+  tl_aphid_count$p_right_quadcoeff[i]<-ans$p_right_quadcoeff
+  tl_aphid_count$real_sTL_mncurv[i]<-ans$real_sTL_mncurv
+  tl_aphid_count$p_left_mncurv[i]<-ans$p_left_mncurv
+  tl_aphid_count$p_right_mncurv[i]<-ans$p_right_mncurv
+}
+par(op)
+dev.off()
+saveRDS(tl_aphid_count,"./Results/taylorslaw_results/tl_aphid_count.RDS")
+```
+
+
+```{r spatialTL_on_realdata_aphid_count_sp6, results="hide", echo=F, cache=T, cache.extra=list(seed,data_aphid_count,TL_on_realdata,mtime("good_loclist.R"),mtime("TaylorsLawTools.R"),mtime("mncurvat.R"),mtime("ncsurrog.R"))}
+
+set.seed(seed)
+
+#Now for sp=6
+sp<-6
+pdf("./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf",height=5,width=5)
+ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=sp,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon = F)
+mtext(paste0("p= ",round(ans$p_left_mncurv,3)),side = 3, line=-2, adj=0.5, col="blue")
+dev.off()
+
+pdf("./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf",height=5,width=10)
+op<-op<-par(mfrow=c(1,2),mar=c(4,5,1,1),mgp=c(3,1,0))
+plot(ans$realTL_stats$s.points,xlab=expression(log[10]("spatial mean")),
+     ylab=expression(log[10]("spatial variance")),col="red",
+     cex.axis=1.5,cex.lab=1.5)
+mtext(paste0("mean curvature= ",round(unname(ans$realTL_stats$s.stats[7]),3)),side = 3, line=-2, adj=0.5, col="blue")
+
+target_mncurv<-0.1
+id<-which(abs(ans$good_surrog_mncurv-target_mncurv)<1e-4)[1]
+ans_s<-ans$surrogTL_stats
+plot(ans_s[[id]]$s.points,xlab=expression(log[10]("spatial mean")),
+     ylab=expression(log[10]("spatial variance")),
+     cex.axis=1.5,cex.lab=1.5)
+mtext(paste0("mean curvature= ",round(ans$good_surrog_mncurv[id],3)),side = 3, line=-2, adj=0.5, col="blue")
+
+par(op)
+dev.off()
+```
+ 
 <!--
 ## Extinction risk
         ----moved to Paper.Rmd----

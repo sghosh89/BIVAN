@@ -493,6 +493,7 @@ knitr::kable(tab_multivar_summary,
 
 This section is dedicated to explore question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. We wanted to find how are copula structure of ecologically influential climate variables changing as part of climate change? 
 
+<!--Moran effects-->
 \textbf{(i)} To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
 
 \begin{equation}\label{eq.AR1}
@@ -510,7 +511,7 @@ To test that our approach is of two way : first, we calculated the parameters of
 \end{center}
 \end{figure}
 
-Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \nameref{NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Kendall's Tau of the noise copula family. Fig. \ref{fig_Cause4copula_C_kend} and Fig. \ref{fig_Cause4copula_SC_kend} represent this picture for noise generating from a lower tail dependent Clayton and upper tail dependent Survival Clayton copula whereas for Fig. \ref{SM-fig_Cause4copula_C_spear} and Fig. \ref{SM-fig_Cause4copula_SC_spear} Spearman's Rho of noise copula were plotted along x-axis. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of non-parametric statistics (see \nameref{NPA}) for both bivariate noise copula and resultant population copula for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Kendall's Tau of the noise copula family. Fig. \ref{fig_Cause4copula_C_kend} represents this picture for noise generating from a lower tail dependent Clayton copula (for upper tail dependent Survival Clayton copula see \ref{fig_Cause4copula_SC_kend}) whereas for Fig. \ref{SM-fig_Cause4copula_C_spear} and Fig. \ref{SM-fig_Cause4copula_SC_spear} Spearman's Rho of noise copula were plotted along x-axis. We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that like our first approach, here also the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which ensured the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 \begin{figure}[!h]
 \begin{center}
@@ -519,26 +520,56 @@ Secondly, we measured 3 types of correlations (Spearman, Kendall, Pearson) and d
 \end{center}
 \end{figure}
 
+<!--Asymmetric sensitivity and copula structure in populations-->
+\textbf{(ii)} On a second note, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) when it is beyond a certain expectation threshold. 
+
+To test the assymetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
+
+\begin{equation}\label{eq.AS}
+P_{i}(t+1) = b P_{i}(t) + g(\epsilon_{i}(t)) + h(\delta_{i}(t))
+\end{equation}
+
+$b$ was the linear growth rate. Global environmental fluctuation function $g(\epsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}) where $\epsilon=(\epsilon_{1}, \epsilon_{2})$ was an iid through time with mean zero and covariance matrix $\Sigma_{\epsilon}$.
+
+\begin{align}
+g(\epsilon) = \begin{cases} 
+g_{1} = \begin{cases}
+\epsilon & \text{if $\epsilon< 0$}; \\
+0 & \text{otherwise}.
+\end{cases}\\ \\
+g_{2} = \begin{cases}
+\epsilon & \text{if $\epsilon> 0$}; \\
+0 & \text{otherwise}\label{eq.AS_g}.
+\end{cases}
+\end{cases} \text{where } \epsilon = N(\textbf{0},\Sigma_{\epsilon})\;\ \text{with} \;\ \Sigma_{\epsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
+\end{align}
+
+Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and covariance matrix $\Sigma_{\delta}$.
+
+\begin{equation}\label{eq.AS_h}
+h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+\end{equation}
+
+We simulated our model (\ref{eq.AS}) for $b=\pm0.1$ , $a=0.2$, $r=0.8$. $10000$ points were generated from each local and global fluctuations to apply on the initial populations and then after simulation we kept only last $1000$ time step of simulated points to plot the population-copula (Fig. \ref{fig_ms_asym_b_0.1}) for a specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). We also carried out model selection and non-parametric statistical analysis with each copula of Fig. \ref{fig_ms_asym_b_0.1} and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_4}. Table \ref{SM-tab_summary_stat_asym_sens} represent the model selection results with AIC weights for best fitted copula and normal copula, model averaged lower and upper tail dependence, p-values (both Cramer-von Mises statistic and Kolmogorov-Smirnov statistic) for goodness of fit test. In each case, successful bootstrap was $100\%$. According to our model selection approach, non-normal copulae (with higher AIC weights) were always best-fit with some asymetric tail dependence. Our non-parametric analysis results (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_4}) are consistent with this model selection approach. 
+
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_kendall.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}}
+\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
+\caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
 
-\textbf{(ii)} On a second note, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) when it is beyond a certain expectation threshold. So, we considered another two-habitat patch model which was influenced by both local and global noises and found that a long time exposure to assymetric copula for global fluctuation shaped the population copula accordingly (for details, see Appendix \ref{SM-Cause_asym_sens}). 
-
+<!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
+<!--
 ## Application : The Moran effect and copula structure in population 
 
 ```{r read_RES_temp_aphid, echo=F}
 RES_temp_aphid<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_winter_neg_temp.RDS")
 ```
 
-<!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
-<!--### The Moran effect and copula structure in populations-->
 Firstly, Our hypothesis was if a non-normal copula structure describes the dependence of an environmental
 variable between two locations, then there can be a non-normal copula structure for the
-dependence of populations in the locations that are influenced by the environmental variables. This assumption was inspired by the the idea of Moran-effect [@Moran1953] which was originally used to explain synchronization of widely dispersed populations. In the previous section, we already tested our hypothesis with a two habitat patch model (1st order AR method) in noisy environment (having non-Normal copula structure) and found that populations were shaped by similar copula structure as that of local noises. Here, we investigated the probable cause of upper tail dependence in the leaf-curling plum aphid's firstflight date throughout all the locations. We assumed that average winter temperature which might be spatially synchronized and had asymmetric tail dependence cause the synchronized delay in leaf-plum curling aphid's appearence. We tested our hypothesis and indeed found the Moran effect on leaf-plum curling aphid's firstflight data induced by average winter temperature for the period of 35 years (1976-2010). We did pair wise model selection with negative average winter temperature (averaged over (n-1)$^{th}$ December to n$^{th}$ March temperature) from the selected 10 locations for which we did model selection with aphid-firstflight data. Negative winter temperature was considered for simulation to compare the aphid's firstflight results with temparature copula (aphid's firstflight date were negatively correlated with temperature or in other words positively correlated with negative temparature). Model selection results for negative average winter temperature in 10 $\times$ 10 matrices were represented in Table \ref{SM-tab_temp_aphid_bestcop} - Table \ref{SM-tab_temp_aphid_LTmUT}. In all cases `r min((RES_temp_aphid$gfc_numBS_success/RES_temp_aphid$gfc_numBS),na.rm=T)*100` $\%$ of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data. Table \ref{SM-tab_temp_aphid_LTmUT} showed `r sum(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw <0, na.rm=T)` out of `r (dim(RES_temp_aphid$gfc_p_CvM)[1]^2-dim(RES_temp_aphid$gfc_p_CvM)[1])-2*RES_temp_aphid$num_indep_loc_pair` location pair showed upper tail dependence in temperature copula, which can be considered as the Moran effect results causing dominant upper tail dependence in the copulas with aphid's firstflight date (Table \ref{SM-tab_ff_LTmUT}). 
+dependence of populations in the locations that are influenced by the environmental variables. This assumption was inspired by the the idea of Moran-effect [@Moran1953] which was originally used to explain synchronization of widely dispersed populations. In the previous section, we already tested our hypothesis with a two habitat patch model (1st order AR method) in noisy environment (having non-Normal copula structure) and found that populations were shaped by similar copula structure as that of local noises. Here, we investigated the probable cause of upper tail dependence in the leaf-curling plum aphid's firstflight date throughout all the locations. We assumed that average winter temperature which might be spatially synchronized and had asymmetric tail dependence cause the synchronized delay in leaf-plum curling aphid's appearence. We tested our hypothesis and indeed found the Moran effect on leaf-plum curling aphid's firstflight data induced by average winter temperature for the period of 35 years (1976-2010). We did pair wise model selection with negative average winter temperature (averaged over (n-1)$^{th}$ December to n$^{th}$ March temperature) from the selected 10 locations for which we did model selection with aphid-firstflight data. Negative winter temperature was considered for simulation to compare the aphid's firstflight results with temparature copula (aphid's firstflight date were negatively correlated with temperature or in other words positively correlated with negative temparature). Model selection results for negative average winter temperature in 10 $\times$ 10 matrices were represented in Table \ref{SM-tab_temp_aphid_bestcop} - Table \ref{SM-tab_temp_aphid_LTmUT}. In all cases `r min((RES_temp_aphid$gfc_numBS_success/RES_temp_aphid$gfc_numBS),na.rm=T)*100` $\%$ of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data. Table \ref{SM-tab_temp_aphid_LTmUT} showed `r sum(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw <0, na.rm=T)` out of `r (dim(RES_temp_aphid$gfc_p_CvM)[1]^2-dim(RES_temp_aphid$gfc_p_CvM)[1])-2*RES_temp_aphid$num_indep_loc_pair` location pair showed upper tail dependence in temperature copula, which can be considered as the Moran effect results causing dominant upper tail dependence in the copulas with aphid's firstflight date (Table \ref{SM-tab_ff_LTmUT}). -->
 
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
@@ -553,26 +584,26 @@ We also showed **(ii)** asymmetric copula structure affected slope of spatial Ta
 \textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_kendall.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_kendall.pdf}\\
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
 \end{center}
 \vspace{0.2 cm}
 \textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_kendall.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_kendall.pdf}
-\caption{Skewness of spatially averaged $(A)$ Green-spruce aphid's abundance, $(B)$ Leaf-plum curling aphid's firstflight date, $(C)$ Ceratium furca's abundance and $(D)$ methane-flux data, were indicated by red line in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Kendall correlation). \label{fig_skewness_kendall}}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
+\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
+\caption{Skewness of spatially averaged $(A)$ green-spruce aphid's abundance, $(B)$ leaf-curling plum aphid's firstflight date, $(C)$ ceratium furca's abundance and $(D)$ methane-flux data, were indicated by red dot in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Spearman correlation). \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 
 ## Application : Change of skewness
 
-we used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. Figure \ref{fig_skewness_kendall} represents the results for each dataset with Kendall correlatiomn preserving surrogates. We tested null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness). 
+we used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. Figure \ref{fig_skewness_spearman} represents the results for each dataset with Kendall correlatiomn preserving surrogates. We tested null hypothesis $H_{0}$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula. If $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness). 
 
-Figure \ref{fig_skewness_kendall}(A) showed that averaged skewness was much lower than expected if the aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_kendall} A). As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results. On the other hand, Figure \ref{fig_skewness_kendall}(B) demonstrated that averaged skewness was much higher than expected if the aphid first flight data came from a normal copula. As $p$ value (the fraction of surrogate-skewness which were greater than the averaged skewness of the given data - red line in Figure \ref{fig_skewness_kendall} B) was less than $0.05$, we reject $H_{0}$ in support of upper tail dependence. Figure \ref{fig_skewness_kendall}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence. But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was lower than expected if the data came from a normal copula (Figure \ref{fig_skewness_kendall} D). As $p<0.05$, we rejected $H_{0}$ and that result was consistent with the non-parametric analysis and model selection results which also favored lower tail dependence. 
+Figure \ref{fig_skewness_spearman}(A) showed that averaged skewness was much lower than expected if the aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data (red line in Figure \ref{fig_skewness_spearman} A). As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results. On the other hand, Figure \ref{fig_skewness_spearman}(B) demonstrated that averaged skewness was much higher than expected if the aphid first flight data came from a normal copula. As $p$ value (the fraction of surrogate-skewness which were greater than the averaged skewness of the given data - red line in Figure \ref{fig_skewness_spearman} B) was less than $0.05$, we reject $H_{0}$ in support of upper tail dependence. Figure \ref{fig_skewness_spearman}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence. But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was lower than expected if the data came from a normal copula (Figure \ref{fig_skewness_spearman} D). As $p<0.05$, we rejected $H_{0}$ and that result was consistent with the non-parametric analysis and model selection results which also favored lower tail dependence. 
 
-We found the same result when we repeated our simulation with Spearman correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_spearman}).
+We found the same result when we repeated our simulation with Spearman correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_kendall}).
 
 # Discussion \label{Discussion}
 

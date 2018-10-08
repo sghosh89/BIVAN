@@ -698,7 +698,7 @@ saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
              format='pandoc',
-             caption = "Fitting info for **mammals' BMR dataset** . \\label{tab_bmr_birds_fit}",
+             caption = "Fitting info for **mammals' BMR dataset** . \\label{tab_bmr_mammals_fit}",
              booktabs=T)
 ```
 
@@ -1884,28 +1884,28 @@ dev.off()
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
-\caption[Testing GOF between noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison) \label{fig_Cause4copula_params_GOF_2500}}
+\caption[Testing GOF between noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicates good fit between noise and population copulae. \label{fig_Cause4copula_params_GOF_2500}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_kendall.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_kend}}
+\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_SC_kend}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/Clayton_spearman.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_C_spear}}
+\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_C_spear}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_spearman.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison) \label{fig_Cause4copula_SC_spear}}
+\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
 \end{center}
 \end{figure}
 
@@ -1928,6 +1928,7 @@ sum(LTmUT_temp>0,na.rm = T)
 sum(LTmUT_temp<0,na.rm = T) #66 out of 90 : suggests UT in leaf-plum curling aphids firstflight data (90 out of 90 UT)
 ```
 
+<!--
 ```{r tab_temp_aphid_bestcop, echo=F, results="markup"}
 knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
              format='pandoc',
@@ -1999,7 +2000,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              booktabs=TRUE
              )
 ```
-
+-->
 <!--# Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}-->
 
 <!--
@@ -2180,7 +2181,7 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[3]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_3}"))
 ```
 
-
+\newpage
 ```{r tab_stat_npa_asym_4,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[4]])
 knitr::kable(temp, booktabs = T, 
@@ -2226,8 +2227,6 @@ knitr::kable(temp, booktabs = T,
 # Cause of non-Normal copula structure : Asymmetric sensitivity and copula structure in populations \label{Cause_asym_sens}
 -->
 
-
-#  Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 \newpage
 <!--results='hide'-->
@@ -2386,8 +2385,8 @@ par(op)
 dev.off()
 saveRDS(skw_plankton_spearman,"./Results/skewness_results/skewness_plankton_north_sea/skw_plankton_spearman.RDS")
 
-pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_kendall.pdf",height=20,width=20)
-op<-par(mfrow=c(4,5),mar=c(4.2,5,1,1),mgp=c(3,1,0))
+pdf("./Results/skewness_results/skewness_plankton_north_sea/plankton_allsp_skewness_kendall.pdf",height=24,width=24)
+op<-par(mfrow=c(4,6),mar=c(4.2,5,1,1),mgp=c(3,1,0))
 #cat("Now for kendall preserving surrogs : pns","\n")
 for(i in splist){
   #cat("sp=",i,"\n")
@@ -3068,8 +3067,10 @@ set.seed(seed)
 #Now for sp=6
 sp<-6
 pdf("./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf",height=5,width=5)
+op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=sp,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon = F)
 mtext(paste0("p= ",round(ans$p_left_mncurv,3)),side = 3, line=-2, adj=0.5, col="blue")
+par(op)
 dev.off()
 
 pdf("./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf",height=5,width=10)
@@ -3090,7 +3091,8 @@ mtext(paste0("mean curvature= ",round(ans$good_surrog_mncurv[id],3)),side = 3, l
 par(op)
 dev.off()
 ```
- 
+
+
 <!--
 ## Extinction risk
         ----moved to Paper.Rmd----
@@ -3217,9 +3219,9 @@ dev.off()
 ![Extinction_Risk_K_effect on Ricker model; r=0.25, numsteps=25, numsims=10000\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 
 
-# Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL}
+# Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 
-Spatial Taylor's law, which shows linear relationship between `log`(variance) and `log`(mean) of population densities of a species from different locations, is a well-known pattern found in ecology and related fields [@Taylor1961, @Taylor1988, @Cohen2013, @Doring2015, @Kuo2016, @Xu2016, @Reuman2017]. Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
+Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
 
 
 # Consequence of non-Normal copula structure : effect on extinction risk \label{Consequence_ext_risk}

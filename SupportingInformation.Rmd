@@ -38,6 +38,85 @@ seed<-101
 source("mtime.R") #A function needed for caching
 ```
 
+```{r cop_fig_intro,echo=F,results="hide",cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
+library(copula)
+library(VineCopula)
+library(mvtnorm)
+set.seed(seed)
+
+source("copsurrognd.R")
+
+#x <- read.table("./Data/dataset/x.txt")
+#y <- read.table("./Data/dataset/y.txt")
+#mat<-cbind(x,y)
+#colnames(mat)<-c("x","y")
+
+#***constants
+N<-200 #length of time series
+n<-2 #number of sampling locations
+numdat<-1 #the number of datasets to get from the normal copula
+rho<-0.8 #normal-copula parameter for dependence between locations
+#this is a covariance, see below call to rmvnorm
+
+#***generate the starting data, which has normal copula structure
+#because it comes originally from a multivariate normal, before 
+#transformation
+sig<-matrix(rho,n,n)
+diag(sig)<-1
+m<-rmvnorm(N*numdat,mean=rep(0,n),sigma=sig)
+m<-array(m,c(N,numdat,n))
+m<-aperm(m,c(1,3,2)) # 2nd dim is normally distributed e.g. hist(m[,1,])
+gshape<-7.5
+gscale<-1 #gamma parameters
+
+cop_to_marg_trans<-function(x){
+  return(qgamma(x,shape=gshape,scale=gscale)) #this is where we choose the marginals,
+  #should be something skewed
+}
+# pnorm(m) makes normal to uniform
+# then qgamma(...) makes uniform to gamma distributed
+m<-cop_to_marg_trans(pnorm(m))
+
+ccop<-claytonCopula(2,2)
+csurrog<-array(NA,dim(m))
+csurrog[,,1]<-copsurrognd(m[,,1],targetcop=ccop,numsurrog=1)
+mat<-csurrog[,,1]
+
+pdf("./Results/rawdata.pdf",height = 4, width = 4)
+scale<-2
+xhist <- hist(mat[,1], breaks=30, plot=FALSE)
+yhist <- hist(mat[,2], breaks=30, plot=FALSE) 
+top <- max(c(xhist$counts, yhist$counts)) 
+xrange <- range(mat[,1])
+yrange <- range(mat[,2])
+nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
+op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0))  
+plot(mat[,1], mat[,2], xlim=xrange, ylim=yrange, xlab="x", ylab="y", cex.lab=1.5) 
+op<-par(mar=c(0,3,1,1)) 
+barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
+op<-par(mar=c(3,0,1,1)) 
+barplot(yhist$counts/scale, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
+par(op)
+dev.off()
+
+pdf("./Results/copdata.pdf",height = 4, width = 4)
+copmat<-pobs(mat)
+xhist <- hist(copmat[,1], breaks=30, plot=FALSE)
+yhist <- hist(copmat[,2], breaks=30, plot=FALSE) 
+top <- max(c(xhist$counts, yhist$counts)) 
+xrange <- c(0,1)
+yrange <- c(0,1)
+nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
+op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0)) 
+plot(copmat[,1], copmat[,2], xlim=xrange, ylim=yrange, xlab="u=rank(x)/(n+1)", ylab="v=rank(y)/(n+1)",cex.lab=1.5) 
+op<-par(mar=c(0,3,1,1)) 
+barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
+op<-par(mar=c(3,0,1,1)) 
+barplot(yhist$counts/scale, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
+par(op)
+dev.off()
+```
+
 ```{r cop_pedag_fig,echo=F,results="hide"}
 set.seed(seed)
 library(VineCopula)
@@ -411,6 +490,7 @@ database [@Wills2014, **or Wills and Loecke pending???**]. Specifically, the soi
 stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the 5930 sites were included in this
 study.
 
+<!--
 Next, the [**BMR data**](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) contains the trait contrasts from phylogenetically independent contrasts [@SukumaranH2010] of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR) and mass of mammals species. Specifically, the "SELECT" BMR data in their database were used for those species for which data were available. A phylogeny in NEXUS [@NEXUS] format was extracted from the supplementary information of [@GenoudIM2017]. Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate phylogenetic independent contrasts using Python 2.7. For each contrast, the path length spanned by the contrast (sum of the branch lengths) and the contrast for the mass, natural logarithm of the BMR and natural logarithm of the mass were written as a row in the [bmr-contrasts.csv](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) file. 
 
 [**Third dataset**](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was a raw data on measurements of anatomical features of several species of *Anolis* lizards, which was downloaded
@@ -418,7 +498,7 @@ from the Dryad data package [@MahlerIRL2013Data] associated with [@MahlerIRL2013
 The [contrasts.csv file](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was produced by using version 4.4.0 of the DendroPy library [@SukumaranH2010]  to calculate phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex) as the phylogeny.
 
 Absolute values of traits for each contrast are considered to construct corresponding copula for second and third datasets.
-
+--> 
 Fourth, we used **Ceder-creek data for e120** which resulted from a biodiversity experiment, carried out by Tilman and his co-warkers [@Tilman2001; @Tilman2006] over many years to collect [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120) data. These datasets were used to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
 for year 2000. 
 

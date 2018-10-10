@@ -707,7 +707,7 @@ make_table_stat_fn<-function(data){
 }
 ```
 
-\newpage
+
 ```{r tab_soilCN_asym,echo=F,results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
@@ -766,6 +766,7 @@ BivMS_mammals<-OurBiCopSelect(u1=cop_m[,1],u2=cop_m[,2],families=c(1,3:10,13:14,
 saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 ```
 
+\newpage
 <!--Display model selection results for BMR:birds data in a table-->
 ```{r tab_bmr_mammals_fit, echo=F, results='markup'}
 h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -995,6 +996,7 @@ survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Ab
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
 ```
 
+
 ```{r tab_count_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
              format='pandoc',
@@ -1003,6 +1005,7 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
              )
 ```
 
+\newpage
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
@@ -2206,11 +2209,13 @@ saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0
 \end{figure}-->
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
-knitr::kable(summary_stat[,c(1:4)], booktabs = T, 
+summary_stat<-summary_stat[,c(1:4)]
+rownames(summary_stat)<-c("bestcop.AICw","N.AICw","relLTdep.AICw","relUTdep.AICw","p.CvM","p.KS","BS.success.percent")
+knitr::kable(summary_stat, booktabs = T, 
              format = "pandoc",
              digits=3,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption="summary of model selection results for asym. sensitivity \\label{tab_summary_stat_asym_sens}")
+      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestcop.AICw} and \\textbf{N.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{relLTdep.AICw} and \\textbf{relLTdep.AICw} represent relative lower tail and upper tail dependence based on AIC-weightage respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
 ```
 
 ```{r read_tab_stat_npa_asym,echo=F,results="asis"}
@@ -2228,6 +2233,7 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 #}
 ```
 
+\newpage
 ```{r tab_stat_npa_asym_1,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[1]])
 knitr::kable(temp, booktabs = T, 
@@ -2235,7 +2241,6 @@ knitr::kable(temp, booktabs = T,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption =paste(cnm[1]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}"))
 ```
-
 
 ```{r tab_stat_npa_asym_2,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[2]])
@@ -2301,7 +2306,6 @@ knitr::kable(temp, booktabs = T,
 -->
 
 
-\newpage
 <!--results='hide'-->
 ```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -3281,15 +3285,15 @@ par(op)
 dev.off()
 ```
 
-![Extinction_Risk_local_dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp}](./Results/ext_risk_local_disp.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with local dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp}](./Results/ext_risk_local_disp.pdf){ width=40%, height=40% }
 
-![Extinction_Risk_global_dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp}](./Results/ext_risk_global_disp.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with global dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp}](./Results/ext_risk_global_disp.pdf){ width=40%, height=40% }
 
-![Extinction_Risk_numlocs_effect_local_disp; numsteps=25, numsims=10000\label{fig_risk_numlocs_effect_local_disp}](./Results/ext_risk_numlocs_effect_local_disp.pdf){ width=40%, height=40% }
+![Increasing patch number allows metapopulation to disperse more efficiently and thereby decresing extinction risk calculated after 25 years; models with local dispersion with numsims=10000 (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_numlocs_effect_local_disp}](./Results/ext_risk_numlocs_effect_local_disp.pdf){ width=40%, height=40% }
 
-![Extinction_Risk_numlocs_effect_global_disp; numsteps=25, numsims=10000\label{fig_risk_numlocs_effect_global_disp}](./Results/ext_risk_numlocs_effect_global_disp.pdf){ width=40%, height=40% }
+![Increasing patch number allows metapopulation to disperse more efficiently and thereby decresing extinction risk calculated after 25 years; models with global dispersion with numsims=10000 (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_numlocs_effect_global_disp}](./Results/ext_risk_numlocs_effect_global_disp.pdf){ width=40%, height=40% }
 
-![Extinction_Risk_K_effect on Ricker model; r=0.25, numsteps=25, numsims=10000\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
+![Extinction risk as calculated after 25 years on Ricker model (r=0.25, numsims=10000) decreases as carrying capacity $K$ increases for both local and global dispersion (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 
 
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}

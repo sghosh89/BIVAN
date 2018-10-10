@@ -135,13 +135,21 @@ additional details???** on greenhouse gas flux methods for this site. We threw o
 \includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
 \includegraphics[width=4 cm]{./Results/BMR_results/birds/copula_birds_BMR.pdf}
 \includegraphics[width=4 cm]{./Results/BMR_results/mammals/copula_mammals_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}\\
+\end{center}
+\textbf{ \hspace{2.8 cm} (I) \hspace{3.2 cm} (J) \hspace{3.2 cm} (K) \hspace{3.2 cm} (L) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
 \caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} log(BMR) vs. log(mass) for birds, \textbf{(C)} log(BMR) vs. log(mass) for mammals, \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
-Lower panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of species for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). \label{fig_biv_raw_cop}}
+Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of species for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). Lower panel shows \textbf{(I)} raw data , \textbf{(J)} copula plot for  green spruce aphid's count data from location pair(4,11) and \textbf{(K)} raw data , \textbf{(L)} copula plot for leaf-curling plum aphid's firstflight data from location pair(2,5). These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript)\label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
 
-
+<!--
 \begin{figure}[!h]
 \textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
 \vspace{-0.4 cm}
@@ -156,7 +164,7 @@ Lower panel \textbf{(E - H)} shows copula plots for the corresponding datasets o
 \includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
 \caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
 \end{center}
-\end{figure}
+\end{figure}--> 
 
 ## Statistical methods for detecting copula structure \label{Methods}
 
@@ -417,7 +425,7 @@ d<-d[,c("SOCstock100","TSNstock100")] #raw soilCN data
 BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 ```
 
-As described in the Appendix \ref{SM-Data_detailed}, raw data plot for soil organic C and soil N stocks to 1m of soil depth from the central pedon of the `r nrow(d)` sites and their corresponding copula plot were presented in Fig. \ref{fig_biv_raw_cop}(A) and (E), respectively.
+As described in the Appendix \nameref{Data}, raw data plot for soil organic C and soil N stocks to 1m of soil depth from the central pedon of the `r nrow(d)` sites and their corresponding copula plot were presented in Fig. \ref{fig_biv_multi_raw_cop}(A) and (E), respectively.
 We carried out model selection analysis and non-parametric statistics to measure tail-dependence (if any) on this copula plot.
 
 <!--#### Model selection approach \label{Ex_SoilCN_Model_selection}-->
@@ -432,7 +440,7 @@ Furthermore, the difference of model-averaged tail dependence statistics (lower 
 
 <!--#### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}-->
 
-We summarized our results columnwise in Table \ref{tab_bivar_summary} for different kinds of bivariate datasets (biogeochemical, evolutionary and ecological data) that were plotted in Fig. \ref{fig_biv_raw_cop}. 
+We summarized our results columnwise in Table \ref{tab_bivar_summary} for different kinds of bivariate datasets (biogeochemical, evolutionary and ecological data) that were plotted in Fig. \ref{fig_biv_multi_raw_cop}(A-H). 
 
 For all $3$ bivariate-datasets indicated by each column name (SoilCN, Birds' BMR, Ceder-creek) 
 in Table \ref{tab_bivar_summary}, Normal copula were always a poor fit compared to 
@@ -462,7 +470,7 @@ the data, and likewise for goodness of fit tests based on a Kolmogorov-Smirnov s
 
 The model-averaged (averaging performed using AIC weights) lower-tail dependence statistic and the model-averaged (again, AIC based) upper-tail dependence statistic are in Tables \ref{SM-tab_count_LTdep_AICw} and \ref{SM-tab_count_UTdep_AICw} respectively. These values were exclusively positive, thereby differing from what a normal copula would give (i.e., 0), and answering the second part of question \hyperref[Intro]{\textbf{(Q1)}} for these data. Apparently these aphid data have greater tail dependence (both lower and upper) than would be expected from a normal-copula null hypothesis. 
 
-The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic (lower minus upper), shown in Table \ref{SM-tab_count_LTmUT}, is positive for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`), answering the third part of question \hyperref[Intro]{\textbf{(Q1)}}. Fig. \ref{fig_aphid_raw_cop}(A) and (C) represnt exemplary plots for aphid abundance (green spruce aphid) raw data and its copula form at $(4,11)$ location pair which shows stronger lower tail dependence.
+The difference between the model-averaged lower-tail dependence statistic and the model-averaged upper-tail dependence statistic (lower minus upper), shown in Table \ref{SM-tab_count_LTmUT}, is positive for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`), answering the third part of question \hyperref[Intro]{\textbf{(Q1)}}. Fig. \ref{fig_biv_multi_raw_cop}(A) and (B) represnt exemplary plots for aphid abundance (green spruce aphid) raw data and its copula form at $(4,11)$ location pair which shows stronger lower tail dependence.
 
 <!--#### Non-parametric analysis of tail dependence \label{Ex_count_NPA}-->
 
@@ -488,7 +496,7 @@ plankton data from UK seas also showed major lower tail dependent spatial synchr
 showed stronger upper tail dependence at every location pair ($2^{nd}$ column in Table \ref{tab_multivar_summary}).
 Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
 
-\newpage
+
 ```{r tab_bivar_summary, echo=F, results='markup'}
 
 tab_bivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")

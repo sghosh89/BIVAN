@@ -120,52 +120,6 @@ Finally, methane ($CH_{4}$) fluxes between the soil or water surface and the tro
 Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.
 
-\begin{figure}[!h]
-\textbf{ \hspace{2.8 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
-\vspace{-0.35 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/birds/raw_birds_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/mammals/raw_mammals_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
-\end{center}
-\textbf{ \hspace{2.8 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
-\vspace{-0.35 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/birds/copula_birds_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/mammals/copula_mammals_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}\\
-\end{center}
-\textbf{ \hspace{2.8 cm} (I) \hspace{3.2 cm} (J) \hspace{3.2 cm} (K) \hspace{3.2 cm} (L) } \\
-\vspace{-0.35 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
-\includegraphics[width=4 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
-\includegraphics[width=4 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}
-\includegraphics[width=4 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} log(BMR) vs. log(mass) for birds, \textbf{(C)} log(BMR) vs. log(mass) for mammals, \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
-Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of species for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). Lower panel shows \textbf{(I)} raw data , \textbf{(J)} copula plot for  green spruce aphid's count data from location pair(4,11) and \textbf{(K)} raw data , \textbf{(L)} copula plot for leaf-curling plum aphid's firstflight data from location pair(2,5). These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript)\label{fig_biv_multi_raw_cop}}
-\end{center}
-\end{figure}
-
-<!--
-\begin{figure}[!h]
-\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
-\vspace{-0.4 cm}
-\begin{center}
-\includegraphics[width=7 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
-\includegraphics[width=7 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
-\end{center}
-\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
-\vspace{-0.4 cm}
-\begin{center}
-\includegraphics[width=7 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
-\includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
-\end{center}
-\end{figure}--> 
-
 ## Statistical methods for detecting copula structure \label{Methods}
 
 Question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} was answered via statistical analysis of the
@@ -406,7 +360,7 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 
 <!--Theoretical models
 Question 2 from the Introduction was explored using simple population models.-->
-
+ 
 
 # Application : copula structures in ecology, evolutionary and biogeochemical spheres \label{Results}
 
@@ -519,6 +473,52 @@ knitr::kable(tab_multivar_summary,
 ```
 
 
+
+\begin{figure}[!h]
+\textbf{ \hspace{2.8 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/birds/raw_birds_BMR.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/mammals/raw_mammals_BMR.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
+\end{center}
+\textbf{ \hspace{2.8 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/birds/copula_birds_BMR.pdf}
+\includegraphics[width=4 cm]{./Results/BMR_results/mammals/copula_mammals_BMR.pdf}
+\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}\\
+\end{center}
+\textbf{ \hspace{2.8 cm} (I) \hspace{3.2 cm} (J) \hspace{3.2 cm} (K) \hspace{3.2 cm} (L) } \\
+\vspace{-0.35 cm}
+\begin{center}
+\includegraphics[width=4 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} log(BMR) vs. log(mass) for birds, \textbf{(C)} log(BMR) vs. log(mass) for mammals, \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
+Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of sampling locations for soil C and N data and number of species for next two datasets and number of plots for the last one (see \nameref{Model_selection} of manuscript). Lower panel shows \textbf{(I)} raw data , \textbf{(J)} copula plot for  green spruce aphid's count data from location pair(4,11) and \textbf{(K)} raw data , \textbf{(L)} copula plot for leaf-curling plum aphid's firstflight data from location pair(2,5). These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript)\label{fig_biv_multi_raw_cop}}
+\end{center}
+\end{figure}
+
+<!--
+\begin{figure}[!h]
+\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
+\end{center}
+\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
+\vspace{-0.4 cm}
+\begin{center}
+\includegraphics[width=7 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=7 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
+\caption{Upper panel shows raw data plots for \textbf{(A)} green spruce aphid-abundance data from location pair(4,11) and \textbf{(B)} leaf-curling plum aphid-firstflight data from location pair(2,5). Lower panel \textbf{(C - D)} shows copula plots for the corresponding datasets of the upper panel. These copula plots are obtained by applying ranks separately to each variable, and then dividing the ranks by $n+1$ where $n$ is the number of data-points available for both location at same year (see \nameref{Model_selection} of manuscript). \label{fig_aphid_raw_cop}}
+\end{center}
+\end{figure}-->
 <!--Question 2 analyses-->
 # Some possible causes of non-Normal copula structure \label{Causes}
 

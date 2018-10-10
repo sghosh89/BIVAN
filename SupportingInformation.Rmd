@@ -91,7 +91,8 @@ xrange <- range(mat[,1])
 yrange <- range(mat[,2])
 nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
 op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0))  
-plot(mat[,1], mat[,2], xlim=xrange, ylim=yrange, xlab="x", ylab="y", cex.lab=1.5) 
+plot(mat[,1], mat[,2], xlim=xrange, ylim=yrange, xlab="x", ylab="y", cex.lab=1.5)
+legend("bottomright","raw data plot",bty="n",cex=1.5,text.col="magenta")
 op<-par(mar=c(0,3,1,1)) 
 barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
 op<-par(mar=c(3,0,1,1)) 
@@ -108,7 +109,8 @@ xrange <- c(0,1)
 yrange <- c(0,1)
 nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
 op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0)) 
-plot(copmat[,1], copmat[,2], xlim=xrange, ylim=yrange, xlab="u=rank(x)/(n+1)", ylab="v=rank(y)/(n+1)",cex.lab=1.5) 
+plot(copmat[,1], copmat[,2], xlim=xrange, ylim=yrange, xlab="u=rank(x)/(n+1)", ylab="v=rank(y)/(n+1)",cex.lab=1.5)
+legend("bottomright","copula plot",bty="n",cex=1.5,text.col="magenta")
 op<-par(mar=c(0,3,1,1)) 
 barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
 op<-par(mar=c(3,0,1,1)) 
@@ -463,15 +465,6 @@ out of which only blue boxes are considered for our study based on having atleas
 \end{center}
 \end{figure}
 
-<!--
-## Methane-flux data  \label{Methane_data}
-
-Methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
-Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at
-daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
-additional details???** on greenhouse gas flux methods for this site.
-
-* We threw out all locations that had fewer than 50 dates data.-->
 
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)
@@ -482,7 +475,7 @@ methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 #             booktabs=T) # display first few rows
 ```
 
-# Description of Data \label{Data_detailed}
+<!--# Description of Data \label{Data_detailed}
 
 For bivariate analysis we used four datasets which are briefly described as follows;
 First, to explore the dependence of **soil organic C** and total **soil N** across a wide geographic range (conterminous US), ecosystem type, and traceable methodology we used the RaCA (Rapid Carbon Assessment)
@@ -498,15 +491,15 @@ from the Dryad data package [@MahlerIRL2013Data] associated with [@MahlerIRL2013
 The [contrasts.csv file](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was produced by using version 4.4.0 of the DendroPy library [@SukumaranH2010]  to calculate phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex) as the phylogeny.
 
 Absolute values of traits for each contrast are considered to construct corresponding copula for second and third datasets.
---> 
+
 Fourth, we used **Ceder-creek data for e120** which resulted from a biodiversity experiment, carried out by Tilman and his co-warkers [@Tilman2001; @Tilman2006] over many years to collect [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120) data. These datasets were used to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
 for year 2000. 
 
-<!--The raw data and copula for each four datasets are shown along each column of Figure \ref{MT-fig_biv_raw_cop}.-->
+The raw data and copula for each four datasets are shown along each column of Figure \ref{MT-fig_biv_raw_cop}.
 
 Similarly, we applied multivariate analysis on four datasets; first two data sets [for aphid-count and aphid-firstflight date] were extracted from the Rothamsted Insect Survey suction-trap data [@Macaulay1988, @Harrington2014]. These two annual timesries (1976-2010) measurements are from 11 locations acroos UK for 20 aphid species. We used the same data format as used by @Sheppard2016 for their analysis on the impact of climate on aphids' spatial synchrony. In our case, we chose species=10 [Name : "Green spruce aphid"] for aphid-abundance data and species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data and considered only those locations which had atleast 30 years of data (see Figure \ref{fig_aphid_map}). 
 
-<!--Figure \ref{MT-fig_aphid_raw_cop} represents raw and copula data plot for aphid count ("Green spruce aphid") and aphid-firstflight date ("Leaf-curling plum aphid") taken from two locations.-->
+Figure \ref{MT-fig_aphid_raw_cop} represents raw and copula data plot for aphid count ("Green spruce aphid") and aphid-firstflight date ("Leaf-curling plum aphid") taken from two locations.
 
 Our third dataset for multivariate analysis is a plankton-count data collected at 26 locations over the areas of the North Sea and British seas for 22 species and for 56 years (1958-2013). These data were obtained from the Continuous Plankton Recorder (CPR) data set and maintained by the Sir Alistair Hardy Foundation for Ocean Science (SAHFOS). The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
 unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and
@@ -516,7 +509,7 @@ averaged, producing a monthly time series for each year. Where data for a given 
 Finally, methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
 Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at
 daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
-additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.
+additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.-->
 
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
@@ -714,7 +707,7 @@ make_table_stat_fn<-function(data){
 }
 ```
 
-
+\newpage
 ```{r tab_soilCN_asym,echo=F,results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
@@ -1812,7 +1805,7 @@ m2<-multivar_tab_summary_fn(r=RES_aphid_ff,rs=stat_aphid_ff)
 m3<-multivar_tab_summary_fn(r=RES_plankton_north_sea,rs=stat_plankton_north_sea)
 m4<-multivar_tab_summary_fn(r=RES_methane,rs=stat_methane)
 tab_multivar_summary<-cbind(m1,m2,m3,m4)
-colnames(tab_multivar_summary)<-c("Aphid_abundance","Aphid_firstflight","Plankton","Methane-flux")
+colnames(tab_multivar_summary)<-c("Green-spruce aphid_count","Leaf-plum curling aphid_firstflight","C. furca_count","Methane-flux")
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
@@ -2261,7 +2254,7 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[3]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_3}"))
 ```
 
-\newpage
+
 ```{r tab_stat_npa_asym_4,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[4]])
 knitr::kable(temp, booktabs = T, 
@@ -3329,11 +3322,13 @@ $r$ is the liner growth rate and $K$ is the carrying capacity of the environment
 With increasing number of patches from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{fig_risk_numlocs_effect_local_disp} - Fig. \ref{fig_risk_numlocs_effect_global_disp}] for both model. 
 
 
-\newpage
+\clearpage
 
-#  References
+# References
+
+<!--
 <div id="refs"></div>
-
+-->
 
 
 

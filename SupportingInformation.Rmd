@@ -1892,10 +1892,9 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-# I need to fix that SG_kendall ylimit error : I think I fixed it
-#----------------------------
+
 pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
-op<-par(mfrow=c(2,2))
+op<-par(mfrow=c(1,2))
 
 Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
@@ -1924,22 +1923,16 @@ set.seed(seed)
 resloc<-"./Results/Cause4copula_results/"
 if (!dir.exists(paste(resloc,"Cause4copula_stat_results",sep=""))){
   dir.create(paste(resloc,"Cause4copula_stat_results",sep=""))
-  resloc<-"./Results/Cause4copula_results/Cause4copula_stat_results/"
 }
+resloc<-paste(resloc,"Cause4copula_stat_results/",sep="")
+
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
                           
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
                           
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
                           
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)                    
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=4,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-               
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)                
 ```
 
 
@@ -1947,27 +1940,6 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=14,method="kendall",lb=0,ub=0.1
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
 \caption[Testing GOF between noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicates good fit between noise and population copulae. \label{fig_Cause4copula_params_GOF_2500}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_kendall.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_SC_kend}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/Clayton_spearman.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_C_spear}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/SClayton_spearman.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal dashed line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
 \end{center}
 \end{figure}
 

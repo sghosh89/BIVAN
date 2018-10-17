@@ -470,8 +470,8 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   }
  
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Spearman_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
-  plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
+  plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
   segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='red')
   bar_len<-0.02
   segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,1],col='red')
@@ -484,23 +484,14 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   #arrows(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_S,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  #legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-  #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = F, inset = c(0,0), 
-  #       bty = "n") 
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Kendall_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
-  plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
+  plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
   segments(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,1],col='red')
   segments(corcoef_list-bar_len,K_noise_mat[,3],corcoef_list+bar_len,K_noise_mat[,3],col='red')
@@ -512,20 +503,14 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   #arrows(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_K,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pearson_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
-  plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
+  plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
   segments(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,1],col='red')
   segments(corcoef_list-bar_len,P_noise_mat[,3],corcoef_list+bar_len,P_noise_mat[,3],col='red')
@@ -537,20 +522,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   #arrows(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
   points(corcoef_list,pval_P,col="purple")
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.1+max(Corl_noise_mat[,2],Corl_pop_mat[,2])))
   segments(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,1],col='red')
@@ -564,20 +544,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(new = TRUE)
   plot(corcoef_list,pval_Corl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["u"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.1+max(Coru_noise_mat[,2],Coru_pop_mat[,2])))
   segments(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,1],col='red')
@@ -591,20 +566,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(new = TRUE)
   plot(corcoef_list,pval_Coru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4, col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl-Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.2,0.2))
   segments(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,1],col='red')
@@ -615,25 +585,20 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,1],corcoef_list+bar_len,CorlmCoru_pop_mat[,1],col='blue')
   segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,3],corcoef_list+bar_len,CorlmCoru_pop_mat[,3],col='blue')
   #arrows(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
   par(new = TRUE)
   plot(corcoef_list,pval_CorlmCoru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.02+max(Pl_noise_mat[,2],Pl_pop_mat[,2])))
   segments(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,1],col='red')
@@ -647,20 +612,21 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(new = TRUE)
   plot(corcoef_list,pval_Pl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
-  par(op)
+  #op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
+  #plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+  #legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
+  #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
+  #       bty = "n") 
+  #par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["u"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.02+max(Pu_noise_mat[,2],Pu_pop_mat[,2])))
   segments(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,1],col='red')
@@ -675,20 +641,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   plot(corcoef_list,pval_Pu,col="purple",type="p",axes = FALSE,
        bty = "n", xlab = "", ylab = "",ylim=c(0,1),xlim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl-Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.1,0.1))
   segments(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,1],col='red')
@@ -699,25 +660,20 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   segments(corcoef_list-bar_len,PlmPu_pop_mat[,1],corcoef_list+bar_len,PlmPu_pop_mat[,1],col='blue')
   segments(corcoef_list-bar_len,PlmPu_pop_mat[,3],corcoef_list+bar_len,PlmPu_pop_mat[,3],col='blue')
   #arrows(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
   par(new = TRUE)
   plot(corcoef_list,pval_PlmPu,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[u]^2),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.002+max(D2u_noise_mat[,2],D2u_pop_mat[,2])))
   segments(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,1],col='red')
@@ -732,20 +688,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   plot(corcoef_list,pval_D2u,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[l]^2),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.002+max(D2l_noise_mat[,2],D2l_pop_mat[,2])))
   segments(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],col='red')
   segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,1],col='red')
@@ -760,20 +711,15 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   plot(corcoef_list,pval_D2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u-D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(2.6,3.5,2,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
+       cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.01,0.01)) 
        #ylim=c(0,0.002+max(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2])))
   segments(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],col='red')
@@ -785,19 +731,13 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   segments(corcoef_list-bar_len,D2umD2l_pop_mat[,1],corcoef_list+bar_len,D2umD2l_pop_mat[,1],col='blue')
   segments(corcoef_list-bar_len,D2umD2l_pop_mat[,3],corcoef_list+bar_len,D2umD2l_pop_mat[,3],col='blue')
   #arrows(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dashed',col='skyblue')
+  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
   par(new = TRUE)
   plot(corcoef_list,pval_D2umD2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
        xlim=c(0,1),ylim=c(0,1))
   lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple")
-  mtext(side = 4, line = 1.5, 'p values', col='purple')
-  par(op)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-         cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-         bty = "n") 
+  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
+  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
   par(op)
   dev.off()
   
@@ -808,6 +748,14 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   #       bty = "n") 
   #par(op2)
   
+  pdf(paste0(resloc,"common_legend_cause4copula_stat.pdf",sep=""),height=1,width=15)
+  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
+  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+  legend("center", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
+                cex = 2.5, pch = c(16, 16, 1), xpd = TRUE, horiz = T, inset = c(0,0), 
+                bty = "n")
+  par(op)
+  dev.off()
 }
 #-----------------------------------------------
 

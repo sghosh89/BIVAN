@@ -1939,7 +1939,7 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
-\caption[Testing GOF between noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicates good fit between noise and population copulae. \label{fig_Cause4copula_params_GOF_2500}}
+\caption[Comparing noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicate good fit of population copula with same noise cpoula family. \label{fig_Cause4copula_params_GOF_2500}}
 \end{center}
 \end{figure}
 
@@ -2169,22 +2169,15 @@ saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS
 saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
-<!--
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
-\caption[asym sensitivity results : copula plot]{asym sensitivity results : copula plot \label{fig_ms_asym_b_0.9}}
-\end{center}
-\end{figure}-->
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
-summary_stat<-summary_stat[,c(1:4)]
-rownames(summary_stat)<-c("bestcop.AICw","N.AICw","relLTdep.AICw","relUTdep.AICw","p.CvM","p.KS","BS.success.percent")
+summary_stat<-summary_stat[,c(1:2)]
+rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS","BS.success.percent")
 knitr::kable(summary_stat, booktabs = T, 
              format = "pandoc",
              digits=3,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestcop.AICw} and \\textbf{N.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{relLTdep.AICw} and \\textbf{relLTdep.AICw} represent relative lower tail and upper tail dependence based on AIC-weightage respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
+      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
 ```
 
 ```{r read_tab_stat_npa_asym,echo=F,results="asis"}
@@ -2202,7 +2195,7 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 #}
 ```
 
-\newpage
+
 ```{r tab_stat_npa_asym_1,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[1]])
 knitr::kable(temp, booktabs = T, 
@@ -2219,63 +2212,10 @@ knitr::kable(temp, booktabs = T,
       caption =paste(cnm[2]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}"))
 ```
 
-
-```{r tab_stat_npa_asym_3,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[3]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[3]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_3}"))
-```
-
-
-```{r tab_stat_npa_asym_4,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[4]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[4]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_4}"))
-```
-
-<!--
-```{r tab_stat_npa_asym_5,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[5]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[5]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_5}"))
-```
-
-```{r tab_stat_npa_asym_6,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[6]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[6]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_6}"))
-```
-
-```{r tab_stat_npa_asym_7,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[7]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[7]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_7}"))
-```
-
-```{r tab_stat_npa_asym_8,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[8]])
-knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[8]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_8}"))
-```
--->
 <!--
 # Cause of non-Normal copula structure : Asymmetric sensitivity and copula structure in populations \label{Cause_asym_sens}
 -->
 
-
-<!--results='hide'-->
 ```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # For sp =1, sp=4 and sp=6 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite : you can see those msg by deleting results="hide" and warning=F option in r chunk
@@ -3139,11 +3079,6 @@ dev.off()
 ```
 
 
-<!--
-## Extinction risk
-        ----moved to Paper.Rmd----
--->
-
 ```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
 source("mydispersal.R")
@@ -3254,6 +3189,8 @@ par(op)
 dev.off()
 ```
 
+<!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-->
+<!--
 ![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with local dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp}](./Results/ext_risk_local_disp.pdf){ width=40%, height=40% }
 
 ![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with global dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp}](./Results/ext_risk_global_disp.pdf){ width=40%, height=40% }
@@ -3263,17 +3200,17 @@ dev.off()
 ![Increasing patch number allows metapopulation to disperse more efficiently and thereby decresing extinction risk calculated after 25 years; models with global dispersion with numsims=10000 (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_numlocs_effect_global_disp}](./Results/ext_risk_numlocs_effect_global_disp.pdf){ width=40%, height=40% }
 
 ![Extinction risk as calculated after 25 years on Ricker model (r=0.25, numsims=10000) decreases as carrying capacity $K$ increases for both local and global dispersion (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
-
+-->
 
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 
 Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
 
+<!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion------
 
 # Consequence of non-Normal copula structure : effect on extinction risk \label{Consequence_ext_risk}
 
 In order to study the effects of non-Normal copula structure on extinction risk for metapopulations with different dispersal rules, we examined the following generalized multiple patch model where local population dynamics at each patch were governed by the Lewton-Cohen model ($r=0$) or Ricker model ($r \neq 0$) as the case may be;
-<!--did I write correct spelling for lewton model?-->
 
 \begin{equation}\label{eq.extrisk_model}
 P(t+1) = \exp\left [  r\left ( 1-\frac{P(t)}{K} \right ) + \epsilon(t) \right ] P(t)
@@ -3292,7 +3229,7 @@ $r$ is the liner growth rate and $K$ is the carrying capacity of the environment
  
     * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_K_effect}]
   
-With increasing number of patches from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{fig_risk_numlocs_effect_local_disp} - Fig. \ref{fig_risk_numlocs_effect_global_disp}] for both model. 
+With increasing number of patches from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{fig_risk_numlocs_effect_local_disp} - Fig. \ref{fig_risk_numlocs_effect_global_disp}] for both model. -->
 
 
 \clearpage

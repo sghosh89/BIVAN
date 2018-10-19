@@ -57,7 +57,9 @@ get_noise_glob_loc_mat<-function(N,r){
 #       decrease : logical (controls the nature of global noise)
 #       numkeep_last : number of points you want to keep for the pop matrix from the end
 # Output :
+#     A list of two :
 #     pop matrix with dim. = numkeep_last by 2
+#     g_noise : global noise
 
 Simulator_asym_sens<-function(mg,ml,a,b,p0=c(0,0),decrease,numkeep_last){
   
@@ -77,7 +79,8 @@ Simulator_asym_sens<-function(mg,ml,a,b,p0=c(0,0),decrease,numkeep_last){
   
   pop<-pobs(pop)
   
-  return(pop)
+  return(list(pop=pop,
+              g_noise=g_noise))
   
 } 
 #--------------------------------------------------------------------------------------

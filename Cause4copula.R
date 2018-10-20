@@ -597,11 +597,22 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_CorlmCoru_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  ylim1<-range(CorlmCoru_pop_mat[,1],CorlmCoru_pop_mat[,3])
+  xlim1<-range(CorlmCoru_noise_mat[,1],CorlmCoru_noise_mat[,3])
+  b_len<-diff(xlim1)/50
   plot(CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,2],cex=2,col="black",
        xlab=expression("Cor"["l,noise"]-"Cor"["u,noise"]),
        ylab=expression("Cor"["l,pop"]-"Cor"["u,pop"]),
        cex.lab=2,cex.axis=1.5,
-       xlim=range(CorlmCoru_noise_mat[,2]),ylim=range(CorlmCoru_pop_mat[,2]))
+       xlim=xlim1,ylim=ylim1)
+  segments(CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,1],CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,3],col='blue')
+  segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,1],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,1],col='blue')
+  segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,3],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,3],col='blue')
+  
+  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2],CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2],col='red')
+  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]+b_len,col='red')
+  segments(CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]+b_len,col='red')
+  
   dat<-data.frame(x1=CorlmCoru_noise_mat[,2],y1=CorlmCoru_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
   abline(mylm,col="black")
@@ -687,11 +698,25 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_PlmPu_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  ylim1<-range(PlmPu_pop_mat[,1],PlmPu_pop_mat[,3])
+  xlim1<-range(PlmPu_noise_mat[,1],PlmPu_noise_mat[,3])
+  
+  b_len<-diff(xlim1)/50
+  
   plot(PlmPu_noise_mat[,2],PlmPu_pop_mat[,2],cex=2,col="black",
        xlab=expression("P"["l,noise"]-"P"["u,noise"]),
        ylab=expression("P"["l,pop"]-"P"["u,pop"]),
        cex.lab=2,cex.axis=1.5,
-       xlim=range(PlmPu_noise_mat[,2]),ylim=range(PlmPu_pop_mat[,2]))
+       xlim=xlim1,ylim=ylim1)
+  
+  segments(PlmPu_noise_mat[,2],PlmPu_pop_mat[,1],PlmPu_noise_mat[,2],PlmPu_pop_mat[,3],col='blue')
+  segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,1],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,1],col='blue')
+  segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,3],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,3],col='blue')
+  
+  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2],PlmPu_noise_mat[,3],PlmPu_pop_mat[,2],col='red')
+  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]+b_len,col='red')
+  segments(PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]+b_len,col='red')
+  
   dat<-data.frame(x1=PlmPu_noise_mat[,2],y1=PlmPu_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
   abline(mylm,col="black")
@@ -773,11 +798,24 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_D2umD2l_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  ylim1<-range(D2umD2l_pop_mat[,1],D2umD2l_pop_mat[,3])
+  xlim1<-range(D2umD2l_noise_mat[,1],D2umD2l_noise_mat[,3])
+  
   plot(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2],cex=2,col="black",
        xlab=expression("D"["u,noise"]^2-"D"["l,noise"]^2),
        ylab=expression("D"["u,pop"]^2-"D"["l,pop"]^2),
        cex.lab=2,cex.axis=1.5,
-       xlim=range(D2umD2l_noise_mat[,2]),ylim=range(D2umD2l_pop_mat[,2]))
+       xlim=xlim1,ylim=ylim1)
+  
+  b_len<-diff(xlim1)/50
+  segments(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,1],D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,3],col='blue')
+  segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,1],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,1],col='blue')
+  segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,3],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,3],col='blue')
+  
+  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2],D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2],col='red')
+  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]+b_len,col='red')
+  segments(D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]+b_len,col='red')
+  
   dat<-data.frame(x1=D2umD2l_noise_mat[,2],y1=D2umD2l_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
   abline(mylm,col="black")

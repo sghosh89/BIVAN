@@ -1943,18 +1943,43 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1
 \end{center}
 \end{figure}
 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
+\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_C_kend}}
+\end{center}
+\end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/common_legend_cause4copula_stat.pdf}\\
 \vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Spearman_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Kendall_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pearson_vs_Spearman's Rho.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Corl-Coru_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pl-Pu_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Spearman_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Kendall_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pearson_vs_Spearman's Rho.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Coru_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Corl-Coru_vs_Spearman's Rho.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pl_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pu_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pl-Pu_vs_Spearman's Rho.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2u_vs_Spearman's Rho.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2l_vs_Spearman's Rho.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2u-D2l_vs_Spearman's Rho.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 3 non-parametric stats ($\cor_l - \cor_u$, $\Ps_l - \Ps_u$ and $\Dsq_u - \Dsq_l$) of environmental noise generated from upper-tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values $< 0.05$ (below horizontal purple line) indicates significantly similar estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
+\caption[Comparing correlations and non-parametric statistic between upper tail dependent noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
 \end{center}
 \end{figure}
 

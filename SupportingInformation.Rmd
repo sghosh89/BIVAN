@@ -2910,7 +2910,7 @@ dev.off()
 \vspace{-0.5 cm}
 \begin{center}
 \includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=10$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient, (K) mean curvature of regression line from first panel-plots. \label{fig_spTL}}
+\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=1000$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient, (K) mean curvature of regression line from first panel-plots. \label{fig_spTL}}
 \end{center}
 \end{figure}
 

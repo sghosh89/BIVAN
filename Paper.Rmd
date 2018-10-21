@@ -450,9 +450,8 @@ exluded $0$ and were positive, indicating asymmetry of tail dependence (stronger
 
 Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{SM-fig_aphid_count} A,B) showed the typical decline of correlation with distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of locations shows these quantities also decline with distance (Fig. \ref{SM-fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows these quantities increase with distance (as expected, given the opposite interpretation these two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Fig. \ref{SM-fig_aphid_count} I-K) did not show a decline with distance, but did illustrate visually the statistical result of Table \ref{SM-tab_count_resamp} that averages of these quantities across all pairs of sampling locations were significantly greater than zero, demonstrating asymmetry of tail dependence, as also seen from model selection approach. Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
 
-
+<!--
 ```{r tab_bivar_summary, echo=F, results='markup'}
-
 tab_bivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
 knitr::kable(tab_bivar_summary, 
              format='pandoc',
@@ -460,7 +459,6 @@ knitr::kable(tab_bivar_summary,
 \\label{tab_bivar_summary}",
              booktabs=TRUE)
 ```
- 
 
 ```{r tab_multivar_summary, echo=F, results='markup'}
 
@@ -471,8 +469,78 @@ knitr::kable(tab_multivar_summary,
 (both Cramer-von Mises and Kolmogorov-Smirnov method), \\textbf{0.025-CI.LT}: lower and \\textbf{0.975-CI.LT}: upper quantile ($95\\%$CI) of model averaged (AIC-weight based) lower tail dependence from all location pair, \\textbf{0.025-CI.UT}: lower and \\textbf{0.975-CI.UT}: upper quantile ($95\\%$CI) of model averaged (AIC-weight based) upper tail dependence from all location pair, \\textbf{num.LT-UT>0}: number of location pair which showed stronger lower tail dependence than upper, Last $6$ rows summarized the non-parametric analysis results for $\\Ps$ statistics : lower and upper quantile ($95\\%$CI) of $\\Ps_l$, $\\Ps_u$, $\\Ps_l-\\Ps_u$ based on resampling location pair.\\label{tab_multivar_summary}",
              booktabs=TRUE)
 ```
+-->
+
+<!--bivariate table summary in latex format-->
+```{r tab_bivar_summaryl, echo=F, results='asis',message=F}
+tab_bivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
+row.names(tab_bivar_summary)<-NULL
+library(kableExtra)
+library(dplyr)
+library(tibble)
+dt <- tibble(Description = c("1. p-value from independence test",
+           "2. best fit copula based on minimum AIC",
+           "3. AIC-weight of that best fit copula",
+           "4. AIC-weight of Normal copula",
+           "5. p-value from goodness of fit test for Cramer-von Mises method",
+           "6. p-value from goodness of fit test for Kolmogorov-Smirnov method",
+           "7. model averaged (AIC-weights based) lower tail dependence",
+           "8. model averaged (AIC-weights based) upper tail dependence",
+           "9. model averaged (AIC-weights based) (lower - upper) tail dependence",
+           "10. Rank of statistics (Pl-Pu) for real data in comparison to 1000 Normal surrogates")
+)
+tab_bivar_summary<-cbind(dt,tab_bivar_summary)
+knitr::kable(tab_bivar_summary, 
+             format="latex", 
+             caption = "Summary of results for bivariate data-sets\\label{tab_bivar_summary}",
+             booktabs=T, linesep = "\\addlinespace",
+             col.names = c(" ", "SoilCN", "Birds’ BMR", "Mammals’ BMR", "Ceder-creek")
+             )%>%column_spec(2:5,width="1.4cm")%>%
+             column_spec(1, width = "11cm")%>%kable_styling(latex_options = "basic",position = "center")
+```
 
 
+
+
+<!--multivariate table summary in latex format-->
+
+```{r tab_multivar_summaryl, echo=F, results='asis',message=F}
+tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
+tab_multivar_summary<-tab_multivar_summary[c(1:11,16,17),]
+row.names(tab_multivar_summary)<-NULL
+library(kableExtra)
+library(dplyr)
+library(tibble)
+dt <- tibble(
+#Items = c("num.pairs","num.non-indep", "num.non-N", "Avg.best.AICw", "Avg.N.AICw", "num.good.fit", "0.025-CI.LT",
+#          "0.975-CI.LT","0.025-CI.UT","0.975-CI.UT","num.LT-UT>0","0.025-CI.Pl-Pu","0.975-CI.Pl-Pu"),
+Description = c("1. total number of location pairs (excluding self-comparison)",
+           "2. how many location pair have non-independent copula structures",
+           "3. number of non-Normal copula as best fit",
+           "4. average AIC-weights of best fit copula from all location pair",
+           "5. average AIC-weights of Normal copula from all location pair",
+           "6. number of location pair having best fit copula with p-values > 0.01
+            (both Cramer-von Mises and Kolmogorov-Smirnov method)",
+           "7. 2.5 percentile of model-avg. lower tail-dep. from all location pair",
+           "8. 97.5 percentile of model-avg. lower tail-dep. from all location pair",
+           "9. 2.5 percentile of model-avg. upper tail-dep. from all location pair",
+           "10. 97.5 percentile of model-avg. upper tail-dep. from all location pair",
+           "11. number of location pair showing stronger lower tail dependence",
+           "12. 2.5 percentile of Pl-Pu statistics from all location pair",
+           "13. 97.5 percentile of Pl-Pu statistics from all location pair")
+)
+
+tab_multivar_summary<-cbind(dt,tab_multivar_summary)
+knitr::kable(tab_multivar_summary, 
+             format="latex", 
+             caption = "Summary of results for multivariate data-sets\\label{tab_multivar_summary}",
+             booktabs=T, linesep = "\\addlinespace",
+             col.names = c(" ","Green-spruce aphid count",
+                        "Leaf-plum curling aphid firstflight",
+                        "Ceratium furca count","Methane-flux")
+             )%>%column_spec(2:5,width="1.4cm")%>%
+             column_spec(1, width = "11cm")%>%kable_styling(latex_options = "basic",position = "center")
+```
 
 \begin{figure}[!h]
 \textbf{ \hspace{2.8 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
@@ -645,6 +713,17 @@ Spatial Taylor's law, which shows linear relationship between `log`(variance) an
 \end{figure}
 
 # Discussion \label{Discussion}
+
+<!--what we did?-->
+In the earlier work, most of the studies in ecology focused on measuring correlations between variables and thus ignoring the possibility to recognize importance of asymmetric tail-dependence and non-Normal copulae in this field. We 
+
+
+
+<!--why is it important to study?-->
+
+
+
+<!--future work-->
 
 
 

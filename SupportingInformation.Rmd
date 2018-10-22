@@ -2,7 +2,7 @@
 title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
 date: "February 12, 2018"
-geometry: "left=1cm,right=1cm,top=2.5cm,bottom=2.8cm"
+geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
   pdf_document:
@@ -182,8 +182,8 @@ dev.off()
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 pdf("./Results/SoilCNraw.pdf")
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=1.5,cex.axis=1.5)
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 ```
@@ -211,8 +211,8 @@ raw_b<-raw_b[-which(raw_b[,1]<0),]  # omit -ve mass?
 b<-log10(raw_b)
 colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
 pdf("./Results/BMR_results/birds/raw_birds_BMR.pdf")
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(b[,1],b[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=1.5,cex.axis=1.5)
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+plot(b[,1],b[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
@@ -234,8 +234,8 @@ colnames(m)<-c("log10M(g)","log10BMR(KJ/h)")
 m<-as.data.frame(m)
 
 pdf("./Results/BMR_results/mammals/raw_mammals_BMR.pdf")
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(m[,1],m[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=1.5,cex.axis=1.5)
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+plot(m[,1],m[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
@@ -306,17 +306,17 @@ cop_HB<-function(db,dp,year,rawplot,ploton){
   
   if(ploton==T){
     if(rawplot==T){
-      op<-par(mar=c(5.1, 4.1, 1.5, 2.1))
-      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col="red",pch=1,cex.lab=1.6,cex.axis=1.5)
-      mtext(paste0("Year=",year),cex=1.5)
+      op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
+      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col="red",pch=1,cex.lab=2.5,cex.axis=1.5)
+      mtext(paste0("Year=",year),cex=2)
       par(op)
     }else{
-      op<-par(mar=c(5.1, 4.1, 1.5, 2.1))
-      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",col="red",pch=1,cex.lab=2,cex.axis=1.5,
+      op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
+      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",col="red",pch=1,cex.lab=2.5,cex.axis=1.5,
          xlim=c(0,1),ylim=c(0,1),asp=1)
       rect(0,0,1,1)
       lines(c(0,1),c(0,1),type='l')
-      mtext(paste0("Year=",year),cex=1.5)
+      mtext(paste0("Year=",year),cex=2)
       par(op)
     }
   }
@@ -635,6 +635,38 @@ a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
 
+# Spatial resampling with multivariate datasets for non-parametric statistics \label{spatial_resamp}
+
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+as part of a method for 
+performing model selection among matrix regression models. For each pair of 
+locations $i \neq j$, the statistic
+of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
+$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
+$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
+values $s_{ij}$ were then arranged in
+a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the 
+average strength of 
+dependence, across all pairs of distinct locations, for data in the portion of the distributions 
+given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
+asymmetry of tail dependence across all pairs of locations. 
+Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a 
+distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
+revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
+or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
+Normal null hypothesis, and answering question \hyperref[MT-Intro]{\textbf{(Q1)}} from the \nameref{MT-Intro}.
+Bootstrapping was performed by resampling the locations of measurement, with replacement. 
+This corresponds to 
+resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
+[@bjornstadfalck2001 ; @walteretal2017]. 
+
+# How to visualize non-parametric analysis results for multivariate spatial data? \label{visual_npa}
+
+The principle remains same but for example we chose one of spatial data set (green spruce aphid's count) to illustrate results from Table \ref{tab_count_resamp}. Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{fig_aphid_count} A,B) showed the typical decline of correlation with distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of locations shows these quantities also decline with distance (Fig. \ref{fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows these quantities increase with distance (as expected, given the opposite interpretation these two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Fig. \ref{fig_aphid_count} I-K) did not show a decline with distance, but did illustrate visually the statistical result of Table \ref{tab_count_resamp} that averages of these quantities across all pairs of sampling locations were significantly greater than zero, demonstrating asymmetry of tail dependence, as also seen from model selection approach. Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
+
+
 <!--This chunk is for model selection results of soilCN dataset-->
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
@@ -766,7 +798,7 @@ BivMS_mammals<-OurBiCopSelect(u1=cop_m[,1],u2=cop_m[,2],families=c(1,3:10,13:14,
 saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 ```
 
-\newpage
+
 <!--Display model selection results for BMR:birds data in a table-->
 ```{r tab_bmr_mammals_fit, echo=F, results='markup'}
 h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -982,6 +1014,7 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
 ```
 
+\newpage
 ```{r tab_count_bestcop, echo=F, results="markup"}
 #library(dplyr)
 #knitr::opts_knit$set(kable.force.latex = TRUE)
@@ -1005,7 +1038,6 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
              )
 ```
 
-\newpage
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
@@ -1031,6 +1063,7 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
              )
 ```
 
+\newpage
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='pandoc',
@@ -1039,6 +1072,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
              )
 ```
 
+\newpage
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='pandoc',
@@ -1047,6 +1081,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
              )
 ```
 
+\newpage
 ```{r tab_count_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 5,
@@ -1202,6 +1237,7 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              )
 ```
 
+\newpage
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
@@ -1677,6 +1713,7 @@ saveRDS(stat_methane,paste(resloc,file="stat_methane.RDS",sep=''))
 stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
 ```
 
+\newpage
 <!--display the main statistical results in a table-->
 ```{r tab_methane_resamp,echo=F,results="markup"}
 s<-stat_methane$numericdf[,c(3,2,4)]
@@ -1790,7 +1827,6 @@ multivar_tab_summary_fn<-function(r,rs){
   m$`0.975-CI.Pu`<-round(rs$numericdf[6,4],3)
   m$`0.025-CI.Pl-Pu`<-round(rs$numericdf[10,3],3)
   m$`0.975-CI.Pl-Pu`<-list(round(rs$numericdf[10,4],3))
-  #m$`CI0.975_Pl-Pu`<-round(rs$numericdf[10,4],3)
   #m$CI_Pl<-list(c(round(rs$numericdf[5,3],3),round(rs$numericdf[5,4],3)))
   #m$CI_Pu<-list(c(round(rs$numericdf[6,3],3),round(rs$numericdf[6,4],3)))
   #m$`CI_Pl-Pu`<-list(c(round(rs$numericdf[10,3],3),round(rs$numericdf[10,4],3)))
@@ -1818,17 +1854,17 @@ saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 d1<-data_aphid_count$`Green spruce aphid`[[4]]
 d2<-data_aphid_count$`Green spruce aphid`[[11]]
 pdf("./Results/Aphid_count_raw_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Green-spruce aphid count from location 4",ylab="Green-spruce aphid count from location 11",cex.lab=1.5,cex.axis=1.5)
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Green-spruce aphid count (loc. 4)",ylab="Green-spruce aphid count (loc. 11)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
 source("./vivj_matrix.R")
 m<-vivj_matrix(d_allsp = data_aphid_count,sp=10,i=4,j=11)
 pdf("./Results/Aphid_count_cop_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
 plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
-     cex.lab=2,cex.axis=1.5,
+     cex.lab=2.5,cex.axis=1.5,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
 lines(c(0,1),c(0,1),type='l')
@@ -1840,16 +1876,16 @@ dev.off()
 d1<-data_aphid_ff$`Leaf-curling plum aphid`[[2]]
 d2<-data_aphid_ff$`Leaf-curling plum aphid`[[5]]
 pdf("./Results/Aphid_ff_raw_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Leaf-plum curling aphid's first-flight from location 2",ylab="Leaf-plum curling aphid's first-flight from location 5",cex.lab=1.5,cex.axis=1.5)
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Leaf-plum curling's first-flight (loc. 2)",ylab="Leaf-plum curling's first-flight (loc. 5)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
 m<-vivj_matrix(d_allsp = data_aphid_ff,sp=11,i=2,j=5)
 pdf("./Results/Aphid_ff_cop_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 4.1, 0.2, 2.1))
+op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
 plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
-     cex.lab=2,cex.axis=1.5,
+     cex.lab=2.5,cex.axis=1.5,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
 lines(c(0,1),c(0,1),type='l')
@@ -3227,6 +3263,7 @@ dev.off()
 ![Extinction risk as calculated after 25 years on Ricker model (r=0.25, numsims=10000) decreases as carrying capacity $K$ increases for both local and global dispersion (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 -->
 
+\newpage
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 
 Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).

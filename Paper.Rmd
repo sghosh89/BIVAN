@@ -579,7 +579,7 @@ To test environmental effect on population copula, our approach is of two way :
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption{Linear regression between 3 non-parametric stats ($\cor_l - \cor_u$, $\Ps_l - \Ps_u$ and $\Dsq_u - \Dsq_l$) of environmental noise generated from lower tail dependent Clayton copula and of the affected populations for 9 equidistant Kendall's Tau values in a range (0.1 to 0.9 as shown in Fig. \ref{SM-fig_Cause4copula_C_kend}) showed significant pearson correlation, and henceforth confirmed asymmetric tail dependence in noise copula caused similar tail dependence in population copula.\label{fig_Cause4copula_scatter_C_kend}}
+\caption{Linear regression between 3 non-parametric stats ($\cor_l - \cor_u$, $\Ps_l - \Ps_u$ and $\Dsq_u - \Dsq_l$) of environmental noise generated from lower tail dependent Clayton copula and of the affected populations for 9 equidistant Kendall's Tau values in a range (0.1 to 0.9 as shown in Fig. \ref{SM-fig_Cause4copula_C_kend}) showed significant pearson correlation, and henceforth confirmed asymmetric tail dependence in noise copula caused similar tail dependence in population copula. Regression line (black) differing from 1:1 line (green) indicates that asymmetric tail dependence in noise and population copulae are similar but not exactly same.\label{fig_Cause4copula_scatter_C_kend}}
 \end{center}
 \end{figure}
 

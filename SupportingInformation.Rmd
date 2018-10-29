@@ -3116,7 +3116,8 @@ sp<-6
 pdf("./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf",height=5,width=5)
 op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=sp,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon = F)
-mtext(paste0("p= ",round(ans$p_left_mncurv,3)),side = 3, line=-2, adj=0.5, col="navyblue",cex=2)
+saveRDS(ans,"./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
+mtext(paste0("p= ",ans$p_left_mncurv),side = 3, line=-2, adj=0.5, col="navyblue",cex=2)
 par(op)
 dev.off()
 

@@ -1796,7 +1796,7 @@ multivar_tab_summary_fn<-function(r,rs){
   colnames(m)<-c("num.pairs","num.non-indep","num.non-N",
                  "Avg.best.AICw","Avg.N.AICw","num.good.fit",
                  "0.025-CI.LT","0.975-CI.LT","0.025-CI.UT","0.975-CI.UT",
-                 "num.LT-UT>0",
+                 "percent.LT-UT>0",
                  "0.025-CI.Pl","0.975-CI-Pl","0.025-CI.Pu","0.975-CI.Pu","0.025-CI.Pl-Pu","0.975-CI.Pl-Pu")
   m<-as.data.frame(m)
   
@@ -1820,7 +1820,7 @@ multivar_tab_summary_fn<-function(r,rs){
   CI_UT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))
   m$`0.025-CI.UT`<-round(CI_UT[1],3)
   m$`0.975-CI.UT`<-round(CI_UT[2],3)
-  m$`num.LT-UT>0`<-sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)
+  m$`percent.LT-UT>0`<-round((sum(r$LTdep_AICw-r$UTdep_AICw>0,na.rm=T)/((d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)))*100,2)
   m$`0.025-CI.Pl`<-round(rs$numericdf[5,3],3)
   m$`0.975-CI-Pl`<-round(rs$numericdf[5,4],3)
   m$`0.025-CI.Pu`<-round(rs$numericdf[6,3],3)

@@ -235,7 +235,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
     #arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
     points(corcoef_list,par_noise,pch=2,col="red")
     axis(2, col="black",las=1)  ## las=1 makes horizontal labels
-    mtext("Parameters",side=2,line=2.5)
+    mtext(expression(paste("Parameter (",theta,")")), side = 2, line = 2.5)
     mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3,cex=0.8)
     box()
     

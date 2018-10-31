@@ -450,6 +450,23 @@ text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$la
 dev.off()
 ```
 
+
+```{r tab_aphid_info, echo=F, results='asis',message=F}
+library(tibble)
+aphid_info <- tibble(c("Apple grass aphid","Bird cherry oat aphid","Black bean aphid","Blackberry cereal aphid","Blackcurrant sowthistle aphid",
+           "Corn leaf aphid","Currant lettuce aphid","Damson hop aphid","Grain aphid","Green spruce aphid",
+           "Leaf-curling plum aphid","Mealy cabbage aphid","Mealy plum aphid","Pea aphid","Peach potato aphid",
+           "Potato aphid","Rose grain aphid","Shallot aphid","Sycamore aphid","Willow carrot aphid"),
+           c("Rhopalosiphum insertum", "Rhopalosiphum padi", "Aphis fabae", "Sitobion fragariae", "Hyperomyzus lactucae",
+             "Rhopalosiphum maidis", "Nasonovia ribisnigri","Phorodon humuli","Sitobion avenae","Elatobium abietinum",
+             "Brachycaudus helichrysi","Brevicoryne brassicae","Hyalopterus pruni","Acyrthosiphon pisum","Myzus persicae",
+             "Macrosiphum euphorbiae","Metopolophium dirhodum","Myzus ascalonicus","Drepanosiphum platanoidis","Cavariella aegopodii")
+)
+knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
+      caption = "Species names of 20 aphids commonly found across UK \\label{tab_aphid_info}",
+      col.names = c("Common name", "Latin binomial"))
+```
+
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=8 cm,height=8 cm]{./Results/aphid_map_plot.pdf} 
@@ -457,6 +474,22 @@ dev.off()
 out of which only blue boxes are considered for our study based on having atleast 30 annual data points. \label{fig_aphid_map}}
 \end{center}
 \end{figure}
+
+```{r tab_plankton_info, echo=F, results='asis',message=F}
+library(tibble)
+plankton_info <- tibble(c('Calanus I-IV','Para-Pseudocalanus spp','Temora longicornis','Acartia spp',
+                          'Centropages typicus',
+                          'Oithona spp','Echinoderm larvae','Calanus finmarchicus',
+                          'Calanus helgolandicus','Metridia lucens','Decapoda larvae',
+                   'Euphausiacea','Thalassiosira spp','Rhizosolenia styliformis',
+                   'Ceratium fusus','Ceratium furca','Ceratium tripos','Ceratium macroceros',
+                   'Rhizosolenia alata alata','Pseudocalanus elongatus Adult',
+                   'Nitzschia delicatissima','Nitzschia seriata')
+)
+knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
+      caption = "Species names of 22 planktons found across UK seas\\label{tab_plankton_info}",
+      col.names = c("Plankton sp. name"))
+```
 
 \begin{figure}[!h]
 \begin{center}

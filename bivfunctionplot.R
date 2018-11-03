@@ -142,6 +142,16 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   PlmPu_frac_S<-sum(PlmPu_S<PlmPu_d,na.rm=T)
   Pstats_Sq<-apply(FUN=quantile,X=Pstats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
+  #--------plot histogram of PlmPu stat for surrogs and real data-----------
+  pdf(paste(resloc,nametag,"_PlmPu_hist_kendall_preserved_surrogs.pdf",sep=""),width=8,height=8)
+  rng<-round(max(abs(range(PlmPu_K,PlmPu_d))),2)
+  hist(PlmPu_K,breaks=100,xlim=c(-rng,rng),main="Histogram of (Pl-Pu) stats from 
+       \nKendall correlation preserving Normal surrogates",
+       cex.main=1.5,
+       xlab="(Pl-Pu)",ylab="Frequency",cex.lab=1.5,cex.axis=1.5)
+  abline(v=PlmPu_d,col="red")
+  dev.off()
+  
   #-------------------------------Ranking--------------------------
   Rank_Pl_K<-unname((1+Pstats_frac_K)[1])
   Rank_Pl_S<-unname((1+Pstats_frac_S)[1])

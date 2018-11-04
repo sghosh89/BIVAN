@@ -144,7 +144,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   
   #--------plot histogram of PlmPu stat for surrogs and real data-----------
   pdf(paste(resloc,nametag,"_PlmPu_hist_kendall_preserved_surrogs.pdf",sep=""),width=8,height=8)
-  rng<-round(max(abs(range(PlmPu_K,PlmPu_d))),2)
+  rng<-round(max(abs(range(c(PlmPu_K,PlmPu_d),na.rm=T))),2)
   hist(PlmPu_K,breaks=100,xlim=c(-rng,rng),main="Histogram of (Pl-Pu) stats from 
        \nKendall correlation preserving Normal surrogates",
        cex.main=1.5,

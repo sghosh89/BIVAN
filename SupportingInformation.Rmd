@@ -15,6 +15,7 @@ output:
 tables: True
 link-citations: True
 urlcolor : blue
+indent : True
 
 csl: ecology-letters.csl
 bibliography: REF_ALL.bib
@@ -183,7 +184,7 @@ d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 pdf("./Results/SoilCNraw.pdf")
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d[,1],d[,2],type="p",col="red",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=1.5)
+plot(d[,1],d[,2],type="p",col="black",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 ```
@@ -212,7 +213,7 @@ b<-log10(raw_b)
 colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
 pdf("./Results/BMR_results/birds/raw_birds_BMR.pdf")
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(b[,1],b[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
+plot(b[,1],b[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
@@ -235,7 +236,7 @@ m<-as.data.frame(m)
 
 pdf("./Results/BMR_results/mammals/raw_mammals_BMR.pdf")
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(m[,1],m[,2],type="p",col="red",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
+plot(m[,1],m[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
 par(op)
 dev.off()
 
@@ -307,12 +308,12 @@ cop_HB<-function(db,dp,year,rawplot,ploton){
   if(ploton==T){
     if(rawplot==T){
       op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
-      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",col="red",pch=1,cex.lab=2,cex.axis=1.5)
+      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",pch=1,cex.lab=2,cex.axis=1.5)
       mtext(paste0("Year=",year),cex=2)
       par(op)
     }else{
       op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
-      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",col="red",pch=1,cex.lab=2,cex.axis=1.5,
+      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",pch=1,cex.lab=2,cex.axis=1.5,
          xlim=c(0,1),ylim=c(0,1),asp=1)
       rect(0,0,1,1)
       lines(c(0,1),c(0,1),type='l')
@@ -509,40 +510,12 @@ methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 ```
 
 <!--# Description of Data \label{Data_detailed}
+to be filled later
+--->
 
-For bivariate analysis we used four datasets which are briefly described as follows;
-First, to explore the dependence of **soil organic C** and total **soil N** across a wide geographic range (conterminous US), ecosystem type, and traceable methodology we used the RaCA (Rapid Carbon Assessment)
-database [@Wills2014, **or Wills and Loecke pending???**]. Specifically, the soil organic C and total soil N
-stocks (Mg C or N m$^{-2}$ ) to 1m of soil depth from the central pedon of the 5930 sites were included in this
-study.
-
-<!--
-Next, the [**BMR data**](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) contains the trait contrasts from phylogenetically independent contrasts [@SukumaranH2010] of data reported by [@GenoudIM2017] on the basal metabolic rate (BMR) and mass of mammals species. Specifically, the "SELECT" BMR data in their database were used for those species for which data were available. A phylogeny in NEXUS [@NEXUS] format was extracted from the supplementary information of [@GenoudIM2017]. Version 4.4.0 of the DendroPy library [@SukumaranH2010] was used to calculate phylogenetic independent contrasts using Python 2.7. For each contrast, the path length spanned by the contrast (sum of the branch lengths) and the contrast for the mass, natural logarithm of the BMR and natural logarithm of the mass were written as a row in the [bmr-contrasts.csv](https://github.com/sghosh89/BIVAN/blob/master/Data/BMR/bmr-contrasts.csv) file. 
-
-[**Third dataset**](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was a raw data on measurements of anatomical features of several species of *Anolis* lizards, which was downloaded
-from the Dryad data package [@MahlerIRL2013Data] associated with [@MahlerIRL2013].
-The [contrasts.csv file](https://github.com/sghosh89/BIVAN/blob/master/Data/Anolis/contrasts.csv) was produced by using version 4.4.0 of the DendroPy library [@SukumaranH2010]  to calculate phylogenetic independent contrasts on the the data in the GA_Anolis_traits.csv file of Mahler et at. using their maximum clade credibility tree (GA_Anolis_MCC.nex) as the phylogeny.
-
-Absolute values of traits for each contrast are considered to construct corresponding copula for second and third datasets.
-
-Fourth, we used **Ceder-creek data for e120** which resulted from a biodiversity experiment, carried out by Tilman and his co-warkers [@Tilman2001; @Tilman2006] over many years to collect [plant above ground biomass](https://www.cedarcreek.umn.edu/research/data/dataset?ple120) and [plant species percent cover](https://www.cedarcreek.umn.edu/research/data/dataset?pce120) data. These datasets were used to calculate plant-aboveground biomass and Shannon's diversity index (H), averaged over each plot (9m by 9m),
-for year 2000. 
-
-The raw data and copula for each four datasets are shown along each column of Figure \ref{MT-fig_biv_raw_cop}.
-
-Similarly, we applied multivariate analysis on four datasets; first two data sets [for aphid-count and aphid-firstflight date] were extracted from the Rothamsted Insect Survey suction-trap data [@Macaulay1988, @Harrington2014]. These two annual timesries (1976-2010) measurements are from 11 locations acroos UK for 20 aphid species. We used the same data format as used by @Sheppard2016 for their analysis on the impact of climate on aphids' spatial synchrony. In our case, we chose species=10 [Name : "Green spruce aphid"] for aphid-abundance data and species=11 [Name : "Leaf-curling plum aphid"] for aphid-firstflight data and considered only those locations which had atleast 30 years of data (see Figure \ref{fig_aphid_map}). 
-
-Figure \ref{MT-fig_aphid_raw_cop} represents raw and copula data plot for aphid count ("Green spruce aphid") and aphid-firstflight date ("Leaf-curling plum aphid") taken from two locations.
-
-Our third dataset for multivariate analysis is a plankton-count data collected at 26 locations over the areas of the North Sea and British seas for 22 species and for 56 years (1958-2013). These data were obtained from the Continuous Plankton Recorder (CPR) data set and maintained by the Sir Alistair Hardy Foundation for Ocean Science (SAHFOS). The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
-unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and
-location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
-averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available). Monthly values were converted to yearly values by averaging over all months. This approach was used by [@Sheppard2017] earlier. But here we only allowed maximum 4 months in a year with missing data which were replaced by those medians. If a year got 5 or more missing monthly data value then we set NA value for that particular year. We used data for species=16 [Name : "Ceratium furca"] which is a dicoflagellate commonly found in UK seas. Among 26 locations, only those having atleast 45 years time series data, were considered (see Figure \ref{fig_plankton_map}).
-
-Finally, methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the
-Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at
-daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
-additional details???** on greenhouse gas flux methods for this site. We threw out all locations that had fewer than 50 dates data.-->
+<!--# Suppmat for model selection approach \label{MS_detailed}
+to be filled later
+--->
 
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
@@ -1888,7 +1861,7 @@ d1<-data_aphid_count$`Green spruce aphid`[[4]]
 d2<-data_aphid_count$`Green spruce aphid`[[11]]
 pdf("./Results/Aphid_count_raw_loc_4_11.pdf",height = 8,width=8)
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Green-spruce aphid count (loc. 4)",ylab="Green-spruce aphid count (loc. 11)",cex.lab=2.5,cex.axis=2)
+plot(d1$Dat,d2$Dat,type="p",xlab="Green-spruce aphid count (loc. 4)",ylab="Green-spruce aphid count (loc. 11)",cex.lab=2.5,cex.axis=2)
 par(op)
 dev.off()
 
@@ -1896,7 +1869,7 @@ source("./vivj_matrix.R")
 m<-vivj_matrix(d_allsp = data_aphid_count,sp=10,i=4,j=11)
 pdf("./Results/Aphid_count_cop_loc_4_11.pdf",height = 8,width=8)
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
+plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
      cex.lab=3,cex.axis=2,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
@@ -1910,14 +1883,14 @@ d1<-data_aphid_ff$`Leaf-curling plum aphid`[[2]]
 d2<-data_aphid_ff$`Leaf-curling plum aphid`[[5]]
 pdf("./Results/Aphid_ff_raw_loc_2_5.pdf",height = 8,width=8)
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",col="red",xlab="Leaf-plum curling's first-flight (loc. 2)",ylab="Leaf-plum curling's first-flight (loc. 5)",cex.lab=2.5,cex.axis=2)
+plot(d1$Dat,d2$Dat,type="p",xlab="Leaf-plum curling's first-flight (loc. 2)",ylab="Leaf-plum curling's first-flight (loc. 5)",cex.lab=2.5,cex.axis=2)
 par(op)
 dev.off()
 
 m<-vivj_matrix(d_allsp = data_aphid_ff,sp=11,i=2,j=5)
 pdf("./Results/Aphid_ff_cop_loc_2_5.pdf",height = 8,width=8)
 op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(m[,1],m[,2],type="p",col="red",xlab="u",ylab="v",
+plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
      cex.lab=3,cex.axis=2,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
@@ -2186,19 +2159,19 @@ plotter_asym_sens_b_varn<-function(mg,ml,a,b,numkeep_last,ploton,resloc){
     #plot(pop[,1],pop[,2],col="red",main = bquote(beta ==.(beta)))
     pop<-pop_g$pop
     geps<-pop_g$g_noise
-    plot(mg[,1],geps[,1],col="red",cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=1")
-    plot(mg[,2],geps[,2],col="red",cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=2")
-    plot(pop[,1],pop[,2],col="red",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2)
+    plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=1")
+    plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=2")
+    plot(pop[,1],pop[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2)
     title(expression(paste("g = ",g[1]," , ")), adj=0.06,cex.main=1.5)
-    mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9, col="black")
+    mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
     
     pop_d<-pop_d_g$pop
     geps<-pop_d_g$g_noise
-    plot(mg[,1],geps[,1],col="blue",cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=1")
-    plot(mg[,2],geps[,2],col="blue",cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=2")
-    plot(pop_d[,1],pop_d[,2],col="blue",xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2)
+    plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=1")
+    plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=2")
+    plot(pop_d[,1],pop_d[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2)
     title(expression(paste("g = ",g[2]," , ")), adj=0.06,cex.main=1.5)
-    mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9, col="black")
+    mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
     
     par(op)
     dev.off()
@@ -2501,7 +2474,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 
@@ -2511,7 +2484,7 @@ answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loc
                           corpres="spearman") 
 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 ```
@@ -2531,7 +2504,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer2k<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
 p_right<-sum(answer2k$surrogskw > answer2k$realskw)/numsurrog
-mtext(paste0("p = ",p_right),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_right),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 
@@ -2540,7 +2513,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 p_right<-sum(answer2s$surrogskw > answer2s$realskw)/numsurrog
-mtext(paste0("p = ",p_right),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_right),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 ```
@@ -2560,7 +2533,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer3k<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="kendall") 
 p_left<-sum(answer3k$surrogskw < answer3k$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 
@@ -2569,7 +2542,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
                           corpres="spearman") 
 p_left<-sum(answer3s$surrogskw < answer3s$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 ```
@@ -3150,16 +3123,16 @@ pdf("./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf",height=5,width
 op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=sp,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon = F)
 saveRDS(ans,"./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
-mtext(paste0("p= ",ans$p_left_mncurv),side = 3, line=-2, adj=0.5, col="navyblue",cex=2)
+mtext(paste0("p= ",ans$p_left_mncurv),side = 3, line=-2, adj=0.5, col="black",cex=2)
 par(op)
 dev.off()
 
 pdf("./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf",height=5,width=10)
 op<-op<-par(mfrow=c(1,2),mar=c(4,5,1,1),mgp=c(3,1,0))
 plot(ans$realTL_stats$s.points,xlab=expression(log[10]("spatial mean")),
-     ylab=expression(log[10]("spatial variance")),col="red",
+     ylab=expression(log[10]("spatial variance")),col="black",
      cex.axis=1.5,cex.lab=1.5)
-mtext(paste0("mean curvature= ",round(unname(ans$realTL_stats$s.stats[7]),3)),side = 3, line=-2, adj=0, col="navyblue",cex=2)
+mtext(paste0("mean curvature= ",round(unname(ans$realTL_stats$s.stats[7]),3)),side = 3, line=-2, adj=0, col="black",cex=2)
 
 target_mncurv<-0.1
 id<-which(abs(ans$good_surrog_mncurv-target_mncurv)<1e-4)[1]
@@ -3167,7 +3140,7 @@ ans_s<-ans$surrogTL_stats
 plot(ans_s[[id]]$s.points,xlab=expression(log[10]("spatial mean")),
      ylab=expression(log[10]("spatial variance")),
      cex.axis=1.5,cex.lab=1.5)
-mtext(paste0("mean curvature= ",round(ans$good_surrog_mncurv[id],3)),side = 3, line=-2, adj=0, col="navyblue",cex=2)
+mtext(paste0("mean curvature= ",round(ans$good_surrog_mncurv[id],3)),side = 3, line=-2, adj=0, col="black",cex=2)
 
 par(op)
 dev.off()

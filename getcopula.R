@@ -31,7 +31,7 @@ getcopula<-function(d,rankon=T,ploton=F)
   #plot
   if(ploton==T){
     op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-    plot(v[,1],v[,2],type="p",col="red",xlab="u",ylab="v",
+    plot(v[,1],v[,2],type="p",xlab="u",ylab="v",
          cex.lab=2.5,cex.axis=1.5,
          xlim=c(0,1),ylim=c(0,1),asp=1)
     rect(0,0,1,1)

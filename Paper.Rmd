@@ -487,7 +487,7 @@ knitr::kable(tab_multivar_summary,
 
 \begin{figure}[!h]
 \textbf{ \hspace{2.8 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
-\vspace{-0.35 cm}
+\vspace{-0.6 cm}
 \begin{center}
 \includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
 \includegraphics[width=4 cm]{./Results/BMR_results/birds/raw_birds_BMR.pdf}
@@ -495,7 +495,7 @@ knitr::kable(tab_multivar_summary,
 \includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
 \end{center}
 \textbf{ \hspace{2.8 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
-\vspace{-0.35 cm}
+\vspace{-0.6 cm}
 \begin{center}
 \includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
 \includegraphics[width=4 cm]{./Results/BMR_results/birds/copula_birds_BMR.pdf}
@@ -503,16 +503,16 @@ knitr::kable(tab_multivar_summary,
 \includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}\\
 \end{center}
 \textbf{ \hspace{7 cm} (I) \hspace{3.2 cm} (J)} \\
-\vspace{-0.35 cm}
+\vspace{-0.6 cm}
 \begin{center}
-\includegraphics[width=3.8 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
-\includegraphics[width=3.8 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
+\includegraphics[width=4 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
 \end{center}
 \textbf{ \hspace{7 cm} (K) \hspace{3.2 cm} (L)} \\
-\vspace{-0.35 cm}
+\vspace{-0.6 cm}
 \begin{center}
-\includegraphics[width=3.8 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
-\includegraphics[width=3.8 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
+\includegraphics[width=4 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
 \caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} log(BMR) vs. log(mass) for birds, \textbf{(C)} log(BMR) vs. log(mass) for mammals, \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
 Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. Lower panel shows \textbf{(I - J)} raw data plots and \textbf{(K - L)} copula plots for  green spruce aphid's count data from location pair(4,11) and for leaf-curling plum aphid's firstflight data from location pair(2,5).\label{fig_biv_multi_raw_cop}}
 \end{center}
@@ -520,9 +520,9 @@ Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets 
 
 
 <!--Question 2 analyses-->
-# Some possible causes of non-Normal copula structure \label{Causes}
+# Concepts for \hyperref[Intro]{\textbf{(Q2)}}: possible causes of non-Normal copula structure \label{Causes}
 
-This section is dedicated to exploring question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. 
+This section is dedicated to exploring question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. We showed environmental copula structure and asymmetric sensitivities to the environment could produce population copula structures.
 <!--We wanted to find how are copula structure of ecologically influential climate variables changing as part of climate change?--> 
 
 <!--Moran effects-->
@@ -591,7 +591,7 @@ had only non-positive contributions at two habitat patches ($g_{1}$ in the first
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
+\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
 \caption{Effects of asymmetric global noise copula (resulting from the asymmetric dependence of $g$ on $\varepsilon$) on two habitat patch model (Eq. \ref{eq.AS}) with growth rate $b=0.1$: copula of two populations ($P_{1}, P_{2}$) shaped according to the asymmetry of noise copula\label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
@@ -611,11 +611,12 @@ dependence of populations in the locations that are influenced by the environmen
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 <!--Question 3 analyses-->
-# Consequences of non-Normal copula structure and tail dependence for our understanding of biology \label{Consequences}
+# Concepts for \hyperref[Intro]{\textbf{(Q3)}}: Consequences of non-Normal copula structure and tail dependence for our understanding of biology \label{Consequences}
 
-This section is dedicated to analysis of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We wanted to examine whether the asymmetric tail dependence had any **(i)** effects on skewness of spatially averaged time series data. We predicted that because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, should change significantly from the individual skewness of time-series data. We also showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL_simulation}). For example, our model simulation showed lower tail dependent Clayton copula had much higher slope (spatial-Taylor's law) than symmetric Normal copula, which in turn had higher slope than upper tail dependent Survival Clayton family (Fig. \ref{SM-fig_spTL}(I)). 
+This section is dedicated to analysis of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We wanted to examine whether the asymmetric tail dependence had any **(i)** effects on skewness of spatially averaged time series data. We predicted that because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, should change significantly from the individual skewness of time-series data. We tested null hypothesis $(H_{0})$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula.
+We generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same and calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set in the next section (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R)). We made a histogram of surrogate skewness and found if actual skewness was within the $95\%$ confidence interval or not. If the $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness than Normal copula).
 
-In the following section we will show application of these ideas with real datasets.
+We also showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL_simulation}). For example, our model simulation showed lower tail dependent Clayton copula had much higher slope (spatial-Taylor's law) than symmetric Normal copula, which in turn had higher slope than upper tail dependent Survival Clayton family (Fig. \ref{SM-fig_spTL}(I)). In the following section we will show application of these ideas with real datasets.
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-----------
 Finally, we studied **(iii)** the effects of environmental noise, having a non-Normal copula, on extinction risk (calculated after 25 years) with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). We considered patches were arranged in a linear chain fashion and the population may disperse to its nearerst two neighbors (local dispersion) or to any patches (global dispersion). For both model with both dispersion, increasing number of habitat patches and increasing carrying capacity, separately, had decreased extinction risk of the populations which was expected (Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_K_effect}). For Lewton-Cohen model, we found greater extinction risk if populations were affected by left tail dependence environmental noise copula than right tail dependent one. For Ricker model, we got the similar observation for smaller values of $r$, the intrinsic growth rate, but for higher values of $r$, there was a turn-over in extinction risks, and right tail dependent noise copula caused population go extinct faster. -->
 
@@ -623,26 +624,25 @@ Finally, we studied **(iii)** the effects of environmental noise, having a non-N
 \textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
+\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
+\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
 \end{center}
 \vspace{0.2 cm}
 \textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
 \vspace{-0.1 cm}
 \begin{center}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
-\includegraphics[width=8 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
+\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
+\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
 \caption{Skewness of spatially averaged $(A)$ green-spruce aphid abundance, $(B)$ leaf-curling plum aphid firstflight date, $(C)$ Ceratium furca abundance and $(D)$ methane-flux data, were indicated by red dot in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Spearman correlation). \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 
-## Application : Change of skewness
+## Results for \hyperref[Intro]{\textbf{(Q3)}}: Change of skewness
 
-We used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. We tested null hypothesis $(H_{0})$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula.
-We generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same and calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R)). We made a histogram of surrogate skewness and found if actual skewness was within the $95\%$ confidence interval or not. If the $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness than Normal copula). We carried out the same analysis with aphid abundance and aphid firstflight date data for all 20 aphid species and plankton abundance data for all 22 plankton species. In each study, we got $>5\%$ positive results which gave us confidence in validating significantly different skewness for asymmetric copula than Normal. For example, Figure \ref{fig_skewness_spearman} represents the results for each dataset with Spearman correlation preserving surrogates. Figure \ref{fig_skewness_spearman}(A) showed that averaged skewness (indicated by red dot) was much lower than expected if the green-spruce aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data. As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results (see first column of Table \ref{tab_multivar_summary}). On the other hand, Figure \ref{fig_skewness_spearman}(B) demonstrated that averaged skewness was significantly higher than expected if the leaf-plum curling aphid first flight data came from a normal copula, which was also confirmed by upper-tail dependence results from model selection and non-parametric results (see second column of Table \ref{tab_multivar_summary}). Figure \ref{fig_skewness_spearman}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence (see third column of Table \ref{tab_multivar_summary}). But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was found significantly lower in comparison to its Normal surrogates (Figure \ref{fig_skewness_spearman} D). We found the same result with all datasets when we repeated our simulation with Kendall correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_kendall}).
+We used our four multivariate datasets : aphid-count data, aphid-firstflight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. We carried out the analysis mentioned in the concepts above, with aphid abundance and aphid firstflight date data for all 20 aphid species and plankton abundance data for all 22 plankton species. In each study, we got $>5\%$ positive results which gave us confidence in validating significantly different skewness for asymmetric copula than Normal. For example, Figure \ref{fig_skewness_spearman} represents the results for each dataset with Spearman correlation preserving surrogates. Figure \ref{fig_skewness_spearman}(A) showed that averaged skewness (indicated by red dot) was much lower than expected if the green-spruce aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data. As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the non-parametric analysis and model fitting results (see first column of Table \ref{tab_multivar_summary}). On the other hand, Figure \ref{fig_skewness_spearman}(B) demonstrated that averaged skewness was significantly higher than expected if the leaf-plum curling aphid first flight data came from a normal copula, which was also confirmed by upper-tail dependence results from model selection and non-parametric results (see second column of Table \ref{tab_multivar_summary}). Figure \ref{fig_skewness_spearman}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on non-parametric analysis and model fitting also supported lower tail dependence (see third column of Table \ref{tab_multivar_summary}). But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was found significantly lower in comparison to its Normal surrogates (Figure \ref{fig_skewness_spearman} D). We found the same result with all datasets when we repeated our simulation with Kendall correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_kendall}).
 
 
-## Application : Change of curvature of spatial Taylor's law regression line
+## Results for \hyperref[Intro]{\textbf{(Q3)}}: Change of curvature of spatial Taylor's law regression line
 
 ```{r read_tl_aphid_count_sp6, echo=F}
 tlsp6<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
@@ -672,7 +672,8 @@ We explained the possible causes which induced asymmetric tail-dependence in the
 We think this copula approach have scope to investigate into the extinction risks of metapopulation due to climate change. To illustrate, lower-tail dependent environmental fluctuations may suppress the metapopulations synchronously by making some of the habitats go extinct. This could help in managing policy for conservation of endangered populations.  
 
 
-\newpage
+\clearpage
+
 # References
 
 

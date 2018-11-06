@@ -183,8 +183,8 @@ dev.off()
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
 d<-d[,c("SOCstock100","TSNstock100")]
 pdf("./Results/SoilCNraw.pdf")
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d[,1],d[,2],type="p",col="black",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=1.5)
+op<-par(mar=c(6, 6, 0.2, 2.1))
+plot(d[,1],d[,2],type="p",col="black",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=2.5)
 par(op)
 dev.off()
 ```
@@ -212,8 +212,8 @@ raw_b<-raw_b[-which(raw_b[,1]<0),]  # omit -ve mass?
 b<-log10(raw_b)
 colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
 pdf("./Results/BMR_results/birds/raw_birds_BMR.pdf")
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(b[,1],b[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
+op<-par(mar=c(6, 6, 0.2, 2.1))
+plot(b[,1],b[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=2.5)
 par(op)
 dev.off()
 
@@ -235,8 +235,8 @@ colnames(m)<-c("log10M(g)","log10BMR(KJ/h)")
 m<-as.data.frame(m)
 
 pdf("./Results/BMR_results/mammals/raw_mammals_BMR.pdf")
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(m[,1],m[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=1.5)
+op<-par(mar=c(6, 6, 0.2, 2.1))
+plot(m[,1],m[,2],type="p",col="black",xlab="log(Mass)",ylab="log(BMR)",cex.lab=2.5,cex.axis=2.5)
 par(op)
 dev.off()
 
@@ -307,17 +307,17 @@ cop_HB<-function(db,dp,year,rawplot,ploton){
   
   if(ploton==T){
     if(rawplot==T){
-      op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
-      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg.H",ylab="avg.Biomass",pch=1,cex.lab=2,cex.axis=1.5)
-      mtext(paste0("Year=",year),cex=2)
+      op<-par(mar=c(6, 6, 0.2, 2.1))
+      plot(tab_dbp$avg.H,tab_dbp$avg.Biomass,xlab="avg. H",ylab="avg. Biomass",pch=1,cex.lab=2.5,cex.axis=2)
+      mtext(paste0("Year=",year),cex=1)
       par(op)
     }else{
-      op<-par(mar=c(5.1, 5.1, 1.5, 2.1))
-      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",pch=1,cex.lab=2,cex.axis=1.5,
+      op<-par(mar=c(6, 6, 0.2, 2.1))
+      plot(cop_tab_dbp$avg.H,cop_tab_dbp$avg.Biomass,xlab="u",ylab="v",pch=1,cex.lab=3,cex.axis=2,
          xlim=c(0,1),ylim=c(0,1),asp=1)
       rect(0,0,1,1)
-      lines(c(0,1),c(0,1),type='l')
-      mtext(paste0("Year=",year),cex=2)
+      lines(c(0,1),c(0,1),type='l',col="grey")
+      #mtext(paste0("Year=",year),cex=1)
       par(op)
     }
   }
@@ -1860,20 +1860,22 @@ saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 d1<-data_aphid_count$`Green spruce aphid`[[4]]
 d2<-data_aphid_count$`Green spruce aphid`[[11]]
 pdf("./Results/Aphid_count_raw_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",xlab="Green-spruce aphid count (loc. 4)",ylab="Green-spruce aphid count (loc. 11)",cex.lab=2.5,cex.axis=2)
+op<-par(mar=c(10,10, 0.2, 2.1),mgp=c(3,1,0))
+plot(d1$Dat,d2$Dat,type="p",xlab="",
+     ylab="Green-spruce aphid \ncount (loc. 11)",cex.lab=3.5,cex.axis=2.5)
+mtext(paste("Green-spruce aphid \ncount (loc. 4)"),line=-38,cex=3.5)
 par(op)
 dev.off()
 
 source("./vivj_matrix.R")
 m<-vivj_matrix(d_allsp = data_aphid_count,sp=10,i=4,j=11)
 pdf("./Results/Aphid_count_cop_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+op<-par(mar=c(6,6, 0.2, 2.1),mgp=c(3,1,0))
 plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
-     cex.lab=3,cex.axis=2,
+     cex.lab=4,cex.axis=3,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
-lines(c(0,1),c(0,1),type='l')
+lines(c(0,1),c(0,1),type='l',col="grey")
 par(op)
 dev.off()
 
@@ -1882,19 +1884,20 @@ dev.off()
 d1<-data_aphid_ff$`Leaf-curling plum aphid`[[2]]
 d2<-data_aphid_ff$`Leaf-curling plum aphid`[[5]]
 pdf("./Results/Aphid_ff_raw_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
-plot(d1$Dat,d2$Dat,type="p",xlab="Leaf-plum curling's first-flight (loc. 2)",ylab="Leaf-plum curling's first-flight (loc. 5)",cex.lab=2.5,cex.axis=2)
+op<-par(mar=c(10,10, 0.2, 2.1),mgp=c(3,1,0))
+plot(d1$Dat,d2$Dat,type="p",xlab="",ylab="Leaf-plum curling's \nfirst-flight (loc. 5)",cex.lab=3.5,cex.axis=2.5)
+mtext(paste("Leaf-plum curling's \nfirst-flight (loc. 2)"),line=-38,cex=3.5)
 par(op)
 dev.off()
 
 m<-vivj_matrix(d_allsp = data_aphid_ff,sp=11,i=2,j=5)
 pdf("./Results/Aphid_ff_cop_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(5.1, 5.1, 0.2, 2.1))
+op<-par(mar=c(6,6, 0.2, 2.1),mgp=c(3,1,0))
 plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
-     cex.lab=3,cex.axis=2,
+     cex.lab=4,cex.axis=3,
      xlim=c(0,1),ylim=c(0,1),asp=1)
 rect(0,0,1,1)
-lines(c(0,1),c(0,1),type='l')
+lines(c(0,1),c(0,1),type='l',col="grey")
 par(op)
 dev.off()
 ```
@@ -2562,7 +2565,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer1k<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="kendall") 
 p_left<-sum(answer1k$surrogskw < answer1k$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 
@@ -2571,7 +2574,7 @@ op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
                            corpres="spearman") 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
-mtext(paste0("p = ",p_left),side=3,line=-0.5,col="navyblue",cex = 2)
+mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 ```

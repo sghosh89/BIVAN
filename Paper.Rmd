@@ -106,7 +106,7 @@ In \nameref{Data}, we described briefly each of bivariate and multivariate datas
 
 <!--# Material and methods \label{Material&Methods}-->
 
-## Data \label{Data}  
+# Data \label{Data}  
 
 <!--
 Considered datasets ranged widely from population ecology, community ecology , evolutionary and biogeochemical sphere. 
@@ -125,12 +125,12 @@ location in the ocean. Organisms were identified and counted (possibly with sub-
 averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available).--> [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had atleast 45 years time series data (see Figure \ref{SM-fig_plankton_map}). \textbf{(iv)} Finally, methane ($CH_{4}$) fluxes between the soil or water surface and the troposphere were measured at the Great Miami Wetland Mitigation Bank ($36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had atleast 50 dates data.
 
-## Concepts for \hyperref[Intro]{\textbf{(Q1)}}: Statistical tools for detecting copula structure \label{Methods}
+# Concepts for \hyperref[Intro]{\textbf{(Q1)}}: Statistical tools for detecting copula structure \label{Methods}
 
 Question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} was answered via statistical analysis of the
 data described above, using both model selection and nonparametric approaches.
 
-### Model selection approach \label{Model_selection}
+## Model selection approach \label{Model_selection}
 
 A model-selection approach based on likelihood and the Akaike Information Criterion (AIC) <!--and Bayesian Information Criterion (BIC)--> was used to help answer \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro}. For bivariate datasets 
 $(x_i,y_i)$ for $i=1,...,n$ such as the soil C and N data, model selection involved several steps, 
@@ -173,7 +173,7 @@ For multivariate datasets, e.g., the aphid abundance or first flight data,
 each of which consists of time series from 10 selected locations, we carried out the same bivariate analysis
 for all possible pairwise combinations of those locations and compared AIC-weights and tail-dependence of best-fit(minimum AIC) copula with that of the Normal copula. We also counted for how many location pairs model -averaged lower tail dependence is greater than model-averaged upper-tail dependence or vice-versa. Then, we reported as the percentage of location pairs showing stronger lower tail dependence out of total non-independent location pairs considered.
 
-### Nonparametric analysis of tail dependence \label{NPA}
+## Nonparametric analysis of tail dependence \label{NPA}
 
 In addition to the model selection approach described above, **nonparametric approaches** to quantify lower <!--($\cor_l$, $\Ps_l$ and $\Dsq_l$ statistics)--> and upper tail dependence <!--($\cor_u$, $\Ps_u$ and $\Dsq_u$ statistics)--> were also used to answer \hyperref[Intro]{\textbf{(Q1)}}. Using two distinct methods, when results are consistent, provides greater confidence 
 that results are robust. 
@@ -520,23 +520,46 @@ Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets 
 
 
 <!--Question 2 analyses-->
-# Concepts for \hyperref[Intro]{\textbf{(Q2)}}: possible causes of non-Normal copula structure \label{Causes}
+# Concepts and models for \hyperref[Intro]{\textbf{(Q2)}}: possible causes of non-Normal copula structure \label{Causes}
 
 This section is dedicated to exploring question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. We showed environmental copula structure and asymmetric sensitivities to the environment could produce population copula structures.
 <!--We wanted to find how are copula structure of ecologically influential climate variables changing as part of climate change?--> 
-
 <!--Moran effects-->
-\textbf{(i)} We were interested to extend the basic idea of Moran's theorem : if noise $\epsilon_{1}(t)$ and $\epsilon_{2}(t)$ at two different habitat patches had some specific assymetric tail dependence then what will be the outcome dependence in the populations at those habitat patches. Should their dependence be exactly the same as of the noises or not ? 
-
-To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
+\textbf{(i)} We were interested to extend the basic idea of Moran's theorem : if environmental noises at two different habitat patches had some specific assymetric tail dependence then what will be the outcome dependence in the populations at those habitat patches. Should their dependence be exactly the same as of the noises or not ? To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
 
 \begin{equation}\label{eq.AR1}
 P_{i}(t+1)=\beta P_{i}(t)+\alpha \epsilon_{i}(t)
 \end{equation}
 
-To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in terms of AR coefficient $\beta$ as $\alpha = \sqrt(1-\beta^2)$. To test environmental effect on population copula, our approach is of two-fold : 
+To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in terms of AR coefficient $\beta$ as $\alpha = \sqrt(1-\beta^2)$. We showed with Eq. \ref{eq.AR1} in the next section that both model selection method and non-parametric analysis indicated similar tail dependence in population copula as that of noise copula. <!--Asymmetric sensitivity and copula structure in populations-->
+\textbf{(ii)} Secondly, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) which behaved differently beyond a certain expectation threshold (as shown in Eq. \ref{eq.AS_g}). To test the assymetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
 
-First, we calculated the parameter values of the noise-copula (for example, we chose Clayton with lower tail dependence, in this case the parameter of interest is $\theta$, which determines the strength of association of the variables [@nelsen2007_copula]) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for the population-copula and its standard error due to sample size. We reported p-values from goodness of fit tests for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{SM-fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+\begin{equation}\label{eq.AS}
+P_{i}(t+1) = b P_{i}(t) + g(\varepsilon_{i}(t)) + h(\delta_{i}(t))
+\end{equation}
+
+$b$ was the linear growth rate. Global environmental fluctuation function $g(\varepsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}, Fig. \ref{fig_ms_asym_b_0.1}) where $\varepsilon=(\varepsilon_{1}, \varepsilon_{2})$ was an iid through time with mean zero and covariance matrix $\Sigma_{\varepsilon}$. Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and covariance matrix $\Sigma_{\delta}$. With this model we showed tail dependence in population copula changed from lower to upper tail dependence as global noise copula $g(\varepsilon)$ changed its form from $g_{1}$ to $g_{2}$ (Eq. \ref{eq.AS_g}).
+
+\begin{align}
+g(\varepsilon) = \begin{cases} 
+g_{1} = \begin{cases}
+\varepsilon & \text{if $\varepsilon< 0$}; \\
+0 & \text{otherwise}.
+\end{cases}\\ \\
+g_{2} = \begin{cases}
+\varepsilon & \text{if $\varepsilon> 0$}; \\
+0 & \text{otherwise}\label{eq.AS_g}.
+\end{cases}
+\end{cases} \text{where } \varepsilon = N(\textbf{0},\Sigma_{\varepsilon})\;\ \text{with} \;\ \Sigma_{\varepsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
+\end{align}
+
+\begin{equation}\label{eq.AS_h}
+h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+\end{equation}
+
+# Results for \hyperref[Intro]{\textbf{(Q2)}}: similar tail dependence in population copula as that of noise copula \label{Results_Q2}
+
+To test environmental effect on population copula from the model \ref{eq.AR1}, our approach is of two-fold : First, we calculated the parameter values of the noise-copula (for example, we chose Clayton with lower tail dependence, in this case the parameter of interest is $\theta$, which determines the strength of association of the variables [@nelsen2007_copula]) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for the population-copula and its standard error due to sample size. We reported p-values from goodness of fit tests for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{SM-fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 \begin{figure}[!h]
 \begin{center}
@@ -556,38 +579,8 @@ Next, we measured 3 types of correlations (Spearman, Kendall, Pearson) and diffe
 \end{center}
 \end{figure}
 
-<!--Asymmetric sensitivity and copula structure in populations-->
-\textbf{(ii)} Secondly, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) which behaved differently beyond a certain expectation threshold (as shown in Eq. \ref{eq.AS_g} and Fig. \ref{fig_ms_asym_b_0.1}). 
 
-To test the assymetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
-
-\begin{equation}\label{eq.AS}
-P_{i}(t+1) = b P_{i}(t) + g(\varepsilon_{i}(t)) + h(\delta_{i}(t))
-\end{equation}
-
-$b$ was the linear growth rate. Global environmental fluctuation function $g(\varepsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}, Fig. \ref{fig_ms_asym_b_0.1}) where $\varepsilon=(\varepsilon_{1}, \varepsilon_{2})$ was an iid through time with mean zero and covariance matrix $\Sigma_{\varepsilon}$.
-
-\begin{align}
-g(\varepsilon) = \begin{cases} 
-g_{1} = \begin{cases}
-\varepsilon & \text{if $\varepsilon< 0$}; \\
-0 & \text{otherwise}.
-\end{cases}\\ \\
-g_{2} = \begin{cases}
-\varepsilon & \text{if $\varepsilon> 0$}; \\
-0 & \text{otherwise}\label{eq.AS_g}.
-\end{cases}
-\end{cases} \text{where } \varepsilon = N(\textbf{0},\Sigma_{\varepsilon})\;\ \text{with} \;\ \Sigma_{\varepsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
-\end{align}
-
-Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and covariance matrix $\Sigma_{\delta}$.
-
-\begin{equation}\label{eq.AS_h}
-h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
-\end{equation}
-
-We simulated our model (\ref{eq.AS}) for $b=0.1$ , $a=0.2$, $r=0.8$. $10000$ points were generated and we kept only the last $1000$ points to plot the population-copula (Fig. \ref{fig_ms_asym_b_0.1}) for each specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). When asymmetric global noise
-had only non-positive contributions at two habitat patches ($g_{1}$ in the first panel of Fig. \ref{fig_ms_asym_b_0.1}), lower tail dependence appeared in the global noise copula and so thus in affected population copula (last subplot in the first panel of Fig. \ref{fig_ms_asym_b_0.1}). Similarly, when global noises had only non-negative contributions at two habitat patches ($g_{2}$ in the second panel of Fig. \ref{fig_ms_asym_b_0.1}), upper tail dependence appeared in the global noise copula and so thus in the outcome population copula (last subplot in the second panel of Fig. \ref{fig_ms_asym_b_0.1}). We also carried out model selection and non-parametric statistical analysis with each copula of Fig. \ref{fig_ms_asym_b_0.1} and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_2}. According to our model selection approach (Table \ref{SM-tab_summary_stat_asym_sens}), non-normal copulae (with higher AIC weights) were always best-fit with similar asymetric tail dependence which gave the support of our hypothesis of the effect of asymmetric global noise copula on populations. Our non-parametric analysis results (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) were consistent with the model selection approach. 
+To explore the effect of asymmetric sensitivity, we simulated our model (\ref{eq.AS}) for $b=0.1$ , $a=0.2$, $r=0.8$. $10000$ points were generated and we kept only the last $1000$ points to plot the population-copula (Fig. \ref{fig_ms_asym_b_0.1}) for each specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). When asymmetric global noise had only non-positive contributions at two habitat patches ($g_{1}$ in the first panel of Fig. \ref{fig_ms_asym_b_0.1}), lower tail dependence appeared in the global noise copula and so thus in affected population copula (last subplot in the first panel of Fig. \ref{fig_ms_asym_b_0.1}). Similarly, when global noises had only non-negative contributions at two habitat patches ($g_{2}$ in the second panel of Fig. \ref{fig_ms_asym_b_0.1}), upper tail dependence appeared in the global noise copula and so thus in the outcome population copula (last subplot in the second panel of Fig. \ref{fig_ms_asym_b_0.1}). We also carried out model selection and non-parametric statistical analysis with each copula of Fig. \ref{fig_ms_asym_b_0.1} and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_2}. According to our model selection approach (Table \ref{SM-tab_summary_stat_asym_sens}), non-normal copulae (with higher AIC weights) were always best-fit with similar asymetric tail dependence which gave the support of our hypothesis of the effect of asymmetric global noise copula on populations. Our non-parametric analysis results (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) were consistent with the model selection approach. 
 
 \begin{figure}[!h]
 \begin{center}

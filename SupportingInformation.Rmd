@@ -453,6 +453,7 @@ dev.off()
 
 
 ```{r tab_aphid_info, echo=F, results='asis',message=F}
+library(tinytex)
 library(tibble)
 aphid_info <- tibble(c1=c("Apple grass aphid","Bird cherry oat aphid","Black bean aphid","Blackberry cereal aphid","Blackcurrant sowthistle aphid",
                        "Corn leaf aphid","Currant lettuce aphid","Damson hop aphid","Grain aphid","Green spruce aphid",

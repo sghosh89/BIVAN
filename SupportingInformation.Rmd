@@ -518,6 +518,19 @@ to be filled later
 to be filled later
 --->
 
+# Details of the data \label{Data_details}
+
+<!--***DAN: This is a dumping group at the moment, but needs to be organized into a section that gives all the necessary details about the data-->
+
+<!--The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
+unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and
+location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
+averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available).-->
+
+ [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had atleast 45 years time series data (see Figure \ref{SM-fig_plankton_map}). 
+ 
+ The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
+additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had atleast 50 dates data.
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
 

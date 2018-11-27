@@ -106,24 +106,35 @@ In \nameref{Data}, we described briefly each of bivariate and multivariate datas
 
 <!--# Material and methods \label{Material&Methods}-->
 
-# Data \label{Data}  
+# Data \label{Data} 
 
-\noindent We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
+```{r read_somedata, echo=F, results='hide'}
+d_soilCN<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
+d_birdsBMR<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
+d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
+```
+
+We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
-The database comprises measurements of soil organic carbon and total soil nitrogen (milligrams C or N per m$^{2}$ of soil surface) 
-<!--***DAN: Shya, this used to say Mg C, but what is Mg? Do you mean mg for miligram? I have written it out, please check and correct if necessary. Also, I added per m^2 of soil surface, please check.-->
-from X 
-<!--***DAN: Shya, make this an autolink to the number of data points - 5930, but should be an autolink, so if the number changes it updates-->
+The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per m$^{2}$ of soil surface) 
+<!--***DAN: Shya, this used to say Mg C, but what is Mg? Do you mean mg for miligram? I have written it out, please check and correct if necessary. Also, I added per m^2 of soil surface, please check.
+***Shya: Mg means mega gram, So an "Mg C" is a ton of Carbon - the standard SI unit when it comes to talking about soil Carbon measurement.-->
+from `r nrow(d_soilCN)` 
+<!--***DAN: Shya, make this an autolink to the number of data points - 5930, but should be an autolink, so if the number changes it updates
+***Shya: Done.-->
 locations across the coterminous United States (Fig. X for sampling locations).
 <!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X-->
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
-Species-trait data were average species basal metabolic rate (units) and body mass (units) data for X species of birds [@Mcnab_2009] and Y species of mammals [@Mcnab_2008].
+Species-trait data were average species basal metabolic rate (KJ per hour) and body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
 <!--***DAN: Shya to add units, and replace X and Y with autolinks that give the numbers-->
+<!--***Shya: These species number for birds and mammals came from the processed data without any NA and -ve(unrealistic) mass, is that okay? 
+for example, species of birds [@Mcnab_2009] raw data (the xls file you gave me) shows 712 species out of which some have NA in both mass and BMR column and one entry has -ve mass!!!-->
 These data have been much studied, but to our knowledge the copula structure of the dependence between metabolic rate and body mass has not been examined. 
 Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
-<!--***DAN: Shya to add a figure shwoing the locations on a map of the UK and cite it here with an automatic citation-->
+<!--***DAN: Shya to add a figure shwoing the locations on a map of the UK and cite it here with an automatic citation
+***Shya: It is already in suppmat figure S1.-->
 across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect Survey suction-trap dataset [@Macaulay1988, @Harrington2014]. The first of our two population-level datasets was also derived from the RIS suction-trap data, and comprised total counts of aphids trapped for the same locations, species, and years; these are indicators of flying aphid abundance. Data pre-processing for the aphid data was the same as that of @Sheppard2016,
 <!--***DAN: Shya, let's discuss please - if we say this we have to be sure we did *exactly* the same pre-processing as Lawrence, whereas I seem to remember we did something slightly different-->
 but we exlcuded one of the 11 sites they used so as to include only sites with at least 30 years data.  Our second population dataset comprised average annual abundance estimates for 14 locations (Fig. \ref{SM-fig_plankton_map})

@@ -209,6 +209,8 @@ raw_b[303,2]<-0.66  #to convert as numeric
 raw_b[,2]<-as.numeric(raw_b[,2])
 raw_b<-raw_b[-which(raw_b[,1]<0),]  # omit -ve mass?
 
+saveRDS(raw_b,"./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
+
 b<-log10(raw_b)
 colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
 pdf("./Results/BMR_results/birds/raw_birds_BMR.pdf")
@@ -229,6 +231,8 @@ raw_m<-readxl::read_xls("./Data/BMR/MammalianBodyMassesMetabolicRates/MammalianM
 raw_m<-raw_m[,1:3]
 raw_m<-na.omit(raw_m)
 raw_m<-raw_m[,2:3]
+
+saveRDS(raw_m,"./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
 
 m<-log10(raw_m)
 colnames(m)<-c("log10M(g)","log10BMR(KJ/h)")

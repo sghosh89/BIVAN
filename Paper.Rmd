@@ -116,20 +116,18 @@ d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBM
 
 We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
-The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per m$^{2}$ of soil surface) 
+The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) 
 <!--***DAN: Shya, this used to say Mg C, but what is Mg? Do you mean mg for miligram? I have written it out, please check and correct if necessary. Also, I added per m^2 of soil surface, please check.
 ***Shya: Mg means mega gram, So an "Mg C" is a ton of Carbon - the standard SI unit when it comes to talking about soil Carbon measurement.-->
-<!--***DAN: Can you check this please? I do not think it can be right. The values on Fig. 3a range from close to 0 to over 3000. 3000 would be 3000 Mg C. I do not think a cubic meter of soil even weighs that much, including all the carbon and non-carbon components.-->
+<!--***DAN: Can you check this please? I do not think it can be right. The values on Fig. 3a range from close to 0 to over 3000. 3000 would be 3000 Mg C. I do not think a cubic meter of soil even weighs that much, including all the carbon and non-carbon components.
+***Shya: I checked : it should be megagram per hectare, Wills2014 reference is for stock of Carbon, not for nitrogen, Prof. loecke told me nitrogen data is not published yet. He screened locations which had both soil C and N stocks after omiting NAs.-->
 from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. X for sampling locations).
-<!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X-->
+<!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X
+***Shya: once Prof. Loecke give me the lattitude and longitudes, I will do that.-->
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
 Species-trait data were average species basal metabolic rate (KJ per hour) and body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
-<!--***DAN: Shya to add units, and replace X and Y with autolinks that give the numbers-->
-<!--***Shya: These species number for birds and mammals came from the processed data without any NA and -ve(unrealistic) mass, is that okay? 
-for example, species of birds [@Mcnab_2009] raw data (the xls file you gave me) shows 712 species out of which some have NA in both mass and BMR column and one entry has -ve mass!!!-->
-<!--***DAN: Yes, that makes sense, but please go back to the data as published, which should be a supporting appendix to the original publications, and make sure I have not given you erroneous data-->
 These data have been much studied, but to our knowledge the copula structure of the dependence between metabolic rate and body mass has not been examined. 
 Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 

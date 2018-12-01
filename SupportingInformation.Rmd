@@ -120,6 +120,10 @@ par(op)
 dev.off()
 ```
 
+```{r cop_pedagog_fig1,echo=F,results="hide"}
+source("./FirstPedagogFig.R")
+```
+
 ```{r cop_pedag_fig,echo=F,results="hide"}
 set.seed(seed)
 library(VineCopula)

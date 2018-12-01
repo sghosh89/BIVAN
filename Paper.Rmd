@@ -1,5 +1,4 @@
 ---
-title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "Shyamolina Ghosh, Lawrence W Sheppard, Mark T. Holder, Terrance E. Loecke, Daniel C. Reuman"
 date: "February 18, 2018"
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
@@ -84,6 +83,53 @@ consequences of non-Normal copula structure and tail dependence for our understa
 \newpage
 # Introduction \label{Intro}
 
+All branches of ecology and related areas study relationships among environmental and biological 
+variables. However, commonly used correlation- and regression-based approaches to studying 
+such relationships are limited - it is well understood that common statistical
+approaches may provide only a very partial description of a relationship. 
+For instance, datasets showing markedly different 
+relationships may nevertheless have the same correlation coefficient value:  
+Fig. \ref{fig_cop_pedag1}A-B show two such datasets. The panel A 
+(respectively, B) variables of Fig. \ref{fig_cop_pedag1} are principally 
+related in the left (respectively, right) portions of their distributions, a difference that may
+have ecological significance, as discussed below, but is not captured by standard
+correlation. Panels C and D 
+were obtained from A and B through monotonic transformation (Appendix X for details),
+<!--***DAN: Dan to go back and write the appendix-->
+which alters the Pearson, but not the Spearman correlation. Although correlation
+is only one of the numerous metrics for 
+studying relationships between variables, other commonly used metrics also 
+provide partial descriptions only.
+
+Well-developed statistical tools do exist (REFS), and are applied widely in other fields 
+(REFS), that provide a complete description of the dependence between two or more variables. 
+The goal of this paper is to illustrate the potential for broader application of these
+tools in ecology and related fields. The tools are based on the statistical concept of the *copula*, which we here introduce conceptually. 
+
+  a) then do it. some things to do include...
+  b) the rank-based approach for data (use bivariate data)
+  c) the inverse cdf approach for the copula of a bivariate distribution
+  d) statement that copulas are also multivariate, though we won't explore that here (or maybe leave that for Discussion?)
+  e) a one- or two-sentence description of sklars theorem
+
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
+\caption{(A-F, I, J) Diverse bivariate datasets, many of which have the same Pearson (P)
+or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
+obtained from A (respectively, B) via monotonic functions that transformed the standard-
+normal marginal distributions of A and B to gamma (C, D) or uniform (E, F) marginals. 
+Details in Appendix X.\label{fig_cop_pedag1}}
+\end{center}
+\end{figure}
+<!--***DAN: Dan to go back and add an appendix with details as it says. Make sure
+to mention the shape and scale params of the gamma marginals in C, D were 2-->
+
+
+
+
 Identifying and quantifying dependencies is the core of modelling in many applications, frequently found in biology and elsewhere. For many years, measuring and modeling dependencies has focused on the
 Pearson correlation because of its ease in use. But correlation can provide little information about the underlying dependence structure in the case of asymmetric dependence (i.e., varying strength of association between two variables depending on their values) because it is a measure of linear association between two variables. It may be better to use rank-based correlation measures such as Kendall’s tau and Spearman’s rho instead of Pearson correlation when the marginal distribution of the variables are highly non-Gaussian. The copula [@joe2014_dependence; @nelsen2007_copula], a rank-based dependence measurement between two variables, transforms non-uniformly distributed marginals in original variables to uniformly distributed marginals when the joint distribution of ranked data is plotted. For example, in the first panel of Fig. \ref{fig_cop_pedag}, we showed the joint distribution of raw data (left) and copula data (right), where the marginals of raw data variables (x and y) were gamma distributed but in the copula plot those marginals had uniform distribution. The copula plot was obtained by scaling individual ranked variables by a factor $(n+1)$ where $n$ was the number of sampling points, so that the copula was confined within a unit box. From now, we will call this "normalized ranking". Using a "copula-based approach" as a dependence measure reflects more knowledge about the dependence structure than summarizing in just a single number, the linear correlation coefficient. It tells us about the tail-dependence of the variables, i.e., the association between extreme values of two variables. If smaller values of each variable are more correlated to each other, then the corresponding copula structure is said to have "lower tail-dependence" as shown in the first panel of Fig. \ref{fig_cop_pedag} copula plot (right). Similarly, an "upper tail-dependence" copula indicates stronger correlation between higher extreme variables in the raw data. Tail dependence occurs when the correlation between two variables increases as we get "further" in the tail (either or both) of the distribution. For example, in the middle panel of Fig. \ref{fig_cop_pedag}, different dependence structures, with same Kendall correlation $\tau = 0.5$, are shown which vary between dominantly upper tail dependent (lower tail - upper tail dependence being negative) to dominantly lower tail dependent (lower tail - upper tail dependence being positive) as we move along the row. Lower panel represents the similar scenario but with stronger correlation (Kendall's $\tau = 0.8$). So, the flexibility of copulae allows us to model more complex multivariate dependence structures by isolating marginal from joint distribution structures, with the capability of modeling a rich variety of tail behavior, such as tail dependence versus tail independence.<!--and reflection symmetry versus reflection asymmetry.--> To identify the kinds of copula structure found in real ecological data, we need to select candidate bivariate copulae from many existing parametric copula families. <!--A very flexible bivariate copula can itself become a welcome candidate in the pool of bivariate copulae to be selected from.--> Here, throughout our studies for different datasets we used a universal pool of 16 bivariate copula families (having exclusively lower, exclusively upper, both or neither tail dependence), described in the \nameref{Methods}. 
 
@@ -116,33 +162,54 @@ d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBM
 
 We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
-The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) 
-<!--***DAN: Shya, this used to say Mg C, but what is Mg? Do you mean mg for miligram? I have written it out, please check and correct if necessary. Also, I added per m^2 of soil surface, please check.
-***Shya: Mg means mega gram, So an "Mg C" is a ton of Carbon - the standard SI unit when it comes to talking about soil Carbon measurement.-->
-<!--***DAN: Can you check this please? I do not think it can be right. The values on Fig. 3a range from close to 0 to over 3000. 3000 would be 3000 Mg C. I do not think a cubic meter of soil even weighs that much, including all the carbon and non-carbon components.
-***Shya: I checked : it should be megagram per hectare, Wills2014 reference is for stock of Carbon, not for nitrogen, Prof. loecke told me nitrogen data is not published yet. He screened locations which had both soil C and N stocks after omiting NAs.-->
-from `r nrow(d_soilCN)` 
+The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. X for sampling locations).
 <!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X
 ***Shya: once Prof. Loecke give me the lattitude and longitudes, I will do that.-->
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
 Species-trait data were average species basal metabolic rate (KJ per hour) and body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
-These data have been much studied, but to our knowledge the copula structure of the dependence between metabolic rate and body mass has not been examined. 
+These data have been much studied, but to our knowledge the copula structure 
+of the dependence between metabolic rate and body mass has not been examined. 
 Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
-across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect Survey suction-trap dataset [@Macaulay1988, @Harrington2014]. The first of our two population-level datasets was also derived from the RIS suction-trap data, and comprised total counts of aphids trapped for the same locations, species, and years; these are indicators of flying aphid abundance. Data pre-processing for the aphid data was the same as that of @Sheppard2016,
-but we exlcuded one of the 11 sites they used so as to include only sites with at least 30 years data.  Our second population dataset comprised average annual abundance estimates for 14 locations (Fig. \ref{SM-fig_plankton_map})
-in the North Sea and British seas for 22 plankton taxa (Table \ref{SM-tab_plankton_info}) for the 56 years from 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data were obtained from the Continuous Plankton Recorder (CPR) dataset maintained by the Sir Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Biological Association of the UK. Data pre-processing was similar but not identical to that of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
-Community-level data were plant aboveground biomass and Shannon's diversity index for X plots, each 9m by 9m, maintained at Cedar Creek Ecosystem Science Reserve and sampled in the year 2000 [@Tilman2001; @Tilman2006]. 
-Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or water surface and the troposphere, measured at 13 locations at daily to weekly intervals from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, Ohio [@Holland1999; @Jarecke2016]. Each included location was measured on at least 50 dates. Sampling locations spanned a hydrologic gradient from upland to seasonal wetland.
+across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 
+35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect 
+Survey suction-trap dataset [@Macaulay1988, @Harrington2014]. The first of our two 
+population-level datasets was also derived from the RIS suction-trap data, and comprised 
+total counts of aphids trapped for the same locations, species, and years; these are 
+indicators of flying aphid abundance. Data pre-processing for the aphid data was the same as 
+that of @Sheppard2016,
+but we exlcuded one of the 11 sites they used so as to include only sites with at least 30 
+years data.  Our second population dataset comprised average annual abundance estimates 
+for 14 locations (Fig. \ref{SM-fig_plankton_map})
+in the North Sea and British seas for 22 plankton taxa (Table \ref{SM-tab_plankton_info}) for the 
+56 years from 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data 
+were obtained from the Continuous Plankton Recorder (CPR) dataset maintained by the Sir 
+Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Biological 
+Association of the UK. Data pre-processing was similar but not identical to that 
+of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
+Community-level data were plant aboveground biomass and Shannon's diversity index for X 
+<!--***DAN: Shya, please fill in X with an autolink-->
+plots, each 9m by 9m, maintained at Cedar Creek Ecosystem Science Reserve and sampled in 
+the year 2000 [@Tilman2001; @Tilman2006]. 
+Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
+water surface and the troposphere, measured at 13 locations at daily to weekly intervals 
+from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, 
+Ohio [@Holland1999; @Jarecke2016]. Each included location was measured on at least 50 dates. 
+Sampling locations spanned a hydrologic gradient from upland to seasonal wetland.
 See Appendix \ref{SM-Data_details} for additional data details. 
 
-The environmental, species-trait, and community datasets, as we studied them, are henceforth called the "bivariate" datasets in the sense that they comprise two quantities measured at different locations or for different species. The phenology and population datasets are "multivariate" in that they comprise, for each taxon, measurements at multiple locations; copula structure can be studied for each pair of locations. Likewise the the ecosystem functioning (methane flux) dataset was  multivariate in this sense.
+The environmental, species-trait, and community datasets, as we studied them, are henceforth 
+called the "bivariate" datasets in the sense that they comprise two quantities measured at 
+different locations or for different species. The phenology and population datasets are 
+"multivariate" in that they comprise, for each taxon, measurements at multiple locations; 
+copula structure can be studied for each pair of locations. Likewise the the ecosystem 
+functioning (methane flux) dataset was  multivariate in this sense.
 
-# Concepts for \hyperref[Intro]{\textbf{(Q1)}}: Statistical tools for detecting copula structure \label{Methods}
+# Concepts for Q1: Statistical tools for detecting copula structure \label{Methods}
 
-Question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} was answered via statistical analysis of the
+Question Q1 from the Introduction was answered via statistical analysis of the
 data described above, using both model selection and nonparametric approaches.
 
 ## Model selection approach \label{Model_selection}

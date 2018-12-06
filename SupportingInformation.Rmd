@@ -185,8 +185,9 @@ dev.off()
 <!--The raw data look like this:-->
 ```{r load_data_Loecke, echo=F, results='hide'}
 #fig.cap="Plot of the raw soil C and N data.\\label{fig_raw_cop_soilCN}(A)", fig.height=3, fig.width=3}
-d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
-d<-d[,c("SOCstock100","TSNstock100")]
+d<-readRDS("Data/dataForShymolinaCoord.rds")
+d<-d[,c("SOCstock100","TSNstock100","lat","long")]
+d<-na.omit(d)
 pdf("./Results/SoilCNraw.pdf")
 op<-par(mar=c(6, 6, 0.2, 2.1))
 plot(d[,1],d[,2],type="p",col="black",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=2.5)
@@ -199,9 +200,25 @@ dev.off()
 source("getcopula.R")
 #convert to a copula and plot
 pdf("./Results/SoilCNcop.pdf")
-v_CN<-getcopula(d=d,rankon=T,ploton=T) 
+v_CN<-getcopula(d=d[,c(1:2)],rankon=T,ploton=T) 
 dev.off()
 ```
+
+```{r plot_SoilCNmapUSA, echo=F, results='hide'}
+#---------map of soilCN location on USA------------
+library(maps)
+pdf("./Results/SoilCNmapUSA.pdf",height=4,width=8)
+map("usa")
+points(x = d$long, y = d$lat, col="red",pch=16,cex=0.5)
+dev.off()
+```
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8 cm,height=8 cm]{./Results/SoilCNmapUSA.pdf} 
+\caption{Locations of central pedons with soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from 5907 sampling sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
+\end{center}
+\end{figure}
 
 ```{r read_BMR_birds_and_copulaplot, echo=F, results='hide'}
 set.seed(seed)

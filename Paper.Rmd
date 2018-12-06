@@ -155,7 +155,8 @@ In \nameref{Data}, we described briefly each of bivariate and multivariate datas
 # Data \label{Data} 
 
 ```{r read_somedata, echo=F, results='hide'}
-d_soilCN<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
+d_soilCN<-readRDS("Data/dataForShymolinaCoord.rds")
+d_soilCN<-na.omit(d_soilCN)
 d_birdsBMR<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
 d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
 ```
@@ -163,7 +164,7 @@ d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBM
 We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
-locations across the coterminous United States (Fig. X for sampling locations).
+locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
 <!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X
 ***Shya: once Prof. Loecke give me the lattitude and longitudes, I will do that.-->
 Measurments were from the central pedon of a soil core, to 1 m depth.

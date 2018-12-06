@@ -83,16 +83,17 @@ consequences of non-Normal copula structure and tail dependence for our understa
 \newpage
 # Introduction \label{Intro}
 
-All branches of ecology and related areas study relationships among environmental and biological 
-variables. However, commonly used correlation- and regression-based approaches to studying 
+Very generally, all branches of ecology and related areas study relationships among environmental and biological 
+variables. However, commonly used correlation- and regression-based 
+approaches to studying 
 such relationships are limited - it is well understood that common statistical
-approaches may provide only a very partial description of a relationship. 
+approaches provide only a very partial description of a relationship between variables. 
 For instance, datasets showing markedly different 
 relationships may nevertheless have the same correlation coefficient value:  
-Fig. \ref{fig_cop_pedag1}A-B show two such datasets. The panel A 
-(respectively, B) variables of Fig. \ref{fig_cop_pedag1} are principally 
-related in the left (respectively, right) portions of their distributions, a difference that may
-have ecological significance, as discussed below, but is not captured by standard
+Fig. \ref{fig_cop_pedag1}A-B shows two such datasets. The variables of panel A 
+(respectively, B) are principally 
+related in the left (respectively, right) portions of their distributions, an asymmetric pattern of dependence in the distribution tails that may
+have ecological significance, as discussed below, but is not captured by 
 correlation. Panels C and D 
 were obtained from A and B through monotonic transformation (Appendix X for details),
 <!--***DAN: Dan to go back and write the appendix-->
@@ -101,27 +102,126 @@ is only one of the numerous metrics for
 studying relationships between variables, other commonly used metrics also 
 provide partial descriptions only.
 
-Well-developed statistical tools do exist (REFS), and are applied widely in other fields 
-(REFS), that provide a complete description of the dependence between two or more variables. 
-The goal of this paper is to illustrate the potential for broader application of these
-tools in ecology and related fields. The tools are based on the statistical concept of the *copula*, which we here introduce conceptually. 
+Well-developed statistical tools do exist, and are 
+applied widely in other fields, that provide a demonstrably complete 
+description of the dependence 
+between two or more variables [@joe2014_dependence; @nelsen2006_copula]. 
+The goal of this paper is to illustrate the potential for 
+broader application of these
+tools in ecology and related fields. The tools are based on 
+the statistical concept of the *copula*, which we here 
+introduce. From a data perspective, given 
+a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g., 
+Fig. \ref{fig_cop_pedag1}, panel A or B), the associated copula
+structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
+$u_i$ is the rank of $x_i$ in the set of $x_j$ ($j=1,\ldots,n$), divided by
+$n+1$; and $v_i$ is defined in the same way but using the $y_i$. See, 
+for instance,
+Fig. \ref{fig_cop_pedag1}E-F, which show the copula structure of 
+A-B, respectively. Mathematically, if $(X,Y)$ is a continuous bivariate random
+variable and the cummulative distribution functions (cdfs) of $X$ and $Y$ are 
+$F_X(x)=P[X\leq x]$ and $F_Y(y)=P[Y\leq y]$, then the copula structure
+of $(X,Y)$ is revealed by the random variable $(F_X(X),F_Y(Y))$.
+This random variable takes values in the unit square, 
+$[0,1] \times [0,1]$, and has uniform marginal distributions. Densities
+corresponding to the copulas associated 
+with Fig. \ref{fig_cop_pedag1}E-F are in Fig.
+\ref{fig_cop_pedag1}G-H, respectively. Strictly speaking, 
+the copula is actually defined as the bivariate 
+cdf of $(F_X(X),F_Y(Y))$ rather than as this random variable itself, 
+but this makes little conceptual difference. See @nelsen2006_copula and @joe2014_dependence
+for mathematical details. An important theorem of Abe Sklar [@sklar1959_theorem] 
+provides the result that copulas give a unique and complete 
+representation of dependence
+between variable: the original joint distribution of $(X,Y)$ 
+can be reconstructed from the 
+copula and the marginal distributions. Copula theory is also well developed for
+multivariate distributions.
 
-  a) then do it. some things to do include...
-  b) the rank-based approach for data (use bivariate data)
-  c) the inverse cdf approach for the copula of a bivariate distribution
-  d) statement that copulas are also multivariate, though we won't explore that here (or maybe leave that for Discussion?)
-  e) a one- or two-sentence description of sklars theorem
+One way we may expect a copula approach  
+to better reflect ecological relationships has to do with Liebig's law of the
+minimum. If, for instance, the growth of a plant depends on soil 
+nitrogen, N, as well
+as on other factors, data on soil nitrogen and resulting growth rates may be 
+expected to look more like Fig. \ref{fig_cop_pedag1}A or E than like 
+Fig. \ref{fig_cop_pedag1}B or F. Nitrogen 
+will control plant growth, producing a strong
+relationship, only when it is limiting, in the left portion of the N and 
+plant-growth-rate distributions. 
+Nitrogen will be less related or unrelated to growth rates in the right tails of 
+the distributions, as pictured in Fig. \ref{fig_cop_pedag1}A and E.
 
+A second reason we may expect a copula-based approach to benefit 
+ecological research is that such an approach may help illuminate 
+causal mechanisms by which variables are related. For instance, if two species
+X and Y are strong competitors, we may expect abundances of the two species
+across quadrats or through time to be negatively related, as in 
+Fig. \ref{fig_cop_pedag1}I-J. If X is plotted on the horizontal axis
+and Y is plotted on the vertical, then the plot in Fig. \ref{fig_cop_pedag1}I 
+suggests X is the dominant 
+competitor: when X is abundant, Y is necessarily rare because it is suppressed 
+by X; whereas when X is rare, Y
+may be abundant or may also be relatively rare due to 
+factors other than X. Alternatively, Fig. \ref{fig_cop_pedag1}J suggests that Y
+is the dominant competitor. 
 
+A third reason we may expect a copula approach to benefit ecological
+research is that prior work has demonstrated important copula 
+stucture in the spatial dependence of environental 
+variables [@Serinaldi2008; @She2018; @Goswami2018;
+@li2013]. Such dependence tends to beget dependence across space
+in fluctuations of populations or other ecosystem variables 
+(this is called \emph{synchrony}) which are influenced by the environmental 
+variables. This is called the \emph{Moran effect}. 
+If copula structure is transmitted, 
+possibly in modified form, 
+from environmental to ecological variables, then we may expect important 
+copula structure to be a common feature of dependencies through time 
+between ecological variables measured in different locations. 
+One may expect copula structure in environmental variables, in the form of 
+accentuated tail-dependence, if
+intense meteorological events are also spatially widespread.
+We will explore this as well as other potential mechanisms for
+copula structure in ecological variables. 
+
+A final \emph{a priori} reason we may expect copula structure to be important
+in ecology has to do with spatially aggregated or averaged quantities. 
+Many ecological variables of applied importance 
+depend on the spatial average or sum of local 
+quantities. For instance, regional methane of CO$_2$ 
+fluxes are the sum of local fluxes; 
+and the total economic value of a fishery is the sum of catches from 
+local areas. We will explore how details, captured by the copula, of the 
+nature of the dependence between local quantities can influence the spatial 
+mean or sum and how this may influence human concerns and 
+higher organizational levels in 
+ecology. Illustrating the idea here, prior work demonstrated that the overall 
+reliability of wind-generated electricity depends sensitively on details
+of the dependence between wind speeds in multiple wind sites [@li2013]. 
+Spatially aggregated ecological variables may show a similar dependence, with
+potentially substantial consequences. For instance, if populations of a 
+pest species in different locations are all mutually strongly
+related to each other in their right tails, then local outbreaks tend strongly
+to occur as part of regional epidemics. Similarly, if populations
+of a crop resource species are strongly related in their left tails, then 
+episodes of local scarcity tend to happen simultaneously, creating regional 
+shortages.
+
+<!--DAN: edit and add references to the following-->
+Though a few examples have been found which shows copula approach to model dependencies in bioinformatics [@Kim2008], medical research [@Emura2016], a short period study of intersite dependence of rainfall data [@Serinaldi2008], a recent study on characterizing and assessing risks in drought management [@She2018] or monitoring changes in precipitation-extremes [@Goswami2018], the multivariate copula approach still, we believe, remains unexplored in ecology or related fields and thus has potential scope to better capture the evolution of ecological time series data. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{(A-F, I, J) Diverse bivariate datasets, many of which have the same Pearson (P)
+\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between variables; many of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
 obtained from A (respectively, B) via monotonic functions that transformed the standard-
-normal marginal distributions of A and B to gamma (C, D) or uniform (E, F) marginals. 
-Details in Appendix X.\label{fig_cop_pedag1}}
+normal marginal distributions of A and B to gamma (C, D) or 
+uniform (E, F) marginals (details in Appendix X). (G, H) Contours 
+of log-scale density functions of Clayton (G) and survival-Clayton 
+(H) copulas with parameter 5 (see Methods). (I,J) Reflections
+of E, F, respectively, about a vertical axis. Subscripts h and v 
+stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
 <!--***DAN: Dan to go back and add an appendix with details as it says. Make sure
@@ -130,10 +230,9 @@ to mention the shape and scale params of the gamma marginals in C, D were 2-->
 
 
 
-Identifying and quantifying dependencies is the core of modelling in many applications, frequently found in biology and elsewhere. For many years, measuring and modeling dependencies has focused on the
-Pearson correlation because of its ease in use. But correlation can provide little information about the underlying dependence structure in the case of asymmetric dependence (i.e., varying strength of association between two variables depending on their values) because it is a measure of linear association between two variables. It may be better to use rank-based correlation measures such as Kendall’s tau and Spearman’s rho instead of Pearson correlation when the marginal distribution of the variables are highly non-Gaussian. The copula [@joe2014_dependence; @nelsen2007_copula], a rank-based dependence measurement between two variables, transforms non-uniformly distributed marginals in original variables to uniformly distributed marginals when the joint distribution of ranked data is plotted. For example, in the first panel of Fig. \ref{fig_cop_pedag}, we showed the joint distribution of raw data (left) and copula data (right), where the marginals of raw data variables (x and y) were gamma distributed but in the copula plot those marginals had uniform distribution. The copula plot was obtained by scaling individual ranked variables by a factor $(n+1)$ where $n$ was the number of sampling points, so that the copula was confined within a unit box. From now, we will call this "normalized ranking". Using a "copula-based approach" as a dependence measure reflects more knowledge about the dependence structure than summarizing in just a single number, the linear correlation coefficient. It tells us about the tail-dependence of the variables, i.e., the association between extreme values of two variables. If smaller values of each variable are more correlated to each other, then the corresponding copula structure is said to have "lower tail-dependence" as shown in the first panel of Fig. \ref{fig_cop_pedag} copula plot (right). Similarly, an "upper tail-dependence" copula indicates stronger correlation between higher extreme variables in the raw data. Tail dependence occurs when the correlation between two variables increases as we get "further" in the tail (either or both) of the distribution. For example, in the middle panel of Fig. \ref{fig_cop_pedag}, different dependence structures, with same Kendall correlation $\tau = 0.5$, are shown which vary between dominantly upper tail dependent (lower tail - upper tail dependence being negative) to dominantly lower tail dependent (lower tail - upper tail dependence being positive) as we move along the row. Lower panel represents the similar scenario but with stronger correlation (Kendall's $\tau = 0.8$). So, the flexibility of copulae allows us to model more complex multivariate dependence structures by isolating marginal from joint distribution structures, with the capability of modeling a rich variety of tail behavior, such as tail dependence versus tail independence.<!--and reflection symmetry versus reflection asymmetry.--> To identify the kinds of copula structure found in real ecological data, we need to select candidate bivariate copulae from many existing parametric copula families. <!--A very flexible bivariate copula can itself become a welcome candidate in the pool of bivariate copulae to be selected from.--> Here, throughout our studies for different datasets we used a universal pool of 16 bivariate copula families (having exclusively lower, exclusively upper, both or neither tail dependence), described in the \nameref{Methods}. 
+Using a "copula-based approach" as a dependence measure reflects more knowledge about the dependence structure than summarizing in just a single number, the linear correlation coefficient. It tells us about the tail-dependence of the variables, i.e., the association between extreme values of two variables. If smaller values of each variable are more correlated to each other, then the corresponding copula structure is said to have "lower tail-dependence" as shown in the first panel of Fig. \ref{fig_cop_pedag} copula plot (right). Similarly, an "upper tail-dependence" copula indicates stronger correlation between higher extreme variables in the raw data. Tail dependence occurs when the correlation between two variables increases as we get "further" in the tail (either or both) of the distribution. For example, in the middle panel of Fig. \ref{fig_cop_pedag}, different dependence structures, with same Kendall correlation $\tau = 0.5$, are shown which vary between dominantly upper tail dependent (lower tail - upper tail dependence being negative) to dominantly lower tail dependent (lower tail - upper tail dependence being positive) as we move along the row. Lower panel represents the similar scenario but with stronger correlation (Kendall's $\tau = 0.8$). So, the flexibility of copulae allows us to model more complex multivariate dependence structures by isolating marginal from joint distribution structures, with the capability of modeling a rich variety of tail behavior, such as tail dependence versus tail independence.<!--and reflection symmetry versus reflection asymmetry.--> To identify the kinds of copula structure found in real ecological data, we need to select candidate bivariate copulae from many existing parametric copula families. <!--A very flexible bivariate copula can itself become a welcome candidate in the pool of bivariate copulae to be selected from.--> Here, throughout our studies for different datasets we used a universal pool of 16 bivariate copula families (having exclusively lower, exclusively upper, both or neither tail dependence), described in the \nameref{Methods}. 
 
-Though a few examples have been found which shows copula approach to model dependencies in bioinformatics [@Kim2008], medical research [@Emura2016], a short period study of intersite dependence of rainfall data [@Serinaldi2008], a recent study on characterizing and assessing risks in drought management [@She2018] or monitoring changes in precipitation-extremes [@Goswami2018], the multivariate copula approach still, we believe, remains unexplored in ecology or related fields and thus has potential scope to better capture the evolution of ecological time series data. 
+
 
 
 From the ecological perspective, when we find a dominantly lower (upper) tail dependence structure between two species abundance timeseries, it means both incidence are rare (abundant) synchronously. Again, if abundance of a species (say, species A) is associated with scarcity of another species (say, species B) then this may indicate causality, i.e. negative feedback of A on species B. If one variable is an environmental factor (like temperatute or rainfall) and another is an observable (like abundance of a species) then copula structure can also help explain the causal relationship between them. On a similar note, if a species' abundance time series from different sampling locations shows multivariate dependence structure, then we can analyze the "spatial data" using pairwise bivariate copulae and find if there is any tail dependence or not. If the copulae have asymmetric tail dependence, then it can be viewed as a new way to quantify "spatial synchrony" [@Liebhold2004; @walteretal2017], which is a celebrated phenomenon in population ecology. In this article, we analyzed the dependence structure for several bivariate and multivariate ecological, community and biogeochemical datasets. In addition to a copula based \nameref{Model_selection}, we also carried out a \nameref{NPA} with three different statistics to verify our model selection based results. 
@@ -227,7 +326,7 @@ selection algorithms are ineffective if data could not be distinguished from ind
 since most or all bivariate copula families considered include the independent copula in the 
 family or as a boundary case. <!--The independence test was as implemented in the `BiCopIndTest`
 function in `VineCopula`, the documentation of which reports the test uses the asymptotic normality of the statistic $|\tau|\sqrt{\frac{9n(n-1)}{2(2n+5)}}$, where $\tau$ is Kendall's tau statistic. to be added in suppmat-->If independence could be rejected ($0.05$ significance level), model selection proceeded. The third step of model selection was to fit multiple bivariate copula families to the ranked data $(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`. Families considered (with abbreviations here indicated) included the **N**ormal/Gaussian, **C**layton, **G**umbel, **F**rank, **J**oe, **BB1**, **BB6**, **BB7**, **BB8**, **S**urvival **C**layton , **S**urvival **G**umbel, **S**urvival **J**oe, **S**urvival **BB1**, **S**urvival **BB6**, **S**urvival **BB7** and **S**urvival **BB8** copulae. These copulae were chosen carefully so that they covered the whole range from exclusively lower (C, SG, SJ, SBB6, SBB8) or upper tail dependence (SC, G, J, BB6, BB8) to both tail dependence (BB1, SBB1, BB7, SBB7) in addition to two symmetric copulae (N, F). AIC and BIC values and accompanying model weights ($\text{AIC}_{\text{w}}$, $\text{BIC}_{\text{w}}$) were generated using standard formulas [@burnham2003_modelselection]. 
-Descriptions of these copula families can be found in introductory texts on copulae [@nelsen2007_copula ; @joe2014_dependence]  and in `VineCopula` documentation. The lower- and upper-tail dependence of the best-fitting member of each family was also provided by `BiCopEst`. Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
+Descriptions of these copula families can be found in introductory texts on copulae [@nelsen2006_copula ; @joe2014_dependence]  and in `VineCopula` documentation. The lower- and upper-tail dependence of the best-fitting member of each family was also provided by `BiCopEst`. Finally, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
 formulas [@burnham2003_modelselection]; likewise for BIC.
 
@@ -265,7 +364,7 @@ Left (or lower)- and right (or upper)-tail dependence quantify the extent to whi
 variables $u_i$, $v_i$ for $i=1,...,n$ 
 (see \nameref{Model_selection} for defintions of $u_i$ and $v_i$)
 are related to each other in the left and right tails, respectively, of their 
-distributions [@nelsen2007_copula, @joe2014_dependence]. 
+distributions [@nelsen2006_copula, @joe2014_dependence]. 
 Our nonparametric study of tail dependence uses three
 statistics (i.e., $\cor$, $\Ps$ and $\Dsq$) which can quantify the extent to which $u_i$ and $v_i$ are 
 related in any part of their distributions. We here describe the 
@@ -350,7 +449,7 @@ $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
 The difference $\cor_l-\cor_u$ is expected to be positive if 
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
-This holds, for instance, for the Clayton copula [@nelsen2007_copula].
+This holds, for instance, for the Clayton copula [@nelsen2006_copula].
 The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
 "lower" statistics occur in opposite order, is also expected to be 
 positive under the same conditions. We use these three differences
@@ -642,7 +741,7 @@ h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_
 
 # Results for \hyperref[Intro]{\textbf{(Q2)}}: similar tail dependence in population copula as that of noise copula \label{Results_Q2}
 
-To test environmental effect on population copula from the model \ref{eq.AR1}, our approach is of two-fold : First, we calculated the parameter values of the noise-copula (for example, we chose Clayton with lower tail dependence, in this case the parameter of interest is $\theta$, which determines the strength of association of the variables [@nelsen2007_copula]) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for the population-copula and its standard error due to sample size. We reported p-values from goodness of fit tests for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{SM-fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
+To test environmental effect on population copula from the model \ref{eq.AR1}, our approach is of two-fold : First, we calculated the parameter values of the noise-copula (for example, we chose Clayton with lower tail dependence, in this case the parameter of interest is $\theta$, which determines the strength of association of the variables [@nelsen2006_copula]) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for the population-copula and its standard error due to sample size. We reported p-values from goodness of fit tests for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{SM-fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
 
 \begin{figure}[!h]
 \begin{center}

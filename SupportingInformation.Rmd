@@ -560,9 +560,9 @@ additional details???** on greenhouse gas flux methods for this site. We conside
 Normal and Frank copula families 
 are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
-in these families [@nelsen2007_copula]. Clayton copulas are known to have stronger lower- than 
+in these families [@nelsen2006_copula]. Clayton copulas are known to have stronger lower- than 
 upper-tail dependence. And survival Clayton copulas, being rotations of Clayton copulas by 
-$180^\circ$, have stronger upper- than lower tail dependence [@nelsen2007_copula].
+$180^\circ$, have stronger upper- than lower tail dependence [@nelsen2006_copula].
 Using the `iRho` function from the `copula` package, for each of the four families normal, 
 Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 

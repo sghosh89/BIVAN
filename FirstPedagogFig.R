@@ -1,6 +1,4 @@
-rm(list=ls())
 library(copula)
-set.seed(101)
 
 #***prep the data
 

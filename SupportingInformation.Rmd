@@ -121,6 +121,7 @@ dev.off()
 ```
 
 ```{r cop_pedagog_fig1,echo=F,results="hide"}
+set.seed(seed)
 source("./FirstPedagogFig.R")
 ```
 

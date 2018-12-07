@@ -258,14 +258,13 @@ d_soilCN<-readRDS("Data/dataForShymolinaCoord.rds")
 d_soilCN<-na.omit(d_soilCN)
 d_birdsBMR<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
 d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
+d_cc<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
 We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
-<!--***DAN: Shya, please add a sup mat figure showing the sampling locations and a link to it here in place of the X
-***Shya: once Prof. Loecke give me the lattitude and longitudes, I will do that.-->
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
 Species-trait data were average species basal metabolic rate (KJ per hour) and body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
@@ -289,8 +288,9 @@ were obtained from the Continuous Plankton Recorder (CPR) dataset maintained by 
 Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Biological 
 Association of the UK. Data pre-processing was similar but not identical to that 
 of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
-Community-level data were plant aboveground biomass and Shannon's diversity index for X 
-<!--***DAN: Shya, please fill in X with an autolink-->
+Community-level data were plant aboveground biomass and Shannon's diversity index for `r nrow(d_cc[[5]])` 
+<!--***DAN: Shya, please fill in X with an autolink
+***Shya: I mention only number of common plots taken from both biomass and percent cover datasets.-->
 plots, each 9m by 9m, maintained at Cedar Creek Ecosystem Science Reserve and sampled in 
 the year 2000 [@Tilman2001; @Tilman2006]. 
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 

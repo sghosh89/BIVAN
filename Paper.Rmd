@@ -185,13 +185,14 @@ characteristics (Fig. \ref{fig_cop_pedag}), which can be quantified (Methods).
 \caption{(A-C) Data generated using the BB1 copula (Methods) with three different 
 sets of parameters chosen to produce a variety of 
 lower-tail (LT) and upper-tail (UT) dependence strengths (Methods), but the same 
-Kendall correlation (to two digits) in all cases. (D-F) Similar to A-C, but
+Kendall correlation (KC) (to two digits) in all cases. (D-F) Similar to A-C, but
 with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
 within each column of panels.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, please reduce it to three panels in each row (the middle one and the most extreme ones), while keeping the panels the same size, and label the panels A-F. Please also get rid of the title over each panel, and express the UT and LT values to two digits, and make the font slightly bigger for those as well as for the axis labels and numbers. Please also remove the 
-color - we don't need it and it would cost us a lot of money.-->
+color - we don't need it and it would cost us a lot of money.
+***Shya: Done.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the

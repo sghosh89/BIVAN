@@ -98,7 +98,8 @@ Fig. \ref{fig_cop_pedag1}A-B shows two such datasets. The variables of panel A
 related in the left (respectively, right) portions of their distributions, an asymmetric pattern of dependence in the distribution tails that may
 have ecological significance, as discussed below, but is not captured by 
 correlation. Panels C and D 
-were obtained from A and B through monotonic transformation (Appendix X for details),
+were obtained from A and B through monotonic transformation 
+(Appendix \ref{SM-Data_details} for details),
 <!--***DAN: Dan to go back and write the appendix-->
 which alters the Pearson, but not the Spearman correlation. Although correlation
 is only one of the numerous metrics for 
@@ -133,8 +134,8 @@ variable and the cummulative distribution functions (cdfs) of $X$ and $Y$ are
 $F_X(x)=P[X\leq x]$ and $F_Y(y)=P[Y\leq y]$, then the dependence or copula structure
 of $(X,Y)$ is revealed by the random variable $(F_X(X),F_Y(Y))$.
 This random variable takes values in the unit square, 
-$[0,1] \times [0,1]$, and has uniform marginal distributions. Densities
-corresponding to the copulas associated 
+$[0,1] \times [0,1]$, and has uniform marginal distributions. Probability density 
+functions (pdfs) corresponding to the copulas associated 
 with Fig. \ref{fig_cop_pedag1}E-F are in Fig.
 \ref{fig_cop_pedag1}G-H, respectively. Strictly speaking, 
 the copula is actually defined as the bivariate 
@@ -152,19 +153,21 @@ multivariate distributions.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between variables; many of these datasets nevertheless have the same Pearson (P)
+\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
+variables; many of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
 obtained from A (respectively, B) via monotonic functions that transformed the standard-
 normal marginal distributions of A and B to gamma (C, D) or 
-uniform (E, F) marginals (details in Appendix X). (G, H) Contours 
+uniform (E, F) marginals (details in Appendix \ref{SM-fig_cop_pedag1}). (G, H) Contours 
 of log-scale density functions of Clayton (G) and survival-Clayton 
-(H) copulas with parameter 5 (see Methods). (I,J) Reflections
+(H) copulas with parameter 5 (Appendix \ref{SM-copula_details}). (I,J) Reflections
 of E, F, respectively, about a vertical axis. Subscripts h and v 
 stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
-<!--***DAN: Dan to go back and add an appendix with details as it says. Make sure
-to mention the shape and scale params of the gamma marginals in C, D were 2-->
+<!--***DAN: Dan to go back and add the appendices with details as it says. Make sure
+to mention in the first one 
+the shape and scale params of the gamma marginals in C, D were 2-->
 
 A principal benefit of a copula approach to ecological data is 
 that such an approach can sensitively model and detect
@@ -190,9 +193,14 @@ with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same
 within each column of panels.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, please reduce it to three panels in each row (the middle one and the most extreme ones), while keeping the panels the same size, and label the panels A-F. Please also get rid of the title over each panel, and express the UT and LT values to two digits, and make the font slightly bigger for those as well as for the axis labels and numbers. Please also remove the 
-color - we don't need it and it would cost us a lot of money.
-***Shya: Done.-->
+<!--***DAN: Shya, I like the grey color of your points on the above figure, 
+but I prefer the 
+solid plotting symbols and the size of plotting symbols used on the new 
+pedagogical figure that I made. Can you please change the code of both figures
+so we get grey, with the plotting symbols I used, on both plots? Likeiwse for the 
+new figure produced in ./ThirdPedagogFig.R, please. It will be
+good to use the same points, for consistency. Don't worry at this stage about
+making other figures, other than these three, consistent.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the
@@ -340,8 +348,6 @@ Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Bio
 Association of the UK. Data pre-processing was similar but not identical to that 
 of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
 Community-level data were plant aboveground biomass and Shannon's diversity index for `r nrow(d_cc[[5]])` 
-<!--***DAN: Shya, please fill in X with an autolink
-***Shya: I mention only number of common plots taken from both biomass and percent cover datasets.-->
 plots, each 9m by 9m, maintained at Cedar Creek Ecosystem Science Reserve and sampled in 
 the year 2000 [@Tilman2001; @Tilman2006]. 
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
@@ -358,7 +364,44 @@ different locations or for different species. The phenology and population datas
 copula structure can be studied for each pair of locations. Likewise the the ecosystem 
 functioning (methane flux) dataset was  multivariate in this sense.
 
-# Concepts for Q1: Statistical tools for detecting copula structure \label{Methods}
+# Background concepts and methods for Q1: detecting copula structure \label{Methods}
+
+We addressed Q1 in part via a model selection procedure in which the normal copula
+and a variety of alternative copulas were fit to 
+our ecological datasets, and fits of the various copula models 
+were compared via the Akaike and Bayesian 
+Information Criteria (AIC and BIC). To make the results more easily interpretable
+to readers unfamiliar with copulas, we first introduce the normal copula and 
+some alternative copulas we used; and we operationally introduce measures of tail dependence
+and asymmetry of tail dependence. 
+Additional details are in Appendix \ref{SM-copula_details}. 
+Conceptually, a bivariate copula is the same as a probability density function 
+on the unit square with uniform maginals. The normal copula family is a one-parameter
+family of copulas, with parameter corresponding to the covariance of the related 
+bivariate normal distribtion and controlling the degree of dependence 
+(Fig. \ref{fig_cop_pedag3}A-B for an example).
+Left- and right-tail dependence are $0$ for a the normal copula, and this 
+serves as a reference for tail dependence in other copulas. The Clayton and 
+survival-Clayton families (Fig. \ref{fig_cop_pedag1}G-H) are two more one-parameter 
+families. The Clayton has positive lower-tail dependence ($0.87$ for
+the example of Fig. \ref{fig_cop_pedag1}G) and $0$ upper-tail dependence; the 
+survival-Clayton, which is a rotation of the Clayton by $180^\circ$, has 
+positive upper-tail dependence ($0.87$ in Fig. \ref{fig_cop_pedag1}H)
+and $0$ lower-tail dependence. For our model selection procedure (see below), we considered
+
+
+Families considered (with abbreviations here indicated) included the **N**ormal/Gaussian, **C**layton, **G**umbel, **F**rank, **J**oe, **BB1**, **BB6**, **BB7**, **BB8**, **S**urvival **C**layton , **S**urvival **G**umbel, **S**urvival **J**oe, **S**urvival **BB1**, **S**urvival **BB6**, **S**urvival **BB7** and **S**urvival **BB8** copulae. These copulae were chosen carefully so that they covered the whole range from exclusively lower (C, SG, SJ, SBB6, SBB8) or upper tail dependence (SC, G, J, BB6, BB8) to both tail dependence (BB1, SBB1, BB7, SBB7) in addition to two symmetric copulae (N, F). 
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=3.5in]{./Results/PedagogFig3.pdf}
+\caption{Log-transformed pdfs (A, C) and samples from (B, D) example copulas.
+Shown are the normal copula with parameter $0.8$ and the Frank copula with 
+parameter $10$. See also Fig. \ref{fig_cop_pedag1}E-H for the Clayton and  
+survival-Clayton copulas with parameter 5, and Appendix. \label{fig_cop_pedag3}}
+\end{center}
+\end{figure}
 
 Question Q1 from the Introduction was answered via statistical analysis of the
 data described above, using both model selection and nonparametric approaches.
@@ -545,7 +588,7 @@ provides a test of asymmetry of tail dependence. Thus this comparison helps answ
 third part of question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} for bivariate datasets. For multivariate datasets, we used a spatial resampling scheme (for details see Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals, instead of the surrogate 
 approach described above.
 
-# Results for \hyperref[Intro]{\textbf{(Q1)}}: Ecological datasets often have non-Normal copula structures, including asymmetric tail dependence \label{Results}
+# Results for Q1: Ecological datasets often have non-normal copula structure and asymmetric tail dependence \label{Results}
 <!--## question 1
 - Do datasets in ecology and related fields have non-Normal copula structure?
 - Do they show tail dependence distinct from that of a Normal copula?
@@ -753,7 +796,7 @@ Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets 
 
 
 <!--Question 2 analyses-->
-# Concepts and models for \hyperref[Intro]{\textbf{(Q2)}}: possible causes of non-Normal copula structure \label{Causes}
+# Concepts and models for Q2: possible causes of non-normal copula structure \label{Causes}
 
 This section is dedicated to exploring question \hyperref[Intro]{\textbf{(Q2)}} from \nameref{Intro}. We showed environmental copula structure and asymmetric sensitivities to the environment could produce population copula structures.
 <!--We wanted to find how are copula structure of ecologically influential climate variables changing as part of climate change?--> 
@@ -837,7 +880,7 @@ dependence of populations in the locations that are influenced by the environmen
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 <!--Question 3 analyses-->
-# Concepts for \hyperref[Intro]{\textbf{(Q3)}}: Consequences of non-Normal copula structure and tail dependence for our understanding of biology \label{Consequences}
+# Concepts, methods and models for Q3: Consequences of non-normal copula structure and tail dependence for our understanding of biology \label{Consequences}
 
 This section is dedicated to analysis of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We wanted to examine whether the asymmetric tail dependence had any **(i)** effects on skewness of spatially averaged time series data. We predicted that because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, should change significantly from the individual skewness of time-series data. We tested null hypothesis $(H_{0})$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula.
 We generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (spearman or kendall) same and calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set in the next section (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R)). We made a histogram of surrogate skewness and found if actual skewness was within the $95\%$ confidence interval or not. If the $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness than Normal copula).

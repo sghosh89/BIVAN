@@ -123,6 +123,7 @@ dev.off()
 ```{r cop_pedagog_fig1,echo=F,results="hide"}
 set.seed(seed)
 source("./FirstPedagogFig.R")
+source("./ThirdPedagogFig.R")
 ```
 
 ```{r cop_pedag_fig,echo=F,results="hide"}
@@ -550,6 +551,11 @@ averaged, producing a monthly time series for each year. Where data for a given 
  
  The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had atleast 50 dates data.
+
+# Transformations used in Fig. \ref{MT-fig_cop_pedag1}
+
+
+# Background on the copulas we fitted with data \label{copula_details}
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
 

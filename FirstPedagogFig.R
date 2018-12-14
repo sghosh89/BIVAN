@@ -51,8 +51,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
           (xmarg_ht+5*pan_ht+4*gap+5*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
 rg<-max(abs(dcc5_nm))
-plot(dcc5_nm[,1],dcc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(-rg,rg),ylim=c(-rg,rg))
+plot(dcc5_nm[,1],dcc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey")
 mtext(expression(z[v]),2,line=1.15)
 text(-rg,rg,"A",cex=cexvalpl,adj=c(0,1))
 text(rg,-rg+.25*rg,paste0("P=",round(cor(dcc5_nm[,1],dcc5_nm[,2]),2)),
@@ -67,8 +66,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+5*pan_ht+4*gap+5*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 rg<-max(abs(dsc5_nm))
-plot(dsc5_nm[,1],dsc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(-rg,rg),ylim=c(-rg,rg))
+plot(dsc5_nm[,1],dsc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey")
 text(-rg,rg,"B",cex=cexvalpl,adj=c(0,1))
 text(rg,-rg+.25*rg,paste0("P=",round(cor(dsc5_nm[,1],dsc5_nm[,2]),2)),
      adj=c(1,0),cex=cexvaltxt)
@@ -83,8 +81,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 rg1<-min(dcc5_gm,dsc5_gm)
 rg2<-max(dcc5_gm,dsc5_gm)
-plot(dcc5_gm[,1],dcc5_gm[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dcc5_gm[,1],dcc5_gm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 mtext(expression(z[v]),2,line=1.15)
 text(rg1,rg2,"C",cex=cexvalpl,adj=c(0,1))
 text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5_gm[,1],dcc5_gm[,2]),2)),
@@ -98,8 +95,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+3*pan_ht+3*gap+4*numsp)/tot_ht,
           (xmarg_ht+4*pan_ht+3*gap+4*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-plot(dsc5_gm[,1],dsc5_gm[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dsc5_gm[,1],dsc5_gm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 text(rg1,rg2,"D",cex=cexvalpl,adj=c(0,1))
 text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5_gm[,1],dsc5_gm[,2]),2)),
      adj=c(1,0),cex=cexvaltxt)
@@ -114,8 +110,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 rg1<-0
 rg2<-1
-plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 mtext(expression(z[v]),2,line=1.15)
 text(rg1,rg2,"E",cex=cexvalpl,adj=c(0,1))
 text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5[,1],dcc5[,2]),2)),
@@ -129,8 +124,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+2*pan_ht+2*gap+3*numsp)/tot_ht,
           (xmarg_ht+3*pan_ht+2*gap+3*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-plot(dsc5[,1],dsc5[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dsc5[,1],dsc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 text(rg1,rg2,"F",cex=cexvalpl,adj=c(0,1))
 text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5[,1],dsc5[,2]),2)),
      adj=c(1,0),cex=cexvaltxt)
@@ -148,7 +142,9 @@ y<-x
 dcarg<-matrix(c(rep(x,times=length(y)),rep(y,each=length(x))),length(x)*length(y),2)
 z<-dCopula(dcarg,cc5)
 z<-matrix(z,101,101)
-contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1))
+contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),col="grey",labels ="")
+contour(x,y,log10(z),nlevels=5,lty=0, add=T)
+#contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1))
 text(1,1,"G",cex=cexvalpl,adj=c(1,1))
 mtext(expression(z[v]),2,line=1.15)
 
@@ -163,7 +159,8 @@ y<-x
 dcarg<-matrix(c(rep(x,times=length(y)),rep(y,each=length(x))),length(x)*length(y),2)
 z<-dCopula(dcarg,sc5)
 z<-matrix(z,101,101)
-contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1))
+contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),col="grey",labels ="")
+contour(x,y,log10(z),nlevels=5,lty=0, add=T)
 text(0,0,"H",cex=cexvalpl,adj=c(0,0))
 
 #5th row of panels, left
@@ -176,8 +173,7 @@ dcc5fv<-dcc5
 dcc5fv[,1]<-(-dcc5fv[,1]+1)
 rg1<-0
 rg2<-1
-plot(dcc5fv[,1],dcc5fv[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dcc5fv[,1],dcc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 text(rg2,rg2,"I",cex=cexvalpl,adj=c(1,1))
 text(rg1,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5fv[,1],dcc5fv[,2]),2)),
      adj=c(0,0),cex=cexvaltxt)
@@ -194,8 +190,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 dsc5fv<-dsc5
 dsc5fv[,1]<-(-dsc5fv[,1]+1)
-plot(dsc5fv[,1],dsc5fv[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(rg1,rg2),ylim=c(rg1,rg2))
+plot(dsc5fv[,1],dsc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 text(rg2,rg2,"J",cex=cexvalpl,adj=c(1,1))
 text(rg1,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5fv[,1],dsc5fv[,2]),2)),
      adj=c(0,0),cex=cexvaltxt)

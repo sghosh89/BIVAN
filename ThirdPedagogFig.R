@@ -53,8 +53,8 @@ y<-x
 dcarg<-matrix(c(rep(x,times=length(y)),rep(y,each=length(x))),length(x)*length(y),2)
 z<-dCopula(dcarg,nc,log=FALSE)
 z<-matrix(z,101,101)
-contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),
-        xaxt="n")
+contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),xaxt="n",col="grey",labels ="")
+contour(x,y,log10(z),nlevels=5,lty=0, add=T)
 axis(side=1,labels=FALSE)
 mtext("v",2,1.15)
 mtext("A",3,.05,cex=cexvalpl,adj=0)
@@ -66,7 +66,7 @@ par(fig=c((ymarg_wd+1*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+2*pan_ht+1*gap+1*numsp+labgap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
 plot(dnc[,1],dnc[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(0,1),ylim=c(0,1),xaxt="n",yaxt="n")
+     xlim=c(0,1),ylim=c(0,1),xaxt="n",yaxt="n",col="grey")
 axis(side=1,labels=FALSE)
 axis(side=2,labels=FALSE)
 mtext("B",3,.05,cex=cexvalpl,adj=0)
@@ -79,8 +79,8 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
 z<-dCopula(dcarg,fc,log=FALSE)
 z<-matrix(z,101,101)
-contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),
-        xlab="u",ylab="v")
+contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),col="grey",labels ="")
+contour(x,y,log10(z),nlevels=5,lty=0, add=T)
 mtext("u",1,1.15)
 mtext("v",2,1.15)
 mtext("C",3,.05,cex=cexvalpl,adj=0)
@@ -91,8 +91,7 @@ par(fig=c((ymarg_wd+1*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+0*pan_ht+0*gap+1*numsp)/tot_ht,
           (xmarg_ht+1*pan_ht+0*gap+1*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
-plot(dfc[,1],dfc[,2],type='p',pch=pchval,cex=cexvalpts,
-     xlim=c(0,1),ylim=c(0,1),yaxt="n")
+plot(dfc[,1],dfc[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(0,1),ylim=c(0,1),yaxt="n",col="grey")
 axis(side=2,labels=FALSE)
 mtext("u",1,1.15)
 mtext("D",3,.05,cex=cexvalpl,adj=0)

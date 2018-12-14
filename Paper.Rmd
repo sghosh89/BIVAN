@@ -364,21 +364,21 @@ different locations or for different species. The phenology and population datas
 copula structure can be studied for each pair of locations. Likewise the the ecosystem 
 functioning (methane flux) dataset was  multivariate in this sense.
 
-# Background concepts and methods for Q1: detecting copula structure \label{Methods}
+# Background, concepts and methods for Q1: detecting copula structure in data \label{Methods}
 
-We addressed Q1 in part via a model selection procedure in which the normal copula
+We addressed Q1 partly via a model selection procedure in which the normal copula
 and a variety of alternative copulas were fit to 
 our ecological datasets, and fits of the various copula models 
 were compared via the Akaike and Bayesian 
-Information Criteria (AIC and BIC). To make the results more easily interpretable
+Information Criteria (AIC and BIC). To make the results interpretable
 to readers unfamiliar with copulas, we first introduce the normal copula and 
-some alternative copulas we used; and we operationally introduce measures of tail dependence
+some other copulas we used; and we operationally introduce measures of tail dependence
 and asymmetry of tail dependence. 
 Additional details are in Appendix \ref{SM-copula_details}. 
 Conceptually, a bivariate copula is the same as a probability density function 
 on the unit square with uniform maginals. The normal copula family is a one-parameter
 family of copulas, with parameter corresponding to the covariance of the related 
-bivariate normal distribtion and controlling the degree of dependence 
+bivariate normal distribtion, and controlling the degree of dependence 
 (Fig. \ref{fig_cop_pedag3}A-B for an example).
 Left- and right-tail dependence are $0$ for a the normal copula, and this 
 serves as a reference for tail dependence in other copulas. The Clayton and 
@@ -399,7 +399,8 @@ Families considered (with abbreviations here indicated) included the **N**ormal/
 \caption{Log-transformed pdfs (A, C) and samples from (B, D) example copulas.
 Shown are the normal copula with parameter $0.8$ and the Frank copula with 
 parameter $10$. See also Fig. \ref{fig_cop_pedag1}E-H for the Clayton and  
-survival-Clayton copulas with parameter 5, and Appendix. \label{fig_cop_pedag3}}
+survival-Clayton copulas with parameter 5, and Appendix \ref{SM-copula_details}
+for additional details. \label{fig_cop_pedag3}}
 \end{center}
 \end{figure}
 

@@ -557,6 +557,12 @@ additional details???** on greenhouse gas flux methods for this site. We conside
 
 # Background on the copulas we fitted with data \label{copula_details}
 
+<!--****DAN: Need a 10-panel fig for each one-parameter family showing samples and 
+pdfs for 5 values of the parameter. May also need something for the two-parameter
+families, but not sure yet how to handle it. After doing the univariate families, then
+maybe it is enough to show just the pdf, in which case it can be done in a 
+5-by-5 array of panels for the 2-parameter families. That seems like it would work.-->
+
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
 
 Normal and Frank copula families 

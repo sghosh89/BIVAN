@@ -56,7 +56,9 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   mtext("v",2,1.15)
   mtext("A",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",round(spearvals[px+1],2),"; p=",round(thetavals[px+1],2)),3,1.25,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  lbds<-unname(lambda(coplist[[px+1]]))
+  mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
   #top panel 2
   px<-1
@@ -72,7 +74,9 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("B",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",round(spearvals[px+1],2),"; p=",round(thetavals[px+1],2)),3,1.25,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  lbds<-unname(lambda(coplist[[px+1]]))
+  mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
   #top panel 3
   px<-2
@@ -88,7 +92,9 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("C",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",round(spearvals[px+1],2),"; p=",round(thetavals[px+1],2)),3,1.25,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  lbds<-unname(lambda(coplist[[px+1]]))
+  mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
   #top panel 4
   px<-3
@@ -104,7 +110,9 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("D",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",round(spearvals[px+1],2),"; p=",round(thetavals[px+1],2)),3,1.25,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  lbds<-unname(lambda(coplist[[px+1]]))
+  mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
   #top panel 5
   px<-4
@@ -120,7 +128,9 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("E",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",round(spearvals[px+1],2),"; p=",round(thetavals[px+1],2)),3,1.25,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  lbds<-unname(lambda(coplist[[px+1]]))
+  mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
   #bottom panel 1
   px<-0
@@ -132,7 +142,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)  
   dat<-rCopula(numpts,coplist[[px+1]])
   plot(dat[,1],dat[,2],type='p',pch=pchval,cex=cexvalpts,
-       xlim=c(0,1),ylim=c(0,1))
+       xlim=c(0,1),ylim=c(0,1),col="grey")
   mtext("u",1,1.15)
   mtext("v",2,1.15)
   mtext("F",3,.05,cex=cexvalpl,adj=0)
@@ -147,7 +157,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)  
   dat<-rCopula(numpts,coplist[[px+1]])
   plot(dat[,1],dat[,2],type='p',pch=pchval,cex=cexvalpts,
-       xlim=c(0,1),ylim=c(0,1),yaxt="n")
+       xlim=c(0,1),ylim=c(0,1),yaxt="n",col="grey")
   mtext("u",1,1.15)
   axis(2,labels=FALSE)
   mtext("G",3,.05,cex=cexvalpl,adj=0)
@@ -162,7 +172,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)    
   dat<-rCopula(numpts,coplist[[px+1]])
   plot(dat[,1],dat[,2],type='p',pch=pchval,cex=cexvalpts,
-       xlim=c(0,1),ylim=c(0,1),yaxt="n")
+       xlim=c(0,1),ylim=c(0,1),yaxt="n",col="grey")
   mtext("u",1,1.15)
   axis(2,labels=FALSE)
   mtext("H",3,.05,cex=cexvalpl,adj=0)
@@ -177,7 +187,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)    
   dat<-rCopula(numpts,coplist[[px+1]])
   plot(dat[,1],dat[,2],type='p',pch=pchval,cex=cexvalpts,
-       xlim=c(0,1),ylim=c(0,1),yaxt="n")
+       xlim=c(0,1),ylim=c(0,1),yaxt="n",col="grey")
   mtext("u",1,1.15)
   axis(2,labels=FALSE)
   mtext("I",3,.05,cex=cexvalpl,adj=0)
@@ -192,7 +202,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)  
   dat<-rCopula(numpts,coplist[[px+1]])
   plot(dat[,1],dat[,2],type='p',pch=pchval,cex=cexvalpts,
-       xlim=c(0,1),ylim=c(0,1),yaxt="n")
+       xlim=c(0,1),ylim=c(0,1),yaxt="n",col="grey")
   mtext("u",1,1.15)
   axis(2,labels=FALSE)
   mtext("J",3,.05,cex=cexvalpl,adj=0)
@@ -202,6 +212,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
 
 #***now make some plots
 
+library(copula)
 numpts<-250
 spearvals<-c(.1,.6,.7,.8,.9)
 
@@ -268,13 +279,219 @@ coplist<-lapply(FUN=rotCopula,X=coplist)
 muvcpp(coplist,numpts,spearvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvJoe")
 
 #' Make a pedagogical plot for a bivariate copula
+#'
+#' @param coplist A list of 25 copula objects from the copula package
+#' @param p1vals A vector of five values of the first copula parameter, again for display
+#' @param p2vals Same for the second parameter
+#' @param tot_wd Total width of the figure generated, in inches
+#' @param filename A filename, without extension, for saving in the working directory. A pdf 
+#' is generated and saved.
 #' 
+#' @note For my own use at present, does little to no error catching
 #' 
+#' @author Daniel Reuman \email{reuman@@ku.edu}
 
-#**BB1**, **BB6**, 
-#**BB7**, **BB8**, **S**urvival **C**layton , **S**urvival **G**umbel, 
-#**S**urvival **J**oe, **S**urvival **BB1**, **S**urvival **BB6**, **S**urvival **BB7** 
-#and **S**urvival **BB8** copulae. These copulae were chosen carefully so that they covered 
-#the whole range from exclusively lower (C, SG, SJ, SBB6, SBB8) or upper tail dependence 
-#(SC, G, J, BB6, BB8) to both tail dependence (BB1, SBB1, BB7, SBB7) in addition to two 
-#symmetric copulae (N, F). 
+mbvcpp<-function(coplist,p1vals,p2vals,tot_wd,filename)
+{
+  if (length(coplist)!=25)
+  {
+    stop("Error in mbvcpp: only works with 25 copulas")
+  }
+
+  #***plot dimensions
+  xmarg_ht<-.25
+  ymarg_wd<-.25
+  numsp<-.2
+  gap<-0.1
+  titgap<-.15
+  pan_wd<-(tot_wd-ymarg_wd-numsp-5*gap-titgap)/5
+  if (pan_wd<=0){stop("Error in mbvcpp: need a larger tot_wd")}
+  pan_ht<-pan_wd
+  tot_ht<-xmarg_ht+numsp+5*pan_ht+5*gap+6*titgap
+  pchval<-20
+  cexvalpts<-0.25
+  cexvaltxt<-0.55
+  cexvalpl<-1.5
+  pdf(file=paste0(filename,".pdf"),width=tot_wd,height=tot_ht)
+  
+  x<-seq(from=0,to=1,length.out=101)
+  y<-x
+  dcarg<-matrix(c(rep(x,times=length(y)),rep(y,each=length(x))),length(x)*length(y),2)
+  
+  for (px in 0:4)
+  {
+    for (py in 0:4)
+    {
+      #set up the panel
+      if (px==0 && py==0)
+      {
+        par(fig=c((ymarg_wd+numsp+px*pan_wd+px*gap)/tot_wd,
+                  (ymarg_wd+numsp+(px+1)*pan_wd+px*gap)/tot_wd,
+                  (xmarg_ht+numsp+py*pan_ht+py*gap+py*titgap)/tot_ht,
+                  (xmarg_ht+numsp+(py+1)*pan_ht+py*gap+py*titgap)/tot_ht),
+            mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
+      }else
+      {
+        par(fig=c((ymarg_wd+numsp+px*pan_wd+px*gap)/tot_wd,
+                  (ymarg_wd+numsp+(px+1)*pan_wd+px*gap)/tot_wd,
+                  (xmarg_ht+numsp+py*pan_ht+py*gap+py*titgap)/tot_ht,
+                  (xmarg_ht+numsp+(py+1)*pan_ht+py*gap+py*titgap)/tot_ht),
+            mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
+      }
+      
+      #make the plot
+      thiscop<-coplist[[px+1+5*py]]
+      z<-dCopula(dcarg,thiscop,log=FALSE)
+      z<-matrix(z,101,101)
+      contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),xaxt="n",yaxt="n")
+      
+      #make the x axis
+      if (py==0)
+      {
+        axis(1)
+        mtext("u",1,1.15)
+      }else
+      {
+        axis(1,labels=FALSE)
+      }
+      
+      #make the y axis
+      if (px==0)
+      {
+        axis(2)
+        mtext("v",2,1.15)
+      }else
+      {
+        axis(2,labels=FALSE)
+      }
+      
+      #make the title, which has tau, LT and UT
+      tauval<-tau(thiscop)
+      lbds<-unname(lambda(thiscop))
+      mtext(paste0("K=",signif(tauval,2),";LT=",signif(lbds[1],2),";UT=",signif(lbds[2],2)),
+            3,0,cex=cexvaltxt)
+      
+      #make the column headers with parameter values
+      if (py==4)
+      {
+        mtext(paste0("p1=",signif(p1vals[px+1],2)),3,1,cex=cexvaltxt)
+      }
+      
+      #make the row headers with parameter values
+      if (px==4)
+      {
+        mtext(paste0("p2=",signif(p2vals[py+1],2)),4,.3,cex=cexvaltxt)
+      }
+    }
+  }
+
+  dev.off()
+}
+
+#***now make some plots
+
+library(VineCopula) 
+
+#BB1
+p1vals<-seq(from=.5,to=6.5,length.out=5)
+p2vals<-seq(from=1.5,to=6.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-BB1Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_BB1")
+
+#BB6
+p1vals<-seq(from=1.5,to=5.5,length.out=5)
+p2vals<-seq(from=1.5,to=6.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-BB6Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_BB6")
+
+#BB7
+p1vals<-seq(from=1.5,to=5.5,length.out=5)
+p2vals<-seq(from=.5,to=5.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-BB7Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_BB7")
+
+#BB8
+p1vals<-seq(from=1.5,to=6.5,length.out=5)
+p2vals<-seq(from=.1,to=.9,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-BB8Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_BB8")
+
+#SBB1
+p1vals<-seq(from=.5,to=6.5,length.out=5)
+p2vals<-seq(from=1.5,to=6.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-surBB1Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_SBB1")
+
+#SBB6
+p1vals<-seq(from=1.5,to=5.5,length.out=5)
+p2vals<-seq(from=1.5,to=6.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-surBB6Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_SBB6")
+
+#SBB7
+p1vals<-seq(from=1.5,to=5.5,length.out=5)
+p2vals<-seq(from=.5,to=5.5,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-surBB7Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_SBB7")
+
+#SBB8
+p1vals<-seq(from=1.5,to=6.5,length.out=5)
+p2vals<-seq(from=.1,to=.9,length.out=5)
+coplist<-list()
+for (c2 in 1:5)
+{
+  for (c1 in 1:5)
+  {
+    coplist[[c1+5*(c2-1)]]<-surBB8Copula(c(p1vals[c1],p2vals[c2]))
+  }
+}
+mbvcpp(coplist,p1vals,p2vals,tot_wd=7.5,filename="./Results/PedagogSuppMat_SBB8")

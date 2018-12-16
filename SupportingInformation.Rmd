@@ -1,7 +1,7 @@
 ---
 title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
-date: "February 12, 2018"
+date: "December 16, 2018"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
@@ -125,6 +125,7 @@ set.seed(seed)
 source("./FirstPedagogFig.R")
 source("./SecondPedagogFig.R")
 source("./ThirdPedagogFig.R")
+source("./MakeCopulaPedagogFigs.R")
 ```
 
 <!--The raw data look like this:-->
@@ -157,13 +158,6 @@ map("usa")
 points(x = d$long, y = d$lat, col="red",pch=16,cex=0.5)
 dev.off()
 ```
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/SoilCNmapUSA.pdf} 
-\caption{Locations of central pedons with soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from 5907 sampling sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
-\end{center}
-\end{figure}
 
 ```{r read_BMR_birds_and_copulaplot, echo=F, results='hide'}
 set.seed(seed)
@@ -437,14 +431,6 @@ knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
       col.names = c("Common name", "Latin binomial"))
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/aphid_map_plot.pdf} 
-\caption{Locations of Rothamsted Insect Survey suction-trap across UK are indicated by the red circles 
-out of which only blue boxes are considered for our study based on having atleast 30 annual data points. \label{fig_aphid_map}}
-\end{center}
-\end{figure}
-
 ```{r tab_plankton_info, echo=F, results='asis',message=F}
 library(tibble)
 plankton_info <- tibble(c('Calanus I-IV','Para-Pseudocalanus spp','Temora longicornis','Acartia spp',
@@ -461,14 +447,6 @@ knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
       col.names = c("Plankton sp. name"))
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/plankton_map_plot.pdf} 
-\caption{CPR data collected from 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ on map) around UK sea (indicated by the red circles) but out of which only blue boxes are considered for our study based on having atleast 45 annual data points. \label{fig_plankton_map}}
-\end{center}
-\end{figure}
-
-
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)
 methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
@@ -477,14 +455,6 @@ methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 #             caption = "First few rows of raw methane data.\\label{tab_rawdata_methane}",
 #             booktabs=T) # display first few rows
 ```
-
-<!--# Description of Data \label{Data_detailed}
-to be filled later
---->
-
-<!--# Suppmat for model selection approach \label{MS_detailed}
-to be filled later
---->
 
 # Details of the data \label{Data_details}
 
@@ -500,16 +470,199 @@ averaged, producing a monthly time series for each year. Where data for a given 
  The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had atleast 50 dates data.
 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8 cm,height=8 cm]{./Results/SoilCNmapUSA.pdf} 
+\caption{Locations of central pedons with soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from 5907 sampling sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8 cm,height=8 cm]{./Results/aphid_map_plot.pdf} 
+\caption{Locations of Rothamsted Insect Survey suction-trap across UK are indicated by the red circles 
+out of which only blue boxes are considered for our study based on having atleast 30 annual data points. \label{fig_aphid_map}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8 cm,height=8 cm]{./Results/plankton_map_plot.pdf} 
+\caption{CPR data collected from 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ on map) around UK sea (indicated by the red circles) but out of which only blue boxes are considered for our study based on having atleast 45 annual data points. \label{fig_plankton_map}}
+\end{center}
+\end{figure}
+
 # Transformations used in Fig. \ref{MT-fig_cop_pedag1}
 
 
 # Background on the copulas we fitted with data \label{copula_details}
 
-<!--****DAN: Need a 10-panel fig for each one-parameter family showing samples and 
-pdfs for 5 values of the parameter. May also need something for the two-parameter
-families, but not sure yet how to handle it. After doing the univariate families, then
-maybe it is enough to show just the pdf, in which case it can be done in a 
-5-by-5 array of panels for the 2-parameter families. That seems like it would work.-->
+<!--Notes about individual copula parameter ranges:
+
+-->
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Normal.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example N copulas. 
+S is Spearman correlation; p is the value of the parameter for the N family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively.\label{figped_N}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Clayton.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example C copulas. S is Spearman correlation; p is the value of the parameter for the C family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively.\label{figped_C}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvClayton.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SC 
+copulas. S is Spearman correlation; p is the value of the parameter for the SC 
+family (it is a one-parameter family); and LT and UT are the measures of lower- and 
+upper-tail dependence, respectively.\label{figped_SC}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Gumbel.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example G copulas. S is 
+Spearman correlation; p is the value of the parameter for the G family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively.\label{figped_G}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvGumbel.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SG 
+copulas. S is Spearman correlation; p is the value of the parameter for the SG 
+family (it is a one-parameter family); and LT and UT are the measures of lower- and 
+upper-tail dependence, respectively.\label{figped_SG}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Joe.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; p is the value of the parameter for the J family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively.\label{figped_J}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvJoe.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SJ 
+copulas. K is Spearman correlation; p is the value of the parameter for the SJ 
+family (it is a one-parameter family); and LT and UT are the measures of lower- and 
+upper-tail dependence, respectively.\label{figped_SJ}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Frank.pdf}
+\caption{Log-transformed pdfs (A-E) and samples (F-J) from example F copulas. S is Kendall correlation; p is the value of the parameter for the F family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively.\label{figped_F}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB1.pdf}
+\caption{Log-transformed pdfs for example BB1 copulas. K is Kendall correlation; p1 and p2
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_BB1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB1.pdf}
+\caption{Log-transformed pdfs for example SBB1 copulas. K is Kendall correlation; p1 ad p2 
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_SBB1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB6.pdf}
+\caption{Log-transformed pdfs for example BB6 copulas. K is Kendall correlation; p1 and p2
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_BB6}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB6.pdf}
+\caption{Log-transformed pdfs for example SBB6 copulas. K is Kendall correlation; p1 ad p2 
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_SBB6}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB7.pdf}
+\caption{Log-transformed pdfs for example BB7 copulas. K is Kendall correlation; p1 and p2
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_BB7}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB7.pdf}
+\caption{Log-transformed pdfs for example SBB7 copulas. K is Kendall correlation; p1 ad p2 
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_SBB7}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB8.pdf}
+\caption{Log-transformed pdfs for example BB8 copulas. K is Kendall correlation; p1 and p2
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_BB8}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB8.pdf}
+\caption{Log-transformed pdfs for example SBB8 copulas. K is Kendall correlation; p1 ad p2 
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively.\label{figped_SBB8}}
+\end{center}
+\end{figure}
+
+<!--***DAN: made it to here 2018 12 16-->
+
+
+
+
 
 # Testing non-parametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
 

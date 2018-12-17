@@ -658,9 +658,40 @@ respectively.\label{figped_SBB8}}
 \end{center}
 \end{figure}
 
-<!--***DAN: made it to here 2018 12 16-->
+# Nonparametric statistics
+
+<!--***DAN: Right now this is a dumping grounds for text taken from the main text.
+The text is valuable, but needs to be organized to fit together in this supp mat
+section-->
+
+We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
+$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
+$S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
+and a distance less than $h$ from the line $v=u$, divided by the 
+total number of points within the bounds. This function is
+defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
+is half the longer of the two segments obtained by intersecting the
+bounds with the unit square. It is easy to see $S(0)=0$ and 
+$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
+of $h$, to be the area within the bounds and the unit square
+and within distance $h$ of the line $v=u$, divided by the area
+within the bounds and the unit square. This is the expected value of
+$S(h)$ for independent data. We then defined
+\begin{equation}\label{eq.P}
+   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
+\end{equation}
+As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
+indicate stronger positive association
+between $u$ and $v$ in the region given by the bounds.
 
 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
+\caption{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
+\end{center}
+\end{figure}
 
 
 

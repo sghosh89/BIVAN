@@ -456,97 +456,68 @@ values to the lower- and upper-tail dependence values of a normal copula (which
 are 0). The third part of Q1
 was answered by comparing the difference of the model-averaged lower- and upper-tail 
 dependence values to the analogous difference for a normal copula, again 0.
-For multivariate datasets,  
+For multivariate datasets,
 each of which consists of time series from multiple locations, we carried out the bivariate analysis
 for all possible pairwise combinations of locations and compared AIC weights and tail-dependence of 
-minimum AIC copulas with that of the normal copula. We also counted the number of location pairs 
+minimum-AIC copulas with that of the normal copula. We also counted the number of location pairs 
 for which model-averaged lower-tail dependence was greater than model-averaged upper-tail dependence 
-or vice-versa, and reported as the percentage of pairs showing stronger lower-tail dependence out of 
+or vice-versa, and reported the percentage of pairs showing stronger lower-tail dependence out of 
 the total number non-independent location pairs considered.
 
-<!--***DAN: made it to here 2018 12 16-->
-
-
-## Nonparametric analysis of tail dependence \label{NPA}
-
-In addition to the model selection approach described above, **nonparametric approaches** to quantify lower <!--($\cor_l$, $\Ps_l$ and $\Dsq_l$ statistics)--> and upper tail dependence <!--($\cor_u$, $\Ps_u$ and $\Dsq_u$ statistics)--> were also used to answer \hyperref[Intro]{\textbf{(Q1)}}. Using two distinct methods, when results are consistent, provides greater confidence 
-that results are robust. 
- 
-Left (or lower)- and right (or upper)-tail dependence quantify the extent to which two ranked
-variables $u_i$, $v_i$ for $i=1,...,n$ 
-(see \nameref{Model_selection} for defintions of $u_i$ and $v_i$)
-are related to each other in the left and right tails, respectively, of their 
-distributions [@nelsen2006_copula, @joe2014_dependence]. 
-Our nonparametric study of tail dependence uses three
-statistics (i.e., $\cor$, $\Ps$ and $\Dsq$) which can quantify the extent to which $u_i$ and $v_i$ are 
-related in any part of their distributions. We here describe the 
+In addition to our model selection approach, we also used nonparametric approaches to 
+quantify lower- and upper-tail dependence to answer Q1. Using two methods can provide greater confidence 
+that results are robust. We used three
+statistics <!--( $\cor$, $\Ps$ and $\Dsq$)--> which can quantify the extent to which 
+two normalized ranks $u_i$ and $v_i$ are 
+related in any part of their distributions; we here describe the 
 statistics. The statistics were formulated with positively associated
 variables in mind. All the variables we study are positively associated
 when they are significantly associated. So definitions and associated 
 diagrams will assume positive associations, though generalizations are 
 possible. Given two bounds 
 $0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
-$u+v=2u_b$ which intersect the unit square in which the $u_i$ and $v_i$ 
-fall (these are the blue and red lines, respectively, in 
-Fig. \ref{fig_stat_image}). Our statistics quantify the dependence
+$u+v=2u_b$, which intersect the unit square (Fig. \ref{SM-fig_stat_image}). 
+Our statistics quantify the dependence
 between $u_i$ and $v_i$ in the region bounded by these lines.
 Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
 dependence in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
 the right parts of the distributions. 
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption{Schematic diagram supporting defintions of nonparametric tail dependence statistics \label{fig_stat_image}}
-\end{center}
-\end{figure}
-
-
-The first quantity, $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
+The first statistic, denoted $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
-lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$, i.e.,
+lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$:
 \begin{equation}\label{eq.Cor}
-   \cor_{l_b,u_b}(u,v) = \frac{1}{(n-1)\sqrt{\var(u)\var(v)}}\sum 
-   (u_i-\mean(u)) (v_i-\mean(v)),
+   \cor_{l_b,u_b}(u,v) = \frac{\sum 
+   (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}}.
 \end{equation}
-where means and sample variances are computed using all $n$ data 
+Here means and sample variances are computed using all $n$ data 
 points, but the
 sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
 $u_i+v_i < 2u_b$. 
 Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
-between $u$ and $v$ in the region given by the bounds.
+between $u$ and $v$ in the region given by the bounds. The sum of 
+$\cor_{0,0.5}(u,v)$ and $\cor_{0.5,1}(u,v)$ (or some other choice of 
+$\cor_{l_b_k,u_b_k}(u,v)$ for bounds $l_b_k,u_b_k$ that partition the
+interval $(0,1)$) equals the standard Spearman correlation.
 
-We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
-$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
-$S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
-and a distance less than $h$ from the line $v=u$, divided by the 
-total number of points within the bounds. This function is
-defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
-is half the longer of the two segments obtained by intersecting the
-bounds with the unit square. It is easy to see $S(0)=0$ and 
-$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
-of $h$, to be the area within the bounds and the unit square
-and within distance $h$ of the line $v=u$, divided by the area
-within the bounds and the unit square. This is the expected value of
-$S(h)$ for independent data. We then defined
-\begin{equation}\label{eq.P}
-   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
-\end{equation}
-As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
-indicate stronger positive association
-between $u$ and $v$ in the region given by the bounds.
-
-The third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
+We also defined the statistic $\Ps_{l_b,u_b}$, which has a similar 
+interpretation to $\cor_{l_b_k,u_b_k}(u,v)$; we use both statistics 
+because in some instances $\Ps_{l_b,u_b}$ appears to have more power to
+reveal significant tail dependence and asymmetry of tail dependence. 
+<!--***DAN: need to make this a bit more precise, perhaps just enough to cite one of the supp mat sections where tests are done of these stats, but you need to review the tests first and what they show-->
+Our third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
 distance between points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ and the line $v=u$. Unlike $\cor_{l_b,u_b}$ and 
+$u_i+v_i<2u_b$ and the line $v=u$. 
+Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
-then small. 
+small in that case. 
 Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
 dependence in the portions of the distributions of $u$ and $v$ given by 
 the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
 $\Dsq_{l_b,u_b}$ indicate strong dependence. 
+
+<!--***DAN: made it to here 2018 12 17 5pm-->
 
 For large datasets (i.e., datasets with large $n$),
 we can consider $l_b$ and $u_b$ close together without incurring undue

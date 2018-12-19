@@ -91,7 +91,7 @@ related in the left (respectively, right) portions of their distributions, an as
 have ecological significance, as discussed below, but is not captured by 
 correlation. Panels C and D 
 were obtained from A and B through monotonic transformation 
-(Appendix \ref{SM-Data_details} for details),
+(Appendix \ref{SM-pedagog1_details} for details),
 <!--***DAN: Dan to go back and write the appendix-->
 which alters the Pearson, but not the Spearman correlation. Although correlation
 is only one of the numerous metrics for 
@@ -150,16 +150,15 @@ variables; many of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
 obtained from A (respectively, B) via monotonic functions that transformed the standard-
 normal marginal distributions of A and B to gamma (C, D) or 
-uniform (E, F) marginals (details in Appendix \ref{SM-fig_cop_pedag1}). (G, H) Contours 
+uniform (E, F) marginals (details in Appendix \ref{SM-pedagog1_details}). (G, H) Contours 
 of log-scale density functions of Clayton (G) and survival-Clayton 
-(H) copulas with parameter 5 (Appendix \ref{SM-copula_details}). (I,J) Reflections
+(H) copulas with parameter 5 (Appendix \ref{SM-pedagog1_details}). (I,J) Reflections
 of E, F, respectively, about a vertical axis. Subscripts h and v 
 stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
 <!--***DAN: Dan to go back and add the appendices with details as it says. Make sure
-to mention in the first one 
-the shape and scale params of the gamma marginals in C, D were 2-->
+to mention the shape and scale params of the gamma marginals in C, D were 2-->
 
 A principal benefit of a copula approach to ecological data is 
 that such an approach can sensitively model and detect
@@ -465,8 +464,8 @@ or vice-versa, and reported the percentage of pairs showing stronger lower-tail 
 the total number non-independent location pairs considered.
 
 In addition to our model selection approach, we also used nonparametric approaches to 
-quantify lower- and upper-tail dependence to answer Q1. Using two methods can provide greater confidence 
-that results are robust. We used three
+quantify lower- and upper-tail dependence and to answer Q1. Using two approaches can provide greater confidence 
+that results are robust. We used three nonparametric
 statistics <!--( $\cor$, $\Ps$ and $\Dsq$)--> which can quantify the extent to which 
 two normalized ranks $u_i$ and $v_i$ are 
 related in any part of their distributions; we here describe the 
@@ -474,7 +473,7 @@ statistics. The statistics were formulated with positively associated
 variables in mind. All the variables we study are positively associated
 when they are significantly associated. So definitions and associated 
 diagrams will assume positive associations, though generalizations are 
-possible. Given two bounds 
+straightforward. Given two bounds 
 $0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
 $u+v=2u_b$, which intersect the unit square (Fig. \ref{SM-fig_stat_image}). 
 Our statistics quantify the dependence
@@ -490,38 +489,43 @@ lying in the region given by the bounds $u+v=2l_b$ and $u+v=2u_b$:
    \cor_{l_b,u_b}(u,v) = \frac{\sum 
    (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}}.
 \end{equation}
-Here means and sample variances are computed using all $n$ data 
+\noindent Here means and sample variances are computed using all $n$ data 
 points, but the
 sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
 $u_i+v_i < 2u_b$. 
 Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds. The sum of 
 $\cor_{0,0.5}(u,v)$ and $\cor_{0.5,1}(u,v)$ (or some other choice of 
-$\cor_{l_b_k,u_b_k}(u,v)$ for bounds $l_b_k,u_b_k$ that partition the
+$\cor_{l_{b_k},u_{b_k}}(u,v)$ for bounds $l_{b_k},u_{b_k}$ that partition the
 interval $(0,1)$) equals the standard Spearman correlation.
 
-We also defined the statistic $\Ps_{l_b,u_b}$, which has a similar 
-interpretation to $\cor_{l_b_k,u_b_k}(u,v)$; we use both statistics 
+We also defined the statistic $\Ps_{l_b,u_b}$ (Appendix \ref{SM-nonparam_stats}), 
+which has a similar 
+interpretation to $\cor_{l_{b_k},u_{b_k}}(u,v)$; we use both statistics 
 because in some instances $\Ps_{l_b,u_b}$ appears to have more power to
-reveal significant tail dependence and asymmetry of tail dependence. 
+reveal tail dependence than does $\cor_{l_{b_k},u_{b_k}}(u,v)$. 
 <!--***DAN: need to make this a bit more precise, perhaps just enough to cite one of the supp mat sections where tests are done of these stats, but you need to review the tests first and what they show-->
 Our third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
 distance between points satisfying $u_i+v_i>2l_b$ and 
-$u_i+v_i<2u_b$ and the line $v=u$. 
+$u_i+v_i<2u_b$ and the line $v=u$.
+<!--***DAN: Shyamolina, is this actually right, i.e., did we use the average, or did we 
+use the sum divided by n? Whichever way we did it is OK, but please check the code and revise the above 
+text if necessary and insert a comment answering this comment. I tried to check this, myself, 
+but I was having a hard time finding where the statistics are implemented. Please also
+indicate in your response comment what line of what file has the implementation of these
+statistics.-->
 Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
 small in that case. 
 Thus large values of $\cor_{l_b,u_b}$ and $\Ps_{l_b,u_b}$ indicate strong 
 dependence in the portions of the distributions of $u$ and $v$ given by 
-the bounds $u_i+v_i>2l_b$ and $u_i+v_i<2u_b$, whereas small values of 
+the bounds, whereas small values of 
 $\Dsq_{l_b,u_b}$ indicate strong dependence. 
 
-<!--***DAN: made it to here 2018 12 17 5pm-->
-
-For large datasets (i.e., datasets with large $n$),
-we can consider $l_b$ and $u_b$ close together without incurring undue
-sampling variation in our statistics, and we can consider 
+For large datasets (large $n$),
+we could use $l_b$ and $u_b$ close together without incurring undue
+sampling variation in our statistics, and we could consider 
 several different bands $(l_b,u_b)$ to understand how dependence
 varies in different parts of the distributions. But for datasets with 
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
@@ -529,28 +533,36 @@ We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower")
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
 $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
 
+To test for asymmetry of dependence in upper and lower portions of distributions,
+we used differences of upper and lower statistics.
 The difference $\cor_l-\cor_u$ is expected to be positive if 
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
-This holds, for instance, for the Clayton copula [@nelsen2006_copula].
-The difference $\Dsq_u-\Dsq_l$, in which the "upper" and
-"lower" statistics occur in opposite order, is also expected to be 
-positive under the same conditions. We use these three differences
-to detect asymmetry of tail dependence. Likewise, for large datasets,
-we consider $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
+The difference $\Dsq_u-\Dsq_l$ (note the opposite order), is also expected to be 
+positive under the same conditions. These statistics were used for smaller datasets.
+For large datasets, we used $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
-$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$. We tested our statistics by testing whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of tail dependence known to be present in data simulated from various copulae (for details see Appendix \ref{SM-Test_npa_stat}).
+$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$. 
+How close depended on $n$, and was chosen to ensure that sample variation 
+was not unduly large. We tested our statistics by testing whether 
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of 
+tail dependence known to be present in data simulated from various copulas 
+(Appendix \ref{SM-Test_npa_stat}). 
 
 For bivariate datasets, we compared values 
 of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ to 
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
+$\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
+$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ to 
 distributions of values of the same statistics computed on surrogate datasets that were produced from 
-the empirical data by randomizing it in a special way to have no tail dependence (for details see Appendix \ref{SM-surrog_test}). The surrogate/randomized datasets had exactly 
+the empirical data by randomizing it in a special way to have no 
+tail dependence (Appendix \ref{SM-surrog_test}). 
+The surrogate/randomized datasets had exactly 
 the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
 correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
-but had Normal copula structure. Thus our comparisons tested the null hypothesis 
+but had normal copula structure. Thus our comparisons tested the null hypothesis 
 that our statistics took values on the empirical data no different from what would have been expected 
-if the copula structure of the data were Normal, but the data were otherwise 
+if the copula structure of the data were normal, but the data were otherwise 
 statistically unchanged. 
 
 The comparison of one of the
@@ -562,20 +574,33 @@ by $l_b$ and $u_b$ is different from
 what would be expected from a null hypothesis of normal copula structure but 
 unchanged marginals and unchanged 
 Kendall (or Spearman)
-correlation. Thus the comparison helps answer the first two parts of question \hyperref[Intro]{\textbf{(Q1)}} 
-from the \nameref{Intro} for bivariate datasets. 
+correlation. Thus the comparison helps answer the first two parts of Q1
+for bivariate datasets. 
 Significant deviations correspond to deviations from normal 
 copula structure. In particular, deviations 
 using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
 different from that of a normal copula;
 likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
-from that of a normal copula. 
-
-The comparison of one of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$, 
+from that of a normal copula.
+The comparison of one of the statistics 
+$\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
+$\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
+$\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$,
 as computed on the empirical data, to the distribution of its values on many surrogate datasets 
-provides a test of asymmetry of tail dependence. Thus this comparison helps answer the
-third part of question \hyperref[Intro]{\textbf{(Q1)}} from the \nameref{Intro} for bivariate datasets. For multivariate datasets, we used a spatial resampling scheme (for details see Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals, instead of the surrogate 
+provides a test of asymmetry of dependence. Thus this comparison helps answer the
+third part of Q1 for bivariate 
+datasets. For multivariate datasets, we used a spatial resampling scheme 
+(Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals, instead of the surrogate 
 approach described above.
+
+<!--***DAN: If we end up being desperate to cut length, and assuming the nonparmetric results
+are sufficiently similar to model selection results, we may be able to put everything about 
+the nonparametric results in the supp mat and just say in the main text that we also used a 
+nonparametric approach and it gave the same general conclusions. Though it may take some work
+to split out the two approaches and all their results from each other.-->
+
+
+<!--***DAN: made it to here 2018 12 18 9pm-->
 
 # Results for Q1: Ecological datasets often have non-normal copula structure and asymmetric tail dependence \label{Results}
 <!--## question 1

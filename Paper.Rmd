@@ -191,7 +191,8 @@ pedagogical figure that I made. Can you please change the code of both figures
 so we get grey, with the plotting symbols I used, on both plots? Likeiwse for the 
 new figure produced in ./ThirdPedagogFig.R, please. It will be
 good to use the same points, for consistency. Don't worry at this stage about
-making other figures, other than these three, consistent.-->
+making other figures, other than these three, consistent.
+***Shya: Done.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the
@@ -513,7 +514,9 @@ use the sum divided by n? Whichever way we did it is OK, but please check the co
 text if necessary and insert a comment answering this comment. I tried to check this, myself, 
 but I was having a hard time finding where the statistics are implemented. Please also
 indicate in your response comment what line of what file has the implementation of these
-statistics.-->
+statistics.
+***Shya: In code we used the sum of squared distances divided by n(=number of points lying within two boundaries) which I think okay to be called as "average-squared distance" or average of squared distances between points within the two boundaries.
+Reference : CopulaFunctions_flexible.R file, line 24.-->
 Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 

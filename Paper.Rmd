@@ -515,7 +515,7 @@ text if necessary and insert a comment answering this comment. I tried to check 
 but I was having a hard time finding where the statistics are implemented. Please also
 indicate in your response comment what line of what file has the implementation of these
 statistics.
-***Shya: In code we used the sum of squared distances divided by n(=number of points lying within two boundaries) which I think okay to be called as "average-squared distance" or average of squared distances between points within the two boundaries.
+***Shya: In code we used the sum of squared distances divided by n(=number of points lying within two boundaries) which I think okay to be called as "average-squared distance" or (to be precised) average of squared distances of points from 1:1 line.
 Reference : CopulaFunctions_flexible.R file, line 24.-->
 Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 

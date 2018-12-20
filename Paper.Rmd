@@ -142,7 +142,7 @@ copula and the marginal distributions.
 Copula theory is also well developed for
 multivariate distributions.
 
-\begin{figure}[!h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
 \caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
@@ -173,7 +173,7 @@ ones (Fig. \ref{fig_cop_pedag1}B, F). Datasets of the same
 corelation can have a range of tail dependence 
 characteristics (Fig. \ref{fig_cop_pedag}), which can be quantified (Methods).
 
-\begin{figure}[!h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
 \caption{(A-C) Data generated using the BB1 copula (Methods) with three different 
@@ -184,14 +184,6 @@ with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same
 within each column of panels.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, I like the grey color of your points on the above figure, 
-but I prefer the 
-solid plotting symbols and the size of plotting symbols used on the new 
-pedagogical figure that I made. Can you please change the code of both figures
-so we get grey, with the plotting symbols I used, on both plots? Likeiwse for the 
-new figure produced in ./ThirdPedagogFig.R, please. It will be
-good to use the same points, for consistency. Don't worry at this stage about
-making other figures, other than these three, consistent.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the
@@ -400,7 +392,7 @@ Additional details are in Appendix \ref{SM-copula_details} and in introductory t
 on copulas [@nelsen2006_copula ; @joe2014_dependence] and in `VineCopula` documentation.
 Visualizations of all the copulas we used are in Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8}. 
 
-\begin{figure}[!h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig3.pdf}
 \caption{Log-transformed pdfs (A, C) and samples from (B, D) example copulas.
@@ -599,25 +591,7 @@ the nonparametric results in the supp mat and just say in the main text that we 
 nonparametric approach and it gave the same general conclusions. Though it may take some work
 to split out the two approaches and all their results from each other.-->
 
-
-<!--***DAN: made it to here 2018 12 18 9pm-->
-
 # Results for Q1: Ecological datasets often have non-normal copula structure and asymmetric tail dependence \label{Results}
-<!--## question 1
-- Do datasets in ecology and related fields have non-Normal copula structure?
-- Do they show tail dependence distinct from that of a Normal copula?
-- In particular do they show asymmetric tail dependence?
-
-To answer \hyperref[Intro]{\textbf{(Q1)}}, we chose one representative datasets for each category : with a bivariate (soil C and N data) and a multivariate (green spruce aphid-abundance data) dataset, we summarized our findings as follows.
---> 
-
-## Results for bivariate data \label{Result_biv}
-
-We summarized our results columnwise in Table \ref{tab_bivar_summary} for different kinds of bivariate datasets (biogeochemical, evolutionary and ecological data) that were plotted in Fig. \ref{fig_biv_multi_raw_cop}(A-H). For all $4$ bivariate-datasets indicated by each column name (SoilCN, Birds' BMR, Mammals' BMR, Ceder-creek) in Table \ref{tab_bivar_summary}, data were always significantly correlated as indicated by p-value (<0.05) from `BiCopIndTest`{`VineCopula`} (1$^{st}$ row of Table \ref{tab_bivar_summary}). Non-Normal copulae always emerged as best fit copula based on minimum AIC value (2$^{nd}$ row of Table \ref{tab_bivar_summary}). The Normal copula was found as poor fit compared to highest AIC-weight based asymmetric copulae (3$^{rd}$ and 4$^{th}$ rows of Table \ref{tab_bivar_summary}) - which answers the first part of \hyperref[Intro]{\textbf{(Q1)}}. Goodness of fit of the best-fit asymmetric copulae were tested based on p-values from two statistics (Cramer-von Mises and Kolmogorov-Smirnov : 5$^{th}$ and 6$^{th}$ rows of Table \ref{tab_bivar_summary}, respectively).
-Among 4 datasets presented there, first three have significantly stronger upper tail dependence whereas the last one has significantly stronger lower tail dependence compared to Normal (compare 7$^{th}$ and 8$^{th}$ rows of Table \ref{tab_bivar_summary}). It was indicated by negative AIC-weights model averaged (lower-upper) tail dependence (9$^{th}$ row of Table \ref{tab_bivar_summary}) for first 3 datasets and positive AIC-weights model averaged 
-(lower-upper) tail dependence for the last one, which answers the second and third part of \hyperref[Intro]{\textbf{(Q1)}} (For detailed results of each dataset see Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}). We also reported the rank of ($\Ps_l - \Ps_u$) for the actual copula data in camparison to the same non-parametric statistics of Kendall-correlation preserving 1000 Normal surrogates. Ranks if were $>$ 975 or $<$ 25, then indicated a significantly (95$\%$ CI) different lower tail-dependence or upper tail-dependence measures, respectively, based on Normal-null hypothesis. We found our model-selection results were consistent with non-parametric analysis for all the datasets (compare last two rows of Table \ref{tab_bivar_summary}). 
-
-### Example for bivariate case : soil C and N data shows upper tail dependence\label{Ex_SoilCN}
 
 ```{r read_BivMS_soilCN_data,echo=F}
 d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
@@ -625,6 +599,19 @@ d<-d[,c("SOCstock100","TSNstock100")] #raw soilCN data
 BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 ```
 
+```{r read_RES_aphid_count, echo=F}
+RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
+```
+
+Across essentially all the sub-fields and levels of organization within ecology that we 
+examined, copula structures were typically non-normal and variables exhibited asymmetric tail 
+dependence. To make results easier for readers who are new to copulas to absorb: we first 
+present results in detail for an example bivariate dataset; followed by a summary of results
+for all bivariate datasets; then we present results in 
+detail for an example multivariate dataset; followed by a summary of results 
+for all multivariate datasets.
+
+<!--bivariate example-->
 We will now discuss briefly findings from one of our bivariate datasets as follows. As described in the \nameref{Data}, raw data plot for RaCA database soil organic C and soil N stocks to 1m of soil depth from the central pedon of the `r nrow(d)` sites and their corresponding copula plot were presented in Fig. \ref{fig_biv_multi_raw_cop}(A) and (E), respectively.
 We carried out model selection analysis and non-parametric statistics to measure tail-dependence (if any) on this copula plot.
 
@@ -638,22 +625,12 @@ The model-averaged (AIC weights used for model averaging) lower-tail dependence 
 
 Furthermore, the difference of model-averaged tail dependence statistics (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of \hyperref[Intro]{\textbf{(Q1)}}. To be precise, this difference being negative, indicated stronger upper-tail dependence than lower, which was also supported by non-parametric results (see Table \ref{SM-tab_soilCN_asym}).
 
-<!--#### Non-parametric analysis of tail dependence \label{Ex_SoilCN_NPA}-->
+<!--bivariate summary-->
+We summarized our results columnwise in Table \ref{tab_bivar_summary} for different kinds of bivariate datasets (biogeochemical, evolutionary and ecological data) that were plotted in Fig. \ref{fig_biv_multi_raw_cop}(A-H). For all $4$ bivariate-datasets indicated by each column name (SoilCN, Birds' BMR, Mammals' BMR, Ceder-creek) in Table \ref{tab_bivar_summary}, data were always significantly correlated as indicated by p-value (<0.05) from `BiCopIndTest`{`VineCopula`} (1$^{st}$ row of Table \ref{tab_bivar_summary}). Non-Normal copulae always emerged as best fit copula based on minimum AIC value (2$^{nd}$ row of Table \ref{tab_bivar_summary}). The Normal copula was found as poor fit compared to highest AIC-weight based asymmetric copulae (3$^{rd}$ and 4$^{th}$ rows of Table \ref{tab_bivar_summary}) - which answers the first part of \hyperref[Intro]{\textbf{(Q1)}}. Goodness of fit of the best-fit asymmetric copulae were tested based on p-values from two statistics (Cramer-von Mises and Kolmogorov-Smirnov : 5$^{th}$ and 6$^{th}$ rows of Table \ref{tab_bivar_summary}, respectively).
+Among 4 datasets presented there, first three have significantly stronger upper tail dependence whereas the last one has significantly stronger lower tail dependence compared to Normal (compare 7$^{th}$ and 8$^{th}$ rows of Table \ref{tab_bivar_summary}). It was indicated by negative AIC-weights model averaged (lower-upper) tail dependence (9$^{th}$ row of Table \ref{tab_bivar_summary}) for first 3 datasets and positive AIC-weights model averaged 
+(lower-upper) tail dependence for the last one, which answers the second and third part of \hyperref[Intro]{\textbf{(Q1)}} (For detailed results of each dataset see Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}). We also reported the rank of ($\Ps_l - \Ps_u$) for the actual copula data in camparison to the same non-parametric statistics of Kendall-correlation preserving 1000 Normal surrogates. Ranks if were $>$ 975 or $<$ 25, then indicated a significantly (95$\%$ CI) different lower tail-dependence or upper tail-dependence measures, respectively, based on Normal-null hypothesis. We found our model-selection results were consistent with non-parametric analysis for all the datasets (compare last two rows of Table \ref{tab_bivar_summary}). 
 
-## Results for multivariate spatial data \label{Result_multi}
-```{r read_RES_aphid_count, echo=F}
-RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
-```
-
-We did model selection and non-parametric analysis with all 20 aphid and 22 plankton species and found our two approaches were consistent to each other. Here, to present our results we chose one species from each category. We summarized our results columnwise in Table \ref{tab_multivar_summary} for all multivariable datasets (i.e., abundance data for green spruce aphid and firstflight date data for leaf-curling plum aphid from `r nrow(RES_aphid_count$gfc_numBS)` sampling locations, abundance data for plankton from UK seas from $14$ sampling locations, 
-methane flux data from $13$ sampling locations). 
-
-We found major occurence of non-independent copulae (row 2, Table \ref{tab_multivar_summary}) out of all pairwise locations (row 1, Table \ref{tab_multivar_summary}) considered. Non-Normal copulae, most of the time, emerged as best-fit based on minimum AIC out of 16 copula family considered (row 3, Table \ref{tab_multivar_summary}) answering the first part of question \hyperref[Intro]{\textbf{(Q1)}}. All four data sets showed Normal copulae were always poor fit in comparison to best-fit non-Normal copulae (compare their average AIC-weights from row 4 and row 5 of Table \ref{tab_multivar_summary}). We considered the "good-fit" location pair based on the p-values (>0.01) obtained from both Cramer-von Mises and Kolmogorov-Smirnov statistics (row 6, Table \ref{tab_multivar_summary}). Some spatial data (green spruce aphid's count, Ceratium furca's count and methane flux) showed stronger lower tail dependence (compare row 7 and row 8 from Table \ref{tab_multivar_summary}, also see row 9) whereas Leaf-plum curling's firstflight data showed stronger upper tail dependence which answered the second and third part of question \hyperref[Intro]{\textbf{(Q1)}}. The spatial synchrony (from model selection) results were also verified by the non-parametric statistic which showed exclusively positive (or negative) confidence interval of the distribution $(\Ps_l - \Ps_u)$ estimated from all location pair for lower (or upper)- tail dependent spatial data (except methane-flux data which had marginal lower quantile). Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
-
-### Example for multivariate case : abundance data for the green spruce aphid (*Elatobium abietinum*) shows spatial synchrony with lower tail dependence\label{Ex_count}
-
-<!--#### Model selection approach \label{Ex_count_Model_selection}-->
-
+<!--multivariate example-->
 As described in \nameref{Model_selection}, for multivariable dataset like green-spruce aphid's abundance data, model selection among copulae was done separately for each pair of the 10 sampling locations, thus results are presented in $10 \times 10$ matrix format with rows and columns corresponding to locations. Table \ref{SM-tab_count_bestcop} shows that, for the large majority of location pairs, some non-Normal copula was a better fit, according to maximum AIC-weights, than was the Normal copula, answering the first part of question \hyperref[Intro]{\textbf{(Q1)}} for these data. Comparing the 
 AIC weight of the best-fitting (lowest AIC) copula family for each pair of sampling locations (Table \ref{SM-tab_count_AICw}) to the AIC weight of the Normal copula family for the same pair (Table \ref{SM-tab_count_AICw_normal}) confirms that the degree of support for Normal copulae was usually not
 comparable to the degree of support for other families.
@@ -674,6 +651,15 @@ resampling scheme (Table \ref{SM-tab_count_resamp}). Confidence intervals of
 $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
 indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
 exluded $0$ and were positive, indicating asymmetry of tail dependence (stronger lower tail dependence than upper), a feature that data with Normal copula structure do not have, providing further evidence answering the third part of question \hyperref[Intro]{\textbf{(Q1)}}. Visual illustration of those results is discussed in Appendix \ref{SM-visual_npa}.
+
+<!--multivariate summary-->
+We did model selection and non-parametric analysis with all 20 aphid and 22 plankton species and found our two approaches were consistent to each other. Here, to present our results we chose one species from each category. We summarized our results columnwise in Table \ref{tab_multivar_summary} for all multivariable datasets (i.e., abundance data for green spruce aphid and firstflight date data for leaf-curling plum aphid from `r nrow(RES_aphid_count$gfc_numBS)` sampling locations, abundance data for plankton from UK seas from $14$ sampling locations, 
+methane flux data from $13$ sampling locations). 
+
+We found major occurence of non-independent copulae (row 2, Table \ref{tab_multivar_summary}) out of all pairwise locations (row 1, Table \ref{tab_multivar_summary}) considered. Non-Normal copulae, most of the time, emerged as best-fit based on minimum AIC out of 16 copula family considered (row 3, Table \ref{tab_multivar_summary}) answering the first part of question \hyperref[Intro]{\textbf{(Q1)}}. All four data sets showed Normal copulae were always poor fit in comparison to best-fit non-Normal copulae (compare their average AIC-weights from row 4 and row 5 of Table \ref{tab_multivar_summary}). We considered the "good-fit" location pair based on the p-values (>0.01) obtained from both Cramer-von Mises and Kolmogorov-Smirnov statistics (row 6, Table \ref{tab_multivar_summary}). Some spatial data (green spruce aphid's count, Ceratium furca's count and methane flux) showed stronger lower tail dependence (compare row 7 and row 8 from Table \ref{tab_multivar_summary}, also see row 9) whereas Leaf-plum curling's firstflight data showed stronger upper tail dependence which answered the second and third part of question \hyperref[Intro]{\textbf{(Q1)}}. The spatial synchrony (from model selection) results were also verified by the non-parametric statistic which showed exclusively positive (or negative) confidence interval of the distribution $(\Ps_l - \Ps_u)$ estimated from all location pair for lower (or upper)- tail dependent spatial data (except methane-flux data which had marginal lower quantile). Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
+
+
+
 
 <!--
 ```{r tab_bivar_summary, echo=F, results='markup'}
@@ -703,29 +689,32 @@ row.names(tab_bivar_summary)<-NULL
 library(kableExtra)
 library(dplyr)
 library(tibble)
-dt <- tibble(Description = c("1. p-value from independence test",
-           "2. Best fit copula based on minimum AIC",
-           "3. AIC-weight of that best fit copula",
-           "4. AIC-weight of Normal copula",
-           "5. p-value from goodness of fit test for Cramer-von Mises method",
-           "6. p-value from goodness of fit test for Kolmogorov-Smirnov method",
-           "7. Model averaged (AIC-weights based) lower tail dependence",
-           "8. Model averaged (AIC-weights based) upper tail dependence",
-           "9. Model averaged (AIC-weights based) (lower - upper) tail dependence",
-           "10. Rank of statistics (Pl-Pu) for real data in comparison to 1000 Normal surrogates")
+
+dt <- tibble(Description = c("1. P-value, independence test",
+           "2. Minimum-AIC copula",
+           "3. AIC weight of minimum-AIC copula",
+           "4. AIC weight of N copula",
+           "5. P-value, Cramer-von Mises goodness of fit test",
+           "6. P-value, Kolmogorov-Smirnov goodness of fit test",
+           "7. Model averaged lower-tail dependence",
+           "8. Model averaged upper-tail dependence",
+           "9. Model averaged lower- minus upper-tail dependence",
+           "10. Asymmetry rank in surrogates")
 )
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 knitr::kable(tab_bivar_summary, 
-             format="latex", 
-             caption = "Summary of results for bivariate data-sets\\label{tab_bivar_summary}",
+             format="latex",
+             caption = "Summary of Q1 results for bivariate datasets. The $p$-values in rows 5-6 and are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. For row 10, the statistic $P_l-P_u$ was computed for real data and for 1000 surrogate datasets with N copulas, and the rank of real-data value in the distribution of surrogate values is presented. \\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
-             col.names = c(" ", "SoilCN", "Birds’ BMR", "Mammals’ BMR", "Ceder-creek")
+             col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar creek data")
              )%>%column_spec(2:5,width="1.4cm")%>%
-             column_spec(1, width = "11cm")%>%kable_styling(latex_options = "basic",position = "center")
+             column_spec(1, width = "8.5cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
+<!--***DAN: Shya, it says Pl-Pu above, but I suspect it was P_first slice - P_last slice, right?
+Can you please look back at the code, if necessary, and write a comment below this one 
+indicating what results are actually presented in the table?-->
 
 <!--multivariate table summary in latex format-->
-
 ```{r tab_multivar_summaryl, echo=F, results='asis',message=F}
 tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
 tab1<-tab_multivar_summary[c(1:7,9,11,12,14,16),] # see carefully if you rearrange tab_multivar_summary's row
@@ -775,38 +764,22 @@ knitr::kable(tab_multivar_summary,
    add_footnote("Good fit was considered for best fit copula with p-values > 0.01 (both Cramer-von Mises and Kolmogorov-Smirnov method)", notation="symbol", threeparttable = T, escape = F)
 ```
 
-\begin{figure}[!h]
-\textbf{ \hspace{2.8 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.2 cm} (D) } \\
-\vspace{-0.6 cm}
+\begin{figure}
 \begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNraw.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/birds/raw_birds_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/mammals/raw_mammals_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/raw_HB_2000.pdf}\\
-\end{center}
-\textbf{ \hspace{2.8 cm} (E) \hspace{3.2 cm} (F) \hspace{3.2 cm} (G) \hspace{3.2 cm} (H) } \\
-\vspace{-0.6 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/SoilCNcop.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/birds/copula_birds_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/BMR_results/mammals/copula_mammals_BMR.pdf}
-\includegraphics[width=4 cm]{./Results/Ceder_creek_results/cop_HB_2000.pdf}\\
-\end{center}
-\textbf{ \hspace{7 cm} (I) \hspace{3.2 cm} (J)} \\
-\vspace{-0.6 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/Aphid_count_raw_loc_4_11.pdf}
-\includegraphics[width=4 cm]{./Results/Aphid_ff_raw_loc_2_5.pdf}\\
-\end{center}
-\textbf{ \hspace{7 cm} (K) \hspace{3.2 cm} (L)} \\
-\vspace{-0.6 cm}
-\begin{center}
-\includegraphics[width=4 cm]{./Results/Aphid_count_cop_loc_4_11.pdf}
-\includegraphics[width=4 cm]{./Results/Aphid_ff_cop_loc_2_5.pdf}
-\caption{Upper panel shows raw data plots for \textbf{(A)} soil C and N data, \textbf{(B)} log(BMR) vs. log(mass) for birds, \textbf{(C)} log(BMR) vs. log(mass) for mammals, \textbf{(D)} above-ground plant biomass data vs. Shannon's index (H) averaged over 9m by 9m plots for year 2000 of Ceder-creek experiment.
-Middle panel \textbf{(E - H)} shows copula plots for the corresponding datasets of the upper panel. Lower panel shows \textbf{(I - J)} raw data plots and \textbf{(K - L)} copula plots for  green spruce aphid's count data from location pair(4,11) and for leaf-curling plum aphid's firstflight data from location pair(2,5).\label{fig_biv_multi_raw_cop}}
+\includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
+\caption{Upper panels shows raw data plots for (A) soil C and N data, (B) $log_{10}$(basal metabolic rate (BMR)) vs. log(body mass) 
+for birds, (C) log(BMR) vs. log(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, we need to produce a single-pdf figure using R, not use latex to
+cobble together separate pdfs for each panel. Also, I think we can dispense with the 
+plots of the multivariate data. I have created a script that will do both of these things, 
+and inserted a call to it in the sup mat Rmd. Right now it only plots dummy, filler data. 
+Please look at MakeBivarDataPlot.R (that's the script) and search for
+"Shya", and do as it says in those comments, so the actual data are imported into that
+script and plotted. I have changed the above so this new figure is plotted instead of the
+cobbled together old figures.-->
+
 
 
 <!--Question 2 analyses-->

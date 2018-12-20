@@ -1,7 +1,6 @@
 ---
 title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
-date: "December 16, 2018"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
@@ -21,12 +20,10 @@ csl: ecology-letters.csl
 bibliography: REF_ALL.bib
 ---
 
-updated on `r Sys.Date()`
-
 \pagenumbering{roman}
 \tableofcontents
-\listoftables
 \listoffigures
+\listoftables
 
 \pagebreak
 \pagenumbering{arabic}
@@ -126,6 +123,7 @@ source("./FirstPedagogFig.R")
 source("./SecondPedagogFig.R")
 source("./ThirdPedagogFig.R")
 source("./MakeCopulaPedagogFigs.R")
+source("./MakeBivarDataPlot.R")
 ```
 
 <!--The raw data look like this:-->
@@ -444,7 +442,7 @@ aphid_info <- tibble(c1=c("Apple grass aphid","Bird cherry oat aphid","Black bea
                        "Macrosiphum euphorbiae","Metopolophium dirhodum","Myzus ascalonicus","Drepanosiphum platanoidis","Cavariella aegopodii")
 )
 knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
-      caption = "Species names of 20 aphids commonly found across UK \\label{tab_aphid_info}",
+      caption = "Species names of 20 aphids for which data were available \\label{tab_aphid_info}",
       col.names = c("Common name", "Latin binomial"))
 ```
 
@@ -460,8 +458,8 @@ plankton_info <- tibble(c('Calanus I-IV','Para-Pseudocalanus spp','Temora longic
                    'Nitzschia delicatissima','Nitzschia seriata')
 )
 knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
-      caption = "Species names of 22 planktons found across UK seas\\label{tab_plankton_info}",
-      col.names = c("Plankton sp. name"))
+      caption = "Species names of 22 plankton taxa for which data were available \\label{tab_plankton_info}",
+      col.names = c("Plankton taxon name"))
 ```
 
 ```{r read_methane_data, echo=F, results="markup"}
@@ -475,23 +473,31 @@ methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/SoilCNmapUSA.pdf} 
-\caption{Locations of central pedons with soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from 5907 sampling sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
+\includegraphics[width=16 cm,height=16 cm]{./Results/SoilCNmapUSA.pdf} 
+\caption[Sampling locations for C and N data]{Locations of central pedons sampled 
+for soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil 
+surface) at 5907 sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/aphid_map_plot.pdf} 
-\caption{Locations of Rothamsted Insect Survey suction-trap across UK are indicated by the red circles 
-out of which only blue boxes are considered for our study based on having atleast 30 annual data points. \label{fig_aphid_map}}
+\includegraphics[width=16 cm,height=16 cm]{./Results/aphid_map_plot.pdf} 
+\caption[Sampling locations for aphid data]{Locations of the 
+Rothamsted Insect Survey 
+suction traps from which data were available are indicated by the red circles, 
+out of which only blue boxes had at least 30 years of data and were 
+used for our study. \label{fig_aphid_map}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8 cm,height=8 cm]{./Results/plankton_map_plot.pdf} 
-\caption{CPR data collected from 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ on map) around UK sea (indicated by the red circles) but out of which only blue boxes are considered for our study based on having atleast 45 annual data points. \label{fig_plankton_map}}
+\includegraphics[width=16 cm,height=16 cm]{./Results/plankton_map_plot.pdf} 
+\caption[Sampling regions for CPR plankton data]{CPR data were available from 
+26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ regions on the map) around UK 
+seas (red circles), out of which only blue boxes had at least 45 years of data and
+were used for our study. \label{fig_plankton_map}}
 \end{center}
 \end{figure}
 
@@ -505,17 +511,17 @@ Notes about individual copula parameter ranges:
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Normal.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example N copulas. 
-S is Spearman correlation; p is the value of the parameter for the N family (it is a 
-one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
-respectively.\label{figped_N}}
+\caption[Example N copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example N copulas. 
+S is Spearman correlation; p is the value of the parameter for the N 
+family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, respectively.\label{figped_N}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Clayton.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example C copulas. S is Spearman correlation; p is the value of the parameter for the C family (it is a 
+\caption[Example C copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example C copulas. S is Spearman correlation; p is the value of the parameter for the C family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively.\label{figped_C}}
 \end{center}
@@ -524,7 +530,8 @@ respectively.\label{figped_C}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvClayton.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SC 
+\caption[Example SC copulas]{Log-transformed pdfs (A-E) and samples (F-J) 
+from example SC 
 copulas. S is Spearman correlation; p is the value of the parameter for the SC 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively.\label{figped_SC}}
@@ -534,7 +541,7 @@ upper-tail dependence, respectively.\label{figped_SC}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Gumbel.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example G copulas. S is 
+\caption[Example G copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example G copulas. S is 
 Spearman correlation; p is the value of the parameter for the G family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively.\label{figped_G}}
@@ -544,7 +551,7 @@ respectively.\label{figped_G}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvGumbel.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SG 
+\caption[Example SG copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example SG 
 copulas. S is Spearman correlation; p is the value of the parameter for the SG 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively.\label{figped_SG}}
@@ -554,7 +561,7 @@ upper-tail dependence, respectively.\label{figped_SG}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Joe.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; p is the value of the parameter for the J family (it is a 
+\caption[Example J copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; p is the value of the parameter for the J family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively.\label{figped_J}}
 \end{center}
@@ -563,7 +570,7 @@ respectively.\label{figped_J}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvJoe.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example SJ 
+\caption[Example SJ copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example SJ 
 copulas. K is Spearman correlation; p is the value of the parameter for the SJ 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively.\label{figped_SJ}}
@@ -573,7 +580,7 @@ upper-tail dependence, respectively.\label{figped_SJ}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Frank.pdf}
-\caption{Log-transformed pdfs (A-E) and samples (F-J) from example F copulas. S is Kendall correlation; p is the value of the parameter for the F family (it is a 
+\caption[Example F copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example F copulas. S is Kendall correlation; p is the value of the parameter for the F family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively.\label{figped_F}}
 \end{center}
@@ -582,7 +589,7 @@ respectively.\label{figped_F}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB1.pdf}
-\caption{Log-transformed pdfs for example BB1 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB1 copulas]{Log-transformed pdfs for example BB1 copulas. K is Kendall correlation; p1 and p2
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_BB1}}
@@ -592,7 +599,7 @@ respectively.\label{figped_BB1}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB1.pdf}
-\caption{Log-transformed pdfs for example SBB1 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB1 copulas]{Log-transformed pdfs for example SBB1 copulas. K is Kendall correlation; p1 ad p2 
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_SBB1}}
@@ -602,7 +609,7 @@ respectively.\label{figped_SBB1}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB6.pdf}
-\caption{Log-transformed pdfs for example BB6 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB6 copulas]{Log-transformed pdfs for example BB6 copulas. K is Kendall correlation; p1 and p2
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_BB6}}
@@ -612,7 +619,7 @@ respectively.\label{figped_BB6}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB6.pdf}
-\caption{Log-transformed pdfs for example SBB6 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB6 copulas]{Log-transformed pdfs for example SBB6 copulas. K is Kendall correlation; p1 ad p2 
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_SBB6}}
@@ -622,7 +629,7 @@ respectively.\label{figped_SBB6}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB7.pdf}
-\caption{Log-transformed pdfs for example BB7 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB7 copulas]{Log-transformed pdfs for example BB7 copulas. K is Kendall correlation; p1 and p2
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_BB7}}
@@ -632,7 +639,7 @@ respectively.\label{figped_BB7}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB7.pdf}
-\caption{Log-transformed pdfs for example SBB7 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB7 copulas]{Log-transformed pdfs for example SBB7 copulas. K is Kendall correlation; p1 ad p2 
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_SBB7}}
@@ -642,7 +649,7 @@ respectively.\label{figped_SBB7}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB8.pdf}
-\caption{Log-transformed pdfs for example BB8 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB8 copulas]{Log-transformed pdfs for example BB8 copulas. K is Kendall correlation; p1 and p2
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_BB8}}
@@ -652,7 +659,7 @@ respectively.\label{figped_BB8}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB8.pdf}
-\caption{Log-transformed pdfs for example SBB8 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB8 copulas]{Log-transformed pdfs for example SBB8 copulas. K is Kendall correlation; p1 ad p2 
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
 respectively.\label{figped_SBB8}}
@@ -690,7 +697,7 @@ between $u$ and $v$ in the region given by the bounds.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
+\caption[For definitions of nonparametric statistics]{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
 \end{center}
 \end{figure}
 
@@ -865,9 +872,9 @@ saveRDS(BivMS_res_Loecke,file="./Results/fitting_results/BivMS_soilCN.RDS")
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h, #longtable = T, 
-             format = "pandoc",
-      #caption.short = "Fitting info for soil C and N dataset",
-      caption = "Fitting info for **soil C and N dataset**. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
+             format = "latex",
+      caption.short = "Fitting info for soil C and N dataset",
+      caption = "Fitting information for **soil C and N dataset**. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 
@@ -928,7 +935,7 @@ make_table_stat_fn<-function(data){
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
 knitr::kable(tab_soilCN_asym, booktabs = T, 
-             format = "pandoc",
+             format = "latex",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (see \\nameref{MT-NPA}). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
@@ -947,7 +954,7 @@ saveRDS(BivMS_birds,file="./Results/BMR_results/birds/BivMS_birds.RDS")
 ```{r tab_bmr_birds_fit, echo=F, results='markup'}
 h<-BivMS_birds$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
-             format='pandoc',
+             format='latex',
              caption = "Fitting info for **birds' BMR dataset** . \\label{tab_bmr_birds_fit}",
              booktabs=T)
 ```
@@ -968,7 +975,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 ```{r tab_bmr_birds_asym, echo=F, results="markup"}
 tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
 knitr::kable(tab_bmr_birds_asym,
-             format="pandoc",
+             format="latex",
              caption = "**Birds' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_birds_asym}",
              booktabs=T)
 ```
@@ -987,7 +994,7 @@ saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 ```{r tab_bmr_mammals_fit, echo=F, results='markup'}
 h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
-             format='pandoc',
+             format='latex',
              caption = "Fitting info for **mammals' BMR dataset** . \\label{tab_bmr_mammals_fit}",
              booktabs=T)
 ```
@@ -1008,7 +1015,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 ```{r tab_bmr_mammals_asym, echo=F, results="markup"}
 tab_bmr_mammals_asym<-make_table_stat_fn(data=stat_mammals_ga)
 knitr::kable(tab_bmr_mammals_asym,
-             format="pandoc",
+             format="latex",
              caption = "**Mammals' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_mammals_asym}",
              booktabs=T)
 ```
@@ -1034,7 +1041,7 @@ BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 knitr::kable(h,
-             format='pandoc',
+             format='latex',
              caption = "Fitting info for **Ceder-creek dataset** for year 2000. \\label{tab_cc2000fit}",
              booktabs=T)
 ```
@@ -1067,7 +1074,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 ```{r tab_cc_asym_2000, echo=F, results="markup"}
 tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
 knitr::kable(tab_cc_asym_2000,
-             format="pandoc",
+             format="latex",
              caption = "**Ceder-creek data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis on year 2000 \\label{tab_cc_asym_2000}",
              booktabs=T)
 ```
@@ -1203,7 +1210,7 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 #library(dplyr)
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
-             format='pandoc',
+             format='latex',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundances of the green spruce aphid**. Copulas 
 considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
@@ -1216,7 +1223,7 @@ survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Ab
 
 ```{r tab_count_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_AICw}",
              booktabs=TRUE
              )
@@ -1225,7 +1232,7 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundances of the green spruce aphid**, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
              booktabs=TRUE
              )
@@ -1233,7 +1240,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
 
 ```{r tab_count_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_CvM,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_CvM}",
              booktabs=TRUE
              )
@@ -1241,7 +1248,7 @@ knitr::kable(RES_aphid_count$gfc_p_CvM,
 
 ```{r tab_count_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_KS,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_KS}",
              booktabs=TRUE
              )
@@ -1250,7 +1257,7 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
 \newpage
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model-averaged lower tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTdep_AICw}",
              booktabs=TRUE
              )
@@ -1259,7 +1266,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
 \newpage
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_UTdep_AICw}",
              booktabs=TRUE
              )
@@ -1269,7 +1276,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
 ```{r tab_count_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 5,
-             format='pandoc',
+             format='latex',
              caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTmUT}",
              booktabs=TRUE
              )
@@ -1298,7 +1305,7 @@ s<-stat_aphid_count$numericdf[,c(3,2,4)]
 colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
-             format = "pandoc",
+             format = "latex",
              caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundances of the green spruce aphid**.\\label{tab_count_resamp}",
              booktabs=TRUE)
 ```
@@ -1406,7 +1413,7 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 
 ```{r tab_ff_bestcop, echo=F, results="markup"}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
-             format='pandoc',
+             format='latex',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **first flight data for the leaf-curling plum aphid**. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
@@ -1415,7 +1422,7 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
 
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_AICw}",
              booktabs=TRUE
              )
@@ -1425,7 +1432,7 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **first flight data for the leaf-curlung plum aphid**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
              )
@@ -1433,7 +1440,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
 
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_CvM,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_CvM}",
              booktabs=TRUE
              )
@@ -1441,7 +1448,7 @@ knitr::kable(RES_aphid_ff$gfc_p_CvM,
 
 ```{r tab_ff_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_KS,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_KS}",
              booktabs=TRUE
              )
@@ -1449,7 +1456,7 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
 
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model-averaged lower tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
              )
@@ -1457,7 +1464,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
 
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model-averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
              )
@@ -1466,7 +1473,7 @@ knitr::kable(RES_aphid_ff$UTdep_AICw,
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 5,
-             format='pandoc',
+             format='latex',
              caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
@@ -1495,7 +1502,7 @@ s<-stat_aphid_ff$numericdf[,c(3,2,4)]
 colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
-             format = "pandoc",
+             format = "latex",
              caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_resamp}",
              booktabs=TRUE)
 ```
@@ -1614,7 +1621,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 
 ```{r tab_pns_bestcop, echo=F, results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
-             format='pandoc', 
+             format='latex', 
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundance data for \\textit{Ceratium furca} in UK seas**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
@@ -1625,7 +1632,7 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
 h<-RES_plankton_north_sea$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw}",
              booktabs=TRUE)
@@ -1636,7 +1643,7 @@ source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
@@ -1646,7 +1653,7 @@ knitr::kable(h,
 h<-RES_plankton_north_sea$gfc_p_CvM
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundance data for *Ceratium furca* in UK seas**. Tests were based on bootstrapping as described in Methods.\\label{tab_pns_p_CvM}",
              booktabs=TRUE)
@@ -1656,7 +1663,7 @@ knitr::kable(h,
 h<-RES_plankton_north_sea$gfc_p_KS
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
@@ -1669,7 +1676,7 @@ were based on bootstrapping as described in Methods.\\label{tab_pns_p_KS}",
 h<-RES_plankton_north_sea$LTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model-averaged lower tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
@@ -1679,7 +1686,7 @@ knitr::kable(h,
 h<-RES_plankton_north_sea$UTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model-averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
@@ -1689,7 +1696,7 @@ knitr::kable(h,
 h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 h[is.nan(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model averaged lower tail dependence minus model
 averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTmUT}",
@@ -1718,7 +1725,7 @@ s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
 colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
-             format = "pandoc",
+             format = "latex",
              caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_resamp}",
              booktabs=TRUE)
 ```
@@ -1783,7 +1790,7 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 
 ```{r tab_methane_bestcop, echo=F, results="markup"}
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
-             format='pandoc',
+             format='latex',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **methane-flux data**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
@@ -1794,7 +1801,7 @@ knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw}",
              booktabs=TRUE)
@@ -1805,7 +1812,7 @@ source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
@@ -1815,7 +1822,7 @@ knitr::kable(h,
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **methane-flux data**. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_CvM}",
              booktabs=TRUE)
@@ -1825,7 +1832,7 @@ knitr::kable(h,
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
@@ -1837,7 +1844,7 @@ locations for **methane-flux data**. Tests were based on bootstrapping as descri
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model-averaged lower tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTdep_AICw}",
              booktabs=TRUE)
@@ -1847,7 +1854,7 @@ knitr::kable(h,
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model-averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_UTdep_AICw}",
              booktabs=TRUE)
@@ -1857,7 +1864,7 @@ knitr::kable(h,
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
 knitr::kable(h,
-             format="pandoc",
+             format="latex",
              digits=3,
              caption = "Model averaged lower tail dependence minus model
 averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTmUT}",
@@ -1904,7 +1911,7 @@ s<-stat_methane$numericdf[,c(3,2,4)]
 colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
 rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
 knitr::kable(s,
-             format = "pandoc",
+             format = "latex",
              caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **methane-flux data**.\\label{tab_methane_resamp}",
              booktabs=TRUE)
 ```
@@ -2228,7 +2235,7 @@ sum(LTmUT_temp<0,na.rm = T) #66 out of 90 : suggests UT in leaf-plum curling aph
 <!--
 ```{r tab_temp_aphid_bestcop, echo=F, results="markup"}
 knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
-             format='pandoc',
+             format='latex',
              #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **negative average winter temperature data (1958-2013)**. Copulas' abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_temp_aphid_bestcop}",
              booktabs=TRUE
@@ -2237,7 +2244,7 @@ knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
 
 ```{r tab_temp_aphid_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$info_ord_AICw[,,1], 
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_AICw}",
              booktabs=TRUE
              )
@@ -2246,7 +2253,7 @@ knitr::kable(RES_temp_aphid$info_ord_AICw[,,1],
 ```{r tab_temp_aphid_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
-             format='pandoc',
+             format='latex',
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **negative average winter temperature data**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_temp_aphid_AICw_normal}",
              booktabs=TRUE
              )
@@ -2255,7 +2262,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
 \newpage
 ```{r tab_temp_aphid_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_CvM,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_CvM}",
              booktabs=TRUE
              )
@@ -2264,7 +2271,7 @@ knitr::kable(RES_temp_aphid$gfc_p_CvM,
 \newpage
 ```{r tab_temp_aphid_p_KS, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_KS,
-             format='pandoc',
+             format='latex',
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_KS}",
              booktabs=TRUE
              )
@@ -2273,7 +2280,7 @@ knitr::kable(RES_temp_aphid$gfc_p_KS,
 \newpage
 ```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model-averaged lower tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTdep_AICw}",
              booktabs=TRUE
              )
@@ -2282,7 +2289,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw,
 \newpage
 ```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$UTdep_AICw,
-             format='pandoc',
+             format='latex',
              caption = "Model-averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_UTdep_AICw}",
              booktabs=TRUE
              )
@@ -2292,7 +2299,7 @@ knitr::kable(RES_temp_aphid$UTdep_AICw,
 ```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              digits = 5,
-             format='pandoc',
+             format='latex',
              caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTmUT}",
              booktabs=TRUE
              )
@@ -2422,7 +2429,7 @@ saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0
 summary_stat<-summary_stat[,c(1:2)]
 rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS","BS.success.percent")
 knitr::kable(summary_stat, booktabs = T, 
-             format = "pandoc",
+             format = "latex",
              digits=3,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
@@ -2435,7 +2442,7 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 #for(i in c(1:8)){
 #  temp<-make_table_stat_fn(data=tab_asym[[i]])
 #  temp2<-knitr::kable(temp, booktabs = T, 
-#             format = "pandoc",
+#             format = "latex",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
 #      caption =paste(cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
 #  print(temp2)
@@ -2447,17 +2454,17 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```{r tab_stat_npa_asym_1,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[1]])
 knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
+             format = "latex",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[1]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}"))
+      caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}")
 ```
 
 ```{r tab_stat_npa_asym_2,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[2]])
 knitr::kable(temp, booktabs = T, 
-             format = "pandoc",
+             format = "latex",
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption =paste(cnm[2]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}"))
+      caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}")
 ```
 
 <!--
@@ -3484,7 +3491,7 @@ With increasing number of patches from $5$ to $25$, extinction risk decreased [f
 
 \clearpage
 
-# References
+#  References
 
 <!--
 <div id="refs"></div>

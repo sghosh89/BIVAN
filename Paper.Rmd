@@ -411,9 +411,10 @@ $(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set
 $\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$ and 
 we set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis used these 
 *normalized ranks* $u_i$ and $v_i$. Ranks were $1$ for the smallest element in a set. 
-Second, we did a test of the independence of the $u_i$ and $v_i$ (implemented in X in the Y package). 
+Second, we did a test of the independence of the $u_i$ and $v_i$ (implemented in `BiCopIndTest` in the `VineCopula` package). 
 <!--***DAN: X and Y to be flled in, can't remember right now what they are and don't want to stop
-to look it up, Shya, you could also fill these in if you get a chance-->
+to look it up, Shya, you could also fill these in if you get a chance
+***Shya: Done.-->
 Subsequent model 
 selection algorithms are ineffective if data could not be distinguished from independent data 
 since most or all bivariate copula families considered include the independent copula in the 
@@ -668,7 +669,8 @@ and inserted a call to it in the sup mat Rmd. Right now it only plots dummy, fil
 Please look at MakeBivarDataPlot.R (that's the script) and search for
 "Shya", and do as it says in those comments, so the actual data are imported into that
 script and plotted. I have changed the above so this new figure is plotted instead of the
-cobbled together old figures.-->
+cobbled together old figures.
+***Shya: filled in MakeBivDataPlot.R : Done.-->
 
 
 <!--bivariate summary-->
@@ -758,7 +760,9 @@ knitr::kable(tab_bivar_summary,
 ```
 <!--***DAN: Shya, it says Pl-Pu above, but I suspect it was P_first slice - P_last slice, right?
 Can you please look back at the code, if necessary, and write a comment below this one 
-indicating what results are actually presented in the table?-->
+indicating what results are actually presented in the table?
+***Shya: Yes, you are right, here Pl-Pu means P_first slice - P_last slice. In table, item 10 : Assymetry rank is shown for Kendall preserving surroagates.
+Reference : bivfunctionplot.R file, lines 134,135,161-->
 
 <!--multivariate table summary in latex format-->
 ```{r tab_multivar_summaryl, echo=F, results='asis',message=F}

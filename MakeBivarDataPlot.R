@@ -14,7 +14,7 @@ pdf(file="./Results/BivarDataPlot.pdf",width=tot_wd,height=tot_ht)
 
 #***top row of panels
 
-#panel 1
+#panel 1 : raw data plot for SoilCN
 px<-0
 py<-1
 par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
@@ -22,17 +22,17 @@ par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
           ((py+1)*xmarg_ht+py*pan_ht+py*gap)/tot_ht,
           ((py+1)*xmarg_ht+(py+1)*pan_ht+py*gap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-#Shya, please load the appropriate data here as d1, replacing the below 
-#nonsense filler row
-d1<-data.frame(x=1:3,y=1:3)
+d1<-readRDS("./Data/dataForShymolinaCoord.rds")
+d1<-d1[,c("SOCstock100","TSNstock100")]
+d1<-na.omit(d1)
 d1c<-copula::pobs(d1)
-plot(d1$x,d1$y,type='p',pch=pchval,cex=cexvalpts,
+plot(d1$SOCstock100,d1$TSNstock100,type='p',pch=pchval,cex=cexvalpts,
      col="grey")
 mtext("Soil C",1,1.15)
 mtext("Soil N",2,1.15)
 mtext("A",3,-1.4,cex=cexvalpl,adj=.05)
 
-#panel 2
+#panel 2 : raw data plot for Birds' BMR
 px<-1
 py<-1
 par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
@@ -40,17 +40,17 @@ par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
           ((py+1)*xmarg_ht+py*pan_ht+py*gap)/tot_ht,
           ((py+1)*xmarg_ht+(py+1)*pan_ht+py*gap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
-#Shya, please load the appropriate data here as d2, replacing the below 
-#nonsense filler row. Please make sure you use log10 here.
-d2<-data.frame(x=1:3,y=1:3)
+raw_b<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
+d2<-log10(raw_b)
+colnames(d2)<-c("log10M(g)","log10BMR(KJ/h)")
 d2c<-copula::pobs(d2)
-plot(d2$x,d2$y,type='p',pch=pchval,cex=cexvalpts,
+plot(d2$`log10M(g)`,d2$`log10BMR(KJ/h)`,type='p',pch=pchval,cex=cexvalpts,
      col="grey")
 mtext("log(body mass)",1,1.15)
 mtext("log(BMR)",2,1.15)
 mtext("B",3,-1.4,cex=cexvalpl,adj=.05)
 
-#panel 3
+#panel 3 : raw data plot for mammals' BMR
 px<-2
 py<-1
 par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
@@ -58,17 +58,18 @@ par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
           ((py+1)*xmarg_ht+py*pan_ht+py*gap)/tot_ht,
           ((py+1)*xmarg_ht+(py+1)*pan_ht+py*gap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
-#Shya, please load the appropriate data here as d3, replacing the below 
-#nonsense filler row. Please make sure you use log10 here.
-d3<-data.frame(x=1:3,y=1:3)
+raw_m<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
+d3<-log10(raw_m)
+colnames(d3)<-c("log10M(g)","log10BMR(KJ/h)")
+d3<-as.data.frame(d3)
 d3c<-copula::pobs(d3)
-plot(d3$x,d3$y,type='p',pch=pchval,cex=cexvalpts,
+plot(d3$`log10M(g)`,d3$`log10BMR(KJ/h)`,type='p',pch=pchval,cex=cexvalpts,
      col="grey")
 mtext("log(body mass)",1,1.15)
 mtext("log(BMR)",2,1.15)
 mtext("C",3,-1.4,cex=cexvalpl,adj=.05)
 
-#panel 4
+#panel 4 : raw data plot for cedercreek_2000
 px<-3
 py<-1
 par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
@@ -76,17 +77,16 @@ par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
           ((py+1)*xmarg_ht+py*pan_ht+py*gap)/tot_ht,
           ((py+1)*xmarg_ht+(py+1)*pan_ht+py*gap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
-#Shya, please load the appropriate data here as d4, replacing the below 
-#nonsense filler row. 
-d4<-data.frame(x=1:3,y=1:3)
-d4c<-copula::pobs(d4)
-plot(d4$x,d4$y,type='p',pch=pchval,cex=cexvalpts,
+sr<-readRDS("./Results/Ceder_creek_results/raw_cop_cc_2000.RDS")
+d4<-sr$tab_dbp[,c(2:3)]
+d4c<-sr$cop_tab_dbp[,c(2:3)]
+plot(d4$avg.H,d4$avg.Biomass,type='p',pch=pchval,cex=cexvalpts,
      col="grey")
 mtext("Avg. H",1,1.15)
 mtext("Avg. biomass",2,1.15)
 mtext("D",3,-1.4,cex=cexvalpl,adj=.05)
 
-#***bottom row of panels
+#***bottom row of panels : copula plots of corresponding figs of upper panel
 
 #panel 1
 px<-0

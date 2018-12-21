@@ -319,6 +319,7 @@ i<-5
 db<-subset(r_ple,Year==yr[i])
 dp<-subset(r_pce_clean,Year==yr[i])
 sr<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=T,ploton = T)
+saveRDS(sr,"./Results/Ceder_creek_results/raw_cop_cc_2000.RDS")
 dev.off()
 #----------------------------------------------------------------------------------------
 cop_HB_all_yr<-vector("list",length(yr))

@@ -98,6 +98,24 @@ is only one of the numerous metrics for
 studying relationships between variables, other commonly used metrics also 
 provide partial information only.
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
+\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
+variables; many of these datasets nevertheless have the same Pearson (P)
+or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
+obtained from A (respectively, B) via monotonic functions that transformed the standard-
+normal marginal distributions of A and B to gamma (C, D) or 
+uniform (E, F) marginals (details in Appendix \ref{SM-pedagog1_details}). (G, H) Contours 
+of log-scale density functions of Clayton (G) and survival-Clayton 
+(H) copulas with parameter 5 (Appendix \ref{SM-pedagog1_details}). (I,J) Reflections
+of E, F, respectively, about a vertical axis. Subscripts h and v 
+stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
+\end{center}
+\end{figure}
+<!--***DAN: Dan to go back and add the appendices with details as it says. Make sure
+to mention the shape and scale params of the gamma marginals in C, D were 2-->
+
 Well-developed statistical tools do exist, and are 
 applied widely in other fields, that provide a demonstrably complete 
 description of the dependence 
@@ -141,24 +159,6 @@ can be reconstructed completely from the
 copula and the marginal distributions. 
 Copula theory is also well developed for
 multivariate distributions.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
-variables; many of these datasets nevertheless have the same Pearson (P)
-or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
-obtained from A (respectively, B) via monotonic functions that transformed the standard-
-normal marginal distributions of A and B to gamma (C, D) or 
-uniform (E, F) marginals (details in Appendix \ref{SM-pedagog1_details}). (G, H) Contours 
-of log-scale density functions of Clayton (G) and survival-Clayton 
-(H) copulas with parameter 5 (Appendix \ref{SM-pedagog1_details}). (I,J) Reflections
-of E, F, respectively, about a vertical axis. Subscripts h and v 
-stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
-\end{center}
-\end{figure}
-<!--***DAN: Dan to go back and add the appendices with details as it says. Make sure
-to mention the shape and scale params of the gamma marginals in C, D were 2-->
 
 A principal benefit of a copula approach to ecological data is 
 that such an approach can sensitively model and detect
@@ -413,7 +413,7 @@ we set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis 
 *normalized ranks* $u_i$ and $v_i$. Ranks were $1$ for the smallest element in a set. 
 Second, we did a test of the independence of the $u_i$ and $v_i$ (implemented in X in the Y package). 
 <!--***DAN: X and Y to be flled in, can't remember right now what they are and don't want to stop
-to look it up-->
+to look it up, Shya, you could also fill these in if you get a chance-->
 Subsequent model 
 selection algorithms are ineffective if data could not be distinguished from independent data 
 since most or all bivariate copula families considered include the independent copula in the 
@@ -507,7 +507,8 @@ but I was having a hard time finding where the statistics are implemented. Pleas
 indicate in your response comment what line of what file has the implementation of these
 statistics.
 ***Shya: In code we used the sum of squared distances divided by n(=number of points lying within two boundaries) which I think okay to be called as "average-squared distance" or (to be precised) average of squared distances of points from 1:1 line.
-Reference : CopulaFunctions_flexible.R file, line 24.-->
+Reference : CopulaFunctions_flexible.R file, line 24.
+***DAN: OK, good, I am leaving these comments here as a reminder-->
 Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, which are large when points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ cluster close to the line $v=u$, $\Dsq_{l_b,u_b}$ is 
@@ -605,27 +606,70 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
 
-Across essentially all the sub-fields and levels of organization within ecology that we 
-examined, copula structures were typically non-normal and variables exhibited asymmetric tail 
-dependence. To make results easier for readers who are new to copulas to absorb: we first 
+Across essentially all the sub-fields and levels of organization within ecology for which we 
+examined a dataset, copula structures were typically non-normal and variables 
+commonly exhibited asymmetric tail 
+dependence. To make results easier to absorb for readers who are new to copulas: we first 
 present results in detail for an example bivariate dataset; followed by a summary of results
 for all bivariate datasets; then we present results in 
 detail for an example multivariate dataset; followed by a summary of results 
 for all multivariate datasets.
 
 <!--bivariate example-->
-We will now discuss briefly findings from one of our bivariate datasets as follows. As described in the \nameref{Data}, raw data plot for RaCA database soil organic C and soil N stocks to 1m of soil depth from the central pedon of the `r nrow(d)` sites and their corresponding copula plot were presented in Fig. \ref{fig_biv_multi_raw_cop}(A) and (E), respectively.
-We carried out model selection analysis and non-parametric statistics to measure tail-dependence (if any) on this copula plot.
+We discuss the example of the soil C and N data (see Data), pictured in 
+Fig. \ref{fig_biv_multi_raw_cop}A (raw data) and E (copula plot). The variables were 
+non-independent ($p=$ `r BivMS_res_Loecke$IndepTestRes`, to within the precision available 
+from `BiCopIndTest` in the `VineCopula` package); non-independence is also visually apparent
+(Fig. \ref{fig_biv_multi_raw_cop}E).
+The Kendall correlation was `r round(BivMS_res_Loecke$TauVal,2)`. We fitted the 16 copulas
+mentioned in the previous section to the 
+data pictured in Fig. \ref{fig_biv_multi_raw_cop}E; AIC and BIC weights and corresponding
+lower- and upper-tail statistics for the fitted distributions were computed (Table \ref{SM-tab_soilCNfit}). 
+`r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]` was the 
+minimum-AIC copula, with AIC weight `r round(max(BivMS_res_Loecke$InfCritRes$AICw),2)`, whereas the 
+normal copula had AIC weight essentially 0, answering the 
+first part of Q1 for these data. 
+The model-averaged lower- and upper-tail dependence statistics were `r round(BivMS_res_Loecke$relLTdep_AICw,3)` 
+and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were used for model averaging). 
+These values are distinct from what a normal copula would give, namely, 0, answering the second part 
+of Q1 for these data. The values are also substantially 
+distinct from each other, answering the third part of Q1. 
 
-<!--#### Model selection approach \label{Ex_SoilCN_Model_selection}-->
+<!--***DAN: made it to here 2018 12 20 920pm-->
 
-From the model selection approach, the test of indepedence gave $p=$ `r BivMS_res_Loecke$IndepTestRes` (to within the precision available from `BiCopIndTest` in the `VineCopula` package) that showed a significant correlation (Kendall's coefficient = `r round(BivMS_res_Loecke$TauVal,2)`). We then fitted several copulae (all $16$ families as mentioned in \nameref{Model_selection})
-and got AIC values and upper- and lower-tail dependency estimates based on the fitted copulae (Table \ref{SM-tab_soilCNfit}). 
-Based on AIC weights, `r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]` was the best fit. The table shows that several copulae are much better supported (higher AIC and BIC weights) than the Normal copula, answering the first part of \hyperref[Intro]{\textbf{(Q1)}} for these data. 
+Although these results do convincingly show non-normal copula structure, 
+we caution that the model-averaged tail-dependence statistics may be biased 
+because even the lowest-AIC copula 
+(`r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]`) 
+was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$GofRes_KS` for the 
+Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
+available from `BiCopGofTest` in the `VineCopula` package). However, nonparametric statistics verified
+both the asymmetry of tail dependence for the soil data and the conclusion that tail dependence 
+in the data was distinct from a normal copula (Fig. \ref{SM-fig_soilCN_nonparam}, Table \ref{SM-tab_soilCN_asym}). 
 
-The model-averaged (AIC weights used for model averaging) lower-tail dependence statistic was `r BivMS_res_Loecke$relLTdep_AICw` and the model-averaged upper-tail dependence statistic was `r BivMS_res_Loecke$relUTdep_AICw`. These values are distinct from what a Normal copula would give (i.e., 0), answering the second part of \hyperref[Intro]{\textbf{(Q1)}} for these data. Although these results do convincingly show non-Normal copula structure, we should caution that because even the lowest-AIC copula was a poor fit, giving $p$-value `r BivMS_res_Loecke$GofRes_CvM` (to within the precision available from `BiCopGofTest` in the `VineCopula` package) in the Cramer-von Mises-based test of the goodness of its fit, and $p$-value `r BivMS_res_Loecke$GofRes_KS` in the Kolmogorov-Smirnov-based test of the goodness of fit. Therefore, we also verified this finding with \nameref{NPA} approach (see Fig. \ref{SM-fig_soilCN_nonparam}), where each of our statistics ($\cor$, $\Ps$, $\Dsq$), as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 Normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). Each bin in each subplot of Fig. \ref{SM-fig_soilCN_nonparam} contains a number indicating how many Normal surrogates out of 1000, are different ($95\%$ confidence interval) from Normal-copula statistics. Those numbers clearly show that tail dependence of data is stronger in both the lower and upper tails than would be expected under a null hypothesis of a normal copula, answering the second part of \hyperref[Intro]{\textbf{(Q1)}}.
+<!--***DAN: the above block of text is the first paart of a para, and i have edited it. The below
+block is the rest of the same para, and I have not-->
+
+where each of our statistics ($\cor$, $\Ps$, $\Dsq$), as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 Normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). Each bin in each subplot of Fig. \ref{SM-fig_soilCN_nonparam} contains a number indicating how many Normal surrogates out of 1000, are different ($95\%$ confidence interval) from Normal-copula statistics. Those numbers clearly show that tail dependence of data is stronger in both the lower and upper tails than would be expected under a null hypothesis of a normal copula, answering the second part of \hyperref[Intro]{\textbf{(Q1)}}.
 
 Furthermore, the difference of model-averaged tail dependence statistics (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of \hyperref[Intro]{\textbf{(Q1)}}. To be precise, this difference being negative, indicated stronger upper-tail dependence than lower, which was also supported by non-parametric results (see Table \ref{SM-tab_soilCN_asym}).
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
+\caption{Upper panels shows raw data plots for (A) soil C and N data, (B) $log_{10}$(basal metabolic rate (BMR)) vs. log(body mass) 
+for birds, (C) log(BMR) vs. log(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. \label{fig_biv_multi_raw_cop}}
+\end{center}
+\end{figure}
+<!--***DAN: Shya, we need to produce a single-pdf figure using R, not use latex to
+cobble together separate pdfs for each panel. Also, I think we can dispense with the 
+plots of the multivariate data. I have created a script that will do both of these things, 
+and inserted a call to it in the sup mat Rmd. Right now it only plots dummy, filler data. 
+Please look at MakeBivarDataPlot.R (that's the script) and search for
+"Shya", and do as it says in those comments, so the actual data are imported into that
+script and plotted. I have changed the above so this new figure is plotted instead of the
+cobbled together old figures.-->
+
 
 <!--bivariate summary-->
 We summarized our results columnwise in Table \ref{tab_bivar_summary} for different kinds of bivariate datasets (biogeochemical, evolutionary and ecological data) that were plotted in Fig. \ref{fig_biv_multi_raw_cop}(A-H). For all $4$ bivariate-datasets indicated by each column name (SoilCN, Birds' BMR, Mammals' BMR, Ceder-creek) in Table \ref{tab_bivar_summary}, data were always significantly correlated as indicated by p-value (<0.05) from `BiCopIndTest`{`VineCopula`} (1$^{st}$ row of Table \ref{tab_bivar_summary}). Non-Normal copulae always emerged as best fit copula based on minimum AIC value (2$^{nd}$ row of Table \ref{tab_bivar_summary}). The Normal copula was found as poor fit compared to highest AIC-weight based asymmetric copulae (3$^{rd}$ and 4$^{th}$ rows of Table \ref{tab_bivar_summary}) - which answers the first part of \hyperref[Intro]{\textbf{(Q1)}}. Goodness of fit of the best-fit asymmetric copulae were tested based on p-values from two statistics (Cramer-von Mises and Kolmogorov-Smirnov : 5$^{th}$ and 6$^{th}$ rows of Table \ref{tab_bivar_summary}, respectively).
@@ -766,21 +810,6 @@ knitr::kable(tab_multivar_summary,
    add_footnote("Good fit was considered for best fit copula with p-values > 0.01 (both Cramer-von Mises and Kolmogorov-Smirnov method)", notation="symbol", threeparttable = T, escape = F)
 ```
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
-\caption{Upper panels shows raw data plots for (A) soil C and N data, (B) $log_{10}$(basal metabolic rate (BMR)) vs. log(body mass) 
-for birds, (C) log(BMR) vs. log(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. \label{fig_biv_multi_raw_cop}}
-\end{center}
-\end{figure}
-<!--***DAN: Shya, we need to produce a single-pdf figure using R, not use latex to
-cobble together separate pdfs for each panel. Also, I think we can dispense with the 
-plots of the multivariate data. I have created a script that will do both of these things, 
-and inserted a call to it in the sup mat Rmd. Right now it only plots dummy, filler data. 
-Please look at MakeBivarDataPlot.R (that's the script) and search for
-"Shya", and do as it says in those comments, so the actual data are imported into that
-script and plotted. I have changed the above so this new figure is plotted instead of the
-cobbled together old figures.-->
 
 
 

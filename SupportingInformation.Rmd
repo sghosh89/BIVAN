@@ -870,11 +870,11 @@ saveRDS(BivMS_res_Loecke,file="./Results/fitting_results/BivMS_soilCN.RDS")
 <!--Display model selection results in a table-->
 ```{r tab_soilCNfit, echo=F, results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
-h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LT","UT")]
 knitr::kable(h, #longtable = T, 
              format = "latex",
-      caption.short = "Fitting info for soil C and N dataset",
-      caption = "Fitting information for **soil C and N dataset**. Here and henceforth copula names are abbreviated as: N=normal (Gaussian); C=Clayton; G=Gumbel; F=Frank; J=Joe; SC=survival Clayton; SG=survival Gumbel; SJ=survival Joe. An S in front of one of the copulas BB1, BB6, BB7, BB8 indicates the survival version of that copula (rotation by $180^\\circ$).\\label{tab_soilCNfit}",
+      caption.short = "Model fitting results for soil C and N dataset",
+      caption = "Results of fitting our 16 copulas to the soil C and N dataset. Copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the copula family with the fitted parameters; UT = the same for upper-tail dependence.\\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 

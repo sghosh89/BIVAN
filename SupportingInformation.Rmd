@@ -870,7 +870,8 @@ saveRDS(BivMS_res_Loecke,file="./Results/fitting_results/BivMS_soilCN.RDS")
 <!--Display model selection results in a table-->
 ```{r tab_soilCNfit, echo=F, results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
-h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LT","UT")]
+h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h, #longtable = T, 
              format = "latex",
       caption.short = "Model fitting results for soil C and N dataset",

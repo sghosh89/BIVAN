@@ -123,7 +123,6 @@ source("./FirstPedagogFig.R")
 source("./SecondPedagogFig.R")
 source("./ThirdPedagogFig.R")
 source("./MakeCopulaPedagogFigs.R")
-source("./MakeBivarDataPlot.R")
 ```
 
 <!--The raw data look like this:-->
@@ -410,6 +409,10 @@ points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",pch=16
 points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="blue", pch=0, cex=1.5)
 text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",  pos=1)
 dev.off()
+```
+
+```{r make_data_plot_fig,echo=FALSE,results="hide"}
+source("./MakeBivarDataPlot.R")
 ```
 
 # Transformations and copulas used in Fig. \ref{MT-fig_cop_pedag1} \label{pedagog1_details}
@@ -876,7 +879,7 @@ colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h, #longtable = T, 
              format = "latex",
       caption.short = "Model fitting results for soil C and N dataset",
-      caption = "Results of fitting our 16 copulas to the soil C and N dataset. Copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the copula family with the fitted parameters; UT = the same for upper-tail dependence.\\label{tab_soilCNfit}",
+      caption = "Results of fitting our 16 copula families to the soil C and N dataset. Copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family, with fitted parameters; UT = the same for upper-tail dependence.\\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 
@@ -891,9 +894,10 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for soilCN data]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{soil C and N data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was above (or below) the blue and green cross, text at the top of plots indicates the actual statistics was greater than (or less than) by those number of surrogate values. When $\cor$ values (respectively, $\Ps$ or $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, stronger than or weaker than for $\Ps$ or $\Dsq$) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, can you please adjust this figure and the analogous 3 other figures for the other three bivariate datasets as follows: replace the y-axis label "Partial correlation" with "cor", for consistency with the other y-axis labels-->
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r make_table_stat_fn, echo=F}
@@ -932,14 +936,14 @@ make_table_stat_fn<-function(data){
 }
 ```
 
-
 ```{r tab_soilCN_asym,echo=F,results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
+tab_soilCN_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_soilCN_asym, booktabs = T, 
              format = "latex",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption = "**Soil CN data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis. Three statistics are listed in the left column that measured asymmetry of tail dependence by comparing the distribution ranges $0-0.1$ and $0.9-1$ (see \\nameref{MT-NPA}). One thousand Kendall-preserving and 1000 Spearman-preserving surrogates with normal copula structure were created, and the same statistics were computed for the surrogates. A table entry $<N$ indicates the value of the given statistic on the data was less than its value on $N$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
+      caption.short = "Nonparametric asymmetry tests against an N-copula null, soil C and N",
+      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (corFS-corLS $=\\cor_{0,0.1}-\\cor_{0.9,1}$, PFS-PLS $=\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D2LS-D2FS $=\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 #kable_styling(, position = "float_left")
 ```
 
@@ -955,9 +959,11 @@ saveRDS(BivMS_birds,file="./Results/BMR_results/birds/BivMS_birds.RDS")
 <!--Display model selection results for BMR:birds data in a table-->
 ```{r tab_bmr_birds_fit, echo=F, results='markup'}
 h<-BivMS_birds$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h,
              format='latex',
-             caption = "Fitting info for **birds' BMR dataset** . \\label{tab_bmr_birds_fit}",
+             caption.short = "Model fitting results for the bird body mass and BMR dataset",
+             caption = "Results of fitting our 16 copula families to the bird body mass and BMR dataset. Analogous to Fig. \\ref{tab_soilCNfit}, see caption of that figure for details. \\label{tab_bmr_birds_fit}",
              booktabs=T)
 ```
 
@@ -970,15 +976,17 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for birds' BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{birds' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_birds_nonparam}}
+\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
 ```{r tab_bmr_birds_asym, echo=F, results="markup"}
 tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
+tab_bmr_birds_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_bmr_birds_asym,
              format="latex",
-             caption = "**Birds' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_birds_asym}",
+             caption.short = "Nonparametric asymmetry tests against an N-copula null, bird body mass and BMR",
+             caption = "Bird body mass and BMR dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure.\\label{tab_bmr_birds_asym}",
              booktabs=T)
 ```
 
@@ -991,13 +999,14 @@ BivMS_mammals<-OurBiCopSelect(u1=cop_m[,1],u2=cop_m[,2],families=c(1,3:10,13:14,
 saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 ```
 
-
-<!--Display model selection results for BMR:birds data in a table-->
+<!--Display model selection results for BMR:mammals data in a table-->
 ```{r tab_bmr_mammals_fit, echo=F, results='markup'}
 h<-BivMS_mammals$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h,
              format='latex',
-             caption = "Fitting info for **mammals' BMR dataset** . \\label{tab_bmr_mammals_fit}",
+             caption.short = "Model fitting results for the mammal body mass and BMR dataset",
+             caption = "Results of fitting our 16 copula families to the mammal body mass and BMR dataset. Analogous to Fig. \\ref{tab_soilCNfit}, see caption of that figure for details. \\label{tab_bmr_mammals_fit}",
              booktabs=T)
 ```
 
@@ -1010,15 +1019,17 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for mammals' BMR data with $numbin=10$]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{mammals' BMR data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_bmr_mammals_nonparam}}
+\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
 ```{r tab_bmr_mammals_asym, echo=F, results="markup"}
 tab_bmr_mammals_asym<-make_table_stat_fn(data=stat_mammals_ga)
+tab_bmr_mammals_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_bmr_mammals_asym,
              format="latex",
-             caption = "**Mammals' BMR data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis \\label{tab_bmr_mammals_asym}",
+             caption.short = "Nonparametric asymmetry tests against an N-copula null, mammal body mass and BMR",
+             caption = "Mammal body mass and BMR dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure. \\label{tab_bmr_mammals_asym}",
              booktabs=T)
 ```
 
@@ -1042,9 +1053,11 @@ BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 <!--Display model selection results for Ceder-creek data for year 2000 in a table-->
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
+colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h,
              format='latex',
-             caption = "Fitting info for **Ceder-creek dataset** for year 2000. \\label{tab_cc2000fit}",
+             caption.short = "Model fitting results for the Cedar Creek dataset",
+             caption = "Results of fitting our 16 copula families to the Cedar Creek dataset. Analogous to Fig. \\ref{tab_soilCNfit}, see caption of that figure for details. \\label{tab_cc2000fit}",
              booktabs=T)
 ```
 
@@ -1069,18 +1082,19 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
-\caption[Testing non-parametric statistics for Ceder-creek data with $numbin=10$ for year 2000]{Nonparametric tests for tail dependence and other deviations from a normal copula for \textbf{Ceder-creek data}. As described in \nameref{MT-Methods}, each statistic was computed on the data using the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (red cross), and was also computed using the same ranges for 1000 normal-copula surrogate datasets (blue and green cross show 0.025 and 0.975 quantiles of these results).  When red cross was outside blue and green cross, text at the top of plots indicates how many surrogate values the data value was less than or greater than. \label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
 ```{r tab_cc_asym_2000, echo=F, results="markup"}
 tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
+tab_cc_asym_2000[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_cc_asym_2000,
              format="latex",
-             caption = "**Ceder-creek data set results** for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis on year 2000 \\label{tab_cc_asym_2000}",
+             caption.short = "Nonparametric asymmetry tests against an N-copula null, Cedar Creek data",
+             caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure.\\label{tab_cc_asym_2000}",
              booktabs=T)
 ```
-
 
 <!--Load the raw data-->
 ```{r read_aphid_data, echo=F}

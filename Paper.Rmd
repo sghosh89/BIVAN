@@ -411,10 +411,8 @@ $(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set
 $\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$ and 
 we set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis used these 
 *normalized ranks* $u_i$ and $v_i$. Ranks were $1$ for the smallest element in a set. 
-Second, we did a test of the independence of the $u_i$ and $v_i$ (implemented in `BiCopIndTest` in the `VineCopula` package). 
-<!--***DAN: X and Y to be flled in, can't remember right now what they are and don't want to stop
-to look it up, Shya, you could also fill these in if you get a chance
-***Shya: Done.-->
+Second, we did a test of the independence of the $u_i$ and $v_i$ 
+(implemented in `BiCopIndTest` in the `VineCopula` package). 
 Subsequent model 
 selection algorithms are ineffective if data could not be distinguished from independent data 
 since most or all bivariate copula families considered include the independent copula in the 
@@ -495,7 +493,8 @@ interval $(0,1)$) equals the standard Spearman correlation.
 We also defined the statistic $\Ps_{l_b,u_b}$ (Appendix \ref{SM-nonparam_stats}), 
 which has a similar 
 interpretation to $\cor_{l_{b_k},u_{b_k}}(u,v)$; we use both statistics 
-because in some instances $\Ps_{l_b,u_b}$ appears to have more power to
+because $\cor_{l_{b_k},u_{b_k}}(u,v)$ is more familiar, but 
+in some instances $\Ps_{l_b,u_b}$ appears to have more power to
 reveal tail dependence than does $\cor_{l_{b_k},u_{b_k}}(u,v)$. 
 <!--***DAN: need to make this a bit more precise, perhaps just enough to cite one of the supp mat sections where tests are done of these stats, but you need to review the tests first and what they show-->
 Our third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
@@ -621,7 +620,7 @@ We discuss the example of the soil C and N data (see Data), pictured in
 Fig. \ref{fig_biv_multi_raw_cop}A (raw data) and E (copula plot). The variables were 
 non-independent ($p=$ `r BivMS_res_Loecke$IndepTestRes`, to within the precision available 
 from `BiCopIndTest` in the `VineCopula` package); non-independence is also visually apparent
-(Fig. \ref{fig_biv_multi_raw_cop}E).
+(Fig. \ref{fig_biv_multi_raw_cop}A,E).
 The Kendall correlation was `r round(BivMS_res_Loecke$TauVal,2)`. We fitted the 16 copulas
 mentioned in the previous section to the 
 data pictured in Fig. \ref{fig_biv_multi_raw_cop}E; AIC and BIC weights and corresponding
@@ -633,10 +632,18 @@ first part of Q1 for these data.
 The model-averaged lower- and upper-tail dependence statistics were `r round(BivMS_res_Loecke$relLTdep_AICw,3)` 
 and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were used for model averaging). 
 These values are distinct from what a normal copula would give, namely, 0, answering the second part 
-of Q1 for these data. The values are also substantially 
-distinct from each other, answering the third part of Q1. 
+of Q1 for these data. The values also differed substantially 
+from each other, answering the third part of Q1. The numbers reflect stronger upper- than lower-tail
+dependence for the soil C and N data, and this can be seen visually in the extreme tails 
+of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
 
-<!--***DAN: made it to here 2018 12 20 920pm-->
+\begin{figure}
+\begin{center}
+\includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
+\caption{Upper panels show raw data plots for (A) soil C and N data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
+for birds, (C) $\log_{10}$(BMR) vs. $\log_{10}$(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. \label{fig_biv_multi_raw_cop}}
+\end{center}
+\end{figure}
 
 Although these results do convincingly show non-normal copula structure, 
 we caution that the model-averaged tail-dependence statistics may be biased 
@@ -645,32 +652,22 @@ because even the lowest-AIC copula
 was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$GofRes_KS` for the 
 Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
 available from `BiCopGofTest` in the `VineCopula` package). However, nonparametric statistics verified
-both the asymmetry of tail dependence for the soil data and the conclusion that tail dependence 
-in the data was distinct from a normal copula (Fig. \ref{SM-fig_soilCN_nonparam}, Table \ref{SM-tab_soilCN_asym}). 
+both that tail dependence was distinct from that of a normal copula for the soil data, and that it 
+was asymmetric (Fig. \ref{SM-fig_soilCN_nonparam}, Table \ref{SM-tab_soilCN_asym}). 
+The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data
+were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates
+of the data,
+separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
+(Fig. \ref{SM-fig_soilCN_nonparam}). Results show that tail dependence of data is stronger in 
+both the lower and upper tails than would be expected under a null hypothesis of a normal copula.
+The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
+$\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for real data were also compared to distributions of their values
+on 1000 Kendall- or Spearman-preserving N surrogates, separately in two comparisons for each
+of the $(l_b,u_b)$ ranges listed above (Table \ref{SM-tab_soilCN_asym}). Results showed that
+upper-tail dependence was significantly stronger than lower-tail dependence.
 
-<!--***DAN: the above block of text is the first paart of a para, and i have edited it. The below
-block is the rest of the same para, and I have not-->
 
-where each of our statistics ($\cor$, $\Ps$, $\Dsq$), as computed for the ranges $0-0.1$, $0.1-0.2$, ..., $0.9-1$ (with $10$ number of bins), was compared to the distributions of values of the same statistic with the same ranges computed on 1000 Normal-copula surrogate datasets with similar Kendall or Spearman correlations, in different runs for Kendall and Spearman (Fig. \ref{SM-fig_soilCN_nonparam}). Each bin in each subplot of Fig. \ref{SM-fig_soilCN_nonparam} contains a number indicating how many Normal surrogates out of 1000, are different ($95\%$ confidence interval) from Normal-copula statistics. Those numbers clearly show that tail dependence of data is stronger in both the lower and upper tails than would be expected under a null hypothesis of a normal copula, answering the second part of \hyperref[Intro]{\textbf{(Q1)}}.
-
-Furthermore, the difference of model-averaged tail dependence statistics (lower minus upper), `r BivMS_res_Loecke$relLTdep_AICw-BivMS_res_Loecke$relUTdep_AICw`, was different from 0, answering the third part of \hyperref[Intro]{\textbf{(Q1)}}. To be precise, this difference being negative, indicated stronger upper-tail dependence than lower, which was also supported by non-parametric results (see Table \ref{SM-tab_soilCN_asym}).
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
-\caption{Upper panels shows raw data plots for (A) soil C and N data, (B) $log_{10}$(basal metabolic rate (BMR)) vs. log(body mass) 
-for birds, (C) log(BMR) vs. log(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. \label{fig_biv_multi_raw_cop}}
-\end{center}
-\end{figure}
-<!--***DAN: Shya, we need to produce a single-pdf figure using R, not use latex to
-cobble together separate pdfs for each panel. Also, I think we can dispense with the 
-plots of the multivariate data. I have created a script that will do both of these things, 
-and inserted a call to it in the sup mat Rmd. Right now it only plots dummy, filler data. 
-Please look at MakeBivarDataPlot.R (that's the script) and search for
-"Shya", and do as it says in those comments, so the actual data are imported into that
-script and plotted. I have changed the above so this new figure is plotted instead of the
-cobbled together old figures.
-***Shya: filled in MakeBivDataPlot.R : Done.-->
+<!--***DAN: made it to here 2018 12 21 at 10pm-->
 
 
 <!--bivariate summary-->
@@ -752,9 +749,9 @@ dt <- tibble(Description = c("1. P-value, independence test",
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 knitr::kable(tab_bivar_summary, 
              format="latex",
-             caption = "Summary of Q1 results for bivariate datasets. The $p$-values in rows 5-6 and are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. For row 10, the statistic $P_l-P_u$ was computed for real data and for 1000 surrogate datasets with N copulas, and the rank of real-data value in the distribution of surrogate values is presented. \\label{tab_bivar_summary}",
+             caption = "Summary of Q1 results for bivariate datasets. The $p$-values in rows 5-6 are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. For row 10, the statistic $P_{0,u_b}-P_{1-u_b}$ was computed for real data and for 1000 Kendall-preserving surrogate datasets with N copulas, and the rank of real-data value in the distribution of surrogate values is presented. The value of $u_b$ depended on the size of the dataset, and can be found in Figs. \\ref{SM-fig_soilCN_nonparam} to \\ref{SM-fig_cc2000_nonparam} and Tables \\ref{SM-tab_soilCN_asym}, \\ref{SM-tab_bmr_birds_asym}, \\ref{SM-tab_bmr_mammals_asym}, and \\ref{SM-tab_cc_asym_2000}. \\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
-             col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar creek data")
+             col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.4cm")%>%
              column_spec(1, width = "8.5cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
@@ -762,7 +759,9 @@ knitr::kable(tab_bivar_summary,
 Can you please look back at the code, if necessary, and write a comment below this one 
 indicating what results are actually presented in the table?
 ***Shya: Yes, you are right, here Pl-Pu means P_first slice - P_last slice. In table, item 10 : Assymetry rank is shown for Kendall preserving surroagates.
-Reference : bivfunctionplot.R file, lines 134,135,161-->
+Reference : bivfunctionplot.R file, lines 134,135,161
+***DAN: OK, great. I have made changes to deal with this, but am leaving the comment for now
+as a reminder that we looked at this-->
 
 <!--multivariate table summary in latex format-->
 ```{r tab_multivar_summaryl, echo=F, results='asis',message=F}

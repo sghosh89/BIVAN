@@ -17,7 +17,7 @@ Ricker<-function(r,K,p0,lensim){
 }
 
 #call the function
-Ricker(r=2,K=100,p0=25,lensim=100)
+Ricker(r=2,K=100,p0=5,lensim=100) # bifurcation point r=1
 #-------------------------------------------------------
 
 # Exploring Hassell model
@@ -40,15 +40,16 @@ Hassell<-function(r,a,b,p0,lensim){
   r2<-((b/(b-2)))^b
   
   plot(time,pop,type="b")
-  cat("For stable, monotonic approach towards eqm. upper limit of r should be",r1,"\n")
   
-  cat("For stable, oscillatory approach towards eqm. lower limit of r should be",r1,"\n")
-  cat("For stable, oscillatory approach towards eqm. upper limit of r should be",r2,"\n")
+  #provided b>2 (to get finite r2), these are the stability conditions:
+  cat("For stable, monotonic approach towards eqm. upper limit of r should be",r1,"\n")
+
+  cat("For stable, oscillatory approach towards eqm. upper limit of r should be within ",r1,"to",r2,"\n")
   
 }
 
 #call the function
-Hassell(r=5, a=0.01, b=4, p0=25, lensim=200)
+Hassell(r=2, a=0.01, b=100, p0=5, lensim=200) #b~1.5 : contest, b~100 : scramble
 
 #----------------------------------------------------------------------------------------------------
 # Exploring Maynard Smith model

@@ -17,7 +17,7 @@ Ricker<-function(r,K,p0,lensim){
 }
 
 #call the function
-Ricker(r=2,K=100,p0=5,lensim=100) # bifurcation point r=1
+Ricker(r=1.1,K=50,p0=5,lensim=100) # bifurcation point r=1
 #-------------------------------------------------------
 
 # Exploring Hassell model
@@ -49,7 +49,7 @@ Hassell<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-Hassell(r=2, a=0.01, b=100, p0=5, lensim=200) #b~1.5 : contest, b~100 : scramble
+Hassell(r=5, a=0.5, b=5, p0=0.1, lensim=200) #b~1.5 : contest, b~100 : scramble
 
 #----------------------------------------------------------------------------------------------------
 # Exploring Maynard Smith model

@@ -50,7 +50,7 @@ Dispersal_mat<-function(numlocs,d,disp_everywhere){
 #--------Output------------------------------------------------------
 #A numsims by numlocs by numsteps+1 array of populations
 #----------------------------------------------------------------------
-popsim_ml_D<-function(p0,ns,D,r,K){
+popsim_ml_D<-function(p0,ns,D,r,K,a,b,model){
   numsims<-dim(ns)[1]
   numlocs<-dim(ns)[2]
   numsteps<-dim(ns)[3]
@@ -66,10 +66,20 @@ popsim_ml_D<-function(p0,ns,D,r,K){
     
     #growth rates based on the noise
     lam_sto<-exp(ns[,,tct])  #numsims by numlocs matrix
+    
     lam_ricker<-exp(r*(1-(res[,,tct]/K)))
+    lam_hassell<-r/((1+res[,,tct])^b)
     
     #growth prior to dispersal
-    res[,,tct+1]<-lam_ricker*lam_sto*res[,,tct] #numsims by numlocs matrix
+    if(model=="ricker"){
+      given_model<-lam_ricker
+    }else if(model=="hassell"){
+      given_model<-lam_hassell
+    }else{
+      warning("model not specified",immediate.=T,call.=T)
+    }
+    
+    res[,,tct+1]<-given_model*lam_sto*res[,,tct] #numsims by numlocs matrix
     
     #after dispersal
     tres<-t(res[,,tct+1]) # numlocs by numsims matrix after taking transpose
@@ -100,22 +110,24 @@ extrisk<-function(sims){
 #       4) D : dispersal matrix which is the output of Dispersal_mat function
 #       5) r : model parameter : growth rate
 #       6) K : Ricker model parameter : carrying capacity
-#       7) ploton : logical(T or F) to get optional plot
+#       7), 8) a, b : model parameters for Hassell model 
+#       9) model : a character specifying model name
+#       10) ploton : logical(T or F) to get optional plot
 
-plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,ploton){
+plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,a,b,model,ploton){
  
   ns1<-retd(n=numsteps*numsims,d=numlocs,rl=1)# a righttail dep matrix(numpoints by numlocs,     
   #                                                      numpoints=numsteps*numsims)
   
   ns1<-array(ns1,c(numsteps,numsims,numlocs))# convert to an array (numsteps by numsims by numlocs)
   ns1<-aperm(ns1,c(2,3,1)) # convert to an array (numsims by numlocs by numsteps)
-  pops1<-popsim_ml_D(p0=rep(K,numlocs),ns=ns1,D=D,r=r,K=K)
+  pops1<-popsim_ml_D(p0=rep(K,numlocs),ns=ns1,D=D,r=r,K=K,a=a,b=b,model=model)
   risk_right<-extrisk(pops1)
   #ps<-rep(K,numlocs)
   #print(ps)
   
   ns2<-(-ns1)
-  pops2<-popsim_ml_D(p0=rep(K,numlocs),ns=ns2,D=D,r=r,K=K)
+  pops2<-popsim_ml_D(p0=rep(K,numlocs),ns=ns2,D=D,r=r,K=K,a=a,b=b,model=model)
   risk_left<-extrisk(pops2)
   
   if(ploton==T){
@@ -141,18 +153,20 @@ plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,ploton){
 #       3) numlocs : an integer : number of locations
 #       4) r : model parameter : growth rate
 #       5) K : Ricker model parameter : carrying capacity
-#       6) disp_everywhere :logical:
+#       6)-7) a,b : Hassell model parameters
+#       8) model : a character specifying model name
+#       9) disp_everywhere :logical:
 #             if T : gives D for linear chain model with equal dispersal everywhere
 #             if F : gives D for linear chain model with equal dispersal only to nearest neighbor location
-#       7) ploton : logical to get optional plot
+#       10) ploton : logical to get optional plot
 
-varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere,ploton){
+varying_d<-function(numsims,numsteps,numlocs,r,K,a,b,model,disp_everywhere,ploton){
   risk_right<-c()
   risk_left<-c()
   d_seq<-seq(from=0,to=1,by=0.1)
   for(d in d_seq){
     D_mat<-Dispersal_mat(numlocs=numlocs,d=d,disp_everywhere=disp_everywhere)
-    riskrl<- plotter_ext_risk(numsims=numsims,numsteps = numsteps,numlocs = numlocs,D=D_mat,r=r,K=K,ploton=F)
+    riskrl<- plotter_ext_risk(numsims=numsims,numsteps = numsteps,numlocs = numlocs,D=D_mat,r=r,K=K,a=a,b=b,model=model,ploton=F)
     risk_r<-riskrl$risk_right_after_numsteps
     risk_l<-riskrl$risk_left_after_numsteps
     risk_right<-c(risk_right,risk_r)
@@ -164,7 +178,7 @@ varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere,ploton){
     plot(d_seq,risk_left,xlab='d',ylab='Risk_left',xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid())
     plot(d_seq,risk_right,xlab='d',ylab='Risk_right',xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid())
     par(op)
-    mtext(paste0("r = ", r," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps," , K = ",K),side=3,line=0.2,col="navyblue")
+    mtext(paste0("r = ", r," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps),side=3,line=0.2,col="navyblue")
   }
   
   return(data.frame(d_seq=d_seq,
@@ -174,56 +188,24 @@ varying_d<-function(numsims,numsteps,numlocs,r,K,disp_everywhere,ploton){
 
 }
 #------------------------------------------------------------------------------------------------------------
+# For LC/Ricker
+#set.seed(seed=101)
+#r<-1
+#a<-NA
+#b<-NA
+#varying_d(numsims=10000,numsteps=10,numlocs=5,r=r,K=50,a=a,b=b,model="ricker",disp_everywhere=T,ploton = T)
 
 
-#varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.05,K=200,disp_everywhere=T)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-# Exploring Ricker model
-Ricker<-function(r,K,p0,lensim){
-  pop<-c(p0)
-  time<-c(0)
- # po<-rep(K,r)
- # print(po)
-  
-  for(it in c(1:lensim)){
-    pt<-p0*exp(r*(1-(p0/K)))
-    time<-c(time,it)
-    pop<-c(pop,pt)
-    p0<-pt
-  }
-  
-  plot(time,pop,type="b")
-
-}
-
-#Ricker(r=2,K=100,p0=25,lensim=100)
-
-
-
-
-
-
+# For Hassell
+#set.seed(seed=101)
+#r<-6
+#a<-0.5
+#b<-1.2
+#K_e<-((r^(1/b))-1)/a
+#K_e
+#rc<-((b/(b-1)))^b
+#rc
+#varying_d(numsims=10000,numsteps=10,numlocs=5,r=r,K=K_e,a=a,b=b,model="hassell",disp_everywhere=T,ploton = T)
 
 
 

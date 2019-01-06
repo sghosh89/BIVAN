@@ -49,12 +49,29 @@ Hassell<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-Hassell(r=5, a=0.5, b=5, p0=0.1, lensim=200) #b~1.5 : contest, b~100 : scramble
+Hassell(r=6, a=0.5, b=2, p0=0.1, lensim=200) #b~1.5 : contest, b~100 : scramble
 
+Hassell(r=5, a=0.5, b=2.5, p0=0.1, lensim=200) # see change : r=5,a=0.5 and vary b 1.5 to 5.5
 #----------------------------------------------------------------------------------------------------
 # Exploring Maynard Smith model
+Msmith<-function(r,a,b,p0,lensim){
+  pop<-c(p0)
+  time<-c(0)
+  
+  for(it in c(1:lensim)){
+    pt<-(r*p0)/(1+((a*p0)^b))
+    time<-c(time,it)
+    pop<-c(pop,pt)
+    p0<-pt
+  }
+  
+  plot(time,pop,type="b")
+  
+}
 
-
+#call the function
+Msmith(r=2,a=0.5,b=2,p0=0.1,lensim=200) #see changes as r=5,a=0.5 and vary b : 1,1.5,2,4
+                                          #see changes as a=0.5,b=4 and vary r : 1.2, 1.5, 2
 
 
 

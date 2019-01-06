@@ -46,7 +46,9 @@ Dispersal_mat<-function(numlocs,d,disp_everywhere){
 #p0       A length numlocs vector holding initial populations
 #ns       An numsims by numlocs by numsteps array of the epsilons, 
 #           where numsteps is the number of time steps you want
-#
+#D        Dispersal matrix
+#r,K,a,b  model parameters
+#model    a character specifying model name
 #--------Output------------------------------------------------------
 #A numsims by numlocs by numsteps+1 array of populations
 #----------------------------------------------------------------------
@@ -69,12 +71,15 @@ popsim_ml_D<-function(p0,ns,D,r,K,a,b,model){
     
     lam_ricker<-exp(r*(1-(res[,,tct]/K)))
     lam_hassell<-r/((1+res[,,tct])^b)
+    lam_msmith<-r/(1+((res[,,tct])^b))
     
     #growth prior to dispersal
     if(model=="ricker"){
       given_model<-lam_ricker
     }else if(model=="hassell"){
       given_model<-lam_hassell
+    }else if(model=="msmith"){
+      given_model<-lam_msmith
     }else{
       warning("model not specified",immediate.=T,call.=T)
     }
@@ -188,32 +193,3 @@ varying_d<-function(numsims,numsteps,numlocs,r,K,a,b,model,disp_everywhere,ploto
 
 }
 #------------------------------------------------------------------------------------------------------------
-# For LC/Ricker
-#set.seed(seed=101)
-#r<-1
-#a<-NA
-#b<-NA
-#varying_d(numsims=10000,numsteps=10,numlocs=5,r=r,K=50,a=a,b=b,model="ricker",disp_everywhere=T,ploton = T)
-
-
-# For Hassell
-#set.seed(seed=101)
-#r<-6
-#a<-0.5
-#b<-1.2
-#K_e<-((r^(1/b))-1)/a
-#K_e
-#rc<-((b/(b-1)))^b
-#rc
-#varying_d(numsims=10000,numsteps=10,numlocs=5,r=r,K=K_e,a=a,b=b,model="hassell",disp_everywhere=T,ploton = T)
-
-
-
-
-
-
-
-
-
-
-

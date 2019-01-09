@@ -185,7 +185,8 @@ within each column of panels.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, I changed the abbreviation for Kendall Correlation from KC to K in the 
-caption, please change in the code that generates the figures, as well-->
+caption, please change in the code that generates the figures, as well
+***Shya: Done.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the
@@ -697,7 +698,8 @@ We present our analysis of the green spruce aphid abundance data (see Data).
 Independence was tested for each pair of the 10 sampling locations, and was 
 rejected in every case.
 <!--***DAN: Right, Shyamolina? I am assuming that because "Indep" does not 
-appear anywhere in Table S11, this is correct, but please confirm or correct-->
+appear anywhere in Table S11, this is correct, but please confirm or correct.
+***Shya: Yes, you are right, all the pairwise sampling locations for aphid data rejected independence test and show copula structures.-->
 Model selection among copulas was carried out separately for each pair of locations.
 Best-fitting (lowest-AIC) copulas were non-normal
 for the large majority of location pairs (Table \ref{SM-tab_count_bestcop}), and 

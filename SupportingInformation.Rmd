@@ -415,9 +415,17 @@ dev.off()
 source("./MakeBivarDataPlot.R")
 ```
 
-# Transformations and copulas used in Fig. \ref{MT-fig_cop_pedag1} \label{pedagog1_details}
+# Transformations used in Fig. \ref{MT-fig_cop_pedag1} \label{pedagog1_details}
 
-<!--***DAN: fill in later-->
+The data of Fig. \ref{MT-fig_cop_pedag1}A-B were generated to have standard normal marginals.
+Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+of both variables by the cdf of the standard normal distribution, and then by the inverse of 
+the cdf of the gamma distribution with shape and scale parameters 2. 
+The function `qgamma` in R was used.
+Fig. \ref{MT-fig_cop_pedag1}D can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way.
+Fig. \ref{MT-fig_cop_pedag1}E can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+of both variables by the cdf of the standard normal distribution.
+Fig. \ref{MT-fig_cop_pedag1}F can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
 
 # Details of the data \label{Data_details}
 
@@ -505,12 +513,7 @@ were used for our study. \label{fig_plankton_map}}
 \end{center}
 \end{figure}
 
-# Background on the copulas we fitted with data \label{copula_details}
-
-<!--Dumping ground at present, need to organize and fill in.
-
-Notes about individual copula parameter ranges:
--->
+<!--Now the copula figures-->
 
 \begin{figure}[!h]
 \begin{center}
@@ -672,31 +675,25 @@ respectively.\label{figped_SBB8}}
 
 # Nonparametric statistics \label{nonparam_stats}
 
-<!--***DAN: Right now this is a dumping grounds for text taken from the main text.
-The text is valuable, but needs to be organized to fit together in this supp mat
-section-->
-
-We also defined a statistic $\Ps_{l_b,u_b}$, using the same bounds
-$u+v=2l_b$ and $u+v=2u_b$, as follows. For a distance $h$, we defined
+We here define $\Ps_{l_b,u_b}$, using the bounds
+$u+v=2l_b$ and $u+v=2u_b$ defined in the main text, as follows. For a distance $h$, we define
 $S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
 and a distance less than $h$ from the line $v=u$, divided by the 
 total number of points within the bounds. This function is
 defined for $h$ going from $0$ to a distance $h_{\text{max}}$ which
 is half the longer of the two segments obtained by intersecting the
 bounds with the unit square. It is easy to see $S(0)=0$ and 
-$S(h_{\text{max}})=1$. We defined $S_i(h)$, for the same range 
-of $h$, to be the area within the bounds and the unit square
+$S(h_{\text{max}})=1$. We define $S_i(h)$, also for $h$ going from $0$
+to $h_{\text{max}}$, to be the area within the bounds and the unit square
 and within distance $h$ of the line $v=u$, divided by the area
 within the bounds and the unit square. This is the expected value of
-$S(h)$ for independent data. We then defined
+$S(h)$ for independent data. We then define
 \begin{equation}\label{eq.P}
-   P_{l_b,u_b} = \int_0^{h_{max}} ( S(h) - S_i(h) ) dh.
+   P_{l_b,u_b} = \int_0^{h_{\text{max}}} ( S(h) - S_i(h) ) dh.
 \end{equation}
-As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
+\noindent As for $\cor_{l_b,u_b}$, larger values of $\Ps_{l_b,u_b}$ 
 indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds.
-
-
 
 \begin{figure}[!h]
 \begin{center}
@@ -705,32 +702,34 @@ between $u$ and $v$ in the region given by the bounds.
 \end{center}
 \end{figure}
 
+# Testing the nonparametric statistics \label{Test_npa_stat}
 
-
-# Testing nonparametric statistics for various symmetric and asymmetric copulas \label{Test_npa_stat}
-
-Normal and Frank copula families 
+N and F copula families 
 are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
-in these families [@nelsen2006_copula]. Clayton copulas are known to have stronger lower- than 
-upper-tail dependence. And survival Clayton copulas, being rotations of Clayton copulas by 
+in these families [@nelsen2006_copula]. C copulas are known to have stronger lower- than 
+upper-tail dependence, and SC copulas, being rotations of C copulas by 
 $180^\circ$, have stronger upper- than lower tail dependence [@nelsen2006_copula].
-Using the `iRho` function from the `copula` package, for each of the four families normal, 
-Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
+Using the `iRho` function from the `copula` package, for each of the four families N, 
+F, C, and SC, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
-of the selected parameter values we generated  $n$ points, 100 times, and thereby computed 100 values of the 
+of the selected parameter values we generated  $n$ points, 100 times, and thereby 
+computed 100 values of the 
 statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$. This exercise 
 was repeated, separately, 
-for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect asymptotic behavior of the 
+for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect 
+asymptotic behavior of the 
 statistics and their behavior on the small datasets which are common in some fields
 of ecology. The mean and standard error of the three difference statistics were computed for 
 each copula family, parameter value, and value of $n$, and results were plotted against 
-Spearman's rho (Figures \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
+Spearman's rho (Figs \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
 the expectation being that the difference statistics would be positive for 
-Clayton copulas and negative for survival Clayton copulas (except for the case of $\rho=0$, a 
+C copulas, negative for SC copulas (except for the case of $\rho=0$, a 
 boundary case of these families corresponding to independence), and not significantly different 
-from $0$ (we used a $t$-test with a significance threshold of $0.05$) for Frank and normal 
-copulas. These expectations were fullfilled (Figures \ref{fig_stat_testing35} and 
+from $0$ for F and N 
+copulas.
+We used a $t$-test with a significance threshold of $0.05$ to judge signficance here.
+These expectations were fullfilled (Figs \ref{fig_stat_testing35} and 
 \ref{fig_stat_testing1000}).
 
 <!--The message=F and warning=F flags are to suppress warnings that come when you pass a parameter
@@ -764,14 +763,14 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing non-parametric statistics with datapoints $n=35$]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing non-parametric statistics with datapoints $n=1000$]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence for the normal and Frank copulas. See text for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -815,9 +814,8 @@ $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to
 another permutation of $1,\ldots,n$).
 - The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
 
-Our code for this algorithm is [`copsurrog2d`](https://github.com/sghosh89/BIVAN/blob/master/copsurrog2d.R) in the 
-[`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
-
+\noindent Our code for this algorithm is `copsurrog2d` in the 
+`BIVAN` repository (https://github.com/sghosh89/BIVAN). 
 Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
 is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
 permutation 
@@ -830,7 +828,7 @@ a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
 sampling variation) the Spearman correlation of the empirical data.  
 
-# Spatial resampling with multivariate datasets for non-parametric statistics \label{spatial_resamp}
+# Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
 
 The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
 widely used spline correlogram method; the same scheme was also used by @walteretal2017 
@@ -842,20 +840,25 @@ $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$,
 $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
 values $s_{ij}$ were then arranged in
 a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
-$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterized the 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterizes the 
 average strength of 
 dependence, across all pairs of distinct locations, for data in the portion of the distributions 
-given by $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, the mean characterized average
+given by the bounds $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, 
+the mean characterizes average
 asymmetry of tail dependence across all pairs of locations. 
-Confidence intervals for the values of $\mean(S)$ were then computed as quantiles of a 
+Confidence intervals for the value of $\mean(S)$ were then computed as quantiles of a 
 distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
-revealed by these confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
+revealed by the confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
 or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-Normal null hypothesis, and answering question \hyperref[MT-Intro]{\textbf{(Q1)}} from the \nameref{MT-Intro}.
+N-copula null hypothesis, and answering question Q1 from the Introduction.
 Bootstrapping was performed by resampling the locations of measurement, with replacement. 
 This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
+
+<!--***DAN: all good up to here, except as marked (the data section)-->
+
+
 
 # How to visualize non-parametric analysis results for multivariate spatial data? \label{visual_npa}
 
@@ -889,12 +892,11 @@ source("bivfunctionplot.R")
 set.seed(seed) 
 stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",nametag="soilCN",numbin=10)
 ```
-<!--****DAN: DAN suspects a bug in the code that generates this fig. because the red dot should appear outside the x's iff the text > 999 (or so,mething like that) appears in the bin, also check make_table_stat_fn r chunk-->
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, can you please adjust this figure and the analogous 3 other figures for the other three bivariate datasets as follows: replace the y-axis label "Partial correlation" with "cor", for consistency with the other y-axis labels-->
@@ -976,7 +978,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
+\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1019,7 +1021,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
+\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1082,7 +1084,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1227,73 +1229,79 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
              format='latex',
-             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundances of the green spruce aphid.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundances of the green spruce aphid**. Copulas 
+             caption.short = "Best-fitting copulas, green spruce aphid abundance data",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for green spruce aphid abundance data. Copulas 
 considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
-survival Joe, survival BB1, survival BB6, survival BB7, survival BB8 copulas. Abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
+survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
              booktabs=TRUE
              )#%>% # only with 'latex'/'html' format
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
 ```
 
-
 ```{r tab_count_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
+knitr::kable(round(RES_aphid_count$info_ord_AICw[,,1],3), 
              format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_AICw}",
+             caption.short = "AIC weights, best-fitting copulas, green spruce aphid abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for green spruce aphid abundance data.\\label{tab_count_AICw}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
+knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_count),3),
              format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundances of the green spruce aphid**, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
+             caption.short = "AIC weights, N copulas, green spruce aphid abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for green spruce aphid abundance data, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_count_p_CvM, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$gfc_p_CvM,
+knitr::kable(round(RES_aphid_count$gfc_p_CvM,3),
              format='latex',
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_CvM}",
+             caption.short="Goodness of fit of best-fitting copulas, green spruce aphid abundance data",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for green spruce abundance data.\\label{tab_count_p_CvM}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_count_p_KS, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$gfc_p_KS,
+knitr::kable(round(RES_aphid_count$gfc_p_KS,3),
              format='latex',
-             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundances of the green spruce aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_count_p_KS}",
+             caption.short="Goodness of fit of best-fitting copulas, green spruce aphid abundance data",
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for green spruce abundance data.\\label{tab_count_p_KS}",
              booktabs=TRUE
              )
 ```
 
 \newpage
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$LTdep_AICw,
+knitr::kable(round(RES_aphid_count$LTdep_AICw,3),
              format='latex',
-             caption = "Model-averaged lower tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTdep_AICw}",
+             caption.short="Lower-tail dependence, green spruce aphid abundance data",
+             caption = "Model-averaged lower-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
 
 \newpage
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$UTdep_AICw,
+knitr::kable(round(RES_aphid_count$UTdep_AICw,3),
              format='latex',
-             caption = "Model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_UTdep_AICw}",
+             caption.short="Upper-tail dependence, green spruce aphid abundance data",
+             caption = "Model-averaged upper-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
 
 \newpage
 ```{r tab_count_LTmUT, echo=F, results='markup'}
-knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
+knitr::kable(round(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,3),
              digits = 5,
              format='latex',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **abundances of the green spruce aphid**.\\label{tab_count_LTmUT}",
+             caption.short="Lower- minus upper-tail dependence, green spruce aphid abundance data",
+             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -1430,16 +1438,17 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 ```{r tab_ff_bestcop, echo=F, results="markup"}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='latex',
-             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **first flight data for the leaf-curling plum aphid**. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
+             caption.short = "Best-fitting copulas, leaf-curling plum aphid first flight data",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for leaf-curling plum aphid first flight data. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
+knitr::kable(round(RES_aphid_ff$info_ord_AICw[,,1],3), 
              format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_AICw}",
+             caption.short="AIC weights, best-fitting copulas, leaf-curling plum aphid first flight data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_AICw}",
              booktabs=TRUE
              )
 ```
@@ -1447,50 +1456,56 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
 \newpage
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
+knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_ff),3),
              format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **first flight data for the leaf-curlung plum aphid**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
+             caption.short="AIC weights, N copulas, leaf-curling plum aphid first flight data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for leaf-curlung plum aphid first flight data, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$gfc_p_CvM,
+knitr::kable(round(RES_aphid_ff$gfc_p_CvM,3),
              format='latex',
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_CvM}",
+             caption.short="Goodness of fit of best-fitting copulas, leaf-curling plum aphid first flight data",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for leaf-curling plum aphid first flight data.\\label{tab_ff_p_CvM}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_p_KS, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$gfc_p_KS,
+knitr::kable(round(RES_aphid_ff$gfc_p_KS,3),
              format='latex',
-             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **first flight data for the leaf-curling plum aphid**. Tests were based on bootstrapping as described in Methods.\\label{tab_ff_p_KS}",
+             caption.short="Goodness of fit of best-fitting copulas, leaf-curling plum aphid first flight data",
+             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for leaf-curling plum aphid first flight data.\\label{tab_ff_p_KS}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$LTdep_AICw,
+knitr::kable(round(RES_aphid_ff$LTdep_AICw,3),
              format='latex',
-             caption = "Model-averaged lower tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTdep_AICw}",
+             caption.short="Lower-tail dependence, leaf-curling plum aphid first flight data",
+             caption = "Model-averaged lower-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$UTdep_AICw,
+knitr::kable(round(RES_aphid_ff$UTdep_AICw,3),
              format='latex',
-             caption = "Model-averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_UTdep_AICw}",
+             caption.short="Upper-tail dependence, leaf-curling plum aphid first flight data",
+             caption = "Model-averaged upper-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
              )
 ```
 
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
-knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
+knitr::kable(round(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,3),
              digits = 5,
              format='latex',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_LTmUT}",
+             caption.short="Lower- minus upper-tail dependence, leaf-curling plum aphid first flight data",
+             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_LTmUT}",
              booktabs=TRUE
              )
 ```
@@ -1638,8 +1653,8 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 ```{r tab_pns_bestcop, echo=F, results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='latex', 
-             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for abundance data for \\textit{Ceratium furca} in UK seas.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **abundance data for \\textit{Ceratium furca} in UK seas**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
+             caption.short = "Best-fitting copulas, \\textit{Ceratium furca} abundance data",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for \\textit{Ceratium furca} abundance data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1647,10 +1662,11 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
 ```{r tab_pns_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw}",
+             caption.short="AIC weights, best-fitting copulas, \\textit{Ceratium furca} abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1658,64 +1674,68 @@ knitr::kable(h,
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_AICw_normal}",
+             caption.short="AIC weights, N copulas, \\textit{Ceratium furca} abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for \\textit{Ceratium furca} abundance data, for comparison with Table \\ref{tab_pns_AICw}.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_CvM
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **abundance data for *Ceratium furca* in UK seas**. Tests were based on bootstrapping as described in Methods.\\label{tab_pns_p_CvM}",
+             caption.short="Goodness of fit of best-fitting copulas, \\textit{Ceratium furca} abundance data",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_CvM}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_p_KS,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_KS
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
+             caption.short="Goodness of fit of best-fitting copulas, \\textit{Ceratium furca} abundance data",
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
-locations for **abundance data for *Ceratium furca* in UK seas**. Tests
-were based on bootstrapping as described in Methods.\\label{tab_pns_p_KS}",
+locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model-averaged lower tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTdep_AICw}",
+             caption.short="Lower-tail dependence, \\textit{Ceratium furca} abundance data",
+             caption = "Model-averaged lower-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_UTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$UTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model-averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_UTdep_AICw}",
+             caption.short="Upper-tail dependence, \\textit{Ceratium furca} abundance data",
+             caption = "Model-averaged upper-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 h[is.nan(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model averaged lower tail dependence minus model
-averaged upper tail dependence statistic for each location pair for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_LTmUT}",
+             caption.short="Lower- minus upper-tail dependence, \\textit{Ceratium furca} abundance data",
+             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_LTmUT}",
              booktabs=TRUE)
 ```
 
@@ -1773,9 +1793,6 @@ knitr::kable(s,
 \end{center}
 \end{figure}
 
-
-<!--***DAN: stopped here 2018 04 07-->
-
 <!--Load and format the data-->
 ```{r read_format_methane_data, echo=F}
 
@@ -1807,8 +1824,8 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 ```{r tab_methane_bestcop, echo=F, results="markup"}
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',
-             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **methane-flux data**. See \\nameref{MT-Methods} for copula abbreviations. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             caption.short = "Best-fitting copulas, methane flux data",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane flux data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1816,10 +1833,11 @@ knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
 ```{r tab_methane_AICw,echo=F,results="markup"}
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw}",
+             caption.short="AIC weights, best-fitting copulas, methane flux data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane flux data.\\label{tab_methane_AICw}",
              booktabs=TRUE)
 ```
 
@@ -1827,63 +1845,68 @@ knitr::kable(h,
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **methane-flux data**.\\label{tab_methane_AICw_normal}",
+             caption.short="AIC weights, N copulas, methane flux data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for methane flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
 ```
 
 ```{r tab_methane_p_CvM,echo=F,results="markup"}
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **methane-flux data**. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_CvM}",
+             caption.short="Goodness of fit of best-fitting copulas, methane flux data",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane flux data.\\label{tab_methane_p_CvM}",
              booktabs=TRUE)
 ```
 
 ```{r tab_methane_p_KS,echo=F,results="markup"}
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
+             caption.short="Goodness of fit of best-fitting copulas, methane flux data",
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
-locations for **methane-flux data**. Tests were based on bootstrapping as described in Methods.\\label{tab_methane_p_KS}",
+locations for methane flux data.\\label{tab_methane_p_KS}",
              booktabs=TRUE)
 ```
 
 ```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model-averaged lower tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTdep_AICw}",
+             caption.short="Lower-tail dependence, methane flux data",
+             caption = "Model-averaged lower-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model-averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_UTdep_AICw}",
+             caption.short="Upper-tail dependence, methane flux data",
+             caption = "Model-averaged upper-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
 ```{r tab_methane_LTmUT,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
-knitr::kable(h,
+knitr::kable(round(h,3),
              format="latex",
              digits=3,
-             caption = "Model averaged lower tail dependence minus model
-averaged upper tail dependence statistic for each location pair for **methane-flux data**.\\label{tab_methane_LTmUT}",
+             caption.short="Lower- minus upper-tail dependence, methane flux data",
+             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_LTmUT}",
              booktabs=TRUE)
 ```
 

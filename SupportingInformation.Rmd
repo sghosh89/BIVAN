@@ -2041,7 +2041,11 @@ multivar_tab_summary_fn<-function(r,rs){
   m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
   normal_AICw[normal_AICw==Inf]<-NaN
   m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
-  temp<-which((r$gfc_p_CvM>0.01) & (r$gfc_p_KS>0.01),arr.ind=T)
+  pcvm<-r$gfc_p_CvM
+  pcvm[pcvm==Inf]<-NaN
+  pks<-r$gfc_p_KS
+  pks[pks==Inf]<-NaN
+  temp<-which((pcvm>0.01) & (pks>0.01),arr.ind=T)
   m$num.good.fit<-dim(temp)[1]
   t<-r$LTdep_AICw[is.finite(r$LTdep_AICw)]
   CI_LT<-unname(quantile(t,probs=c(0.025,0.975),na.rm = T))

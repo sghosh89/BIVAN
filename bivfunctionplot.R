@@ -211,7 +211,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',cex=1.5)
   mtext(side=3,line=0,text="Kendall-preserving surrogates")
-  mtext(side=2,line=1,text="Partial correlation")
+  mtext(side=2,line=1,text="cor")
   axis(side=1,labels=F)
   #segments(x0=x,y0=corstats_K[2,],x1=x,y1=corstats_K[3,],col="blue")
   #lines(x,corstats_K[1,],type='l',lty='dotted')

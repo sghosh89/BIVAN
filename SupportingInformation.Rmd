@@ -899,7 +899,8 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, can you please adjust this figure and the analogous 3 other figures for the other three bivariate datasets as follows: replace the y-axis label "Partial correlation" with "cor", for consistency with the other y-axis labels-->
+<!--***DAN: Shya, can you please adjust this figure and the analogous 3 other figures for the other three bivariate datasets as follows: replace the y-axis label "Partial correlation" with "cor", for consistency with the other y-axis labels.
+***Shya: Done.-->
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r make_table_stat_fn, echo=F}
@@ -3376,112 +3377,112 @@ dev.off()
 
 ```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
-source("mydispersal.R")
-set.seed(seed)
+#source("mydispersal.R")
+#set.seed(seed)
 
-rlist<-c(0,0.05,0.25,0.5,0.7,0.75,0.9,1.0,1.25,1.5,1.75,1.95)
+#rlist<-c(0,0.05,0.25,0.5,0.7,0.75,0.9,1.0,1.25,1.5,1.75,1.95)
 
 # plot for local dispersal in D matrix ; r=0 for LC model, r!=0 for Ricker model
-pdf("./Results/ext_risk_local_disp.pdf",heigh=6,width=10)
-op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
-for(r in rlist){
+#pdf("./Results/ext_risk_local_disp.pdf",heigh=6,width=10)
+#op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
+#for(r in rlist){
     #cat("r=",r,"\n")
-    s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
-    plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
-    lines(s$d_seq,s$risk_right,type="b",col="blue")
-    legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
-    mtext(paste0("r = ", r))
-}
-par(op)
-dev.off()
+#    s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
+#    plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
+#    lines(s$d_seq,s$risk_right,type="b",col="blue")
+#    legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
+#    mtext(paste0("r = ", r))
+#}
+#par(op)
+#dev.off()
 
 
 # plot for global dispersal in D matrix ; r=0 for LC model, r!=0 for Ricker model
-pdf("./Results/ext_risk_global_disp.pdf",heigh=6,width=10)
-op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
-for(r in rlist){
+#pdf("./Results/ext_risk_global_disp.pdf",heigh=6,width=10)
+#op<-par(mfrow=c(3,4),mar=c(5,4,1,1) + 0.2)
+#for(r in rlist){
   #cat("r=",r,"\n")
-  s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
-  plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
-  lines(s$d_seq,s$risk_right,type="b",col="blue")
-  legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
-  mtext(paste0("r = ", r))
-}
-par(op)
-dev.off()
+#  s<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
+#  plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
+#  lines(s$d_seq,s$risk_right,type="b",col="blue")
+#  legend(x=-0.06,y=1.1, c("noise : left","noise : right"), fill=c('red', 'blue'), horiz=T, bty='n')
+#  mtext(paste0("r = ", r))
+#}
+#par(op)
+#dev.off()
 
 # plot to show the effect of increasing numlocs for r=0 (LC model), r=0.25 (Ricker model)
-pdf("./Results/ext_risk_numlocs_effect_local_disp.pdf",heigh=6,width=6)
-op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
-for(r in c(0,0.25)){
+#pdf("./Results/ext_risk_numlocs_effect_local_disp.pdf",heigh=6,width=6)
+#op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+#for(r in c(0,0.25)){
   #cat("r=",r,"\n")
-  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
-  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=F,ploton=F)
+#  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=F,ploton=F)
+#  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=F,ploton=F)
   
-  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
-  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
+#  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
+#  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
  
   
-  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
-       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
-  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+#  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
+#       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
+#  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
   #mtext(paste0("B",1))
-}
-par(op)
-dev.off()
+#}
+#par(op)
+#dev.off()
 
 # plot to show the effect of increasing numlocs for r=0 (LC model), r=0.25 (Ricker model)
-pdf("./Results/ext_risk_numlocs_effect_global_disp.pdf",heigh=6,width=6)
-op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
-for(r in c(0,0.25)){
+#pdf("./Results/ext_risk_numlocs_effect_global_disp.pdf",heigh=6,width=6)
+#op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+#for(r in c(0,0.25)){
   #cat("r=",r,"\n")
-  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
-  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=T,ploton=F)
+#  s5<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=r,K=50,disp_everywhere=T,ploton=F)
+#  s25<-varying_d(numsims=10000,numsteps =25,numlocs=25,r=r,K=50,disp_everywhere=T,ploton=F)
   
-  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
-  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
+#  plot(s5$d_seq,s5$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#  lines(s25$d_seq,s25$risk_left,type="b",col="orange")
+#  legend("topleft", title=paste0("r=",r," , left tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('red', 'orange'),  horiz=F, bty='n')
  
   
-  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
-       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
-  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+#  plot(s5$d_seq,s5$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",
+#       panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#  lines(s25$d_seq,s25$risk_right,type="b",col="skyblue")
+#  legend("topleft",title=paste0("r=",r," , right tail dep. in noise"), c("numlocs=5","numlocs=25"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
   #mtext(paste0("B",1))
-}
-par(op)
-dev.off()
+#}
+#par(op)
+#dev.off()
 
 # plot to see the effect of K for r=0.25 (Ricker model)
-pdf("./Results/ext_risk_K_effect.pdf",heigh=6,width=6)
-op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
+#pdf("./Results/ext_risk_K_effect.pdf",heigh=6,width=6)
+#op<-par(mfrow=c(2,2),mar=c(4,4,1,1) + 0.1)
 
-s1<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=F,ploton=F)
-s2<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=F,ploton=F)
+#s1<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=F,ploton=F)
+#s2<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=F,ploton=F)
   
-s3<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=T,ploton=F)
-s4<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=T,ploton=F)
+#s3<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=50,disp_everywhere=T,ploton=F)
+#s4<-varying_d(numsims=10000,numsteps =25,numlocs=5,r=0.25,K=200,disp_everywhere=T,ploton=F)
   
-plot(s1$d_seq,s1$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-lines(s2$d_seq,s2$risk_left,type="b",col="orange")
-legend("topleft",title=("Noise : left tail dep., local disp."), c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
+#plot(s1$d_seq,s1$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#lines(s2$d_seq,s2$risk_left,type="b",col="orange")
+#legend("topleft",title=("Noise : left tail dep., local disp."), c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
   
-plot(s1$d_seq,s1$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-lines(s2$d_seq,s2$risk_right,type="b",col="skyblue")
-legend("topleft",title=("Noise : right tail dep., local disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+#plot(s1$d_seq,s1$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#lines(s2$d_seq,s2$risk_right,type="b",col="skyblue")
+#legend("topleft",title=("Noise : right tail dep., local disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
  
-plot(s3$d_seq,s3$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-lines(s4$d_seq,s4$risk_left,type="b",col="orange")
-legend("topleft",title= ("Noise : left tail dep., global disp."),c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
+#plot(s3$d_seq,s3$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#lines(s4$d_seq,s4$risk_left,type="b",col="orange")
+#legend("topleft",title= ("Noise : left tail dep., global disp."),c("K=50","K=200"), fill=c('red', 'orange'),  horiz=F, bty='n')
   
-plot(s3$d_seq,s3$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
-lines(s4$d_seq,s4$risk_right,type="b",col="skyblue")
-legend("topleft",title=("Noise : right tail dep., global disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
+#plot(s3$d_seq,s3$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5)
+#lines(s4$d_seq,s4$risk_right,type="b",col="skyblue")
+#legend("topleft",title=("Noise : right tail dep., global disp."),c("K=50","K=200"), fill=c('blue', 'skyblue'),  horiz=F, bty='n')
  
-par(op)
-dev.off()
+#par(op)
+#dev.off()
 ```
 
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-->

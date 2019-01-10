@@ -657,7 +657,7 @@ because even the lowest-AIC copula
 was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$GofRes_KS` for the 
 Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
 available from `BiCopGofTest` in the `VineCopula` package). However, nonparametric statistics verified
-both that tail dependence was distinct from that of a normal copula for the soil data, and that it 
+both that tail dependence was distinct from that of an N copula for the soil data, and that it 
 was asymmetric (Fig. \ref{SM-fig_soilCN_nonparam}, Table \ref{SM-tab_soilCN_asym}). 
 The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data
 were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates
@@ -719,33 +719,49 @@ positive and were frequently substantially large, thereby differing
 from what an N copula would give (i.e., 0), and answering the second part of 
 Q1 for these data. Apparently these aphid data have greater tail dependence 
 (both lower and upper) than would be expected from an N-copula null hypothesis. 
-The model-averaged lower-tail dependence statistic minus the model-averaged 
-upper-tail dependence statistic (Table \ref{SM-tab_count_LTmUT}) was positive 
+Model-averaged lower-tail dependence statistics minus model-averaged 
+upper-tail dependence statistics (Table \ref{SM-tab_count_LTmUT}) were positive 
 for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
 out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`), 
 indicating that lower-tail dependence across space was much stronger than upper-tail 
 dependence. Thus the spatial synchrony of rarity in green spruce aphid is stronger 
 than the spatial synchrony of outbreak events. This also answers the third part of Q1.
 
-<!--Non-parametric analysis of tail dependence, green spruce abundance data-->
-
-
-
-As mentioned in \nameref{NPA} and Appendix \ref{SM-spatial_resamp}, mean values of our statistics ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$, 
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$), as well as mean Kendall and Spearman correlations, were 
-computed across all pairs of sampling locations, and confidence intervals of these means were computed via a spatial
-resampling scheme (Table \ref{SM-tab_count_resamp}). Confidence intervals of
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ always excluded zero and mean values were positive,
-indicating tail dependence. Confidence intervals of $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, $\Dsq_u-\Dsq_l$ also always 
-exluded $0$ and were positive, indicating asymmetry of tail dependence (stronger lower tail dependence than upper), a feature that data with Normal copula structure do not have, providing further evidence answering the third part of question \hyperref[Intro]{\textbf{(Q1)}}. Visual illustration of those results is discussed in Appendix \ref{SM-visual_npa}.
+<!--Non-parametric analysis of tail dependence, green spruce aphid abundance data-->
+Nonparametric statistics verified both that tail dependence was distinct from that 
+of an N copula for the green spruce aphid abundance data, and that it was asymmetric.
+Mean values across all pairs of locations of the statistics 
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
+confidence intervals excluded $0$ (the value for an N copula), confirming tail 
+dependence distinct from that of an N copula (Table \ref{SM-tab_count_resamp}). 
+Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
+also were always positive and had confidence intervals that excluded $0$ 
+(Table \ref{SM-tab_count_resamp}), confirming asymmetry of tail dependence and 
+stronger lower- than upper-tail dependence. Each of the statistics 
+was plotted against geographic (great-circle) distances between sampling locations, 
+across all pairs of sampling locations (Fig. \ref{SM-fig_aphid_count}). 
 
 <!--multivariate summary-->
-We did model selection and non-parametric analysis with all 20 aphid and 22 plankton species and found our two approaches were consistent to each other. Here, to present our results we chose one species from each category. We summarized our results columnwise in Table \ref{tab_multivar_summary} for all multivariable datasets (i.e., abundance data for green spruce aphid and firstflight date data for leaf-curling plum aphid from `r nrow(RES_aphid_count$gfc_numBS)` sampling locations, abundance data for plankton from UK seas from $14$ sampling locations, 
-methane flux data from $13$ sampling locations). 
+Table \ref{tab_multivar_summary} summarizes some of our results using our
+multivariate data. In addition to summaries of the green spruce aphid abundance data results 
+elaborated in detail above, the table also summarizes results of analyzing 
+leaf-curling plum aphid first flight data, abundance data for the dinoflagellate
+\textit{Ceratium furca}, and methan flux data (see Data).  
+
+
+We did model selection and non-parametric analysis with all 20 aphid and 22 plankton species and found our two approaches were consistent to each other. Here, to present our results we chose one species from each category. 
+
 
 We found major occurence of non-independent copulae (row 2, Table \ref{tab_multivar_summary}) out of all pairwise locations (row 1, Table \ref{tab_multivar_summary}) considered. Non-Normal copulae, most of the time, emerged as best-fit based on minimum AIC out of 16 copula family considered (row 3, Table \ref{tab_multivar_summary}) answering the first part of question \hyperref[Intro]{\textbf{(Q1)}}. All four data sets showed Normal copulae were always poor fit in comparison to best-fit non-Normal copulae (compare their average AIC-weights from row 4 and row 5 of Table \ref{tab_multivar_summary}). We considered the "good-fit" location pair based on the p-values (>0.01) obtained from both Cramer-von Mises and Kolmogorov-Smirnov statistics (row 6, Table \ref{tab_multivar_summary}). Some spatial data (green spruce aphid's count, Ceratium furca's count and methane flux) showed stronger lower tail dependence (compare row 7 and row 8 from Table \ref{tab_multivar_summary}, also see row 9) whereas Leaf-plum curling's firstflight data showed stronger upper tail dependence which answered the second and third part of question \hyperref[Intro]{\textbf{(Q1)}}. The spatial synchrony (from model selection) results were also verified by the non-parametric statistic which showed exclusively positive (or negative) confidence interval of the distribution $(\Ps_l - \Ps_u)$ estimated from all location pair for lower (or upper)- tail dependent spatial data (except methane-flux data which had marginal lower quantile). Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
 
 
+
+We also carried out the same analyses for abundance and first-flight data for the 18 
+aphids species for which we had data other than the green spruce and leaf-curling plum aphids,
+as well as for the 21 plankton taxa for which we had abundance data other 
+\textit{Ceratium furca} (results not shown). The conclusions were generally supported that 
+non-N copula structure and tail dependence, as well as asymmetry of tail dependence, are 
+very common.
 
 
 <!--
@@ -829,32 +845,31 @@ library(kableExtra)
 library(dplyr)
 library(tibble)
 dt <- tibble(
-            Description = c("1. Total number of location pairs (excluding self-comparison)",
-           "2. Number of location pairs having non-independent copula structures",
-           "3. Number of non-Normal copula as best fit",
-           "4. Average AIC-weights of best fit copula from all location pair",
-           "5. Average AIC-weights of Normal copula from all location pair",
-           "6. Number of good-fit location pair*",
-           "7. 95% CI of model-avg. lower tail-dep. from all location pair",
-           "8. 95% CI of model-avg. upper tail-dep. from all location pair",
-           "9. Percentage of location pairs showing stronger lower tail dependence",
-           "10. 95% CI of (Pl - Pu) from all location pair")
+            Description = c("1. Location pairs (excluding self comparisons)",
+           "2. Number of non-independent pairs",
+           "3. Number of pairs with non-N copula as best fit",
+           "4. Average AIC-weights of best-fitting copulas across location pairs",
+           "5. Average AIC-weights of N copula across pairs",
+           "6. Number of well-fitting location pairs",
+           "7. 2.5th and 97.5 quantiles of model-avg. lower-tail dependence",
+           "8. 2.5th and 97.5th quantiles of model-avg. upper-tail dependence",
+           "9. Percent pairs showing stronger lower tail dependence",
+           "10. 95% CI of average P_l - P_u across all location pair")
            )
 
 tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 
 knitr::kable(tab_multivar_summary, 
              format="latex", 
-             caption = "Summary of results for multivariate data-sets\\label{tab_multivar_summary}",
+             short.caption = "Summary of results for multivariate data sets"
+             caption = "Summary of results for multivariate data-sets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green-spruce aphid's count",
                         "Leaf-plum curling aphid's firstflight",
                         "Ceratium furca's count","Methane-flux")
              )%>%column_spec(2:5,width="2.5cm")%>%
-             column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")%>%
-   add_footnote("Good fit was considered for best fit copula with p-values > 0.01 (both Cramer-von Mises and Kolmogorov-Smirnov method)", notation="symbol", threeparttable = T, escape = F)
+             column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
-
 
 
 

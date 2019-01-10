@@ -856,13 +856,8 @@ This corresponds to
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
 
-<!--***DAN: all good up to here, except as marked (the data section)-->
+<!--***DAN: text all good up to here, except as marked (the data section)-->
 
-
-
-# How to visualize non-parametric analysis results for multivariate spatial data? \label{visual_npa}
-
-The principle remains same but for example we chose one of spatial data set (green spruce aphid's count) to illustrate results from Table \ref{tab_count_resamp}. Plotting Spearman or Kendall correlation between aphid abundance time series for pairs of locations as a function of great circle distance between the locations (Fig. \ref{fig_aphid_count} A,B) showed the typical decline of correlation with distance between sampling locations that has been seen for numerous other datasets in earlier work. Plotting $\cor_l$, $\cor_u$, $\Ps_l$, and $\Ps_u$  against distance between pairs of locations shows these quantities also decline with distance (Fig. \ref{fig_aphid_count} C-F). Plotting $\Dsq_u$ and  $\Dsq_l$ against distance between pairs of locations shows these quantities increase with distance (as expected, given the opposite interpretation these two statistics have compared to $\cor_u$, $\Ps_u$ and $\cor_l$, $\Ps_l$, respectively). Plotting $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$ versus distance (Fig. \ref{fig_aphid_count} I-K) did not show a decline with distance, but did illustrate visually the statistical result of Table \ref{tab_count_resamp} that averages of these quantities across all pairs of sampling locations were significantly greater than zero, demonstrating asymmetry of tail dependence, as also seen from model selection approach. Code for these analyses is in [`NonParamStat.R`](https://github.com/sghosh89/BIVAN/blob/master/NonParamStat.R) in the [`BIVAN`](https://github.com/sghosh89/BIVAN) repository. 
 
 
 <!--This chunk is for model selection results of soilCN dataset-->
@@ -1327,11 +1322,12 @@ saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep=''))
 <!--Show the statistical results in a table-->
 ```{r tab_count_resamp,echo=F,results="markup"}
 s<-stat_aphid_count$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
-rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
-knitr::kable(s,
+colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
+rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
+knitr::kable(round(s,3),
              format = "latex",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundances of the green spruce aphid**.\\label{tab_count_resamp}",
+             caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
              booktabs=TRUE)
 ```
 
@@ -1358,10 +1354,7 @@ knitr::kable(s,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics results for green spruce aphid abundance data]{Non-parametric tail statistics results for green spruce aphid abundance data plotted against geographical distance ($D$) between two sampling locations. (A) Spearman correlation vs. $D$; (B) Kendall correlation vs. $D$; (C) $\cor_l$ vs. $D$; (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; 
-(H) $\Dsq_l$ vs. $D$; 
-(I) $\cor_l-\cor_u$ vs. $D$, (J) $\Ps_l-\Ps_u$ vs. $D$, (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all 
-pairs of locations. \label{fig_aphid_count}}
+\caption[Nonparametric tail statistics versus distance between locations for green spruce aphid abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
 
@@ -1531,11 +1524,12 @@ saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep=''))
 <!--display the main statistical results in a table-->
 ```{r tab_ff_resamp,echo=F,results="markup"}
 s<-stat_aphid_ff$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
-rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
-knitr::kable(s,
+colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
+rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
+knitr::kable(round(s,3),
              format = "latex",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **first flight data for the leaf-curling plum aphid**.\\label{tab_ff_resamp}",
+             caption.short="Results for nonparametric statistics, leaf-curling plum aphid first flight data",
+             caption = "Average values of statistics across all location pairs and confidence intervals based on spatial resampling for leaf-curling plum aphid first flight data.\\label{tab_ff_resamp}",
              booktabs=TRUE)
 ```
 
@@ -1562,7 +1556,7 @@ knitr::kable(s,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data]{Non-parametric tail statistics results for leaf-curling plum aphid's first flight date data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_aphid_ff}}
+\caption[Nonparametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
 
@@ -1759,11 +1753,12 @@ saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16
 <!--display the main statistical results in a table-->
 ```{r tab_pns_resamp,echo=F,results="markup"}
 s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
-rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
-knitr::kable(s,
+colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
+rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
+knitr::kable(round(s,3),
              format = "latex",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **abundance data for *Ceratium furca* in UK seas**.\\label{tab_pns_resamp}",
+             caption.short="Results for nonparametric statistics, \\textit{Ceratium furca} abundance data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for \\textit{Ceratium furca} abundance data.\\label{tab_pns_resamp}",
              booktabs=TRUE)
 ```
 
@@ -1790,7 +1785,7 @@ knitr::kable(s,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics results for \textit{Ceratium furca} abundance data]{Non-parametric tail statistics results for \textit{Ceratium furca} abundance data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_pns}}
+\caption[Nonparametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
 \end{center}
 \end{figure}
 
@@ -1944,15 +1939,15 @@ saveRDS(stat_methane,paste(resloc,file="stat_methane.RDS",sep=''))
 stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
 ```
 
-\newpage
 <!--display the main statistical results in a table-->
 ```{r tab_methane_resamp,echo=F,results="markup"}
 s<-stat_methane$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95\\% CI", "Mean", "Upper 95\\% CI")
-rownames(s)<-c("Spearman","Kendall","$\\cor_l$","$\\cor_u$","$\\Ps_l$","$\\Ps_u$","$\\Dsq_l$","$\\Dsq_u$","$\\cor_l - \\cor_u$","$\\Ps_l - \\Ps_u$","$\\Dsq_u - \\Dsq_l$")
-knitr::kable(s,
+colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
+rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
+knitr::kable(round(s,3),
              format = "latex",
-             caption = "Spatially averaged values of statistics and confidence intervals based on resampling for **methane-flux data**.\\label{tab_methane_resamp}",
+             caption.short="Results for nonparametric statistics, methane flux data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for methane flux data.\\label{tab_methane_resamp}",
              booktabs=TRUE)
 ```
 
@@ -1979,7 +1974,7 @@ knitr::kable(s,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics results for methane-flux data]{Non-parametric tail statistics results for methane-flux data plotted against geographical distance $(D)$ between two sampling locations. (A) Spearman correlation vs. $D$, (B) Kendall correlation vs. $D$, (C) $\cor_l$ vs. $D$, (D) $\cor_u$ vs. $D$; (E) $\Ps_l$ vs. $D$; (F) $\Ps_u$ vs. $D$; (G) $\Dsq_u$ vs. $D$; (H) $\Dsq_l$ vs. $D$; (I) $\cor_l-\cor_u$ vs. $D$; (J) $\Ps_l-\Ps_u$ vs. $D$; (K) $\Dsq_u-\Dsq_l$ vs. $D$ plotted for all pairs of locations. \label{fig_methane}}
+\caption[Nonparametric tail statistics versus distance between locations for methane-flux data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
 \end{center}
 \end{figure}
 

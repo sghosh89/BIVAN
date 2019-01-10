@@ -25,7 +25,7 @@ for(i in c(1:length(desLTmUT_vector))){
   text(0.1,0.9,LETTERS[i],cex=6)
   #legend("topleft",LETTERS[i],bty="n",cex=6,x.intersp=-0.5)
   #mtext(paste0("( LT - UT ) = ",round((obj$taildep$lower - obj$taildep$upper),2),sep=""),side=3,cex=2)
-  legend("bottomright",c(paste0("KC= ", round(obj$tau,2)),
+  legend("bottomright",c(paste0("K= ", round(obj$tau,2)),
                          paste0("LT=",round(obj$taildep$lower,2)),
                          paste0("UT=",round(obj$taildep$upper,2))),bty="n",horiz = F,cex=2.5)
   #legend("bottomright",paste0("LT=",round(obj$taildep$lower,2)),bty="n",cex=2)
@@ -40,7 +40,7 @@ for(i in c(1:length(desLTmUT_vector))){
   plot(c[,1],c[,2],col="grey",xlab="u",ylab="v",cex.lab=3.5,cex.axis=3.5,pch=20,cex=1.4)
   text(0.1,0.9,LETTERS[3+i],cex=6)
   #mtext(paste0("( LT - UT ) = ",round((obj$taildep$lower - obj$taildep$upper),2),sep=""),side=3,cex=2)
-  legend("bottomright",c(paste0("KC= ", round(obj$tau,2)),
+  legend("bottomright",c(paste0("K= ", round(obj$tau,2)),
                          paste0("LT=",round(obj$taildep$lower,2)),
                          paste0("UT=",round(obj$taildep$upper,2))),bty="n",horiz = F,cex=2.5)
   #legend("bottomright",paste0("LT=",round(obj$taildep$lower,2)),bty="n",cex=2)

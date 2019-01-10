@@ -856,13 +856,13 @@ dt <- tibble(
            "7. 2.5th and 97.5 quantiles of model-avg. lower-tail dependence",
            "8. 2.5th and 97.5th quantiles of model-avg. upper-tail dependence",
            "9. Percent pairs showing stronger lower tail dependence",
-           "10. 95% CI of average P_l - P_u across all location pair")
+           "10. 2.5th and 97.5th quantiles of $<$P$_{l}$ - P${_u}$$>$ across all location pair")
            )
 
 tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 
 knitr::kable(tab_multivar_summary, 
-             format="latex", 
+             format="latex", escape = F,
              caption.short = "Summary of results for multivariate data sets",
              caption = "Summary of results for multivariate data-sets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",

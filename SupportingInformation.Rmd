@@ -1322,10 +1322,12 @@ saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep=''))
 <!--Show the statistical results in a table-->
 ```{r tab_count_resamp,echo=F,results="markup"}
 s<-stat_aphid_count$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
-rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
-knitr::kable(round(s,3),
-             format = "latex",linesep = "",
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
+knitr::kable(s,
+             format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
              booktabs=TRUE)
@@ -1524,10 +1526,12 @@ saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep=''))
 <!--display the main statistical results in a table-->
 ```{r tab_ff_resamp,echo=F,results="markup"}
 s<-stat_aphid_ff$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
-rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
-knitr::kable(round(s,3),
-             format = "latex",linesep = "",
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
+knitr::kable(s,
+             format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, leaf-curling plum aphid first flight data",
              caption = "Average values of statistics across all location pairs and confidence intervals based on spatial resampling for leaf-curling plum aphid first flight data.\\label{tab_ff_resamp}",
              booktabs=TRUE)
@@ -1753,10 +1757,12 @@ saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16
 <!--display the main statistical results in a table-->
 ```{r tab_pns_resamp,echo=F,results="markup"}
 s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
-rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
-knitr::kable(round(s,3),
-             format = "latex",linesep = "",
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
+knitr::kable(s,
+             format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, \\textit{Ceratium furca} abundance data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for \\textit{Ceratium furca} abundance data.\\label{tab_pns_resamp}",
              booktabs=TRUE)
@@ -1942,10 +1948,15 @@ stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
 <!--display the main statistical results in a table-->
 ```{r tab_methane_resamp,echo=F,results="markup"}
 s<-stat_methane$numericdf[,c(3,2,4)]
-colnames(s)<-c("Lower 95% CI", "Mean", "Upper 95% CI")
-rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
-knitr::kable(round(s,3),
-             format = "latex",linesep = "",
+
+#rownames(s)<-c("Spearman","Kendall","cor_l","cor_u","P_l","P_u","D^2_l","D^2_u","cor_l - cor_u","P_l - P_u","D^2_u - D^2_l")
+
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
+knitr::kable(s,
+             format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, methane flux data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for methane flux data.\\label{tab_methane_resamp}",
              booktabs=TRUE)

@@ -916,9 +916,9 @@ make_table_stat_fn<-function(data){
  #atdres<-data.frame(Statistic=c("$\\cor_{0,0.1}-\\cor_{0.9,1}$",
  #                               "$\\Ps_{0,0.1}-\\Ps_{0.9,1}$",
  #                               "$\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$"),
- atdres<-data.frame(Statistic=c("$\\cor_\\text{first slice}-\\cor_\\text{last slice}$",
-                               "$\\Ps_\\text{first slice}-\\Ps_\\text{last slice}$",
-                                "$\\Dsq_\\text{last slice}-\\Dsq_\\text{first slice}$"),
+ atdres<-data.frame(Statistic=c("cor$_{FS}$-cor$_{LS}$",
+                               "P$_{FS}$-P$_{LS}$",
+                                "D$_{LS}^2$-D$_{FS}^2$"),
                    Kendall=rep("",3),
                    Spearman=rep("",3),stringsAsFactors = F)
  
@@ -937,12 +937,11 @@ make_table_stat_fn<-function(data){
 ```{r tab_soilCN_asym,echo=F,results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
-tab_soilCN_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
-knitr::kable(tab_soilCN_asym, booktabs = T, 
+#tab_soilCN_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
+knitr::kable(tab_soilCN_asym, booktabs = T, escape=F,
              format = "latex",linesep = "",
       caption.short = "Nonparametric asymmetry tests against an N-copula null, soil C and N",
-      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (corFS-corLS $=\\cor_{0,0.1}-\\cor_{0.9,1}$, PFS-PLS $=\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D2LS-D2FS $=\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
-#kable_styling(, position = "float_left")
+      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 ```
 
 ```{r bivmodselect_birds_BMR, echo=F, cache=T, cache.extra=list(seed,cop_b,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -980,9 +979,9 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 
 ```{r tab_bmr_birds_asym, echo=F, results="markup"}
 tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
-tab_bmr_birds_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
+#tab_bmr_birds_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_bmr_birds_asym,
-             format="latex",linesep = "",
+             format="latex",linesep = "",escape=F,
              caption.short = "Nonparametric asymmetry tests against an N-copula null, bird body mass and BMR",
              caption = "Bird body mass and BMR dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure.\\label{tab_bmr_birds_asym}",
              booktabs=T)
@@ -1023,9 +1022,9 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 
 ```{r tab_bmr_mammals_asym, echo=F, results="markup"}
 tab_bmr_mammals_asym<-make_table_stat_fn(data=stat_mammals_ga)
-tab_bmr_mammals_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
+#tab_bmr_mammals_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_bmr_mammals_asym,
-             format="latex",linesep = "",
+             format="latex",linesep = "",escape=F,
              caption.short = "Nonparametric asymmetry tests against an N-copula null, mammal body mass and BMR",
              caption = "Mammal body mass and BMR dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure. \\label{tab_bmr_mammals_asym}",
              booktabs=T)
@@ -1086,9 +1085,9 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 
 ```{r tab_cc_asym_2000, echo=F, results="markup"}
 tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
-tab_cc_asym_2000[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
+#tab_cc_asym_2000[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
 knitr::kable(tab_cc_asym_2000,
-             format="latex",linesep = "",
+             format="latex",linesep = "",escape=F,
              caption.short = "Nonparametric asymmetry tests against an N-copula null, Cedar Creek data",
              caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure.\\label{tab_cc_asym_2000}",
              booktabs=T)
@@ -1235,8 +1234,8 @@ survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas
 ```
 
 ```{r tab_count_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$info_ord_AICw[,,1],3), 
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
+             format='latex',linesep = "",digits=3,
              caption.short = "AIC weights, best-fitting copulas, green spruce aphid abundance data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for green spruce aphid abundance data.\\label{tab_count_AICw}",
              booktabs=TRUE
@@ -1245,8 +1244,8 @@ knitr::kable(round(RES_aphid_count$info_ord_AICw[,,1],3),
 
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_count),3),
-             format='latex',linesep = "",
+knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
+             format='latex',linesep = "",digits=3,
              caption.short = "AIC weights, N copulas, green spruce aphid abundance data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for green spruce aphid abundance data, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
              booktabs=TRUE
@@ -1254,8 +1253,8 @@ knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_count),3),
 ```
 
 ```{r tab_count_p_CvM, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$gfc_p_CvM,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_count$gfc_p_CvM,
+             format='latex',linesep = "",digits=3,
              caption.short="Goodness of fit of best-fitting copulas, green spruce aphid abundance data",
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for green spruce abundance data.\\label{tab_count_p_CvM}",
              booktabs=TRUE
@@ -1263,8 +1262,8 @@ knitr::kable(round(RES_aphid_count$gfc_p_CvM,3),
 ```
 
 ```{r tab_count_p_KS, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$gfc_p_KS,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_count$gfc_p_KS,
+             format='latex',linesep = "",digits=3,
              caption.short="Goodness of fit of best-fitting copulas, green spruce aphid abundance data",
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for green spruce abundance data.\\label{tab_count_p_KS}",
              booktabs=TRUE
@@ -1273,8 +1272,8 @@ knitr::kable(round(RES_aphid_count$gfc_p_KS,3),
 
 \newpage
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$LTdep_AICw,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_count$LTdep_AICw,
+             format='latex',linesep = "",digits=3,
              caption.short="Lower-tail dependence, green spruce aphid abundance data",
              caption = "Model-averaged lower-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_LTdep_AICw}",
              booktabs=TRUE
@@ -1283,8 +1282,8 @@ knitr::kable(round(RES_aphid_count$LTdep_AICw,3),
 
 \newpage
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$UTdep_AICw,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_count$UTdep_AICw,
+             format='latex',linesep = "",digits=3,
              caption.short="Upper-tail dependence, green spruce aphid abundance data",
              caption = "Model-averaged upper-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_UTdep_AICw}",
              booktabs=TRUE
@@ -1293,8 +1292,8 @@ knitr::kable(round(RES_aphid_count$UTdep_AICw,3),
 
 \newpage
 ```{r tab_count_LTmUT, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,3),
-             digits = 5,linesep = "",
+knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
+             digits = 3,linesep = "",
              format='latex',
              caption.short="Lower- minus upper-tail dependence, green spruce aphid abundance data",
              caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for green spruce aphid abundance data.\\label{tab_count_LTmUT}",
@@ -1325,8 +1324,8 @@ s<-stat_aphid_count$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
                     "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
 s<-cbind(sc,s)
-colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
-knitr::kable(s,
+knitr::kable(s, digits = 3,
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
              format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
@@ -1441,8 +1440,8 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
 ```
 
 ```{r tab_ff_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$info_ord_AICw[,,1],3), 
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
+             format='latex',linesep = "",digits=3,
              caption.short="AIC weights, best-fitting copulas, leaf-curling plum aphid first flight data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_AICw}",
              booktabs=TRUE
@@ -1452,8 +1451,8 @@ knitr::kable(round(RES_aphid_ff$info_ord_AICw[,,1],3),
 \newpage
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_ff),3),
-             format='latex',linesep = "",
+knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
+             format='latex',linesep = "",digits=3,
              caption.short="AIC weights, N copulas, leaf-curling plum aphid first flight data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for leaf-curlung plum aphid first flight data, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
@@ -1461,8 +1460,8 @@ knitr::kable(round(normal_cop_AICw_matrix(r=RES_aphid_ff),3),
 ```
 
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$gfc_p_CvM,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_ff$gfc_p_CvM,
+             format='latex',linesep = "",digits=3,
              caption.short="Goodness of fit of best-fitting copulas, leaf-curling plum aphid first flight data",
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for leaf-curling plum aphid first flight data.\\label{tab_ff_p_CvM}",
              booktabs=TRUE
@@ -1470,8 +1469,8 @@ knitr::kable(round(RES_aphid_ff$gfc_p_CvM,3),
 ```
 
 ```{r tab_ff_p_KS, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$gfc_p_KS,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_ff$gfc_p_KS,
+             format='latex',linesep = "",digits=3,
              caption.short="Goodness of fit of best-fitting copulas, leaf-curling plum aphid first flight data",
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for leaf-curling plum aphid first flight data.\\label{tab_ff_p_KS}",
              booktabs=TRUE
@@ -1479,8 +1478,8 @@ knitr::kable(round(RES_aphid_ff$gfc_p_KS,3),
 ```
 
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$LTdep_AICw,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_ff$LTdep_AICw,
+             format='latex',linesep = "",digits=3,
              caption.short="Lower-tail dependence, leaf-curling plum aphid first flight data",
              caption = "Model-averaged lower-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_LTdep_AICw}",
              booktabs=TRUE
@@ -1488,8 +1487,8 @@ knitr::kable(round(RES_aphid_ff$LTdep_AICw,3),
 ```
 
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$UTdep_AICw,3),
-             format='latex',linesep = "",
+knitr::kable(RES_aphid_ff$UTdep_AICw,
+             format='latex',linesep = "",digits=3,
              caption.short="Upper-tail dependence, leaf-curling plum aphid first flight data",
              caption = "Model-averaged upper-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_UTdep_AICw}",
              booktabs=TRUE
@@ -1497,8 +1496,8 @@ knitr::kable(round(RES_aphid_ff$UTdep_AICw,3),
 ```
 
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
-knitr::kable(round(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,3),
-             digits = 5,
+knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
+             digits = 3,
              format='latex',linesep = "",
              caption.short="Lower- minus upper-tail dependence, leaf-curling plum aphid first flight data",
              caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for leaf-curling plum aphid first flight data.\\label{tab_ff_LTmUT}",
@@ -1529,8 +1528,8 @@ s<-stat_aphid_ff$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
                     "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
 s<-cbind(sc,s)
-colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
-knitr::kable(s,
+knitr::kable(s, digits = 3,
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
              format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, leaf-curling plum aphid first flight data",
              caption = "Average values of statistics across all location pairs and confidence intervals based on spatial resampling for leaf-curling plum aphid first flight data.\\label{tab_ff_resamp}",
@@ -1661,7 +1660,7 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
 ```{r tab_pns_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",
              digits=3,linesep = "",
              caption.short="AIC weights, best-fitting copulas, \\textit{Ceratium furca} abundance data",
@@ -1673,7 +1672,7 @@ knitr::kable(round(h,3),
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="AIC weights, N copulas, \\textit{Ceratium furca} abundance data",
@@ -1684,7 +1683,7 @@ knitr::kable(round(h,3),
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_CvM
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Goodness of fit of best-fitting copulas, \\textit{Ceratium furca} abundance data",
@@ -1695,7 +1694,7 @@ knitr::kable(round(h,3),
 ```{r tab_pns_p_KS,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_KS
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Goodness of fit of best-fitting copulas, \\textit{Ceratium furca} abundance data",
@@ -1708,7 +1707,7 @@ locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_KS}",
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Lower-tail dependence, \\textit{Ceratium furca} abundance data",
@@ -1719,7 +1718,7 @@ knitr::kable(round(h,3),
 ```{r tab_pns_UTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$UTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Upper-tail dependence, \\textit{Ceratium furca} abundance data",
@@ -1730,7 +1729,7 @@ knitr::kable(round(h,3),
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 h[is.nan(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Lower- minus upper-tail dependence, \\textit{Ceratium furca} abundance data",
@@ -1760,8 +1759,8 @@ s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
                     "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
 s<-cbind(sc,s)
-colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
-knitr::kable(s,
+knitr::kable(s, digits = 3,
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
              format = "latex",linesep = "", escape = F,align="c",
              caption.short="Results for nonparametric statistics, \\textit{Ceratium furca} abundance data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for \\textit{Ceratium furca} abundance data.\\label{tab_pns_resamp}",
@@ -1835,7 +1834,7 @@ knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
 ```{r tab_methane_AICw,echo=F,results="markup"}
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="AIC weights, best-fitting copulas, methane flux data",
@@ -1847,7 +1846,7 @@ knitr::kable(round(h,3),
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="AIC weights, N copulas, methane flux data",
@@ -1858,7 +1857,7 @@ knitr::kable(round(h,3),
 ```{r tab_methane_p_CvM,echo=F,results="markup"}
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Goodness of fit of best-fitting copulas, methane flux data",
@@ -1869,7 +1868,7 @@ knitr::kable(round(h,3),
 ```{r tab_methane_p_KS,echo=F,results="markup"}
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Goodness of fit of best-fitting copulas, methane flux data",
@@ -1882,7 +1881,7 @@ locations for methane flux data.\\label{tab_methane_p_KS}",
 ```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Lower-tail dependence, methane flux data",
@@ -1893,7 +1892,7 @@ knitr::kable(round(h,3),
 ```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Upper-tail dependence, methane flux data",
@@ -1904,7 +1903,7 @@ knitr::kable(round(h,3),
 ```{r tab_methane_LTmUT,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
-knitr::kable(round(h,3),
+knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
              caption.short="Lower- minus upper-tail dependence, methane flux data",
@@ -1954,9 +1953,9 @@ s<-stat_methane$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
                     "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
 s<-cbind(sc,s)
-colnames(s)<-c("","2.5th quantile", "Mean", "97.5th quantile")
-knitr::kable(s,
+knitr::kable(s,digits = 3,
              format = "latex",linesep = "", escape = F,align="c",
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
              caption.short="Results for nonparametric statistics, methane flux data",
              caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for methane flux data.\\label{tab_methane_resamp}",
              booktabs=TRUE)
@@ -2478,9 +2477,9 @@ saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[,c(1:2)]
 rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS","BS.success.percent")
-knitr::kable(summary_stat, booktabs = T, 
-             format = "latex",linesep = "",
-             digits=3,
+knitr::kable(summary_stat, booktabs = T, escape=F,
+             format = "latex", linesep = "",
+             digits=3, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$"),
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
 ```
@@ -2504,7 +2503,7 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```{r tab_stat_npa_asym_1,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[1]])
 knitr::kable(temp, booktabs = T, 
-             format = "latex",linesep = "",
+             format = "latex",linesep = "",escape=F,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}")
 ```
@@ -2512,7 +2511,7 @@ knitr::kable(temp, booktabs = T,
 ```{r tab_stat_npa_asym_2,echo=F,results="markup"}
 temp<-make_table_stat_fn(data=tab_asym[[2]])
 knitr::kable(temp, booktabs = T, 
-             format = "latex",linesep = "",
+             format = "latex",linesep = "",escape=F,
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
       caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}")
 ```

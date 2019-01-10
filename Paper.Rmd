@@ -1,6 +1,6 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamolina Ghosh, Lawrence W Sheppard, Mark T. Holder, Terrance E. Loecke, P. Chris Reid, Daniel C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, P. Chris Reid, Daniel C. Reuman"
 date: "December 16, 2018"
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
 
@@ -184,9 +184,6 @@ with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same
 within each column of panels.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, I changed the abbreviation for Kendall Correlation from KC to K in the 
-caption, please change in the code that generates the figures, as well
-***Shya: Done.-->
 
 One way we may expect a copula approach 
 to better reflect ecological relationships has to do with Liebig's law of the
@@ -637,8 +634,8 @@ and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were 
 These values are distinct from what a normal copula would give, namely, 0, answering the second part 
 of Q1 for these data. The values also differed substantially 
 from each other, answering the third part of Q1. The numbers reflect stronger upper- than lower-tail
-dependence for the soil C and N data, and this can also be seen visually in the extreme tails 
-of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
+dependence for the soil C and N data, and this can also be seen visually in extreme upper-right
+and lower-left corners of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
 
 \begin{figure}
 \begin{center}
@@ -674,32 +671,35 @@ upper-tail dependence was significantly stronger than lower-tail dependence.
 
 <!--bivariate summary-->
 Table \ref{tab_bivar_summary} summarizes bivariate results for Q1. For all $4$ 
-bivariate datasets, the two variables were always significantly related (1$^{st}$ row of 
-Table \ref{tab_bivar_summary}). A non-normal copula 
+bivariate datasets, the two variables were always significantly related 
+(Table \ref{tab_bivar_summary}, row 1). A non-normal copula 
 always emerged as the lowest-AIC (highest-AIC-weight) copula 
-(2$^{nd}$ row of Table \ref{tab_bivar_summary}). 
+(Table \ref{tab_bivar_summary}, row 2). 
 The N copula was always a poor fit compared to the highest-AIC-weight copula 
-(3$^{rd}$ and 4$^{th}$ rows of Table \ref{tab_bivar_summary}), answering the first part of Q1. 
-Upper- and lower-tail statistics (7$^{th}$ and 8$^{th}$ rows of 
-Table \ref{tab_bivar_summary}) differed substantially from 0, the tail dependence statistics of 
+(Table \ref{tab_bivar_summary}, rows 3-4), answering the first part of Q1. 
+Upper- and lower-tail statistics (Table \ref{tab_bivar_summary}, rows 7-8) 
+differed substantially from 0, the tail dependence statistics of 
 the N copula, answering the second part of Q1; and also differed substantially from each other
-(9$^{th}$ row of Table \ref{tab_bivar_summary}),
-answering the third part of Q1. The first three datasets had stronger upper- than lower-tail dependence, and the last dataset had the reverse. 
+(Table \ref{tab_bivar_summary}, row 9),
+answering the third part of Q1. The first three datasets had stronger upper- 
+than lower-tail dependence, and the last dataset had the reverse. 
 Although these results convincingly show non-normal copula structure, the 
 model-averaged tail-dependence statistics may have been biased 
 because even the lowest-AIC copula was a poor fit in some cases 
-(5$^{th}$ and 6$^{th}$ rows of Table \ref{tab_bivar_summary}).
-But our nonparametric statistics confirmed the same conclusions (10$^{th}$ row of 
-Table \ref{tab_bivar_summary}).
+(Table \ref{tab_bivar_summary}, rows 5-6).
+But our nonparametric statistics confirmed the same conclusions 
+(Table \ref{tab_bivar_summary}, row 10).
 Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} 
 and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
 
-We present our analysis of the green spruce aphid abundance data (see Data).
+We present our analysis of the green spruce aphid abundance data (see Data)
+as an example multivariate analysis.
 Independence was tested for each pair of the 10 sampling locations, and was 
 rejected in every case.
 <!--***DAN: Right, Shyamolina? I am assuming that because "Indep" does not 
 appear anywhere in Table S11, this is correct, but please confirm or correct.
-***Shya: Yes, you are right, all the pairwise sampling locations for aphid data rejected independence test and show copula structures.-->
+***Shya: Yes, you are right, all the pairwise sampling locations for aphid data rejected independence test and show copula structures.
+***DAN: Good, thanks, leaving these comments here as a reminder-->
 Model selection among copulas was carried out separately for each pair of locations.
 Best-fitting (lowest-AIC) copulas were non-normal
 for the large majority of location pairs (Table \ref{SM-tab_count_bestcop}), and 
@@ -730,12 +730,11 @@ dependence. Thus the spatial synchrony of rarity in green spruce aphid is strong
 than the spatial synchrony of outbreak events. This also answers the third part of Q1.
 
 <!--Non-parametric analysis of tail dependence, green spruce aphid abundance data-->
-Nonparametric statistics verified both that tail dependence was distinct from that 
-of an N copula for the green spruce aphid abundance data, and that it was asymmetric.
+Nonparametric statistics verified that tail dependence was asymmetric for the green 
+spruce aphid abundance data.
 Mean values across all pairs of locations of the statistics 
 $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
-confidence intervals excluded $0$ (the value for an N copula), confirming tail 
-dependence distinct from that of an N copula (Table \ref{SM-tab_count_resamp}). 
+confidence intervals excluded $0$ (Table \ref{SM-tab_count_resamp}). 
 Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
 also were always positive and had confidence intervals that excluded $0$ 
 (Table \ref{SM-tab_count_resamp}), confirming asymmetry of tail dependence and 
@@ -746,20 +745,27 @@ across all pairs of sampling locations (Fig. \ref{SM-fig_aphid_count}).
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes some of our results using our
 multivariate data. In addition to summaries of the green spruce aphid abundance data results 
-elaborated in detail above, the table also summarizes results of analyzing 
+elaborated in detail above, the table also summarizes results for 
 leaf-curling plum aphid first flight data, abundance data for the dinoflagellate
-\textit{Ceratium furca}, and methan flux data (see Data).  
-
-
-We did model selection and non-parametric analysis with all 20 aphid and 22 plankton species and found our two approaches were consistent to each other. Here, to present our results we chose one species from each category. 
-
-
-We found major occurence of non-independent copulae (row 2, Table \ref{tab_multivar_summary}) out of all pairwise locations (row 1, Table \ref{tab_multivar_summary}) considered. Non-Normal copulae, most of the time, emerged as best-fit based on minimum AIC out of 16 copula family considered (row 3, Table \ref{tab_multivar_summary}) answering the first part of question \hyperref[Intro]{\textbf{(Q1)}}. All four data sets showed Normal copulae were always poor fit in comparison to best-fit non-Normal copulae (compare their average AIC-weights from row 4 and row 5 of Table \ref{tab_multivar_summary}). We considered the "good-fit" location pair based on the p-values (>0.01) obtained from both Cramer-von Mises and Kolmogorov-Smirnov statistics (row 6, Table \ref{tab_multivar_summary}). Some spatial data (green spruce aphid's count, Ceratium furca's count and methane flux) showed stronger lower tail dependence (compare row 7 and row 8 from Table \ref{tab_multivar_summary}, also see row 9) whereas Leaf-plum curling's firstflight data showed stronger upper tail dependence which answered the second and third part of question \hyperref[Intro]{\textbf{(Q1)}}. The spatial synchrony (from model selection) results were also verified by the non-parametric statistic which showed exclusively positive (or negative) confidence interval of the distribution $(\Ps_l - \Ps_u)$ estimated from all location pair for lower (or upper)- tail dependent spatial data (except methane-flux data which had marginal lower quantile). Methane flux data (last column of Table \ref{tab_multivar_summary}) did show that there were non-Normal copula as best fit for most of the location pair but its model-averaged lower tail dependence was not significantly stronger in non-parametric analysis results.
-
-
-
+\textit{Ceratium furca}, and methane-flux data (see Data). Results supported the 
+conclusions that non-N copula structure, non-N tail dependence, and asymmetric tail 
+dependence were common. Most locations pairs were non-independent 
+(Table \ref{tab_multivar_summary}, row 2). The large majority of non-independent location 
+pairs had best-fitting copula that was not the N copula (Table \ref{tab_multivar_summary}, 
+row 3), and AIC weights of best-fitting copulas were 
+substantially better than AIC weights of N copulas (Table \ref{tab_multivar_summary}, rows 4-5).
+For these data, best-fitting copulas were nearly always considered an adequate fit, 
+according to Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests 
+(Table \ref{tab_multivar_summary}, row 6). Some of the datasets (green spruce aphid
+abundance, \textit{Ceratium furca} abundance, methane flux) showed stronger 
+or marginally stronger lower- than upper-tail dependence 
+(Table \ref{tab_multivar_summary}, rows 7-9), whereas leaf-curling plum aphid first flight
+data showed the reverse. Asymmetry results were verified by nonparametric approaches 
+(e.g., Table \ref{tab_multivar_summary}, row 10). Detailed results are in 
+Tables \ref{SM-tab_count_bestcop}-\ref{SM-tab_methane_resamp} and 
+Figs \ref{SM-fig_aphid_count}-\ref{SM-fig_methane}.
 We also carried out the same analyses for abundance and first-flight data for the 18 
-aphids species for which we had data other than the green spruce and leaf-curling plum aphids,
+aphid species for which we had data other than the green spruce and leaf-curling plum aphids,
 as well as for the 21 plankton taxa for which we had abundance data other 
 \textit{Ceratium furca} (results not shown). The conclusions were generally supported that 
 non-N copula structure and tail dependence, as well as asymmetry of tail dependence, are 
@@ -863,17 +869,17 @@ tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 
 knitr::kable(tab_multivar_summary, 
              format="latex", 
-             short.caption = "Summary of results for multivariate data sets"
+             caption.short = "Summary of results for multivariate data sets",
              caption = "Summary of results for multivariate data-sets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
-             col.names = c(" ","Green-spruce aphid's count",
-                        "Leaf-plum curling aphid's firstflight",
-                        "Ceratium furca's count","Methane-flux")
+             col.names = c(" ","Green spruce aphid abundance",
+                        "Leaf-curling plum aphid first flight",
+                        "Ceratium furca abundance","Methane flux")
              )%>%column_spec(2:5,width="2.5cm")%>%
              column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
 
-
+<!--***DAN: made it to here, 2018 1 10, 1252pm-->
 
 <!--Question 2 analyses-->
 # Concepts and models for Q2: possible causes of non-normal copula structure \label{Causes}

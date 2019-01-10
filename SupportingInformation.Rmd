@@ -1,6 +1,6 @@
 ---
 title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "S. Ghosh, T. Loecke, C.P. Reid, D.C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, P. Chris Reid, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
@@ -856,7 +856,9 @@ This corresponds to
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
 
-<!--***DAN: text all good up to here, except as marked (the data section)-->
+<!--***DAN: text all good up to here, except as marked (the data section). Also
+all figs and tables relevant to the stuff this far have been edited and look pretty
+good. This is as of 2018 01 10, 1255pm. So start editing from this point.-->
 
 
 
@@ -894,8 +896,6 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, can you please adjust this figure and the analogous 3 other figures for the other three bivariate datasets as follows: replace the y-axis label "Partial correlation" with "cor", for consistency with the other y-axis labels.
-***Shya: Done.-->
 
 <!--Now make and display a table, this one about asymmetry of tail dependence-->
 ```{r make_table_stat_fn, echo=F}
@@ -1219,7 +1219,6 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
 ```
 
-\newpage
 ```{r tab_count_bestcop, echo=F, results="markup"}
 #library(dplyr)
 #knitr::opts_knit$set(kable.force.latex = TRUE)

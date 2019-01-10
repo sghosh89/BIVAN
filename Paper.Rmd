@@ -863,7 +863,7 @@ tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 
 knitr::kable(tab_multivar_summary, 
              format="latex", 
-             short.caption = "Summary of results for multivariate data sets"
+             #short.caption = "Summary of results for multivariate data sets",
              caption = "Summary of results for multivariate data-sets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green-spruce aphid's count",

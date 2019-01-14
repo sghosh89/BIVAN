@@ -17,7 +17,7 @@ Ricker<-function(r,K,p0,lensim){
 }
 
 #call the function
-Ricker(r=1.1,K=50,p0=5,lensim=100) # bifurcation point r=1
+Ricker(r=1.1,K=50,p0=5,lensim=1000) # bifurcation point r=1
 #-------------------------------------------------------
 
 # Exploring Hassell model
@@ -49,12 +49,12 @@ Hassell<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-r=5
+r=1
 a=0.5
-b=1.5
+b=100
 K_e<-((r^(1/b))-1)/a
 K_e
-Hassell(r=r, a=a, b=b, p0=K_e, lensim=200) #b~1.5 : contest, b~100 : scramble
+Hassell(r=r, a=a, b=b, p0=0.1, lensim=50) #b~1.5 : contest, b~100 : scramble
 
 Hassell(r=5, a=0.01, b=2.5, p0=0.1, lensim=200) # see change : r=5,a=0.5 and vary b 1.5 to 5.5
 #----------------------------------------------------------------------------------------------------
@@ -75,7 +75,12 @@ Msmith<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-Msmith(r=4.5,a=0.5,b=1.4,p0=0.1,lensim=200) #see changes as r=5,a=0.5 and vary b : 1,1.5,2,4
+r<-2
+a<-0.5
+b<-3
+K_e<-((r-1)^(1/b))/a
+K_e
+Msmith(r=r,a=a,b=b,p0=K_e-0.1,lensim=200) #see changes as r=5,a=0.5 and vary b : 1,1.5,2,4
                                           #see changes as a=0.5,b=4 and vary r : 1.2, 1.5, 2
 
 

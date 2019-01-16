@@ -71,12 +71,15 @@ popsim_ml_D<-function(p0,ns,D,r,K,a,b,ext_thrs,model){
     lam_sto<-exp(ns[,,tct])  #numsims by numlocs matrix
     
     lam_ricker<-exp(r*(1-(res[,,tct]/K)))
+    lam_verhulst<-1+(r*(1-res[,,tct]))
     lam_hassell<-r/((1+(a*res[,,tct]))^b)
     lam_msmith<-r/(1+((a*res[,,tct])^b))
     
     #growth prior to dispersal
     if(model=="ricker"){
       given_model<-lam_ricker
+    }else if(model=="verhulst"){
+      given_model<-lam_verhulst
     }else if(model=="hassell"){
       given_model<-lam_hassell
     }else if(model=="msmith"){

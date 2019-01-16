@@ -49,9 +49,9 @@ Hassell<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-r=1
-a=0.5
-b=100
+r<-1.1
+a<-0.5
+b<-1
 K_e<-((r^(1/b))-1)/a
 K_e
 Hassell(r=r, a=a, b=b, p0=0.1, lensim=50) #b~1.5 : contest, b~100 : scramble
@@ -75,13 +75,48 @@ Msmith<-function(r,a,b,p0,lensim){
 }
 
 #call the function
-r<-2
-a<-0.5
+r<-2.8
+a<-1
 b<-3
 K_e<-((r-1)^(1/b))/a
 K_e
 Msmith(r=r,a=a,b=b,p0=K_e-0.1,lensim=200) #see changes as r=5,a=0.5 and vary b : 1,1.5,2,4
                                           #see changes as a=0.5,b=4 and vary r : 1.2, 1.5, 2
+#--------------------------------------------------------------------------------------------------
+
+# Exploring Verhulst model
+Verhulst<-function(r,p0,lensim){
+  pop<-c(p0)
+  time<-c(0)
+  # po<-rep(K,r)
+  # print(po)
+  
+  for(it in c(1:lensim)){
+    pt<-p0*(1+r*(1-p0))
+    time<-c(time,it)
+    pop<-c(pop,pt)
+    p0<-pt
+  }
+  
+  plot(time,pop,type="b")
+}
+
+#call the function
+Verhulst(r=1.2,p0=0.4,lensim=400) # eqm. point =1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -94,10 +94,8 @@ numsteps<-25
 numlocs<-5
 a<-0.5
 b<-100
-K_e<-((r^(1/b))-1)/a
 scl<-1
-K<-K_e
-ext_thrs<-K/10
+
 rc<-((b/(b-1)))^b # critical value of r from monotonic to osc steady state approach transition 
 
 # plot for local dispersal in D matrix 
@@ -105,6 +103,9 @@ pdf("./Results/ext_risk_copula/hassell_ext_risk_local_disp.pdf",heigh=9,width=15
 op<-par(mfrow=c(3,5),mar=c(5,4,1,1) + 0.2)
 for(r in rlist){
     #cat("r=",r,"\n")
+    K_e<-((r^(1/b))-1)/a
+    K<-K_e
+    ext_thrs<-K/10
     s<-varying_d(numsims=numsims,numsteps=numsteps,numlocs=numlocs,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,
                  scl=scl,model="hassell",disp_everywhere=F,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
@@ -120,6 +121,9 @@ pdf("./Results/ext_risk_copula/hassell_ext_risk_global_disp.pdf",heigh=9,width=1
 op<-par(mfrow=c(3,5),mar=c(5,4,1,1) + 0.2)
 for(r in rlist){
     #cat("r=",r,"\n")
+    K_e<-((r^(1/b))-1)/a
+    K<-K_e
+    ext_thrs<-K/10
     s<-varying_d(numsims=numsims,numsteps=numsteps,numlocs=numlocs,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,
                  scl=scl,model="hassell",disp_everywhere=T,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
@@ -132,30 +136,29 @@ dev.off()
 ```
 
 
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Hassell model : a = 0.5, b = 100, rc=2.73) with local dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp_hassell}](./Results/ext_risk_copula/hassell_ext_risk_local_disp.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Hassell model : a = 0.5, b = 100, rc = 2.73) with local dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp_hassell}](./Results/ext_risk_copula/hassell_ext_risk_local_disp.pdf){ width=40%, height=40% }
 
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Hassell model : a = 0.5, b = 100, rc=2.73) with global dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp_hassell}](./Results/ext_risk_copula/hassell_ext_risk_global_disp.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Hassell model : a = 0.5, b = 100, rc = 2.73) with global dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp_hassell}](./Results/ext_risk_copula/hassell_ext_risk_global_disp.pdf){ width=40%, height=40% }
 
 #Maynard Smith Model :
 
-```{r fig_msmith_r_vary, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
+```{r fig_msmith_r_vary_localdisp, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 set.seed(seed)
-
-rlist<-seq(from=1.1,to=1.9,by=0.2)
+rlist<-seq(from=1.2,to=2.8,by=0.2)
 numsims<-10000
 numsteps<-25
 numlocs<-5
-a<-0.5
-b<-4
-K_e<-((r-1)^(1/b))/a
-K<-K_e
+a<-1
+b<-3
 scl<-1
-ext_thrs<-K/10
 
 # plot for local dispersal in D matrix 
-pdf("./Results/ext_risk_copula/msmith_ext_risk_local_disp_r_variation.pdf",heigh=3,width=15)
-op<-par(mfrow=c(1,5),mar=c(5,4,1,1) + 0.2)
+pdf("./Results/ext_risk_copula/msmith_ext_risk_local_disp.pdf",heigh=9,width=9)
+op<-par(mfrow=c(3,3),mar=c(5,4,1,1) + 0.2)
 for(r in rlist){
+    K_e<-((r-1)^(1/b))/a
+    K<-K_e
+    ext_thrs<-K/10
     s<-varying_d(numsims=numsims,numsteps=numsteps,numlocs=numlocs,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,
                  scl=scl,model="msmith",disp_everywhere=F,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
@@ -167,9 +170,12 @@ par(op)
 dev.off()
 
 # plot for global dispersal in D matrix 
-pdf("./Results/ext_risk_copula/msmith_ext_risk_global_disp_r_variation.pdf",heigh=3,width=15)
-op<-par(mfrow=c(1,5),mar=c(5,4,1,1) + 0.2)
+pdf("./Results/ext_risk_copula/msmith_ext_risk_global_disp.pdf",heigh=9,width=9)
+op<-par(mfrow=c(3,3),mar=c(5,4,1,1) + 0.2)
 for(r in rlist){
+    K_e<-((r-1)^(1/b))/a
+    K<-K_e
+    ext_thrs<-K/10
     s<-varying_d(numsims=numsims,numsteps=numsteps,numlocs=numlocs,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,
                  scl=scl,model="msmith",disp_everywhere=T,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
@@ -181,8 +187,8 @@ par(op)
 dev.off()
 ```
 
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Maynard Smith model : a = 0.5, b = 4, rc=1.5) with local dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp_msmith_r_vary}](./Results/ext_risk_copula/msmith_ext_risk_local_disp_r_variation.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Maynard Smith model : a = 1, b = 3, rc = 1.7) with local dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp_msmith_r_vary}](./Results/ext_risk_copula/msmith_ext_risk_local_disp.pdf){ width=40%, height=40% }
 
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Maynard Smith model : a = 0.5, b=4, rc=1.5) with global dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp_msmith_r_vary}](./Results/ext_risk_copula/msmith_ext_risk_global_disp_r_variation.pdf){ width=40%, height=40% }
+![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Maynard Smith model : a = 1, b = 3, rc = 1.7) with global dispersion; numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp_msmith_r_vary}](./Results/ext_risk_copula/msmith_ext_risk_global_disp.pdf){ width=40%, height=40% }
 
 

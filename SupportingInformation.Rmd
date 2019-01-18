@@ -2198,11 +2198,14 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-# This chunk stores results for ar1 model 
-resloc<-"./Results/Cause4copula_results/"
+# This chunk stores results for ar1 model : clayton
+
 model<-"ar1"
-params<-c(0.5) # this parameter is beta in ar1 model
 fcode<-3
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+resloc<-"./Results/Cause4copula_results/"
 
 tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
 
@@ -2217,6 +2220,8 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model="ar1")
 
+# for negative beta
+resloc<-"./Results/Cause4copula_results/"
 params<-c(-0.5) # this parameter is beta in ar1 model
 tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
 
@@ -2238,12 +2243,14 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-# This chunk stores results for ar1 model 
-resloc<-"./Results/Cause4copula_results/"
+# This chunk stores results for ar1 model : survival clayton
 model<-"ar1"
-params<-c(0.5) # this parameter is beta in ar1 model
 fcode<-13
 
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
 tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
 
 if (!dir.exists(tempo)){
@@ -2257,7 +2264,10 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model="ar1")
 
+# for negative beta
 params<-c(-0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
 tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
 
 if (!dir.exists(tempo)){

@@ -2137,83 +2137,127 @@ dev.off()
 
 
 ```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
+#source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=3)
-op<-par(mfrow=c(1,2))
+#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=3)
+#op<-par(mfrow=c(1,2))
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=500,BS=1000)
 
 #par(op)
 
-op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", "magenta", "green2"),
-       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-       bty = "n") 
-par(op)
-dev.off()
+#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
+#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
+#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
+#       bty = "n") 
+#par(op)
+#dev.off()
 ```
 
 ```{r cause4copula_pGOF_2500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
+#source("Cause4copula.R")
 #-----------------
-set.seed(seed)
+#set.seed(seed)
 #---------------------------------------
 
-pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
-op<-par(mfrow=c(1,2))
+#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
+#op<-par(mfrow=c(1,2))
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=2500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
-op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", "magenta", "green2"),
-       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-       bty = "n") 
-par(op)
-dev.off()
+#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
+#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
+#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
+#       bty = "n") 
+#par(op)
+#dev.off()
 ```
 
-```{r cause4copula_stat, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+```{r cause4copula_stat_clayton_ar1_posbeta, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+#source("Cause4copula.R")
+#-----------------
+#set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model 
+#resloc<-"./Results/Cause4copula_results/"
+#model<-"ar1"
+#params<-c(0.5) # this parameter is beta in ar1 model
+#tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,sep="")
+
+#if (!dir.exists(tempo)){
+#  dir.create(tempo)
+#}
+
+#resloc<-paste(tempo,"/",sep="")
+
+# for clayton with spearman and kendall method
+#Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+#                          params=params,p0=c(0,0),model="ar1")
+
+#Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+#                          params=params,p0=c(0,0),model="ar1")
+
+# for survival clayton with spearman and kendall method
+#Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+#                          params=params,p0=c(0,0),model="ar1")
+
+#Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+#                          params=params,p0=c(0,0),model="ar1")
+```
+
+```{r cause4copula_stat_clayton_ar1_negbeta, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+# This chunk stores results for ar1 model 
 resloc<-"./Results/Cause4copula_results/"
-if (!dir.exists(paste(resloc,"Cause4copula_stat_results",sep=""))){
-  dir.create(paste(resloc,"Cause4copula_stat_results",sep=""))
-}
-resloc<-paste(resloc,"Cause4copula_stat_results/",sep="")
+model<-"ar1"
+params<-c(-0.5) # this parameter is beta in ar1 model
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,sep="")
 
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)                
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+
+# for clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model="ar1")
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model="ar1")
+
+# for survival clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model="ar1")
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model="ar1")               
 ```
 
-
+<!--
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
@@ -2260,6 +2304,7 @@ Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1
 \caption[Comparing correlations and non-parametric statistic between upper tail dependent noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
 \end{center}
 \end{figure}
+-->
 
 
 ```{r moran_effect_on_aphid_ff, echo=F, results="hide", cache=T, cache.extra=list(seed,temp_aphid,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}

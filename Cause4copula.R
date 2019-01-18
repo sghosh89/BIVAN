@@ -68,7 +68,10 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 #Simulates a model for use in understanding Moran effects on population structure
 #
 #Args
-#cons         An autocorrelation coefficient for the model (one number, |cons|<1)
+#params       a vector  with 
+#               if model == "ar1" : an autocorrelation coefficient for the model (one number, |cons|<1)
+#               if model == "ricker" : with two number, 1. r, 2. K
+                            
 #p0           Initial conditions - length 2 vector, default c(0,0)
 #noise       An N by 2 matrix of environment variables in two habitat patches through time 
 #                             (this should be noise_q from output of GetNoise function)
@@ -78,15 +81,25 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
 #           pop_c : An N+1 by 2 matrix of populations through time, p0 is the first row in copula space
 #           pop_q : this is similar but with normal distribution marginal
 
-Simulator_Cause4copula<-function(cons,p0=c(0,0),noise){
+Simulator_Cause4copula<-function(params,p0=c(0,0),noise,model){
   
   N<-dim(noise)[1]
-  cons2<-sqrt(1-cons^2)
   res<-matrix(NA,N+1,2)
   res[1,]<-p0
   
   for (counter in 2:(N+1)){
-    res[counter,]<-(res[counter-1,]*cons)+(noise[counter-1,]*cons2)
+    if(model=="ar1"){
+      beta<-params
+      alpha<-sqrt(1-beta^2)
+      res[counter,]<-(beta*res[counter-1,])+(alpha*noise[counter-1,])
+    }else if(model=="ricker"){
+      r<-params[1]
+      K<-params[2]
+      res[counter,]<-res[counter-1,]*exp((r*(1-(res[counter-1,]/K)))+noise[counter-1,])
+    }else{
+      warning("model not specified",immediate.=T,call.=T)
+    }
+    
   }
   
   res2<-pnorm(res) # convert into copula space
@@ -169,7 +182,7 @@ comp<-function(s,s2,num_keep_last){
 #  parameter of noise copula vs. correln coef (spearman/kendall)
 # BS : number of bootstrapps used for BiCopGOFTest
 
-Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
+Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,model){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -189,7 +202,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
     # generate noise copula 
     s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
     # generate pop_copula
-    s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
+    s2<-Simulator_Cause4copula(params=params,p0=cp0,noise=s$noise_q,model=model)
     
     # compare btw parameters of s$noise_c and s2$pop_c
     
@@ -277,8 +290,9 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS){
 #       num_keep_last : number of rows you want to keep from bottom 
 #                     for each of s$noise_c, s$noise_q and s2$pop_c, s2$pop_q matrix
 #       resloc : folder location where the plots should be saved
+#       params,p0,model : these are inputs for Simulator_Cause4copula function
 #-----------------------------------------------------------------------------------------------
-Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_keep_last,resloc){
+Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_keep_last,resloc,params,p0,model){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -353,7 +367,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
     for(i in 1:numsim){
       #cat("i=",i,"\n")
       s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
-      s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
+      s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
       z<-comp(s=s,s2=s2,num_keep_last = num_keep_last)
       S_noise<-c(S_noise,z$comp$cor_noise[1])
       K_noise<-c(K_noise,z$comp$cor_noise[2])

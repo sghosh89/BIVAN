@@ -38,7 +38,7 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
     param<-iTau(copula = tgcop, tau = corcoef)
   }else{
     param<-NA
-    warning("specify method",immediate.=T,call.=T)
+    warning("specify method compatible with copula family",immediate.=T,call.=T)
   }
   
   noisecop<-BiCopSim(N=N, family=fcode, par=param)
@@ -222,7 +222,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,mod
     # generate noise copula 
     s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
     # generate pop_copula
-    s2<-Simulator_Cause4copula(params=params,p0=cp0,noise=s$noise_q,model=model)
+    s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
     
     # compare btw parameters of s$noise_c and s2$pop_c
     

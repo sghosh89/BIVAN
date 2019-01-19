@@ -2303,7 +2303,7 @@ if (!dir.exists(tempo)){
   dir.create(tempo)
 }
 resloc<-paste(tempo,"/",sep="")
-# for clayton with spearman and kendall method
+# for gumbel with spearman and kendall method
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
 
@@ -2320,7 +2320,7 @@ if (!dir.exists(tempo)){
 }
 
 resloc<-paste(tempo,"/",sep="")
-# for clayton with spearman and kendall method
+# for gumbel with spearman and kendall method
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
 
@@ -2347,7 +2347,7 @@ if (!dir.exists(tempo)){
   dir.create(tempo)
 }
 resloc<-paste(tempo,"/",sep="")
-# for survival clayton with spearman and kendall method
+# for survival gumbel with spearman and kendall method
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
 
@@ -2365,7 +2365,7 @@ if (!dir.exists(tempo)){
 }
 
 resloc<-paste(tempo,"/",sep="")
-# for survival clayton with spearman and kendall method
+# for survival gumbel with spearman and kendall method
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
 
@@ -2393,9 +2393,7 @@ if (!dir.exists(tempo)){
   dir.create(tempo)
 }
 resloc<-paste(tempo,"/",sep="")
-# for clayton with spearman and kendall method
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=c(0,0),model=model)
+# for joe with kendall method only
 
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
@@ -2410,9 +2408,7 @@ if (!dir.exists(tempo)){
 }
 
 resloc<-paste(tempo,"/",sep="")
-# for clayton with spearman and kendall method
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=c(0,0),model=model)
+# for joe with kendall method only
 
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
@@ -2437,9 +2433,7 @@ if (!dir.exists(tempo)){
   dir.create(tempo)
 }
 resloc<-paste(tempo,"/",sep="")
-# for survival clayton with spearman and kendall method
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=c(0,0),model=model)
+# for survival joe with kendall method only
 
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
@@ -2455,9 +2449,7 @@ if (!dir.exists(tempo)){
 }
 
 resloc<-paste(tempo,"/",sep="")
-# for survival clayton with spearman and kendall method
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=c(0,0),model=model)
+# for survival joe with kendall method only
 
 Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=c(0,0),model=model)
@@ -2524,7 +2516,7 @@ for(i in rlist){
   }
   resloc<-paste(tempo,"/",sep="")
 
-# for clayton with spearman and kendall method
+# for survival clayton with spearman and kendall method
   Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
 
@@ -2559,7 +2551,7 @@ for(i in rlist){
   }
   resloc<-paste(tempo,"/",sep="")
 
-# for clayton with spearman and kendall method
+# for gumbel with spearman and kendall method
   Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
 
@@ -2594,7 +2586,7 @@ for(i in rlist){
   }
   resloc<-paste(tempo,"/",sep="")
 
-# for clayton with spearman and kendall method
+# for survival gumbel with spearman and kendall method
   Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
 
@@ -2629,10 +2621,8 @@ for(i in rlist){
   }
   resloc<-paste(tempo,"/",sep="")
 
-# for clayton with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
+# for joe with kendall method only
+  
   Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
 }
@@ -2664,10 +2654,8 @@ for(i in rlist){
   }
   resloc<-paste(tempo,"/",sep="")
 
-# for clayton with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
+# for survival joe with kendall method only
+  
   Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
 }

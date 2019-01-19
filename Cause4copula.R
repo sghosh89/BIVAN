@@ -87,22 +87,26 @@ Simulator_Cause4copula<-function(params,p0=c(0,0),noise,model){
   res<-matrix(NA,N+1,2)
   res[1,]<-p0
   
-  for (counter in 2:(N+1)){
+  
     if(model=="ar1"){
       beta<-params
       alpha<-sqrt(1-beta^2)
-      res[counter,]<-(beta*res[counter-1,])+(alpha*noise[counter-1,])
+      for (counter in 2:(N+1)){
+        res[counter,]<-(beta*res[counter-1,])+(alpha*noise[counter-1,])
+      }
     }else if(model=="ricker"){
       r<-params[1]
       K<-params[2]
-      res[counter,]<-res[counter-1,]*exp((r*(1-(res[counter-1,]/K)))+noise[counter-1,])
+      for (counter in 2:(N+1)){
+        res[counter,]<-res[counter-1,]*exp((r*(1-(res[counter-1,]/K)))+noise[counter-1,])
+      }
     }else{
       warning("model not specified",immediate.=T,call.=T)
     }
-    
-  }
   
-  res2<-pnorm(res) # convert into copula space
+  # convert into copula space
+  #res2<-pnorm(res) 
+  res2<-VineCopula::pobs(res)
   return(list(pop_c=res2,pop_q=res))
   
 } 
@@ -118,6 +122,7 @@ Simulator_Cause4copula<-function(params,p0=c(0,0),noise,model){
 # This function gives mean,lowCI,upCI of a vector
 #
 MCI<-function(x){
+  x<-x[is.finite(x)] # only considering finite values
   m<-mean(x)
   se<-sd(x)/sqrt(length(x))   
   return(c(m-1.96*se,m,m+1.96*se))
@@ -170,11 +175,26 @@ comp<-function(s,s2,num_keep_last){
 }
 #-------------------------------------------------------------------
 # when noise comes from a clayton cop with spearmancor=0.8
-#s<-GetNoise(N=2000,fcode=3,corcoef=0.8,method="spearman",ploton=T)
-#s2<-Simulator_Cause4copula(cons=0.5,p0=c(0,0),noise=s$noise_q)
+#s<-GetNoise(N=1000,fcode=3,corcoef=0.3,method="spearman",ploton=T)
+#s2<-Simulator_Cause4copula(params=c(0.5),p0=c(0,0),noise=s$noise_q,model="ar1")
 #hist(s2$pop_q[,1],breaks=1000) # it's normal
 #hist(s2$pop_c[,1],breaks=1000) # it's uniform
-#points(s2$pop_c[,1],s2$pop_c[,2],col="red")
+#plot(s2$pop_c[,1],s2$pop_c[,2],col="red")
+
+#set.seed(seed=101)
+#s<-GetNoise(N=5000,fcode=3,corcoef=0.1,method="spearman",ploton=T)
+#hist(s$noise_q[,1],breaks=100) #should be normal
+#params<-c(0.8,100)
+#p0<-c(100,100)
+#noise<-s$noise_q
+#noise<-matrix(0,nrow=1000,ncol=2)
+#noise<-noise*0.75
+#s2<-Simulator_Cause4copula(params=params,p0=p0,noise=noise,model="ricker")
+#t<-c(1:nrow(s2$pop_q))
+#plot(t,s2$pop_q[,1],type="l")
+#hist(s2$pop_q[,1],breaks=1000) # it should be normal, but it's not???
+#hist(s2$pop_c[,1],breaks=1000) # it's uniform
+#plot(s2$pop_c[,1],s2$pop_c[,2],col="red")
 #zz<-comp(s=s,s2=s2)
 #---------------------------------------------------------
 #-----------------------------------------------------------------------------------------------
@@ -338,7 +358,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   
   for(counter in c(1:length(corcoef_list))){
     corcoef<-corcoef_list[counter]
-    #cat("corcoef=",corcoef,"\n")
+    #cat("--------corcoef=",corcoef,"---------\n")
     S_noise<-c()
     K_noise<-c()
     P_noise<-c()
@@ -364,6 +384,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
     D2umD2l_noise<-c()
     D2umD2l_pop<-c()
     
+    
     for(i in 1:numsim){
       #cat("i=",i,"\n")
       s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
@@ -383,6 +404,17 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
       
       temp_Corl_pop<-Corbds(vi = z$last_num_keep_pop$last_num_keep_pop_c[,1],
                               vj = z$last_num_keep_pop$last_num_keep_pop_c[,2],lb = lb,ub = ub)
+      
+      #cat("numsim=",i,"corl_pop=",temp_Corl_pop,"\n")
+      #if(is.na(temp_Corl_pop)==T){
+      #  plot(z$last_num_keep_pop$last_num_keep_pop_c[,1],z$last_num_keep_pop$last_num_keep_pop_c[,2],asp=1,xlim=c(0,1),ylim=c(0,1),cex=0.5,col="red",pch=20)
+      #  mtext(paste0("bad numsim = ",i,", corcoef = ",corcoef,sep=""),line=0.1)
+      #  abline(a=2*lb,b=-1,col="blue")
+      #  abline(a=2*ub,b=-1,col="green4")
+      #  abline(a=0,b=1)
+      #  rect(0,0,1,1)
+      #}
+     
       Corl_pop<-c(Corl_pop,temp_Corl_pop)
       
       temp_Coru_noise<-Corbds(vi = z$last_num_keep_noise$last_num_keep_noise_c[,1],
@@ -435,6 +467,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
       D2umD2l_pop<-c(D2umD2l_pop,temp_D2u_pop-temp_D2l_pop)
       
     }
+    
     S_noise_mat[counter,]<-MCI(S_noise)
     K_noise_mat[counter,]<-MCI(K_noise)
     P_noise_mat[counter,]<-MCI(P_noise)
@@ -482,7 +515,8 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   }else{
     warning("specify method",immediate.=T,call.=T)
   }
- 
+  
+  # Plotting Spearman correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Spearman_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
@@ -503,6 +537,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Kendall correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Kendall_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
@@ -522,6 +557,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Pearson correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pearson_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
@@ -541,6 +577,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Corl of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]),
@@ -563,6 +600,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Coru of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["u"]),
@@ -585,6 +623,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Corl - Coru of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl-Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
@@ -609,8 +648,9 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting correlation between Corl - Coru of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_CorlmCoru_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
   ylim1<-range(CorlmCoru_pop_mat[,1],CorlmCoru_pop_mat[,3])
   xlim1<-range(CorlmCoru_noise_mat[,1],CorlmCoru_noise_mat[,3])
   b_len<-diff(xlim1)/50
@@ -632,10 +672,11 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,4),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   
+  # Plotting Pl of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]),
@@ -664,6 +705,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   #par(op)
   dev.off()
   
+  # Plotting Pu of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["u"]),
@@ -687,6 +729,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting Pl - Pu of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl-Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
@@ -711,8 +754,9 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting correlation between Pl - Pu of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_PlmPu_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
   ylim1<-range(PlmPu_pop_mat[,1],PlmPu_pop_mat[,3])
   xlim1<-range(PlmPu_noise_mat[,1],PlmPu_noise_mat[,3])
   
@@ -737,10 +781,11 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,4),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   
+  # Plotting D2u of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[u]^2),
@@ -764,6 +809,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting D2l of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[l]^2),
@@ -787,6 +833,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting D2u - D2l of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u-D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
   plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
@@ -812,8 +859,9 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   par(op)
   dev.off()
   
+  # Plotting correlation between D2u - D2l of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_D2umD2l_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,1), mgp=c(3,0.5,0))
+  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
   ylim1<-range(D2umD2l_pop_mat[,1],D2umD2l_pop_mat[,3])
   xlim1<-range(D2umD2l_noise_mat[,1],D2umD2l_noise_mat[,3])
   
@@ -837,7 +885,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,4),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   

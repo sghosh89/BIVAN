@@ -1,5 +1,6 @@
 library(copula)
 library(VineCopula)
+library(e1071)
 source("CopulaFunctions_flexible.R")
 source("MyBiCopGofTest.R")
 #---------------------------------------------------------------------------------------
@@ -384,12 +385,18 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
     D2umD2l_noise<-c()
     D2umD2l_pop<-c()
     
+    all_numsim_pop_patch1<-c()# to store all pop_q from each numsim for 1st patch : this should be num_keep_last times numsim points
+    all_numsim_pop_patch2<-c()# to store all pop_q from each numsim for 2nd patch : this should be num_keep_last times numsim points
     
     for(i in 1:numsim){
       #cat("i=",i,"\n")
       s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
       s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
       z<-comp(s=s,s2=s2,num_keep_last = num_keep_last)
+      
+      all_numsim_pop_patch1<-c(all_numsim_pop_patch1,z$last_num_keep_pop$last_num_keep_pop_q[,1])
+      all_numsim_pop_patch2<-c(all_numsim_pop_patch2,z$last_num_keep_pop$last_num_keep_pop_q[,2])
+      
       S_noise<-c(S_noise,z$comp$cor_noise[1])
       K_noise<-c(K_noise,z$comp$cor_noise[2])
       P_noise<-c(P_noise,z$comp$cor_noise[3])
@@ -465,6 +472,61 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
       
       D2umD2l_noise<-c(D2umD2l_noise,temp_D2u_noise-temp_D2l_noise)
       D2umD2l_pop<-c(D2umD2l_pop,temp_D2u_pop-temp_D2l_pop)
+      
+    }
+    
+    
+    if(model=="ricker"){
+      
+      tempo<-paste(resloc,"hist_pop",sep="")
+      if (!dir.exists(tempo)){
+        dir.create(tempo)
+      }
+      
+      K<-params[2]
+      
+      # Plot of histogram of pop_q (last num_keep_last number of points) from all numsim simulations
+      pdf(paste0(tempo,"/",BiCopName(fcode,short=T),"_method_",method,"_corcoef_",corcoef,".pdf",sep=""),height=6,width=12)
+      op<-par(mfrow=c(1,2),mar=c(5.2,4.2,1.2,1.2))
+      
+      skw1<-skewness(all_numsim_pop_patch1,type=2)
+      hist(all_numsim_pop_patch1,breaks=1000,main=paste("patch1, skewness =",round(skw1,4),sep=""),xlab="pop. from all simulations")
+      abline(v=K,col="red")
+      
+      skw2<-skewness(all_numsim_pop_patch2,type=2)
+      hist(all_numsim_pop_patch2,breaks=1000,main=paste("patch2, skewness =",round(skw2,4),sep=""),xlab="pop. from all simulations")
+      abline(v=K,col="red")
+       
+      par(op)
+      dev.off()
+      
+      # Plot of time series for pop_q (last num_keep_last number of points) from each of total numsim number of simulations
+      pts_patch1<-split(all_numsim_pop_patch1,as.numeric(gl(length(all_numsim_pop_patch1),num_keep_last,length(all_numsim_pop_patch1)))) 
+      pts_patch2<-split(all_numsim_pop_patch1,as.numeric(gl(length(all_numsim_pop_patch1),num_keep_last,length(all_numsim_pop_patch1)))) 
+      xlb<-paste("last ",num_keep_last," time series",sep="")
+      tt<-c(1:num_keep_last)
+      
+      pdf(paste0(tempo,"/",BiCopName(fcode,short=T),"_method_",method,"_corcoef_",corcoef,"_poptimeseries_patch1.pdf",sep=""),height=25,width=25)
+      op<-par(mfrow=c(5,5),mar=c(5.2,4.2,2,1.2))
+      
+      for(i in c(1:length(pts_patch1))){
+        plot(tt,pts_patch1[[i]],xlab=xlb,ylab="pop",main=paste("numsim =",i,sep=""),type="l")
+        abline(h=K,col="red")
+      }
+      
+      par(op)
+      dev.off()
+      
+      pdf(paste0(tempo,"/",BiCopName(fcode,short=T),"_method_",method,"_corcoef_",corcoef,"_poptimeseries_patch2.pdf",sep=""),height=25,width=25)
+      op<-par(mfrow=c(5,5),mar=c(5.2,4.2,2,1.2))
+      
+      for(i in c(1:length(pts_patch2))){
+        plot(tt,pts_patch2[[i]],xlab=xlb,ylab="pop",main=paste("numsim =",i,sep=""),type="l")
+        abline(h=K,col="red")
+      }
+      
+      par(op)
+      dev.off()
       
     }
     

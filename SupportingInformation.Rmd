@@ -2465,28 +2465,33 @@ set.seed(seed)
 model<-"ricker"
 fcode<-3
 
+Klist<-c(100,1000)
+
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
+#rlist<-c(0.5,1.1)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for clayton with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
   }
-  resloc<-paste(tempo,"/",sep="")
-
-# for clayton with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
 }
 ```
 
@@ -2499,29 +2504,31 @@ set.seed(seed)
 
 model<-"ricker"
 fcode<-13
-
+Klist<-c(100,1000)
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for survival clayton with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
   }
-  resloc<-paste(tempo,"/",sep="")
-
-# for survival clayton with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
 }
 ```
 
@@ -2534,29 +2541,31 @@ set.seed(seed)
 
 model<-"ricker"
 fcode<-4
-
+Klist<-c(100,1000)
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for gumbel with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
   }
-  resloc<-paste(tempo,"/",sep="")
-
-# for gumbel with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
 }
 ```
 
@@ -2569,29 +2578,31 @@ set.seed(seed)
 
 model<-"ricker"
 fcode<-14
-
+Klist<-c(100,1000)
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for survival gumbel with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
   }
-  resloc<-paste(tempo,"/",sep="")
-
-# for survival gumbel with spearman and kendall method
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
-
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
-                          params=params,p0=p0,model=model)
 }
 ```
 
@@ -2604,27 +2615,29 @@ set.seed(seed)
 
 model<-"ricker"
 fcode<-6
-
+Klist<-c(100,1000)
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
-  }
-  resloc<-paste(tempo,"/",sep="")
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
 
-# for joe with kendall method only
-  
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+  # for joe with kendall method only
+   
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
+  }
 }
 ```
 
@@ -2637,27 +2650,29 @@ set.seed(seed)
 
 model<-"ricker"
 fcode<-16
-
+Klist<-c(100,1000)
 # for varying r (@r=1 transition from under- to over-compensatory dynamics )
 rlist<-seq(from=0.1,to=1.3,by=0.2)
 
-for(i in rlist){
-  params<-c(i,100) # this parameter is a vector with r and K
-  p0<-c(params[2],params[2])
+for(iK in Klist){
+  for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
 
-  resloc<-"./Results/Cause4copula_results/"
+    resloc<-"./Results/Cause4copula_results/"
 
-  tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
 
-  if (!dir.exists(tempo)){
-   dir.create(tempo)
-  }
-  resloc<-paste(tempo,"/",sep="")
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
 
-# for survival joe with kendall method only
-  
-  Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+  # for joe with kendall method only
+   
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
                           params=params,p0=p0,model=model)
+  }
 }
 ```
 <!--

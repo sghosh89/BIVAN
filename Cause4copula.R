@@ -9,6 +9,7 @@ source("MyBiCopGofTest.R")
 #        N : number of points drawn for a copula (C,G,J,F,SC,SG,SJ)
 #        fcode : familycode of the desired copula [within c(3:6,13,14,16)]
 #        corcoef : a number which may be Kendall's Tau or Spearman's Rho
+#        nsd : standard deviation of noise generated
 #        method : a character of spearman or kendall
 #        ploton : logical to genarate an optional plot
 # Output :
@@ -17,7 +18,7 @@ source("MyBiCopGofTest.R")
 #                  noise_q : it's qnorm transformed form 
 #                  param : parameter of the copula from where that noise is generated
 #---------------------------------------------------------------------------------------
-GetNoise<-function(N,fcode,corcoef,method,ploton){
+GetNoise<-function(N,fcode,corcoef,nsd,method,ploton){
 
   if (fcode %in% c(3,13)){
     tgcop<-claytonCopula(3,2)
@@ -49,13 +50,13 @@ GetNoise<-function(N,fcode,corcoef,method,ploton){
   }
 
 # apply qnorm on noisecop to get normal distribution of each marginal
-  noise_q<-qnorm(noisecop)
+  noise_q<-qnorm(noisecop,mean=0,sd=nsd)
   
   return(list(noise_c=noisecop,noise_q=noise_q,param=param))
 }
 #------------------------------------------------------------------------------
 # Check the function
-#s<-GetNoise(N=100,fcode=3,corcoef=0.5,method="kendall",ploton=T)
+#s<-GetNoise(N=10000,fcode=3,corcoef=0.5,nsd=0.1,method="kendall",ploton=T)
 
 #s1<-s$noise_q
 #hist(s1[,1],breaks=1000) # check if normal?
@@ -203,7 +204,7 @@ comp<-function(s,s2,num_keep_last){
 #  parameter of noise copula vs. correln coef (spearman/kendall)
 # BS : number of bootstrapps used for BiCopGOFTest
 
-Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,model){
+Plotter_Cause4copula_GOF<-function(N,fcode,method,nsd,num_keep_last,BS,params,p0,model){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -221,7 +222,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,mod
     #cat("corcoef=",corcoef,"\n")
     
     # generate noise copula 
-    s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
+    s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,nsd=nsd,method=method,ploton=F)
     # generate pop_copula
     s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
     
@@ -305,6 +306,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,mod
 # Input :
 #       numsim : a number over which desired stat (Spearman, Kendall, Pearson) called for (default:50)
 #       fcode : family of copula from where noise is genarated initially [within c(3:6,13,14,16)]
+#       nsd : standard deviation of the noise generated
 #       method : a character : either "spearman" or "kendall"
 #       lb : lower bound for Non-parametric stat function (Default=0)
 #       ub : upper bound for Non-parametric stat function (Default =0.1)
@@ -313,7 +315,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,num_keep_last,BS,params,p0,mod
 #       resloc : folder location where the plots should be saved
 #       params,p0,model : these are inputs for Simulator_Cause4copula function
 #-----------------------------------------------------------------------------------------------
-Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_keep_last,resloc,params,p0,model){
+Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num_keep_last,resloc,params,p0,model){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -390,7 +392,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,method,lb=0,ub=0.1,num_kee
     
     for(i in 1:numsim){
       #cat("i=",i,"\n")
-      s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,method=method,ploton=F)
+      s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,nsd=nsd,method=method,ploton=F)
       s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
       z<-comp(s=s,s2=s2,num_keep_last = num_keep_last)
       

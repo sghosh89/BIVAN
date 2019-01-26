@@ -2137,129 +2137,891 @@ dev.off()
 
 
 ```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
+#source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=3)
-op<-par(mfrow=c(1,2))
+#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=3)
+#op<-par(mfrow=c(1,2))
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=500,BS=1000)
 
 #par(op)
 
-op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", "magenta", "green2"),
-       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-       bty = "n") 
-par(op)
-dev.off()
+#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
+#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
+#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
+#       bty = "n") 
+#par(op)
+#dev.off()
 ```
 
 ```{r cause4copula_pGOF_2500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-source("Cause4copula.R")
+#source("Cause4copula.R")
 #-----------------
-set.seed(seed)
+#set.seed(seed)
 #---------------------------------------
 
-pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
-op<-par(mfrow=c(1,2))
+#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
+#op<-par(mfrow=c(1,2))
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=2500,BS=1000)
 
-Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
+#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
 #Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=2500,BS=1000)
 
-op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", "magenta", "green2"),
-       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-       bty = "n") 
-par(op)
-dev.off()
+#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
+#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
+#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
+#       bty = "n") 
+#par(op)
+#dev.off()
 ```
 
-```{r cause4copula_stat, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
-resloc<-"./Results/Cause4copula_results/"
-if (!dir.exists(paste(resloc,"Cause4copula_stat_results",sep=""))){
-  dir.create(paste(resloc,"Cause4copula_stat_results",sep=""))
-}
-resloc<-paste(resloc,"Cause4copula_stat_results/",sep="")
+# This chunk stores results for ar1 model : clayton
 
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=3,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)
-                          
-Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=13,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc)                
+model<-"ar1"
+fcode<-3
+nsd<-1
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+resloc<-"./Results/Cause4copula_results/"
+
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+resloc<-"./Results/Cause4copula_results/"
+params<-c(-0.5) # this parameter is beta in ar1 model
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
 ```
 
+```{r cause4copula_stat_ar1_survivalclayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival clayton
+model<-"ar1"
+fcode<-13
+nsd<-1
 
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for survival clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+params<-c(-0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for survival clayton with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+```
+
+```{r cause4copula_stat_ar1_gumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : clayton
+
+model<-"ar1"
+fcode<-4
+nsd<-1
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+resloc<-"./Results/Cause4copula_results/"
+
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for gumbel with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+resloc<-"./Results/Cause4copula_results/"
+params<-c(-0.5) # this parameter is beta in ar1 model
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for gumbel with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+```
+
+```{r cause4copula_stat_ar1_survivalgumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival clayton
+model<-"ar1"
+fcode<-14
+nsd<-1
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for survival gumbel with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+params<-c(-0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for survival gumbel with spearman and kendall method
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+```
+
+```{r cause4copula_stat_ar1_joe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : clayton
+
+model<-"ar1"
+fcode<-6
+nsd<-1
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+resloc<-"./Results/Cause4copula_results/"
+
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for joe with kendall method only
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+resloc<-"./Results/Cause4copula_results/"
+params<-c(-0.5) # this parameter is beta in ar1 model
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for joe with kendall method only
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+```
+
+```{r cause4copula_stat_ar1_survivaljoe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival clayton
+model<-"ar1"
+fcode<-16
+nsd<-1
+
+# for positive beta
+params<-c(0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+resloc<-paste(tempo,"/",sep="")
+# for survival joe with kendall method only
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+
+# for negative beta
+params<-c(-0.5) # this parameter is beta in ar1 model
+
+resloc<-"./Results/Cause4copula_results/"
+tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_beta_",params,"_",BiCopName(fcode,short=F),sep="")
+
+if (!dir.exists(tempo)){
+  dir.create(tempo)
+}
+
+resloc<-paste(tempo,"/",sep="")
+# for survival joe with kendall method only
+
+Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=c(0,0),model=model)
+```
+
+```{r cause4copula_stat_ricker_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : clayton
+
+model<-"ricker"
+fcode<-3
+
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for clayton with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+
+```{r cause4copula_stat_ricker_survivalclayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival clayton
+
+model<-"ricker"
+fcode<-13
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for survival clayton with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+
+```{r cause4copula_stat_ricker_gumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : gumbel
+
+model<-"ricker"
+fcode<-4
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for gumbel with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+
+```{r cause4copula_stat_ricker_survivalgumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival gumbel
+
+model<-"ricker"
+fcode<-14
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for survival gumbel with spearman and kendall method
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+
+```{r cause4copula_stat_ricker_joe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : joe
+
+model<-"ricker"
+fcode<-6
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for joe with spearman and kendall method
+    
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+
+```{r cause4copula_stat_ricker_survivaljoe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+source("Cause4copula.R")
+#-----------------
+set.seed(seed)
+#---------------------------------------
+# This chunk stores results for ar1 model : survival joe
+
+model<-"ricker"
+fcode<-16
+nsdlist<-c(0.1,1)
+Klist<-c(100)
+# for varying r (@r=1 transition from under- to over-compensatory dynamics )
+rlist<-seq(from=0.1,to=1.3,by=0.2)
+
+for(insd in nsdlist){
+  for(iK in Klist){
+   for(i in rlist){
+    params<-c(i,iK) # this parameter is a vector with r and K
+    p0<-c(params[2],params[2])
+
+    resloc<-"./Results/Cause4copula_results/"
+
+    tempo<-paste(resloc,"Cause4copula_stat_results_",model,"_nsd_",insd,"_r_",params[1],"_K_",params[2],"_",BiCopName(fcode,short=F),sep="")
+
+    if (!dir.exists(tempo)){
+      dir.create(tempo)
+    }
+    resloc<-paste(tempo,"/",sep="")
+
+  # for survival joe with spearman and kendall method
+    
+    Plotter_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,num_keep_last=500,resloc=resloc,
+                          params=params,p0=p0,model=model)
+  }
+ }
+}
+```
+<!--
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
 \caption[Comparing noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicate good fit of population copula with same noise cpoula family. \label{fig_Cause4copula_params_GOF_2500}}
 \end{center}
 \end{figure}
+--->
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/common_legend_cause4copula_stat.pdf}\\
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
 \vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
-\caption[Comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different \textbf{Kendall's Tau}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant \textbf{Kendall's Tau} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_C_kend}}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
+\caption[AR(1) model : comparing correlations and non-parametric statistic for between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_C_kend_ar1}}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with pearson correlation p-value $< 0.05$, then they are significantly similar.\label{fig_Cause4copula_SC_kend_ar1}}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Gumbel} copula. \label{fig_Cause4copula_G_kend_ar1}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/common_legend_cause4copula_stat.pdf}\\
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
 \vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Spearman_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Kendall_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Pearson_vs_Spearman's Rho.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Corl_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Clayton_Coru_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Corl-Coru_vs_Spearman's Rho.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pl_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pu_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_Pl-Pu_vs_Spearman's Rho.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2u_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2l_vs_Spearman's Rho.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results/Survival Clayton_D2u-D2l_vs_Spearman's Rho.pdf}
-\caption[Comparing correlations and non-parametric statistic between upper tail dependent noise-copula (\textbf{Survival Clayton}) and population copula for different \textbf{Spearman's Rho}]{Results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant \textbf{Spearman's Rho} values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_SC_spear}}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula. \label{fig_Cause4copula_SG_kend_ar1}}
 \end{center}
 \end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Joe} copula \label{fig_Cause4copula_J_kend_ar1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[AR(1) model: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula. \label{fig_Cause4copula_SJ_kend_ar1}}
+\end{center}
+\end{figure}
+
+
+# Similar tail dependence in population copula as that of noise copula for stochastic Ricker model \label{cause4copula_ricker}
+
+To find whether nature of tail dependence in noise copula preserved for affected population copula or it would be destroyed because of underlying non-linearity in the model, we simulated the following stochastic Ricker model with intrinsic growth rate $r = 0.5$ and carrying capacity $K = 100$ for two population patches ($i = 1, 2$);
+
+\begin{equation}\label{eq.sRicker}
+P_{i}(t+1)=P_{i}(t) exp \left[ r \left\{ 1-\frac{P_{i}(t)}{K} \right\} +\epsilon_{i}(t) \right]
+\end{equation}
+
+The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula family, was transformed into a normally distribution with mean zero and standard deviation $0.1$ (considered as weak non-linear regime) or $1$ (considered as strongly non-linear), for code see [`GetNoise`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function. For weak non-linear regime, we found similar tail dependence in noise copula and the resultant population copula from the stochastic Ricker model (Figs. \ref{fig_Cause4copula_C_kend_sRicker} - \ref{fig_Cause4copula_SJ_kend_sRicker}) as we obtained in linear AR(1) model (see \nameref{MT-Results_Q2} in the maintext). But for strongly non-linear regime the tail-dependence between noise and population copula was not significantly similar (see the summary in Fig. \ref{fig_Cause4copula_kend_sRicker_nsd_1}). We repeated the whole analysis with $r > 1$ (i.e. Ricker model's over-compensatory dynamical regime) and came up with same conclusion that strong non-linearility could disturb the tail-dependence information translated from noise to population copula.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with pearson correlation p-value $< 0.05$, then they are significantly similar. \label{fig_Cause4copula_C_kend_sRicker}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker} but for noise generated from upper tail dependent \textbf{Survival Clayton} copula. \label{fig_Cause4copula_SC_kend_sRicker}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker} but for noise generated from upper tail dependent \textbf{Gumbel} copula. \label{fig_Cause4copula_G_kend_sRicker}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula. \label{fig_Cause4copula_SG_kend_sRicker}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker} but for noise generated from upper tail dependent \textbf{Joe} copula. \label{fig_Cause4copula_J_kend_sRicker}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with weak non-linearity: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak non-linearity: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker} but for noise generated from lower tail dependent \textbf{Survival Joe} copula. \label{fig_Cause4copula_SJ_kend_sRicker}}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}\\
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}\\
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}\\
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}\\
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}\\
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Stochastic Ricker model with strong non-linearity: comparing tail-dependence statistic between noise-copula and population copula for different Kendall's correlation]{Stochastic Ricker model with strong non-linearity: comparing tail-dependence statistic between noise-copula and population copula for different Kendall's correlation with noise generated from \textbf{Clayton} (row 1), \textbf{Survival Clayton} (row 2), \textbf{Gumbel} (row 3),\textbf{Survival Gumbel} (row 4),\textbf{Joe} (row 5),\textbf{Survival Joe} (row 6). \label{fig_Cause4copula_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
 
 
 ```{r moran_effect_on_aphid_ff, echo=F, results="hide", cache=T, cache.extra=list(seed,temp_aphid,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}

@@ -110,7 +110,7 @@ for(r in rlist){
                  scl=scl,model="hassell",disp_everywhere=F,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
     lines(s$d_seq,s$risk_right,type="b",col="blue")
-    legend("topleft", c("noise : left","noise : right"), lty=c(1,1), pch=c(1,1), col=c('red', 'blue'), horiz=T, bty='n', cex=1.2)
+    legend("bottomleft", c("noise : left","noise : right"), lty=c(1,1), pch=c(1,1), col=c('red', 'blue'), horiz=T, bty='n', cex=1.2)
     mtext(paste0("r = ", r))
 }
 par(op)
@@ -128,7 +128,7 @@ for(r in rlist){
                  scl=scl,model="hassell",disp_everywhere=T,ploton = F)
     plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid(),xlab="d",ylab="ext_risk",cex.lab=1.5,cex.axis=1.5)
     lines(s$d_seq,s$risk_right,type="b",col="blue")
-    legend("topleft", c("noise : left","noise : right"), lty=c(1,1), pch=c(1,1), col=c('red', 'blue'), horiz=T, bty='n', cex=1.2)
+    legend("bottomleft", c("noise : left","noise : right"), lty=c(1,1), pch=c(1,1), col=c('red', 'blue'), horiz=T, bty='n', cex=1.2)
     mtext(paste0("r = ", r))
 }
 par(op)

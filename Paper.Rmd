@@ -1057,5 +1057,9 @@ We think this copula approach have scope to investigate into the extinction risk
 \clearpage
 
 # References
+\setlength{\parindent}{-0.2in}
+\setlength{\leftskip}{0.2in}
+\setlength{\parskip}{1pt}
+\noindent
 
 

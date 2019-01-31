@@ -698,7 +698,7 @@ between $u$ and $v$ in the region given by the bounds.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption[For definitions of non-parametric statistics]{Schematic diagram supporting definitions of non-parametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
+\caption[For definitions of non-parametric statistics]{Schematic diagram supporting definitions of non-parametric tail dependence statistics. The blue and red lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
 \end{center}
 \end{figure}
 

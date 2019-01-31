@@ -436,10 +436,10 @@ unwinding silk ribbon. The ribbon was cut into 4 inch segments, each correspondi
 location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
 averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available).-->
 
- [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had atleast 45 years time series data (see Figure \ref{SM-fig_plankton_map}). 
+ [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had at least 45 years time series data (see Figure \ref{SM-fig_plankton_map}). 
  
  The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
-additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had atleast 50 dates data.
+additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had at least 50 dates data.
 
 ```{r tab_aphid_info, echo=F, results='asis',message=F}
 library(tinytex)
@@ -698,7 +698,7 @@ between $u$ and $v$ in the region given by the bounds.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption[For definitions of nonparametric statistics]{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
+\caption[For definitions of non-parametric statistics]{Schematic diagram supporting definitions of non-parametric tail dependence statistics. The red and blue lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
 \end{center}
 \end{figure}
 
@@ -719,7 +719,7 @@ statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$. This exercise
 was repeated, separately, 
 for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect 
 asymptotic behavior of the 
-statistics and their behavior on the small datasets which are common in some fields
+statistics and their behavior on the small data sets which are common in some fields
 of ecology. The mean and standard error of the three difference statistics were computed for 
 each copula family, parameter value, and value of $n$, and results were plotted against 
 Spearman's rho (Figs \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
@@ -728,8 +728,8 @@ C copulas, negative for SC copulas (except for the case of $\rho=0$, a
 boundary case of these families corresponding to independence), and not significantly different 
 from $0$ for F and N 
 copulas.
-We used a $t$-test with a significance threshold of $0.05$ to judge signficance here.
-These expectations were fullfilled (Figs \ref{fig_stat_testing35} and 
+We used a $t$-test with a significance threshold of $0.05$ to judge significance here.
+These expectations were fulfilled (Figs \ref{fig_stat_testing35} and 
 \ref{fig_stat_testing1000}).
 
 <!--The message=F and warning=F flags are to suppress warnings that come when you pass a parameter
@@ -763,14 +763,14 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing non-parametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing non-parametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -794,7 +794,7 @@ call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copn
 
 # Surrogate testing with bivariate datasets for non-parametric statistics \label{surrog_test}
 
-For bivariate datasets, surrogates were produced as follows.   
+For bivariate data sets, surrogates were produced as follows.   
 
 - Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
 one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
@@ -812,7 +812,7 @@ indices $1,\ldots,n$).
 such that the permutation
 $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
 another permutation of $1,\ldots,n$).
-- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+- The surrogate data set is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
 
 \noindent Our code for this algorithm is `copsurrog2d` in the 
 `BIVAN` repository (https://github.com/sghosh89/BIVAN). 
@@ -822,7 +822,7 @@ permutation
 of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
 those of the original data. 
 Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
-Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
+Kendall correlation of the surrogate data set will be the same as that of the $a_i$ and $b_i$, and therefore 
 will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
 a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
@@ -893,7 +893,7 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Non-parametric tests against an N-copula null, soil C and N data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -973,7 +973,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
+\caption[Non-parametric tests against an N-copula null, bird body mass and BMR data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1016,7 +1016,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
+\caption[Non-parametric tests against an N-copula null, mammal body mass and BMR data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1079,7 +1079,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
+\caption[Non-parametric tests against an N-copula null, Cedar Creek data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1354,7 +1354,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption[Nonparametric tail statistics versus distance between locations for green spruce aphid abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
+\caption[Non-parametric tail statistics versus distance between locations for green spruce aphid abundance data]{Non parametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
 
@@ -1558,7 +1558,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
-\caption[Nonparametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
+\caption[Non-parametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Non parametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
 
@@ -1789,7 +1789,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption[Nonparametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
+\caption[Non-parametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Non-parametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
 \end{center}
 \end{figure}
 
@@ -1983,7 +1983,7 @@ knitr::kable(s,digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_D2u-D2l_vs_D.pdf}
-\caption[Nonparametric tail statistics versus distance between locations for methane-flux data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
+\caption[Non-parametric tail statistics versus distance between locations for methane-flux data]{Non-parametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
 \end{center}
 \end{figure}
 
@@ -2748,7 +2748,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with pearson correlation p-value $< 0.05$, then they are significantly similar.\label{fig_Cause4copula_SC_kend_ar1}}
+\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar.\label{fig_Cause4copula_SC_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2855,7 +2855,7 @@ To find whether nature of tail dependence in noise copula preserved for affected
 P_{i}(t+1)=P_{i}(t) exp \left[ r \left\{ 1-\frac{P_{i}(t)}{K} \right\} +\epsilon_{i}(t) \right]
 \end{equation}
 
-The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula family, was transformed into a normally distribution with mean zero and standard deviation $0.1$ (considered as weak noise) or $1$ (considered as strong noise), for code see [`GetNoise`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function. For weak noise, we found similar tail dependence in noise copula and the resultant population copula from the stochastic Ricker model (Figs. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} - \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}) as we obtained in linear AR(1) model (see \nameref{MT-Results_Q2} in the maintext). But for strong noise the tail-dependence between noise and population copula was not significantly similar (Figs. \ref{fig_Cause4copula_C_kend_sRicker_nsd_1} - \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_1}). We repeated the whole analysis with $r > 1$ (i.e. Ricker model's over-compensatory dynamical regime) and came up with same conclusion that strong noise with non-linearility could disturb the tail-dependence information translated from noise to population copula.
+The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula family, was transformed into a normally distribution with mean zero and standard deviation $0.1$ (considered as weak noise) or $1$ (considered as strong noise), for code see [`GetNoise`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function. For weak noise, we found similar tail dependence in noise copula and the resultant population copula from the stochastic Ricker model (Figs. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} - \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}) as we obtained in linear AR(1) model (see \nameref{MT-Results_Q2} in the main text). But for strong noise the tail-dependence between noise and population copula was not significantly similar (Figs. \ref{fig_Cause4copula_C_kend_sRicker_nsd_1} - \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_1}). We repeated the whole analysis with $r > 1$ (i.e. Ricker model's over-compensatory dynamical regime) and came up with same conclusion that strong noise with non-linearity could disturb the tail-dependence information translated from noise to population copula.
 
 <!--adding results for stochastic ricker with weak noise : nsd=0.1-->
 \begin{figure}[!h]
@@ -2877,7 +2877,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak nonise: results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula (having normal marginal with standard deviation 0.1) and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with pearson correlation p-value $< 0.05$, then they are significantly similar. \label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula (having normal marginal with standard deviation 0.1) and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar. \label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2992,7 +2992,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak nonise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -4383,7 +4383,7 @@ dev.off()
 \newpage
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 
-Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with covariance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of timeseries, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula dataset or not and plotted our results alongwith root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
+Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with co-variance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of time series, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula data set or not and plotted our results along with root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
 
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion------
 

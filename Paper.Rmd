@@ -889,25 +889,56 @@ knitr::kable(tab_multivar_summary,
              column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
 
-<!--***DAN: made it to here, 2018 1 10, 1252pm-->
-
 <!--Question 2 analyses-->
 # Background, concepts and methods for Q2: causes/mechanisms of non-normal copula structure \label{Causes}
 
 Having demonstrated that non-N copula structure and asymmetric tail dependence are common
-features of ecological data, we explore via mathematical 
+features of ecological data, we explored via mathematical 
 models two possible mechanisms of this structure which 
 seem likely to operate in diverse ecological scenarios. The first mechanism 
 is an extension of the well known Moran
 effect, and was summarized conceptually in the Introduction. 
-It explores the idea that non-N copula structure and asymmetric tail dependence 
-between environmental variables measured in two places may bring about similarly 
+It explores the hypothesis that non-N copula structure and asymmetric tail dependence 
+between environmental variables measured through time 
+in two places may bring about similarly 
 structured dependence between ecological variables that are influenced by the 
-environmental variables. Let $P_i(t)$ be a population index for location $i$ ($i=1,2$),
-and assume the index follows AR(1) dynamics within a patch, 
-$P_i(t+1)=\beta P_{i}(t-1)+ \sqrt{1-\beta^2} \epsilon_i(t)$. Here the $\epsilon_i(t)$ are 
+environmental variables. 
+
+Let $E_i(t)$ be an ecological variable 
+measured in location $i$ ($i=1,2$).
+We initially assumed the variable follows AR(1) dynamics within a location, 
+$E_i(t+1)=\beta E_{i}(t-1)+ \sqrt{1-\beta^2} \epsilon_i(t)$. 
+We used $\beta=0.5$. Here the $\epsilon_i(t)$ represent environmental noise; they are 
 standard-normal random variables that are independent for distinct times, $t$, but 
-that are non-independent across patches. 
+that were made to exhibit different kinds of 
+dependence across locations in different simulations (see below).
+The ecological variable, $E$, is very general, and could represent, for instance, deviations
+of a population density from a carrying capacity or average density, deviations of
+total plant community biomass or other community variable from an average value,
+or flux of a biogeochemical variable. 
+
+To explore the importance of nonlinear dynamics for our hypothersis, we also considered 
+nonlinear population models based on $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right) \right)+\sigma\epsilon_i(t))$, using $r=0.5$, $K=100$, and $\sigma=0.1$ or 
+$\sigma=1$. When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
+$K$, and the nonlinearities of the model have limited influence on dynamics. When
+$\sigma=1$, model dynamics are strongly nonlinear. We refer to these as
+the weak-noise and strong-noise cases. The $epsilon_i(t)$ were again standard
+normal and independent through time, but were related (see below) across locations.
+
+For each of the three model setups, for each of the copulas C, SC, G, SG, J, SJ,
+and for each Kendall correlation value $\tau=0.1,0.2,\ldots,0.9$, 
+we generated 5000 noise pairs $(\epsilon_1(t),\epsilon_2(t))$ from the
+bivariate random variable with the given copula family and the given $\tau$.
+We then used the generated noise to drive the model, and retained both the
+noise and population values for the final 500 
+time steps of the simulation. For each model, copula family, and $\tau$, the following
+statistics were computed for both the noises and populations: 
+Pearson, Spearman and Kendall correlations, $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, 
+$\Dsq_l$, $\Dsq_u$, $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$. 
+Values were plotted for noises and populations against $\tau$. If the hypothesis is
+correct that copula structure between locations of environmental noise can be 
+transmitted to produce similar dependence structure for ecological variables, 
+plots should be similar for populations and noises. 
 
 <!--***DAN: Note to self, this model, and also the other one we study in this section,
 are actually much more general than populatin. Should replace P_i with E_i where E_i is
@@ -924,16 +955,13 @@ At least I have straightforward generalization to biogeochem and community cases
 More on evolutionary: suppose we model traits as a bivariate random walk where the perturbations
 in the traits are related with a copula with some tail dependence. Suppose you have a tree and 
 you model evolution down the tree in this way and then look at the bivariate distribution of
-trait on the tips of the tree. What do you get? I guess you get some copula structure?-->
+trait on the tips of the tree. What do you get? I guess you get some copula structure? maybe
+this thinking can lead to some isnights into how copula structure we observed in the species
+trait data might have come about?-->
 
-To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
 
-\begin{equation}\label{eq.AR1}
-P_{i}(t+1)=\beta P_{i}(t)+\alpha \epsilon_{i}(t)
-\end{equation}
 
-To keep $Var(P_{i}(t+1))$ equal to unity, we set noise coefficient $\alpha$ in terms of AR coefficient $\beta$ as $\alpha = \sqrt(1-\beta^2)$. We showed with Eq. \ref{eq.AR1} in the next section that both model selection method and non-parametric analysis indicated similar tail dependence in population copula as that of noise copula. <!--Asymmetric sensitivity and copula structure in populations-->
-\textbf{(ii)} 
+
 
 
 

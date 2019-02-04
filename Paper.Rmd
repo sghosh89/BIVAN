@@ -234,7 +234,8 @@ variable. This process is called the \emph{Moran effect}.
 If copula structure is transmitted, 
 possibly in modified form, 
 from environmental to ecological variables, then we may expect important 
-copula structure to be a common feature of spatial synchrony.
+copula structure to be a common feature of spatial synchrony of population, community, 
+biogeochemical and other ecological variables.
 Synchrony is a phenomenon of great interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].
 
@@ -303,13 +304,22 @@ d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBM
 d_cc<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
-We used datasets that pertain to multiple fields and levels of organization within or related to ecology, including environmental, species-trait, phenological, population, community, and ecosystem functioning data. Copula structure describing the relationship between atmospheric weather variables such as X and Y has been examined previously in the meteorological literature (e.g., REF). We therefore examined environmental variables from the soil instead, using the Rapid Carbon Assessment database (RaCA; @Wills2014).
+We used datasets that pertain to multiple fields and levels of organization within 
+or related to ecology, including environmental, species-trait, phenological, 
+population, community, and ecosystem functioning data. Copula structure describing 
+the relationship between atmospheric weather variables such as X and Y has been 
+examined previously in the meteorological literature (e.g., REF). We therefore 
+examined environmental variables from the soil instead, using the Rapid Carbon 
+Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
-The database comprises measurements of soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
+The database comprises measurements of soil organic carbon and total soil 
+nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
-Species-trait data were average species basal metabolic rate (KJ per hour) and body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
+Species-trait data were average species basal metabolic rate (KJ per hour) and 
+body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
+and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
 These data have been much studied, but to our knowledge the copula structure 
 of the dependence between metabolic rate and body mass has not been examined. 
 Species-trait data such as these reflect the coevolution of the two traits.
@@ -887,18 +897,34 @@ knitr::kable(tab_multivar_summary,
 Having demonstrated that non-N copula structure and asymmetric tail dependence are common
 features of ecological data, we explore via mathematical 
 models two possible mechanisms of this structure which 
-seem likely to operate in population systems. The first mechanism 
+seem likely to operate in diverse ecological scenarios. The first mechanism 
 is an extension of the well known Moran
-effect, and was summarized in the Introduction. 
+effect, and was summarized conceptually in the Introduction. 
 It explores the idea that non-N copula structure and asymmetric tail dependence 
 between environmental variables measured in two places may bring about similarly 
 structured dependence between ecological variables that are influenced by the 
 environmental variables. Let $P_i(t)$ be a population index for location $i$ ($i=1,2$),
 and assume the index follows AR(1) dynamics within a patch, 
-$P_i(t+1)=\beta P_{i}(t-1)+ \sqrt{1-\beta^2} \epsilon_i(t)$ where the $\epsilon_i(t)$ are 
-standard-normal random variables that are independent for distinct times, $t$, but correlated
+$P_i(t+1)=\beta P_{i}(t-1)+ \sqrt{1-\beta^2} \epsilon_i(t)$. Here the $\epsilon_i(t)$ are 
+standard-normal random variables that are independent for distinct times, $t$, but 
+that are non-independent across patches. 
 
-
+<!--***DAN: Note to self, this model, and also the other one we study in this section,
+are actually much more general than populatin. Should replace P_i with E_i where E_i is
+just some ecological variable. Could be deviaitons from a pop from carrying capacity, could be a 
+biogeochemical variable, could maybe even be an evolutinary variable. Anything that is
+affected by an environmental variable and could reasonably be modelled by an AR process. 
+So the generalization to biogeochemical and community
+data seems pretty straightforward. Need to think this through and reword the corresponding
+part of the intro to encompass this greater generality. How would the evolutionary case work?
+Well, suppose the two "patches" are actually traits, and the perturbations epsilon are somehow
+the "drift events" or something like that? This does not really make sense, strictly speaking,
+now that I am thinking about it, but maybe the model could be modified to make it make sense?
+At least I have straightforward generalization to biogeochem and community cases. 
+More on evolutionary: suppose we model traits as a bivariate random walk where the perturbations
+in the traits are related with a copula with some tail dependence. Suppose you have a tree and 
+you model evolution down the tree in this way and then look at the bivariate distribution of
+trait on the tips of the tree. What do you get? I guess you get some copula structure?-->
 
 To begin with, we chose a two habitat patch ($i = 1, 2$) with AR(1) model [Eq. \ref{eq.AR1}] where population $P_{i}$ at time $(t+1)$ depends upon its past value at $(t)$ and the iid noise (assumed to be caused by environmental fluctuations) $\epsilon_{i} (t)$.  
 

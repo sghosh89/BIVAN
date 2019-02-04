@@ -1,5 +1,5 @@
 ---
-title: "Makefile, compiliation notes"
+title: "BIVAN makefile, compiliation notes"
 author: "Daniel Reuman"
 date: ""
 output: pdf_document

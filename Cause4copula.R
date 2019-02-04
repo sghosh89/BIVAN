@@ -736,7 +736,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   
@@ -845,7 +845,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   
@@ -949,7 +949,7 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num
   abline(mylm,col="black")
   lines(x=xlim1,y=ylim1,col="green")
   c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson correlation = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
+  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
   par(op)
   dev.off()
   

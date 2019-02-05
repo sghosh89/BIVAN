@@ -1082,7 +1082,8 @@ our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_s
 We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
 in all cases.
 <!--***DAN: Right Shya? I have written this, but I want you to show me these results
-(without putting them in the paper) to make sure the statement is accurate-->
+(without putting them in the paper) to make sure the statement is accurate.
+But we should put the figs in the sup mat, not the stats results, I think, but we could put the figs-->
 
 \begin{figure}[!h]
 \begin{center}

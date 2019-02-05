@@ -698,7 +698,7 @@ between $u$ and $v$ in the region given by the bounds.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
-\caption[For definitions of non-parametric statistics]{Schematic diagram supporting definitions of non-parametric tail dependence statistics. The blue and red lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
+\caption[For definitions of nonparametric statistics]{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The blue and red lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
 \end{center}
 \end{figure}
 
@@ -763,14 +763,14 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing non-parametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing non-parametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -792,7 +792,7 @@ statname<-"D2umD2l"
 call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
 ```
 
-# Surrogate testing with bivariate datasets for non-parametric statistics \label{surrog_test}
+# Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
 
 For bivariate data sets, surrogates were produced as follows.   
 
@@ -893,7 +893,7 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Non-parametric tests against an N-copula null, soil C and N data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -973,7 +973,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Non-parametric tests against an N-copula null, bird body mass and BMR data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
+\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1016,7 +1016,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Non-parametric tests against an N-copula null, mammal body mass and BMR data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
+\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1079,7 +1079,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
-\caption[Non-parametric tests against an N-copula null, Cedar Creek data]{Non parametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1300,7 +1300,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              )
 ```
 
-<!--Do the main computations for non-parametric analysis of aphid count data-->
+<!--Do the main computations for nonparametric analysis of aphid count data-->
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1354,7 +1354,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_count/Sp_10_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics versus distance between locations for green spruce aphid abundance data]{Non parametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
+\caption[Nonparametric tail statistics versus distance between locations for green spruce aphid abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
 
@@ -1504,7 +1504,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              )
 ```
 
-<!--Do the main computations for non-parametric analysis of aphid ff data-->
+<!--Do the main computations for nonparametric analysis of aphid ff data-->
 ```{r stat_aphid_ff, echo=F, cache=T,  cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1558,7 +1558,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_aphid_ff/Sp_11_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Non parametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
+\caption[Nonparametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
 
@@ -1566,7 +1566,7 @@ knitr::kable(s, digits = 3,
 \newpage
 ## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
 ### Model selection approach \label{Ex_pns_Model_selection}
-### Non-parametric analysis of tail dependence  \label{Ex_pns_NPA}
+### nonparametric analysis of tail dependence  \label{Ex_pns_NPA}
                           ----moved to Paper.Rmd----
 -->
 
@@ -1736,7 +1736,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--Do the main computations for non-parametric analysis of plankton data-->
+<!--Do the main computations for nonparametric analysis of plankton data-->
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1789,7 +1789,7 @@ knitr::kable(s, digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_plankton_north_sea/Sp_16_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Non-parametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
+\caption[Nonparametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
 \end{center}
 \end{figure}
 
@@ -1910,7 +1910,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--Do the main computations for non-parametric analysis of methane-flux data-->
+<!--Do the main computations for nonparametric analysis of methane-flux data-->
 ```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1983,7 +1983,7 @@ knitr::kable(s,digits = 3,
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Corl-Coru_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_Pl-Pu_vs_D.pdf}
 \includegraphics[width=4 cm]{./Results/stat_results/stat_methane/data_pt_thrs50_D2u-D2l_vs_D.pdf}
-\caption[Non-parametric tail statistics versus distance between locations for methane-flux data]{Non-parametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
+\caption[Nonparametric tail statistics versus distance between locations for methane-flux data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
 \end{center}
 \end{figure}
 
@@ -2724,7 +2724,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic for between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_C_kend_ar1}}
+\caption[AR(1) model : comparing correlations and nonparametric statistic for between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 nonparametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. \label{fig_Cause4copula_C_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2748,7 +2748,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar.\label{fig_Cause4copula_SC_kend_ar1}}
+\caption[AR(1) model : comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{AR(1) model : results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 nonparametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from upper tail dependent \textbf{Survival Clayton} copula and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar.\label{fig_Cause4copula_SC_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2772,7 +2772,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Gumbel} copula. \label{fig_Cause4copula_G_kend_ar1}}
+\caption[AR(1) model : comparing correlations and nonparametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Gumbel} copula. \label{fig_Cause4copula_G_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2795,7 +2795,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula. \label{fig_Cause4copula_SG_kend_ar1}}
+\caption[AR(1) model : comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula. \label{fig_Cause4copula_SG_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2819,7 +2819,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model : comparing correlations and non-parametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Joe} copula \label{fig_Cause4copula_J_kend_ar1}}
+\caption[AR(1) model : comparing correlations and nonparametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from upper tail dependent \textbf{Joe} copula \label{fig_Cause4copula_J_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2842,7 +2842,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[AR(1) model: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula. \label{fig_Cause4copula_SJ_kend_ar1}}
+\caption[AR(1) model: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{AR(1) model: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_ar1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula. \label{fig_Cause4copula_SJ_kend_ar1}}
 \end{center}
 \end{figure}
 
@@ -2877,7 +2877,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 non-parametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula (having normal marginal with standard deviation 0.1) and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar. \label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: results of comparison between 3 types of correlation (i.e. Spearman, Kendall, Pearson) and 6 nonparametric stats ($\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_u$ and $\Dsq_l$) of environmental noise generated from lower tail dependent \textbf{Clayton} copula (having normal marginal with standard deviation 0.1) and of the affected populations for 9 equidistant Kendall's correlation ($\tau$) values in a range (0.1 to 0.9) (Initially $5000$ points are generated but we kept last $500$ points for both noise and population data for comparison). p-values from paired t-test if $> 0.05$ (above horizontal purple line) indicates exactly same estimate between noise and population copulae. Last row in the figure compared the linear regression line with the 1:1 green line and if noise and population tail-dependence stats came up with Pearson correlation p-value $< 0.05$, then they are significantly similar. \label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2900,7 +2900,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Survival Clayton} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Survival Clayton} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2923,7 +2923,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Gumbel} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_G_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Gumbel} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_G_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2946,7 +2946,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SG_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SG_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2969,7 +2969,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -2992,7 +2992,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}}
+\caption[Stochastic Ricker model with weak noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with weak noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 0.1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -3016,7 +3016,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with strong noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Clayton} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with strong noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_C_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Clayton} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3039,7 +3039,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with strong noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Survival Clayton} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with strong noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Clayton}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SC_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Survival Clayton} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3062,7 +3062,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with strong noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_G_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Gumbel} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_G_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with strong noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_G_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Gumbel} copula  having normal marginal with standard deviation 1. \label{fig_Cause4copula_G_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3085,7 +3085,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with strong noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SG_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_SG_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with strong noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Gumbel}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SG_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Gumbel} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_SG_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3108,7 +3108,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with strong noise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_J_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Joe} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with strong noise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_J_kend_sRicker_nsd_0.1} but for noise generated from upper tail dependent \textbf{Joe} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3131,7 +3131,7 @@ The noise ($\epsilon_{i}$), initially drawn from a bivariate asymmetric copula f
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Stochastic Ricker model with weak nonise: comparing correlations and non-parametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_1}}
+\caption[Stochastic Ricker model with weak nonise: comparing correlations and nonparametric statistic between noise-copula (\textbf{Survival Joe}) and population copula for different Kendall's correlation]{Stochastic Ricker model with strong noise: similar analysis as depicted in Fig. \ref{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1} but for noise generated from lower tail dependent \textbf{Survival Joe} copula having normal marginal with standard deviation 1. \label{fig_Cause4copula_SJ_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 

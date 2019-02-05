@@ -357,7 +357,7 @@ different locations or for different species. The phenology and population datas
 copula structure can be studied for each pair of locations. Likewise the the ecosystem 
 functioning (methane flux) dataset was  multivariate in this sense.
 
-# Background, concepts and methods for Q1: detecting copula structure in data \label{Methods}
+# Background, concepts and methods for Q1: Detecting copula structure in data \label{Methods}
 
 We addressed Q1 partly via a model selection procedure in which the normal copula
 and a variety of alternative copulas were fit to 
@@ -890,7 +890,7 @@ knitr::kable(tab_multivar_summary,
 ```
 
 <!--Question 2 analyses-->
-# Background, concepts and methods for Q2: causes/mechanisms of non-normal copula structure \label{Causes}
+# Background, concepts and methods for Q2: Causes and mechanisms of non-normal copula structure \label{Causes}
 
 Having demonstrated that non-N copula structure and asymmetric tail dependence are common
 features of ecological data, we explored via mathematical 
@@ -922,7 +922,7 @@ nonlinear population models based on $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/
 $\sigma=1$. When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
 $K$, and the nonlinearities of the model have limited influence on dynamics. When
 $\sigma=1$, model dynamics are strongly nonlinear. We refer to these as
-the weak-noise and strong-noise cases. The $epsilon_i(t)$ were again standard
+the weak-noise and strong-noise cases. The $\epsilon_i(t)$ were again standard
 normal and independent through time, but were related (see below) across locations.
 
 For each of the three model setups, for each of the copulas C, SC, G, SG, J, SJ,
@@ -942,7 +942,7 @@ transmitted to produce similar dependence structure for ecological variables,
 plots should be similar for populations and noises. 
 
 <!--***DAN: Note to self, this model, and also the other one we study in this section,
-are actually much more general than populatin. Should replace P_i with E_i where E_i is
+are actually much more general than population. Should replace P_i with E_i where E_i is
 just some ecological variable. Could be deviaitons from a pop from carrying capacity, could be a 
 biogeochemical variable, could maybe even be an evolutinary variable. Anything that is
 affected by an environmental variable and could reasonably be modelled by an AR process. 
@@ -960,45 +960,47 @@ trait on the tips of the tree. What do you get? I guess you get some copula stru
 this thinking can lead to some isnights into how copula structure we observed in the species
 trait data might have come about?-->
 
+<!--***DAN: note to self. Suppose deviations from the 
+regression line for log met rate v log M are 
+more costly at one end than at another, for whatever reason. That is a proximate
+mechanism for asymmetric tail dependence-->
 
+The second mechanism we will explore, which was also summarized in the 
+Introduction,
+relates to Liebig's law of the minimum, or, more generally, to the fact that 
+environmental variables can often influence ecological variables through nonlinear 
+relationships. If an environmental variable influences an ecological variable
+more strongly in one of its tails, we explored using a model 
+whether the ecological variable
+could then exhibit asymmetric tail dependence between measurements made in two
+locations. Let $E_i(t)$ again be an ecological variable measured in locations
+$i=1,2$. Assume $E_i(t)$ has dynamics that follow 
+$E_i(t+1)=bE_i(t)+g(\epsilon_i(t))+a \delta_i(t)$, where $g$ is a function
+describing how the environmental variable $\epsilon_i(t)$ influences
+$E_i(t)$, and the $\delta_i(t)$ are standard-normally distributed 
+local noise, independent across time and sampling locations. We used $b=0.1$ and
+$a=0.2$, and $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
+time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
+$\cov(\epsilon_1,\epsilon_2)=0.8$. We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
+$g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise; and 
+$g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
+$g_1$ represent environmental effects that occur only for negative 
+values of the environmental variables, and $g_2$ represent environmental effects 
+that occur only for positive values. Note that both $(\epsilon_1,\epsilon_2)$
+and $(\delta_1,\delta_2)$ have N copula structure, being drawn from 
+bivariate normal distributions. Hence the Moran-like mechanism discussed
+previously cannot be operating in this model.
 
+We simulated the model once using $g_1$ and once using $g_2$, for 5000 time
+steps in both cases, retaining $E_1(t)$ and $E_2(t)$ for the final 500 time 
+steps of each simulation. We applied our model selection algorithms and 
+non-arametric statistics, which were previously applied to 
+data to answer Q1, to the 
+simulation outputs to discover if the mechanism built into the model could
+give rise to non-N copula structure and asymmetric tail dependence in the 
+ecological variable.
 
-
-
-
-The second mechanism, which was also summarized in the introduction,
-relates to Liebig's law of the minimum, or, more generally, to the potential for 
-environmental variables to influence ecological variables through nonlinear relationships.
-
-
-
-
-Secondly, we intended to see if any specific (lower or upper) tail dependence emerges from a copula of two meta-populations, due to some global environmental factors (like temperature or snowfall) which behaved differently beyond a certain expectation threshold (as shown in Eq. \ref{eq.AS_g}). To test the asymmetric sensitivity, we constructed a two habitat patch model for population $P_{i} (i=1,2)$ as follows;
-
-\begin{equation}\label{eq.AS}
-P_{i}(t+1) = b P_{i}(t) + g(\varepsilon_{i}(t)) + h(\delta_{i}(t))
-\end{equation}
-
-$b$ was the linear growth rate. Global environmental fluctuation function $g(\varepsilon)$ can take up any one form between $g_{1}$ and $g_{2}$ (Eq. \ref{eq.AS_g}, Fig. \ref{fig_ms_asym_b_0.1}) where $\varepsilon=(\varepsilon_{1}, \varepsilon_{2})$ was an iid through time with mean zero and co-variance matrix $\Sigma_{\varepsilon}$. Local environmental fluctuation function $h(\delta)$ varied according to Eq. \ref{eq.AS_h} where $a$ was the scaling parameter between $0$ to $1$. $\delta=(\delta_{1}, \delta_{2})$ was an iid across $i=(1,2)$ and time with mean zero and co-variance matrix $\Sigma_{\delta}$. With this model we showed tail dependence in population copula changed from lower to upper tail dependence as global noise copula $g(\varepsilon)$ changed its form from $g_{1}$ to $g_{2}$ (Eq. \ref{eq.AS_g}).
-
-\begin{align}
-g(\varepsilon) = \begin{cases} 
-g_{1} = \begin{cases}
-\varepsilon & \text{if $\varepsilon< 0$}; \\
-0 & \text{otherwise}.
-\end{cases}\\ \\
-g_{2} = \begin{cases}
-\varepsilon & \text{if $\varepsilon> 0$}; \\
-0 & \text{otherwise}\label{eq.AS_g}.
-\end{cases}
-\end{cases} \text{where } \varepsilon = N(\textbf{0},\Sigma_{\varepsilon})\;\ \text{with} \;\ \Sigma_{\varepsilon} = \begin{bmatrix} 1 & r \\ r & 1 \end{bmatrix}
-\end{align}
-
-\begin{equation}\label{eq.AS_h}
-h(\delta) = a \delta = aN(\textbf{0},\Sigma_{\delta})\;\ \text{with} \;\ \Sigma_{\delta} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
-\end{equation}
-
-# Results for \hyperref[Intro]{\textbf{(Q2)}}: similar tail dependence in population copula as that of noise copula \label{Results_Q2}
+# Results for Q2: Moran-like effects and asymmetric dependencies \label{Results_Q2}
 
 The hypothesis that copula structure and tail dependence between environmental 
 variables measured through time in different locations can produce similar 
@@ -1009,7 +1011,9 @@ intrinsic dynamics of the ecological variable is strongly nonlinear.
 For simulations using AR(1) models (see section on methods for Q2), copula 
 statistics were always very similar for noise and populations 
 (Fig \ref{fig_Cause4copula_scatter_C_kend_ar1}, 
-\ref{SM-fig_Cause4copula_C_kend_ar1}-\ref{fig_Cause4copula_SJ_kend_ar1}).
+\ref{SM-fig_Cause4copula_C_kend_ar1}-\ref{SM-fig_Cause4copula_SJ_kend_ar1}),
+though there were significant but minor differences for some statistics
+and simulations.
 
 \begin{figure}[!h]
 \begin{center}
@@ -1033,33 +1037,64 @@ the other models described in the methods for Q2.\label{fig_Cause4copula_scatter
 \end{center}
 \end{figure}
 
-<!--***DAN: got to here-->
+For weak noise and using our nonlinear model (methods for Q2), copula statistics
+were again very similar for noise and model outputs 
+(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}).
+Though there were again significant but small differences for some statistics
+and simulations, the overall hypothesis that copula structure in the noise translates
+to similar but not identical copula structure in output populations, at least
+as measured with the tail dependence and correlation statistics we used, was
+supported. Since many ecological models are nonlinear, this result provides the 
+important expectation that there will be a Moran-effect-like correspondence 
+between noise and model-output copula structure for typical ecological dynamics,
+as long as the noise is small enough that dynamics stay relatively close
+to model equilibrium. Results that hold for "weak noise" in this sense
+are common in ecology. 
+We repeated the analysis with $r=X$, with similar results. The deterministic 
+<!--***DAN: Shya, please replace X in the above line with the actual value(s)
+of r that you used.-->
+one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
+at $K$ when $r<1$ (so-called under-compensating dynamics), but exhibits 
+an oscillatory approach to a stable equilibrium at $K$ when $r>1$ (over-compensating
+dynamics).
 
-To test environmental effect on population copula from the model \ref{eq.AR1} with $\beta = 0.5$, we measured 3 types of correlations (Spearman, Kendall, Pearson) and different types of nonparametric tail-dependence statistics for both bivariate noise copula and resultant population copula (following model \ref{eq.AR1}) for $50$ simulations. Then we plotted mean of each measured quantity with standard error against Kendall's correlation of the noise copula family. Fig. \ref{SM-fig_Cause4copula_C_kend_ar1} compares the statistics from population copula and the copula made of noises drawn from Clayton (lower tail dependent copula family). We also carried out a paired t-test to compute the p-values of each statistic for noise and population data and found that the nature of tail dependence in noise and populations remained similar but they were not exactly the same except in Pearson correlation coefficient which verified the Moran effect on the population data caused by environmental noise. (For code see [`Plotter_Cause4copula_stat`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). Linear regression between tail statistics from noise and population copula (Fig. \ref{fig_Cause4copula_scatter_C_kend_ar1}) confirmed that the asymmetric tail dependence in noise copula caused similar tail dependence in population copula. We did the same analysis with other asymmetric uni-parameter copula family and got similar tail dependence in resultant population copula (see Figs. \ref{SM-fig_Cause4copula_SC_kend_ar1} - \ref{SM-fig_Cause4copula_SJ_kend_ar1}). We also measured tail-dependence between noise and population copula for non-linear stochastic Ricker model and found that our hypothesis of similar tail dependence held true for weak non-linearity regime (see Appendix \ref{SM-cause4copula_ricker}).
+For strong noise and using our nonlinear model (methods for Q2), 
+copula statistics, generally speaking, were approximately similar 
+between noise and model
+outputs; however, similarity was reduced relative to the AR(1) 
+and weak-noise results, and, for a few simulations, tail dependence 
+asymmetry statistics
+even had opposite signs for noise and model outputs 
+(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). For instance, using a C copula with a large Kendall $\tau$,
+$\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
+population model outputs; and likewise for SG and SJ copulas. Dynamics were
+strongly nonlinear for the model parameters we used, and nevertheless similarities
+between noise and model-output copula structure, according to the statistics 
+we used, were more noticable than discrepancies.
+We again repeated the analysis with $r=X$, with similar results.
+<!--***DAN: Right, Shya? Please replace X with the actual value(s)-->
 
-<!--
-***SG : commented out this section as it gives the similar interpretation but in a more complex way.
-our approach is of two-fold : First, we calculated the parameter values of the noise-copula (for example, we chose Clayton with lower tail dependence, in this case the parameter of interest is $\theta$, which determines the strength of association of the variables [@nelsen2006_copula]) using `iRho` or `iTau` function from `copula` package for Spearman's Rho or Kendall's Tau, respectively. Then we simulated our model (\ref{eq.AR1}) and estimated parameters of the outcome bivariate population-copula, with last $500$ simulated points for each habitat patch (see Fig. \ref{fig_Cause4copula_params_GOF_500}). We also tested the goodness of fit of the estimated parameters for the population-copula and its standard error due to sample size. We reported p-values from goodness of fit tests for both statistics (Cramer-von Mises and Kolmogorov-Smirnov). p-values greater or equal to $0.05$ (above the dashed line in Fig. \ref{fig_Cause4copula_params_GOF_500}) were considered as a good fit of estimated parameters. Fig. \ref{SM-fig_Cause4copula_params_GOF_2500} represents similar feature as of Fig. \ref{fig_Cause4copula_params_GOF_500} but here we considered last $2500$ simulated population data points for our parameters-estimation, thus making our comparison more sensitive on basis of p-value threshold at $0.05$. (For code see [`Plotter_Cause4copula_GOF`](https://github.com/sghosh89/BIVAN/blob/master/Cause4copula.R) function). 
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf}
-\caption{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last 500 points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicate good fit (not significantly different) of population copula with same noise copula family. \label{fig_Cause4copula_params_GOF_500}}
-\end{center}
-\end{figure}
---> 
-
-
-
-
-To explore the effect of asymmetric sensitivity, we simulated our model (\ref{eq.AS}) for $b=0.1$ , $a=0.2$, $r=0.8$. $10000$ points were generated and we kept only the last $1000$ points to plot the population-copula (Fig. \ref{fig_ms_asym_b_0.1}) for each specific functional form of $g$  (For code see [`Simulator_asym_sens`](https://github.com/sghosh89/BIVAN/blob/master/asym_sensitivity.R) function). When asymmetric global noise had only non-positive contributions at two habitat patches ($g_{1}$ in the first panel of Fig. \ref{fig_ms_asym_b_0.1}), lower tail dependence appeared in the global noise copula and so thus in affected population copula (last subplot in the first panel of Fig. \ref{fig_ms_asym_b_0.1}). Similarly, when global noises had only non-negative contributions at two habitat patches ($g_{2}$ in the second panel of Fig. \ref{fig_ms_asym_b_0.1}), upper tail dependence appeared in the global noise copula and so thus in the outcome population copula (last subplot in the second panel of Fig. \ref{fig_ms_asym_b_0.1}). We also carried out model selection and nonparametric statistical analysis with each copula of Fig. \ref{fig_ms_asym_b_0.1} and summarized our results in Tables \ref{SM-tab_summary_stat_asym_sens} - \ref{SM-tab_stat_npa_asym_2}. According to our model selection approach (Table \ref{SM-tab_summary_stat_asym_sens}), non-normal copulae (with higher AIC weights) were always best-fit with similar asymmetric tail dependence which gave the support of our hypothesis of the effect of asymmetric global noise copula on populations. Our nonparametric analysis results (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) were consistent with the model selection approach. 
+Our model with environmental effects which differed in the
+two tails produced simulated ecological variables with visually apparent asymmetry 
+of tail dependence and non-N copula structure (Fig. \ref{fig_ms_asym_b_0.1}).
+Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
+our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) statistically confirmed the visual result.
+We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
+in all cases.
+<!--***DAN: Right Shya? I have written this, but I want you to show me these results
+(without putting them in the paper) to make sure the statement is accurate-->
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
-\caption{Effects of asymmetric global noise copula (resulting from the asymmetric dependence of $g$ on $\varepsilon$) on two habitat patch model (Eq. \ref{eq.AS}) with growth rate $b=0.1$: copula of two populations ($P_{1}, P_{2}$) shaped according to the asymmetry of noise copula\label{fig_ms_asym_b_0.1}}
+\caption{If environmental effects operate asymmetrically in their tails on
+ecological variables, it can result in non-N copula structure and asymmetric 
+tail dependence across space in the ecological variables. Shown are the last
+$500$ points from simulations described in the text.\label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, pls remove the left 4 panels, and also the headers of the right
+two panels - we can put that information in the caption, as I have done-->
 
 <!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
 <!--

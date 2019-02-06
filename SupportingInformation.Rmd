@@ -3959,12 +3959,15 @@ saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
-rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS","BS.success.percent")
+rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS")
 knitr::kable(summary_stat, booktabs = T, escape=F,
              format = "latex", linesep = "",
-             digits=3, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$"),
+             digits=3, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
+                                   "b=-0.1, g$_{1}$","b=-0.1, g$_{2}$",
+                                   "b=0.9, g$_{1}$","b=0.9, g$_{2}$",
+                                   "b=-0.9, g$_{1}$","b=-0.9, g$_{2}$"),
       #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based), \\textbf{BS.success.percent} percentage of successful bootstraps in goodness of fit test. Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
+      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based). Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
 ```
 
 ```{r read_tab_stat_npa_asym,echo=F,results="asis"}

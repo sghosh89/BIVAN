@@ -315,7 +315,7 @@ Plotter_Cause4copula_GOF<-function(N,fcode,method,nsd,num_keep_last,BS,params,p0
 #       resloc : folder location where the plots should be saved
 #       params,p0,model : these are inputs for Simulator_Cause4copula function
 #-----------------------------------------------------------------------------------------------
-Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num_keep_last,resloc,params,p0,model){
+Sim_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num_keep_last,resloc,params,p0,model){
   
   corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
   
@@ -572,402 +572,46 @@ Plotter_Cause4copula_stat<-function(N,numsim=50,fcode,nsd,method,lb=0,ub=0.1,num
     
   }
   
-  if(method=="spearman"){
-    xlabel<-"Spearman's Rho"
-  }else if(method=="kendall"){
-    xlabel<-"Kendall's Tau"
-  }else{
-    warning("specify method",immediate.=T,call.=T)
-  }
-  
-  # Plotting Spearman correlation btw noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Spearman_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='red')
-  bar_len<-0.02
-  segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,S_noise_mat[,3],corcoef_list+bar_len,S_noise_mat[,3],col='red')
-  #arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,S_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,S_pop_mat[,1],corcoef_list+bar_len,S_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,S_pop_mat[,3],corcoef_list+bar_len,S_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  points(corcoef_list,pval_S,col="purple")
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Kendall correlation btw noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Kendall_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,K_noise_mat[,3],corcoef_list+bar_len,K_noise_mat[,3],col='red')
-  #arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,K_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,K_pop_mat[,1],corcoef_list+bar_len,K_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,K_pop_mat[,3],corcoef_list+bar_len,K_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  points(corcoef_list,pval_K,col="purple")
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Pearson correlation btw noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pearson_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,P_noise_mat[,3],corcoef_list+bar_len,P_noise_mat[,3],col='red')
-  #arrows(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,P_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,P_pop_mat[,1],corcoef_list+bar_len,P_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,P_pop_mat[,3],corcoef_list+bar_len,P_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  points(corcoef_list,pval_P,col="purple")
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Corl of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.1+max(Corl_noise_mat[,2],Corl_pop_mat[,2])))
-  segments(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,Corl_noise_mat[,3],corcoef_list+bar_len,Corl_noise_mat[,3],col='red')
-  #arrows(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,Corl_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,Corl_pop_mat[,1],corcoef_list+bar_len,Corl_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,Corl_pop_mat[,3],corcoef_list+bar_len,Corl_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_Corl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Coru of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["u"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.1+max(Coru_noise_mat[,2],Coru_pop_mat[,2])))
-  segments(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,Coru_noise_mat[,3],corcoef_list+bar_len,Coru_noise_mat[,3],col='red')
-  #arrows(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,Coru_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,Coru_pop_mat[,1],corcoef_list+bar_len,Coru_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,Coru_pop_mat[,3],corcoef_list+bar_len,Coru_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_Coru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Corl - Coru of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl-Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(-0.2,0.2))
-  segments(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,3],corcoef_list+bar_len,CorlmCoru_noise_mat[,3],col='red')
-  #arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,CorlmCoru_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,1],corcoef_list+bar_len,CorlmCoru_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,3],corcoef_list+bar_len,CorlmCoru_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
-  par(new = TRUE)
-  plot(corcoef_list,pval_CorlmCoru,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
-       xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting correlation between Corl - Coru of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_CorlmCoru_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
-  ylim1<-range(CorlmCoru_pop_mat[,1],CorlmCoru_pop_mat[,3])
-  xlim1<-range(CorlmCoru_noise_mat[,1],CorlmCoru_noise_mat[,3])
-  b_len<-diff(xlim1)/50
-  plot(CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,2],cex=2,col="black",
-       xlab=expression("Cor"["l,noise"]-"Cor"["u,noise"]),
-       ylab=expression("Cor"["l,pop"]-"Cor"["u,pop"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=xlim1,ylim=ylim1)
-  segments(CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,1],CorlmCoru_noise_mat[,2],CorlmCoru_pop_mat[,3],col='blue')
-  segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,1],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,1],col='blue')
-  segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,3],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,3],col='blue')
-  
-  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2],CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2],col='red')
-  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]+b_len,col='red')
-  segments(CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]+b_len,col='red')
-  
-  dat<-data.frame(x1=CorlmCoru_noise_mat[,2],y1=CorlmCoru_pop_mat[,2])
-  mylm<-lm(y1~x1,data=dat)
-  abline(mylm,col="black")
-  lines(x=xlim1,y=ylim1,col="green")
-  c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
-  par(op)
-  dev.off()
-  
-  # Plotting Pl of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.02+max(Pl_noise_mat[,2],Pl_pop_mat[,2])))
-  segments(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,Pl_noise_mat[,3],corcoef_list+bar_len,Pl_noise_mat[,3],col='red')
-  #arrows(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,Pl_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,Pl_pop_mat[,1],corcoef_list+bar_len,Pl_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,Pl_pop_mat[,3],corcoef_list+bar_len,Pl_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_Pl,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  #op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-  #plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  #legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-  #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-  #       bty = "n") 
-  #par(op)
-  dev.off()
-  
-  # Plotting Pu of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["u"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.02+max(Pu_noise_mat[,2],Pu_pop_mat[,2])))
-  segments(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,Pu_noise_mat[,3],corcoef_list+bar_len,Pu_noise_mat[,3],col='red')
-  #arrows(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,Pu_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,Pu_pop_mat[,1],corcoef_list+bar_len,Pu_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,Pu_pop_mat[,3],corcoef_list+bar_len,Pu_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_Pu,col="purple",type="p",axes = FALSE,
-       bty = "n", xlab = "", ylab = "",ylim=c(0,1),xlim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting Pl - Pu of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl-Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(-0.1,0.1))
-  segments(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,PlmPu_noise_mat[,3],corcoef_list+bar_len,PlmPu_noise_mat[,3],col='red')
-  #arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,PlmPu_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,PlmPu_pop_mat[,1],corcoef_list+bar_len,PlmPu_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,PlmPu_pop_mat[,3],corcoef_list+bar_len,PlmPu_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
-  par(new = TRUE)
-  plot(corcoef_list,pval_PlmPu,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
-       xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting correlation between Pl - Pu of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_PlmPu_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
-  ylim1<-range(PlmPu_pop_mat[,1],PlmPu_pop_mat[,3])
-  xlim1<-range(PlmPu_noise_mat[,1],PlmPu_noise_mat[,3])
-  
-  b_len<-diff(xlim1)/50
-  
-  plot(PlmPu_noise_mat[,2],PlmPu_pop_mat[,2],cex=2,col="black",
-       xlab=expression("P"["l,noise"]-"P"["u,noise"]),
-       ylab=expression("P"["l,pop"]-"P"["u,pop"]),
-       cex.lab=2,cex.axis=1.5,
-       xlim=xlim1,ylim=ylim1)
-  
-  segments(PlmPu_noise_mat[,2],PlmPu_pop_mat[,1],PlmPu_noise_mat[,2],PlmPu_pop_mat[,3],col='blue')
-  segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,1],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,1],col='blue')
-  segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,3],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,3],col='blue')
-  
-  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2],PlmPu_noise_mat[,3],PlmPu_pop_mat[,2],col='red')
-  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]+b_len,col='red')
-  segments(PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]+b_len,col='red')
-  
-  dat<-data.frame(x1=PlmPu_noise_mat[,2],y1=PlmPu_pop_mat[,2])
-  mylm<-lm(y1~x1,data=dat)
-  abline(mylm,col="black")
-  lines(x=xlim1,y=ylim1,col="green")
-  c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
-  par(op)
-  dev.off()
-  
-  # Plotting D2u of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[u]^2),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.002+max(D2u_noise_mat[,2],D2u_pop_mat[,2])))
-  segments(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,D2u_noise_mat[,3],corcoef_list+bar_len,D2u_noise_mat[,3],col='red')
-  #arrows(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,D2u_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,D2u_pop_mat[,1],corcoef_list+bar_len,D2u_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,D2u_pop_mat[,3],corcoef_list+bar_len,D2u_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_D2u,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
-       xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting D2l of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"[l]^2),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(0,0.002+max(D2l_noise_mat[,2],D2l_pop_mat[,2])))
-  segments(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,D2l_noise_mat[,3],corcoef_list+bar_len,D2l_noise_mat[,3],col='red')
-  #arrows(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,D2l_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,D2l_pop_mat[,1],corcoef_list+bar_len,D2l_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,D2l_pop_mat[,3],corcoef_list+bar_len,D2l_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  par(new = TRUE)
-  plot(corcoef_list,pval_D2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
-       xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting D2u - D2l of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u-D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="red",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
-       cex.lab=2,cex.axis=1.5,
-       xlim=c(0,1),ylim=c(-0.01,0.01)) 
-       #ylim=c(0,0.002+max(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2])))
-  segments(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],col='red')
-  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,1],corcoef_list+bar_len,D2umD2l_noise_mat[,1],col='red')
-  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,3],corcoef_list+bar_len,D2umD2l_noise_mat[,3],col='red')
-  #arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='red')
-  points(corcoef_list,D2umD2l_pop_mat[,2],cex=0.5,col="blue")
-  segments(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],col='blue')
-  segments(corcoef_list-bar_len,D2umD2l_pop_mat[,1],corcoef_list+bar_len,D2umD2l_pop_mat[,1],col='blue')
-  segments(corcoef_list-bar_len,D2umD2l_pop_mat[,3],corcoef_list+bar_len,D2umD2l_pop_mat[,3],col='blue')
-  #arrows(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],length=0.03, angle=90, code=3, col='blue')
-  lines(range(0,1),c(0,0),type='l',lty='dotted',col='black')
-  par(new = TRUE)
-  plot(corcoef_list,pval_D2umD2l,col="purple",type="p",axes = FALSE, bty = "n", xlab = "", ylab = "",
-       xlim=c(0,1),ylim=c(0,1))
-  lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-  axis(side=4,col='purple',col.axis="purple",cex.axis=1.5)
-  mtext(side = 4, line = 2, 'p values', col='purple',cex=2)
-  par(op)
-  dev.off()
-  
-  # Plotting correlation between D2u - D2l of noise and pop copula
-  pdf(paste0(resloc,BiCopName(fcode,short=F),"_scatter_D2umD2l_",xlabel,".pdf",sep=""),height=4,width=5)
-  op<-par(mar=c(4.5,6,2,2), mgp=c(3,0.5,0))
-  ylim1<-range(D2umD2l_pop_mat[,1],D2umD2l_pop_mat[,3])
-  xlim1<-range(D2umD2l_noise_mat[,1],D2umD2l_noise_mat[,3])
-  
-  plot(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2],cex=2,col="black",
-       xlab=expression("D"["u,noise"]^2-"D"["l,noise"]^2),
-       ylab=expression("D"["u,pop"]^2-"D"["l,pop"]^2),
-       cex.lab=2,cex.axis=1.5,
-       xlim=xlim1,ylim=ylim1)
-  
-  b_len<-diff(xlim1)/50
-  segments(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,1],D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,3],col='blue')
-  segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,1],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,1],col='blue')
-  segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,3],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,3],col='blue')
-  
-  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2],D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2],col='red')
-  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]+b_len,col='red')
-  segments(D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]+b_len,col='red')
-  
-  dat<-data.frame(x1=D2umD2l_noise_mat[,2],y1=D2umD2l_pop_mat[,2])
-  mylm<-lm(y1~x1,data=dat)
-  abline(mylm,col="black")
-  lines(x=xlim1,y=ylim1,col="green")
-  c<-cor.test(dat$x1,dat$y1,method = "pearson",alternative = "t")
-  mtext(paste0("Pearson = ",round(unname(c$estimate),3),", p = ",round(c$p.value,3),sep=""),cex=1.5,line=0.1)
-  par(op)
-  dev.off()
-  
-  #op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
-  #plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  #legend("top", c("noise","population", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-  #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = T, inset = c(0,0), 
-  #       bty = "n") 
-  #par(op2)
-  
-  pdf(paste0(resloc,"common_legend_cause4copula_stat.pdf",sep=""),height=1,width=15)
-  op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
-  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("center", c("noise copula","population copula", "p-value(paired t-test)"), col = c("red", "blue", "purple"),
-                cex = 2.5, pch = c(16, 16, 1), xpd = TRUE, horiz = T, inset = c(0,0), 
-                bty = "n")
-  par(op)
-  dev.off()
+  return(list(resloc=resloc,
+              fcode=fcode,
+              method=method,
+              corcoef_list=corcoef_list,
+              S_noise_mat=S_noise_mat,
+              K_noise_mat=K_noise_mat,
+              P_noise_mat=P_noise_mat,
+              S_pop_mat=S_pop_mat,
+              K_pop_mat=K_pop_mat,
+              P_pop_mat=P_pop_mat,
+              Corl_noise_mat=Corl_noise_mat,
+              Corl_pop_mat=Corl_pop_mat,
+              Coru_noise_mat=Coru_noise_mat,
+              Coru_pop_mat=Coru_pop_mat,
+              CorlmCoru_noise_mat=CorlmCoru_noise_mat,
+              CorlmCoru_pop_mat=CorlmCoru_pop_mat,
+              Pl_noise_mat=Pl_noise_mat,
+              Pl_pop_mat=Pl_pop_mat,
+              Pu_noise_mat=Pu_noise_mat,
+              Pu_pop_mat=Pu_pop_mat,
+              PlmPu_noise_mat=PlmPu_noise_mat,
+              PlmPu_pop_mat=PlmPu_pop_mat,
+              D2u_noise_mat=D2u_noise_mat,
+              D2u_pop_mat=D2u_pop_mat,
+              D2l_noise_mat=D2l_noise_mat,
+              D2l_pop_mat=D2l_pop_mat,
+              D2umD2l_noise_mat=D2umD2l_noise_mat,
+              D2umD2l_pop_mat=D2umD2l_pop_mat,
+              pval_S=pval_S,
+              pval_K=pval_K,
+              pval_P=pval_P,
+              pval_Corl=pval_Corl,
+              pval_Coru=pval_Coru,
+              pval_CorlmCoru=pval_CorlmCoru,
+              pval_Pl=pval_Pl,
+              pval_Pu=pval_Pu,
+              pval_PlmPu=pval_PlmPu,
+              pval_D2u=pval_D2u,
+              pval_D2l=pval_D2l,
+              pval_D2umD2l=pval_D2umD2l))
 }
 #-----------------------------------------------
 

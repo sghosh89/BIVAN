@@ -981,7 +981,7 @@ $E_i(t)$, and the $\delta_i(t)$ are standard-normally distributed
 local noise, independent across time and sampling locations. We used $b=0.1$ and
 $a=0.2$, and $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
-$\cov(\epsilon_1,\epsilon_2)=0.8$. We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
+$\\cov(\epsilon_1,\epsilon_2)=0.8$. We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise; and 
 $g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
 $g_1$ represent environmental effects that occur only for negative 
@@ -1171,6 +1171,7 @@ We explained the possible causes which induced asymmetric tail-dependence in the
 
 <!--future work-->
 We think this copula approach have scope to investigate into the extinction risks of meta-population due to climate change. To illustrate, lower-tail dependent environmental fluctuations may suppress the meta-populations synchronously by making some of the habitats go extinct. This could help in managing policy for conservation of endangered populations.  
+
 
 
 \clearpage

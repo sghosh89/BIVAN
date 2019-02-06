@@ -157,6 +157,7 @@ dev.off()
 ```
 
 ```{r read_BMR_birds_and_copulaplot, echo=F, results='hide'}
+library(readxl)
 set.seed(seed)
 raw_b<-readxl::read_xls("./Data/BMR/BirdBodyMassesMetabolicRates/BirdMassesAndMetabolicRatesMcNab2008.xls")
 raw_b<-raw_b[,1:3]
@@ -3170,7 +3171,7 @@ for(insd in nsdlist){
                                           num_keep_last=500,resloc=resloc,
                                           params=params,p0=p0,model=model)
 
-    saveRDS(myres,paste(resloc,"ricker_J_kend.RDS",sep=""))
+    saveRDS(myres,paste(resloc,"ricker_SJ_kend.RDS",sep=""))
   }
  }
 }

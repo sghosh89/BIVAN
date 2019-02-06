@@ -2739,15 +2739,15 @@ for(insd in nsdlist){
     resloc<-paste(tempo,"/",sep="")
 
   # for clayton with spearman and kendall method
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,
                                            num_keep_last=500,resloc=resloc,
-                                           params=params,p0=c(0,0),model=model)
+                                           params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_C_spear.RDS",sep=""))
 
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_C_kend.RDS",sep=""))
 
@@ -2828,15 +2828,15 @@ for(insd in nsdlist){
     resloc<-paste(tempo,"/",sep="")
 
   # for survival clayton with spearman and kendall method
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,
                                            num_keep_last=500,resloc=resloc,
-                                           params=params,p0=c(0,0),model=model)
+                                           params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_SC_spear.RDS",sep=""))
 
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_SC_kend.RDS",sep=""))
   }
@@ -2914,15 +2914,15 @@ for(insd in nsdlist){
     resloc<-paste(tempo,"/",sep="")
 
   # for gumbel with spearman and kendall method
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,
                                            num_keep_last=500,resloc=resloc,
-                                           params=params,p0=c(0,0),model=model)
+                                           params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_G_spear.RDS",sep=""))
 
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_G_kend.RDS",sep=""))
   }
@@ -3000,15 +3000,15 @@ for(insd in nsdlist){
     resloc<-paste(tempo,"/",sep="")
 
   # for survival gumbel with spearman and kendall method
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="spearman",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="spearman",lb=0,ub=0.1,
                                            num_keep_last=500,resloc=resloc,
-                                           params=params,p0=c(0,0),model=model)
+                                           params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_SG_spear.RDS",sep=""))
 
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_SG_kend.RDS",sep=""))
   }
@@ -3087,9 +3087,9 @@ for(insd in nsdlist){
 
   # for joe with spearman and kendall method
     
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_J_kend.RDS",sep=""))
   }
@@ -3166,9 +3166,9 @@ for(insd in nsdlist){
 
   # for survival joe with spearman and kendall method
     
-    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=nsd,method="kendall",lb=0,ub=0.1,
+    myres<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=insd,method="kendall",lb=0,ub=0.1,
                                           num_keep_last=500,resloc=resloc,
-                                          params=params,p0=c(0,0),model=model)
+                                          params=params,p0=p0,model=model)
 
     saveRDS(myres,paste(resloc,"ricker_J_kend.RDS",sep=""))
   }

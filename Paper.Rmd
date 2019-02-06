@@ -994,9 +994,9 @@ previously cannot be operating in this model.
 We simulated the model once using $g_1$ and once using $g_2$, for 5000 time
 steps in both cases, retaining $E_1(t)$ and $E_2(t)$ for the final 500 time 
 steps of each simulation. We applied our model selection algorithms and 
-non-arametric statistics, which were previously applied to 
+non-parametric statistics, which were previously applied to 
 data to answer Q1, to the 
-simulation outputs to discover if the mechanism built into the model could
+simulation outputs to discover if the model could
 give rise to non-N copula structure and asymmetric tail dependence in the 
 ecological variable.
 
@@ -1078,12 +1078,14 @@ Our model with environmental effects which differed in the
 two tails produced simulated ecological variables with visually apparent asymmetry 
 of tail dependence and non-N copula structure (Fig. \ref{fig_ms_asym_b_0.1}).
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
-our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) statistically confirmed the visual result.
+our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) 
+statistically confirmed the visual result.
 We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
 in all cases.
 <!--***DAN: Right Shya? I have written this, but I want you to show me these results
 (without putting them in the paper) to make sure the statement is accurate.
-But we should put the figs in the sup mat, not the stats results, I think, but we could put the figs-->
+But we should put the figs in the sup mat, not the stats results, I think, but we could put the figs. Or maybe we do want to put the stats. Let's look at them anyway. Maybe the sentence needs to
+be rewritten if the results for other b are actually different.-->
 
 \begin{figure}[!h]
 \begin{center}

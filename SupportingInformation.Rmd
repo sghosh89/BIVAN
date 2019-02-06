@@ -2712,6 +2712,7 @@ source("Cause4copula.R")
 set.seed(seed)
 #---------------------------------------
 # This chunk stores results for ar1 model : clayton
+tag_ricker_C<-"999C" #this is a caching tag used later to cache output from present chunk
 
 model<-"ricker"
 fcode<-3
@@ -2755,7 +2756,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_C, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_C, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_C,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -2799,6 +2800,8 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+tag_ricker_SC<-"999SC" #this is a caching tag used later to cache output from present chunk
+
 # This chunk stores results for ar1 model : survival clayton
 
 model<-"ricker"
@@ -2841,12 +2844,11 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SC, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_SC, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SC,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
 #---------------------------------------
-# This chunk plots results for ar1 model : clayton
 
 model<-"ricker"
 fcode<-13
@@ -2885,6 +2887,8 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+tag_ricker_G<-"999G" #this is a caching tag used later to cache output from present chunk
+
 # This chunk stores results for ar1 model : gumbel
 
 model<-"ricker"
@@ -2926,12 +2930,11 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_G, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_G, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_G,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
 #---------------------------------------
-# This chunk plots results for ar1 model : clayton
 
 model<-"ricker"
 fcode<-4
@@ -2970,6 +2973,8 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+tag_ricker_SG<-"999SG" #this is a caching tag used later to cache output from present chunk
+
 # This chunk stores results for ar1 model : survival gumbel
 
 model<-"ricker"
@@ -3011,12 +3016,11 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SG, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_SG, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SG,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
 #---------------------------------------
-# This chunk plots results for ar1 model : clayton
 
 model<-"ricker"
 fcode<-14
@@ -3055,6 +3059,8 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+tag_ricker_J<-"999J" #this is a caching tag used later to cache output from present chunk
+
 # This chunk stores results for ar1 model : joe
 
 model<-"ricker"
@@ -3091,12 +3097,11 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_J, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_J, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_J,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
 #---------------------------------------
-# This chunk plots results for ar1 model : clayton
 
 model<-"ricker"
 fcode<-6
@@ -3133,6 +3138,8 @@ source("Cause4copula.R")
 #-----------------
 set.seed(seed)
 #---------------------------------------
+tag_ricker_SJ<-"999SJ" #this is a caching tag used later to cache output from present chunk
+
 # This chunk stores results for ar1 model : survival joe
 
 model<-"ricker"
@@ -3169,12 +3176,11 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SJ, echo=F, results="hide"}
+```{r plot_cause4copula_stat_ricker_SJ, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SJ,mtime("Plotter_Cause4copula.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
 #---------------------------------------
-# This chunk plots results for ar1 model : clayton
 
 model<-"ricker"
 fcode<-16

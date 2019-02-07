@@ -1099,6 +1099,7 @@ $500$ points from simulations described in the text.\label{fig_ms_asym_b_0.1}}
 <!--***DAN: Shya, pls remove the left 4 panels, and also the headers of the right
 two panels - we can put that information in the caption, as I have done-->
 
+
 <!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
 <!--
 ## Application : The Moran effect and copula structure in population 

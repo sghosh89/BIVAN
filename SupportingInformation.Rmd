@@ -3263,7 +3263,8 @@ so you can knit over night. Also please let me know, so I can knit overnight, to
 
 At the same time that you do that above, please see if you can fix the alignment
 between the bottom three panels of Fig S32 (and subsequent analogous figures) so they
-line up with the panels above that.-->
+line up with the panels above that.
+***Shya: Done.-->
 
 \begin{figure}[!h]
 \begin{center}
@@ -3956,6 +3957,51 @@ saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS
 saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
+```{r overwritting_plots_asym_cop,echo=F,results="hide"}
+pdf("./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.3,0))
+pop<-ans_b_0.1$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_0.1$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.3,0))
+pop<-ans_b_neg0.1$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_neg0.1$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.3,0))
+pop<-ans_b_0.9$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_0.9$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.3,0))
+pop<-ans_b_neg0.9$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_neg0.9$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+```
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
@@ -4008,7 +4054,7 @@ for(i in c(1:8)){
 }
 gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.9, g$_{1}$","b=0.9, g$_{2}$","b=-0.9, g$_{1}$","b=-0.9, g$_{2}$")
 tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.9,0.9,-0.9,-0.9),each=3),
-  g=rep(c(1,2,1,2,1,2,1,2),each=3),tab_stat_npa_asym)
+  g=rep(c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),each=3),tab_stat_npa_asym)
 knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              format = "latex",linesep = "",escape=F,
              caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
@@ -4023,7 +4069,7 @@ of the same statistic computed on surrogate time series randomized to have N-cop
 given statistic on the data was less (respectively, more) than its value on $X$ of the 
 surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
-lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice
+lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice'
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")#%>%
  #            kable_styling()%>%
@@ -4040,21 +4086,21 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
 \caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
 \caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.9$.\label{fig_ms_asym_b_0.9}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf}
 \caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.9$.\label{fig_ms_asym_b_-0.9}}
 \end{center}
 \end{figure}

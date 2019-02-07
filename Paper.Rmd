@@ -1105,11 +1105,11 @@ and asymmetries of tail dependence were not particularly noticable
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
 \caption{If environmental effects operate asymmetrically in their tails on
 ecological variables, it can result in non-N copula structure and asymmetric 
 tail dependence across space in the ecological variables. Shown are the last
-$500$ points from simulations described in the text.\label{fig_ms_asym_b_0.1}}
+$500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the text.\label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
 

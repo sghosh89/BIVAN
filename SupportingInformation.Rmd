@@ -3972,7 +3972,7 @@ knitr::kable(summary_stat, booktabs = T, escape=F,
 
 ```{r read_tab_stat_npa_asym,echo=F,results="asis"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
-tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
+#tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 
 #for(i in c(1:8)){
 #  temp<-make_table_stat_fn(data=tab_asym[[i]])
@@ -3986,20 +3986,33 @@ tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
 
-```{r tab_stat_npa_asym_1,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[1]])
-knitr::kable(temp, booktabs = T, 
-             format = "latex",linesep = "",escape=F,
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_1}")
-```
+```{r tab_stat_npa_asym,echo=F,results="markup"}
+library(kableExtra)
 
-```{r tab_stat_npa_asym_2,echo=F,results="markup"}
-temp<-make_table_stat_fn(data=tab_asym[[2]])
-knitr::kable(temp, booktabs = T, 
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
+tab_stat_npa_asym<-c()
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
+}
+
+knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              format = "latex",linesep = "",escape=F,
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence.\\label{tab_stat_npa_asym_2}")
+             caption.short = "Results for tests of whether asymmetry of tail dependence was significant
+                              compared to a normal-copula null hypothesis.",
+             caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more)
+                      than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ 
+                      or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail         
+                      dependence.\\label{tab_stat_npa_asym}")%>%
+             kable_styling()%>%
+             group_rows("b=0.1, g$_{1}$", 2,4, escape=F) %>%
+             group_rows("b=0.1, g$_{2}$", 5,7, escape=F) %>%
+             group_rows("b=-0.1, g$_{1}$", 8,10, escape=F) %>%
+             group_rows("b=-0.1, g$_{2}$", 11,13, escape=F) %>%
+             group_rows("b=0.9, g$_{1}$", 14,16, escape=F) %>%
+             group_rows("b=0.9, g$_{2}$", 17,19, escape=F) %>%
+             group_rows("b=-0.9, g$_{1}$", 20,22, escape=F) %>%
+             group_rows("b=-0.9, g$_{2}$", 23,25, escape=F)
 ```
 
 <!--

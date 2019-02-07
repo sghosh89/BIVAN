@@ -3959,15 +3959,26 @@ saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0
 
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
-rownames(summary_stat)<-c("bestfit.copula.AICw","Normal.copula.AICw","LT.model.avg","UT.model.avg","p.CvM","p.KS")
+rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
 knitr::kable(summary_stat, booktabs = T, escape=F,
              format = "latex", linesep = "",
              digits=3, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
                                    "b=-0.1, g$_{1}$","b=-0.1, g$_{2}$",
                                    "b=0.9, g$_{1}$","b=0.9, g$_{2}$",
                                    "b=-0.9, g$_{1}$","b=-0.9, g$_{2}$"),
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-      caption="summary of model selection results for asymmetric sensitivity : \\textbf{bestfit.copula.AICw} and \\textbf{Normal.copula.AICw} represent the AIC-weightage for best fit copula and Normal copula, \\textbf{LT.model.avg} and \\textbf{UT.model.avg} represent AIC-weight based model averaged lower and upper tail dependence respectively, \\textbf{p.CvM} and \\textbf{p.KS} are the p-values coming from goodness of fit test (Cramer-von Mises and Kolmogorov-Smirnov statistics based). Each column summarizes those statistics for each copula plotted in Fig. \\ref{MT-fig_ms_asym_b_0.1}.\\label{tab_summary_stat_asym_sens}")
+      caption.short="Asymmetric sensitivity model, model selection results",
+      caption="Asymmetric sensitivity model, model selection results. 
+The output of simulations from the second model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.9}) were subjected to the model 
+selection procedures detailed in the 
+methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
+N-copula AICw: the AIC weight of the N copula family; Model-avg. LT: the lower-tail 
+statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
+upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula
+family using the test based on the Cramer-von Mises statistic; p, KS: p-value for goodness of fit 
+test of the best-fitting copula family using the test based on the Kolmogorov-Smirnov 
+statistic.\\label{tab_summary_stat_asym_sens}")
 ```
 
 ```{r read_tab_stat_npa_asym,echo=F,results="asis"}
@@ -4000,12 +4011,21 @@ tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.9,0.9,-0.9,-0.9),each=3),
   g=rep(c(1,2,1,2,1,2,1,2),each=3),tab_stat_npa_asym)
 knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              format = "latex",linesep = "",escape=F,
-             caption.short = "Results for tests of whether asymmetry of tail dependence was significant
-                              compared to a normal-copula null hypothesis.",
-             caption ="A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more)
-                      than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ 
-                      or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail         
-                      dependence.\\label{tab_stat_npa_asym}")#%>%
+             caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
+             caption ="Asymmetric sensitivity model, nonparametric statistics results. 
+The output of simulations from the second model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.9}) were subjected to nonparamtric statistical 
+analyses decribed in the methods section for Q1. The listed statistic was computed for the
+output of the model with the indicated b and g, and the value was compared to 1000 values
+of the same statistic computed on surrogate time series randomized to have N-copula structure
+(see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
+given statistic on the data was less (respectively, more) than its value on $X$ of the 
+surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
+indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
+lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice
+and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
+0.9 to 1.\\label{tab_stat_npa_asym}")#%>%
  #            kable_styling()%>%
  #            group_rows(index=setNames(c(3,3,3,3,3,3,3,3), gtext))
  #            group_rows("b=0.1, g$_{1}$", 2,4, escape=F) %>%
@@ -4018,9 +4038,26 @@ knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
  #            group_rows("b=-0.9, g$_{2}$", 23,25, escape=F)
 ```
 
-<!--
-# Cause of non-Normal copula structure : Asymmetric sensitivity and copula structure in populations \label{Cause_asym_sens}
--->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.9$.\label{fig_ms_asym_b_0.9}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=15 cm]{./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.9$.\label{fig_ms_asym_b_-0.9}}
+\end{center}
+\end{figure}
 
 ```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 

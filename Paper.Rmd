@@ -980,12 +980,14 @@ $i=1,2$. Assume $E_i(t)$ has dynamics that follow
 $E_i(t+1)=bE_i(t)+g(\epsilon_i(t))+a \delta_i(t)$, where $g$ is a function
 describing how the environmental variable $\epsilon_i(t)$ influences
 $E_i(t)$, and the $\delta_i(t)$ are standard-normally distributed 
-local noise, independent across time and sampling locations. We used $b=0.1, -0.1, 0.9, -0.9$ and
-$a=0.2$, and $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
-time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
-$\cov(\epsilon_1,\epsilon_2)=0.8$. Negative values of $b$ correspond to overcompensating dynamics 
+local noise, independent across time and sampling locations. We used $a=0.2$, and 
+$b=0.1, -0.1, 0.9, -0.9$ in different simulations. 
+Negative values of $b$ correspond to overcompensating dynamics 
 and positive values correspond to undercompensating dynamics; larger-magnitude $b$
 mean slower return time of the model to equilibrium after a perturbation. 
+The $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
+time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
+$\cov(\epsilon_1,\epsilon_2)=0.8$. 
 We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise; and 
 $g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
@@ -1084,14 +1086,22 @@ the results were "similar". I encourage you to show me the actual results if the
 any doubt in your mind.-->
 
 Our model with environmental effects which differed in the
-two tails produced simulated ecological variables with visually apparent asymmetry 
-of tail dependence and non-N copula structure (Fig. \ref{fig_ms_asym_b_0.1}).
+two tails could produce simulated ecological variables with visually apparent asymmetry 
+of tail dependence and non-N copula structure, depending on the value of $b$ used. 
+For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ (Fig. \ref{SM-fig_ms_asym_b_-0.1}), 
+for both $g_1$ and $g_2$,
+asymmetric tail dependence and non-N copula structure were visually apparent.
+Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, resp., $g_2) 
+produced lower-tail (resp., upper-tail) dependence in the ecological variable.
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
 our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) 
-statistically confirmed the visual result.
-We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
-in all cases.
-<!--***DAN: Dan to rewrite this para after seeing the complete collection of results-->
+statistically confirmed the visual result for $b=0.1, -0.1$. Results were more
+complex for $b=0.9$ or $-0.9$, indicating that strongly autocorrelated (or strongly 
+negatively autocorrelated dynamics) interact with the effect we have decribed.
+Ecological-variable copulas were strongly non-N for $g_1$, but not for $g_2$ 
+and asymmetries of tail dependence were not particularly noticable 
+(Figs \ref{SM-fig_ms_asym_b_0.9}-\ref{SM-fig_ms_asym_b_-0.9} and Tables 
+\ref{SM-tab_summary_stat_asym_sens}-\ref{SM-tab_stat_npa_asym}).
 
 \begin{figure}[!h]
 \begin{center}

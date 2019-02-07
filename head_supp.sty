@@ -12,11 +12,14 @@
 \newcommand{\Ps}{\operatorname{P}}  
 \newcommand{\Dsq}{\operatorname{D}^2}
 \newcommand{\rank}{\operatorname{rank}}
+\newcommand{\cov}{\operatorname{cov}}
+
 
 \usepackage{xr}
 %\usepackage{setspace}
 %\doublespacing
 %\usepackage{indentfirst}
+\usepackage{array}
 \usepackage{hyperref}
 \usepackage{lineno}
 \usepackage[nomarkers,nolists,heads]{endfloat}
@@ -31,3 +34,7 @@
 \linenumbers
 \hypersetup{linkcolor=red}
 
+% This lines to use longtable option in rmarkdown with endfloat environment
+\let\normallongtable=\longtable
+\renewcommand{\longtable}{\clearpage\normallongtable}
+\DeclareDelayedFloatFlavour*{longtable}{table}

@@ -1078,7 +1078,7 @@ Our model with environmental effects which differed in the
 two tails produced simulated ecological variables with visually apparent asymmetry 
 of tail dependence and non-N copula structure (Fig. \ref{fig_ms_asym_b_0.1}).
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
-our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym_1} -\ref{SM-tab_stat_npa_asym_2}) 
+our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) 
 statistically confirmed the visual result.
 We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
 in all cases.

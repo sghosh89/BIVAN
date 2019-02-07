@@ -825,7 +825,7 @@ dt <- tibble(Description = c("1. P-value, independence test",
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 knitr::kable(tab_bivar_summary, 
              format="latex",
-             caption = "Summary of Q1 results for bivariate datasets. The $p$-values in rows 5-6 are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. For row 10, the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and for 1000 Kendall-preserving surrogate datasets with N copulas, and the rank of real-data value in the distribution of surrogate values is presented. If ranks were $>975$ or $<25$, asymmetry of tail dependence was significant compared to a N-copula null hypothesis.",
+             caption = "Summary of Q1 results for bivariate datasets. The $p$-values in rows 5-6 are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. For row 10, the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and for 1000 Kendall-preserving surrogate datasets with N copulas, and the rank of real-data value in the distribution of surrogate values is presented. If ranks were $>975$ or $<25$, asymmetry of tail dependence was significant compared to a N-copula null hypothesis.\\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.4cm")%>%

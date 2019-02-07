@@ -915,14 +915,16 @@ dependence across locations in different simulations (see below).
 The ecological variable, $E$, is very general, and could represent, for instance, deviations
 of a population density from a carrying capacity or average density, deviations of
 total plant community biomass or other community variable from an average value,
-or flux of a biogeochemical variable. 
+or flux of a biogeochemical variable such as methane or CO$_2$.. 
 
-To explore the importance of nonlinear dynamics for our hypothersis, we also considered 
+To explore the importance of nonlinear dynamics for our hypothesis, we also considered 
 nonlinear population models based on $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right) \right)+\sigma\epsilon_i(t))$, using $r=0.5$, $K=100$, and $\sigma=0.1$ or 
 $\sigma=1$. When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
 $K$, and the nonlinearities of the model have limited influence on dynamics. When
 $\sigma=1$, model dynamics are strongly nonlinear. We refer to these as
-the weak-noise and strong-noise cases. The $\epsilon_i(t)$ were again standard
+the weak-noise and strong-noise cases, though the importance of the noise here
+is that, when it is strong, it brings the nonlinearities of the model strongly into play. 
+The $\epsilon_i(t)$ were again standard
 normal and independent through time, but were related (see below) across locations.
 
 For each of the three model setups, for each of the copulas C, SC, G, SG, J, SJ,
@@ -965,7 +967,7 @@ regression line for log met rate v log M are
 more costly at one end than at another, for whatever reason. That is a proximate
 mechanism for asymmetric tail dependence-->
 
-The second mechanism we will explore, which was also summarized in the 
+The second mechanism we explored, which was also summarized in the 
 Introduction,
 relates to Liebig's law of the minimum, or, more generally, to the fact that 
 environmental variables can often influence ecological variables through nonlinear 
@@ -978,10 +980,13 @@ $i=1,2$. Assume $E_i(t)$ has dynamics that follow
 $E_i(t+1)=bE_i(t)+g(\epsilon_i(t))+a \delta_i(t)$, where $g$ is a function
 describing how the environmental variable $\epsilon_i(t)$ influences
 $E_i(t)$, and the $\delta_i(t)$ are standard-normally distributed 
-local noise, independent across time and sampling locations. We used $b=0.1$ and
+local noise, independent across time and sampling locations. We used $b=0.1, -0.1, 0.9, -0.9$ and
 $a=0.2$, and $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
-$\cov(\epsilon_1,\epsilon_2)=0.8$. We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
+$\cov(\epsilon_1,\epsilon_2)=0.8$. Negative values of $b$ correspond to overcompensating dynamics 
+and positive values correspond to undercompensating dynamics; larger-magnitude $b$
+mean slower return time of the model to equilibrium after a perturbation. 
+We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise; and 
 $g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
 $g_1$ represent environmental effects that occur only for negative 
@@ -991,7 +996,7 @@ and $(\delta_1,\delta_2)$ have N copula structure, being drawn from
 bivariate normal distributions. Hence the Moran-like mechanism discussed
 previously cannot be operating in this model.
 
-We simulated the model once using $g_1$ and once using $g_2$, for 5000 time
+For each value of $b$, we simulated the model once using $g_1$ and once using $g_2$, for 5000 time
 steps in both cases, retaining $E_1(t)$ and $E_2(t)$ for the final 500 time 
 steps of each simulation. We applied our model selection algorithms and 
 non-parametric statistics, which were previously applied to 
@@ -1048,21 +1053,23 @@ supported. Since many ecological models are nonlinear, this result provides the
 important expectation that there will be a Moran-effect-like correspondence 
 between noise and model-output copula structure for typical ecological dynamics,
 as long as the noise is small enough that dynamics stay relatively close
-to model equilibrium. Results that hold for "weak noise" in this sense
+to the model equilibrium. Results that hold for "weak noise" in this sense
 are common in ecology. 
 We repeated the analysis with $r=X$, with similar results. The deterministic 
 <!--***DAN: Shya, please replace X in the above line with the actual value(s)
-of r that you used.-->
+of r that you used. But please be sure
+the results were "similar". I encourage you to show me the actual results if there is 
+any doubt in your mind.-->
 one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
-at $K$ when $r<1$ (so-called under-compensating dynamics), but exhibits 
-an oscillatory approach to a stable equilibrium at $K$ when $r>1$ (over-compensating
+at $K$ when $r<1$ (undercompensating dynamics), but exhibits 
+an oscillatory approach to $K$ when $r>1$ (overcompensating
 dynamics).
 
 For strong noise and using our nonlinear model (methods for Q2), 
 copula statistics, generally speaking, were approximately similar 
 between noise and model
 outputs; however, similarity was reduced relative to the AR(1) 
-and weak-noise results, and, for a few simulations, tail dependence 
+and weak-noise cases, and, for a few simulations, tail dependence 
 asymmetry statistics
 even had opposite signs for noise and model outputs 
 (Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). For instance, using a C copula with a large Kendall $\tau$,
@@ -1072,7 +1079,9 @@ strongly nonlinear for the model parameters we used, and nevertheless similariti
 between noise and model-output copula structure, according to the statistics 
 we used, were more noticable than discrepancies.
 We again repeated the analysis with $r=X$, with similar results.
-<!--***DAN: Right, Shya? Please replace X with the actual value(s)-->
+<!--***DAN: Right, Shya? Please replace X with the actual value(s), but please be sure
+the results were "similar". I encourage you to show me the actual results if there is 
+any doubt in your mind.-->
 
 Our model with environmental effects which differed in the
 two tails produced simulated ecological variables with visually apparent asymmetry 
@@ -1082,10 +1091,7 @@ our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym})
 statistically confirmed the visual result.
 We repeated our analyses with $b=-0.1, 0.9, -0.9$, with similar conclusions
 in all cases.
-<!--***DAN: Right Shya? I have written this, but I want you to show me these results
-(without putting them in the paper) to make sure the statement is accurate.
-But we should put the figs in the sup mat, not the stats results, I think, but we could put the figs. Or maybe we do want to put the stats. Let's look at them anyway. Maybe the sentence needs to
-be rewritten if the results for other b are actually different.-->
+<!--***DAN: Dan to rewrite this para after seeing the complete collection of results-->
 
 \begin{figure}[!h]
 \begin{center}
@@ -1096,8 +1102,6 @@ tail dependence across space in the ecological variables. Shown are the last
 $500$ points from simulations described in the text.\label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, pls remove the left 4 panels, and also the headers of the right
-two panels - we can put that information in the caption, as I have done-->
 
 
 <!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 

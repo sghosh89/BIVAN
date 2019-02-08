@@ -1091,13 +1091,13 @@ of tail dependence and non-N copula structure, depending on the value of $b$ use
 For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ (Fig. \ref{SM-fig_ms_asym_b_-0.1}), 
 for both $g_1$ and $g_2$,
 asymmetric tail dependence and non-N copula structure were visually apparent.
-Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, resp., $g_2) 
+Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, resp., $g_2$) 
 produced lower-tail (resp., upper-tail) dependence in the ecological variable.
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
 our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) 
 statistically confirmed the visual result for $b=0.1, -0.1$. Results were more
 complex for $b=0.9$ or $-0.9$, indicating that strongly autocorrelated (or strongly 
-negatively autocorrelated dynamics) interact with the effect we have decribed.
+negatively autocorrelated dynamics) interact with the effect we have described.
 Ecological-variable copulas were strongly non-N for $g_1$, but not for $g_2$ 
 and asymmetries of tail dependence were not particularly noticable 
 (Figs \ref{SM-fig_ms_asym_b_0.9}-\ref{SM-fig_ms_asym_b_-0.9} and Tables 

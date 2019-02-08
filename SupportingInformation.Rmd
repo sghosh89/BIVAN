@@ -3956,7 +3956,6 @@ saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS
 saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
 ```
 
-
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
 rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
@@ -5046,7 +5045,35 @@ dev.off()
 ![Extinction risk as calculated after 25 years on Ricker model (r=0.25, numsims=10000) decreases as carrying capacity $K$ increases for both local and global dispersion (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
 -->
 
-\newpage
+# Surrogate testing with multivariate datasets\label{Surrog_multi}
+
+For multivariate datasets, surrogates were produced as follows:
+
+- Given data $x_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$, let $\tau_{ij}$ be the Kendall
+correlation of $x_i(t)$ and $x_j(t)$.  
+- Calculate the covariance matrix of a multivariate normal distribution with standard-normal
+marginals and with pairwise Kendall correlations equal to the $\tau_{ij}$. This is possible
+using the `iTau` function of the `VineCopula` package.  
+- Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent draws
+from the the multivariate normal distribution of the previous step.  
+- For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.
+- For each $k$ and $i$ for which $a_i(t)$ is not `NA`, replace the 
+$k$th-smallest (non-`NA`) element of the time series 
+$a_i(t)$, $t=1,\ldots,T$ by the $k$th smallest (non-`NA`) 
+element of $x_i(t)$, $t=1,\ldots,T$.
+Call the result $b_i(t)$. This is the surrogate dataset.    
+
+Our code for this algorithm is `ncsurrog` in the `BIVAN` repository 
+(\url{https://github.com/sghosh89/BIVAN}). Because, for each $i$, the final time series 
+$b_i(t)$ is a permuted version of $x_i(t)$ (and with `NA`s for the same $t$), 
+the marginal distributions of the surrogate dataset (i.e., the distributions of 
+values for each sampling location, $i$) are exactly the same as for the original data.
+Because ranks are preserved in passing from $a_i(t)$ to $b_i(t)$, pairwise Kendall 
+correlations for the $b_i(t)$ will be the same as those of the $a_i(t)$. 
+Discrepancies will come only from the presence of NAs and from sampling variation, 
+and should be minor if the 
+numbers of NAs are not too large and $T$ is not too small. 
+
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 
 Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with co-variance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of time series, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula data set or not and plotted our results along with root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).

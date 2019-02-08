@@ -893,7 +893,7 @@ knitr::kable(tab_multivar_summary,
 # Background, concepts and methods for Q2: Causes and mechanisms of non-normal copula structure \label{Causes}
 
 Having demonstrated that non-N copula structure and asymmetric tail dependence are common
-features of ecological data, we explored via mathematical 
+features of ecological data, we addressed Q2 by exploring via mathematical 
 models two possible mechanisms of this structure which 
 seem likely to operate in diverse ecological scenarios. The first mechanism 
 is an extension of the well known Moran
@@ -965,7 +965,7 @@ trait data might have come about?-->
 <!--***DAN: note to self. Suppose deviations from the 
 regression line for log met rate v log M are 
 more costly at one end than at another, for whatever reason. That is a proximate
-mechanism for asymmetric tail dependence-->
+mechanism for asymmetric tail dependence?-->
 
 The second mechanism we explored, which was also summarized in the 
 Introduction,
@@ -1007,7 +1007,7 @@ simulation outputs to discover if the model could
 give rise to non-N copula structure and asymmetric tail dependence in the 
 ecological variable.
 
-# Results for Q2: Moran-like effects and asymmetric dependencies \label{Results_Q2}
+# Results for Q2: Moran-like effects and asymmetric dependencies produce non-normal copula structure\label{Results_Q2}
 
 The hypothesis that copula structure and tail dependence between environmental 
 variables measured through time in different locations can produce similar 
@@ -1129,7 +1129,49 @@ dependence of populations in the locations that are influenced by the environmen
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 
 <!--Question 3 analyses-->
-# Concepts, methods and models for Q3: Consequences of non-normal copula structure and tail dependence for our understanding of biology \label{Consequences}
+# Background, concepts and methods for Q3: Consequences of non-normal copula structure for our understanding of ecology \label{Consequences}
+
+We addressed Q3 using both models and data. The initial 
+idea was presented in the Introduction that
+the distribution (through time) of a spatially averaged quantity should depend on the 
+nature of the dependence between the local quantities being averaged, including their
+copula structure and tail dependence. For instance, suppose $E_i(t)$ are ecological
+variables measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and suppose 
+the distribution and temporal dynamics of the spatial average $\sum_i E_i(t)/N$ is of
+interest. The $E_i(t)$ could be, for instance, local abundances of a pest or 
+exploited species, or local fluxes of a greenhouse gas. If  $E_i$ and $E_j$ are 
+strongly right-tail dependent for all or most location pairs $i$ and $j$, then
+exceptionally large values tend to occur at the same time in all or most locations.
+This should tend to increase the skewness of the distribution through time of the
+spatial average. Using similar reasoning, left-tail dependence between local variables
+$E_i$ and $E_j$ will tend to decreases skewness of the spatial mean. Skewness of the 
+spatial mean corresponds to the "spikiness" of the spatial-mean time series. 
+The spatial-mean time series may be the quantity of principal importance for 
+cases such as pest or resource abundance or CO$_2$ or methane flux.
+
+We tested these ideas using the focal multivariate datasets of our earlier analyses:
+green spruce aphid abundance data, leaf-curling plum aphid first flight data, \emph{Ceratium
+furca} abundance data, and methane flux data (see Data and Table \ref{tab_multivar_summary}).
+For each dataset we calculated the spatial mean, and then the skewness (through time) of that
+mean. Then, for each dataset separately, we compared the value obtained 
+to a distribution of values 
+of the same quantity calculated for each of 10000 surrogate datasets that were 
+produced from the empirical data by randomizing
+it in a special way to have the copula structure of a multivariate-normal distribution
+(Appendix \ref{SM-Surrog_multi}). The surrogate/randomized datasets had exactly the same
+marginal distributions (i.e., distributions of values for each sampling location)
+as the original data. 
+They also had very similar Kendall or Spearman correlations (the algorithm had two versions,
+one for preserving each correlation coefficient) between pairs of sampling locations
+as the original data. But the surrogates had multivariate normal copula structure. 
+Our comparisons therefore tested the null hypothesis that the skewness of the spatial 
+mean took values on the empirical no different from what one would expect if the copula
+structure of the data were multivariate normal, but the data were otherwise statistically
+unchanged. Significant differences indicate that copula structure contributes to the skewness
+of the spatial mean, i.e., to its "spikiness."
+
+<!--***DAN: stopped here 2019 02 08 1106am central-->
+
 
 This section is dedicated to analysis of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We wanted to examine whether the asymmetric tail dependence had any **(i)** effects on skewness of spatially averaged time series data. We predicted that because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, should change significantly from the individual skewness of time-series data. We tested null hypothesis $(H_{0})$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula.
 We generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (Spearman or Kendall) same and calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set in the next section (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R)). We made a histogram of surrogate skewness and found if actual skewness was within the $95\%$ confidence interval or not. If the $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness than Normal copula).

@@ -38,7 +38,10 @@ ncsurrog<-function(m,corpres,numsurrog){
     stop("Error in ncsurrog: corpres must be 'kendall' or 'spearman'")
   }
   if (corpres=="kendall" && 
-      any(apply(X=m,MARGIN=2,FUN=function(x){length(x)-length(unique(x))})>0))
+      any(apply(X=m,MARGIN=2,FUN=function(x){
+        x<-x[is.finite(x)]
+        return(length(x)-length(unique(x)))
+        })>0))
   {
     stop("Error in ncsurrog: ties in time series are not allowed if corpres is kendall")
   }

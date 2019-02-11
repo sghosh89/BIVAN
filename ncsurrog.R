@@ -1,5 +1,6 @@
 library(copula)
 library(mvtnorm)
+library(matrixcalc)
 
 #This function takes a bunch of time series measured at the same
 #times in different locations and creates surrogate datasets which
@@ -12,6 +13,10 @@ library(mvtnorm)
 #This is better than copsurrod2d because it can do multivariate data
 #but it is worse that copsurrog2d because the target copula can only 
 #be a normal copula.
+#
+#Notes: If the data have ties, Kendall cannot be used. In some cases
+#the algorithm does not work because an intermediate matrix which needs
+#to be positive semi-definite is not. In that case it throws an error.
 #
 #Args
 #m          A N by n matrix, where N is the length of the time series 
@@ -27,6 +32,16 @@ library(mvtnorm)
 ncsurrog<-function(m,corpres,numsurrog){
   N<-dim(m)[1]
   n<-dim(m)[2]
+  
+  #Some error checking
+  if (corpres!="kendall" && corpres!="spearman"){
+    stop("Error in ncsurrog: corpres must be 'kendall' or 'spearman'")
+  }
+  if (corpres=="kendall" && 
+      any(apply(X=m,MARGIN=2,FUN=function(x){length(x)-length(unique(x))})>0))
+  {
+    stop("Error in ncsurrog: ties in time series are not allowed if corpres is kendall")
+  }
   
   if (corpres=="kendall"){
     #get the kendall correlation matrix of the data
@@ -46,12 +61,11 @@ ncsurrog<-function(m,corpres,numsurrog){
     #scor
     ncov<-iRho(normalCopula(0,2),scor)
   }
-  if (corpres!="kendall" && corpres!="spearman"){
-    stop("Error in ncsurrog: corpres must be 'kendall' or 'spearman'")
-  }
   
-  if((any(eigen(ncov)$value<0))==T){
-    warning("Error in ncsurrog: ncov is not positive semidefinite",call.=T,immediate.=T)
+  #more error checking
+  if(!is.positive.semi.definite(ncov))
+  {
+    stop("Error in ncsurrog: ncov is not positive semidefinite")
   }
   
   #generate a bunch of mv normals in the shape of the final

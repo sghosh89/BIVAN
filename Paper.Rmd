@@ -1057,11 +1057,7 @@ between noise and model-output copula structure for typical ecological dynamics,
 as long as the noise is small enough that dynamics stay relatively close
 to the model equilibrium. Results that hold for "weak noise" in this sense
 are common in ecology. 
-We repeated the analysis with $r=X$, with similar results. The deterministic 
-<!--***DAN: Shya, please replace X in the above line with the actual value(s)
-of r that you used. But please be sure
-the results were "similar". I encourage you to show me the actual results if there is 
-any doubt in your mind.-->
+We repeated the analysis with $r=1.3$, with similar results. The deterministic 
 one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
 at $K$ when $r<1$ (undercompensating dynamics), but exhibits 
 an oscillatory approach to $K$ when $r>1$ (overcompensating
@@ -1080,10 +1076,10 @@ population model outputs; and likewise for SG and SJ copulas. Dynamics were
 strongly nonlinear for the model parameters we used, and nevertheless similarities
 between noise and model-output copula structure, according to the statistics 
 we used, were more noticable than discrepancies.
-We again repeated the analysis with $r=X$, with similar results.
-<!--***DAN: Right, Shya? Please replace X with the actual value(s), but please be sure
-the results were "similar". I encourage you to show me the actual results if there is 
-any doubt in your mind.-->
+We again repeated the analysis with $r=1.3$. Discrepancies between noise and population
+copula structure in this case were often glaring - apparently noise of standard deviation 1
+interacted very strongly with model nonlinearities when the model was in its overcompensatory 
+regime.  
 
 Our model with environmental effects which differed in the
 two tails could produce simulated ecological variables with visually apparent asymmetry 
@@ -1112,19 +1108,6 @@ tail dependence across space in the ecological variables. Shown are the last
 $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the text.\label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
-
-
-<!--We now know the copula structure of environmental variables can induce (sometimes similar but not the same) copula structure in the populations, but we don’t really know how a change in the environment copula structure would make what kind of change in the population copula structure.--> 
-<!--
-## Application : The Moran effect and copula structure in population 
-
-```{r read_RES_temp_aphid, echo=F}
-RES_temp_aphid<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_winter_neg_temp.RDS")
-```
-
-Firstly, Our hypothesis was if a non-normal copula structure describes the dependence of an environmental
-variable between two locations, then there can be a non-normal copula structure for the
-dependence of populations in the locations that are influenced by the environmental variables. This assumption was inspired by the the idea of Moran-effect [@Moran1953] which was originally used to explain synchronization of widely dispersed populations. In the previous section, we already tested our hypothesis with a two habitat patch model (1st order AR method) in noisy environment (having non-Normal copula structure) and found that populations were shaped by similar copula structure as that of local noises. Here, we investigated the probable cause of upper tail dependence in the leaf-curling plum aphid's firstflight date throughout all the locations. We assumed that average winter temperature which might be spatially synchronized and had asymmetric tail dependence cause the synchronized delay in leaf-plum curling aphid's appearence. We tested our hypothesis and indeed found the Moran effect on leaf-plum curling aphid's firstflight data induced by average winter temperature for the period of 35 years (1976-2010). We did pair wise model selection with negative average winter temperature (averaged over (n-1)$^{th}$ December to n$^{th}$ March temperature) from the selected 10 locations for which we did model selection with aphid-firstflight data. Negative winter temperature was considered for simulation to compare the aphid's firstflight results with temparature copula (aphid's firstflight date were negatively correlated with temperature or in other words positively correlated with negative temparature). Model selection results for negative average winter temperature in 10 $\times$ 10 matrices were represented in Table \ref{SM-tab_temp_aphid_bestcop} - Table \ref{SM-tab_temp_aphid_LTmUT}. In all cases `r min((RES_temp_aphid$gfc_numBS_success/RES_temp_aphid$gfc_numBS),na.rm=T)*100` $\%$ of bootstrap randomizations used for goodness of fit tests successfully lead to values of the statistic for comparison with its value on the real data. Table \ref{SM-tab_temp_aphid_LTmUT} showed `r sum(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw <0, na.rm=T)` out of `r (dim(RES_temp_aphid$gfc_p_CvM)[1]^2-dim(RES_temp_aphid$gfc_p_CvM)[1])-2*RES_temp_aphid$num_indep_loc_pair` location pair showed upper tail dependence in temperature copula, which can be considered as the Moran effect results causing dominant upper tail dependence in the copulae with aphid's firstflight date (Table \ref{SM-tab_ff_LTmUT}). -->
 
 ### Need to think about mechanisms for biogeochemical, evolutionary, and community data
 

@@ -8,8 +8,6 @@ output: pdf_document
 <!--checkpoint package-->
 ```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
 library(checkpoint)
-library(captioner)
-library(rmarkdown)
 if (!dir.exists("./.checkpoint/")){
   dir.create("./.checkpoint/")
 }
@@ -20,6 +18,7 @@ checkpoint("2018-03-29",checkpointLocation = "./")
 #are missing the external references 
 
 ```{r tex_for_supp_mat}
+library(rmarkdown)
 rmarkdown::render(input="SupportingInformation.Rmd") 
 ```
 

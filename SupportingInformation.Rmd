@@ -34,6 +34,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 seed<-101
 # families<-c(1,3:10,13,14,16:20)
 source("mtime.R") #A function needed for caching
+library(captioner)
 ```
 
 ```{r cop_fig_intro,echo=F,results="hide",cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
@@ -1270,7 +1271,7 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1280,7 +1281,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1290,7 +1291,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_count_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 3,linesep = "",
@@ -1448,7 +1449,7 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
@@ -1562,14 +1563,6 @@ knitr::kable(s, digits = 3,
 \caption[Nonparametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
-
-<!--
-\newpage
-## Results: abundance data for *Ceratium furca* in UK seas \label{Ex_pns}
-### Model selection approach \label{Ex_pns_Model_selection}
-### nonparametric analysis of tail dependence  \label{Ex_pns_NPA}
-                          ----moved to Paper.Rmd----
--->
 
 <!--Load the data-->
 ```{r read_plankton_north_sea_data, echo=F}
@@ -3219,7 +3212,7 @@ for(insd in nsdlist){
 \caption[Comparing noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicate good fit of population copula with same noise cpoula family. \label{fig_Cause4copula_params_GOF_2500}}
 \end{center}
 \end{figure}
---->
+-->
 
 \begin{figure}[!h]
 \begin{center}
@@ -3792,7 +3785,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_temp_aphid_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_CvM,
              format='latex',
@@ -3801,7 +3794,7 @@ knitr::kable(RES_temp_aphid$gfc_p_CvM,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_temp_aphid_p_KS, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_KS,
              format='latex',
@@ -3810,7 +3803,7 @@ knitr::kable(RES_temp_aphid$gfc_p_KS,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw,
              format='latex',
@@ -3819,7 +3812,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$UTdep_AICw,
              format='latex',
@@ -3828,7 +3821,7 @@ knitr::kable(RES_temp_aphid$UTdep_AICw,
              )
 ```
 
-\newpage
+<!--\newpage-->
 ```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              digits = 5,
@@ -3837,7 +3830,7 @@ knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              booktabs=TRUE
              )
 ```
--->
+
 <!--# Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}-->
 
 <!--
@@ -5096,30 +5089,36 @@ dev.off()
 
 For multivariate datasets, surrogates were produced as follows:
 
-- Given data $x_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$, let $\tau_{ij}$ be the Kendall
-correlation of $x_i(t)$ and $x_j(t)$.  
+- Given data $x_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$, let $\tau_{ij}$ be the Spearman (or Kendall) 
+correlation of $x_i(t)$ and $x_j(t)$.
 - Calculate the covariance matrix of a multivariate normal distribution with standard-normal
-marginals and with pairwise Kendall correlations equal to the $\tau_{ij}$. This is possible
-using the `iTau` function of the `VineCopula` package.  
+marginals and with pairwise Spearman (or Kendall) correlations equal to the $\tau_{ij}$. This is possible
+using the `iRho` function (or the `iTau function) of the `VineCopula` package
 - Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent draws
-from the the multivariate normal distribution of the previous step.  
+from the the multivariate normal distribution of the previous step.
 - For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.
 - For each $k$ and $i$ for which $a_i(t)$ is not `NA`, replace the 
 $k$th-smallest (non-`NA`) element of the time series 
 $a_i(t)$, $t=1,\ldots,T$ by the $k$th smallest (non-`NA`) 
 element of $x_i(t)$, $t=1,\ldots,T$.
-Call the result $b_i(t)$. This is the surrogate dataset.    
+Call the result $b_i(t)$. This is the surrogate dataset.
 
-Our code for this algorithm is `ncsurrog` in the `BIVAN` repository 
+\noindent Our code for this algorithm is `ncsurrog` in the `BIVAN` repository 
 (\url{https://github.com/sghosh89/BIVAN}). Because, for each $i$, the final time series 
 $b_i(t)$ is a permuted version of $x_i(t)$ (and with `NA`s for the same $t$), 
 the marginal distributions of the surrogate dataset (i.e., the distributions of 
 values for each sampling location, $i$) are exactly the same as for the original data.
-Because ranks are preserved in passing from $a_i(t)$ to $b_i(t)$, pairwise Kendall 
+Because ranks are preserved in passing from $a_i(t)$ to $b_i(t)$, pairwise Spearman 
+(or Kendall) 
 correlations for the $b_i(t)$ will be the same as those of the $a_i(t)$. 
-Discrepancies will come only from the presence of NAs and from sampling variation, 
-and should be minor if the 
-numbers of NAs are not too large and $T$ is not too small. 
+Discrepancies between the $\tau_{ij}$ and the pairwise Spearman (or Kendall) 
+correlations of the
+$b_i(t)$ will therefore come about only from the presence of NAs and from sampling variation. 
+These discrepancies should be minor if the 
+numbers of NAs are not too large and $T$ is not too small. The Kendall version of the
+algorithm throws an error if there are ties in any of the time series. The algorithm
+also throws an error in the event that
+the matrix generated in the second step is not positive semidefinite. 
 
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 

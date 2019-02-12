@@ -475,6 +475,8 @@ knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
       caption = "Species names of 22 plankton taxa for which data were available \\label{tab_plankton_info}",
       col.names = c("Plankton taxon name"))
 ```
+<!--***DAN: These names differ from those used in Emma's 2016 Glob Change Biol paper.
+Need to check with Chris Reid. Have to get this right.-->
 
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)
@@ -3785,7 +3787,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
              )
 ```
 
-<!--\newpage-->
+<!--
 ```{r tab_temp_aphid_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_CvM,
              format='latex',
@@ -3793,8 +3795,9 @@ knitr::kable(RES_temp_aphid$gfc_p_CvM,
              booktabs=TRUE
              )
 ```
+-->
 
-<!--\newpage-->
+<!--
 ```{r tab_temp_aphid_p_KS, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$gfc_p_KS,
              format='latex',
@@ -3802,8 +3805,9 @@ knitr::kable(RES_temp_aphid$gfc_p_KS,
              booktabs=TRUE
              )
 ```
+-->
 
-<!--\newpage-->
+<!--
 ```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw,
              format='latex',
@@ -3811,8 +3815,9 @@ knitr::kable(RES_temp_aphid$LTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
-<!--\newpage-->
+<!--
 ```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$UTdep_AICw,
              format='latex',
@@ -3820,8 +3825,9 @@ knitr::kable(RES_temp_aphid$UTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
-<!--\newpage-->
+<!--
 ```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              digits = 5,
@@ -3830,12 +3836,6 @@ knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
              booktabs=TRUE
              )
 ```
-
-<!--# Cause of non-Normal copula structure : the Moran effect and copula structure in populations \label{Cause_Moran}-->
-
-<!--
-## Asymmetric sensitivity and copula structure in populations
-           ----moved to Paper.Rmd----
 -->
 
 ```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
@@ -5124,8 +5124,15 @@ $b_i(t)$ will therefore come about only from the presence of NAs and from sampli
 These discrepancies should be minor if the 
 numbers of NAs are not too large and $T$ is not too small. 
 
-# Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
+# Calculating curvature for Taylor's law \label{TL_curvature}
 
+<!--***DAN: Shya, I need a reminder how we did this, can you please tell me where the
+code is, then I can write this section. Feel free to take a stab at it yourself, too,
+though.-->
+
+# Effects of non-N copula structure on Taylor's law \label{Consequence_TL_simulation}
+
+<!--***DAN: Dan has not edited this section yet at all-->
 Here, we examined the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with co-variance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of time series, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula data set or not and plotted our results along with root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
 
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion------

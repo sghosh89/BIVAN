@@ -1109,7 +1109,7 @@ $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the t
 \end{center}
 \end{figure}
 
-### Need to think about mechanisms for biogeochemical, evolutionary, and community data
+<!--***DAN: Maybe need to think about mechanisms for biogeochemical, evolutionary, and community data-->
 
 <!--Question 3 analyses-->
 # Background, concepts and methods for Q3: Consequences of non-normal copula structure for our understanding of ecology \label{Consequences}
@@ -1158,20 +1158,46 @@ data, because these datasets exhibited lower-tail dependence
 via a one-tailed test in the left tail: the $p$-value result was simply the fraction
 of surrogate skewnesses less than the skewness computed from the empirical data. For
 leaf-curling plum aphid first flight data, because this dataset exhibited upper-tail 
-dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tail test
+dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tailed test
 in the right tail.
 
-<!--Reminder that Table 2 says:
-Green spruce - lower tail
-Leaf-curling - upper tail
-Cerratium - lower tail
-methane - marginal lower tail-->
+Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we tested whether
+the copula structure of dependence between population variables influences the
+spatial version of Taylor's
+law. Taylor's law is an extremely commonly observed and widely studied 
+[@Taylor1961, @Taylor1988, @Cohen2013, @Xu2016] empirical pattern that relates the 
+variances of groups, $g$, of population measurements to the means of these 
+groups via a power law, $v_g = a \times m_g^b$, or equivalently via a log-log linear 
+relationship, $\log(v_g)=\log(a)+b \times \log(m_g)$. Here $b$ is called 
+the Taylor's law *exponent* or 
+*slope*. There are several versions of Taylor's law. For spatial Taylor's law,
+given population density or abundance data $x_i(t)$ measured in locations
+$i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
+all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
+So the means and variances in the Tayor's law formula are computed across 
+space. Taylor's law has been 
+verified in data from hundreds of taxa and has been applied in numerous fields
+including fisheries management, estimation of species persistence times, and
+agriculture [@Cohen2015,@Reuman2017].
 
-<!--***DAN: stopped here in this section, 2019 02 12, 633am-->
+We tested whether the linearity of the spatial Taylor's law relationship was partly
+due to the copula structure of the dependences between the populations sampled. 
+Using corn leaf aphid abundance data as an example, but also
+applying the same analysis to the abundance data we had for 19 other aphid species
+(see *Data*), we calculated the curvature (details in Appendix \ref{SM-TL_curvature}) 
+of the empirical Taylor's law relationship; Taylor's law hypothesizes that this 
+curvature should be close to 0. We then calculated the same curvature quantity for
+10000 surrogate datasets, using the same surrogate procedure described above in 
+this section, and compared the empirical Taylor's law curvature to the 
+distribution of surrogate curvatures using a two-tailed test. If the empirical
+curvature value was below the $5^{\text{th}}$ quantile of the surrogate distribution, 
+then copula structure contributes to the linearity of spatial Taylor's law 
+because randomizing copula structure while retaining other statistical properties
+of the data cause the Taylor's law relationship to become significantly more 
+curved. 
 
+<!--***DAN: Shya,  want to add the extinction risk stuff back in, let's discuss-->
 
-
-We also showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL_simulation}). For example, our model simulation showed lower tail dependent Clayton copula had much higher slope (spatial-Taylor's law) than symmetric Normal copula, which in turn had higher slope than upper tail dependent Survival Clayton family (Fig. \ref{SM-fig_spTL}(I)). In the following section we will show application of these ideas with real data sets.
 
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-----------
 Finally, we studied **(iii)** the effects of environmental noise, having a non-Normal copula, on extinction risk (calculated after 25 years) with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). We considered patches were arranged in a linear chain fashion and the population may disperse to its nearerst two neighbors (local dispersion) or to any patches (global dispersion). For both model with both dispersion, increasing number of habitat patches and increasing carrying capacity, separately, had decreased extinction risk of the populations which was expected (Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_K_effect}). For Lewton-Cohen model, we found greater extinction risk if populations were affected by left tail dependence environmental noise copula than right tail dependent one. For Ricker model, we got the similar observation for smaller values of $r$, the intrinsic growth rate, but for higher values of $r$, there was a turn-over in extinction risks, and right tail dependent noise copula caused population go extinct faster. -->
@@ -1202,24 +1228,60 @@ by tail dependence. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, please replace the x axis label by "Skewness" and the y-axis label
-by "Frequency"-->
+by "Frequency" in the above plot-->
 
-
-
-
-<!--***DAN: stopped here in this section, 2019 02 12, 633am-->
-
-We used our four multivariate data sets : aphid-count data, aphid-first flight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. We carried out the analysis mentioned in the concepts above for spearman preserving surrogates, with aphid abundance and aphid first flight date data for all 20 aphid species and plankton abundance data for all 22 plankton species. In each study, we got $>5\%$ positive results which gave us confidence in validating significantly different skewness for asymmetric copula than Normal. For example, Figure \ref{fig_skewness_spearman} represents the results for each data set with Spearman correlation preserving surrogates. Figure \ref{fig_skewness_spearman}(A) showed that averaged skewness (indicated by red dot) was much lower than expected if the green-spruce aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data. As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the nonparametric analysis and model fitting results (see first column of Table \ref{tab_multivar_summary}). On the other hand, Figure \ref{fig_skewness_spearman}(B) demonstrated that averaged skewness was significantly higher than expected if the leaf-plum curling aphid first flight data came from a normal copula, which was also confirmed by upper-tail dependence results from model selection and nonparametric results (see second column of Table \ref{tab_multivar_summary}). Figure \ref{fig_skewness_spearman}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on nonparametric analysis and model fitting also supported lower tail dependence (see third column of Table \ref{tab_multivar_summary}). But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was found significantly lower in comparison to its Normal surrogates (Figure \ref{fig_skewness_spearman} D). 
-<!--We found the same result with all data sets when we repeated our simulation with Kendall correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_kendall}). Now we did only with spearman preserving to handle ties and +ve semidefinite case-->
-
-
-## Results for \hyperref[Intro]{\textbf{(Q3)}}: Change of curvature of spatial Taylor's law regression line
+Skewness results were generally consistent with hypotheses. For the datasets that
+exhibited strong lower-tail (respectively, upper-tail) 
+dependence in earlier analyses (namely, the green spruce 
+aphid abundance data for lower-tail, and the leaf-curling plum aphid first flight data
+for upper-tail, Table 
+\ref{tab_multivar_summary}), the skewness, through time, of the spatial average of the 
+empirical data was less than (respectively, greater than) a significant fraction (i.e.,
+more than $95\%$) of the
+surrogate skewness values 
+(Fig. \ref{fig_skewness_spearman}A,B). For the datasets that demonstrated a 
+more moderate lower-tail dependence in earlier analyses (the 
+\emph{Ceratium furca} abundance and the methane data), skewness of the spatial
+average showed a non-significant tendency toward being less than surrogate skewnesses
+(Fig. \ref{fig_skewness_spearman}C), or was less than a marginally significant 
+fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D). 
 
 ```{r read_tl_aphid_count_sp6, echo=F}
 tlsp6<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
 ```
 
-Spatial Taylor's law, the observed linear relationship between `log`(variance) and `log`(mean) of population densities of a species from different locations, is a well-known pattern found in ecology and related fields [@Taylor1961, @Taylor1988, @Cohen2013, @Doring2015, @Kuo2016, @Xu2016, @Reuman2017]. We already showed through simulation (Appendix \ref{SM-Consequence_TL_simulation}) that for asymmetric copula this linear relationship somehow deviates compared to Normal copula for a distribution with gamma marginals. We tested spatial Taylor's law with aphid count data (for all 20 species) and found that the mean curvature of the regression line from `log`(variance) vs. `log`(mean) of population abundance data was significantly different from $10000$ Normal surrogates (Spearman-correlation and marginal distribution preserving) for $20\%$ of total species considered. For example, the "Corn leaf aphid" (having significantly upper tail dependence from model selection and nonparametric analysis) showed mean curvature of regression line close to zero, whereas `r 10000 -(tlsp6$p_left_mncurv*10000)` of the $10000$ Normal surrogates showed higher curvature, indicating here Normal copula didn't hold linear relationship between `log`(spatial variance) and `log`(spatial mean) (see Fig \ref{fig_sTL_mncurv_sp6}). 
+Results also suggested that copula structure contributes to the linearity of 
+spatial Taylor's law. For instance, the spatial Taylor's law relationship 
+for corn leaf aphid abundance data was significantly less curved than for 
+surrogate datasets (Fig. \ref{fig_sTL_mncurv_sp6}). Three of $20$ aphid species
+had cuvatures less than at least $95\%$ of surrogate datasets ($p=X$, $Y$, $Z$ for 
+the $A$, $B$ and $C$ species, respectively). 
+<!--***DAN: Shya, please fill in X, Y, Z, A, B, C with autolinks)-->
+Three such significant
+results of 20 species could have occurred by chance due to 
+multiple-testing error. However, for each of the 20 species, we computed the fraction
+of surrogate curvatures less than the curvature that came from real data, and we
+combined these $p$-values using Fisher's combined probability test to get an
+aggregate $p$-value of $0.019$ 
+<!--***DAN: Shya, see the Wikipedia article on Fisher's method to learn about it. Then 
+you need to put this analysis into the code suite and have the resulting p value
+typed in above be an autolink instead. Here is what I did: 
+1) I copied by hand all the pleft values on the pdf you sent me into a vector pleft. Instead you should create such a vector in your code from your test output, not typing in the results.
+2) I used the formula stat<--2*sum(log(pleft)) to get the Fisher method statistic
+3) I compared to a chi-squared distribution with 40 degress of freedom using 1-pchisq(stat,40) to get my p-value
+Please let me know if any of this is unclear.-->
+for the test of the null hypothesis that 
+copula structure did not contribute to linearity of Taylor's law for any of the 
+species. This result is usefully suggestive and can guide future work, but still does not
+provide certainty, because the Fisher method provides $p$-values that are too 
+small if its assumption of independent tests is violated. Though our 20 species
+have different host plants so may be independent for the purposes of our analyses, 
+it would be difficult to fully assess independence.
+<!--***DAN: Shya, can you remind me why the same analyses were not done for plankton,
+if there is a good reason? Or if you did it, what were the results?--> 
+We provide simulation results in Appendix \ref{SM-Consequence_TL_simulation}
+that robustly illustrate, at least in the model setup we used, 
+that copula structure influences spatial Taylor's law.
 
 \begin{figure}[!h]
 \textbf{ \hspace{4 cm} (A) \hspace{4 cm} (B) \hspace{4 cm} (C)} \\
@@ -1227,9 +1289,19 @@ Spatial Taylor's law, the observed linear relationship between `log`(variance) a
 \begin{center}
 \includegraphics[width=10 cm]{./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf}
 \includegraphics[width=5 cm]{./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf}\\
-\caption{log(spatial variance) and log(spatial mean) for $(A)$ corn-leaf aphid (\textit{Rhopalosiphum maidis}) abundance and for $(B)$ one of the $9961$ Normal surrogates (having same marginal distribution and Spearman correlation of actual data). $(C)$ Histogram of mean curvature of $10000$ normal surrogates showed that for corn-leaf aphid abundance data (with asymmetric tail dependence), Normal surrogates didn't follow linear relationship between log(spatial variance) and log(spatial mean). \label{fig_sTL_mncurv_sp6}}
+\caption{Mean curvature of the spatial Taylor's law relationship for 
+corn leaf aphid abundance
+data (A) was significantly less than for surrogates (B, C). The Taylor's law 
+relationship for one example surrogate (B) shows shows greater curvature than
+for data (A), and the significance of the difference was demonstrated
+by the fact that only $39$ of $10000$ surrogates had curvature less than that
+of the data (C). See Appendix \ref{SM-TL_curvature} for details on 
+how curvature was calculated.\label{fig_sTL_mncurv_sp6}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"-->
+
+<!--***DAN: I want to put back in some extinction risk results. Let's talk about this, please, Shyamolina-->
 
 # Discussion \label{Discussion}
 

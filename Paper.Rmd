@@ -1202,7 +1202,8 @@ by tail dependence. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, please replace the x axis label by "Skewness" and the y-axis label
-by "Frequency"-->
+by "Frequency"
+***Shya: Done.-->
 
 
 

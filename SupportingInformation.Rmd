@@ -4302,8 +4302,11 @@ loclist<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
 
 pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf",height=6,width=8)
 op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
-answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=T,
+answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=F,
                           corpres="spearman") 
+hist(answer1s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
+#abline(v=realskw,col="red")
+points(x=answer1s$realskw,y=0,col="black",pch=15,cex=2)
 
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
 mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
@@ -4334,8 +4337,12 @@ loclist<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
 
 pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf",height=6,width=8)
 op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
-answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=T,
-                          corpres="spearman") 
+answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=F,
+                          corpres="spearman")
+hist(answer2s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
+#abline(v=realskw,col="red")
+points(x=answer2s$realskw,y=0,col="black",pch=15,cex=2)
+
 p_right<-sum(answer2s$surrogskw > answer2s$realskw)/numsurrog
 mtext(paste0("p = ",p_right),side=3,line=-0.5,cex = 2)
 par(op)
@@ -4365,8 +4372,12 @@ loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
 
 pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf",height=6,width=8)
 op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
-answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=T,
+answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=F,
                           corpres="spearman") 
+hist(answer3s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
+#abline(v=realskw,col="red")
+points(x=answer3s$realskw,y=0,col="black",pch=15,cex=2)
+
 p_left<-sum(answer3s$surrogskw < answer3s$realskw)/numsurrog
 mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
@@ -4395,8 +4406,12 @@ loclist<-good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=50)
 
 pdf("./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf",height=6,width=8)
 op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
-answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=T,
+answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=F,
                            corpres="spearman") 
+hist(answer1s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
+#abline(v=realskw,col="red")
+points(x=answer1s$realskw,y=0,col="black",pch=15,cex=2)
+
 p_left<-sum(answer1s$surrogskw < answer1s$realskw)/numsurrog
 mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)

@@ -461,8 +461,8 @@ aphid_info <- tibble(c1=c("Apple grass aphid","Bird cherry oat aphid","Black bea
 
 knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
       caption = "Species names of 20 aphids for which data were available \\label{tab_aphid_info}",
-      col.names = c("", ""))%>%
-     column_spec(column = 2,italic=T)%>%add_header_above(header=c("Common name" = 1, "Latin binomial" = 1),align = "l",line=F)
+      col.names = NULL)%>%
+     column_spec(column = 2,italic=T)%>%add_header_above(header=c("Common name" = 1, "Latin binomial" = 1))
 ```
 
 ```{r tab_plankton_info, echo=F, results='asis',message=F}

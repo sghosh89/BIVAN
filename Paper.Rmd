@@ -1220,15 +1220,13 @@ Finally, we studied **(iii)** the effects of environmental noise, having a non-N
 \caption{Skewness of spatially averaged green spruce aphid abundance $(A)$, leaf-curling plum 
 aphid first flight dates $(B)$, \emph{Ceratium furca} abundance $(C)$, and methane-flux
 $(D)$ time series compared to an multivariate 
-N-copula null hypothesis. Red dots are empirical 
+N-copula null hypothesis. Black dots are empirical 
 skewnesses; see text 
 and Appendix \ref{SM-Surrog_multi} for details of the null hypothesis. Results show a 
 tendency for skewness of the spatial average to be affected as hypothesized 
 by tail dependence. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, please replace the x axis label by "Skewness" and the y-axis label
-by "Frequency" in the above plot-->
 
 Skewness results were generally consistent with hypotheses. For the datasets that
 exhibited strong lower-tail (respectively, upper-tail) 

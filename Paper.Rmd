@@ -1077,7 +1077,7 @@ strongly nonlinear for the model parameters we used, and nevertheless similariti
 between noise and model-output copula structure, according to the statistics 
 we used, were more noticable than discrepancies.
 We again repeated the analysis with $r=1.3$. Discrepancies between noise and population
-copula structure in this case were often glaring - apparently noise of standard deviation 1
+copula structure in this case were often glaring. Apparently noise of standard deviation 1
 interacted very strongly with model nonlinearities when the model was in its overcompensatory 
 regime.  
 
@@ -1114,9 +1114,9 @@ $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the t
 <!--Question 3 analyses-->
 # Background, concepts and methods for Q3: Consequences of non-normal copula structure for our understanding of ecology \label{Consequences}
 
-We addressed Q3 using both models and data. The initial 
+We addressed Q3 using both models and data. An initial 
 idea was presented in the Introduction that
-the distribution (through time) of a spatially averaged quantity should depend on the 
+the distribution (through time) of a spatially averaged quantity should be influenced by the 
 nature of the dependence between the local quantities being averaged, including their
 copula structure and tail dependence. For instance, suppose $E_i(t)$ are ecological
 variables measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and suppose 
@@ -1126,8 +1126,8 @@ exploited species, or local fluxes of a greenhouse gas. If  $E_i$ and $E_j$ are
 strongly right-tail dependent for all or most location pairs $i$ and $j$, then
 exceptionally large values tend to occur at the same time in all or most locations.
 This should tend to increase the skewness of the distribution through time of the
-spatial average. Using similar reasoning, left-tail dependence between local variables
-$E_i$ and $E_j$ will tend to decreases skewness of the spatial mean. Skewness of the 
+spatial average. Similarly, left-tail dependence between local variables
+will tend to decreases skewness of the spatial mean. Skewness of the 
 spatial mean corresponds to the "spikiness" of the spatial-mean time series. 
 The spatial-mean time series may be the quantity of principal importance for 
 cases such as pest or resource abundance or CO$_2$ or methane flux.
@@ -1144,24 +1144,39 @@ it in a special way to have the copula structure of a multivariate-normal distri
 (Appendix \ref{SM-Surrog_multi}). The surrogate/randomized datasets had exactly the same
 marginal distributions (i.e., distributions of values for each sampling location)
 as the original data. 
-They also had very similar Kendall or Spearman correlations (the algorithm had two versions,
-one for preserving each correlation coefficient) between pairs of sampling locations
+They also had very similar Spearman correlations between pairs of sampling locations
 as the original data. But the surrogates had multivariate normal copula structure. 
 Our comparisons therefore tested the null hypothesis that the skewness of the spatial 
-mean took values on the empirical no different from what one would expect if the copula
+mean took values on the empirical data no different from what one would expect if the copula
 structure of the data were multivariate normal, but the data were otherwise statistically
-unchanged. Significant differences indicate that copula structure contributes to the skewness
-of the spatial mean, i.e., to its "spikiness."
+unchanged. Significant differences indicate that copula structure contributed 
+to the skewness of the spatial mean, i.e., to its "spikiness."
 
-<!--***DAN: stopped here 2019 02 08 1106am central-->
+For green spruce aphid abundance data, *Ceratium furca* abundance data, and methane-flux
+data, because these datasets exhibited lower-tail dependence 
+(Table \ref{tab_multivar_summary}), we compared empirical and surrogate skewness values
+via a one-tailed test in the left tail: the $p$-value result was simply the fraction
+of surrogate skewnesses less than the skewness computed from the empirical data. For
+leaf-curling plum aphid first flight data, because this dataset exhibited upper-tail 
+dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tail test
+in the right tail.
+
+<!--Reminder that Table 2 says:
+Green spruce - lower tail
+Leaf-curling - upper tail
+Cerratium - lower tail
+methane - marginal lower tail-->
+
+<!--***DAN: stopped here in this section, 2019 02 12, 633am-->
 
 
-This section is dedicated to analysis of question \hyperref[Intro]{\textbf{(Q3)}} from \nameref{Intro}. We wanted to examine whether the asymmetric tail dependence had any **(i)** effects on skewness of spatially averaged time series data. We predicted that because of overall distinct tail dependence of the multivariate copula structure, the skewness of the spatially-averaged time-series data, should change significantly from the individual skewness of time-series data. We tested null hypothesis $(H_{0})$ which presumed that multivariate copula actually came from normal copula structure with no tail dependence and thus should have the same skewness as of normal copula.
-We generated $10000$ number of surrogate normal copula from a given multivariate copula keeping the marginal distribution and the correlation (Spearman or Kendall) same and calculated the skewness of spatially averaged surrogate time series data, as we did with the actual multivariate data set in the next section (For code see [skewness_multivar_dataset.R](https://github.com/sghosh89/BIVAN/blob/master/skewness_multivar_dataset.R)). We made a histogram of surrogate skewness and found if actual skewness was within the $95\%$ confidence interval or not. If the $p$-value is less than $0.05$, then we reject the null hypothesis in support of significant tail dependence (and henceforth significantly different skewness than Normal copula).
 
 We also showed **(ii)** asymmetric copula structure affected slope of spatial Taylor's Law differently than as expected from symmetric Normal copula (For details see Appendix \ref{SM-Consequence_TL_simulation}). For example, our model simulation showed lower tail dependent Clayton copula had much higher slope (spatial-Taylor's law) than symmetric Normal copula, which in turn had higher slope than upper tail dependent Survival Clayton family (Fig. \ref{SM-fig_spTL}(I)). In the following section we will show application of these ideas with real data sets.
+
 <!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-----------
 Finally, we studied **(iii)** the effects of environmental noise, having a non-Normal copula, on extinction risk (calculated after 25 years) with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). We considered patches were arranged in a linear chain fashion and the population may disperse to its nearerst two neighbors (local dispersion) or to any patches (global dispersion). For both model with both dispersion, increasing number of habitat patches and increasing carrying capacity, separately, had decreased extinction risk of the populations which was expected (Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_K_effect}). For Lewton-Cohen model, we found greater extinction risk if populations were affected by left tail dependence environmental noise copula than right tail dependent one. For Ricker model, we got the similar observation for smaller values of $r$, the intrinsic growth rate, but for higher values of $r$, there was a turn-over in extinction risks, and right tail dependent noise copula caused population go extinct faster. -->
+
+## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk
 
 \begin{figure}[!h]
 \textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
@@ -1176,11 +1191,23 @@ Finally, we studied **(iii)** the effects of environmental noise, having a non-N
 \begin{center}
 \includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
 \includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
-\caption{Skewness of spatially averaged $(A)$ green-spruce aphid abundance, $(B)$ leaf-curling plum aphid first flight date, $(C)$ Ceratium furca abundance and $(D)$ methane-flux data, were indicated by red dot in each plot and were compared with respect to skewness of spatially averaged 10000 Normal surrogates preserving Spearman correlation). \label{fig_skewness_spearman}}
+\caption{Skewness of spatially averaged green spruce aphid abundance $(A)$, leaf-curling plum 
+aphid first flight dates $(B)$, \emph{Ceratium furca} abundance $(C)$, and methane-flux
+$(D)$ time series compared to an multivariate 
+N-copula null hypothesis. Red dots are empirical 
+skewnesses; see text 
+and Appendix \ref{SM-Surrog_multi} for details of the null hypothesis. Results show a 
+tendency for skewness of the spatial average to be affected as hypothesized 
+by tail dependence. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, please replace the x axis label by "Skewness" and the y-axis label
+by "Frequency"-->
 
-## Results for \hyperref[Intro]{\textbf{(Q3)}}: Change of skewness
+
+
+
+<!--***DAN: stopped here in this section, 2019 02 12, 633am-->
 
 We used our four multivariate data sets : aphid-count data, aphid-first flight data, plankton data and methane-flux data, to compute skewness of spatially averaged data. We carried out the analysis mentioned in the concepts above for spearman preserving surrogates, with aphid abundance and aphid first flight date data for all 20 aphid species and plankton abundance data for all 22 plankton species. In each study, we got $>5\%$ positive results which gave us confidence in validating significantly different skewness for asymmetric copula than Normal. For example, Figure \ref{fig_skewness_spearman} represents the results for each data set with Spearman correlation preserving surrogates. Figure \ref{fig_skewness_spearman}(A) showed that averaged skewness (indicated by red dot) was much lower than expected if the green-spruce aphid count data came from a normal copula. In that example, $p$ value was denoted by the fraction of surrogate-skewness which were lower than the averaged skewness of the given data. As $p<0.05$, we rejected $H_{0}$ in support of significantly stronger lower tail dependence which was also consistent with the nonparametric analysis and model fitting results (see first column of Table \ref{tab_multivar_summary}). On the other hand, Figure \ref{fig_skewness_spearman}(B) demonstrated that averaged skewness was significantly higher than expected if the leaf-plum curling aphid first flight data came from a normal copula, which was also confirmed by upper-tail dependence results from model selection and nonparametric results (see second column of Table \ref{tab_multivar_summary}). Figure \ref{fig_skewness_spearman}(C) showed that averaged skewness was lower than expected if the plankton data came from a normal copula. Our previous results on nonparametric analysis and model fitting also supported lower tail dependence (see third column of Table \ref{tab_multivar_summary}). But, as $p>0.05$, we could not reject $H_{0}$ in that case. Finally, for methane-flux data, the averaged skewness was found significantly lower in comparison to its Normal surrogates (Figure \ref{fig_skewness_spearman} D). 
 <!--We found the same result with all data sets when we repeated our simulation with Kendall correlation preserving surrogates (see Fig. \ref{SM-fig_skewness_kendall}). Now we did only with spearman preserving to handle ties and +ve semidefinite case-->

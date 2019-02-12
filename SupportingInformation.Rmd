@@ -4098,7 +4098,7 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 \end{center}
 \end{figure}
 
-```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # For sp =1, sp=4 and sp=6 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite
 # also it can't handle ties for "kendall" and code crashes
@@ -4160,7 +4160,7 @@ saveRDS(skw_aphid_count_spearman,"./Results/skewness_results/skewness_aphid_coun
 #saveRDS(skw_aphid_count_kendall,"./Results/skewness_results/skewness_aphid_count/skw_aphid_count_kendall.RDS")
 ```
 
-```{r skewness_aphidff_allsp_plot, echo=F, results="hide", warning=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+```{r skewness_aphidff_allsp_plot, echo=F, results="hide", cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # For sp =12 and sp=16 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite,
 # also it can't handle ties for "kendall" and code crashes
@@ -4372,7 +4372,6 @@ mtext(paste0("p = ",p_left),side=3,line=-0.5,cex = 2)
 par(op)
 dev.off()
 ```
-
 
 ```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -5096,10 +5095,23 @@ from the the multivariate normal distribution of the previous step.
 $k$th-smallest (non-`NA`) element of the time series 
 $a_i(t)$, $t=1,\ldots,T$ by the $k$th smallest (non-`NA`) 
 element of $x_i(t)$, $t=1,\ldots,T$.
-Call the result $b_i(t)$. This is the surrogate dataset.
+Call the result $b_i(t)$. This is a surrogate dataset.
 
 \noindent Our code for this algorithm is `ncsurrog` in the `BIVAN` repository 
-(\url{https://github.com/sghosh89/BIVAN}). Because, for each $i$, the final time series 
+(\url{https://github.com/sghosh89/BIVAN}).
+The code for the Kendall version of the
+algorithm throws an error if there are ties in any of the time series. This is
+because the Kendall correlation in the very commonly used `cor` function in R 
+is the Kendall tau-b coefficient in the event of ties, and index which 
+differs in its definition from the commonly used tau-a that works when there are
+no ties; and `tau` and `iTau` are intended for continuous copulas, which cannot 
+produce data with ties. Our code also throws an error in the event that
+the matrix generated in the second step is not positive semidefinite. Because
+ties are common in our data, we only used the Spearman case in analyses using `ncsurrog`,
+though, for expansibility, the `ncsurrog` code itself is written to handle 
+the Kendall case as well when there are no ties.
+ 
+Because, for each $i$, the final time series 
 $b_i(t)$ is a permuted version of $x_i(t)$ (and with `NA`s for the same $t$), 
 the marginal distributions of the surrogate dataset (i.e., the distributions of 
 values for each sampling location, $i$) are exactly the same as for the original data.
@@ -5110,10 +5122,7 @@ Discrepancies between the $\tau_{ij}$ and the pairwise Spearman (or Kendall)
 correlations of the
 $b_i(t)$ will therefore come about only from the presence of NAs and from sampling variation. 
 These discrepancies should be minor if the 
-numbers of NAs are not too large and $T$ is not too small. The Kendall version of the
-algorithm throws an error if there are ties in any of the time series. The algorithm
-also throws an error in the event that
-the matrix generated in the second step is not positive semidefinite. 
+numbers of NAs are not too large and $T$ is not too small. 
 
 # Consequence of non-Normal copula structure : Effect on Taylor's law \label{Consequence_TL_simulation}
 

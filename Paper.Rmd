@@ -1168,30 +1168,21 @@ in the right tail.
 more ext risk in a metapop context
 2) then methods for how we test that (present the model, say what sims you did-->
 
-<!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-----------
-Finally, we studied **(iii)** the effects of environmental noise, having a non-Normal copula, on extinction risk (calculated after 25 years) with two metapopulation model, namely, Lewton-Cohen model and Ricker model (For details see Appendix \ref{SM-Consequence_ext_risk}). We considered patches were arranged in a linear chain fashion and the population may disperse to its nearerst two neighbors (local dispersion) or to any patches (global dispersion). For both model with both dispersion, increasing number of habitat patches and increasing carrying capacity, separately, had decreased extinction risk of the populations which was expected (Fig. \ref{SM-fig_risk_numlocs_effect_local_disp} - Fig. \ref{SM-fig_risk_K_effect}). For Lewton-Cohen model, we found greater extinction risk if populations were affected by left tail dependence environmental noise copula than right tail dependent one. For Ricker model, we got the similar observation for smaller values of $r$, the intrinsic growth rate, but for higher values of $r$, there was a turn-over in extinction risks, and right tail dependent noise copula caused population go extinct faster. -->
-
-<!-- 
-This extincton risk material had been commented out in the sup mat:
-
-Extinction risk results are not shown currently, it is introduced as a future idea in Discussion------
-
-# Consequence of non-Normal copula structure : effect on extinction risk \label{Consequence_ext_risk}
-
-In order to study the effects of non-Normal copula structure on extinction risk for metapopulations with different dispersal rules, we examined the following generalized multiple patch model where local population dynamics at each patch were governed by the Lewton-Cohen model ($r=0$) or Ricker model ($r \neq 0$) as the case may be;
-
-\begin{equation}\label{eq.extrisk_model}
-P(t+1) = \exp\left [  r\left ( 1-\frac{P(t)}{K} \right ) + \epsilon(t) \right ] P(t)
-\end{equation}
-
-$r$ is the liner growth rate and $K$ is the carrying capacity of the environment. $\epsilon$ is the environmental noise which might take stronger right tail (means stronger upper tail)  or stronger left tail (means stronger lower tail) dependence. We then considered each population $P(t+1)$ was updated depending upon $D$, the dispersal matrix, which could take either forms; one case when each population patch on a linear chain interacted with its two nearest neighbors (we called it local dispersion) or when any patch was allowed to interact with the rest of all (we called it as global dispersion). We simulated Eq. \ref{eq.extrisk_model} for $10000$ simulations and calculated extinction risk after $25$ years with different possibilities (for code see [mydispersal.R](https://github.com/sghosh89/BIVAN/blob/master/mydispersal.R)) and summarized our findings as follows;
-
-
-- LC model (r=0) :
-
-    * For LC model, as expected, when extinction risk calculated after $25$ years, was plotted against each varying $d$ (=degree of dispersion), we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one. [see first subplot of Fig. \ref{fig_risk_local_disp} and Fig. \ref{fig_risk_global_disp}]
-
--->
+On a second thought, we addressed the question how asymmetry in 
+tail-dependence of environmental
+variable could influence the extinction risk from a meta-population
+context. We hypothesized to get higher 
+extinction risk if the environmental noises from multiple patches
+were more correlated to their smaller values 
+(resulting left-tail dependence
+in copula structure) than larger. This idea came from the context that
+"bad" years (e.g. extreme cold) would have adverse affect 
+on all metapopulation patches simultaneously, so there would 
+not be enough neighboring-populations to rescue the "extinct"
+patches. But in "good" years as the environmental variables 
+from multiple locations were not correlated strongly, some of
+extinct metapopulation-patches could be rescued by dispersal from
+other patches. We tested our hypothesis in the following section.
 
 
 ## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk
@@ -1237,6 +1228,45 @@ average showed a non-significant tendency toward being less than surrogate skewn
 fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D). 
 
 <!--***DAN: Shya to insert extinction risk results with one fig-->
+We tested our hypothesis of asymmetric copula-effect on extinction-risk
+as discussed in
+earlier section, with Lewinton-Cohen metapopulation
+model (Eq. \ref{eq.extrisk_LC}), where population density 
+$P$ could update exponentially depending on its intrinsic rate $r$.
+$\epsilon(t)$ represent environmental noise; they are standard-normal 
+random variables that are independent for distinct times, t, but 
+that were made to exhibit either extreme left tail or right tail dependence
+across patches.
+We considered metapopulation patches were arranged in
+a linear chain fashion
+and the population may disperse to its nearerst
+two neighbors (local dispersion) or to any patches (global dispersion); for code see [`mydispersal.R`](https://github.com/sghosh89/BIVAN/blob/master/mydispersal.R).
+
+\begin{equation}\label{eq.extrisk_LC}
+P(t+1) = \exp\left [  r + \epsilon(t) \right ] P(t)
+\end{equation}
+
+We simulated Eq. \ref{eq.extrisk_LC} with local dispersal for $r=0$ and calculated extinction risk after 25 years
+from $10000$ simulations for both left-tail and right-tail dependent environmental noise across $5$ patches. 
+Whenever population, at any patch after each year, went below the extinction threshold ($=1$) we considered 
+that patch for that time went extinct. We found, as we
+hypothesized, left tail dependent environmental fluctuations increased extinction risk of metapopulations than the right-tail
+dependent ones (Fig. \ref{fig_extrisk_lcohen_local}). When number of patches increased from $5$ to $25$, extinction risk 
+decreased in both cases. We repeated our simulations using same parameters with global dispersal among patches 
+and got similar results (see Fig. \ref{SM-fig_extrisk_lcohen_global}).
+
+\begin{figure}[!h]
+\textbf{ \hspace{6.6 cm} (A) \hspace{4.2 cm} (B)} \\
+\vspace{-0.8 cm}
+\begin{center}
+\includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
+\caption{Extinction risk for Lewinton-Cohen metapopulation model was calculated after $25$ years with local dispersal
+among two nearest neighbors (Eq. \ref{eq.extrisk_LC}, $r=0$). $(A)$ Left-tail dependent environmental noise showed higher 
+extinction risk than $(B)$ right-tail dependent one, where both case showed extinction risk decreased with 
+increasing number of patches from $numlocs =5$ to $25$.\label{fig_extrisk_lcohen_local}}
+\end{center}
+\end{figure}
+
 
 # Discussion \label{Discussion}
 

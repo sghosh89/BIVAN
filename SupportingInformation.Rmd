@@ -4996,25 +4996,25 @@ p0<-50
 
 # plot for local dispersal in D matrix 
 pdf("./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf",heigh=5,width=10)
-op<-par(mfrow=c(1,2),mar=c(5,5,1.8,0.2),mgp=c(3,1,0))
+op<-par(mfrow=c(1,2),mar=c(5,5,1.8,0.5),mgp=c(3,1,0))
 s<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
                  ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
 s1<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
                  ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
 plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="black",
      xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1,pch=1)
-legend(x=0.3,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1),
+     cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
+lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1.2,pch=1)
+legend(x=0.2,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
+       pch=c(16,1), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.2),
        horiz=F, bty='n') 
 
 plot(s$d_seq,s$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="grey",
      xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1,pch=1,col="grey")
-legend(x=0.3,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), col=c("grey","grey"),
+     cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
+lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1.2,pch=1,col="grey")
+legend(x=0.2,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
+       pch=c(16,1), lty=c(1,1), col=c("grey","grey"), cex=1.4,pt.cex=c(1.5,1.2),
        horiz=F, bty='n') 
 
 par(op)
@@ -5022,7 +5022,6 @@ dev.off()
 
 
 # plot for global dispersal in D matrix 
-# plot for local dispersal in D matrix 
 pdf("./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf",heigh=5,width=10)
 op<-par(mfrow=c(1,2),mar=c(5,5,1.8,0.2),mgp=c(3,1,0))
 s<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
@@ -5030,35 +5029,31 @@ s<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
 s1<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
                  ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
 plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="black",xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1,pch=1)
-legend(x=0.3,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1),
+     cex.lab=1.5,cex.axis=1.5,cex=1.5,pch=16,lwd=1.5)
+lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1.2,pch=1)
+legend(x=0.2,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
+       pch=c(16,1), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.2),
        horiz=F, bty='n') 
 
 plot(s$d_seq,s$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="grey",xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1,pch=1,col="grey")
-legend(x=0.3,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), col=c("grey","grey"),
+     cex.lab=1.5,cex.axis=1.5,cex=1.5,pch=16,lwd=1.5)
+lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1.2,pch=1,col="grey")
+legend(x=0.2,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
+       pch=c(16,1), lty=c(1,1), col=c("grey","grey"), cex=1.4,pt.cex=c(1.5,1.2),
        horiz=F, bty='n') 
 
 par(op)
 dev.off()
 ```
 
-<!-- Extinction risk results are not shown currently, it is introduced as a future idea in Discussion-->
-<!--
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with local dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_local_disp}](./Results/ext_risk_local_disp.pdf){ width=40%, height=40% }
-
-![Effect of non-Normal environmental noise copula on extinction risk after 25 years (Lewton-Cohen model : $r=0$, Ricker model : $r\neq0$) with global dispersion (see Eq. \ref{eq.extrisk_model}); numlocs=5, numsteps=25, numsims=10000\label{fig_risk_global_disp}](./Results/ext_risk_global_disp.pdf){ width=40%, height=40% }
-
-![Increasing patch number allows metapopulation to disperse more efficiently and thereby decresing extinction risk calculated after 25 years; models with local dispersion with numsims=10000 (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_numlocs_effect_local_disp}](./Results/ext_risk_numlocs_effect_local_disp.pdf){ width=40%, height=40% }
-
-![Increasing patch number allows metapopulation to disperse more efficiently and thereby decresing extinction risk calculated after 25 years; models with global dispersion with numsims=10000 (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_numlocs_effect_global_disp}](./Results/ext_risk_numlocs_effect_global_disp.pdf){ width=40%, height=40% }
-
-![Extinction risk as calculated after 25 years on Ricker model (r=0.25, numsims=10000) decreases as carrying capacity $K$ increases for both local and global dispersion (see Eq. \ref{eq.extrisk_model}).\label{fig_risk_K_effect}](./Results/ext_risk_K_effect.pdf){ width=40%, height=40% }
--->
+\begin{figure}[!h]
+\textbf{ \hspace{7.3 cm} (A) \hspace{4 cm} (B)} \\
+\vspace{-0.8 cm}
+\begin{center}
+\includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
+\caption{Analogous to figure \ref{MT-fig_extrisk_lcohen_local} in maintext but with global dispersion.\label{fig_extrisk_lcohen_global}}
+\end{center}
+\end{figure}
 
 # Surrogate testing with multivariate datasets\label{Surrog_multi}
 

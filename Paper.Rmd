@@ -1261,7 +1261,8 @@ and got similar results (see Fig. \ref{SM-fig_extrisk_lcohen_global}).
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
 \caption{Extinction risk for Lewinton-Cohen metapopulation model was calculated after $25$ years with local dispersal
-among two nearest neighbors (Eq. \ref{eq.extrisk_LC}, $r=0$). $(A)$ Left-tail dependent environmental noise showed higher 
+among two nearest neighbors (Eq. \ref{eq.extrisk_LC}, $r=0$, $d=$ degree of dispersal). 
+$(A)$ Left-tail dependent environmental noise showed higher 
 extinction risk than $(B)$ right-tail dependent one, where both case showed extinction risk decreased with 
 increasing number of patches from $numlocs =5$ to $25$.\label{fig_extrisk_lcohen_local}}
 \end{center}

@@ -53,7 +53,7 @@ Dispersal_mat<-function(numlocs,d,disp_everywhere){
 #--------Output------------------------------------------------------
 #A numsims by numlocs by numsteps+1 array of populations
 #----------------------------------------------------------------------
-popsim_ml_D<-function(p0,ns,D,r,K,a,b,ext_thrs,model){
+popsim_ml_D<-function(p0,ns,D,params,ext_thrs,model){
   numsims<-dim(ns)[1]
   numlocs<-dim(ns)[2]
   numsteps<-dim(ns)[3]
@@ -70,25 +70,12 @@ popsim_ml_D<-function(p0,ns,D,r,K,a,b,ext_thrs,model){
     #growth rates based on the noise
     lam_sto<-exp(ns[,,tct])  #numsims by numlocs matrix
     
-    lam_ricker<-exp(r*(1-(res[,,tct]/K)))
-    lam_verhulst<-1+(r*(1-res[,,tct]))
-    lam_hassell<-r/((1+(a*res[,,tct]))^b)
-    lam_msmith<-r/(1+((a*res[,,tct])^b))
-    
     #growth prior to dispersal
-    if(model=="ricker"){
-      given_model<-lam_ricker
-    }else if(model=="verhulst"){
-      given_model<-lam_verhulst
-    }else if(model=="hassell"){
-      given_model<-lam_hassell
-    }else if(model=="msmith"){
-      given_model<-lam_msmith
+    if(model=="lcohen"){
+      res[,,tct+1]<-lam_sto*exp(params)*res[,,tct] #numsims by numlocs matrix
     }else{
       warning("model not specified",immediate.=T,call.=T)
     }
-    
-    res[,,tct+1]<-given_model*lam_sto*res[,,tct] #numsims by numlocs matrix
     
     #after dispersal
     tres<-t(res[,,tct+1]) # numlocs by numsims matrix after taking transpose
@@ -117,15 +104,14 @@ extrisk<-function(sims){
 #       2) numsteps : an integer : number of time steps
 #       3) numlocs : an integer : number of locations
 #       4) D : dispersal matrix which is the output of Dispersal_mat function
-#       5) r : model parameter : growth rate
-#       6) K : Ricker model parameter : carrying capacity
-#       7), 8) a, b : model parameters for Hassell model 
-#       9) ext_thrs : extinction threshold below which populations go extinct
-#       10) scl : a scaling factor which is multiplied with noise generated
-#       11) model : a character specifying model name
-#       12) ploton : logical(T or F) to get optional plot
+#       5) p0 : initial pop value
+#       6) params : model parameter 
+#       7) ext_thrs : extinction threshold below which populations go extinct
+#       8) scl : a scaling factor which is multiplied with noise generated
+#       9) model : a character specifying model name
+#       10) ploton : logical(T or F) to get optional plot
 
-plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,a,b,ext_thrs,scl,model,ploton){
+plotter_ext_risk<-function(numsims,numsteps,numlocs,D,p0,params,ext_thrs,scl,model,ploton){
  
   ns1<-retd(n=numsteps*numsims,d=numlocs,rl=1)# a righttail dep matrix(numpoints by numlocs,     
   #                                                      numpoints=numsteps*numsims)
@@ -134,13 +120,13 @@ plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,a,b,ext_thrs,scl,model
   ns1<-aperm(ns1,c(2,3,1)) # convert to an array (numsims by numlocs by numsteps)
   
   ns1<-scl*ns1
-  pops1<-popsim_ml_D(p0=rep(K,numlocs),ns=ns1,D=D,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,model=model)
+  pops1<-popsim_ml_D(p0=rep(p0,numlocs),ns=ns1,D=D,params=params,ext_thrs=ext_thrs,model=model)
   risk_right<-extrisk(pops1)
   #ps<-rep(K,numlocs)
   #print(ps)
   
   ns2<-(-ns1)
-    pops2<-popsim_ml_D(p0=rep(K,numlocs),ns=ns2,D=D,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,model=model)
+    pops2<-popsim_ml_D(p0=rep(p0,numlocs),ns=ns2,D=D,params=params,ext_thrs=ext_thrs,model=model)
   risk_left<-extrisk(pops2)
   
   if(ploton==T){
@@ -164,24 +150,24 @@ plotter_ext_risk<-function(numsims,numsteps,numlocs,D,r,K,a,b,ext_thrs,scl,model
 #       1) numsims : an integer : number of simulations
 #       2) numsteps : an integer : number of time steps
 #       3) numlocs : an integer : number of locations
-#       4) r : model parameter : growth rate
-#       5) K : Ricker model parameter : carrying capacity
-#       6)-7) a,b : Hassell model parameters
-#       8) scl : a scaling factor which is multiplied with noise generated
-#       9) ext_thrs extinction threshold below which populations go extinct
-#       10) model : a character specifying model name
-#       11) disp_everywhere :logical:
+#       4) p0 : initial pop value
+#       5) params : model parameter 
+#       6) scl : a scaling factor which is multiplied with noise generated
+#       7) ext_thrs extinction threshold below which populations go extinct
+#       8) model : a character specifying model name
+#       9) disp_everywhere :logical:
 #             if T : gives D for linear chain model with equal dispersal everywhere
 #             if F : gives D for linear chain model with equal dispersal only to nearest neighbor location
-#       12) ploton : logical to get optional plot
+#       10) ploton : logical to get optional plot
 
-varying_d<-function(numsims,numsteps,numlocs,r,K,a,b,ext_thrs=ext_thrs,scl,model,disp_everywhere,ploton){
+varying_d<-function(numsims,numsteps,numlocs,p0,params,ext_thrs,scl,model,disp_everywhere,ploton){
   risk_right<-c()
   risk_left<-c()
   d_seq<-seq(from=0,to=1,by=0.1)
   for(d in d_seq){
     D_mat<-Dispersal_mat(numlocs=numlocs,d=d,disp_everywhere=disp_everywhere)
-    riskrl<- plotter_ext_risk(numsims=numsims,numsteps = numsteps,numlocs = numlocs,D=D_mat,r=r,K=K,a=a,b=b,ext_thrs=ext_thrs,scl=scl,model=model,ploton=F)
+    riskrl<- plotter_ext_risk(numsims=numsims,numsteps = numsteps,numlocs = numlocs,D=D_mat,
+                              p0=p0,params=params,ext_thrs=ext_thrs,scl=scl,model=model,ploton=F)
     risk_r<-riskrl$risk_right_after_numsteps
     risk_l<-riskrl$risk_left_after_numsteps
     risk_right<-c(risk_right,risk_r)
@@ -190,16 +176,15 @@ varying_d<-function(numsims,numsteps,numlocs,r,K,a,b,ext_thrs=ext_thrs,scl,model
   
   if(ploton==T){
     op<-par(mfrow=c(1,2))
-    plot(d_seq,risk_left,xlab='d',ylab='Risk_left',xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid())
-    plot(d_seq,risk_right,xlab='d',ylab='Risk_right',xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid())
+    plot(d_seq,risk_left,xlab='d',ylab='Noise : left-tail',xlim=c(0,1),ylim=c(0,1),type="b",col="red",panel.first = grid())
+    plot(d_seq,risk_right,xlab='d',ylab='Noise : right-tail',xlim=c(0,1),ylim=c(0,1),type="b",col="blue",panel.first = grid())
     par(op)
-    mtext(paste0("r = ", r," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps),side=3,line=0.2,col="navyblue")
+    mtext(paste0("params = ", params," , numlocs = ",numlocs," , numsims = ",numsims," , numsteps = ",numsteps),side=3,line=0.2,col="navyblue")
   }
   
   return(data.frame(d_seq=d_seq,
                     risk_left=risk_left,
                     risk_right=risk_right))
-  
 
 }
 #------------------------------------------------------------------------------------------------------------

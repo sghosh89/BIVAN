@@ -1191,13 +1191,7 @@ $r$ is the liner growth rate and $K$ is the carrying capacity of the environment
 
     * For LC model, as expected, when extinction risk calculated after $25$ years, was plotted against each varying $d$ (=degree of dispersion), we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one. [see first subplot of Fig. \ref{fig_risk_local_disp} and Fig. \ref{fig_risk_global_disp}]
 
-- Ricker model (r $\neq$ 0):
-
-    * For ricker model when extinction risk calculated after $25$ years, was plotted against each varying $d$ (=degree of dispersion), we found that extinction risk was higher for data came from left tail dependent environmental fluctuations than right tail dependent one upto $r=0.7$. For $r>0.7$, extinction risk is greater for data came from right tail dependent environmental fluctuations. [see Fig. \ref{fig_risk_local_disp} - \ref{fig_risk_global_disp}]
- 
-    * With increasing $K$ from $50$ to $200$, extinction risk in both case gets decreased as expected. [see Figure \ref{fig_risk_K_effect}]
-  
-With increasing number of patches from $5$ to $25$, extinction risk decreased [for a fixed $d$] ; [see Fig. \ref{fig_risk_numlocs_effect_local_disp} - Fig. \ref{fig_risk_numlocs_effect_global_disp}] for both model. -->
+-->
 
 
 ## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk

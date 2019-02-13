@@ -5219,8 +5219,94 @@ as it had significant p_left value for mean curvature.
 code is in r chunk named "spatialTL_on_realdata_aphid_count".
 -->
 
+<!--
+Stuff on TL cut from the main text
+From Q3 methods:
+We tested whether the linearity of the spatial Taylor's law relationship was partly
+due to the copula structure of the dependences between the populations sampled. 
+Using corn leaf aphid abundance data as an example, but also
+applying the same analysis to the abundance data we had for 19 other aphid species
+(see *Data*), we calculated the curvature (details in Appendix \ref{SM-TL_curvature}) 
+of the empirical Taylor's law relationship; Taylor's law hypothesizes that this 
+curvature should be close to 0. We then calculated the same curvature quantity for
+10000 surrogate datasets, using the same surrogate procedure described above in 
+this section, and compared the empirical Taylor's law curvature to the 
+distribution of surrogate curvatures using a two-tailed test. If the empirical
+curvature value was below the $5^{\text{th}}$ quantile of the surrogate distribution, 
+then copula structure contributes to the linearity of spatial Taylor's law 
+because randomizing copula structure while retaining other statistical properties
+of the data cause the Taylor's law relationship to become significantly more 
+curved. 
 
+From Q3 results:
+```{r read_tl_aphid_count_sp6, echo=F}
+tlsp6<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
+tl_aphid_count<-readRDS("./Results/taylorslaw_results/tl_aphid_count.RDS")
+aphid_info<-readRDS("./Results/aphid_info.RDS")
+pleft<-tl_aphid_count$p_left_mncurv
+stat<--2*sum(log(pleft))
+pchi2<-1-pchisq(stat,40)
+idsp<-which(pleft<0.05)
+pleftgood<-pleft[idsp]
+```
 
+Results also suggested that copula structure contributes to the linearity of 
+spatial Taylor's law. For instance, the spatial Taylor's law relationship 
+for corn leaf aphid abundance data was significantly less curved than for 
+surrogate datasets (Fig. \ref{fig_sTL_mncurv_sp6}). Three of $20$ aphid species
+had cuvatures less than at least $95\%$ of surrogate datasets ($p=$ `r pleftgood` for 
+the `r aphid_info$c1[idsp]` species, respectively). 
+***DAN: Shya, please fill in X, Y, Z, A, B, C with autolinks)
+***Shya: Done.
+Three such significant
+results of 20 species could have occurred by chance due to 
+multiple-testing error. However, for each of the 20 species, we computed the fraction
+of surrogate curvatures less than the curvature that came from real data, and we
+combined these $p$-values using Fisher's combined probability test to get an
+aggregate $p$-value of `r pchi2`
+***DAN: Shya, see the Wikipedia article on Fisher's method to learn about it. Then 
+you need to put this analysis into the code suite and have the resulting p value
+typed in above be an autolink instead. Here is what I did: 
+1) I copied by hand all the pleft values on the pdf you sent me into a vector pleft. Instead you should create such a vector in your code from your test output, not typing in the results.
+2) I used the formula stat<--2*sum(log(pleft)) to get the Fisher method statistic
+3) I compared to a chi-squared distribution with 40 degress of freedom using 1-pchisq(stat,40) to get my p-value
+Please let me know if any of this is unclear.
+***Shya: Done.
+for the test of the null hypothesis that 
+copula structure did not contribute to linearity of Taylor's law for any of the 
+species. This result is usefully suggestive and can guide future work, but still does not
+provide certainty, because the Fisher method provides $p$-values that are too 
+small if its assumption of independent tests is violated. Though our 20 species
+have different host plants so may be independent for the purposes of our analyses, 
+it would be difficult to fully assess independence.
+***DAN: Shya, can you remind me why the same analyses were not done for plankton,
+if there is a good reason? Or if you did it, what were the results?
+***Shya : we did it, I have the pdf but I don't have the code where I called to generate the pdf,
+As we could not get any significant results for a single species (see attachment in the mail I sent you)
+we did not show the results. 
+We provide simulation results in Appendix \ref{SM-Consequence_TL_simulation}
+that robustly illustrate, at least in the model setup we used, 
+that copula structure influences spatial Taylor's law.
+
+\begin{figure}[!h]
+\textbf{ \hspace{4 cm} (A) \hspace{4 cm} (B) \hspace{4 cm} (C)} \\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=10 cm]{./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf}
+\includegraphics[width=5 cm]{./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf}\\
+\caption{Mean curvature of the spatial Taylor's law relationship for 
+corn leaf aphid abundance
+data (A) was significantly less than for surrogates (B, C). The Taylor's law 
+relationship for one example surrogate (B) shows shows greater curvature than
+for data (A), and the significance of the difference was demonstrated
+by the fact that only `r (tlsp6$p_left_mncurv)*10000` of $10000$ surrogates had curvature less than that
+of the data (C). See Appendix \ref{SM-TL_curvature} for details on 
+how curvature was calculated.\label{fig_sTL_mncurv_sp6}}
+\end{center}
+\end{figure}
+***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"
+***sHYA: dONE.
+-->
 
 \clearpage
 

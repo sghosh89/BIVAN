@@ -458,7 +458,7 @@ aphid_info <- tibble(c1=c("Apple grass aphid","Bird cherry oat aphid","Black bea
                        "Macrosiphum euphorbiae","Metopolophium dirhodum","Myzus ascalonicus","Drepanosiphum platanoidis","Cavariella aegopodii")
 )
 
-
+saveRDS(aphid_info,"./Results/aphid_info.RDS")
 knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
       caption = "Species names of 20 aphids for which data were available \\label{tab_aphid_info}",
       col.names = NULL)%>%
@@ -4305,8 +4305,9 @@ loclist<-good_loclist(d_allsp=data_aphid_count,sp=10,data_pt_thrs=30)
 #par(op)
 #dev.off()
 
-pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf",height=6,width=8)
-op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
+pdf("./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf",height=5,width=5)
+op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
+#op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=10,d_allsp=data_aphid_count),loclist=loclist,numsurrog=numsurrog,ploton=F,
                           corpres="spearman") 
 hist(answer1s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
@@ -4340,8 +4341,8 @@ loclist<-good_loclist(d_allsp=data_aphid_ff,sp=11,data_pt_thrs=30)
 #par(op)
 #dev.off()
 
-pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf",height=6,width=8)
-op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
+pdf("./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf",height=5,width=5)
+op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 answer2s<-skewness_testing(ts_matrix=sp_data(sp=11,d_allsp=data_aphid_ff),loclist=loclist,numsurrog=numsurrog,ploton=F,
                           corpres="spearman")
 hist(answer2s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
@@ -4375,8 +4376,8 @@ loclist<-good_loclist(d_allsp=data_plankton_north_sea,sp=16,data_pt_thrs=45)
 #par(op)
 #dev.off()
 
-pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf",height=6,width=8)
-op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
+pdf("./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf",height=5,width=5)
+op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 answer3s<-skewness_testing(ts_matrix=sp_data(sp=16,d_allsp=data_plankton_north_sea),loclist=loclist,numsurrog=numsurrog,ploton=F,
                           corpres="spearman") 
 hist(answer3s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
@@ -4409,8 +4410,8 @@ loclist<-good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=50)
 #par(op)
 #dev.off()
 
-pdf("./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf",height=6,width=8)
-op<-par(mar=c(5,5,1.8,0.1), mgp=c(3, 1, 0))
+pdf("./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf",height=5,width=5)
+op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
 answer1s<-skewness_testing(ts_matrix=sp_data(sp=1,d_allsp=methane_data),loclist=loclist,numsurrog=numsurrog,ploton=F,
                            corpres="spearman") 
 hist(answer1s$surrogskw,breaks=100,main="",xlab="Skewness",ylab="Frequency",cex.lab=2,cex.axis=2,col="grey",border=F)
@@ -4925,6 +4926,9 @@ for(i in splist){
   #ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="slope",labelon=T)
   #ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="quadcoeff",labelon=T)
   ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=i,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon=T)
+  if(i==6){
+    saveRDS(ans,"./Results/taylorslaw_results/tl_aphid_count_sp6.RDS") #saving sp=6 results
+  }
   tl_aphid_count$real_sTL_slope[i]<-ans$real_spatialTLslope
   tl_aphid_count$p_left[i]<-ans$p_left
   tl_aphid_count$p_right[i]<-ans$p_right
@@ -4941,34 +4945,32 @@ dev.off()
 saveRDS(tl_aphid_count,"./Results/taylorslaw_results/tl_aphid_count.RDS")
 ```
 
-
-```{r spatialTL_on_realdata_aphid_count_sp6, results="hide", echo=F, cache=T, cache.extra=list(seed,data_aphid_count,TL_on_realdata,mtime("good_loclist.R"),mtime("TaylorsLawTools.R"),mtime("mncurvat.R"),mtime("ncsurrog.R"))}
-
-set.seed(seed)
-
+```{r spatialTL_on_realdata_aphid_count_sp6, results="hide", echo=F}
 #Now for sp=6
-sp<-6
+
+ans<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
+
 pdf("./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf",height=5,width=5)
 op<-par(mar=c(4,5,1,1),mgp=c(3,1,0))
-ans<-TL_on_realdata(data=data_aphid_count,numsurrog=10000,sp=sp,data_pt_thrs = 30,ploton=T,tag="mncurv",labelon = F)
-saveRDS(ans,"./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
+hist(ans$good_surrog_mncurv,breaks=100,main="",xlab="Mean curvature",cex.axis=2,cex.lab=2,cex=2,col="grey",border=F)
+points(x=ans$real_sTL_mncurv,y=0,col="black",pch=15,cex=2)
 mtext(paste0("p= ",ans$p_left_mncurv),side = 3, line=-2, adj=0.5, col="black",cex=2)
 par(op)
 dev.off()
 
 pdf("./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf",height=5,width=10)
-op<-op<-par(mfrow=c(1,2),mar=c(4,5,1,1),mgp=c(3,1,0))
+op<-par(mfrow=c(1,2),mar=c(4,5,1,1),mgp=c(3,1,0))
 plot(ans$realTL_stats$s.points,xlab=expression(log[10]("spatial mean")),
-     ylab=expression(log[10]("spatial variance")),col="black",
-     cex.axis=1.5,cex.lab=1.5)
+     ylab=expression(log[10]("spatial variance")),col="grey",pch=20,cex=1.5,
+     cex.axis=2,cex.lab=2)
 mtext(paste0("mean curvature= ",round(unname(ans$realTL_stats$s.stats[7]),3)),side = 3, line=-2, adj=0, col="black",cex=2)
 
 target_mncurv<-0.1
 id<-which(abs(ans$good_surrog_mncurv-target_mncurv)<1e-4)[1]
 ans_s<-ans$surrogTL_stats
 plot(ans_s[[id]]$s.points,xlab=expression(log[10]("spatial mean")),
-     ylab=expression(log[10]("spatial variance")),
-     cex.axis=1.5,cex.lab=1.5)
+     ylab=expression(log[10]("spatial variance")),col="grey",pch=20,cex=1.5,
+     cex.axis=2,cex.lab=2)
 mtext(paste0("mean curvature= ",round(ans$good_surrog_mncurv[id],3)),side = 3, line=-2, adj=0, col="black",cex=2)
 
 par(op)
@@ -5148,7 +5150,27 @@ numbers of NAs are not too large and $T$ is not too small.
 
 <!--***DAN: Shya, I need a reminder how we did this, can you please tell me where the
 code is, then I can write this section. Feel free to take a stab at it yourself, too,
-though.-->
+though.
+***Shya: What do you want to know? how did you calculate mean curvature and 
+slope for made up data or you want to see code with real data?
+
+In case of made up data :
+For each non-N copula family (C,F,SC) you generated surrogates
+having similar correlation (spearman/ kendall, though for 
+consistency we added plots in suppmat with spearman) that of N copula
+[using copsurrognd.R] : this thing is done in r chunk named "taylors_law_make_surrogs".
+
+Then you did spatial-TL calculation for each set of copula family in r chunk "tl_analysis"
+[using TaylorsLawTools.R which calls mncurvat.R code to calculate mean curvature]
+
+Next two r chunks : taylor_plots_kendall and taylor_plots_spearman generates plot with those data.
+
+For spatial TL calculation on real data :
+
+We used Aphid count all sp with spearman only, but to show a plot for example chose sp=6 (corn leaf aphid)
+as it had significant p_left value for mean curvature.
+code is in r chunk named "spatialTL_on_realdata_aphid_count".
+-->
 
 # Effects of non-N copula structure on Taylor's law \label{Consequence_TL_simulation}
 

@@ -1205,18 +1205,18 @@ Finally, we studied **(iii)** the effects of environmental noise, having a non-N
 ## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk
 
 \begin{figure}[!h]
-\textbf{ \hspace{6 cm} (A) \hspace{6 cm} (B)} \\
-\vspace{-0.1 cm}
+\textbf{ \hspace{6.6 cm} (A) \hspace{4.6 cm} (B)} \\
+\vspace{-0.4 cm}
 \begin{center}
-\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
-\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
+\includegraphics[width=5 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
+\includegraphics[width=5 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
 \end{center}
 \vspace{0.2 cm}
-\textbf{ \hspace{6 cm} (C) \hspace{6 cm} (D)} \\
-\vspace{-0.1 cm}
+\textbf{ \hspace{6.6 cm} (C) \hspace{4.6 cm} (D)} \\
+\vspace{-0.4 cm}
 \begin{center}
-\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
-\includegraphics[width=5.5 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
+\includegraphics[width=5 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
+\includegraphics[width=5 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
 \caption{Skewness of spatially averaged green spruce aphid abundance $(A)$, leaf-curling plum 
 aphid first flight dates $(B)$, \emph{Ceratium furca} abundance $(C)$, and methane-flux
 $(D)$ time series compared to an multivariate 
@@ -1246,28 +1246,37 @@ fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D).
 
 ```{r read_tl_aphid_count_sp6, echo=F}
 tlsp6<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
+tl_aphid_count<-readRDS("./Results/taylorslaw_results/tl_aphid_count.RDS")
+aphid_info<-readRDS("./Results/aphid_info.RDS")
+pleft<-tl_aphid_count$p_left_mncurv
+stat<--2*sum(log(pleft))
+pchi2<-1-pchisq(stat,40)
+idsp<-which(pleft<0.05)
+pleftgood<-pleft[idsp]
 ```
 
 Results also suggested that copula structure contributes to the linearity of 
 spatial Taylor's law. For instance, the spatial Taylor's law relationship 
 for corn leaf aphid abundance data was significantly less curved than for 
 surrogate datasets (Fig. \ref{fig_sTL_mncurv_sp6}). Three of $20$ aphid species
-had cuvatures less than at least $95\%$ of surrogate datasets ($p=X$, $Y$, $Z$ for 
-the $A$, $B$ and $C$ species, respectively). 
-<!--***DAN: Shya, please fill in X, Y, Z, A, B, C with autolinks)-->
+had cuvatures less than at least $95\%$ of surrogate datasets ($p=$ `r pleftgood` for 
+the `r aphid_info$c1[idsp]` species, respectively). 
+<!--***DAN: Shya, please fill in X, Y, Z, A, B, C with autolinks)
+***Shya: Done.-->
 Three such significant
 results of 20 species could have occurred by chance due to 
 multiple-testing error. However, for each of the 20 species, we computed the fraction
 of surrogate curvatures less than the curvature that came from real data, and we
 combined these $p$-values using Fisher's combined probability test to get an
-aggregate $p$-value of $0.019$ 
+aggregate $p$-value of `r pchi2`
 <!--***DAN: Shya, see the Wikipedia article on Fisher's method to learn about it. Then 
 you need to put this analysis into the code suite and have the resulting p value
 typed in above be an autolink instead. Here is what I did: 
 1) I copied by hand all the pleft values on the pdf you sent me into a vector pleft. Instead you should create such a vector in your code from your test output, not typing in the results.
 2) I used the formula stat<--2*sum(log(pleft)) to get the Fisher method statistic
 3) I compared to a chi-squared distribution with 40 degress of freedom using 1-pchisq(stat,40) to get my p-value
-Please let me know if any of this is unclear.-->
+Please let me know if any of this is unclear.
+***Shya: Done.-->
 for the test of the null hypothesis that 
 copula structure did not contribute to linearity of Taylor's law for any of the 
 species. This result is usefully suggestive and can guide future work, but still does not
@@ -1276,7 +1285,10 @@ small if its assumption of independent tests is violated. Though our 20 species
 have different host plants so may be independent for the purposes of our analyses, 
 it would be difficult to fully assess independence.
 <!--***DAN: Shya, can you remind me why the same analyses were not done for plankton,
-if there is a good reason? Or if you did it, what were the results?--> 
+if there is a good reason? Or if you did it, what were the results?
+***Shya : we did it, I have the pdf but I don't have the code where I called to generate the pdf,
+As we could not get any significant results for a single species (see attachment in the mail I sent you)
+we did not show the results.--> 
 We provide simulation results in Appendix \ref{SM-Consequence_TL_simulation}
 that robustly illustrate, at least in the model setup we used, 
 that copula structure influences spatial Taylor's law.
@@ -1292,12 +1304,13 @@ corn leaf aphid abundance
 data (A) was significantly less than for surrogates (B, C). The Taylor's law 
 relationship for one example surrogate (B) shows shows greater curvature than
 for data (A), and the significance of the difference was demonstrated
-by the fact that only $39$ of $10000$ surrogates had curvature less than that
+by the fact that only `r (tlsp6$p_left_mncurv)*10000` of $10000$ surrogates had curvature less than that
 of the data (C). See Appendix \ref{SM-TL_curvature} for details on 
 how curvature was calculated.\label{fig_sTL_mncurv_sp6}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"-->
+<!--***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"
+***sHYA: dONE.-->
 
 <!--***DAN: I want to put back in some extinction risk results. Let's talk about this, please, Shyamolina-->
 

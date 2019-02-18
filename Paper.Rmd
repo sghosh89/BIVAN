@@ -1127,9 +1127,10 @@ strongly right-tail dependent for all or most location pairs $i$ and $j$, then
 exceptionally large values tend to occur at the same time in all or most locations.
 This should tend to increase the skewness of the distribution through time of the
 spatial average. Similarly, left-tail dependence between local variables
-will tend to decreases skewness of the spatial mean. Skewness of the 
-spatial mean corresponds to the "spikiness" of the spatial-mean time series or
-its tendency to crash to low levels. 
+will tend to decreases skewness of the spatial mean. Positive skewness of the 
+spatial mean corresponds to the "spikiness" of the spatial-mean time series; negative 
+skewness, if it occurs,  corresponds to a 
+tendency to crash to low levels but quickly recover. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
 cases such as pest or resource abundance or CO$_2$ or methane flux.
@@ -1140,19 +1141,20 @@ furca} abundance data, and methane flux data (see Data and Table \ref{tab_multiv
 For each dataset we calculated the spatial mean, and then the skewness (through time) of that
 mean. Then, for each dataset separately, we compared the value obtained 
 to a distribution of values 
-of the same quantity calculated for each of 10000 surrogate datasets that were 
-produced from the empirical data by randomizing
-it in a special way to have the copula structure of a multivariate-normal distribution
-(Appendix \ref{SM-Surrog_multi}). The surrogate/randomized datasets had exactly the same
-marginal distributions (i.e., distributions of values for each sampling location)
-as the original data. 
+of the same quantity calculated for each of 10000 surrogate datasets. Surrogate 
+datasets were produced from the empirical data by randomizing
+it in a special way so that surrogate/randomized dataset then had the 
+copula structure of a multivariate-normal distribution
+(Appendix \ref{SM-Surrog_multi}). The surrogate datasets had exactly the same
+distributions of values for each sampling location as the original data. 
 They also had very similar Spearman correlations between pairs of sampling locations
-as the original data. But the surrogates had multivariate normal copula structure. 
+as the original data.  
 Our comparisons therefore tested the null hypothesis that the skewness of the spatial 
 mean took values on the empirical data no different from what one would expect if the copula
 structure of the data were multivariate normal, but the data were otherwise statistically
-unchanged. Significant differences indicate that copula structure contributed 
-to the skewness of the spatial mean, i.e., to its "spikiness."
+unchanged. Significant differences indicate that non-N copula structure in the data 
+contributed to the skewness of the spatial mean, i.e., to the "spikiness" of that
+time series.
 
 For green spruce aphid abundance data, *Ceratium furca* abundance data, and methane-flux
 data, because these datasets exhibited lower-tail dependence 
@@ -1163,27 +1165,38 @@ leaf-curling plum aphid first flight data, because this dataset exhibited upper-
 dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tailed test
 in the right tail.
 
-<!--***DAN: 
-1) Shya put concepts on why we would expect lt dependence of noise to mean
-more ext risk in a metapop context
-2) then methods for how we test that (present the model, say what sims you did-->
-
-On a second thought, we addressed the question how asymmetry in 
-tail-dependence of environmental
-variable could influence the extinction risk from a meta-population
-context. We hypothesized to get higher 
-extinction risk if the environmental noises from multiple patches
-were more correlated to their smaller values 
-(resulting left-tail dependence
-in copula structure) than larger. This idea came from the context that
-"bad" years (e.g. extreme cold) would have adverse affect 
-on all metapopulation patches simultaneously, so there would 
-not be enough neighboring-populations to rescue the "extinct"
-patches. But in "good" years as the environmental variables 
-from multiple locations were not correlated strongly, some of
-extinct metapopulation-patches could be rescued by dispersal from
-other patches. We tested our hypothesis in the following section.
-
+We also examined whether the nature of the
+tail dependence of an environmental variable across space could influence the 
+extinction risk of a metapopulation. We hypothesized that environmental noises
+exhibiting greater left-tail dependence across different habitat patches would 
+cause higher metapopulation extinction risks because then bad years for the 
+component populations would occur simultaneously in many patches,
+reducing the potential for rescue effects. 
+We provided a test of the conceptual validity of this hypothesis using a metapopulation
+extension of the Lewinton-Cohen model,
+$\vec{P}(t+1) = D \lambda(t) \vec{P}(t)$,
+where $\vec{P}(t)$ is a vector of populations, the $i$th component $P_i(t)$ representing
+the population in the $i$th habitat patch ($i=1,\ldots,N$) at time $t$. 
+The $N \times N$ matrix $\lambda(t)$ was diagonal with $i$th diagonal entry 
+$\exp(r+\epsilon_i(t))$. Here $r$ is an intrinsic growth rate; we used $r=0$. The
+$\epsilon_i(t)$ represent environmental noises in each patch. They were standard-normally 
+distributed in each patch, were independent through time, and showed between-patch
+Spearman correlations X and Pearson correlations Y in all simulations, 
+<!--***Shya: Please fill in X and Y. If it was the Kendall that was used, please 
+change Spearman to Kendall. If anything is unclear here in what you should do, please ask. 
+If you don't know how to answer these questions, let me know and remind me where the 
+code is that you used to generate the noise. Actually, even if you can do this yourself,
+please insert a comment below this one indcating where the code is for model and noise-->
+but were made to exhibit right- or left-tail dependence between patches in
+different simulations (Appendix \ref{SM-ext_risk_model}). The $N \times N$
+matrix $D$ was a dispersal matrix. For simplicity, we considered habitat patches 
+to be arranged in a line, with populations dispersing either to nearest neighbors only,
+or globally, in different simulations (Appendix \ref{SM-ext_risk_model}). The dispersal 
+rate was $d$. After each time step, if the population in a patch was below $1$, it was
+set to $0$. We simulated the model 10000 times for each combination of parameters,
+starting from initial populations in each patch of X, 
+<!--***DAN: Shya, please fill in X-->
+and calculated extinction risk after $25$ time steps.
 
 ## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk
 
@@ -1227,29 +1240,8 @@ average showed a non-significant tendency toward being less than surrogate skewn
 (Fig. \ref{fig_skewness_spearman}C), or was less than a marginally significant 
 fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D). 
 
-<!--***DAN: Shya to insert extinction risk results with one fig-->
-We tested our hypothesis of asymmetric copula-effect on extinction-risk
-as discussed in
-earlier section, with Lewinton-Cohen metapopulation
-model (Eq. \ref{eq.extrisk_LC}), where population density 
-$P$ could update exponentially depending on its intrinsic rate $r$.
-$\epsilon(t)$ represent environmental noise; they are standard-normal 
-random variables that are independent for distinct times, t, but 
-that were made to exhibit either extreme left tail or right tail dependence
-across patches.
-We considered metapopulation patches were arranged in
-a linear chain fashion
-and the population may disperse to its nearerst
-two neighbors (local dispersion) or to any patches (global dispersion); for code see [`mydispersal.R`](https://github.com/sghosh89/BIVAN/blob/master/mydispersal.R).
-
-\begin{equation}\label{eq.extrisk_LC}
-P(t+1) = \exp\left [  r + \epsilon(t) \right ] P(t)
-\end{equation}
-
-We simulated Eq. \ref{eq.extrisk_LC} with local dispersal for $r=0$ and calculated extinction risk after 25 years
-from $10000$ simulations for both left-tail and right-tail dependent environmental noise across $5$ patches. 
-Whenever population, at any patch after each year, went below the extinction threshold ($=1$) we considered 
-that patch for that time went extinct. We found, as we
+<!--***DAN: Dan has not edited the results for the extinction risk stuff yet-->
+ We found, as we
 hypothesized, left tail dependent environmental fluctuations increased extinction risk of metapopulations than the right-tail
 dependent ones (Fig. \ref{fig_extrisk_lcohen_local}). When number of patches increased from $5$ to $25$, extinction risk 
 decreased in both cases. We repeated our simulations using same parameters with global dispersal among patches 
@@ -1267,7 +1259,17 @@ extinction risk than $(B)$ right-tail dependent one, where both case showed exti
 increasing number of patches from $numlocs =5$ to $25$.\label{fig_extrisk_lcohen_local}}
 \end{center}
 \end{figure}
-
+<!--***DAN: Shya, can you please change this figure as follows:
+1) Make it only go to d=0.5. I think reviewers will complain that d close to 1 is a weird and 
+unrealistic. Anyway, results are the same for larger d, so we are not hiding anything
+2) the main comparison is between right and left tail dependence, so make the left panel show 
+the numlocs=5 case, with results for both right- and left-tail dependence of the noise shown. 
+And make the right panel show the numlocs=25 case with results for both right- and left-tail
+dependence of the noise shown.
+3) Right now you use grey dots on one panel and black on the other, but you can just use black 
+on both.
+4)  Use N instead of numlocs - in papers we use variable names like in math, not like in code.
+-->
 
 # Discussion \label{Discussion}
 

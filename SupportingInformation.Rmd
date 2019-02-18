@@ -5100,6 +5100,10 @@ $b_i(t)$ will therefore come about only from the presence of NAs and from sampli
 These discrepancies should be minor if the 
 numbers of NAs are not too large and $T$ is not too small. 
 
+# Extinction risk noise and dispersal matrix \label{ext_risk_model}
+
+
+
 # Effects of non-N copula structure on Taylor's law \label{Consequence_TL_simulation}
 
 \noindent Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 

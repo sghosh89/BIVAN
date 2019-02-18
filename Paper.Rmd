@@ -310,7 +310,7 @@ population, community, and ecosystem functioning data. Copula structure describi
 the relationship between atmospheric weather variables such as X and Y has been 
 examined previously in the meteorological literature (e.g., REF). We therefore 
 examined environmental variables from the soil instead, using the Rapid Carbon 
-Assessment database (RaCA; @Wills2014).
+Assessment database (RaCA; [@Wills2014]).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
 nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
@@ -326,7 +326,7 @@ Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
 across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 
 35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect 
-Survey suction-trap dataset [@Macaulay1988, @Harrington2014]. The first of our two 
+Survey suction-trap dataset [@Macaulay1988; @Harrington2014]. The first of our two 
 population-level datasets was also derived from the RIS suction-trap data, and comprised 
 total counts of aphids trapped for the same locations, species, and years; these are 
 indicators of flying aphid abundance. Data pre-processing for the aphid data was the same as 
@@ -1175,18 +1175,22 @@ reducing the potential for rescue effects.
 We provided a test of the conceptual validity of this hypothesis using a metapopulation
 extension of the Lewinton-Cohen model,
 $\vec{P}(t+1) = D \lambda(t) \vec{P}(t)$,
-where $\vec{P}(t)$ is a vector of populations, the $i$th component $P_i(t)$ representing
-the population in the $i$th habitat patch ($i=1,\ldots,N$) at time $t$. 
-The $N \times N$ matrix $\lambda(t)$ was diagonal with $i$th diagonal entry 
+where $\vec{P}(t)$ is a vector of populations, the $i^{th}$ component $P_i(t)$ representing
+the population in the $i^{th}$ habitat patch ($i=1,\ldots,N$) at time $t$. 
+The $N \times N$ matrix $\lambda(t)$ was diagonal with $i^{th}$ diagonal entry 
 $\exp(r+\epsilon_i(t))$. Here $r$ is an intrinsic growth rate; we used $r=0$. The
 $\epsilon_i(t)$ represent environmental noises in each patch. They were standard-normally 
 distributed in each patch, were independent through time, and showed between-patch
 Spearman correlations X and Pearson correlations Y in all simulations, 
-<!--***Shya: Please fill in X and Y. If it was the Kendall that was used, please 
+<!--***DAN: Please fill in X and Y. If it was the Kendall that was used, please 
 change Spearman to Kendall. If anything is unclear here in what you should do, please ask. 
 If you don't know how to answer these questions, let me know and remind me where the 
 code is that you used to generate the noise. Actually, even if you can do this yourself,
-please insert a comment below this one indcating where the code is for model and noise-->
+please insert a comment below this one indcating where the code is for model and noise
+***Shya: I don't know the answer, the code which generates extreme right or left tail dep noise 
+is written by you : ExtremeTailDep.R; there is no mention to preserve spearman or kendall or pearson.
+I called retd function from ExtremeTaildep.R in another script mydispersal.R line 116, 128 
+to generate right and left tail dep. noise.-->
 but were made to exhibit right- or left-tail dependence between patches in
 different simulations (Appendix \ref{SM-ext_risk_model}). The $N \times N$
 matrix $D$ was a dispersal matrix. For simplicity, we considered habitat patches 
@@ -1253,10 +1257,10 @@ and got similar results (see Fig. \ref{SM-fig_extrisk_lcohen_global}).
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
 \caption{Extinction risk for Lewinton-Cohen metapopulation model was calculated after $25$ years with local dispersal
-among two nearest neighbors (Eq. \ref{eq.extrisk_LC}, $r=0$, $d=$ degree of dispersal). 
-$(A)$ Left-tail dependent environmental noise showed higher 
-extinction risk than $(B)$ right-tail dependent one, where both case showed extinction risk decreased with 
-increasing number of patches from $numlocs =5$ to $25$.\label{fig_extrisk_lcohen_local}}
+among two nearest neighbors ($r=0$, $d=$ rate of dispersal). 
+Left-tail dependent environmental noise caused higher 
+extinction risk than right-tail dependent one for number of patches $(A)$ $N = 5$ and $(B)$ $N = 25$, respectively,
+where both case showed lower extinction risk with increasing number of patches.\label{fig_extrisk_lcohen_local}}
 \end{center}
 \end{figure}
 <!--***DAN: Shya, can you please change this figure as follows:
@@ -1269,7 +1273,7 @@ dependence of the noise shown.
 3) Right now you use grey dots on one panel and black on the other, but you can just use black 
 on both.
 4)  Use N instead of numlocs - in papers we use variable names like in math, not like in code.
--->
+***Shya: Done.-->
 
 # Discussion \label{Discussion}
 

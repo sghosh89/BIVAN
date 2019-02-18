@@ -4980,8 +4980,7 @@ par(op)
 dev.off()
 ```
 
-
-```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
+```{r sim_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
 source("mydispersal.R")
 set.seed(seed)
@@ -4994,27 +4993,47 @@ ext_thrs<-1
 scl<-1
 p0<-50
 
+sl5<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
+                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
+saveRDS(sl5,"./Results/ext_risk_copula/ext_risk_local_lcohen_numlocs5.RDS")
+
+sl25<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
+                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
+saveRDS(sl25,"./Results/ext_risk_copula/ext_risk_local_lcohen_numlocs25.RDS")
+
+sg5<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
+                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
+saveRDS(sg5,"./Results/ext_risk_copula/ext_risk_global_lcohen_numlocs5.RDS")
+
+sg25<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
+                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
+saveRDS(sg25,"./Results/ext_risk_copula/ext_risk_global_lcohen_numlocs25.RDS")
+```
+
+
+```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,sl5,sl25,sg5,sg25)}
+sl5<-readRDS("./Results/ext_risk_copula/ext_risk_local_lcohen_numlocs5.RDS")
+sl25<-readRDS("./Results/ext_risk_copula/ext_risk_local_lcohen_numlocs25.RDS")
+sg5<-readRDS("./Results/ext_risk_copula/ext_risk_global_lcohen_numlocs5.RDS")
+sg25<-readRDS("./Results/ext_risk_copula/ext_risk_global_lcohen_numlocs25.RDS")
+
 # plot for local dispersal in D matrix 
 pdf("./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf",heigh=5,width=10)
-op<-par(mfrow=c(1,2),mar=c(5,5,1.8,0.5),mgp=c(3,1,0))
-s<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
-                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
-s1<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
-                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=F,ploton=F)
-plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="black",
+op<-par(mfrow=c(1,2),mar=c(5,5,1.8,1),mgp=c(3,1,0))
+plot(sl5$d_seq[1:6],sl5$risk_left[1:6],xlim=c(0,0.5),ylim=c(0,1),type="b",col="black",
      xlab="d",ylab="Extinction risk",
      cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1.2,pch=1)
-legend(x=0.2,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.2),
+lines(sl5$d_seq[1:6],sl5$risk_right[1:6],type="b",lwd=1.5,cex=1.5,pch=16,col="grey")
+legend(x=0.05,y=0.9, title=paste0("r = 0 , N = 5"), c("Left tail-dep. in noise","Right tail-dep. in noise"), 
+       pch=c(16,16), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.5), col=c("black","grey"),
        horiz=F, bty='n') 
 
-plot(s$d_seq,s$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="grey",
+plot(sl25$d_seq[1:6],sl25$risk_left[1:6],xlim=c(0,0.5),ylim=c(0,1),type="b",col="black",
      xlab="d",ylab="Extinction risk",
      cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1.2,pch=1,col="grey")
-legend(x=0.2,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), col=c("grey","grey"), cex=1.4,pt.cex=c(1.5,1.2),
+lines(sl25$d_seq[1:6],sl25$risk_right[1:6],type="b",lwd=1.5,cex=1.5,pch=16,col="grey")
+legend(x=0.05,y=0.9, title=paste0("r = 0 , N = 25"), c("Left tail-dep. in noise","Right tail-dep. in noise"), 
+       pch=c(16,16), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.5), col=c("black","grey"),
        horiz=F, bty='n') 
 
 par(op)
@@ -5023,25 +5042,22 @@ dev.off()
 
 # plot for global dispersal in D matrix 
 pdf("./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf",heigh=5,width=10)
-op<-par(mfrow=c(1,2),mar=c(5,5,1.8,0.2),mgp=c(3,1,0))
-s<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=5,p0=p0,params=params,
-                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
-s1<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=params,
-                 ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
-plot(s$d_seq,s$risk_left,xlim=c(0,1),ylim=c(0,1),type="b",col="black",xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1.5,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_left,type="b",lwd=1.5,cex=1.2,pch=1)
-legend(x=0.2,y=0.9, title=paste0("r = ",params," , left tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.2),
+op<-par(mfrow=c(1,2),mar=c(5,5,1.8,1),mgp=c(3,1,0))
+plot(sg5$d_seq[1:6],sg5$risk_left[1:6],xlim=c(0,0.5),ylim=c(0,1),type="b",col="black",
+     xlab="d",ylab="Extinction risk",
+     cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
+lines(sg5$d_seq[1:6],sg5$risk_right[1:6],type="b",lwd=1.5,cex=1.5,pch=16,col="grey")
+legend(x=0.05,y=0.9, title=paste0("r = 0 , N = 5"), c("Left tail-dep. in noise","Right tail-dep. in noise"), 
+       pch=c(16,16), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.5), col=c("black","grey"),
        horiz=F, bty='n') 
 
-plot(s$d_seq,s$risk_right,xlim=c(0,1),ylim=c(0,1),type="b",col="grey",xlab="d",ylab="Extinction risk",
-     cex.lab=1.5,cex.axis=1.5,cex=1.5,pch=16,lwd=1.5)
-lines(s1$d_seq,s1$risk_right,type="b",lwd=1.5,cex=1.2,pch=1,col="grey")
-legend(x=0.2,y=0.9, title=paste0("r = ",params," , right tail dep. in noise"), c("numlocs = 5","numlocs = 25"), 
-       pch=c(16,1), lty=c(1,1), col=c("grey","grey"), cex=1.4,pt.cex=c(1.5,1.2),
-       horiz=F, bty='n') 
-
+plot(sg25$d_seq[1:6],sg25$risk_left[1:6],xlim=c(0,0.5),ylim=c(0,1),type="b",col="black",
+     xlab="d",ylab="Extinction risk",
+     cex.lab=2,cex.axis=1.8,cex=1.5,pch=16,lwd=1.5)
+lines(sg25$d_seq[1:6],sg25$risk_right[1:6],type="b",lwd=1.5,cex=1.5,pch=16,col="grey")
+legend(x=0.05,y=0.9, title=paste0("r = 0 , N = 25"), c("Left tail-dep. in noise","Right tail-dep. in noise"), 
+       pch=c(16,16), lty=c(1,1), cex=1.4, pt.cex=c(1.5,1.5), col=c("black","grey"),
+       horiz=F, bty='n')
 par(op)
 dev.off()
 ```
@@ -5051,7 +5067,7 @@ dev.off()
 \vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
-\caption{Analogous to figure \ref{MT-fig_extrisk_lcohen_local} in maintext but with global dispersion.\label{fig_extrisk_lcohen_global}}
+\caption{Analogous to figure \ref{MT-fig_extrisk_lcohen_local} in maintext but with global dispersal.\label{fig_extrisk_lcohen_global}}
 \end{center}
 \end{figure}
 
@@ -5102,7 +5118,18 @@ numbers of NAs are not too large and $T$ is not too small.
 
 # Extinction risk noise and dispersal matrix \label{ext_risk_model}
 
+<!--How noise was generated ? code : ExtremeTailDep.R-->
 
+<!--How dispersal matrix was generated ? code : mydispersal.R-->
+A $N \times N$ dispersal matrix ($D$) was generated assuming that the $N$ number of metapopulation patches
+were arranged in a linear chain fashion. Say, population from $i^{th}$ patch could either disperse to its nearest
+connecting patches only (we called it as local dispersal) or could disperse to all other patches 
+equally (we called it as global dispersal) at an dispersal rate, $d$. In case of 
+local dispersal matrix the diagonal entries $D_{ii}$ would be equal to $d$ and its immediate neighbors
+$D_{ii\pm j ,\;\ j=1}$ would get an equal proportion from the rest of $(1-d)$. The other distant neighbors 
+$D_{ii\pm j ,\; j>1}$ were set to zero to execute local dispersal. For global dispersal matrix, $D_{ii}$
+would be $d$ and all the other entries were equal to $(1-d)/N$. Code to generate these dispersal matrices 
+was implemented in [Dispersal_mat](https://github.com/sghosh89/BIVAN/blob/master/mydispersal.R) function.
 
 # Effects of non-N copula structure on Taylor's law \label{Consequence_TL_simulation}
 
@@ -5110,7 +5137,7 @@ numbers of NAs are not too large and $T$ is not too small.
 tested whether the copula structure of dependence between population variables 
 measured in different locations influences the spatial version of Taylor's
 law. Taylor's law is an extremely commonly observed and widely studied 
-[@Taylor1961, @Taylor1988, @Cohen2013, @Xu2016] empirical pattern that relates the 
+[@Taylor1961; @Taylor1988; @Cohen2013; @Xu2016] empirical pattern that relates the 
 variances of groups, $g$, of population measurements to the means of the 
 groups via a power law, $v_g = a \times m_g^b$, or equivalently, 
 $\log(v_g)=\log(a)+b \times \log(m_g)$. Here $b$ is called 
@@ -5122,7 +5149,7 @@ all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the
 So means and variances are computed across space. Taylor's law has been 
 verified empirically for hundreds of taxa and has been applied in numerous fields
 including fisheries management, estimation of species persistence times, and
-agriculture [@Cohen2015,@Reuman2017].
+agriculture [@Cohen2015; @Reuman2017].
 
 We examined using simulations whether copula structure influences spatial Taylor's law as 
 follows. First, an $n \times n$ covariance matrix $\Sigma$ was created
@@ -5138,7 +5165,7 @@ inverse of the cdf of a gamma distribution with shape and scale parameters $7.5$
 These transformations made gamma distributed the marginal distributions of 
 each population sampling location in each simulation. 
 A skewed population marginal distribution is an 
-important factor in Taylor's law [@Cohen2015,@Reuman2017]. We refer henceforth to the 
+important factor in Taylor's law [@Cohen2015; @Reuman2017]. We refer henceforth to the 
 resulting $N \times n \times 1000$ array as our *N array* for this simulation exercise;
 copula structure of dependences between populations in different sampling locations
 was normal (N) for the simulations in this array. 
@@ -5263,7 +5290,7 @@ how curvature was calculated.\label{fig_sTL_mncurv_sp6}}
 \end{center}
 \end{figure}
 ***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"
-***sHYA: dONE.
+***Shya: dONE.
 -->
 
 \clearpage

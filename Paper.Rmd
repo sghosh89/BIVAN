@@ -1171,32 +1171,25 @@ extinction risk of a metapopulation. We hypothesized that environmental noises
 exhibiting greater left-tail dependence across different habitat patches would 
 cause higher metapopulation extinction risks because then bad years for the 
 component populations would occur simultaneously in many patches,
-reducing the potential for rescue effects. 
+reducing rescue effects. 
 We provided a test of the conceptual validity of this hypothesis using a metapopulation
 extension of the Lewinton-Cohen model,
 $\vec{P}(t+1) = D \lambda(t) \vec{P}(t)$,
-where $\vec{P}(t)$ is a vector of populations, the $i^{th}$ component $P_i(t)$ representing
-the population in the $i^{th}$ habitat patch ($i=1,\ldots,N$) at time $t$. 
+where $\vec{P}(t)$ is a vector of population densities, 
+the $i^{th}$ component $P_i(t)$ representing
+the density in the $i^{th}$ habitat patch ($i=1,\ldots,N$) at time $t$. 
 The $N \times N$ matrix $\lambda(t)$ was diagonal with $i^{th}$ diagonal entry 
-$\exp(r+\epsilon_i(t))$. Here $r$ is an intrinsic growth rate; we used $r=0$. The
+$\exp(r+\epsilon_i(t))$. Here $r$ is a growth rate; we used $r=0$. The
 $\epsilon_i(t)$ represent environmental noises in each patch. They were standard-normally 
-distributed in each patch, were independent through time, and showed between-patch
-Spearman correlations X and Pearson correlations Y in all simulations, 
-<!--***DAN: Please fill in X and Y. If it was the Kendall that was used, please 
-change Spearman to Kendall. If anything is unclear here in what you should do, please ask. 
-If you don't know how to answer these questions, let me know and remind me where the 
-code is that you used to generate the noise. Actually, even if you can do this yourself,
-please insert a comment below this one indcating where the code is for model and noise
-***Shya: I don't know the answer, the code which generates extreme right or left tail dep noise 
-is written by you : ExtremeTailDep.R; there is no mention to preserve spearman or kendall or pearson.
-I called retd function from ExtremeTaildep.R in another script mydispersal.R line 116, 128 
-to generate right and left tail dep. noise.-->
+distributed in each patch, were independent through time, and showed the same 
+spatial correlations (to within sampling error) for every simulation, 
 but were made to exhibit right- or left-tail dependence between patches in
 different simulations (Appendix \ref{SM-ext_risk_model}). The $N \times N$
 matrix $D$ was a dispersal matrix. For simplicity, we considered habitat patches 
-to be arranged in a line, with populations dispersing either to nearest neighbors only,
-or globally, in different simulations (Appendix \ref{SM-ext_risk_model}). The dispersal 
-rate was $d$. After each time step, if the population in a patch was below $1$, it was
+to be arranged in a line, with dispersal occurring either to nearest neighbors only,
+or globally, in different simulations. The dispersal 
+rate was $d$ (Appendix \ref{SM-ext_risk_model}). After each time step, 
+if the population density in a patch was below $1$ (an extinction threshold), it was
 set to $0$. We simulated the model 10000 times for each combination of parameters,
 starting from initial populations in each patch of X, 
 <!--***DAN: Shya, please fill in X-->
@@ -1228,7 +1221,7 @@ by tail dependence. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 
-Skewness results were generally consistent with hypotheses. For the datasets that
+\noindent Skewness results were generally consistent with hypotheses. For the datasets that
 exhibited strong lower-tail (respectively, upper-tail) 
 dependence in earlier analyses (namely, the green spruce 
 aphid abundance data for lower-tail, and the leaf-curling plum aphid first flight data
@@ -1244,36 +1237,25 @@ average showed a non-significant tendency toward being less than surrogate skewn
 (Fig. \ref{fig_skewness_spearman}C), or was less than a marginally significant 
 fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D). 
 
-<!--***DAN: Dan has not edited the results for the extinction risk stuff yet-->
- We found, as we
-hypothesized, left tail dependent environmental fluctuations increased extinction risk of metapopulations than the right-tail
-dependent ones (Fig. \ref{fig_extrisk_lcohen_local}). When number of patches increased from $5$ to $25$, extinction risk 
-decreased in both cases. We repeated our simulations using same parameters with global dispersal among patches 
-and got similar results (see Fig. \ref{SM-fig_extrisk_lcohen_global}).
+As hypothesized, left-tail dependent environmental fluctuations increased metapopulation
+extinction risk for the spatially 
+extended Lewinton-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}). 
+This was true for both $N=5$ and $N=25$ habitat patches, and for both local 
+(Fig. \ref{fig_extrisk_lcohen_local}) and global (Fig. \ref{SM-fig_extrisk_lcohen_global})
+dispersal. We also examined the influence of non-N copula structure and tail dependence
+on Taylor's law in Appendix \ref{SM-Consequence_TL_simulation}.
 
 \begin{figure}[!h]
 \textbf{ \hspace{6.6 cm} (A) \hspace{4.2 cm} (B)} \\
 \vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
-\caption{Extinction risk for Lewinton-Cohen metapopulation model was calculated after $25$ years with local dispersal
-among two nearest neighbors ($r=0$, $d=$ rate of dispersal). 
-Left-tail dependent environmental noise caused higher 
-extinction risk than right-tail dependent one for number of patches $(A)$ $N = 5$ and $(B)$ $N = 25$, respectively,
-where both case showed lower extinction risk with increasing number of patches.\label{fig_extrisk_lcohen_local}}
+\caption{Extinction risk for the metapopulation extension of the Lewinton-Cohen model, after 
+$25$ time steps, was higher for left-tail-dependent environmental noise. Dispersal was local,
+with dispersal rate $d$ (Appendix \ref{SM-ext_risk_model}). Simulations used $N$ patches
+for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, can you please change this figure as follows:
-1) Make it only go to d=0.5. I think reviewers will complain that d close to 1 is a weird and 
-unrealistic. Anyway, results are the same for larger d, so we are not hiding anything
-2) the main comparison is between right and left tail dependence, so make the left panel show 
-the numlocs=5 case, with results for both right- and left-tail dependence of the noise shown. 
-And make the right panel show the numlocs=25 case with results for both right- and left-tail
-dependence of the noise shown.
-3) Right now you use grey dots on one panel and black on the other, but you can just use black 
-on both.
-4)  Use N instead of numlocs - in papers we use variable names like in math, not like in code.
-***Shya: Done.-->
 
 # Discussion \label{Discussion}
 

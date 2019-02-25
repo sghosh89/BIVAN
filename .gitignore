@@ -6,5 +6,12 @@
 *.csv
 *.RData
 .Rhistory
-Tests_cache
-
+*_cache
+*.aux
+*.log
+*.out
+*.tex
+*.toc
+*.fff
+*.lof
+*.lot

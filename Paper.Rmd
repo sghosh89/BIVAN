@@ -1173,7 +1173,7 @@ cause higher metapopulation extinction risks because then bad years for the
 component populations would occur simultaneously in many patches,
 reducing rescue effects. 
 We provided a test of the conceptual validity of this hypothesis using a metapopulation
-extension of the Lewinton-Cohen model,
+extension of the Lewontin-Cohen model,
 $\vec{P}(t+1) = D \lambda(t) \vec{P}(t)$,
 where $\vec{P}(t)$ is a vector of population densities, 
 the $i^{th}$ component $P_i(t)$ representing
@@ -1239,7 +1239,7 @@ fraction of surrogate skewnesses (Fig. \ref{fig_skewness_spearman}D).
 
 As hypothesized, left-tail dependent environmental fluctuations increased metapopulation
 extinction risk for the spatially 
-extended Lewinton-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}). 
+extended Lewontin-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}). 
 This was true for both $N=5$ and $N=25$ habitat patches, and for both local 
 (Fig. \ref{fig_extrisk_lcohen_local}) and global (Fig. \ref{SM-fig_extrisk_lcohen_global})
 dispersal. We also examined the influence of non-N copula structure and tail dependence
@@ -1250,7 +1250,7 @@ on Taylor's law in Appendix \ref{SM-Consequence_TL_simulation}.
 \vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
-\caption{Extinction risk for the metapopulation extension of the Lewinton-Cohen model, after 
+\caption{Extinction risk for the metapopulation extension of the Lewontin-Cohen model, after 
 $25$ time steps, was higher for left-tail-dependent environmental noise. Dispersal was local,
 with dispersal rate $d$ (Appendix \ref{SM-ext_risk_model}). Simulations used $N$ patches
 for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}

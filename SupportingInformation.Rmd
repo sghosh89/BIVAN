@@ -4594,7 +4594,8 @@ names(spea.points.res)<-names(spea.surrog)
 xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
 ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.pdf",height=4,width=16)
+#pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.pdf",height=4,width=16)
+png("./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.png",width=16,height=4,units="in",res=400)
 op<-op<-par(mfrow=c(1,4),mar=c(4,5,1,1),mgp=c(3,1,0))
 ##plot TL for clayton
 plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
@@ -4690,7 +4691,8 @@ dev.off()
 xlimits<-range(spea.points.res[[1]][,1,],spea.points.res[[2]][,1,],spea.points.res[[3]][,1,],spea.points.res[[4]][,1,])
 ylimits<-range(spea.points.res[[1]][,2,],spea.points.res[[2]][,2,],spea.points.res[[3]][,2,],spea.points.res[[4]][,2,])
 
-pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.pdf",height=4,width=16)
+#pdf("./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.pdf",height=4,width=16)
+png("./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png",height=4,width=16,units="in",res=400)
 op<-op<-par(mfrow=c(1,4),mar=c(4,5,1,1),mgp=c(3,1,0))
 ##plot TL for clayton
 plot(spea.points.res[[1]][,1,],spea.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
@@ -4776,13 +4778,28 @@ dev.off()
 \textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
 \vspace{-0.5 cm} 
 \begin{center}
-\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.pdf}\\
+\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
 \end{center}
 \textbf{ \hspace{1.8 cm} (E) \hspace{1.6 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.8 cm} (I) \hspace{1.8 cm} (J) \hspace{1.8 cm} (K)}\\
 \vspace{-0.5 cm}
 \begin{center}
 \includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
-\caption[Spatial Taylor's Law results]{Spatial Taylor's Law results: log(spatial variance) vs. log(spatial mean) for $ns=1000$ number of (A) Clayton, (B) Normal, (C) Frank, (D) Survival Clayton surrogates; (E) p-value for test of linearity, (F) p-value for test of homoskedasticity, (G) root mean square error, (H) intercept, (I) slope, (J) quadratic coefficient, (K) mean curvature of regression line from first panel-plots. \label{fig_spTL}}
+\caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
+log(spatial mean) relationships for $1000$ simulations over $50$ time steps for $25$ locations 
+using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
+locations. Results from all $1000$ 
+simulations were plotted on the same axes for each panel, but two example simulations are 
+shown in red and green to help assess to what extent variation on the plots was between 
+simulations or within simulations. For each simulation, we tested the linearity 
+(E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
+and quantified the root mean squared error of points from the linear regression line (G).
+We also calculated the linear regression intercept (H) and slope (I), the quadratic
+term of a quadratic regression through the points on the log(variance) vs. log(mean) plot
+(J), and the curvature of that quadratic regression (K). Distributions of values 
+across all 1000 simulations are displayed. Spearman-preserving surrogates were used, 
+though results using Kendall-preserving surrogates were very similar. See 
+Appendix \ref{Consequence_TL_simulation} for 
+simulation and plotting details.\label{fig_spTL}}
 \end{center}
 \end{figure}
 
@@ -5075,10 +5092,10 @@ For multivariate datasets, surrogates were produced as follows:
 - Given data $x_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$, let $\tau_{ij}$ be the Spearman (or Kendall) 
 correlation of $x_i(t)$ and $x_j(t)$.
 - Calculate the covariance matrix of a multivariate normal distribution with standard-normal
-marginals and with pairwise Spearman (or Kendall) correlations equal to the $\tau_{ij}$. This is possible
-using the `iRho` function (or the `iTau function) of the `VineCopula` package
+marginals and with pairwise Spearman (or Kendall) correlations equal to the $\tau_{ij}$. This is possible.
+using the `iRho` function (or the `iTau` function) of the `VineCopula` package
 - Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent draws
-from the the multivariate normal distribution of the previous step.
+from the multivariate normal distribution of the previous step.
 - For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.
 - For each $k$ and $i$ for which $a_i(t)$ is not `NA`, replace the 
 $k$th-smallest (non-`NA`) element of the time series 
@@ -5138,7 +5155,7 @@ among all other patches.
 # Effects of non-N copula structure on Taylor's law \label{Consequence_TL_simulation}
 
 \noindent Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
-tested whether the copula structure of dependence between population variables 
+tested whether the copula structure of the dependences between population variables 
 measured in different locations influences the spatial version of Taylor's
 law. Taylor's law is an extremely commonly observed and widely studied 
 [@Taylor1961; @Taylor1988; @Cohen2013; @Xu2016] empirical pattern that relates the 
@@ -5146,156 +5163,140 @@ variances of groups, $g$, of population measurements to the means of the
 groups via a power law, $v_g = a \times m_g^b$, or equivalently, 
 $\log(v_g)=\log(a)+b \times \log(m_g)$. Here $b$ is called 
 the Taylor's law *exponent* or 
-*slope*. There are several versions of Taylor's law. For spatial Taylor's law,
+*slope*, and we refer to $\log(a)$ as the Taylor's law intercept. 
+There are several versions of Taylor's law. For spatial Taylor's law,
 given population density or abundance data $x_i(t)$ measured in locations
 $i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
 all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
-So means and variances are computed across space. Taylor's law has been 
+So means $m_g$ and variances $v_g$ are computed across space. We view the assumptions
+of Taylor's law to be validated for a dataset if the 
+$\log(v_g)$ versus $\log(m_g)$ scatter plot 
+for the dataset shows a linear, homoskedastic pattern.
+Taylor's law has been 
 verified empirically for hundreds of taxa and has been applied in numerous fields
 including fisheries management, estimation of species persistence times, and
 agriculture [@Cohen2015; @Reuman2017].
 
-We examined using simulations whether copula structure influences spatial Taylor's law as 
+We examined using simulations whether copula structure influences spatial Taylor's law, as 
 follows. First, an $n \times n$ covariance matrix $\Sigma$ was created
 with unit diagonal entries 
 and off-diagonal entries $\rho=0.7$; $n=25$ was the number of locations at which populations
 were sampled. Then $N \times 1000$ random vectors were generated from a multivariate normal 
 distribution with mean vector $(0,\ldots,0)$ and covariance matrix $\Sigma$. These 
-were organized into an $N \times n \times 1000$ array representing $1000$ simulations of 
-populations measured in $n$ locations over $N$ time steps. 
+were organized into an $N \times n \times 1000$ array representing $1000$ replicate 
+simulations of (temporally independent, in this example) 
+spatio-temporal population dynamics measured in 
+$n$ locations over $N$ time steps. We used $N=50$.
 The cumulative distribution function
 (cdf) of the standard normal distribution was applied to these numbers, followed by the 
 inverse of the cdf of a gamma distribution with shape and scale parameters $7.5$ and $1$. 
-These transformations made gamma distributed the marginal distributions of 
-each population sampling location in each simulation. 
+These transformations made gamma distributed the marginal distributions of populations in 
+each sampling location for each simulation. 
 A skewed population marginal distribution is an 
 important factor in Taylor's law [@Cohen2015; @Reuman2017]. We refer henceforth to the 
-resulting $N \times n \times 1000$ array as our *N array* for this simulation exercise;
-copula structure of dependences between populations in different sampling locations
-was normal (N) for the simulations in this array. 
+resulting $N \times n \times 1000$ array as our *N-copula population array* 
+for this simulation exercise;
+copula structure of dependences between populations in different locations
+was normal (N) for this array. 
 
-We then considered an $n$-dimensional C copula with parameter chosen so that the 
-Kendall correlations between each pair of the $n$ components were the same as those
-of the N distribution constructed above. 
+We then generated an series of arrays that were the same dimensions ($N \times n \times 1000$)
+as the N-copula population array, and that were statistically similar to 
+the N-copula population array in all ways except the new
+arrays were constructed to have C (respectively, F, SC) copula structure for 
+the dependences between 
+populations in different sampling locations within a simulation. We 
+refer to the new arrays as our
+*C-copula*, *F-copula*, and *SC-copula population arrays*, respectively. The C-copula array was
+constructed as follows; the others were constructed analogously. First, we constructed an
+$n$-dimensional C copula with parameter chosen so that the 
+Spearman correlations between each pair of the $n$ components were the same as those
+of the N distribution constructed above. This was done using the `rho` and `iRho` functions 
+in the `copula` package in R. Because the C copula is a one-paremeter family, this 
+step relies on the fact that all pairs of locations were 
+equally correlated with each other in the original multivariate normal distribution
+constructed above. We then randomized each simulation in 
+the N-copula population array in a special way 
+(see Appendix \ref{sect:copsurrognd}) so that the resulting 
+surrogate/randomized dataset had the copula structure
+of the C copula just constructed. The randomization procedure worked 
+by permuting time series of values in the N-copula array, separately for each 
+sampling location and simulation. So population marginal distrbutions for each location
+and simulation were *exactly* the same as those in the N-copula population array. 
+Permutations were done in such a way
+that resulting pairwise Spearman correlations were the same as the C-copula 
+constructed above, and hence were the same as the N-copula array, 
+except for sampling variation. Thus, to summarize using mathematical notation,
+if $m^{(\text{N})}$ is our N-copula population array and $m^{(\text{C})}$ is our 
+C-copula population array, then,
+for any given $i$ and $j$, the sets $\{m^{(\text{N})}_{tij}: t=1,\ldots,N\}$ and 
+$\{m^{(\text{C})}_{tij}: t=1,\ldots,N\}$ are exactly the same (when considered 
+as unordered sets); 
+and for any given $i_1$, $i_2$ and $j$, the Spearman correlations $\cor_t(m^{(\text{C})}_{ti_1j},m^{(\text{C})}_{ti_2j})$
+and $\cor_t(m^{(\text{N})}_{ti_1j},m^{(\text{N})}_{ti_2j})$ are the same, to within 
+sampling variation. The whole exercise was repeated preserving Kendall instead of 
+Spearman correlations.
 
+A variety of Taylor's law statistics were computed for each simulation $m^{(X)}_{tij}$ 
+($i=1,\ldots,n$, $t=1,\ldots,N$) for each copula structure $X$ used. First, the $N=50$ 
+spatial means,
+$m_t$, and variances, $v_t$, were computed, and $\log(v_t)$ vs. $\log(m_t)$ plots 
+were considered. As a shorthand, denote $y=\log(v_t)$ and $x=\log(m_t)$ for a 
+single simulation. Linearity of the $y$ vs. $x$ relationship was 
+tested for each simulation by comparing the linear regression
+through these $50$ points to a quadratic alternative via an $F$-test, 
+producing a $p$-value result. If 
+these $p$-values were uniformly distributed across the unit interval for the 1000 replicate 
+simulations, it supported the linearity assumption of Taylor's law; whereas if 
+they were clustered toward smaller values
+the test tended to reject that assumption. We also tested, for each simulation, 
+the assumption of Taylor's 
+law that the $y$ vs. $x$ plot was homoskedastic: we regressed the absolute residuals of the 
+linear regression of $y$ versus $x$ against the predictions of that regression. 
+A significant $p$-value
+result of this test indicates heteroskedasticity. For each simulation we also computed the
+root mean squared error of $y$ vs. $x$ data from the linear regression
+of $y$ versus $x$, as well as the intercept and slope of the linear regression.
+Finally we recorded the quadratic coefficient of the regression of $y$ against
+$x$ and $x^2$, and the mean curvature of the quadratic regression equation itself
+across the values $x$. The distrubutions of all these statistics across 1000 replicate 
+simulations were compared for the C, N, F, and SC simulations to determine if copula structure 
+influences Taylor's law.
 
-the nature of the slope and how it changed if population time series (taken as $50$ years) from different locations (say, $numloc=25$) had some certain type of copula structure (namely, \textbf{C}, \textbf{F} and \textbf{SC}) other than the $\textbf{N}$ormal copula. First, we simulated (N $\times$ n $\times$ nr) dimensional normal copula with co-variance $\rho =0.7$, where $(N=50,n=25,nr=10)$ are the length of time series, number of sampling locations and number of replica for that copula, respectively. Then we generated Kendall-correlation preserving \textbf{C}layton, \textbf{F}rank and $\textbf{S}$urvival \textbf{C}layton surrogates with same dimension of \textbf{N}ormal. With these four different types of copula we computed `log`(spatial variance) and `log`(mean) and plotted in Fig.\ref{fig_spTL}(A-D). We also tested statistically that whether linearity, homoskedasticity is maintained in each copula data set or not and plotted our results along with root mean square error, intercept and slope in Fig.\ref{fig_spTL}(E-I). We did a quadratic regression with each simulated copula for all types and measured quadratic coefficient and mean curvature for the regression line which is plotted in Fig.\ref{fig_spTL}(J-K) (For code see [`copsurrognd.R`](https://github.com/sghosh89/BIVAN/blob/master/copsurrognd.R) and [`TaylorsLawTools.R`](https://github.com/sghosh89/BIVAN/blob/master/TaylorsLawTools.R)).
+Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
+linearity and homoskedasticity, by non-N copula structure. For N copula structure 
+(i.e., for simulations in our N-copula population array), $p$-values for the linearty
+and homoskedasticity tests were roughly uniformly distributed across replicate 
+simulations and Taylor's law appeared visually to be a reasonable approximation
+of the $\log(v_t)$ versus $\log(m_t)$ relationship (Fig. \ref{fig_spTL}B,E,F). 
+Furthermore, quadratic coefficients
+and curvature values were close to $0$ (Fig. \ref{fig_spTL}J,K), and root mean squared
+errors from the linear regression were relatively small (Fig. \ref{fig_spTL}G).
+But linearity or homoskedasticity were violated more frequently for non-N copula structure
+(Fig. \ref{fig_spTL}A,C,D,E,F); quadratic coefficients and curvatures were frequently 
+non-zero (Fig. \ref{fig_spTL}J,K); and root mean squared
+errors from the linear regression were much higher (Fig. \ref{fig_spTL}G). Slopes 
+and intercepts of the linear regression were also strongly affected by copula
+structure (Fig. \ref{fig_spTL}H,I), though some of the effect here was because
+linear regressions do not always adequately represent the $\log(v_t)$ versus $\log(m_t)$
+relationship when copula structure was not N.
 
+# Another tool for producing surrogates for multivariate datasets\label{sect:copsurrognd}
 
-<!--
-Curvature calculations:
-***DAN: Shya, I need a reminder how we did this, can you please tell me where the
-code is, then I can write this section. Feel free to take a stab at it yourself, too,
-though.
-***Shya: What do you want to know? how did you calculate mean curvature and 
-slope for made up data or you want to see code with real data?
+\noindent Suppose one has data $x_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$, with
+no missing values and no ties, and an
+$N$-dimensional copula $C$. The following algorithm produces a surrogate dataset
+$y_i(t)$ ($i=1,\ldots,N$, $t=1,\ldots,T$) such that: 1) the Kendall and Spearman 
+correlations $\cor_t(y_i(t),y_j(t))$ are the same,
+up to sampling variation, as the Kendall and Spearman correlations, respectively, of the corresponding
+components of $C$, for all $i\neq j$; and 2) for any $i$, the values of the unordered set 
+$\{y_i(t):t=1,\ldots,T\}$ are the same as the values of the unordered set
+$\{x_i(t):t=1,\ldots,T\}$. 
 
-In case of made up data :
-For each non-N copula family (C,F,SC) you generated surrogates
-having similar correlation (spearman/ kendall, though for 
-consistency we added plots in suppmat with spearman) that of N copula
-[using copsurrognd.R] : this thing is done in r chunk named "taylors_law_make_surrogs".
-
-Then you did spatial-TL calculation for each set of copula family in r chunk "tl_analysis"
-[using TaylorsLawTools.R which calls mncurvat.R code to calculate mean curvature]
-
-Next two r chunks : taylor_plots_kendall and taylor_plots_spearman generates plot with those data.
-
-For spatial TL calculation on real data :
-
-We used Aphid count all sp with spearman only, but to show a plot for example chose sp=6 (corn leaf aphid)
-as it had significant p_left value for mean curvature.
-code is in r chunk named "spatialTL_on_realdata_aphid_count".
--->
-
-<!--
-Stuff on TL cut from the main text
-From Q3 methods:
-We tested whether the linearity of the spatial Taylor's law relationship was partly
-due to the copula structure of the dependences between the populations sampled. 
-Using corn leaf aphid abundance data as an example, but also
-applying the same analysis to the abundance data we had for 19 other aphid species
-(see *Data*), we calculated the curvature (details in Appendix \ref{SM-TL_curvature}) 
-of the empirical Taylor's law relationship; Taylor's law hypothesizes that this 
-curvature should be close to 0. We then calculated the same curvature quantity for
-10000 surrogate datasets, using the same surrogate procedure described above in 
-this section, and compared the empirical Taylor's law curvature to the 
-distribution of surrogate curvatures using a two-tailed test. If the empirical
-curvature value was below the $5^{\text{th}}$ quantile of the surrogate distribution, 
-then copula structure contributes to the linearity of spatial Taylor's law 
-because randomizing copula structure while retaining other statistical properties
-of the data cause the Taylor's law relationship to become significantly more 
-curved. 
-
-From Q3 results:
-```{r read_tl_aphid_count_sp6, echo=F}
-tlsp6<-readRDS("./Results/taylorslaw_results/tl_aphid_count_sp6.RDS")
-tl_aphid_count<-readRDS("./Results/taylorslaw_results/tl_aphid_count.RDS")
-aphid_info<-readRDS("./Results/aphid_info.RDS")
-pleft<-tl_aphid_count$p_left_mncurv
-stat<--2*sum(log(pleft))
-pchi2<-1-pchisq(stat,40)
-idsp<-which(pleft<0.05)
-pleftgood<-pleft[idsp]
-```
-
-Results also suggested that copula structure contributes to the linearity of 
-spatial Taylor's law. For instance, the spatial Taylor's law relationship 
-for corn leaf aphid abundance data was significantly less curved than for 
-surrogate datasets (Fig. \ref{fig_sTL_mncurv_sp6}). Three of $20$ aphid species
-had cuvatures less than at least $95\%$ of surrogate datasets ($p=$ `r pleftgood` for 
-the `r aphid_info$c1[idsp]` species, respectively). 
-***DAN: Shya, please fill in X, Y, Z, A, B, C with autolinks)
-***Shya: Done.
-Three such significant
-results of 20 species could have occurred by chance due to 
-multiple-testing error. However, for each of the 20 species, we computed the fraction
-of surrogate curvatures less than the curvature that came from real data, and we
-combined these $p$-values using Fisher's combined probability test to get an
-aggregate $p$-value of `r pchi2`
-***DAN: Shya, see the Wikipedia article on Fisher's method to learn about it. Then 
-you need to put this analysis into the code suite and have the resulting p value
-typed in above be an autolink instead. Here is what I did: 
-1) I copied by hand all the pleft values on the pdf you sent me into a vector pleft. Instead you should create such a vector in your code from your test output, not typing in the results.
-2) I used the formula stat<--2*sum(log(pleft)) to get the Fisher method statistic
-3) I compared to a chi-squared distribution with 40 degress of freedom using 1-pchisq(stat,40) to get my p-value
-Please let me know if any of this is unclear.
-***Shya: Done.
-for the test of the null hypothesis that 
-copula structure did not contribute to linearity of Taylor's law for any of the 
-species. This result is usefully suggestive and can guide future work, but still does not
-provide certainty, because the Fisher method provides $p$-values that are too 
-small if its assumption of independent tests is violated. Though our 20 species
-have different host plants so may be independent for the purposes of our analyses, 
-it would be difficult to fully assess independence.
-***DAN: Shya, can you remind me why the same analyses were not done for plankton,
-if there is a good reason? Or if you did it, what were the results?
-***Shya : we did it, I have the pdf but I don't have the code where I called to generate the pdf,
-As we could not get any significant results for a single species (see attachment in the mail I sent you)
-we did not show the results. 
-We provide simulation results in Appendix \ref{SM-Consequence_TL_simulation}
-that robustly illustrate, at least in the model setup we used, 
-that copula structure influences spatial Taylor's law.
-
-\begin{figure}[!h]
-\textbf{ \hspace{4 cm} (A) \hspace{4 cm} (B) \hspace{4 cm} (C)} \\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=10 cm]{./Results/taylorslaw_results/aphid_count_sp6_logv_vs_logm.pdf}
-\includegraphics[width=5 cm]{./Results/taylorslaw_results/aphid_count_sp6_sTL_mncurv.pdf}\\
-\caption{Mean curvature of the spatial Taylor's law relationship for 
-corn leaf aphid abundance
-data (A) was significantly less than for surrogates (B, C). The Taylor's law 
-relationship for one example surrogate (B) shows shows greater curvature than
-for data (A), and the significance of the difference was demonstrated
-by the fact that only `r (tlsp6$p_left_mncurv)*10000` of $10000$ surrogates had curvature less than that
-of the data (C). See Appendix \ref{SM-TL_curvature} for details on 
-how curvature was calculated.\label{fig_sTL_mncurv_sp6}}
-\end{center}
-\end{figure}
-***DAN: Shya, pls make the x axis label on C read simply "Mean curvature"
-***Shya: dONE.
--->
+- Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent 
+draws from $C$.
+- For each $k$ and $i$, replace the $k$th-smallest element of the time series $a_i(t)$, 
+$t=1,\ldots,T$ by the $k$th smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
+result $y_i(t)$. This is the surrogate dataset.
 
 \clearpage
 

@@ -1128,9 +1128,7 @@ exceptionally large values tend to occur at the same time in all or most locatio
 This should tend to increase the skewness of the distribution through time of the
 spatial average. Similarly, left-tail dependence between local variables
 will tend to decreases skewness of the spatial mean. Positive skewness of the 
-spatial mean corresponds to the "spikiness" of the spatial-mean time series; negative 
-skewness, if it occurs,  corresponds to a 
-tendency to crash to low levels but quickly recover. 
+spatial mean corresponds to the "spikiness" of the spatial-mean time series. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
 cases such as pest or resource abundance or CO$_2$ or methane flux.
@@ -1143,12 +1141,12 @@ mean. Then, for each dataset separately, we compared the value obtained
 to a distribution of values 
 of the same quantity calculated for each of 10000 surrogate datasets. Surrogate 
 datasets were produced from the empirical data by randomizing
-it in a special way so that surrogate/randomized dataset then had the 
+it in a special way so that surrogate/randomized dataset had the 
 copula structure of a multivariate-normal distribution
 (Appendix \ref{SM-Surrog_multi}). The surrogate datasets had exactly the same
 distributions of values for each sampling location as the original data. 
 They also had very similar Spearman correlations between pairs of sampling locations
-as the original data.  
+as the original data. 
 Our comparisons therefore tested the null hypothesis that the skewness of the spatial 
 mean took values on the empirical data no different from what one would expect if the copula
 structure of the data were multivariate normal, but the data were otherwise statistically
@@ -1160,10 +1158,14 @@ For green spruce aphid abundance data, *Ceratium furca* abundance data, and meth
 data, because these datasets exhibited lower-tail dependence 
 (Table \ref{tab_multivar_summary}), we compared empirical and surrogate skewness values
 via a one-tailed test in the left tail: the $p$-value result was simply the fraction
-of surrogate skewnesses less than the skewness computed from the empirical data. For
+of surrogate skewnesses less than the skewness computed from the empirical data; the test
+examines whether lower-tail dependence made the spatial average have a significantly lower
+skewness than would have been expected without tail dependence. For
 leaf-curling plum aphid first flight data, because this dataset exhibited upper-tail 
 dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tailed test
-in the right tail.
+in the right tail. The test examines whether upper-tail dependence made the spatial
+average of the first-flight data have significantly higher skewness than would have been
+expected without tail dependence.
 
 We also examined whether the nature of the
 tail dependence of an environmental variable across space could influence the 
@@ -1195,7 +1197,7 @@ starting from initial populations in each patch of X,
 <!--***DAN: Shya, please fill in X-->
 and calculated extinction risk after $25$ time steps.
 
-## Results for Q3: Tail dependence influences skewness of spatial average, Taylor's law, and extinction risk
+## Results for Q3: Tail dependence influences skewness of spatial average, extinction risk, and Taylor's law
 
 \begin{figure}[!h]
 \textbf{ \hspace{6.6 cm} (A) \hspace{4.6 cm} (B)} \\
@@ -1243,7 +1245,8 @@ extended Lewontin-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}).
 This was true for both $N=5$ and $N=25$ habitat patches, and for both local 
 (Fig. \ref{fig_extrisk_lcohen_local}) and global (Fig. \ref{SM-fig_extrisk_lcohen_global})
 dispersal. We also examined the influence of non-N copula structure and tail dependence
-on Taylor's law in Appendix \ref{SM-Consequence_TL_simulation}.
+on Taylor's law in Appendices \ref{SM-Consequence_TL_simulation} and 
+\ref{SM-sect:copsurrognd}.
 
 \begin{figure}[!h]
 \textbf{ \hspace{6.6 cm} (A) \hspace{4.2 cm} (B)} \\
@@ -1260,13 +1263,24 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 # Discussion \label{Discussion}
 
 <!--what we did and why is it important to study?-->
+<!--***DAN: some notes by which to revise this para, Shya:
+1) no need to restate methods at all, the methods are not among our main results in this paper
+2) No real need to say much about why it is important to study what we stdied, that was done in the intro. Except insofar as saying what our main results are should make it clear it is an important thng to study, and see also further notes below.
+3) Some additional points below
+-->
+Most studies in ecology have focused on measuring correlations between variables and thus ignoring the possibility to recognize importance of stronger association between extreme values. In the present study, we introduced the concept of asymmetric tail-dependence and non-Normal copulae in this field. 
+<!--***DAN: Too discursive. We do not need to repeat that we introduced this. Just summarize our main results in pothy language! And then maybe emphasize the importance, or make any additional points about importance that could not be made in the Intro. This para needs to be hard-hitting and brief, saying all the important thigs we accomplished in short form, all in one place. See below for some examples.-->
+We showed by examples of several real data sets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables.
+<!--***DAN: How about simply: "We showed that non-N copula structure and asymmetric tail dependence are exceedingly common in datasets that range across multiple sub-disciplines of ecology." See if you can write 1-3 pithy, impactful sentences like this one for Q2, and 1-3 for Q3 as well. Look at the first para of Discussion for some of my recent papers to get examples of the writing techniques for how we have done this in the past.-->
+We applied two methods. First, we did a model selection approach based on maximum likelihood which fit the real copula data with an optimal set of 16 copulae family. Copula having highest AIC-weight came as best-fit from this approach. Though we did goodness of fit test based on two statistics (Cramer-von Mises and Kolmogorov-Smirnov), we wanted to ensure the reliability of our model selection results. So, on a second note, we measured the tail dependence at both lower and upper end of a copula by three different nonparametric statistics ($\cor$, $\Ps$ and $\Dsq$) which we defined and we found they were consistent with the inferences we drew from model selection results. 
+<!--***DAN: No need at all to summarize methods again, except in cases where the methods are 
+among the main products of the paper - not our case. So delete the above text. If you want to discuss our methods, do in later in the Discussion, not in this first paragraph, unless you may want to have a sentence saying something like "We synthesized and expanded upon methods for statistically assessing copula structure and tail dependence, and models for exploring the causes and consequences of copula strucuture in ecology and related fields."-->
+Our approach could help to interpret the synchronous behavior of a species from several meta-populations. To illustrate, if pairwise copulae from a multivariate spatial data of a species (e.g. abundance data of green-spruce aphid) showed major "lower-tail dependence" on most of the locations then it could be considered as a signature of "spatial synchrony" that meta-populations are simultaneously rare at those locations. Conversely, if some aphid species showed synchronously "upper-tail dependence" then it would be harmful for corp-production or in case of synchronous abundance of plankton could lead to algal-bloom in the ocean. Copulae could also give us information about the causal relationship between ecological variables. For example, if maximum rainfall is beneficial for some species then it would show an upper-tail dependent copula where high values of species abundance and precipitation would be more strongly correlated than lower values. 
+<!--***DAN: I do not see how these examples go beyond the examples of the introduction. If they do, please clarify. If they don't, please remove.-->
 
-Most studies in ecology have focused on measuring correlations between variables and thus ignoring the possibility to recognize importance of stronger association between extreme values. In the present study, we introduced the concept of asymmetric tail-dependence and non-Normal copulae in this field. We showed by examples of several real data sets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables. We applied two methods. First, we did a model selection approach based on maximum likelihood which fit the real copula data with an optimal set of 16 copulae family. Copula having highest AIC-weight came as best-fit from this approach. Though we did goodness of fit test based on two statistics (Cramer-von Mises and Kolmogorov-Smirnov), we wanted to ensure the reliability of our model selection results. So, on a second note, we measured the tail dependence at both lower and upper end of a copula by three different nonparametric statistics ($\cor$, $\Ps$ and $\Dsq$) which we defined and we found they were consistent with the inferences we drew from model selection results. Our approach could help to interpret the synchronous behavior of a species from several meta-populations. To illustrate, if pairwise copulae from a multivariate spatial data of a species (e.g. abundance data of green-spruce aphid) showed major "lower-tail dependence" on most of the locations then it could be considered as a signature of "spatial synchrony" that meta-populations are simultaneously rare at those locations. Conversely, if some aphid species showed synchronously "upper-tail dependence" then it would be harmful for corp-production or in case of synchronous abundance of plankton could lead to algal-bloom in the ocean. Copulae could also give us information about the causal relationship between ecological variables. For example, if maximum rainfall is beneficial for some species then it would show an upper-tail dependent copula where high values of species abundance and precipitation would be more strongly correlated than lower values. 
-
+<!--***DAN: Shya, the below is more summary of results. Pls summarize very briefly in the first paragraph of the Discusion ONLY. So most of the below won't be needed, but some could be incorporated into the first Discussion para above.-->
 We explained the possible causes which induced asymmetric tail-dependence in the copula. Borrowing the idea from "Moran's theorem", we demonstrated with simulations that two habitat patches when affected by bivariate noise with an asymmetric copula structure showed similar tail-dependence asymmetry in the population copula from those patches (see Fig. \ref{fig_Cause4copula_params_GOF_500} and Fig. \ref{fig_Cause4copula_scatter_C_kend}). We also showed the effect of global environmental fluctuation (behaving asymmetrically beyond a certain threshold) on the meta-population copula which was shaped with similar tail dependence as the initial global noise copula (Fig. \ref{fig_ms_asym_b_0.1}). We observed significant changes in skewness of spatially averaged time series and also in the curvature of spatial Taylor's law for copula having asymmetric tail-dependence than would have been expected for Normal copula. For example, Fig. \ref{fig_skewness_spearman}(A) showed green spruce aphid abundance time series had right skewed distribution but its skewness was significantly lower than was expected if it came from Spearman correlation preserving Normal surrogates. This result indicates less extreme outbreaks of green spruce aphid around UK than it would have been with Normal copula structure. Similarly, methane fluxes showing lower skewness than Normal surrogates mean that the high emissions are un-correlated between locations and monitoring this skewness over several decades may be helpful to understand the "green-house effect" on environment. 
 
-<!--future work-->
-We think this copula approach have scope to investigate into the extinction risks of meta-population due to climate change. To illustrate, lower-tail dependent environmental fluctuations may suppress the meta-populations synchronously by making some of the habitats go extinct. This could help in managing policy for conservation of endangered populations.  
 
 
 

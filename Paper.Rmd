@@ -1,7 +1,7 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, P. Chris Reid, Daniel C. Reuman"
-date: "December 16, 2018"
+date: ""
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
 
 output: 
@@ -42,9 +42,9 @@ Holder: Department of Ecology and Evolutionary Biology and Biodiversity Institut
 
 Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
 
-Reid: 
+Reid: Marine Institute, Plymouth University, Drake Circus, Plymouth, United Kingdom; Mrine Biological Association of the UK, The Laboratory, Citadel Hill, Plymouth, United Kingdom
 
-Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA. 
+Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA 
 
 *Possible alternative titles:*
 
@@ -71,9 +71,7 @@ Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Sur
 \newpage
 # Abstract
 
-We introduce a new rank based "copula" approach to model dependencies between ecological variables. Our method could overcome the shortcomings of the linear correlation approach and give us new insight about "asymmetric tail dependence" found in ecology, bio-geochemistry and related field. We focus on three objectives (1) Do data sets in ecology and related fields have non-Normal copula structure? Do they show tail dependence distinct from that of a Normal copula, and in particular do they show asymmetric
-tail dependence? (2) If so, what are some possible causes of non-Normal copula structure? And (3) what are the
-consequences of non-Normal copula structure and tail dependence for our understanding of biology and what are the applications? We present several examples with real data which show asymmetric tail dependence in bivariate as well as multivariate non-Normal copulae. Asymmetric tail dependence can illuminate some important phenomena like "spatial synchrony" and causal relationships between ecological variables (like species abundance and rainfall). We show that the "Moran-effect" and asymmetric sensitivity towards global environmental fluctuations could be the possible causes for non-Normal copula structures. We demonstrate with simulations and real data that non-Normal copulae have profound effects on spatial skewness of species abundances and spatial Taylor's law slope values.  Our method is new and could have potential when exploring some other related phenomena like effects of climate change on extinction risks of meta-populations.
+All branches of ecology and related areas study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, which are typically based on correlation and regression, are limited, providing only a small slice of the complex information content of the dependence. Well-developed statistical tools do exist that provide a demonstrably complete description of the dependence between two or more variables. The tools are based on the concept of the *copula*, and have been applied to great benefit in finance, neuroscience, and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding across multiple disciplines of ecology, using environmental, species-trait, phenological, population, community, and ecosystem functioning data, as well as models that can be widely applied across ecology. We find that informative copula structure of dependence between variables is exceedingly common across all the disciplines we considered. An important feature in numerous datasets is asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. Via models, we describe two mechanisms by which observed copula structures and tail dependence can arise in ecological data: a Moran-like effect, whereby dependence structures between environmental variables are inherited by ecological variables influenced by the environmental variables; and via asymmetric or nonlinear influences of environmental variables on ecological variables, such as under Liebig's law of the minimum. Via models and data, we describe important consequences of copula structure for applications and our understanding of ecology, including: impacts of copula structure on the stability through time of ecosystem service provisioning and spatially averaged population levels; and impacts on extinction risk. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to help elevate copula approaches to widespread use in studying ecological phenomena.
 
 \newpage
 # Introduction \label{Intro}

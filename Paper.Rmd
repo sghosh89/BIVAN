@@ -1191,8 +1191,7 @@ or globally, in different simulations. The dispersal
 rate was $d$ (Appendix \ref{SM-ext_risk_model}). After each time step, 
 if the population density in a patch was below $1$ (an extinction threshold), it was
 set to $0$. We simulated the model 10000 times for each combination of parameters,
-starting from initial populations $p_0 = 50$ in each patch of $N$, 
-<!--***DAN: Shya, please fill in X-->
+starting from initial populations $p_0 = 50$ in each patch, 
 and calculated extinction risk after $25$ time steps.
 
 ## Results for Q3: Tail dependence influences skewness of spatial average, extinction risk, and Taylor's law
@@ -1283,7 +1282,9 @@ among the main products of the paper - not our case. So delete the above text. I
 <!--We explained the possible causes which induced asymmetric tail-dependence in the copula. Borrowing the idea from "Moran's theorem", we demonstrated with simulations that two habitat patches when affected by bivariate noise with an asymmetric copula structure showed similar tail-dependence asymmetry in the population copula from those patches (see Fig. \ref{fig_Cause4copula_params_GOF_500} and Fig. \ref{fig_Cause4copula_scatter_C_kend}). We also showed the effect of global environmental fluctuation (behaving asymmetrically beyond a certain threshold) on the meta-population copula which was shaped with similar tail dependence as the initial global noise copula (Fig. \ref{fig_ms_asym_b_0.1}). We observed significant changes in skewness of spatially averaged time series and also in the curvature of spatial Taylor's law for copula having asymmetric tail-dependence than would have been expected for Normal copula. For example, Fig. \ref{fig_skewness_spearman}(A) showed green spruce aphid abundance time series had right skewed distribution but its skewness was significantly lower than was expected if it came from Spearman correlation preserving Normal surrogates. This result indicates less extreme outbreaks of green spruce aphid around UK than it would have been with Normal copula structure. Similarly, methane fluxes showing lower skewness than Normal surrogates mean that the high emissions are un-correlated between locations and monitoring this skewness over several decades may be helpful to understand the "green-house effect" on environment. 
 -->
 
+# Acknowledgments
 
+We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We especially thank James Bell of the Rothamsted Insect Survey (RIS). The RIS is a National Capability of the United Kingdom, funded by the Biotechnology and Biological Sciences Research Council. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595, and the James S McDonnell Foundation. 
 
 \clearpage
 

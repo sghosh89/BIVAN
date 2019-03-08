@@ -324,10 +324,10 @@ Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
 across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 
 35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect 
-Survey suction-trap dataset [@Macaulay1988; @Harrington2014]. The first of our two 
+Survey suction-trap dataset [@Harrington2014; @Bell2015]. The first of our two 
 population-level datasets was also derived from the RIS suction-trap data, and comprised 
 total counts of aphids trapped for the same locations, species, and years; these are 
-indicators of flying aphid abundance. Data pre-processing for the aphid data was the same as 
+indicators of aphid migration counts. Data pre-processing for the aphid data was the same as 
 that of @Sheppard2016,
 but we exlcuded one of the 11 sites they used so as to include only sites with at least 30 
 years data.  Our second population dataset comprised average annual abundance estimates 
@@ -1284,7 +1284,8 @@ among the main products of the paper - not our case. So delete the above text. I
 
 # Acknowledgments
 
-We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We especially thank James Bell of the Rothamsted Insect Survey (RIS). The RIS is a National Capability of the United Kingdom, funded by the Biotechnology and Biological Sciences Research Council. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595, and the James S McDonnell Foundation. 
+We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We especially thank James Bell of the Rothamsted Insect Survey (RIS). 
+The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595, and the James S McDonnell Foundation. 
 
 \clearpage
 

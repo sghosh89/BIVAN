@@ -1259,7 +1259,23 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 
 # Discussion \label{Discussion}
 
-<!--what we did and why is it important to study?-->
+We showed that non-N copula structure and asymmetric tail dependence are 
+exceedingly common in datasets that range across multiple sub-disciplines
+of ecology. Via basic mathematical models, we hypothesized two probable
+mechanisms causing those non-N copula structures with asymmetric tail-dependence. One
+mechanism was "Moran"-like effect where dependence structure between ecological
+variables from two locations was shaped by the dependence structure of 
+the environmental variables at those patches. Second mechanism, a mimic of 
+Liebig's law of the minimum, explored
+the asymmetric influence of environmental variables which 
+could limit the growth of populations when below (or beyond)
+a certain threshold. Using model simulations and real ecological data,
+we concluded asymmetric tail dependence feature of 
+non-N copula could affect (1) the skewness (henceforth, the stability)
+of spatially averaged quantities over years, (2) the extinction risk 
+and (3) the spatial Taylor's law slope of metapopulations. 
+
+
 <!--***DAN: some notes by which to revise this para, Shya:
 1) no need to restate methods at all, the methods are not among our main results in this paper
 2) No real need to say much about why it is important to study what we stdied, that was done in the intro. Except insofar as saying what our main results are should make it clear it is an important thng to study, and see also further notes below.
@@ -1272,6 +1288,7 @@ Most studies in ecology have focused on measuring correlations between variables
 <!--We showed by examples of several real data sets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables.-->
 
 <!--***DAN: How about simply: "We showed that non-N copula structure and asymmetric tail dependence are exceedingly common in datasets that range across multiple sub-disciplines of ecology." See if you can write 1-3 pithy, impactful sentences like this one for Q2, and 1-3 for Q3 as well. Look at the first para of Discussion for some of my recent papers to get examples of the writing techniques for how we have done this in the past.-->
+
 <!--We applied two methods. First, we did a model selection approach based on maximum likelihood which fit the real copula data with an optimal set of 16 copulae family. Copula having highest AIC-weight came as best-fit from this approach. Though we did goodness of fit test based on two statistics (Cramer-von Mises and Kolmogorov-Smirnov), we wanted to ensure the reliability of our model selection results. So, on a second note, we measured the tail dependence at both lower and upper end of a copula by three different nonparametric statistics ($\cor$, $\Ps$ and $\Dsq$) which we defined and we found they were consistent with the inferences we drew from model selection results. -->
 <!--***DAN: No need at all to summarize methods again, except in cases where the methods are 
 among the main products of the paper - not our case. So delete the above text. If you want to discuss our methods, do in later in the Discussion, not in this first paragraph, unless you may want to have a sentence saying something like "We synthesized and expanded upon methods for statistically assessing copula structure and tail dependence, and models for exploring the causes and consequences of copula strucuture in ecology and related fields."-->

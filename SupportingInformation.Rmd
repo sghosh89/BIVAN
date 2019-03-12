@@ -812,7 +812,7 @@ For bivariate data sets, surrogates were produced as follows.
 one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
 Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
 $\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
-study using the `iTau` function of the `VineCopula` package). 
+study using the `iTau` function of the `copula` package). 
 - Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
 $\mathcal{B}(\theta_\tau)$. 
 - Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
@@ -5093,7 +5093,7 @@ For multivariate datasets, surrogates were produced as follows:
 correlation of $x_i(t)$ and $x_j(t)$.
 - Calculate the covariance matrix of a multivariate normal distribution with standard-normal
 marginals and with pairwise Spearman (or Kendall) correlations equal to the $\tau_{ij}$. This is possible.
-using the `iRho` function (or the `iTau` function) of the `VineCopula` package
+using the `iRho` function (or the `iTau` function) of the `copula` package
 - Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent draws
 from the multivariate normal distribution of the previous step.
 - For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.

@@ -1277,6 +1277,8 @@ of spatially averaged quantities over years, (2) the extinction risk
 and (3) the spatial Taylor's law slope of metapopulations. 
 
 
+Put ideas here for discussion paragraphs:
+1) 
 
 
 <!--***DAN: some notes by which to revise this para, Shya:

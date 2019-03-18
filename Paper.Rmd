@@ -1259,6 +1259,10 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 
 # Discussion \label{Discussion}
 
+Paragraphs/topics:
+1) Intro para - recap of most important results
+2) 
+
 <!--what we did and why is it important to study?-->
 <!--***DAN: some notes by which to revise this para, Shya:
 1) no need to restate methods at all, the methods are not among our main results in this paper

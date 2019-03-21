@@ -429,6 +429,19 @@ Fig. \ref{MT-fig_cop_pedag1}E can be obtained from Fig. \ref{MT-fig_cop_pedag1}A
 of both variables by the cdf of the standard normal distribution.
 Fig. \ref{MT-fig_cop_pedag1}F can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
+\caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 copula (see section on methods for Q1) 
+with three different 
+sets of parameters chosen to produce a variety of 
+lower-tail (LT) and upper-tail (UT) dependence strengths (methods for Q1), but the same 
+Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
+with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
+within each column.\label{fig_cop_pedag}}
+\end{center}
+\end{figure}
+
 # Details of the data \label{Data_details}
 
 <!--***DAN: This is a dumping ground at the moment, but needs to be organized into a section that gives all the necessary details about the data-->
@@ -731,7 +744,7 @@ statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$. This exercise
 was repeated, separately, 
 for $n=1000$ and for $n=35$, these cases being chosen, respectively, to reflect 
 asymptotic behavior of the 
-statistics and their behavior on the small data sets which are common in some fields
+statistics and their behavior on the small datasets which are common in some fields
 of ecology. The mean and standard error of the three difference statistics were computed for 
 each copula family, parameter value, and value of $n$, and results were plotted against 
 Spearman's rho (Figs \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
@@ -806,7 +819,7 @@ call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copn
 
 # Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
 
-For bivariate data sets, surrogates were produced as follows.   
+For bivariate datasets, surrogates were produced as follows.   
 
 - Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
 one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
@@ -824,7 +837,7 @@ indices $1,\ldots,n$).
 such that the permutation
 $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
 another permutation of $1,\ldots,n$).
-- The surrogate data set is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
 
 \noindent Our code for this algorithm is `copsurrog2d` in the 
 `BIVAN` repository (https://github.com/sghosh89/BIVAN). 
@@ -834,7 +847,7 @@ permutation
 of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
 those of the original data. 
 Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
-Kendall correlation of the surrogate data set will be the same as that of the $a_i$ and $b_i$, and therefore 
+Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
 will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
 a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
 as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 

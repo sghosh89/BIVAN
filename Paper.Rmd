@@ -71,36 +71,36 @@ Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Sur
 \newpage
 # Abstract
 
-All branches of ecology and related areas study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, which are typically based on correlation and regression, are limited, providing only a small slice of the complex information content of the dependence. Well-developed statistical tools do exist that provide a demonstrably complete description of the dependence between two or more variables. The tools are based on the concept of the *copula*, and have been applied to great benefit in finance, neuroscience, and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding across multiple disciplines of ecology, using environmental, species-trait, phenological, population, community, and ecosystem functioning data, as well as models that can be widely applied across ecology. We find that informative copula structure of dependence between variables is exceedingly common across all the disciplines we considered. An important feature in numerous datasets is asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. Via models, we describe two mechanisms by which observed copula structures and tail dependence can arise in ecological data: a Moran-like effect, whereby dependence structures between environmental variables are inherited by ecological variables influenced by the environmental variables; and via asymmetric or nonlinear influences of environmental variables on ecological variables, such as under Liebig's law of the minimum. Via models and data, we describe important consequences of copula structure for applications and our understanding of ecology, including: impacts of copula structure on the stability through time of ecosystem service provisioning and spatially averaged population levels; and impacts on extinction risk. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to help elevate copula approaches to widespread use in studying ecological phenomena.
+All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information content of the relationships. Statistical tools do exist that provide a complete description of relationships, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning dataset we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe two mechanisms by which observed copula structure and tail dependence can arise in ecological data: a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to elevate copula approaches to widespread use in ecology.
 
 \newpage
 # Introduction \label{Intro}
 
 Very generally, all branches of ecology and related areas study relationships among environmental and biological 
-variables. However, commonly used correlation- and regression-based 
+variables. However, commonly used correlation and regression 
 approaches to studying 
-such relationships are limited - it is well understood that common statistical
+such relationships are limited - common statistical
 approaches provide only a very partial description of a relationship between variables. 
-For instance, data sets showing markedly different 
+For instance, datasets showing markedly different 
 relationships may nevertheless have the same correlation coefficient value 
 (Fig. \ref{fig_cop_pedag1}A-B). The variables of Fig. \ref{fig_cop_pedag1}A 
 (respectively, Fig. \ref{fig_cop_pedag1}B) are principally 
 related in the left (respectively, right) portions of their distributions, an asymmetric 
-pattern of dependence in the distribution tails that may
+pattern of dependence that may
 have ecological significance, as discussed below, but is not captured by 
 correlation. Panels C and D 
 were obtained from A and B through monotonic transformation 
 (Appendix \ref{SM-pedagog1_details} for details),
 which alters the Pearson, but not the Spearman correlation. Although correlation
-is only one of the numerous metrics for 
-studying relationships between variables, other commonly used metrics also 
-provide partial information only.
+is only one of numerous metrics for 
+studying relationships between variables, other common metrics also 
+provide only partial information.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{(A-F, I, J) Bivariate data sets showing diverse relationships between 
-variables; many of these data sets nevertheless have the same Pearson (P)
+\caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
+variables; many of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. Panels C and E (respectively, D and F) were 
 obtained from A (respectively, B) via monotonic functions that transformed the 
 standard-normal marginal distributions of A and B to gamma (C, D) or 
@@ -143,77 +143,62 @@ This random variable takes values in the unit square,
 $[0,1] \times [0,1]$, and has uniform marginal distributions. Probability density 
 functions (pdfs) corresponding to the copulas associated 
 with Fig. \ref{fig_cop_pedag1}E-F are in Fig.
-\ref{fig_cop_pedag1}G-H, respectively. Strictly speaking, 
-the copula is actually defined as the bivariate 
-cdf of $(F_X(X),F_Y(Y))$ rather than as this random variable itself, 
-but this makes little conceptual difference. See @nelsen2006_copula and @joe2014_dependence
-for mathematical details. An important theorem of A. Sklar [@sklar1959_theorem] 
+\ref{fig_cop_pedag1}G-H, respectively. 
+See @nelsen2006_copula and @joe2014_dependence
+for general background. An theorem of A. Sklar 
 states that copulas give a unique and complete 
 representation of the dependence
 between variables, in the sense that the joint distribution of $(X,Y)$ 
-can be reconstructed completely from the 
-copula and the marginal distributions. 
+can be reconstructed from the 
+copula and the marginal distributions [@sklar1959_theorem]. 
 Copula theory is also well developed for
 multivariate distributions.
 
-A principal benefit of a copula approach to ecological data is 
-that such an approach can sensitively model and detect
+A principal benefit of a copula approach is 
+that it can sensitively detect and model
 tail dependence and asymmetries of tail dependence. 
-Tail dependence is association between extreme values of two variables. 
+Tail dependence is association between extreme values of variables. 
 If smaller values of two positively associated variables are more 
 strongly associated than are larger values, the variables are said to
 have stronger lower- or left-tail dependence than right- or upper-tail dependence
 (Fig. \ref{fig_cop_pedag1}A, E);
 and \emph{vice versa} if larger values are more strongly associated than smaller
-ones (Fig. \ref{fig_cop_pedag1}B, F). Data sets of the same 
+ones (Fig. \ref{fig_cop_pedag1}B, F). Datasets of the same 
 correlation can have a range of tail dependence 
-characteristics (Fig. \ref{fig_cop_pedag}), which can be quantified (see section on
+characteristics (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
 methods for Q1).
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
-\caption{(A-C) Data generated using the BB1 copula (see section on methods for Q1) 
-with three different 
-sets of parameters chosen to produce a variety of 
-lower-tail (LT) and upper-tail (UT) dependence strengths (methods for Q1), but the same 
-Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
-with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
-within each column of panels.\label{fig_cop_pedag}}
-\end{center}
-\end{figure}
-
 One way we may expect a copula approach 
-to better reflect ecological relationships has to do with Liebig's law of the
+to better reflect ecological relationships relates to Liebig's law of the
 minimum. If, for instance, the growth of a plant depends on soil 
 nitrogen, N, as well
-as on other factors, data on soil nitrogen and resulting growth rates may be 
+as on other factors, a plot of plant growth rates versus soil nitrogen may be 
 expected to look more like Fig. \ref{fig_cop_pedag1}A or E than like 
 Fig. \ref{fig_cop_pedag1}B or F. Nitrogen 
-will control plant growth, producing a strong
+will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portion of the N and 
 plant-growth-rate distributions. 
 Nitrogen will be less related or unrelated to growth rates in the right tails of 
-the distributions, as pictured in Fig. \ref{fig_cop_pedag1}A and E. The portion
-of the distributions that dominate the overall association is visible in the copula
-approach, but may not be reflected by correlation coefficients and other standard techniques.
+the distributions, as in Fig. \ref{fig_cop_pedag1}A and E. The portion
+of the distributions that dominate the association is visible in the copula
+approach, but not via standard techniques.
 
 A second reason we may expect a copula-based approach to benefit 
 ecological research is that such an approach may help illuminate 
-the causal mechanisms through which variables are related. For instance, if two species
+the causal mechanisms by which variables are related. For instance, if two species
 X and Y are strong competitors, we may expect abundances of the two species
-across quadrats or through time within a single quadrat to be negatively related, as in 
+across quadrats to be negatively related, as in 
 Fig. \ref{fig_cop_pedag1}I-J. If X is plotted on the horizontal axis
 and Y is plotted on the vertical, then the plot in Fig. \ref{fig_cop_pedag1}I 
 suggests X is the dominant 
 competitor: when X is abundant, Y is necessarily rare because it is suppressed 
 by X; whereas when X is rare, Y
-may be abundant or may also be relatively rare due to 
+may be abundant, or may also be relatively rare due to 
 limiting factors other than X. 
 Alternatively, Fig. \ref{fig_cop_pedag1}J suggests that Y
 is the dominant competitor. The copula approach again reveals which portions of the
 distributions are principally responsible for the association between variables, and this 
-detail may help support or refute alternative mechanistic and causal hypotheses about 
+detail may help support or refute alternative causal hypotheses about 
 the relationship between the variables.
 
 A third reason we may expect a copula approach to benefit ecological
@@ -264,7 +249,7 @@ or right-tail dependence in the crop, even if overall correlation were
 unchanged, would have much more benign effects.
 
 We approached our overall goal of exploring the potential of 
-copula approaches for understanding dependences in ecology by addressing the 
+copula approaches in ecology by addressing the 
 following specific questions. (Q1) Do datasets in ecology and related fields 
 have copula structure distinct from that of a Gaussian/normal distribution (here called 
 non-normal copula structure)? Do they show tail dependence distinct from that 
@@ -275,22 +260,20 @@ copula structure and tail dependence for our understanding of biology and for
 applications? To address Q1, we analyze several datasets, including 
 environmental, species-trait, phenological, population, community, and 
 ecosystem functioning data. We selected these datasets to span multiple 
-sub-fields and organizational levels of ecology, in an attempt to be 
-reasonably representative of the field as a whole. The second section of the 
+sub-fields and organizational levels of ecology. The second section of the 
 paper introduces the data, and the third and fourth sections use the data to 
 address Q1. The fifth and sixth sections, which address Q2, use simple models to 
 explore mechanisms. The seventh and eigth sections, which address Q3, use both
 the data of section two as well as models to explore a variety of consequences
-of copula structure and tail dependence for applications and for our understanding
-of ecology. The ninth section is the Discussion. 
+of copula structure and tail dependence for applications and for understanding
+ecology. The ninth section is the Discussion. 
 Copula approaches have been used to great benefit in neuroscience [@onken2009], 
 bioinformatics 
 [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], finance, and other fields. 
-To our knowledge, these approaches have been used seldom or never for ecological 
-research. We argue that the benefits to ecological research of a complete statistical 
-desription of dependence will be substantial, and we hope this paper helps stimulate the
-fruitful use of copula approaches across the discipline.
+To our knowledge, these approaches have been used seldom or never in ecology. 
+We argue that benefits to ecology of using a complete statistical 
+desription of dependence will be substantial.
 
 # Data \label{Data} 
 
@@ -302,13 +285,13 @@ d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBM
 d_cc<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
-We used datasets that pertain to multiple fields and levels of organization within 
-or related to ecology, including environmental, species-trait, phenological, 
+Datasets included environmental, species-trait, phenological, 
 population, community, and ecosystem functioning data. Copula structure describing 
-the relationship between atmospheric weather variables such as X and Y has been 
-examined previously in the meteorological literature (e.g., REF). We therefore 
+the relationship between atmospheric weather variables such as rainfall or wind speed 
+as measured in multiple locations has been 
+examined previously in the meteorological literature (e.g., @Serinaldi2008, @li2013). We therefore 
 examined environmental variables from the soil instead, using the Rapid Carbon 
-Assessment database (RaCA; [@Wills2014]).
+Assessment database (RaCA; @Wills2014).
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
 nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
@@ -316,14 +299,14 @@ locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} f
 Measurments were from the central pedon of a soil core, to 1 m depth.
 <!--***DAN: Terry to check the wording and accuracy here-->
 Species-trait data were average species basal metabolic rate (KJ per hour) and 
-body mass (gram) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
+body mass (grams) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
 and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
 These data have been much studied, but to our knowledge the copula structure 
 of the dependence between metabolic rate and body mass has not been examined. 
 Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
 across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 
-35 years from 1976 to 2010. These time series were computed from the the Rothamsted Insect 
+35 years 1976 to 2010. These time series were computed from the Rothamsted Insect 
 Survey suction-trap dataset [@Harrington2014; @Bell2015]. The first of our two 
 population-level datasets was also derived from the RIS suction-trap data, and comprised 
 total counts of aphids trapped for the same locations, species, and years; these are 
@@ -333,7 +316,7 @@ but we exlcuded one of the 11 sites they used so as to include only sites with a
 years data.  Our second population dataset comprised average annual abundance estimates 
 for 14 locations (Fig. \ref{SM-fig_plankton_map})
 in the North Sea and British seas for 22 plankton taxa (Table \ref{SM-tab_plankton_info}) for the 
-56 years from 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data 
+56 years 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data 
 were obtained from the Continuous Plankton Recorder (CPR) dataset maintained by the Sir 
 Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Biological 
 Association of the UK. Data pre-processing was similar but not identical to that 
@@ -348,10 +331,10 @@ Ohio [@Holland1999; @Jarecke2016]. Each included location was measured on at lea
 Sampling locations spanned a hydrologic gradient from upland to seasonal wetland.
 See Appendix \ref{SM-Data_details} for additional data details. 
 
-The environmental, species-trait, and community datasets, as we studied them, are henceforth 
+The environmental, species-trait, and community datasets are henceforth 
 called the "bivariate" datasets in the sense that they comprise two quantities measured at 
 different locations or for different species. The phenology and population datasets are 
-"multivariate" in that they comprise, for each taxon, measurements at multiple locations; 
+"multivariate" in that they comprise, for each taxon, measurements through time at multiple locations; 
 copula structure can be studied for each pair of locations. Likewise the ecosystem 
 functioning (methane flux) dataset was  multivariate in this sense.
 
@@ -365,14 +348,19 @@ Information Criteria (AIC and BIC). To make the results interpretable
 to readers unfamiliar with copulas, we first introduce the normal copula and 
 some other copulas we used; and we operationally introduce measures of tail dependence
 and asymmetry of tail dependence. 
-Conceptually, a bivariate copula is essentially a probability density function 
-on the unit square with uniform maginals. The normal copula family is a one-parameter
+Conceptually, a bivariate copula is essentially a probability density function (pdf)
+on the unit square with uniform maginals. 
+Strictly speaking, 
+the copula is actually defined as the bivariate 
+cdf of the distribution rather than as the pdf or the random variable itself,
+but this makes little conceptual difference. 
+The normal copula family is a one-parameter
 family of copulas, with parameter corresponding to the correlation of the related 
 bivariate normal distribtion, and controlling the degree of dependence 
 (Fig. \ref{fig_cop_pedag3}A-B for an example).
 Left- and right-tail dependence are $0$ for the normal copula, and this 
 serves as a benchmark for tail dependence in other copulas - positive values of our
-tail dependence measure correspond to dependence stronger than that of a normal
+tail dependence measures correspond to dependence stronger than that of a normal
 copula. The Clayton and 
 survival-Clayton families (Fig. \ref{fig_cop_pedag1}G-H) are two more one-parameter 
 families. The Clayton has positive lower-tail dependence ($0.87$ for
@@ -417,9 +405,10 @@ data using a model selection approach. For bivariate datasets
 $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps. 
 First, as in the Introduction, we produced ranks 
 $(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set 
-$\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$ and 
-we set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis used these 
-*normalized ranks* $u_i$ and $v_i$. Ranks were $1$ for the smallest element in a set. 
+$\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$.
+Ranks were $1$ for the smallest element in a set. We then 
+set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis used these 
+*normalized ranks* $u_i$ and $v_i$. 
 Second, we did a test of the independence of the $u_i$ and $v_i$ 
 (implemented in `BiCopIndTest` in the `VineCopula` package). 
 Subsequent model 
@@ -526,11 +515,11 @@ dependence in the portions of the distributions of $u$ and $v$ given by
 the bounds, whereas small values of 
 $\Dsq_{l_b,u_b}$ indicate strong dependence. 
 
-For large data sets (large $n$),
+For large datasets (large $n$),
 we could use $l_b$ and $u_b$ close together without incurring undue
 sampling variation in our statistics, and we could consider 
 several different bands $(l_b,u_b)$ to understand how dependence
-varies in different parts of the distributions. But for data sets with 
+varies in different parts of the distributions. But for datasets with 
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
 We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
@@ -542,8 +531,8 @@ The difference $\cor_l-\cor_u$ is expected to be positive if
 dependence in the left halves of the distributions is stronger 
 than dependence in their right halves; likewise for $\Ps_l-\Ps_u$.
 The difference $\Dsq_u-\Dsq_l$ (note the opposite order), is also expected to be 
-positive under the same conditions. These statistics were used for smaller data sets.
-For large data sets, we used $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
+positive under the same conditions. These statistics were used for smaller datasets.
+For large datasets, we used $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ with $l_b=0$ and $u_b$ close to $0$. 
 How close depended on $n$, and was chosen to ensure that sample variation 
@@ -552,15 +541,15 @@ $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ revealed the asymmetry of
 tail dependence known to be present in data simulated from various copulas 
 (Appendix \ref{SM-Test_npa_stat}, Figs \ref{SM-fig_stat_testing35}-\ref{SM-fig_stat_testing1000}). 
 
-For bivariate data sets, we compared values 
+For bivariate datasets, we compared values 
 of the statistics $\cor_{l_b,u_b}$,
 $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$ to 
-distributions of values of the same statistics computed on surrogate data sets that were produced from 
+distributions of values of the same statistics computed on surrogate datasets that were produced from 
 the empirical data by randomizing it in a special way to have no 
 tail dependence (Appendix \ref{SM-surrog_test}). 
-The surrogate/randomized data sets had exactly 
+The surrogate/randomized datasets had exactly 
 the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
 correlation (the algorithm had two versions, one for preserving each correlation coefficient), 
 but had normal copula structure. Thus our comparisons tested the null hypothesis 
@@ -571,14 +560,14 @@ statistically unchanged.
 The comparison of one of the
 statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
 empirical data, to the distribution
-of its values computed on many surrogate data sets 
+of its values computed on many surrogate datasets 
 provides a test of whether dependence in the part of the distribution specified 
 by $l_b$ and $u_b$ is different from
 what would be expected from a null hypothesis of normal copula structure but 
 unchanged marginals and similar 
 Kendall (or Spearman)
 correlation. Thus the comparison helps answer the first two parts of Q1
-for bivariate data sets. 
+for bivariate datasets. 
 Significant deviations correspond to deviations from normal 
 copula structure. In particular, deviations 
 using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
@@ -589,10 +578,10 @@ The comparison of one of the statistics
 $\cor_{l_b,u_b}-\cor_{1-u_b,1-l_b}$, 
 $\Ps_{l_b,u_b}-\Ps_{1-u_b,1-l_b}$ and
 $\Dsq_{1-u_b,1-l_b}-\Dsq_{l_b,u_b}$,
-as computed on the empirical data, to the distribution of its values on many surrogate data sets 
+as computed on the empirical data, to the distribution of its values on many surrogate datasets 
 provides a test of asymmetry of dependence. Thus this comparison helps answer the
 third part of Q1 for bivariate 
-data sets. For multivariate data sets, we used a spatial resampling scheme 
+datasets. For multivariate datasets, we used a spatial resampling scheme 
 (Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals, instead of the surrogate 
 approach described above.
 
@@ -615,13 +604,13 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 ```
 
 Across essentially all the sub-fields and levels of organization within ecology for which we 
-examined a data set, copula structures were typically non-normal and variables 
+examined a dataset, copula structures were typically non-normal and variables 
 commonly exhibited asymmetric tail 
 dependence. To make results easier to absorb for readers who are new to copulas: we first 
-present results in detail for an example bivariate data set; then we summarize results
-for all bivariate data sets; then we present results in 
-detail for an example multivariate data set; then we summarize results 
-for all multivariate data sets.
+present results in detail for an example bivariate dataset; then we summarize results
+for all bivariate datasets; then we present results in 
+detail for an example multivariate dataset; then we summarize results 
+for all multivariate datasets.
 
 <!--bivariate example-->
 We present the example of the soil C and N data (see Data), pictured in 
@@ -679,7 +668,7 @@ upper-tail dependence was significantly stronger than lower-tail dependence.
 
 <!--bivariate summary-->
 Table \ref{tab_bivar_summary} summarizes bivariate results for Q1. For all $4$ 
-bivariate data sets, the two variables were always significantly related 
+bivariate datasets, the two variables were always significantly related 
 (Table \ref{tab_bivar_summary}, row 1). A non-normal copula 
 always emerged as the lowest-AIC (highest-AIC-weight) copula 
 (Table \ref{tab_bivar_summary}, row 2). 
@@ -689,15 +678,15 @@ Lower- and upper-tail statistics (Table \ref{tab_bivar_summary}, rows 7-8)
 differed substantially from 0, the tail dependence statistics of 
 the N copula, answering the second part of Q1; and also differed substantially from each other
 (Table \ref{tab_bivar_summary}, row 9),
-answering the third part of Q1. The first three data sets had stronger upper- 
-than lower-tail dependence, and the last data set had the reverse. 
+answering the third part of Q1. The first three datasets had stronger upper- 
+than lower-tail dependence, and the last dataset had the reverse. 
 Although these results convincingly show non-normal copula structure, the 
 model-averaged tail-dependence statistics may have been biased 
 because even the lowest-AIC copula was a poor fit in some cases 
 (Table \ref{tab_bivar_summary}, rows 5-6).
 But our nonparametric statistics confirmed the same conclusions 
 (Table \ref{tab_bivar_summary}, row 10).
-Detailed results for each data set are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} 
+Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} 
 and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
 
 We present our analysis of the green spruce aphid abundance data (see Data)
@@ -764,7 +753,7 @@ row 3), and AIC weights of best-fitting copulas were
 substantially better than AIC weights of N copulas (Table \ref{tab_multivar_summary}, rows 4-5).
 For these data, best-fitting copulas were nearly always considered an adequate fit, 
 according to Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests 
-(Table \ref{tab_multivar_summary}, row 6). Some of the data sets (green spruce aphid
+(Table \ref{tab_multivar_summary}, row 6). Some of the datasets (green spruce aphid
 abundance, \textit{Ceratium furca} abundance, methane flux) showed stronger 
 or marginally stronger lower- than upper-tail dependence 
 (Table \ref{tab_multivar_summary}, rows 7-9), whereas leaf-curling plum aphid first flight
@@ -877,7 +866,7 @@ tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 
 knitr::kable(tab_multivar_summary, 
              format="latex", escape = F,
-             caption.short = "Summary of results for multivariate data sets",
+             caption.short = "Summary of results for multivariate datasets",
              caption = "Summary of results for multivariate data-sets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green spruce aphid abundance",
@@ -1290,7 +1279,7 @@ Put ideas here for discussion paragraphs:
 Most studies in ecology have focused on measuring correlations between variables and thus ignoring the possibility to recognize importance of stronger association between extreme values. In the present study, we introduced the concept of asymmetric tail-dependence and non-Normal copulae in this field. -->
 <!--***DAN: Too discursive. We do not need to repeat that we introduced this. Just summarize our main results in pothy language! And then maybe emphasize the importance, or make any additional points about importance that could not be made in the Intro. This para needs to be hard-hitting and brief, saying all the important thigs we accomplished in short form, all in one place. See below for some examples.-->
 
-<!--We showed by examples of several real data sets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables.-->
+<!--We showed by examples of several real datasets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables.-->
 
 <!--***DAN: How about simply: "We showed that non-N copula structure and asymmetric tail dependence are exceedingly common in datasets that range across multiple sub-disciplines of ecology." See if you can write 1-3 pithy, impactful sentences like this one for Q2, and 1-3 for Q3 as well. Look at the first para of Discussion for some of my recent papers to get examples of the writing techniques for how we have done this in the past.-->
 
@@ -1306,8 +1295,8 @@ among the main products of the paper - not our case. So delete the above text. I
 
 # Acknowledgments
 
-We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We especially thank James Bell of the Rothamsted Insect Survey (RIS). 
-The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595, and the James S McDonnell Foundation. 
+We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). 
+The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
 
 \clearpage
 

@@ -2170,7 +2170,9 @@ multivar_tab_summary_fn<-function(r,rs){
   d<-dim(r$gfc_numBS)[1]
   m$num.pairs<-(d^2)-d 
   m$`num.non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
-  m$`num.non-N`<-sum(r$info_ord_copcode[,,1]!=1,na.rm = T)
+  bcop<-r$info_ord_copcode[,,1] # matrix with best fit copula name
+  bcop[bcop==Inf]<-NaN # replacing nonInd pairs with NaN
+  m$`num.non-N`<-sum(bcop!=1,na.rm = T)
   r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN
   m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
   normal_AICw[normal_AICw==Inf]<-NaN

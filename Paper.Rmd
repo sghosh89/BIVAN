@@ -756,7 +756,7 @@ tab_multivar_summary<-cbind(dt,tab_multivar_summary)
 knitr::kable(tab_multivar_summary[1:9,], 
              format="latex", escape = F,
              caption.short = "Summary of results for multivariate datasets",
-             caption = "Summary of results for multivariate datasets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only; row 10 was for all location pairs. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
+             caption = "Summary of results for multivariate datasets. Rows 3-9 of the table were computed for the non-independent pairs (row 2) only. A well-fitting location pair (row 6) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green spruce aphid abundance",
                         "Leaf-curling plum aphid first flight",
@@ -777,7 +777,7 @@ effect, and was summarized conceptually in the Introduction.
 It explores the hypothesis that non-N copula structure and asymmetric tail dependence 
 between environmental variables measured through time 
 in two places may bring about similarly 
-structured dependence between ecological variables that are influenced by the 
+structured dependence between ecological variables in those places that are influenced by the 
 environmental variables. 
 
 Let $E_i(t)$ be an ecological variable 
@@ -791,7 +791,7 @@ dependence across locations in different simulations (see below).
 The ecological variable, $E$, is very general, and could represent, for instance, deviations
 of a population density from a carrying capacity or average density, deviations of
 total plant community biomass or other community variable from an average value,
-or flux of a biogeochemical variable such as methane or CO$_2$.. 
+or flux of a biogeochemical variable such as methane or CO$_2$.
 
 To explore the importance of nonlinear dynamics for our hypothesis, we also considered 
 nonlinear population models based on $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right) \right)+\sigma\epsilon_i(t))$, using $r=0.5$, $K=100$, and $\sigma=0.1$ or 
@@ -881,7 +881,8 @@ non-parametric statistics, which were previously applied to
 data to answer Q1, to the 
 simulation outputs to discover if the model could
 give rise to non-N copula structure and asymmetric tail dependence in the 
-ecological variable.
+ecological variable, in spite of the absence of such structure in the driver
+environmental variables.
 
 # Results for Q2: Moran-like effects and asymmetric dependencies produce non-normal copula structure\label{Results_Q2}
 
@@ -948,7 +949,9 @@ asymmetry statistics
 even had opposite signs for noise and model outputs 
 (Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). For instance, using a C copula with a large Kendall $\tau$,
 $\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
-population model outputs; and likewise for SG and SJ copulas. Dynamics were
+population model outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}); 
+and likewise for SG and SJ copulas (Figs \ref{SM-fig_Cause4copula_SG_kend_sRicker_nsd_1}, 
+ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). Dynamics were
 strongly nonlinear for the model parameters we used, and nevertheless similarities
 between noise and model-output copula structure, according to the statistics 
 we used, were more noticable than discrepancies.
@@ -969,11 +972,15 @@ Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
 our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) 
 statistically confirmed the visual result for $b=0.1, -0.1$. Results were more
 complex for $b=0.9$ or $-0.9$, indicating that strongly autocorrelated (or strongly 
-negatively autocorrelated dynamics) interact with the effect we have described.
+negatively autocorrelated) dynamics interact with the effect we have described.
 Ecological-variable copulas were strongly non-N for $g_1$, but not for $g_2$ 
 and asymmetries of tail dependence were not particularly noticable 
 (Figs \ref{SM-fig_ms_asym_b_0.9}-\ref{SM-fig_ms_asym_b_-0.9} and Tables 
 \ref{SM-tab_summary_stat_asym_sens}-\ref{SM-tab_stat_npa_asym}).
+<!--***DAN: Shya, this has got to be an error. Results should be symmetric
+with respect to the choice of g_1 and g_2 because the model is symmetric. Let's discuss.
+I think there is likely a bug affecting Figs S51 and 51, and Tables S47-48, and 
+possibly all results based on the same model.-->
 
 \begin{figure}[!h]
 \begin{center}
@@ -1007,7 +1014,9 @@ will tend to decreases skewness of the spatial mean. Positive skewness of the
 spatial mean corresponds to the "spikiness" of the spatial-mean time series. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
-cases such as pest or resource abundance or CO$_2$ or methane flux.
+cases such as pest or resource abundance, for which extreme values (spikes) 
+in the spatial-mean
+quantity have disproportionately large effects.
 
 We tested these ideas using the focal multivariate datasets of our earlier analyses:
 green spruce aphid abundance data, leaf-curling plum aphid first flight data, \emph{Ceratium
@@ -1049,7 +1058,8 @@ extinction risk of a metapopulation. We hypothesized that environmental noises
 exhibiting greater left-tail dependence across different habitat patches would 
 cause higher metapopulation extinction risks because then bad years for the 
 component populations would occur simultaneously in many patches,
-reducing rescue effects. 
+reducing rescue effects. Here, we are assuming that low values of the environmental
+variable are "bad" for the populations being modelled, and high values are "good".
 We provided a test of the conceptual validity of this hypothesis using a metapopulation
 extension of the Lewontin-Cohen model,
 $\vec{P}(t+1) = D \lambda(t) \vec{P}(t)$,

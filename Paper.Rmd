@@ -857,7 +857,7 @@ $E_i(t+1)=bE_i(t)+g(\epsilon_i(t))+a \delta_i(t)$, where $g$ is a function
 describing how the environmental variable $\epsilon_i(t)$ influences
 $E_i(t)$, and the $\delta_i(t)$ are standard-normally distributed 
 local noise, independent across time and sampling locations. We used $a=0.2$, and 
-$b=0.1, -0.1, 0.9, -0.9$ in different simulations. 
+$b=0.1, -0.1, 0.5, -0.5$ in different simulations. 
 Negative values of $b$ correspond to overcompensating dynamics 
 and positive values correspond to undercompensating dynamics; larger-magnitude $b$
 mean slower return time of the model to equilibrium after a perturbation. 
@@ -874,8 +874,8 @@ and $(\delta_1,\delta_2)$ have N copula structure, being drawn from
 bivariate normal distributions. Hence the Moran-like mechanism discussed
 previously cannot be operating in this model.
 
-For each value of $b$, we simulated the model once using $g_1$ and once using $g_2$, for 5000 time
-steps in both cases, retaining $E_1(t)$ and $E_2(t)$ for the final 500 time 
+For each value of $b$, we simulated the model once using $g_1$ and once using $g_2$, for $25000$ time
+steps in both cases, retaining $E_1(t)$ and $E_2(t)$ for the final $2500$ time 
 steps of each simulation. We applied our model selection algorithms and 
 non-parametric statistics, which were previously applied to 
 data to answer Q1, to the 
@@ -951,7 +951,7 @@ even had opposite signs for noise and model outputs
 $\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
 population model outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}); 
 and likewise for SG and SJ copulas (Figs \ref{SM-fig_Cause4copula_SG_kend_sRicker_nsd_1}, 
-ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). Dynamics were
+\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). Dynamics were
 strongly nonlinear for the model parameters we used, and nevertheless similarities
 between noise and model-output copula structure, according to the statistics 
 we used, were more noticable than discrepancies.
@@ -966,17 +966,17 @@ of tail dependence and non-N copula structure, depending on the value of $b$ use
 For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ (Fig. \ref{SM-fig_ms_asym_b_-0.1}), 
 for both $g_1$ and $g_2$,
 asymmetric tail dependence and non-N copula structure were visually apparent.
+We also got similar results from simulations with $b=\pm 0.5$ (Figs \ref{SM-fig_ms_asym_b_0.5} - 
+\ref{SM-fig_ms_asym_b_-0.5}).
 Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, resp., $g_2$) 
 produced lower-tail (resp., upper-tail) dependence in the ecological variable.
-Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) and
-our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) 
-statistically confirmed the visual result for $b=0.1, -0.1$. Results were more
-complex for $b=0.9$ or $-0.9$, indicating that strongly autocorrelated (or strongly 
-negatively autocorrelated) dynamics interact with the effect we have described.
-Ecological-variable copulas were strongly non-N for $g_1$, but not for $g_2$ 
-and asymmetries of tail dependence were not particularly noticable 
-(Figs \ref{SM-fig_ms_asym_b_0.9}-\ref{SM-fig_ms_asym_b_-0.9} and Tables 
-\ref{SM-tab_summary_stat_asym_sens}-\ref{SM-tab_stat_npa_asym}).
+Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) confirmed that
+non-Normal copula was always best fit for $b= \pm 0.1$ and $\pm 0.5$, but their model 
+AIC-wieght averaged tail dependence could not reflect the asymmetry for each case 
+when that dependnece was at too much extreme end.
+However, our nonparametric statistics (Tables \ref{SM-tab_stat_npa_asym}) focused on those extreme tips
+and overcome the shortcomings of model selection approach which fit data based on maximum likelihood. 
+
 <!--***DAN: Shya, this has got to be an error. Results should be symmetric
 with respect to the choice of g_1 and g_2 because the model is symmetric. Let's discuss.
 I think there is likely a bug affecting Figs S51 and 51, and Tables S47-48, and 

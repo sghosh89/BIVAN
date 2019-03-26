@@ -4091,11 +4091,11 @@ pdf("./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf",height=3,width
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_0.1$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_0.1$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,pch=20,col=rgb(0,0,0,0.5),cex=0.6)
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4104,11 +4104,11 @@ pdf("./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf",height=3,widt
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_neg0.1$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,pch=20,col=rgb(0,0,0,0.5),cex=0.6)
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_neg0.1$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4117,11 +4117,11 @@ pdf("./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf",height=3,width
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_0.5$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_0.5$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4130,11 +4130,11 @@ pdf("./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf",height=3,widt
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_neg0.5$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_neg0.5$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.5),pch=20,cex=0.6)
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4230,14 +4230,14 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.9$.\label{fig_ms_asym_b_0.5}}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.9$.\label{fig_ms_asym_b_-0.5}}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
 \end{center}
 \end{figure}
 

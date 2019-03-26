@@ -1150,47 +1150,62 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 <!--what we did and why is it important to study?-->
 We showed that non-N copula structure and asymmetric tail dependence are 
 exceedingly common in datasets that range across multiple sub-disciplines
-of ecology. Via basic mathematical models, we hypothesized two probable
-mechanisms causing those non-N copula structures with asymmetric tail-dependence. One
-mechanism was "Moran"-like effect where dependence structure between ecological
-variables from two locations was shaped by the dependence structure of 
-the environmental variables at those patches. Second mechanism, a mimic of 
-Liebig's law of the minimum, explored
-the asymmetric influence of environmental variables which 
-could limit the growth of populations when below (or beyond)
-a certain threshold. Using model simulations and real ecological data,
-we concluded asymmetric tail dependence feature of 
-non-N copula could affect (1) the skewness (henceforth, the stability)
-of spatially averaged quantities over years, (2) the extinction risk 
-and (3) the spatial Taylor's law slope of metapopulations. 
+and levels of organization in ecology, in spite of the fact that no published 
+ecological research we are aware of has ever
+taken this structure into account. Via simple mathematical models, we hypothesized two 
+mechanisms that may cause non-N copula structures with asymmetric tail dependence
+in ecological data. One
+mechanism was via a Moran-like effect by which the dependence structure between ecological
+variables, measured through time in different locations, is shaped by the dependence structure of 
+an environmental variable in those locations that influences the ecological variable. 
+A second mechanism gives rise to non-N copula structure and asymmetric tail dependence via
+asymmetric or nonlinear influence of environmental variables on ecological variables, 
+and relates to Liebigs law of the minimum. We discuss below how commonly these and other
+potential mechanisms may opperate. 
+<!--***DAN: make sure to do so-->
+We also demonstrated important consequences of 
+non-N and tail-dependent copula structure in ecology. First, the skewness, through time, 
+of spatially averaged time series is affected by the tail dependence of the relationships
+between the local quantities being averaged (such as local abundances of a pest or a resource). 
+Thus right-tail-dependent local quantities 
+tend to produce "spiky" spatially averaged time series, with large outbreaks. 
+Second, metapopulation extinction risk can be accentuated or reduced by the tail dependence
+properties of environmental variables that influence the populations. Finally, we presented
+simulation results in an Appendix showing that spatial Taylor's law can be strongly affected by
+tail dependence between local populations. In our view, our results show that
+many ecological phenomena cannot be completely understood without using a more complete, 
+copula-based approach to analyzing dependence between variables, and we advocate that
+such approaches become standard tools in ecology. 
+
 
 
 Put ideas here for discussion paragraphs:
-1) 
+1) Maybe a para on how likely one is to get copula structure via the Liebig mechanism - considers
+what people have written on nonlinear effects and empirical evidence for Liebig's law and so on
+2) Maybe a para on how likely one is to get copula structure via the Moran mechanism - considers
+work on copula structure in environmental variables. Future work: copula structure of environmental
+variables known to be important in ecology, including how it may be changing and whether it has a 
+geography.
+3) a para on stability of the total biomass time series, and skewness - sets up Shya's later paper as
+future work
+4) We have only given two mechanisms, but there are likely to be others. Maybe I can think
+of some ideas and make a paragraph.
+5) If Van gives us some ideas, they may fit in the Discussion.
+6) Maybe give Holder a bunch of draws from a bivariate dist with standard normals marginals but with 
+some tail-dependent copula structure and ask him to simulate evolution down a mammal or bird tree and
+see what you get. Then give him the other tail dependence, and no tail dependence (bivariate standard
+normal). Maybe this will lead to more results, and also a Discussion para on why evolutionary steps 
+might be tail dependent. A result that tail dependent steps lead to tail dependent character dists
+in the end would replace one question (why are there tail-dependent characters) with another (why are
+there tail dependent steps). Of course it could also be the case that steps are not tail dependent and 
+the tail dependence of characters arises in another way. Would also lead in to alternative thinking in 
+evolutionary biology - Mark could write a para on why it would matter for evolutionary biol if there are 
+tail dependent steps.
+7) A para that sets up Shya's extinction risk paper - asks about importance of this effect for real 
+species and whether it needs to be incorporated into PVA, and in what cases. If the copula structure of environmental variables changes (is it changing?) what will be the impact on extinction risk? Also, there may be copula structure between vital rates, and it is not accounted for in typical stochastic matrix model based PVA. Does it need to be?
+8) A para about what is available in the copula and VineCopula packages. Maybe make it a broader para about emthods, and state in there that we developed some new surrogate methods that may be broadly useful for researches trying to incorporate copula approaches.
 
 
-<!--***DAN: some notes by which to revise this para, Shya:
-1) no need to restate methods at all, the methods are not among our main results in this paper
-2) No real need to say much about why it is important to study what we stdied, that was done in the intro. Except insofar as saying what our main results are should make it clear it is an important thng to study, and see also further notes below.
-3) Some additional points below
--->
-<!--
-Most studies in ecology have focused on measuring correlations between variables and thus ignoring the possibility to recognize importance of stronger association between extreme values. In the present study, we introduced the concept of asymmetric tail-dependence and non-Normal copulae in this field. -->
-<!--***DAN: Too discursive. We do not need to repeat that we introduced this. Just summarize our main results in pothy language! And then maybe emphasize the importance, or make any additional points about importance that could not be made in the Intro. This para needs to be hard-hitting and brief, saying all the important thigs we accomplished in short form, all in one place. See below for some examples.-->
-
-<!--We showed by examples of several real datasets (Table \ref{tab_bivar_summary} and Table \ref{tab_multivar_summary}) that non-Normal copulae with specific tail dependence are common in nature and could tell us about the nature of interaction between different ecological variables.-->
-
-<!--***DAN: How about simply: "We showed that non-N copula structure and asymmetric tail dependence are exceedingly common in datasets that range across multiple sub-disciplines of ecology." See if you can write 1-3 pithy, impactful sentences like this one for Q2, and 1-3 for Q3 as well. Look at the first para of Discussion for some of my recent papers to get examples of the writing techniques for how we have done this in the past.-->
-
-<!--We applied two methods. First, we did a model selection approach based on maximum likelihood which fit the real copula data with an optimal set of 16 copulae family. Copula having highest AIC-weight came as best-fit from this approach. Though we did goodness of fit test based on two statistics (Cramer-von Mises and Kolmogorov-Smirnov), we wanted to ensure the reliability of our model selection results. So, on a second note, we measured the tail dependence at both lower and upper end of a copula by three different nonparametric statistics ($\cor$, $\Ps$ and $\Dsq$) which we defined and we found they were consistent with the inferences we drew from model selection results. -->
-<!--***DAN: No need at all to summarize methods again, except in cases where the methods are 
-among the main products of the paper - not our case. So delete the above text. If you want to discuss our methods, do in later in the Discussion, not in this first paragraph, unless you may want to have a sentence saying something like "We synthesized and expanded upon methods for statistically assessing copula structure and tail dependence, and models for exploring the causes and consequences of copula strucuture in ecology and related fields."-->
-<!--Our approach could help to interpret the synchronous behavior of a species from several meta-populations. To illustrate, if pairwise copulae from a multivariate spatial data of a species (e.g. abundance data of green-spruce aphid) showed major "lower-tail dependence" on most of the locations then it could be considered as a signature of "spatial synchrony" that meta-populations are simultaneously rare at those locations. Conversely, if some aphid species showed synchronously "upper-tail dependence" then it would be harmful for corp-production or in case of synchronous abundance of plankton could lead to algal-bloom in the ocean. Copulae could also give us information about the causal relationship between ecological variables. For example, if maximum rainfall is beneficial for some species then it would show an upper-tail dependent copula where high values of species abundance and precipitation would be more strongly correlated than lower values. -->
-<!--***DAN: I do not see how these examples go beyond the examples of the introduction. If they do, please clarify. If they don't, please remove.-->
-
-<!--***DAN: Shya, the below is more summary of results. Pls summarize very briefly in the first paragraph of the Discusion ONLY. So most of the below won't be needed, but some could be incorporated into the first Discussion para above.-->
-<!--We explained the possible causes which induced asymmetric tail-dependence in the copula. Borrowing the idea from "Moran's theorem", we demonstrated with simulations that two habitat patches when affected by bivariate noise with an asymmetric copula structure showed similar tail-dependence asymmetry in the population copula from those patches (see Fig. \ref{fig_Cause4copula_params_GOF_500} and Fig. \ref{fig_Cause4copula_scatter_C_kend}). We also showed the effect of global environmental fluctuation (behaving asymmetrically beyond a certain threshold) on the meta-population copula which was shaped with similar tail dependence as the initial global noise copula (Fig. \ref{fig_ms_asym_b_0.1}). We observed significant changes in skewness of spatially averaged time series and also in the curvature of spatial Taylor's law for copula having asymmetric tail-dependence than would have been expected for Normal copula. For example, Fig. \ref{fig_skewness_spearman}(A) showed green spruce aphid abundance time series had right skewed distribution but its skewness was significantly lower than was expected if it came from Spearman correlation preserving Normal surrogates. This result indicates less extreme outbreaks of green spruce aphid around UK than it would have been with Normal copula structure. Similarly, methane fluxes showing lower skewness than Normal surrogates mean that the high emissions are un-correlated between locations and monitoring this skewness over several decades may be helpful to understand the "green-house effect" on environment. 
--->
 
 # Acknowledgments
 

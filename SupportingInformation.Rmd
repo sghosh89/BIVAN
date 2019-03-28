@@ -4032,10 +4032,10 @@ plotter_asym_sens_b_varn<-function(mg,ml,a,b,numkeep_last,ploton,resloc){
   
 }
 #----------------------------------------------------------
-N<-5000
+N<-25000
 r<-0.8
 a<-0.2
-numkeep_last<-500
+numkeep_last<-2500
 temp<-get_noise_glob_loc_mat(N=N,r=r)
 mg<-temp$mg
 ml<-temp$ml
@@ -4043,31 +4043,31 @@ ml<-temp$ml
 resloc<-"./Results/asym_sens_results/"
 ans_b_0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
 ans_b_neg0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-ans_b_0.9<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.9,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-ans_b_neg0.9<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.9,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+ans_b_0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+ans_b_neg0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
 
-vlist_b_0.1_b_0.9<-c(ans_b_0.1,ans_b_neg0.1,ans_b_0.9,ans_b_neg0.9) # a list of 8 matrices
+vlist_b_0.1_b_0.5<-c(ans_b_0.1,ans_b_neg0.1,ans_b_0.5,ans_b_neg0.5) # a list of 8 matrices
 
 summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
 rownames(summary_stat)<-c("bestcop_AICw","N_AICw","relLTdep_AICw","relUTdep_AICw","p_CvM","p_KS","BS_success%")
 #bg <- intToUtf8(0x03B2) 
-cnm<-c("b_0.1_g~1~","b_0.1_g~2~","b_-0.1_g~1~","b_-0.1_g~2~","b_0.9_g~1~","b_0.9_g~2~","b_-0.9_g~1~","b_-0.9_g~2~")
+cnm<-c("b_0.1_g~1~","b_0.1_g~2~","b_-0.1_g~1~","b_-0.1_g~2~","b_0.5_g~1~","b_0.5_g~2~","b_-0.5_g~1~","b_-0.5_g~2~")
 #cname<-paste0(bg,cnm)
 colnames(summary_stat)<-cnm
 
-ms_asym_b_0.1_b_0.9<-vector(mode = "list", length = 8) # initializing list to store model selection results for all possible b variation
-names(ms_asym_b_0.1_b_0.9)<-cnm
+ms_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store model selection results for all possible b variation
+names(ms_asym_b_0.1_b_0.5)<-cnm
 
-stat_npa_asym_b_0.1_b_0.9<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible b variation
-names(stat_npa_asym_b_0.1_b_0.9)<-cnm
+stat_npa_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible b variation
+names(stat_npa_asym_b_0.1_b_0.5)<-cnm
 
 for(ic in c(1:8)){
-  v<-vlist_b_0.1_b_0.9[[ic]]
+  v<-vlist_b_0.1_b_0.5[[ic]]
   res<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=c(1,3:10,13:14,16:20),level=0.05,
                       AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
                       gofnormal=F,status=F)
   
-  ms_asym_b_0.1_b_0.9[[ic]]<-res
+  ms_asym_b_0.1_b_0.5[[ic]]<-res
   
   summary_stat[1,ic]<-max(res$InfCritRes$AICw)
   summary_stat[2,ic]<-res$InfCritRes$AICw[1]
@@ -4077,23 +4077,25 @@ for(ic in c(1:8)){
   summary_stat[6,ic]<-res$GofRes_KS
   summary_stat[7,ic]<-(res$Numboot_success/res$Numboot)*100
   
-  stat_npa_asym_b_0.1_b_0.9[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cnm[ic],numbin=10)
+  stat_npa_asym_b_0.1_b_0.5[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cnm[ic],numbin=10)
   
 }
 
 saveRDS(summary_stat,"./Results/asym_sens_results/b_variation_summary_stat.RDS")
-saveRDS(ms_asym_b_0.1_b_0.9,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.9.RDS")
-saveRDS(stat_npa_asym_b_0.1_b_0.9,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
+saveRDS(ms_asym_b_0.1_b_0.5,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.5.RDS")
+saveRDS(stat_npa_asym_b_0.1_b_0.5,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
 ```
 
 ```{r overwritting_plots_asym_cop,echo=F,results="hide"}
 pdf("./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf",height=3,width=6)
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_0.1$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_0.1$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4101,32 +4103,38 @@ dev.off()
 pdf("./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf",height=3,width=6)
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_neg0.1$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
 text(0.1,0.95,"A",cex=2)
 pop<-ans_b_neg0.1$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
 
-pdf("./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf",height=3,width=6)
+pdf("./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf",height=3,width=6)
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_0.9$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+pop<-ans_b_0.5$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
-pop<-ans_b_0.9$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+pop<-ans_b_0.5$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
 
-pdf("./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf",height=3,width=6)
+pdf("./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf",height=3,width=6)
 op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_neg0.9$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+pop<-ans_b_neg0.5$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"A",cex=2)
-pop<-ans_b_neg0.9$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,cex.axis=1,col="grey",pch=20,cex=0.6)
+pop<-ans_b_neg0.5$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
 text(0.1,0.95,"B",cex=2)
 par(op)
 dev.off()
@@ -4137,15 +4145,15 @@ summary_stat<-summary_stat[c(1:6),]
 rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
 knitr::kable(summary_stat, booktabs = T, escape=F,
              format = "latex", linesep = "",
-             digits=3, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
+             digits=4, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
                                    "b=-0.1, g$_{1}$","b=-0.1, g$_{2}$",
-                                   "b=0.9, g$_{1}$","b=0.9, g$_{2}$",
-                                   "b=-0.9, g$_{1}$","b=-0.9, g$_{2}$"),
+                                   "b=0.5, g$_{1}$","b=0.5, g$_{2}$",
+                                   "b=-0.5, g$_{1}$","b=-0.5, g$_{2}$"),
       caption.short="Asymmetric sensitivity model, model selection results",
       caption="Asymmetric sensitivity model, model selection results. 
 The output of simulations from the second model detailed in 
 the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.9}) were subjected to the model 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
 selection procedures detailed in the 
 methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
 N-copula AICw: the AIC weight of the N copula family; Model-avg. LT: the lower-tail 
@@ -4171,18 +4179,17 @@ statistic.\\label{tab_summary_stat_asym_sens}")
 #}
 ```
 
-
 ```{r tab_stat_npa_asym,echo=F,results="markup"}
 library(kableExtra)
 
-tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
 tab_stat_npa_asym<-c()
 for(i in c(1:8)){
   temp<-make_table_stat_fn(data=tab_asym[[i]])
   tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
 }
-gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.9, g$_{1}$","b=0.9, g$_{2}$","b=-0.9, g$_{1}$","b=-0.9, g$_{2}$")
-tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.9,0.9,-0.9,-0.9),each=3),
+gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.5, g$_{1}$","b=0.5, g$_{2}$","b=-0.5, g$_{1}$","b=-0.5, g$_{2}$")
+tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.5,0.5,-0.5,-0.5),each=3),
   g=rep(c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),each=3),tab_stat_npa_asym)
 knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              format = "latex",linesep = "",escape=F,
@@ -4190,7 +4197,7 @@ knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              caption ="Asymmetric sensitivity model, nonparametric statistics results. 
 The output of simulations from the second model detailed in 
 the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.9}) were subjected to nonparamtric statistical 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
 analyses decribed in the methods section for Q1. The listed statistic was computed for the
 output of the model with the indicated b and g, and the value was compared to 1000 values
 of the same statistic computed on surrogate time series randomized to have N-copula structure
@@ -4222,15 +4229,15 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.9_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.9$.\label{fig_ms_asym_b_0.9}}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.9_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.9$.\label{fig_ms_asym_b_-0.9}}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
 \end{center}
 \end{figure}
 

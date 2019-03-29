@@ -1162,7 +1162,6 @@ A second mechanism gives rise to non-N copula structure and asymmetric tail depe
 the asymmetric or nonlinear influence of environmental variables on ecological variables, 
 and relates to Liebig's law of the minimum. We discuss below how commonly these and other
 potential mechanisms may opperate. 
-<!--***DAN: make sure to do so-->
 We also demonstrated important consequences of 
 non-N and tail-dependent copula structure in ecology. First, the skewness, through time, 
 of the spatial average of time series from different locations (e.g., local pest abundance
@@ -1186,7 +1185,7 @@ problems. We created a variety of interrelated surrogate (randomization) procedu
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
 that build upon existing methods and may be especially useful in ecological applications.
 
-<!--***DAN: some mechanism paragraphs follow-->
+<!--some mechanism paragraphs follow-->
 
 <!--Maybe a para on how likely one is to get copula structure via the Moran mechanism - considers
 work on copula structure in environmental variables. Maybe mention possible future work: 
@@ -1242,22 +1241,42 @@ tail dependent steps.
 
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
 
-<!--A para that sets up Shya's extinction risk paper - asks about importance of this effect for real 
-species and whether it needs to be incorporated into PVA, and in what cases. If the copula structure of environmental variables changes (is it changing?) what will be the impact on extinction risk? Also, there may be copula structure between vital rates, and it is not accounted for in typical stochastic matrix model based PVA. Does it need to be?-->
+
+<!--A para that sets up Shya's extinction risk paper-->
 Although we have demonstrated that tail dependence between environmental variables
 can influence extinction risk, substantial work remains to be done regarding the 
 circumstances under which this result holds, and its magnitude in different scenarios. 
 First, we used 
-a non-density dependent model to examine extinction risk; does tail dependence
+a non-density dependent model to examine extinction risk. Does tail dependence
 in environmental variables still influence extinction risk when density dependence
-plays a role? Second, we considered metapopulation extinction risk, but the whole field 
-of population viability analysis [@REF-Morris and Doak] stochastic matrix modelling 
-<!--***DAN: Shya, don't work on this para, I am still working on it-->
+plays a role? Second, we considered metapopulation extinction risk, but the large field 
+of population viability analysis (PVA) via stochastic 
+matrix modelling [@Caswell2000; @MorrisDoak2002]
+uses a framework in which a single population's vital rates (e.g., life-stage-specific 
+fecundity and survival rates) are considered to
+vary stochastically through time due to environmental variation. Do relationships
+between different vital rates exhibit tail dependence, and does tail dependence 
+influence extinction risk of a single population?
+PVA is one of the routes by which a species can be added to the influential
+International Union for the Conservation of Nature (IUCN) red list of threatened
+species. It seems worthwhile for future research to investigate the extent to which 
+copula structure in dependences between vital rates may occur and may influence
+estimates of risk. Finally, is the copula structure of environmental variables
+changing through time, and, if so, how do such changes influence extinction risks?
+Climate change is known to amplify the factors that lead to extreme weather events
+[@Hansen2012]. Extreme events, by definition, produce values in the right tails of distributions
+of environmental variables. Extreme weather events also tend to be spatially extensive, so
+increased frequency of extreme weather events may correspond to changes in the tail dependence
+environmental variables measured in different places, and we showed such changes
+can affect extinction risk. It seems
+important for future work to explore whether such effects are of sufficient 
+commonness and magnitude to interest conservationists. 
 
 <!--Maybe a para from Holder on his thoughts in the importance of copulas for
-macroevolutionary biology-->
+macro-scale evolutionary biology?-->
 
-<!--Conclusion of some kind-->
+
+<!--Brief conclusion of some kind-->
 
 
 
@@ -1265,7 +1284,7 @@ macroevolutionary biology-->
 
 # Acknowledgments
 
-We thank the many contributors to the large datasets we have used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). 
+We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). 
 The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
 
 \clearpage

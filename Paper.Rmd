@@ -1164,26 +1164,26 @@ and relates to Liebig's law of the minimum. We discuss below how commonly these 
 potential mechanisms may opperate. 
 We also demonstrated important consequences of 
 non-N and tail-dependent copula structure in ecology. First, the skewness, through time, 
-of the spatial average of time series from different locations (e.g., local pest abundance
-time series) is affected by the tail dependence of the relationships
+of the spatial average of time series from different locations (e.g., average regional pest abundance computed from local pest abundances) is affected by the tail dependence of the relationships
 between the local quantities. Thus right-tail-dependent local quantities 
 tend to produce "spiky" spatially averaged time series, with large outbreaks. 
 Second, metapopulation extinction risk can be accentuated or reduced by the tail dependence
 properties of environmental variables that influence the populations. Finally, 
-simulation results in an Appendix showed that spatial Taylor's law can be strongly influenced by
-tail dependence between local populations. In our view, our results show that, for many
-ecological phenomena, a complete understanding is impossible without 
+simulation results in Appendix \ref{SM-Consequence_TL_simulation} 
+showed that spatial Taylor's law can be strongly influenced by
+tail dependence between local populations. In our view, our results demonstrate that, for many
+ecological phenomena, complete understanding is impossible without 
 characterizing dependence between variables using copulas. 
 
 <!--8) A para about what is available in the copula and VineCopula packages. Maybe make it a broader para about emthods, and state in there that we developed some new surrogate methods that may be broadly useful for researches trying to incorporate copula approaches.-->
 Copula approaches are
 well developed, statistically [@joe2014_dependence; @nelsen2006_copula], and 
-convenient computer implementations exist (e.g., the `copula` and 
+computer implementations exist (e.g., the `copula` and 
 `VineCopula` packages in R). Ecologists need only to become aware of these tools
-and understand them conceptually to start applying them broadly to ecological
-problems. We created a variety of interrelated surrogate (randomization) procedures
+and understand them conceptually to start applying them broadly. 
+We created a variety of interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
-that build upon existing methods and may be especially useful in ecological applications.
+that build upon existing methods and may be especially useful for ecological applications.
 
 <!--some mechanism paragraphs follow-->
 

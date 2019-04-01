@@ -1179,7 +1179,7 @@ characterizing dependence between variables using copulas.
 Copula approaches are
 well developed, statistically [@joe2014_dependence; @nelsen2006_copula], and 
 computer implementations exist (e.g., the `copula` and 
-`VineCopula` packages in R). Ecologists need only to become aware of these tools
+`VineCopula` packages in R). Ecologists need only become aware of these tools
 and understand them conceptually to start applying them broadly. 
 We created a variety of interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
@@ -1192,58 +1192,56 @@ work on copula structure in environmental variables. Maybe mention possible futu
 study copula structure of environmental variables (such as temperature and precip) that are known 
 to be important in ecology, including how such copula structure may be changing and whether it 
 has a geography of the kind studied in Walter et al.-->
-
-
-
-<!--***DAN: Shya, please read or reread all the papers we have that say anything about 
-copula structure of dependence between an environmental variable measured in different places, 
-and then write this paragraph.-->
 One may expect our Moran-like mechanism for non-N copula structure and tail dependence to 
-operate commonly, because Moran effects are likely ubiquitous [@Liebhold2004], and 
-non-N and tail-dependent copula structures are common in environmental variables.
-<!--***DAN: Shya, this topic sentence may have to be modified if you find non-N and tail-dependent
-copula structures in environmental variables measured in different places are not so common,
-or have not been studied much. Butif you find some papers, and they show non-N structure, you 
-can just summarize their results here.
-***Shya: Done but please check the last line of this para : 
+operate commonly, because Moran effects are common [@Liebhold2004], and 
+non-N and tail-dependent copula structures have often been found in prior analyses of 
+environmental variables. If large meteorological events are also spatially widespread, then
+one would expect environmental variables associated with these events to take extreme
+values simultaneously across large spatial areas, producing tail dependence in measurements
+made at different locations. Non-extreme values, not associated with extreme events, may
+be more associated with local weather phenomena, and therefore 
+less prone to being correlated across large areas.
+<!--***Shya: Done but please check the last line of this para : 
 @Goswami2018 this paper tests model with 3 different copula : Frank, Gaussian, Plackett, as far as I know all are symmetric, 
-so non-N copula may be best fit but in this case I could not understand how tha tail-dep. thing would fit.--> 
-Using a bivariate mixed model approach with copula, 
-past study [@Serinaldi2008] examined the spatial dependence 
-of rainfall observations (7 years with 30 min. time resolution) 
-within a rain gauge network located in Central Italy and concluded that Gumbel or Student 2-copulas 
-were possible candidates for modelling bivariate dependence at several time scale. A relatively recent 
-study [@liu2016probabilistic] used copula 
-based approach in assessing the probability of vegetation related drought across China. They found 
-majority of non-Normal copula as best fit for the dependence between vegatation index (NDVI) 
-and climatic variables (e.g. precipitation and temperature) for each month of the growing season
-(April-October). Another long-term study (1950–2014) in the Loess Plateau (LP) of China [@She2018]
-showed that Gumbel copula (with upper tail dependence) can better model the spatial dependence 
-(in the 93.1$\%$ case of the 
-total grid considered) between the drought variables 
+so non-N copula may be best fit but in this case I could not understand how tha tail-dep. thing would fit. 
+***DAN: that's OK, the purpose here is to give background on what has been done, it does not all have to pit perfectly. And also, the topic sentence just says non-N, which that is.--> 
+Using a bivariate mixed model approach with copulas, 
+@Serinaldi2008 examined the spatial dependence 
+of rainfall observations (7 years with 30 minute time resolution) 
+within a rain gauge network in Central Italy. Gumbel or Student 2-copulas 
+were possible candidates for modelling bivariate dependence at several time scales, and 
+neither of these is an N copula. @liu2016probabilistic used a copula 
+based approach in assessing the probability of vegetation related drought across China. 
+<!--***DAN: Shya, what do you mean by "vegetation related drought"? Is this a kind of drought
+that is somehow caused by the vegetation? That's what it sounds like, and it sounds like what
+they studied was the probability that such a drought occurred. If that's not what you mean, please
+rephrase.-->
+In a majority of their cases, they found 
+non-N copula structure in the dependence between a vegatation index 
+and climatic variables (e.g., precipitation and temperature). 
+Another long-term study (1950–2014) in the Loess Plateau of China [@She2018]
+showed that a Gumbel copula (which has upper tail dependence) could effectively model 
+the spatial dependence of drought variables 
 (duration and severity) in the study area. Bivariate copula analysis was also used in forecasting the 
 co-occurrence of extreme events (flood or drought) 
-over North Sikkim Himalaya using spatial data set at different time scales [@Goswami2018]. 
-
-
-<!--***DAN: Idea to work in if it fits: if large weather events (e.g., large rain events) 
-are also widespread, that should lead to right-tail dependence in, e.g., rainfall.-->
+over the North Sikkim Himalayas, India, using spatial data sets at different 
+time scales [@Goswami2018]. 
 
 <!--Maybe a para on how likely one is to get copula structure via the Liebig mechanism - considers
 what people have written on nonlinear effects and empirical evidence for Liebig's law and so on-->
-There are also substantial reasons to expect that our second mechanism operates commonly. 
+There are also good reasons to expect that our second mechanism operates commonly. 
 The second mechanism is the one that involves asymmetric or nonlinear influences of 
-environmental variables. Liebig's law of the minimum and the idea of the "limiting 
-nutrient" for organism or population growth are fundamental and dominant paradigms in ecology.
+environmental variables. Liebig's law of the minimum and the idea of a "limiting 
+nutrient" of organism or population growth are fundamental and dominant paradigms in ecology.
 Furthermore, innumerable studies document nonlinear influences of environmental
 variables on important ecological quantities at all levels of organization, e.g., the 
 influence of temperature on: 
 individual metabolism and autotroph growth rates 
 [@GarciaCarreras2018]; dispersal [@Oconnor2007]; population growth 
 [@Savage2004]; and microbial and ecosystem methane flux [@YvonDurocher2014].
-<!--***DAN: you may want to combine the above para with the previous one in the end, using an
-intro something like "There are good reasons to suspect that the two mechanisms we suggested
-operate extremely commonly in real ecosystems"-->
+Environmental variables influence not only ecological populations, but also physiological,
+community, and ecosystem functioning measurements. So our two mechanism may well operate
+to produce spatial copula structure in a wide variety of ecological measurements.
 
 <!--4) We have only given two mechanisms, but there are likely to be others, and discoverig
 additional mechanisms of copula structure is certain worthy of future work. Maybe I can think
@@ -1260,11 +1258,33 @@ the tail dependence of characters arises in another way. Would also lead in to a
 evolutionary biology - Mark could write a para on why it would matter for evolutionary biol if there are 
 tail dependent steps.
 -->
+Other mechanisms that we have not considered likely also operate to produce copula structure
+in ecological datasets.
+For instance, we detected non-N structure and tail dependence in our 
+metabolic rate-versus-body mass datasets,
+but the mechanisms discussed above do not apply directly in a macroevolutionary context.
+We hope by enumerating two potential mechanisms we help inspire additional theoretical and
+empirical research on the
+potentially numerous mechanisms of copula structure that may apply in diverse ecological datasets.
+<!--***DAN: beef this up if/when we get inputs from Mark and Van-->
 
 <!--***DAN: some consequences paragraphs next-->
 
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
-
+Our results showed that the skewness of the 
+spatial average of local time series from different locations is influenced 
+by their tail dependence. But the logic of this result should also apply to any collection of time
+series, whether associated with different locations in space or not, that are summed or averaged. 
+Another potential application is time series of all species from a single community, e.g., all
+plants in a quadrat or survey site (REF) or all herbivorous plankton in a lake (REF). A huge 
+literature has focused on synchrony versus compensatory dynamics between such time series (REFS), and 
+the influence of such interspecific relationships on the variability, through time, of total-community
+properties such as total biomass. Typically, variability through time of total-community
+properties is measured with the coefficient of variation, but the skewness of such a time series
+may also be of interest: it can characterize the extent to
+which community properties show "spikiness," i.e., uncharacteristically extreme values. 
+Therefore, future work on copula structure of intraspecific relationships in communities and its
+influence on community properties seems likely to us to be a potentially very exciting avenue.
 
 <!--A para that sets up Shya's extinction risk paper-->
 Although we have demonstrated that tail dependence between environmental variables
@@ -1298,12 +1318,6 @@ commonness and magnitude to interest conservationists.
 
 <!--Maybe a para from Holder on his thoughts in the importance of copulas for
 macro-scale evolutionary biology?-->
-
-
-<!--Brief conclusion of some kind-->
-
-
-
 
 
 # Acknowledgments

@@ -1192,6 +1192,9 @@ work on copula structure in environmental variables. Maybe mention possible futu
 study copula structure of environmental variables (such as temperature and precip) that are known 
 to be important in ecology, including how such copula structure may be changing and whether it 
 has a geography of the kind studied in Walter et al.-->
+
+
+
 <!--***DAN: Shya, please read or reread all the papers we have that say anything about 
 copula structure of dependence between an environmental variable measured in different places, 
 and then write this paragraph.-->
@@ -1201,7 +1204,28 @@ non-N and tail-dependent copula structures are common in environmental variables
 <!--***DAN: Shya, this topic sentence may have to be modified if you find non-N and tail-dependent
 copula structures in environmental variables measured in different places are not so common,
 or have not been studied much. Butif you find some papers, and they show non-N structure, you 
-can just summarize their results here.-->
+can just summarize their results here.
+***Shya: Done but please check the last line of this para : 
+@Goswami2018 this paper tests model with 3 different copula : Frank, Gaussian, Plackett, as far as I know all are symmetric, 
+so non-N copula may be best fit but in this case I could not understand how tha tail-dep. thing would fit.--> 
+Using a bivariate mixed model approach with copula, 
+past study [@Serinaldi2008] examined the spatial dependence 
+of rainfall observations (7 years with 30 min. time resolution) 
+within a rain gauge network located in Central Italy and concluded that Gumbel or Student 2-copulas 
+were possible candidates for modelling bivariate dependence at several time scale. A relatively recent 
+study [@liu2016probabilistic] used copula 
+based approach in assessing the probability of vegetation related drought across China. They found 
+majority of non-Normal copula as best fit for the dependence between vegatation index (NDVI) 
+and climatic variables (e.g. precipitation and temperature) for each month of the growing season
+(April-October). Another long-term study (1950–2014) in the Loess Plateau (LP) of China [@She2018]
+showed that Gumbel copula (with upper tail dependence) can better model the spatial dependence 
+(in the 93.1$\%$ case of the 
+total grid considered) between the drought variables 
+(duration and severity) in the study area. Bivariate copula analysis was also used in forecasting the 
+co-occurrence of extreme events (flood or drought) 
+over North Sikkim Himalaya using spatial data set at different time scales [@Goswami2018]. 
+
+
 <!--***DAN: Idea to work in if it fits: if large weather events (e.g., large rain events) 
 are also widespread, that should lead to right-tail dependence in, e.g., rainfall.-->
 

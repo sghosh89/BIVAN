@@ -1,16 +1,7 @@
 #--------------------------------------------------------------------------
 source("ExtremeTailDep.R")
 #--------------------------------------------------------------------------
-#The simulator of the multi-location model.
-#
-#Args
-#p0       A length numlocs vector holding initial populations
-#ns       An numsims by numlocs by numsteps array of the epsilons, 
-#           where numsteps is the number of time steps you want
-#
-#Output
-#A numsims by numlocs by numsteps+1 array of populations
-#
+
 #-------------------------------------------------------------------------------
 # A function to generate dispersal matrix D (a square matrix : numlocs by numlocs)
 # Input :
@@ -41,14 +32,14 @@ Dispersal_mat<-function(numlocs,d,disp_everywhere){
   return(D)
 }
 #-----------------------------------------------------------------------------------
-#The simulator of the multi-location model with a dispersal matrix.
+#The simulator of the metapopulation model with dispersal
 #-------Args--------------------------------------------------
 #p0       A length numlocs vector holding initial populations
 #ns       An numsims by numlocs by numsteps array of the epsilons, 
 #           where numsteps is the number of time steps you want
 #D        Dispersal matrix
-#r,K,a,b  model parameters
-# ext_thrs  a threshold below which populations go extinct
+#params   model parameters
+#ext_thrs  a threshold below which populations go extinct
 #model    a character specifying model name
 #--------Output------------------------------------------------------
 #A numsims by numlocs by numsteps+1 array of populations

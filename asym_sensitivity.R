@@ -46,12 +46,11 @@ get_noise_glob_loc_mat<-function(N,r){
   
 }
 #----------------------------------------------------------------------------------
-# This function simulates the equation to test asym sensitivity :
+# This function simulates the equation to test asym sensitivity on the following model :
 #      P(i,t+1)=b*P(i,t)+globalnoise(i,t)+a*localnoise(i,t)
 # Input :
 #       mg : global noise matrix (dim = N by 2)
 #       ml : local noise matrix (dim = N by 2)
-#       r : covariance of global noise matrix
 #       a : a number : local noise coeeficient
 #       b : growth factor of pop
 #       decrease : logical (controls the nature of global noise)

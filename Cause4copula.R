@@ -5,7 +5,7 @@ source("CopulaFunctions_flexible.R")
 source("MyBiCopGofTest.R")
 #---------------------------------------------------------------------------------------
 # This function GetNoise generates noises with a copula structure as you specified
-# Input :
+# Args :
 #        N : number of points drawn for a copula (C,G,J,F,SC,SG,SJ)
 #        fcode : familycode of the desired copula [within c(3:6,13,14,16)]
 #        corcoef : a number which may be Kendall's Tau or Spearman's Rho
@@ -130,8 +130,8 @@ MCI<-function(x){
   return(c(m-1.96*se,m,m+1.96*se))
 }
 #------------------------------------------------------------------------------------------------------------
-#function to get a comparison table 
-# Input:
+#function to get a list with a comparison table, chopped data for input noise and output copula
+# Args:
 #      s : gives you [s$noise_c, s$noise_q : each is a N by 2 noise matrix] , param
 #      s2 : gives you [s2$pop_c, s2$pop_q : each is a N+1 by 2 noise matrix] 
 #     num_keep_last : an integer : number of rows you want to keep from bottom 
@@ -199,111 +199,22 @@ comp<-function(s,s2,num_keep_last){
 #plot(s2$pop_c[,1],s2$pop_c[,2],col="red")
 #zz<-comp(s=s,s2=s2)
 #---------------------------------------------------------
-#-----------------------------------------------------------------------------------------------
-# This function will generate a plot for C, SC, G and SG copula (or any other as the case may be) : 
-#  parameter of noise copula vs. correln coef (spearman/kendall)
-# BS : number of bootstrapps used for BiCopGOFTest
 
-Plotter_Cause4copula_GOF<-function(N,fcode,method,nsd,num_keep_last,BS,params,p0,model){
-  
-  corcoef_list<-seq(from=0.1,to=0.9,by=0.1)
-  
-  # initialize
-  par_noise<-c()
-  par_pop<-c()
-  se_par_pop<-c()
-  pval_CvM<-c()
-  pval_KS<-c()
-  BS_success<-c()
-  
- 
-  for(corcoef in corcoef_list){
-    
-    #cat("corcoef=",corcoef,"\n")
-    
-    # generate noise copula 
-    s<-GetNoise(N=N,fcode=fcode,corcoef=corcoef,nsd=nsd,method=method,ploton=F)
-    # generate pop_copula
-    s2<-Simulator_Cause4copula(params=params,p0=p0,noise=s$noise_q,model=model)
-    
-    # compare btw parameters of s$noise_c and s2$pop_c
-    
-    u1<-tail(s2$pop_c[,1],num_keep_last)  # take last num_keep_last # of rows of s2$pop_c matrix
-    u2<-tail(s2$pop_c[,2],num_keep_last)
-    
-    z<-BiCopEst(u1,u2,family=fcode,se=T) # apply BiCopEst to get par_pop and se_par_pop for sample estimation
-    zf<-MyBiCopGofTest(u1,u2,family=fcode,method = "kendall",B=BS) # to get p-values(CvM, KS) of GOF test
-    
-    par_noise<-c(par_noise,s$param)
-    par_pop<-c(par_pop,z$par)
-    se_par_pop<-c(se_par_pop,z$se)
-    pval_CvM<-c(pval_CvM,zf$p.value.CvM)
-    pval_KS<-c(pval_KS,zf$p.value.KS)
-    BS_success<-c(BS_success,zf$B_success)
-    
-  }
-  
- 
-  BS_success_percentage<-((min(BS_success))/BS)*100
-  
-  if(method=="spearman"){
-    xlabel<-"Spearman's Rho"
-  }else if(method=="kendall"){
-    xlabel<-"Kendall's Tau"
-  }else{
-    warning("specify method",immediate.=T,call.=T)
-  }
-  
-    ## add extra space to right margin of plot within frame
-    op<-par(mar=c(3.5, 4, 4, 6) + 0.1)
-    se_par_pop_lim<-max(se_par_pop,na.rm=T) # to remove NA from ylim
-    ## Plot first set of data and draw its axis
-    plot(corcoef_list, par_pop, pch=6, axes=FALSE, 
-         #ylim=c(ceiling(min(0,par_pop-1.96*se_par_pop_lim)),
-         ylim=c(0,ceiling(max(par_noise,par_pop+1.96*se_par_pop_lim))),xlim=c(0,1),
-         xlab="", ylab="", 
-         col="blue")#,main=BiCopName(family = fcode,short=F))
-    segments(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,col='blue')
-    bar_len<-0.02
-    segments(corcoef_list-bar_len,par_pop-1.96*se_par_pop,corcoef_list+bar_len,par_pop-1.96*se_par_pop,col='blue')
-    segments(corcoef_list-bar_len,par_pop+1.96*se_par_pop,corcoef_list+bar_len,par_pop+1.96*se_par_pop,col='blue')
-    #arrows(corcoef_list,par_pop-1.96*se_par_pop,corcoef_list,par_pop+1.96*se_par_pop,length=0.03, angle=90, code=3, col='blue')
-    points(corcoef_list,par_noise,pch=2,col="red")
-    axis(2, col="black",las=1)  ## las=1 makes horizontal labels
-    mtext(expression(paste("Parameter (",theta,")")), side = 2, line = 2.5)
-    mtext(paste0(BiCopName(family = fcode,short=T)," , min_BS_success = ",BS_success_percentage,"%"),side=3,line=0.3,cex=0.8)
-    box()
-    
-    ## Allow a second plot on the same graph
-    par(new=TRUE)
-    
-    ## Plot the second plot and put axis scale on right
-    plot(corcoef_list, pval_CvM, pch=16,  xlab="", ylab="", ylim=c(0,1), xlim=c(0,1),
-         axes=FALSE, type="p", col="magenta")
-    points(corcoef_list, pval_KS, pch=16, col="green2")
-    lines(range(0,1),c(0.05,0.05),type='l',lty='dashed',col='purple')
-    ## a little farther out (line=3) to make room for labels
-    mtext("p values",side=4,col="purple",line=3) 
-    axis(4, ylim=c(0,1), col="purple",col.axis="purple",las=1)
-    
-    ## Draw the x axis
-    axis(1,corcoef_list)
-    mtext(xlabel,side=1,col="black",line=2.5)  
-    par(op)
-
-}
-
-#--------------------------------------------------------------------------------------
-# This function will give you a 3 by 3 multipanel plot for a specified family of copula 
-# 1st row : [1] Spearman correlation btw noise_c & pop_c against spearman's rho/ kendall's tau of noise
-#           [2] Kendall correlation btw noise_c & pop_c against spearman's rho/ kendall's tau of noise
-#           [3] Pearson correlation btw noise_q & pop_q against spearman's rho/ kendall's tau of noise
-# 2nd and 3rd row :
-#  Our non-parametric stats @ extreme ends (Corl,Coru,Pl,Pu,D2u,D2l) 
+#---------------------------------------------------------------------------------------------------
+# This function computes
+#  Spearman correlation btw noise_c & pop_c against spearman's rho/ kendall's tau of noise
+#  Kendall correlation btw noise_c & pop_c against spearman's rho/ kendall's tau of noise
+#  Pearson correlation btw noise_q & pop_q against spearman's rho/ kendall's tau of noise
+#  non-parametric statistics @ extreme ends (Corl,Coru,Pl,Pu,D2u,D2l) 
 #                                 against spearman's rho/ kendall's tau of noise
-#-------------------------------------------------------------------------------------
+# on both output copula and input noise copula 
+# In addition, it computes the standard error associated with total number of 
+# simulations for each value computed and estimates P -values 
+# from a paired t-test of the null hypothesis that the distributions of noise and output 
+# values have the same mean
 #
-# Input :
+# Args :
+#       N : number of points drawn for a noise copula initially
 #       numsim : a number over which desired stat (Spearman, Kendall, Pearson) called for (default:50)
 #       fcode : family of copula from where noise is genarated initially [within c(3:6,13,14,16)]
 #       nsd : standard deviation of the noise generated

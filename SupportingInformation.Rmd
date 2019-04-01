@@ -32,92 +32,11 @@ bibliography: REF_ALL.bib
 ```{r setup, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 seed<-101
-# families<-c(1,3:10,13,14,16:20)
 source("mtime.R") #A function needed for caching
 library(captioner)
 ```
 
-```{r cop_fig_intro,echo=F,results="hide",cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
-library(copula)
-library(VineCopula)
-library(mvtnorm)
-set.seed(seed)
-
-source("copsurrognd.R")
-
-#x <- read.table("./Data/dataset/x.txt")
-#y <- read.table("./Data/dataset/y.txt")
-#mat<-cbind(x,y)
-#colnames(mat)<-c("x","y")
-
-#***constants
-N<-200 #length of time series
-n<-2 #number of sampling locations
-numdat<-1 #the number of datasets to get from the normal copula
-rho<-0.8 #normal-copula parameter for dependence between locations
-#this is a covariance, see below call to rmvnorm
-
-#***generate the starting data, which has normal copula structure
-#because it comes originally from a multivariate normal, before 
-#transformation
-sig<-matrix(rho,n,n)
-diag(sig)<-1
-m<-rmvnorm(N*numdat,mean=rep(0,n),sigma=sig)
-m<-array(m,c(N,numdat,n))
-m<-aperm(m,c(1,3,2)) # 2nd dim is normally distributed e.g. hist(m[,1,])
-gshape<-7.5
-gscale<-1 #gamma parameters
-
-cop_to_marg_trans<-function(x){
-  return(qgamma(x,shape=gshape,scale=gscale)) #this is where we choose the marginals,
-  #should be something skewed
-}
-# pnorm(m) makes normal to uniform
-# then qgamma(...) makes uniform to gamma distributed
-m<-cop_to_marg_trans(pnorm(m))
-
-ccop<-claytonCopula(2,2)
-csurrog<-array(NA,dim(m))
-csurrog[,,1]<-copsurrognd(m[,,1],targetcop=ccop,numsurrog=1)
-mat<-csurrog[,,1]
-
-pdf("./Results/rawdata.pdf",height = 4, width = 4)
-scale<-2
-xhist <- hist(mat[,1], breaks=30, plot=FALSE)
-yhist <- hist(mat[,2], breaks=30, plot=FALSE) 
-top <- max(c(xhist$counts, yhist$counts)) 
-xrange <- range(mat[,1])
-yrange <- range(mat[,2])
-nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
-op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0))  
-plot(mat[,1], mat[,2], xlim=xrange, ylim=yrange, xlab="x", ylab="y", cex.lab=1.5)
-legend("bottomright","raw data plot",bty="n",cex=1.5,text.col="magenta")
-op<-par(mar=c(0,3,1,1)) 
-barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
-op<-par(mar=c(3,0,1,1)) 
-barplot(yhist$counts/scale, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
-par(op)
-dev.off()
-
-pdf("./Results/copdata.pdf",height = 4, width = 4)
-copmat<-pobs(mat)
-xhist <- hist(copmat[,1], breaks=30, plot=FALSE)
-yhist <- hist(copmat[,2], breaks=30, plot=FALSE) 
-top <- max(c(xhist$counts, yhist$counts)) 
-xrange <- c(0,1)
-yrange <- c(0,1)
-nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(4,1), c(1,4), TRUE) 
-op<-par(mar=c(3,3,1,1),mgp=c(2, 1, 0)) 
-plot(copmat[,1], copmat[,2], xlim=xrange, ylim=yrange, xlab="u=rank(x)/(n+1)", ylab="v=rank(y)/(n+1)",cex.lab=1.5)
-legend("bottomright","copula plot",bty="n",cex=1.5,text.col="magenta")
-op<-par(mar=c(0,3,1,1)) 
-barplot(xhist$counts/scale, axes=FALSE, ylim=c(0, top), space=0) 
-op<-par(mar=c(3,0,1,1)) 
-barplot(yhist$counts/scale, axes=FALSE, xlim=c(0, top), space=0, horiz=TRUE)
-par(op)
-dev.off()
-```
-
+<!--generating plots for pedagog figures-->
 ```{r cop_pedagog_fig,echo=F,results="hide"}
 set.seed(seed)
 source("./FirstPedagogFig.R")
@@ -126,8 +45,8 @@ source("./ThirdPedagogFig.R")
 source("./MakeCopulaPedagogFigs.R")
 ```
 
-<!--The raw data look like this:-->
-```{r load_data_Loecke, echo=F, results='hide'}
+<!--reading data and generaing plot for soilCN-->
+```{r load_and_plot_data_soilCN, echo=F, results='hide'}
 #fig.cap="Plot of the raw soil C and N data.\\label{fig_raw_cop_soilCN}(A)", fig.height=3, fig.width=3}
 d<-readRDS("Data/dataForShymolinaCoord.rds")
 d<-d[,c("SOCstock100","TSNstock100","lat","long")]
@@ -139,8 +58,8 @@ par(op)
 dev.off()
 ```
 
-<!--The copula looks like this:-->
-```{r rankandplot_Loecke, echo=F, results='hide'}
+<!--generating copula plot with soilCN data-->
+```{r copula_plot_soilCN, echo=F, results='hide'}
 source("getcopula.R")
 #convert to a copula and plot
 pdf("./Results/SoilCNcop.pdf")
@@ -148,6 +67,7 @@ v_CN<-getcopula(d=d[,c(1:2)],rankon=T,ploton=T)
 dev.off()
 ```
 
+<!--generating plots with sampling locations for soilCN data-->
 ```{r plot_SoilCNmapUSA, echo=F, results='hide'}
 #---------map of soilCN location on USA------------
 library(maps)
@@ -157,6 +77,7 @@ points(x = d$long, y = d$lat, col="red",pch=16,cex=0.5)
 dev.off()
 ```
 
+<!--reading Birds' BMR data and generating raw, copula plots with it-->
 ```{r read_BMR_birds_and_copulaplot, echo=F, results='hide'}
 library(readxl)
 set.seed(seed)
@@ -182,6 +103,7 @@ cop_b<-getcopula(d=b,rankon=T,ploton=T) #convert to a copula and plot
 dev.off()
 ```
 
+<!--reading Mammals' BMR data and generating raw, copula plots with it-->
 ```{r read_BMR_mammals_and_copulaplot, echo=F, results='hide'}
 set.seed(seed)
 raw_m<-readxl::read_xls("./Data/BMR/MammalianBodyMassesMetabolicRates/MammalianMassesAndMetabolicRatesMcNab2008.xls")
@@ -207,6 +129,8 @@ cop_m<-getcopula(d=m,rankon=T,ploton=T) #convert to a copula and plot
 dev.off()
 ```
 
+
+<!--reading ceder creek data and generating raw and copula plots with it-->
 ```{r read_ceder_creek_data, echo=F, results="hide"}
 set.seed(seed)
 #-------------------------------------------------
@@ -353,6 +277,8 @@ saveRDS(cop_HB_all_yr,"./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 cop_HB_all_yr<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
+
+<!--reading aphid and plankton data, then generating plots showing sampling locations-->
 ```{r map_plot_aphid_plankton,results="hide",echo=F}
 source("aphid_data_calling.R")
 source("good_loclist.R")
@@ -413,6 +339,7 @@ text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$la
 dev.off()
 ```
 
+<!--Generating a single plot containing raw and copula plots for all bivariate data-->
 ```{r make_data_plot_fig,echo=FALSE,results="hide"}
 source("./MakeBivarDataPlot.R")
 ```
@@ -451,11 +378,12 @@ unwinding silk ribbon. The ribbon was cut into 4 inch segments, each correspondi
 location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
 averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available).-->
 
- [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had at least 45 years time series data (see Figure \ref{SM-fig_plankton_map}). 
+ [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had at least 45 years time series data (see Figure \ref{fig_plankton_map}). 
  
  The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
 additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had at least 50 dates data.
 
+<!--generating table with information about 20 aphid species-->
 ```{r tab_aphid_info, echo=F, results='asis',message=F}
 library(tinytex)
 library(tibble)
@@ -478,6 +406,7 @@ knitr::kable(aphid_info, "latex", booktabs = T, linesep = "",
      column_spec(column = 2,italic=T)%>%add_header_above(header=c("Common name" = 1, "Latin binomial" = 1))
 ```
 
+<!--generating table with information about 22 plankton species-->
 ```{r tab_plankton_info, echo=F, results='asis',message=F}
 library(tibble)
 plankton_info <- tibble(c1=c('Calanus stages I-IV','Para-pseudocalanus spp.','Temora longicornis','Acartia sp.',
@@ -496,18 +425,14 @@ knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
       caption = "Species names of 22 plankton taxa for which data were available \\label{tab_plankton_info}",
       col.names = c("Plankton taxon name"))%>%row_spec(row=idn,italic=T)
 ```
-<!--***DAN: These names differ from those used in Emma's 2016 Glob Change Biol paper.
-Need to check with Chris Reid. Have to get this right.-->
 
+<!--reading multivariate methane flux data-->
 ```{r read_methane_data, echo=F, results="markup"}
 set.seed(seed)
 methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
-#class(methane_raw) #it's a data.frame for multivariable data
-#knitr::kable(head(methane_raw,3),format='pandoc',
-#             caption = "First few rows of raw methane data.\\label{tab_rawdata_methane}",
-#             booktabs=T) # display first few rows
 ```
 
+<!--embedding plot with sampling locations : soilCN, aphids, planktons-->
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm,height=16 cm]{./Results/SoilCNmapUSA.pdf} 
@@ -775,12 +700,11 @@ We used a $t$-test with a significance threshold of $0.05$ to judge significance
 These expectations were fulfilled (Figs \ref{fig_stat_testing35} and 
 \ref{fig_stat_testing1000}).
 
-<!--The message=F and warning=F flags are to suppress warnings that come when you pass a parameter
+<!--Simulation for testing non-parametric statistics with different copulas :
+The message=F is to suppress warnings that come when you pass a parameter
 of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for these families.
 They correspond to the independent copula. The packages we use provide the indepdent copula, but
-issue a warning. Since anyway we want the independent copula, we can suppress the warning. We ran this
-without the warning and it is OK to supress it.-->
-<!-- The lines you are talking about appeared as message not as warning(actualy no warning appered for this chunk), so we have to set message=F here-->
+issue a message.-->
 ```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 source("TestStats_multivar_dataset.R")
 set.seed(seed)
@@ -816,24 +740,6 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the C and SC copulas, and the known symmetry of tail dependence of the N and F copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
-
-<!--This r-chunk generates figure necessary for maintext Paper-->
-```{r fig_stat_testing_for_maintext, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"),mtime("StatTestNumericResults.RData"))}
-set.seed(seed) 
-source("fig_Paper_stat_testing.R")
-#load("./Results/stat_results/stat_testing/StatTestNumericResults.RData")
-resultsloc<-"./Results/stat_results/stat_testing/"
-
-copname<-"C"
-reslist<-res_pt35_rankT
-
-statname<-"CorlmCoru"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-statname<-"PlmPu"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-statname<-"D2umD2l"
-call_fig_Paper_stat_testing(resultsloc=resultsloc,statname=statname,copname=copname,reslist=reslist, numsims=100)
-```
 
 # Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
 
@@ -1009,7 +915,7 @@ BivMS_res_Loecke<-OurBiCopSelect(u1=v_CN[,1],u2=v_CN[,2],families=families_Loeck
 saveRDS(BivMS_res_Loecke,file="./Results/fitting_results/BivMS_soilCN.RDS")
 ```
 
-<!--Display model selection results in a table-->
+<!--Display model selection results for soilCN data in a table-->
 ```{r tab_soilCNfit, echo=F, results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
@@ -1035,12 +941,12 @@ stat_soilCN_ga<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilC
 \end{center}
 \end{figure}
 
-<!--Now make and display a table, this one about asymmetry of tail dependence-->
+<!--Function to generate a table for npa results-summary with bivariate data, this one about asymmetry of tail dependence-->
 ```{r make_table_stat_fn, echo=F}
 
 fractxt<-function(fracval,numsurrog){
   ptxt<-''
-  if (fracval>.5*numsurrog){                        # ?DCR why 0.5 factor?
+  if (fracval>.5*numsurrog){                        
     ptxt<-paste(">",fracval,sep='')
   } 
   if (fracval<=.5*numsurrog){
@@ -1072,6 +978,7 @@ make_table_stat_fn<-function(data){
 }
 ```
 
+<!--Displaying a table with npa summary results for soilCN data-->
 ```{r tab_soilCN_asym,echo=F,results="markup"}
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 tab_soilCN_asym<-make_table_stat_fn(data=stat_soilCN_ga)
@@ -1082,6 +989,7 @@ knitr::kable(tab_soilCN_asym, booktabs = T, escape=F,
       caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 ```
 
+<!--Simulations for model selection results with Birds' BMR data-->
 ```{r bivmodselect_birds_BMR, echo=F, cache=T, cache.extra=list(seed,cop_b,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
 set.seed(seed)
@@ -1102,6 +1010,7 @@ knitr::kable(h,
              booktabs=T)
 ```
 
+<!--This chunk is for npa testing results for Birds' BMR dataset-->
 ```{r stat_bmr_birds_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_b,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
 set.seed(seed)
@@ -1115,6 +1024,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \end{center}
 \end{figure}
 
+<!--Displaying a table with npa summary results for Birds' BMR data-->
 ```{r tab_bmr_birds_asym, echo=F, results="markup"}
 tab_bmr_birds_asym<-make_table_stat_fn(data=stat_birds_ga)
 #tab_bmr_birds_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
@@ -1125,6 +1035,7 @@ knitr::kable(tab_bmr_birds_asym,
              booktabs=T)
 ```
 
+<!--Simulations for model selection results with Mammals' BMR data-->
 ```{r bivmodselect_mammals_BMR, echo=F, cache=T, cache.extra=list(seed,cop_m,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
 set.seed(seed)
@@ -1145,6 +1056,7 @@ knitr::kable(h,
              booktabs=T)
 ```
 
+<!--This chunk is for npa testing results for Mammals' BMR dataset-->
 ```{r stat_bmr_mammals_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_m,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
 set.seed(seed)
@@ -1158,6 +1070,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \end{center}
 \end{figure}
 
+<!--Displaying a table with npa summary results for Mammals' BMR data-->
 ```{r tab_bmr_mammals_asym, echo=F, results="markup"}
 tab_bmr_mammals_asym<-make_table_stat_fn(data=stat_mammals_ga)
 #tab_bmr_mammals_asym[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
@@ -1168,6 +1081,7 @@ knitr::kable(tab_bmr_mammals_asym,
              booktabs=T)
 ```
 
+<!--Simulations for model selection results with Cedar creek data-->
 ```{r bivmodselect_cc, echo=F, cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("OurBiCopSelect.R")
 set.seed(seed)
@@ -1185,7 +1099,7 @@ saveRDS(BivMS_res_cc,file="./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 ```
 
-<!--Display model selection results for Ceder-creek data for year 2000 in a table-->
+<!--Display model selection results for Cedar-creek data for year 2000 in a table-->
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AICw","BICw","LTdep","UTdep")]
 colnames(h)<-c("copname","AICw","BICw","LT","UT")
@@ -1196,6 +1110,7 @@ knitr::kable(h,
              booktabs=T)
 ```
 
+<!--This chunk is for npa testing results for Cedar creek dataset-->
 ```{r stat_cc_graphic_approach, echo=F, results="hide", cache=T, cache.extra=list(seed,cop_HB_all_yr,mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 source("bivfunctionplot.R")
 set.seed(seed)
@@ -1221,6 +1136,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \end{center}
 \end{figure}
 
+<!--Displaying a table with npa summary results for Cedar creek data-->
 ```{r tab_cc_asym_2000, echo=F, results="markup"}
 tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
 #tab_cc_asym_2000[,1]<-c("corFS-corLS","PFS-PLS","D2LS-D2FS")
@@ -1231,7 +1147,7 @@ knitr::kable(tab_cc_asym_2000,
              booktabs=T)
 ```
 
-<!--Load the raw data-->
+<!--Load the raw data for aphid-->
 ```{r read_aphid_data, echo=F}
 source("aphid_data_calling.R")
 
@@ -1285,6 +1201,7 @@ names(temp_aphid)<-"aphid_winter_neg_temp"
 saveRDS(temp_aphid,"./Results/temp_aphid_winter_neg_temp_avg_data.RDS")
 ```
 
+<!--Simulation for model selection and non-parametric analysis with aphids count data for all 20 sp.-->
 ```{r modelsel_and_npa_aphid_count_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
@@ -1343,7 +1260,7 @@ for(sp in c(1:20)){
 saveRDS(summary_aphid_count_allsp,"./Results/summary_aphid_count_allsp.RDS")
 ```
 
-<!--Do the model selection for aphid count data and then showing results in Tables-->
+<!--Do the model selection for Green spruce aphid's abundance data and then showing results in Tables-->
 ```{r RES_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
@@ -1356,6 +1273,7 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species_10.RDS",sep=""))
 ```
 
+<!--table for Best-fitting copulas, green spruce aphid abundance data-->
 ```{r tab_count_bestcop, echo=F, results="markup"}
 #library(dplyr)
 #knitr::opts_knit$set(kable.force.latex = TRUE)
@@ -1370,6 +1288,7 @@ survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
 ```
 
+<!--table for AIC-weights of best-fitting copulas, green spruce aphid abundance data-->
 ```{r tab_count_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
              format='latex',linesep = "",digits=3,
@@ -1379,6 +1298,7 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
              )
 ```
 
+<!--table for AIC-weights of Normal copula used for fitting, green spruce aphid abundance data-->
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
@@ -1389,6 +1309,7 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
              )
 ```
 
+<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, green spruce aphid abundance data-->
 ```{r tab_count_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_CvM,
              format='latex',linesep = "",digits=3,
@@ -1398,6 +1319,7 @@ knitr::kable(RES_aphid_count$gfc_p_CvM,
              )
 ```
 
+<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, green spruce aphid abundance data-->
 ```{r tab_count_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_KS,
              format='latex',linesep = "",digits=3,
@@ -1407,7 +1329,7 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
              )
 ```
 
-<!--\newpage-->
+<!--table for model averaged lower tail dep., green spruce aphid abundance data-->
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1417,7 +1339,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
              )
 ```
 
-<!--\newpage-->
+<!--table for model averaged upper tail dep., green spruce aphid abundance data-->
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1427,7 +1349,7 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
              )
 ```
 
-<!--\newpage-->
+<!--table for model averaged lower- minus upper-tail dep., green spruce aphid abundance data-->
 ```{r tab_count_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 3,linesep = "",
@@ -1438,7 +1360,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              )
 ```
 
-<!--Do the main computations for nonparametric analysis of aphid count data-->
+<!--Do the main computations for nonparametric analysis of green spruce aphid abundance data-->
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1455,7 +1377,7 @@ stat_aphid_count<-multcall(d_allsp=data_aphid_count,sp=sp,lats=lats,longs=longs,
 saveRDS(stat_aphid_count,paste(resloc,file="stat_aphid_count_sp_10.RDS",sep='')) 
 ```
 
-<!--Show the statistical results in a table-->
+<!--Show the statistical results in a table for green spruce aphid abundance data-->
 ```{r tab_count_resamp,echo=F,results="markup"}
 s<-stat_aphid_count$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
@@ -1496,6 +1418,7 @@ knitr::kable(s, digits = 3,
 \end{center}
 \end{figure}
 
+<!--Simulation for model selection and non-parametric analysis with aphids first flight data for all 20 sp.-->
 ```{r modelsel_and_npa_aphid_ff_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
@@ -1554,7 +1477,7 @@ for(sp in c(1:20)){
 saveRDS(summary_aphid_ff_allsp,"./Results/summary_aphid_ff_allsp.RDS")
 ```
 
-<!--Do the model selection for aphid ff data and then showing results in Tables-->
+<!--Do the model selection for leaf plum curling aphid first flight data and then showing results in Tables-->
 ```{r RES_aphid_ff, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
@@ -1567,6 +1490,7 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_species_11.RDS",sep=""))
 ```
 
+<!--table for Best-fitting copulas, leaf plum curling aphid first flight data-->
 ```{r tab_ff_bestcop, echo=F, results="markup"}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='latex',linesep = "",
@@ -1576,6 +1500,7 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              )
 ```
 
+<!--table for AIC-weights of best-fitting copulas, leaf plum curling aphid first flight data-->
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
              format='latex',linesep = "",digits=3,
@@ -1585,7 +1510,7 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              )
 ```
 
-<!--\newpage-->
+<!--table for AIC-weights of Normal copula used for fitting, leaf plum curling aphid first flight data-->
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
@@ -1596,6 +1521,8 @@ knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              )
 ```
 
+<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, 
+leaf plum curling aphid first flight data-->
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_CvM,
              format='latex',linesep = "",digits=3,
@@ -1605,6 +1532,8 @@ knitr::kable(RES_aphid_ff$gfc_p_CvM,
              )
 ```
 
+<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, 
+leaf plum curling aphid first flight data-->
 ```{r tab_ff_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_KS,
              format='latex',linesep = "",digits=3,
@@ -1614,6 +1543,7 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
              )
 ```
 
+<!--table for model averaged lower tail dep., leaf plum curling aphid first flight data-->
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1623,6 +1553,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
              )
 ```
 
+<!--table for model averaged upper tail dep., leaf plum curling aphid first flight data-->
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1632,6 +1563,7 @@ knitr::kable(RES_aphid_ff$UTdep_AICw,
              )
 ```
 
+<!--table for model averaged lower- minus upper-tail dep., leaf plum curling aphid first flight data-->
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 3,
@@ -1642,7 +1574,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              )
 ```
 
-<!--Do the main computations for nonparametric analysis of aphid ff data-->
+<!--Do the main computations for nonparametric analysis of leaf plum curling aphid first flight data-->
 ```{r stat_aphid_ff, echo=F, cache=T,  cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1659,7 +1591,7 @@ stat_aphid_ff<-multcall(d_allsp=data_aphid_ff,sp=sp,lats=lats,longs=longs,pfname
 saveRDS(stat_aphid_ff,paste(resloc,file="stat_aphid_ff_sp_11.RDS",sep='')) 
 ```
 
-<!--display the main statistical results in a table-->
+<!--Show the statistical results in a table for leaf plum curling aphid first flight data-->
 ```{r tab_ff_resamp,echo=F,results="markup"}
 s<-stat_aphid_ff$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
@@ -1700,13 +1632,14 @@ knitr::kable(s, digits = 3,
 \end{center}
 \end{figure}
 
-<!--Load the data-->
+<!--Load the data : planktons-->
 ```{r read_plankton_north_sea_data, echo=F}
 source("plankton_north_sea_data_calling.R")
 d0_plankton_north_sea<-as.matrix(read.csv("./Data/Plankton_North_Sea_data/planktontimeseries201117_4.csv",header=F))
 data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
+<!--Simulation for model selection and non-parametric analysis with plankton data for all 22 sp.-->
 ```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
@@ -1763,7 +1696,7 @@ for(sp in c(1:22)){
 saveRDS(summary_pns_allsp,"./Results/summary_pns_allsp.RDS")
 ```
 
-<!--Do the model selection for plankton data and then showing results in Tables-->
+<!--Do the model selection for plankton (Ceratium furca) and then showing results in Tables-->
 ```{r RES_plankton_north_sea, echo=F, cache=T, results="hide", cache.extra=list(seed,data_plankton_north_sea,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
@@ -1777,6 +1710,7 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_selecloc_species_16.RDS",sep=""))
 ```
 
+<!--table for Best-fitting copulas, Ceratium furca abundance data-->
 ```{r tab_pns_bestcop, echo=F, results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='latex', linesep = "",
@@ -1786,6 +1720,7 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              )
 ```
 
+<!--table for AIC-weights of best-fitting copulas, Ceratium furca abundance data-->
 ```{r tab_pns_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
@@ -1797,6 +1732,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for AIC-weights of Normal copula used for fitting, Ceratium furca abundance data-->
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
@@ -1809,6 +1745,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, Ceratium furca abundance data-->
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_CvM
 h[is.infinite(h)]<-NA
@@ -1820,6 +1757,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, Ceratium furca abundance data-->
 ```{r tab_pns_p_KS,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_KS
 h[is.infinite(h)]<-NA
@@ -1833,6 +1771,7 @@ locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
 
+<!--table for model averaged lower tail dep., Ceratium furca abundance data-->
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw
 h[is.infinite(h)]<-NA
@@ -1844,6 +1783,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for model averaged upper tail dep., Ceratium furca abundance data-->
 ```{r tab_pns_UTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$UTdep_AICw
 h[is.infinite(h)]<-NA
@@ -1855,6 +1795,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for model averaged lower- minus upper-tail dep., Ceratium furca abundance data-->
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 h[is.nan(h)]<-NA
@@ -1866,7 +1807,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--Do the main computations for nonparametric analysis of plankton data-->
+<!--Do the main computations for nonparametric analysis of Ceratium furca abundance data-->
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -1882,7 +1823,7 @@ stat_plankton_north_sea<-multcall(d_allsp=data_plankton_north_sea,sp=sp,lats=lat
 saveRDS(stat_plankton_north_sea,paste(resloc,file="stat_plankton_north_sea_sp_16.RDS",sep=''))
 ```
 
-<!--display the main statistical results in a table-->
+<!--Show the statistical results in a table for Ceratium furca abundance data-->
 ```{r tab_pns_resamp,echo=F,results="markup"}
 s<-stat_plankton_north_sea$numericdf[,c(3,2,4)]
 sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
@@ -1923,7 +1864,7 @@ knitr::kable(s, digits = 3,
 \end{center}
 \end{figure}
 
-<!--Load and format the data-->
+<!--Load and format the data : methane flux-->
 ```{r read_format_methane_data, echo=F}
 
 methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
@@ -1937,7 +1878,7 @@ for(i in 2:dim(methane_raw)[2]){
 methane_data<-list(myls=myls)
 ``` 
 
-<!--Do the main analysis-->
+<!--Do the model selection for methane flux data and then showing results in Tables-->
 ```{r RES_methane, echo=F, cache=T, results="hide", cache.extra=list(seed,methane_data,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
@@ -1951,6 +1892,7 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.RDS",sep=""))
 ```
 
+<!--table for Best-fitting copulas, methane flux data-->
 ```{r tab_methane_bestcop, echo=F, results="markup"}
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',linesep = "",
@@ -1960,6 +1902,7 @@ knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              )
 ```
 
+<!--table for AIC-weights of best-fitting copulas, methane flux data-->
 ```{r tab_methane_AICw,echo=F,results="markup"}
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
@@ -1971,6 +1914,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for AIC-weights of Normal copula used for fitting, methane flux data-->
 ```{r tab_methane_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
@@ -1983,6 +1927,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, methane flux data-->
 ```{r tab_methane_p_CvM,echo=F,results="markup"}
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
@@ -1994,6 +1939,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, methane flux data-->
 ```{r tab_methane_p_KS,echo=F,results="markup"}
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
@@ -2007,6 +1953,7 @@ locations for methane flux data.\\label{tab_methane_p_KS}",
              booktabs=TRUE)
 ```
 
+<!--table for model averaged lower tail dep., methane flux data-->
 ```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
@@ -2018,6 +1965,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for model averaged upper tail dep., methane flux data-->
 ```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
@@ -2029,6 +1977,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
+<!--table for model averaged lower- minus upper-tail dep., methane flux data-->
 ```{r tab_methane_LTmUT,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
@@ -2040,7 +1989,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--Do the main computations for nonparametric analysis of methane-flux data-->
+<!--Do the main computations for nonparametric analysis of methane flux data-->
 ```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -2069,11 +2018,7 @@ stat_methane<-multcall(d_allsp=methane_data,sp=1,lats=latlon_arranged$lat,longs=
 saveRDS(stat_methane,paste(resloc,file="stat_methane.RDS",sep='')) 
 ```
 
-```{r read_stat_methane,echo=F}
-stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
-```
-
-<!--display the main statistical results in a table-->
+<!--Show the statistical results in a table for methane flux data-->
 ```{r tab_methane_resamp,echo=F,results="markup"}
 s<-stat_methane$numericdf[,c(3,2,4)]
 
@@ -2117,6 +2062,7 @@ knitr::kable(s,digits = 3,
 \end{center}
 \end{figure}
 
+<!--Function to generate a table containing summary results for all bivariate datasets-->
 ```{r bivar_tab_summary_fn,echo=F}
 bivar_tab_summary_fn<-function(r,rs){
   
@@ -2152,6 +2098,7 @@ colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Mammals' BMR","Ceder-creek
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
 
+<!--Function to generate a table containing summary results for all multivariate datasets-->
 ```{r multivar_tab_summary_fn,echo=F}
 source("normal_cop_AICw.R")
 
@@ -2217,114 +2164,7 @@ colnames(tab_multivar_summary)<-c("Green-spruce aphid_count","Leaf-plum curling 
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
-```{r sample_plot_aphid_count_ff,echo=F,results="hide"}
-#-------------------------------------------------------------------------------
-# code to plot raw data and copula plot for aphid count @location pair (4,11)
-# bestfit cop : SJ
-
-d1<-data_aphid_count$`Green spruce aphid`[[4]]
-d2<-data_aphid_count$`Green spruce aphid`[[11]]
-pdf("./Results/Aphid_count_raw_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(10,10, 0.2, 2.1),mgp=c(3,1,0))
-plot(d1$Dat,d2$Dat,type="p",xlab="",
-     ylab="Green-spruce aphid \ncount (loc. 11)",cex.lab=3.5,cex.axis=2.5)
-mtext(paste("Green-spruce aphid \ncount (loc. 4)"),line=-38,cex=3.5)
-par(op)
-dev.off()
-
-source("./vivj_matrix.R")
-m<-vivj_matrix(d_allsp = data_aphid_count,sp=10,i=4,j=11)
-pdf("./Results/Aphid_count_cop_loc_4_11.pdf",height = 8,width=8)
-op<-par(mar=c(6,6, 0.2, 2.1),mgp=c(3,1,0))
-plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
-     cex.lab=4,cex.axis=3,
-     xlim=c(0,1),ylim=c(0,1),asp=1)
-rect(0,0,1,1)
-lines(c(0,1),c(0,1),type='l',col="grey")
-par(op)
-dev.off()
-
-# code to plot raw data and copula plot for aphid ff @location pair (2,5)
-# bestfit cop : J
-d1<-data_aphid_ff$`Leaf-curling plum aphid`[[2]]
-d2<-data_aphid_ff$`Leaf-curling plum aphid`[[5]]
-pdf("./Results/Aphid_ff_raw_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(10,10, 0.2, 2.1),mgp=c(3,1,0))
-plot(d1$Dat,d2$Dat,type="p",xlab="",ylab="Leaf-plum curling's \nfirst-flight (loc. 5)",cex.lab=3.5,cex.axis=2.5)
-mtext(paste("Leaf-plum curling's \nfirst-flight (loc. 2)"),line=-38,cex=3.5)
-par(op)
-dev.off()
-
-m<-vivj_matrix(d_allsp = data_aphid_ff,sp=11,i=2,j=5)
-pdf("./Results/Aphid_ff_cop_loc_2_5.pdf",height = 8,width=8)
-op<-par(mar=c(6,6, 0.2, 2.1),mgp=c(3,1,0))
-plot(m[,1],m[,2],type="p",xlab="u",ylab="v",
-     cex.lab=4,cex.axis=3,
-     xlim=c(0,1),ylim=c(0,1),asp=1)
-rect(0,0,1,1)
-lines(c(0,1),c(0,1),type='l',col="grey")
-par(op)
-dev.off()
-```
-
-
-```{r cause4copula_pGOF_500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-#source("Cause4copula.R")
-#-----------------
-set.seed(seed)
-#---------------------------------------
-#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_500.pdf", width=8, height=3)
-#op<-par(mfrow=c(1,2))
-
-#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=500,BS=1000)
-
-#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=500,BS=1000)
-
-#par(op)
-
-#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
-#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-#       bty = "n") 
-#par(op)
-#dev.off()
-```
-
-```{r cause4copula_pGOF_2500, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-#source("Cause4copula.R")
-#-----------------
-#set.seed(seed)
-#---------------------------------------
-
-#pdf("./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf", width=8, height=3)
-#op<-par(mfrow=c(1,2))
-
-#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "spearman",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=13,method="spearman",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "spearman",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=14,method="spearman",num_keep_last=2500,BS=1000)
-
-#Plotter_Cause4copula_GOF(N=5000,fcode=3,method = "kendall",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=13,method="kendall",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=4,method = "kendall",num_keep_last=2500,BS=1000)
-#Plotter_Cause4copula_GOF(N=5000,fcode=14,method="kendall",num_keep_last=2500,BS=1000)
-
-#op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
-#plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-#legend("top", c("noise copula,", "population copula,",  "Gof test : p-value(CvM),", "Gof test : p-value(KS)"), col = c("red","blue", #"magenta", "green2"),
-#       cex = 0.9, pch = c(2, 6, 16, 16), xpd = TRUE, horiz = TRUE, inset = c(0,0),
-#       bty = "n") 
-#par(op)
-#dev.off()
-```
-
+<!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2383,7 +2223,6 @@ ar1_C_kend_negbeta0.5<-Sim_Cause4copula_stat(N=5000,numsim=50,fcode=fcode,nsd=ns
 saveRDS(ar1_C_kend_negbeta0.5,paste(resloc,"ar1_C_kend_negbeta0.5.RDS",sep=""))
 ```
 
-
 ```{r plot_cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,ar1_C_spear_beta0.5,ar1_C_spear_negbeta0.5,ar1_C_kend_beta0.5,ar1_C_kend_negbeta0.5,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
@@ -2417,7 +2256,40 @@ readres<-readRDS(paste(resloc,"ar1_C_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Clayton-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model,
+C copula.]{Comparison of copula structure of noise inputs and model 
+outputs, AR(1) model, C copula. Red and blue points give 
+means over 50 replicate simulations of the statistics listed on the left axes, 
+red points are values for noise inputs and blue points are for
+model outputs. Error bars are standard errors. 
+$P$-values (purple points, right axis) are for a 
+paired $t$-test of the null hypothesis that the distributions of 50 noise and 
+output values have the same mean; $p$-values less than $0.05$ indicate that 
+copula structure as measured by the listed statistic differs significant
+between noise inputs and model outputs. See methods section for Q2 
+for additional details.\label{fig_Cause4copula_C_kend_ar1}}
+\end{center}
+\end{figure}
 
+<!--Following two chunks examine Moran-like mechanism with survival clayton copula noises in AR(1) model 
+and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_survivalclayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2506,6 +2378,37 @@ readres<-readRDS(paste(resloc,"ar1_SC_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Survival Clayton-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model, 
+SC copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, SC copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+details.\label{fig_Cause4copula_SC_kend_ar1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with gumbel copula noises in AR(1) model 
+and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_gumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2595,6 +2498,37 @@ readres<-readRDS(paste(resloc,"ar1_G_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Gumbel-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model, 
+G copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, G copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+details.\label{fig_Cause4copula_G_kend_ar1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with survival gumbel copula noises in AR(1) model 
+and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_survivalgumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2684,6 +2618,37 @@ readres<-readRDS(paste(resloc,"ar1_SG_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Survival Gumbel-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model, 
+SG copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, SG copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+details.\label{fig_Cause4copula_SG_kend_ar1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with joe copula noises in AR(1) model 
+and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_joe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2761,6 +2726,37 @@ readres<-readRDS(paste(resloc,"ar1_J_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Joe-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model, 
+J copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, J copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+details.\label{fig_Cause4copula_J_kend_ar1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with survival joe copula noises in AR(1) model
+and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_survivaljoe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2838,6 +2834,37 @@ readres<-readRDS(paste(resloc,"ar1_SJ_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
+<!--Plots for AR(1) with Survival Joe-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, AR(1) model, 
+SJ copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, SJ copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+details.\label{fig_Cause4copula_SJ_kend_ar1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with clayton copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -2927,6 +2954,66 @@ for(insd in nsdlist){
 }
 ```
 
+<!--Plots for stochastic ricker with weak noise (Clayton copula) : nsd=0.1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, weak noise, C copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, C copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Clayton copula): nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, C copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, C copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with survival clayton copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_survivalclayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -3014,6 +3101,66 @@ for(insd in nsdlist){
 }
 ```
 
+<!--Plots for stochastic ricker with weak noise (Survival Clayton copula) : nsd=0.1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, weak noise, SC copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, SC copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Survival Clayton copula): nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, SC copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, SC copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with gumbel copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_gumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -3100,6 +3247,66 @@ for(insd in nsdlist){
 }
 ```
 
+<!--Plots for stochastic ricker with weak noise (Gumbel copula) : nsd=0.1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, weak noise, G copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, G copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Gumbel copula): nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, G copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, G copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with survival gumbel copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_survivalgumbel, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -3186,6 +3393,66 @@ for(insd in nsdlist){
 }
 ```
 
+<!--Plots for stochastic ricker with weak noise (Survival Gumbel copula)  : nsd=0.1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, weak noise, SG copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, SG copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Survival Gumbel copula): nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, SG copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, SG copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with joe copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_joe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -3265,6 +3532,66 @@ for(insd in nsdlist){
 }
 ```
 
+<!--Plots for stochastic ricker with weak noise (Joe copula) : nsd=0.1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, weak noise, J copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, J copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Joe copula) : nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, J copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, J copula. Same format as Figs 
+\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
+see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
+\end{center}
+\end{figure}
+
+<!--Following two chunks examine Moran-like mechanism with survival joe copula noises in Ricker model and 
+then generate plots with the simulated results-->
 ```{r cause4copula_stat_ricker_survivaljoe, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
 #-----------------
@@ -3343,343 +3670,8 @@ for(insd in nsdlist){
  }
 }
 ```
-<!--
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/Cause4copula_results/compare_params_pGOF_num_keep_last_2500.pdf}
-\caption[Comparing noise-copula parameters and estimated population copula parameters with $2500$ sampling points]{Results of comparison between the parameters of environmental noise generated from a specific family of copula and estimated sample parameter (with some standard error) of the affected populations (Initially 5000 points are generated but we kept last \textbf{2500} points for both noise and population data for comparison). p-values $> 0.05$ (above horizontal dashed line) indicate good fit of population copula with same noise cpoula family. \label{fig_Cause4copula_params_GOF_2500}}
-\end{center}
-\end{figure}
--->
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model,
-C copula.]{Comparison of copula structure of noise inputs and model 
-outputs, AR(1) model, C copula. Red and blue points give 
-means over 50 replicate simulations of the statistics listed on the left axes, 
-red points are values for noise inputs and blue points are for
-model outputs. Error bars are standard errors. 
-$P$-values (purple points, right axis) are for a 
-paired $t$-test of the null hypothesis that the distributions of 50 noise and 
-output values have the same mean; $p$-values less than $0.05$ indicate that 
-copula structure as measured by the listed statistic differs significant
-between noise inputs and model outputs. See methods section for Q2 
-for additional details.\label{fig_Cause4copula_C_kend_ar1}}
-\end{center}
-\end{figure}
-<!--***DAN: Shya, can you please change the top legend of this and the similar-format
-figures so instead of saying "noise copula" for the red points and "population copula" 
-for the blue points it says "input noise copula" for the red points and "model output 
-copula" for the blue ones? This is because one of our models is much more general than
-just a population model, so I have changed the langauge in the text to reflect that.
-Please be aware that when you make this change it will mean the next knit will take 
-several hours, unless you go to the effort of reorganizing your code to put the sims
-and the plots in separate chunks. So maybe make this change right before you go home,
-so you can knit over night. Also please let me know, so I can knit overnight, too.
-
-At the same time that you do that above, please see if you can fix the alignment
-between the bottom three panels of Fig S32 (and subsequent analogous figures) so they
-line up with the panels above that.
-***Shya: Done.-->
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model, 
-SC copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, SC copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
-details.\label{fig_Cause4copula_SC_kend_ar1}}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model, 
-G copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, G copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
-details.\label{fig_Cause4copula_G_kend_ar1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model, 
-SG copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, SG copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
-details.\label{fig_Cause4copula_SG_kend_ar1}}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model, 
-J copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, J copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
-details.\label{fig_Cause4copula_J_kend_ar1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/Survival Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model, 
-SJ copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, SJ copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
-details.\label{fig_Cause4copula_SJ_kend_ar1}}
-\end{center}
-\end{figure}
-
-<!--adding results for stochastic ricker with weak noise : nsd=0.1-->
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, C copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, C copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, SC copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, SC copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, G copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, G copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, SG copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, SG copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, J copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, J copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
+<!--Plots for stochastic ricker with weak noise (Survival Joe): nsd=0.1-->
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
@@ -3708,147 +3700,7 @@ see captions of those figures for details.\label{fig_Cause4copula_SJ_kend_sRicke
 \end{center}
 \end{figure}
 
-<!--adding results for stochastic ricker with strong noise : nsd=1-->
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, C copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, C copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, SC copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, SC copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, G copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, G copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/Survival Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, SG copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, SG copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, J copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, J copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
-\end{center}
-\end{figure}
-
+<!--Plots for stochastic ricker with strong noise (Survival Joe): nsd=1-->
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
@@ -3878,102 +3730,7 @@ see captions of those figures for details.\label{fig_Cause4copula_SJ_kend_sRicke
 \end{figure}
 
 
-```{r moran_effect_on_aphid_ff, echo=F, results="hide", cache=T, cache.extra=list(seed,temp_aphid,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
-set.seed(seed)
-source("FittingCopula_selective_loc.R")  # top most hierarchy source file
-
-
-#cat(paste("start-time: ",Sys.time(),"\n"))
-RES_temp_aphid<-RES_single_sp(d_allsp=temp_aphid,sp=1,families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
-                              good_loc_given=T,good_loc=c(2:11))
-#cat(paste("stop-time: ",Sys.time(),"\n")) 
-resloc<-"./Results/fitting_results/"
-saveRDS(RES_temp_aphid,paste(resloc,file="AphidCopulaFit_selecloc_winter_neg_temp.RDS",sep=""))
-
-LTmUT_temp<-(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw)
-
-sum(LTmUT_temp>0,na.rm = T)
-sum(LTmUT_temp<0,na.rm = T) #66 out of 90 : suggests UT in leaf-plum curling aphids firstflight data (90 out of 90 UT)
-```
-
-<!--
-```{r tab_temp_aphid_bestcop, echo=F, results="markup"}
-knitr::kable(RES_temp_aphid$info_ord_copname[,,1], #longtable = T,
-             format='latex',
-             #caption.short = "Best-fitting copulas for each location pair from among those considered, according to AIC, for first flight data for the leaf-curling plum aphid.",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for **negative average winter temperature data (1958-2013)**. Copulas' abbreviations were given in \\nameref{MT-Methods}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_temp_aphid_bestcop}",
-             booktabs=TRUE
-             )
-```
-
-```{r tab_temp_aphid_AICw, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$info_ord_AICw[,,1], 
-             format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_AICw}",
-             booktabs=TRUE
-             )
-```
-
-```{r tab_temp_aphid_AICw_normal, echo=F, results='markup'}
-source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_temp_aphid),
-             format='latex',
-             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for **negative average winter temperature data**, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_temp_aphid_AICw_normal}",
-             booktabs=TRUE
-             )
-```
-
-<!--
-```{r tab_temp_aphid_p_CvM, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$gfc_p_CvM,
-             format='latex',
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_CvM}",
-             booktabs=TRUE
-             )
-```
--->
-
-<!--
-```{r tab_temp_aphid_p_KS, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$gfc_p_KS,
-             format='latex',
-             caption = "$P$-value results of a Kolmogorov-Smirnov-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for **negative average winter temperature data**. Tests were based on bootstrapping as described in Methods.\\label{tab_temp_aphid_p_KS}",
-             booktabs=TRUE
-             )
-```
--->
-
-<!--
-```{r tab_temp_aphid_LTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$LTdep_AICw,
-             format='latex',
-             caption = "Model-averaged lower tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTdep_AICw}",
-             booktabs=TRUE
-             )
-```
--->
-
-<!--
-```{r tab_temp_aphid_UTdep_AICw, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$UTdep_AICw,
-             format='latex',
-             caption = "Model-averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_UTdep_AICw}",
-             booktabs=TRUE
-             )
-```
--->
-
-<!--
-```{r tab_temp_aphid_LTmUT, echo=F, results='markup'}
-knitr::kable(RES_temp_aphid$LTdep_AICw - RES_temp_aphid$UTdep_AICw,
-             digits = 5,
-             format='latex',
-             caption = "Model averaged lower tail dependence minus model averaged upper tail dependence statistic for each location pair for **negative average winter temperature data**.\\label{tab_temp_aphid_LTmUT}",
-             booktabs=TRUE
-             )
-```
--->
-
+<!--Following two chunks examine asymetric dependence mechanism with model selection and non-parametric statistics approach-->
 ```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
 set.seed(seed)
 #-----------------------------------------------------------------------------------
@@ -4140,6 +3897,29 @@ par(op)
 dev.off()
 ```
 
+<!--adding plots from asymmetric dependence analysis results-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
+\end{center}
+\end{figure}
+
+<!--Displaying summary table with model selection results from asymmetric dependence analysis-->
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
 rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
@@ -4164,21 +3944,7 @@ test of the best-fitting copula family using the test based on the Kolmogorov-Sm
 statistic.\\label{tab_summary_stat_asym_sens}")
 ```
 
-```{r read_tab_stat_npa_asym,echo=F,results="asis"}
-#knitr::opts_knit$set(kable.force.latex = TRUE)
-#tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.9.RDS")
-
-#for(i in c(1:8)){
-#  temp<-make_table_stat_fn(data=tab_asym[[i]])
-#  temp2<-knitr::kable(temp, booktabs = T, 
-#             format = "latex",
-      #caption.short = "Results for tests of whether asymmetry of tail dependence was significant compared to a normal-copula null hypothesis.",
-#      caption =paste(cnm[i]," : A table entry $<N$(or $>N$) indicates the value of the given statistic on the data was less (or more) than its value on $N$ of the surrogates, so entries of the form $<X$ (or $>X$) for $X$ equal to $975$ or above indicate that upper-tail (or lower-tail) dependence was significantly stronger than lower-tail dependence."))
-#  print(temp2)
-#  cat("\\newpage")
-#}
-```
-
+<!--Displaying summary table with non-parametric approach results of asymmetric dependence analysis-->
 ```{r tab_stat_npa_asym,echo=F,results="markup"}
 library(kableExtra)
 
@@ -4207,40 +3973,11 @@ surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $9
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
 lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice'
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
-0.9 to 1.\\label{tab_stat_npa_asym}")#%>%
- #            kable_styling()%>%
- #            group_rows(index=setNames(c(3,3,3,3,3,3,3,3), gtext))
- #            group_rows("b=0.1, g$_{1}$", 2,4, escape=F) %>%
- #            group_rows("b=0.1, g$_{2}$", 5,7, escape=F) %>%
- #            group_rows("b=-0.1, g$_{1}$", 8,10, escape=F) %>%
- #            group_rows("b=-0.1, g$_{2}$", 11,13, escape=F) %>%
- #            group_rows("b=0.9, g$_{1}$", 14,16, escape=F) %>%
- #            group_rows("b=0.9, g$_{2}$", 17,19, escape=F) %>%
- #            group_rows("b=-0.9, g$_{1}$", 20,22, escape=F) %>%
- #            group_rows("b=-0.9, g$_{2}$", 23,25, escape=F)
+0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
-\end{center}
-\end{figure}
-
+<!--Following 3 chunks examine the consequence of non-Normal copula atructure on skewness using aphid count, firstflight for 20 sp.
+and plankton count data for 22 sp. : these results are currently not showin in either main text or suppmat-->
 ```{r skewness_aphidcount_allsp_plot, echo=F, results="hide", cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # For sp =1, sp=4 and sp=6 : kendall preserving surrogates gives warning : Error in ncsurrog: ncov is not positive semidefinite
@@ -4423,6 +4160,7 @@ saveRDS(skw_plankton_spearman,"./Results/skewness_results/skewness_plankton_nort
 #saveRDS(skw_plankton_kendall,"./Results/skewness_results/skewness_plankton_north_sea/skw_plankton_kendall.RDS")
 ```
 
+<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using green spruce aphid abundance data-->
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4458,6 +4196,8 @@ par(op)
 dev.off()
 ```
 
+<!--Following chunk examine the consequence of non-Normal copula atructure on skewness 
+using leaf plum curling aphids' first flight data-->
 ```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4493,6 +4233,8 @@ par(op)
 dev.off()
 ```
 
+<!--Following chunk examine the consequence of non-Normal copula atructure on skewness 
+using ceratium furca's abundance data-->
 ```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4527,6 +4269,7 @@ par(op)
 dev.off()
 ```
 
+<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using methane flux data-->
 ```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4561,7 +4304,10 @@ par(op)
 dev.off()
 ```
 
-<!--make surrogate datasets for TL analysis to follow-->
+
+<!--Following 4 chunks are examining consequence of non-Normal copula structure on Taylors law using made up data-->
+
+<!--first, make surrogate datasets for TL analysis to follow-->
 ```{r taylors_law_make_surrogs, echo=F, cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
 source("copsurrognd.R")
 set.seed(seed)
@@ -4687,7 +4433,7 @@ scsurrog<-cop_to_marg_trans((1-marg_to_cop_trans(csurrog)))
 spea.surrog<-list(cla=csurrog,nor=m,fra=fsurrog,scl=scsurrog)
 ```
 
-<!--do a TL analysis on the data just created-->
+<!--second, do a TL analysis on the data just created-->
 ```{r tl_analysis, echo=F, cache=T, cache.extra=list(kend.surrog,spea.surrog,mtime("mncurvat.R"),mtime("TaylorsLawTools.R"),seed,mtime("copsurrognd.R"))}
 source("copsurrognd.R")
 source("TaylorsLawTools.R")
@@ -4724,7 +4470,7 @@ names(spea.stats.res)<-names(spea.surrog)
 names(spea.points.res)<-names(spea.surrog)
 ```
 
-<!--Now make some plots, these one for kendall surrogates-->
+<!--third, now make some plots, these one for kendall surrogates-->
 ```{r taylor_plots_kendall, echo=F, results="hide"}
 xlimits<-range(kend.points.res[[1]][,1,],kend.points.res[[2]][,1,],kend.points.res[[3]][,1,],kend.points.res[[4]][,1,])
 ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.res[[3]][,2,],kend.points.res[[4]][,2,])
@@ -4821,7 +4567,7 @@ par(op)
 dev.off()
 ```
 
-<!--Now make some plots, these one for spearman surrogates-->
+<!--fourth, now make some plots, these one for spearman surrogates-->
 ```{r taylor_plots_spearman, echo=F, results="hide"}
 xlimits<-range(spea.points.res[[1]][,1,],spea.points.res[[2]][,1,],spea.points.res[[3]][,1,],spea.points.res[[4]][,1,])
 ylimits<-range(spea.points.res[[1]][,2,],spea.points.res[[2]][,2,],spea.points.res[[3]][,2,],spea.points.res[[4]][,2,])
@@ -4909,6 +4655,7 @@ par(op)
 dev.off()
 ```
 
+<!--adding plots showing influences of non-Normal copula on spatial Taylors law-->
 \begin{figure}[!h]
 \textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
 \vspace{-0.5 cm} 
@@ -4938,6 +4685,8 @@ simulation and plotting details.\label{fig_spTL}}
 \end{center}
 \end{figure}
 
+<!--Following 2 chunks examine the consequence of non-Normal copula atructure on Taylors Law 
+using real data of aphid count with all 20 sp.-->
 ```{r spatialTL_on_realdata_aphid_count, results="hide", echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("TaylorsLawTools.R"),mtime("mncurvat.R"),mtime("ncsurrog.R"))}
 
 set.seed(seed)
@@ -5129,6 +4878,8 @@ par(op)
 dev.off()
 ```
 
+
+<!--Following 2 chunks examine the effect of non-Normal asymmetric copula on extinction risk-->
 ```{r sim_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
 source("mydispersal.R")
@@ -5158,7 +4909,6 @@ sg25<-varying_d(numsims=numsims,numsteps =numsteps,numlocs=25,p0=p0,params=param
                  ext_thrs=ext_thrs,scl=scl,model=model,disp_everywhere=T,ploton=F)
 saveRDS(sg25,"./Results/ext_risk_copula/ext_risk_global_lcohen_numlocs25.RDS")
 ```
-
 
 ```{r fig_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,sl5,sl25,sg5,sg25)}
 sl5<-readRDS("./Results/ext_risk_copula/ext_risk_local_lcohen_numlocs5.RDS")
@@ -5211,6 +4961,7 @@ par(op)
 dev.off()
 ```
 
+<!--adding plots showing effects of asymmetric copula on extinction risk-->
 \begin{figure}[!h]
 \textbf{ \hspace{7.3 cm} (A) \hspace{4 cm} (B)} \\
 \vspace{-0.8 cm}

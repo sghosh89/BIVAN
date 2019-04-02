@@ -24,17 +24,16 @@ calcstats<-function(v,f,nm,numbin){
   
   return(res)
 }
-#-----------------------------------------------------
+#---------------------------------------------------------------------------------------------
+# Function to make correlation preserving (Kendall or Spreanman) bivariate Normal surrogates
 makeSurrog<-function(v,numsurrog=1000){
   cop<-normalCopula(.5,2)
-  #numsurrog<-1000
   surv_K<-copsurrog2d(v,cop,"kendall",numsurrog) #Do the kendall surrogates
   surv_S<-copsurrog2d(v,cop,"spearman",numsurrog) #Do the spearman surrogates
   return(list(surv_K=surv_K,
               surv_S=surv_S))
 }
-#makeSurrog(v=v_BMR)
-#------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 #utility function for calculating fractions of surrogates 
 #with a stat smaller than that of data, i.e., fraction of 
 #surrogates for which the stat value on the data is bigger
@@ -48,12 +47,13 @@ fracwork<-function(dvals,surrvals){
 }
 #corstats_frac_K<-fracwork(corstats_d,corstats_K)
 
-#--------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
 #now work with the P stats
 Pbds_wrap<-function(vi,vj,lb,ub){
   return(Pbds(vi,vj,lb,ub)$abs_res)
 }
-#----------------------------------------------------
+#------------------------------------------------------------
+# utility function
 fracplot<-function(x,fracs,ylims,numsurrog){
   for (counter in 1:length(fracs)){
     ptxt<-''
@@ -67,33 +67,61 @@ fracplot<-function(x,fracs,ylims,numsurrog){
     text(x[counter],yht,ptxt,adj=c(0.5,.5),cex=0.5,srt=90)
   }
 }
-#-----------------------------
-#This function will do the same thing as of fracplot
-myfracplot<-function(x,stats_d,surrog_statsq,stats_frac,ylims,numsurrog){
-  for (counter in 1:length(x)){
-    ptxt<-''
-    if(stats_d[counter]>surrog_statsq[3,][counter]){
-      ptxt<-paste(">",stats_frac[counter],sep='')
-    }
-    if(stats_d[counter]<surrog_statsq[2,][counter]){
-      ptxt<-paste("<",numsurrog-stats_frac[counter],sep='')
-    }
-    #ptxt2<-stats_frac[counter]
+#---------------------------------------------------------------------------
+#This function can do the same thing as of fracplot
+#myfracplot<-function(x,stats_d,surrog_statsq,stats_frac,ylims,numsurrog){
+#  for (counter in 1:length(x)){
+#    ptxt<-''
+#    if(stats_d[counter]>surrog_statsq[3,][counter]){
+#     ptxt<-paste(">",stats_frac[counter],sep='')
+#    }
+#    if(stats_d[counter]<surrog_statsq[2,][counter]){
+#     ptxt<-paste("<",numsurrog-stats_frac[counter],sep='')
+#   }
     
-    yht<-ylims[2]-.1*diff(ylims)
-    text(x[counter],yht,ptxt,adj=c(0.5,.5),cex=0.5,srt=90)
-    #text(x[counter],yht,ptxt2,adj=c(0.5,.5),cex=0.5,srt=90)
-  }
-}
+#    yht<-ylims[2]-.1*diff(ylims)
+#    text(x[counter],yht,ptxt,adj=c(0.5,.5),cex=0.5,srt=90)
+#  }
+#}
 #----------------------------------------------------------------
+# utility function for plotting purpose
 vlineplot<-function(x,ylims){
   for (counter in 1:length(x)){
     lines(rep(x[counter]-(x[2]-x[1])/2,2),ylims,type='l',lty='dotted')
   }
   lines(rep(x[length(x)]+(x[2]-x[1])/2,2),ylims,type='l',lty='dotted')
 }
-#---------------------------------------------------------------------
-# This is the plotter function as well as it returns the stats as a list of 6
+#-------------------------------------------------------------------------------------------
+# This is the plotter function as well as it returns the stats as a list 
+# Args :
+#      v : a bivariate copoula matrix
+#      resloc , nametag : for saving plot as pdf and output as RDS file
+#      numbin : number of bins used in an Isosceles lower and upper triangular parts of unit box
+#      numsurrog : number of bivariate Normal surrogates used (default value 1000)
+
+# Output :
+#     corlmcoru_frac_K = (Corl - Coru) stats for a given bivariate copula (v) lower than the same stat for 
+#                                 how many number bivariate Normal surrogates (Kendall correlation preserving)
+#     corlmcoru_frac_S = same as of corlmcoru_frac_K but for Spearman correlation preserving bivariate Normal surrogates
+#     PlmPu_frac_K = (Pl - Pu) stats for a given bivariate copula (v) lower than the same stat for 
+#                                 how many number bivariate Normal surrogates (Kendall correlation preserving)
+#     PlmPu_frac_S = same as of PlmPu_frac_K but for Spearman correlation preserving bivariate Normal surrogates
+#     D2umD2l_frac_K = (D2u - D2l) stats for a given bivariate copula (v) lower than the same stat for 
+#                                 how many number bivariate Normal surrogates (Kendall correlation preserving)
+#     D2umD2l_frac_S = same as of PlmPu_frac_K but for Spearman correlation preserving bivariate Normal surrogates
+#     Rank_Pl_K = Rank of Pl stat of given bivariate copula (v) in a range of (1 to numsurrog+1) when 
+#                                 bivariate Normal surrogates are made to preserve Kendall correlation of given copula (v)
+#     Rank_Pl_S = similar as that of Rank_Pl_K but with bivariate Normal surrogates preserving Spearman correlation of given copula (v)
+#     Rank_Pu_K = Rank of Pu stat of given bivariate copula (v) in a range of (1 to numsurrog+1) when 
+#                                 bivariate Normal surrogates are made to preserve Kendall correlation of given copula (v)
+#     Rank_Pu_S = similar as that of Rank_Pu_K but with bivariate Normal surrogates preserving Spearman correlation of given copula (v)
+#     Rank_PlmPu_K = Rank of (Pl-Pu) stat of given bivariate copula (v) in a range of (1 to numsurrog+1) when 
+#                                 bivariate Normal surrogates are made to preserve Kendall correlation of given copula (v)
+#     Rank_PlmPu_S = similar as that of Rank_PlmPu_K but with bivariate Normal surrogates preserving Spearman correlation of given copula (v)
+#     numsurrog_success_S = number of Kendall correlation preserving Normal surrogates having finite non-parametric stats at the extreme tails
+#     numsurrog_success_K = similar as that of numsurrog_success_S but with bivariate Normal surrogates 
+#                                         preserving Spearman correlation of given copula (v) 
+
 bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   
   temp<-makeSurrog(v=v)
@@ -178,11 +206,14 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   D2umD2l_frac_S<-sum(D2umD2l_S<D2umD2l_d,na.rm=T)
   D2stats_Sq<-apply(FUN=quantile,X=D2stats_S,MARGIN=1,prob=c(.005,0.025,.975,.995),na.rm=T)
   
-  # -----------------Plot---------------------------------------------------------------------
+  # -----------------Now generate 3 by 2 multipanel Plot---------------------------------------------------------------------
+  #
+  #plot kendall results on the left column, spearman on right,
+  #cor in top panels, then P, then D2 on bottom panels
+  
   bingap<-1/numbin
   x<-seq(from=0,to=1,by=bingap)
   x<-head(x,-1)+diff(x)/2
-  #x<-seq(from=0.05,to=0.95,by=0.1)
   xlimits<-c(0,1)
   
   #plotting layout, units inches
@@ -195,10 +226,6 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   totwd<-ywd+2*panwd+2*gap
   totht<-xht+3*panht+3*gap+titleht
   pdf(paste(resloc,nametag,"_bivfunctionplot.pdf",sep=""),width=totwd,height=totht)
-  #pdf(file="./Results/stat_results/stat_soilCN/CNdata_NonparamTailDep.pdf",width=totwd,height=totht)
-  
-  #plot kendall results on the left panels, spearman on right,
-  #cor in top panels, then P, then D2 on bottom panels
   
   #kendall, cor
   par(fig=c(ywd/totwd,
@@ -206,7 +233,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+2*panht+2*gap)/totht,
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-  ylimits_cor<-range(corstats_d,corstats_S,corstats_K,na.rm = T)#??? should it be range(corstats_d,corstats_S,corstats_K)???
+  ylimits_cor<-range(corstats_d,corstats_S,corstats_K,na.rm = T)
   ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
   plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',cex=1.5)
@@ -235,13 +262,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   mtext(side=3,line=0,text="Spearman-preserving surrogates")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  #lines(x,corstats_S[1,],type='l',lty='dotted')
   points(x,corstats_Sq[2,],pch=4,col="blue")
   points(x,corstats_Sq[3,],pch=4,col="green")
-  #lines(x,corstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='B',cex=1.5,adj=c(.5,0))
-  #myfracplot(x=x,stats_d = corstats_d,surrog_statsq = corstats_Sq,stats_frac = corstats_frac_S,
-  #           ylims = ylimits_cor,numsurrog = numsurrog_success_S)
   fracplot(x=x,corstats_frac_S,ylimits_cor,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_cor)
   
@@ -256,13 +279,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   plot(x,Pstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=1.5)
   axis(side=1,labels=F)
   mtext(side=2,line=1,text="P")
-  #lines(x,Pstats_K[1,],type='l',lty='dotted')
   points(x,Pstats_Kq[2,],pch=4,col="blue")
   points(x,Pstats_Kq[3,],pch=4,col="green")
-  #lines(x,Pstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='C',cex=1.5,adj=c(.5,0))
-  #myfracplot(x=x,stats_d = Pstats_d,surrog_statsq = Pstats_Kq,stats_frac = Pstats_frac_K,
-  #           ylims = ylimits_P,numsurrog = numsurrog_success_K)
   fracplot(x=x,Pstats_frac_K,ylimits_P,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_P)
   
@@ -276,13 +295,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
        xaxt='n',yaxt='n',cex=1.5)
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  #lines(x,Pstats_S[1,],type='l',lty='dotted')
   points(x,Pstats_Sq[2,],pch=4,col="blue")
   points(x,Pstats_Sq[3,],pch=4,col="green")
-  #lines(x,Pstats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_P[1],labels='D',cex=1.5,adj=c(.5,0))
-  #myfracplot(x=x,stats_d = Pstats_d,surrog_statsq = Pstats_Sq,stats_frac = Pstats_frac_S,
-  #           ylims = ylimits_P,numsurrog = numsurrog_success_S)
   fracplot(x=x,Pstats_frac_S,ylimits_P,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_P)
   
@@ -298,13 +313,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   mtext(side=1,line=1,text="Diagonal slice")
   mtext(side=2,line=1,text=expression(D^{2}))
   axis(side=1,labels=F)
-  #lines(x,D2stats_K[1,],type='l',lty='dotted')
   points(x,D2stats_Kq[2,],pch=4,col="blue")
   points(x,D2stats_Kq[3,],pch=4,col="green")
-  #lines(x,D2stats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='E',cex=1.5,adj=c(.5,0))
-  #myfracplot(x=x,stats_d = D2stats_d,surrog_statsq = D2stats_Kq,stats_frac = D2stats_frac_K,
-  #           ylims = ylimits_D2,numsurrog = numsurrog_success_K)
   fracplot(x=x,D2stats_frac_K,ylimits_D2,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_D2)
   
@@ -319,13 +330,9 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   mtext(side=1,line=1,text="Diagonal slice")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  #lines(x,D2stats_S[1,],type='l',lty='dotted')
   points(x,D2stats_Sq[2,],pch=4,col="blue")
   points(x,D2stats_Sq[3,],pch=4,col="green")
-  #lines(x,D2stats_S[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_D2[1],labels='F',cex=1.5,adj=c(.5,0))
-  #myfracplot(x=x,stats_d = D2stats_d,surrog_statsq = D2stats_Sq,stats_frac = D2stats_frac_S,
-  #           ylims = ylimits_D2,numsurrog = numsurrog_success_S)
   fracplot(x=x,D2stats_frac_S,ylimits_D2,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_D2)
   

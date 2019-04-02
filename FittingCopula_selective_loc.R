@@ -1,15 +1,58 @@
-# THIS CODE TESTS FOR A GIVEN COPULA WHICH ARE THE POSSIBLE BEST FIT MODELS ?
-# It fits MULTIVARIATE COPULAS (PAIRWISE) based on MODEL SELECTION APPROACH
-# This code is written to test SPATIAL SYNCHRONY between different lacation pair for a specific species
-#----------------
+# This code fits MULTIVARIATE COPULAS (PAIRWISE) based on MODEL SELECTION APPROACH
+# This code can test SPATIAL SYNCHRONY between different lacation pair for a specific species
+#------------------------------------------------------------------------------------------------------
 library(copula)
 library(VineCopula)
 #-------------------------------------
 source("vivj_matrix.R")
 source("good_loclist.R")
 source(file="OurBiCopSelect.R")
-#---------------------------------------------------------------------------------------
-# This function generates result for single species
+#-----------------------------------------------------------------------------------------------------------------------
+# This function generates model selection results with timeseries taken from multiple locations for a single species
+# Args :
+#       sp : species id
+#       d_allsp : data in specified format as indicated in "vivj_matrix.R"      
+#                   a list (length = total no. of sp.) of 
+#                         a list (length = total no. of locations)
+#                             of a dataframe (with "Year" and "Dat" column)
+#       families : a vector indicating a set of copula families use for model selection approach
+#       level : Significance level to be used for the independence test (generally 0.05)
+#       data_pt_thrs : a threshold on data points available
+#       good_loc_given : logical , if F it will choose selected locations using file "good_loclist.R" 
+#       good_loc : a vector of ids for selected locations which you can supply externally
+
+# Output : a long list with following elements :
+#           num_indep_loc_pair = an integer : number of independent location pairs 
+#                               (e.g. if (loc1,loc2) and (loc2,loc1) bivar. copulas are indep. it will return value 1),
+#           num_neg_cor_loc_pair =an integer : number of negatively correlated location pairs 
+#                                 (e.g. if (loc3,loc4) and (loc4,loc3) bivar. copulas are -vely correlated it will return value 1),
+#           gfc_numBS = matrix with elements showing number of bootstraps used for goodness of fit test for each location pair
+#           gfc_numBS_success = matrix with elements showing number of bootstraps succeeded for goodness of fit test for each location pair
+#           gfc_p_CvM = matrix with elements showing p value from goodness of fit test (using Cramer-von Mises statistic) for each location pair
+#           gfc_p_KS = matrix with elements showing p value from goodness of fit test (using Kolmogorov-Smirnov statistic) for each location pair
+#           gfc_p_CvM_stat = matrix with elements showing the observed Cramer-von Mises test statistic for each location pair
+#           gfc_p_KS_stat = matrix with elements showing the observed Kolmogorov-Smirnov test statistic for each location pair
+#           gfc_normal_numBS = matrix with elements showing number of bootstraps used for goodness of fit test for each location pair
+#                              where Normal copula was best fit (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           gfc_normal_numBS_success = matrix with elements showing number of bootstraps succeeded for goodness of fit test for each location pair
+#                             where Normal copula was best fit (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           gfc_normal_p_CvM = Similar as of gfc_p_CvM but for bestfit Normal copula (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           gfc_normal_p_KS = Similar as of gfc_p_KS but for bestfit Normal copula (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           gfc_normal_p_CvM_stat = Similar as of gfc_p_CvM_stat but for bestfit Normal copula 
+#                                   (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           gfc_normal_p_KS_stat = Similar as of gfc_p_KS_stat but for bestfit Normal copula 
+#                                     (meaningful only when gofnormal=T in OurBiCopSelect function)
+#           info_ord_copcode = an array with dimension : length(good_loc) by length(good_loc) by length(families)
+#                              where for each location pair copula family codes are arranged in order from best fit to worst fit
+#           info_ord_copname = similar to info_ord_copcode but for copula family names in short
+#           info_ord_AIC = similar to info_ord_copcode but for copula family's AIC value
+#           info_ord_LTdep = similar to info_ord_copcode but for copula family's  lower tail dep. value 
+#           info_ord_UTdep = similar to info_ord_copcode but for copula family's  upper tail dep. value 
+#           info_ord_AICw = similar to info_ord_copcode but for copula family's  AIC-weight
+#           LTdep_AICw = a matrix with elements for model averaged (AIC-weight based) lower tail dep. value for each location pair
+#           UTdep_AICw = similar as that of LTdep_AICw but for upper tail dep.
+#           copdata_cor_Kend = a matrix with elements for Kendall correlation coefficient for each significantly correlated location pair
+
 RES_single_sp<-function(sp,d_allsp,families,level,data_pt_thrs,good_loc_given,good_loc){
   
   len<-length(families)

@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# THIS CODE CONTAINS STATISTICS FOR LOOKING AT TAIL DEPENDENCE
+# THIS CODE CONTAINS STATISTICS FOR LOOKING AT TAIL DEPENDENCE (using non-parametric statistics)
 #-----------------------------------------------------------------------------------------------------------------------
 
 source("CopulaFunctions_flexible.R")
@@ -14,7 +14,7 @@ CorlCoru<-function(vi,vj){
   return(c(Corl,Coru))
 }
 
-#--------------------------- Stat based on counting points a given distance from the diagonal in lower and upper triangle ---------------------------------------------------------
+#----------------- Stat based on counting points for a given distance from the diagonal in lower and upper triangle -------------
 
 PlPu<-function(vi,vj){
   
@@ -48,7 +48,7 @@ PlPu<-function(vi,vj){
   return(list(Sl_Su_Si_P,Pl,Pu)) 
 }
 
-#------------------------------------------------ stat based on distance from the diagonal -----------------------------------------------------------------------
+#-------------------------------- stat based on distance from the diagonal ---------------------------------------
 
 D2lD2u<-function(vi,vj)
 {
@@ -57,29 +57,4 @@ D2lD2u<-function(vi,vj)
   
   return(c(D2l,D2u))
 }
-
-#---------------------------------------------------------------------------------------------------------------------
-#                                                     CODE ENDS HERE
-#---------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#and the others
+#----------------------------------------------------------------------

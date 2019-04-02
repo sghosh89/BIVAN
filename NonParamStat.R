@@ -1,6 +1,6 @@
 # THIS CODE CALCULATES NON-PARAMETRIC STATS FOR MULTIVARIATE COPULAS (PAIRWISE)
-# This code is written to test synchrony between different LOCATIONS pair for a specific SPECIES
-#---------------------------------------------------------------
+# This code is written to test synchrony between different LOCATIONS pair for a specific SPECIES using non-parametric stats
+#----------------------------------------------------------------------------------------------------------------------------------
 source("CopulaFunctions.R")
 source("vivj_matrix.R")
 source("good_loclist.R")
@@ -9,7 +9,7 @@ library(ncf)
 #Processing function for a copula approach to synchrony
 #
 #Args
-#m : output from vivj_matrix.R
+#m : output from vivj_matrix.R : a bivariate copula matrix
 #
 #Output - A list with these elements
 #ranks        A dataframe with 2 columns, one for 
@@ -96,8 +96,7 @@ copsync<-function(m){
 #1) datmean - The mean of the matrix except for the diagonals
 #2) quantiles - as specified by prob
 #3) fracgt0 - fraction of resampling-based values greater than 0
-#4) fraclt0 - (will just be 1-fracgt0)
-#
+
 #Also generates the histogram plot if ploton=T
 
 resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
@@ -120,11 +119,7 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
   
   #get fracgt0 : fraction of resampling-based values greater than 0
   fracgt0<-length(which(resamp_stat>0))/length(resamp_stat)
-  
-  #get fraclt0 : fraction of resampling-based values greater than 0
-  #  fraclt0<-length(which(resamp_stat<0))/length(resamp_stat)
-  
-  
+
   #generate the plot
   if (ploton){
     hist(resamp_stat,breaks=100)
@@ -134,23 +129,18 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
     mtext(paste0("datmean=",round(datmean,4),", q2.5=",round(q2.5,4),", q97.5=",round(q97.5,4))) 
   }
   
-  #  return(list(datmean=datmean,quantiles=quantiles,fracgt0=fracgt0,fraclt0=fraclt0))
   return(list(datmean=datmean,quantiles=quantiles,fracgt0=fracgt0))
 }
 
 #---------------------------------------------------------------------------------------------------------------------------
-#Calling the above on all pairs of several time series and plotting
-#results and returning all stats. All this function does is call the 
-#above function on all pairs of time series, organize the results, 
-#and make plots.
-#
-#------------Input---------------------------------------------------------
-#d_allsp         d_allsp[[species]][[location]]$Year or $Dat format
-#                A list of data frames, each with columns Year and Dat
-#               The years are assumed to be sequential and all included,
-#               though there may be NAs in Dat and the years may not
-#               be all the same for ds1 and ds2.
-#sp             species number
+#The following function calls the above functions on all pairs of several time series and plotting
+#results and returning all stats. 
+#-----------Args---------------------------------------------------------
+#d_allsp        data in specified format as indicated in "vivj_matrix.R"      
+#                   a list (length = total no. of sp.) of 
+#                         a list (length = total no. of locations)
+#                             of a dataframe (with "Year" and "Dat" column)
+#sp            id of the species
 #lats, longs  Vectors of latitudes and longitudes for the locations.
 #pfname       Filename (without extension) prepended to plot files saved.
 #good_loc    a vector of chosen locations (say, of length d)
@@ -169,15 +159,14 @@ resampmn<-function(M,numresamp=10000,prob=c(.025,0.975),ploton=F)
 
 multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
   
-#  d<-d_allsp[[sp]]
   lenloc<-length(good_loc)
+
+  #first initialize result receptacles for the output
   
-  #D<-matrix(NA,lenloc,lenloc)
-  D<-gcdist(longs[good_loc],lats[good_loc]) # This good_loc by good_loc matrix with distance btw any two selected among all locations
+  D<-gcdist(longs[good_loc],lats[good_loc]) # initialize a matrix with pair-wise distance for all selected locations
   colnames(D) <- paste("loc",good_loc, sep="")
   rownames(D) <- paste("loc",good_loc, sep="")
   
-  #first initialize result receptacles for the output
   spear<-matrix(NA,lenloc,lenloc)
   colnames(spear) <- colnames(D)
   rownames(spear) <-rownames(D)
@@ -222,8 +211,6 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
       j<-good_loc[jj]
       #cat("i,j",i,j,"\n")
       
-      #D[ii,jj]<-gcdist(longs[i],lats[i],longs[j],lats[j]) old way of gcdist calling from ncf-version 1.1 to 1.7
-   
       m<-vivj_matrix(d_allsp=d_allsp,sp=sp,i=i,j=j)
       thisres<-copsync(m)
       
@@ -469,14 +456,3 @@ multcall<-function(d_allsp,sp,lats,longs,pfname,good_loc){
 }
 
 #----------------------------------------------------------------------------------------------------------------------------
-#                                                       CODE ENDS HERE
-#-----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-

@@ -34,6 +34,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 seed<-101
 source("mtime.R") #A function needed for caching
 library(captioner)
+library(parallel)
+busycores<-detectCores()-2 # for parallell computing with mclapply your computer will use all cores except two.
 ```
 
 <!--generating plots for pedagog figures-->
@@ -705,7 +707,7 @@ The message=F is to suppress warnings that come when you pass a parameter
 of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for these families.
 They correspond to the independent copula. The packages we use provide the indepdent copula, but
 issue a message.-->
-```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,busycores,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 source("TestStats_multivar_dataset.R")
 set.seed(seed)
 
@@ -713,11 +715,11 @@ resultsloc<-"./Results/stat_results/stat_testing/"
 spearvals<-seq(from=0,to=0.9,by=0.1)
 callfn<-coplist_with_params(spearvals=spearvals)
 coplist<-callfn$coplist
-ncores<-3
-res_pt35_rankF<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=ncores)
-res_pt35_rankT<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=T,mc.cores=ncores)
-res_pt1000_rankF<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=F,mc.cores=ncores)
-res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,mc.cores=ncores)
+
+res_pt35_rankF<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=F,mc.cores=busycores)
+res_pt35_rankT<-mclapply(X=coplist,FUN=worker,numpts=35,numsims=100,rank=T,mc.cores=busycores)
+res_pt1000_rankF<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=F,mc.cores=busycores)
+res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,mc.cores=busycores)
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
 
 b<-callfn$paramlist
@@ -1202,14 +1204,14 @@ saveRDS(temp_aphid,"./Results/temp_aphid_winter_neg_temp_avg_data.RDS")
 ```
 
 <!--Simulation for model selection and non-parametric analysis with aphids count data for all 20 sp.-->
-```{r modelsel_and_npa_aphid_count_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r modelsel_and_npa_aphid_count_allsp, echo=F, cache=T, cache.extra=list(seed,busycores,data_aphid_count,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
 library(parallel)
 source("FittingCopula_selective_loc.R")
 RES_all_sp_aphid_count<-mclapply(X=c(1:20),FUN=RES_single_sp,d_allsp=data_aphid_count,
                                  families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
-                                 good_loc_given=F,good_loc=NA,mc.cores=3)
+                                 good_loc_given=F,good_loc=NA,mc.cores=busycores)
 saveRDS(RES_all_sp_aphid_count,"./Results/fitting_results/RES_all_sp_aphid_count.RDS")
 
 source("good_loclist.R")
@@ -1419,14 +1421,14 @@ knitr::kable(s, digits = 3,
 \end{figure}
 
 <!--Simulation for model selection and non-parametric analysis with aphids first flight data for all 20 sp.-->
-```{r modelsel_and_npa_aphid_ff_allsp, echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r modelsel_and_npa_aphid_ff_allsp, echo=F, cache=T, cache.extra=list(seed,busycores,data_aphid_ff,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
 library(parallel)
 source("FittingCopula_selective_loc.R")
 RES_all_sp_aphid_ff<-mclapply(X=c(1:20),FUN=RES_single_sp,d_allsp=data_aphid_ff,
                                  families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=30,
-                                 good_loc_given=F,good_loc=NA,mc.cores=3)
+                                 good_loc_given=F,good_loc=NA,mc.cores=busycores)
 saveRDS(RES_all_sp_aphid_ff,"./Results/fitting_results/RES_all_sp_aphid_ff.RDS")
 
 source("good_loclist.R")
@@ -1640,14 +1642,14 @@ data_plankton_north_sea<-d_allsp_data_plankton_north_sea(d0_plankton_north_sea)
 ``` 
 
 <!--Simulation for model selection and non-parametric analysis with plankton data for all 22 sp.-->
-```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r modelsel_and_npa_pns_allsp, echo=F, cache=T, cache.extra=list(seed,busycores,data_plankton_north_sea,longs_pns,lats_pns,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 set.seed(seed)
 library(parallel)
 source("FittingCopula_selective_loc.R")
 RES_all_sp_pns<-mclapply(X=c(1:22),FUN=RES_single_sp,d_allsp=data_plankton_north_sea,
                               families=c(1,3:10,13,14,16:20),level=0.05,data_pt_thrs=45,
-                              good_loc_given=F,good_loc=NA,mc.cores=3)
+                              good_loc_given=F,good_loc=NA,mc.cores=busycores)
 saveRDS(RES_all_sp_pns,"./Results/fitting_results/RES_all_sp_pns.RDS")
 
 source("good_loclist.R")

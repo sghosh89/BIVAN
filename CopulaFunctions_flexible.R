@@ -1,4 +1,6 @@
-
+#---------------------------------------------------------------------------
+# Non-parametric stats to measure dependence for a bivariate copula
+#---------------------------------------------------------------------------
 #Calculates the mean squared distance between copula
 #points between two bounds and the main diagonal of
 #the unit square.
@@ -29,7 +31,7 @@ D2bds<-function(vi,vj,lb,ub)
   
   return(D2)
 }
-
+#-------------------------------------------------------------------------------------------
 #Calculates the portion of the Spearman correlation 
 #that is due to points in from a copula that are
 #between two bounds.
@@ -64,7 +66,8 @@ Corbds<-function(vi,vj,lb,ub)
   }
   return(res)  
 }
-
+#--------------------------------------------------------------------------------------------------
+# Calculates the P statistics for bivariate copula
 #Args
 #vi, vj       Coordinates of points from a copula
 #lb, ub       Lower and upper bounds between 0 and 1

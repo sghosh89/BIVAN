@@ -1,5 +1,13 @@
-# Select any two location pair [i,j] for a copula of species sp
-# This function gives you a matrix with vi and vj as two columns
+# This function takes two time series and makes a bivariate copula
+# Args:
+#     d_allsp : data in specified format, it is 
+#                   a list (length = total no. of sp.) of 
+#                         a list (length = total no. of locations)
+#                             of a dataframe (with "Year" and "Dat" column)
+#     sp : id of species
+#     i, j : integers indicating id of locations
+
+# Output : a bivariate copula as a 2 column matrix
 library(VineCopula)
 vivj_matrix<-function(d_allsp,sp,i,j){
   

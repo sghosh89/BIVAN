@@ -35,7 +35,8 @@ seed<-101
 source("mtime.R") #A function needed for caching
 library(captioner)
 library(parallel)
-busycores<-detectCores()-2 # for parallell computing with mclapply your computer will use all cores except two.
+freecores<-2
+busycores<-detectCores()-freecores # for parallell computing with mclapply your computer will use all cores except the number of freecores.
 ```
 
 <!--generating plots for pedagog figures-->

@@ -1,17 +1,12 @@
-1) Need to modify documentation for :
- 			- FittingCopula_selective_loc.R
-			- Nonparamstat.R
-			- vivj_matrix.R
-			- bivfunctionplot.R
 
-2) At present r chunk 112-114, 123-124 calculates skewness 
+1) At present r chunk 112-114, 123-124 calculates skewness 
 	and Taylors law res. for aphids and planktons with all sp.
    If we did not say anything with this results 
 	then can I reove those chunks?
 
-3) Add README.md
+2) Add README.md
 
-4) Describe each data section (not sure which version of data should I add in Data folder)
+3) Describe each data section (not sure which version of data should I add in Data folder)
 
 Ecology letters guideline for DATA SOURCES
 

@@ -12,3 +12,7 @@
 3) Add README.md
 
 4) Describe each data section (not sure which version of data should I add in Data folder)
+
+Ecology letters guideline for DATA SOURCES
+
+Prior to submission of a manuscript, authors are responsible for having secured any required permissions to use data in their study. It is the policy of Ecology Letters that all published data sources must be referenced in the manuscript. This reflects that data citations are important for the reproducibility of research and as an incentive to make data publicly available. In cases where there is both an original published paper and a citation for the data set then both should be cited.

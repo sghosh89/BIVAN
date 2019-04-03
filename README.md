@@ -1,10 +1,15 @@
 # The importance of a complete statistical description of dependence between variables for ecology and related fields : Introduction to the Repository of All Analyses Supporting the Paper
 
-Shyamolina Ghosh, University of Kansas \\
+Shyamolina Ghosh, University of Kansas 
+
 Lawrence W. Sheppard, University of Kansas
+
 Mark T. Holder, University of Kansas
+
 Terrance E. Loecke, University of Kansas
+
 Philip C. Reid, University of Plymouth
+
 Daniel C. Reuman, University of Kansas
 
 # Introduction

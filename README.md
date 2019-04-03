@@ -1,5 +1,4 @@
-# The importance of a complete statistical description of dependence between variables for ecology and related fields : 
-Introduction to the Repository of All Analyses Supporting the Paper
+# The importance of a complete statistical description of dependence between variables for ecology and related fields : Introduction to the Repository of All Analyses Supporting the Paper
 
 Shyamolina Ghosh
 Lawrence W. Sheppard
@@ -17,7 +16,7 @@ to recompile the paper itself along with Supporting Information. Some data are a
 # How to compile
 Knit the makefile.Rmd using R markdown. If all dependencies are in place (see next section) this should re-compute all analyses from data to paper, resulting in three pdfs: Paper.pdf (the main text of the paper), SupportingInformation.pdf (the supporting information file for the paper), and makefile.pdf (notes on the compilation process - can be useful for error mitigation in the event of failure).
 
-The knit may take a several hours or a few days, depending on your computer speed, number of cores used for parallell computing, the value of nsurrogs in SupportingInformation.Rmd, and other factors. Subsequent knits, if any, can be faster because packages will be installed (see below) and because intermediate results are cached.
+The knit may take a several hours or a few days, depending on your computer speed, number of cores used for parallel computing (we used all cores except 2, you can change this number in r chunk named setup of SupportingInformation.Rmd), the value of nsurrogs in SupportingInformation.Rmd, and other factors. Subsequent knits, if any, can be faster because packages will be installed (see below) and because intermediate results are cached.
 
 If you try to knit Paper.Rmd or SupportingInformation.Rmd directly, you may have some success, but cross-document references and other features may fail so this is not recommended.
 
@@ -52,7 +51,11 @@ The makefile makes a system call to pdflatex, so software supporting that needs 
  - On Linux, install latex (e.g., sudo apt-get install texlive), and
  - On Mac, use the MacTeX installer (http://www.tug.org/mactex/)
 
+## Additional dependencies?
+If you find additional dependencies were needed on your system, please let us know: reuman@ku.edu. The compilation process was tested by Reuman on........... using R version ......... and R studio version ......... ; and by Ghosh on Ubuntu 16.04.5 LTS using R version 3.4.4 and R studio version 1.1.463. It has not been tested on Mac. We have endeavored to list all dependencies we can think of above, but we have only compiled on our own machines, so we cannot guarantee that additional dependencies will not also be needed on other machines. This repository is intended to record a workflow, and is not designed or tested for distribution and wide use on multiple machines. It is not guaranteed to work on the first try without any hand-holding on arbitrary computing setups.<!--test--->
 
+## Intermediate files:
+Knitting the makefile automatically produces a lot of 'intermediate' files. Files ending in .tex are the converted documents from .Rmd including all the R code output and the rest (files ending .log, .aux, .lof, .lot, .toc and .out ) are intermediate files that pdflatex uses to keep track of various parts of the document. Some of these can be useful for diagnosing problems, if any.
 
 
 

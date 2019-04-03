@@ -1,4 +1,4 @@
-The importance of a complete statistical description of dependence between variables for ecology and related fields : 
+#The importance of a complete statistical description of dependence between variables for ecology and related fields : 
 Introduction to the Repository of All Analyses Supporting the Paper
 
 Shyamolina Ghosh
@@ -8,7 +8,7 @@ Terrance E. Loecke
 Philip C. Reid
 Daniel C. Reuman 
 
-Introduction
+#Introduction
 
 This repository can be used to reproduce the complete analyses behind the paper 
 "The importance of a complete statistical description of dependence between variables for ecology and related fields" and 

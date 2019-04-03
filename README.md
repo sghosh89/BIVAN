@@ -1,11 +1,16 @@
 # The importance of a complete statistical description of dependence between variables for ecology and related fields : Introduction to the Repository of All Analyses Supporting the Paper
 
-Shyamolina Ghosh
-Lawrence W. Sheppard
-Mark T. Holder
-Terrance E. Loecke
-Philip C. Reid
-Daniel C. Reuman 
+Shyamolina Ghosh, University of Kansas
+
+Lawrence W. Sheppard, University of Kansas
+
+Mark T. Holder, University of Kansas
+
+Terrance E. Loecke, University of Kansas
+
+Philip C. Reid, University of Plymouth
+
+Daniel C. Reuman, University of Kansas
 
 # Introduction
 
@@ -52,7 +57,7 @@ The makefile makes a system call to pdflatex, so software supporting that needs 
  - On Mac, use the MacTeX installer (http://www.tug.org/mactex/)
 
 ## Additional dependencies?
-If you find additional dependencies were needed on your system, please let us know: reuman@ku.edu. The compilation process was tested by Reuman on........... using R version ......... and R studio version ......... ; and by Ghosh on Ubuntu 16.04.5 LTS using R version 3.4.4 and R studio version 1.1.463. It has not been tested on Mac. We have endeavored to list all dependencies we can think of above, but we have only compiled on our own machines, so we cannot guarantee that additional dependencies will not also be needed on other machines. This repository is intended to record a workflow, and is not designed or tested for distribution and wide use on multiple machines. It is not guaranteed to work on the first try without any hand-holding on arbitrary computing setups.<!--test--->
+If you find additional dependencies were needed on your system, please let us know: reuman@ku.edu. The compilation process was tested by Reuman on........... using R version ......... and R studio version ......... ; and by Ghosh on Ubuntu 16.04.5 LTS using R version 3.4.4 and R studio version 1.1.463. It has not been tested on Mac. We have endeavored to list all dependencies we can think of above, but we have only compiled on our own machines, so we cannot guarantee that additional dependencies will not also be needed on other machines. This repository is intended to record a workflow, and is not designed or tested for distribution and wide use on multiple machines. It is not guaranteed to work on the first try without any hand-holding on arbitrary computing setups.
 
 ## Intermediate files:
 Knitting the makefile automatically produces a lot of 'intermediate' files. Files ending in .tex are the converted documents from .Rmd including all the R code output and the rest (files ending .log, .aux, .lof, .lot, .toc and .out ) are intermediate files that pdflatex uses to keep track of various parts of the document. Some of these can be useful for diagnosing problems, if any.

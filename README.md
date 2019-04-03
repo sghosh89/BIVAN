@@ -21,7 +21,7 @@ to recompile the paper itself along with Supporting Information. Some data are a
 # How to compile
 Knit the makefile.Rmd using R markdown. If all dependencies are in place (see next section) this should re-compute all analyses from data to paper, resulting in three pdfs: Paper.pdf (the main text of the paper), SupportingInformation.pdf (the supporting information file for the paper), and makefile.pdf (notes on the compilation process - can be useful for error mitigation in the event of failure).
 
-The knit may take a several hours or a few days, depending on your computer speed, number of cores used for parallel computing (we used all cores except 2, you can change this number in r chunk named setup of SupportingInformation.Rmd), the value of nsurrogs in SupportingInformation.Rmd, and other factors. Subsequent knits, if any, can be faster because packages will be installed (see below) and because intermediate results are cached.
+The knit may take a several hours or a few days, depending on your computer speed, number of cores used for parallel computing (we used all cores except 2, you can change this number in r chunk named **setup** of SupportingInformation.Rmd), the value of nsurrogs in SupportingInformation.Rmd, and other factors. Subsequent knits, if any, can be faster because packages will be installed (see below) and because intermediate results are cached.
 
 If you try to knit Paper.Rmd or SupportingInformation.Rmd directly, you may have some success, but cross-document references and other features may fail so this is not recommended.
 
@@ -38,7 +38,7 @@ To compile the documents from the command line, use the following: Rscript -e "l
 
 ## Dependencies on the R checkpoint package
 
-Code uses the R 'checkpoint' package. This is set up in the master file makefile.Rmd in r chunk named checkpoint_chunk, which contains the following line of code specifying a date :
+Code uses the R **checkpoint** package. This is set up in the master file makefile.Rmd in r chunk named **checkpoint_chunk**, which contains the following line of code specifying a date :
 
 checkpoint("2018-03-29",checkpointLocation = "./")
 

@@ -1,3 +1,9 @@
-This is just to make git commit the directory it is in, once
-other files are added and committed, delete this using "git rm
-DELETEME.txt"
+Reference for Birds-BMR data :
+
+McNab, B.K. (2009). Ecological factors affect the level and scaling of avian bmr. Comparative Biochemistry and Physiology
+Part A: Molecular & Integrative Physiology, 152, 22–45.
+
+Reference for Mammals-BMR data :
+
+McNab, B.K. (2008). An analysis of the factors that influence the level and scaling of mammalian bmr. Comparative
+Biochemistry and Physiology Part A: Molecular & Integrative Physiology, 151, 5–28.

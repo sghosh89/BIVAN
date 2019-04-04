@@ -327,7 +327,7 @@ the year 2000 [@Tilman2001; @Tilman2006].
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
 water surface and the troposphere, measured at 13 locations at daily to weekly intervals 
 from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, 
-Ohio [@Holland1999; @Jarecke2016]. Each included location was measured on at least 50 dates. 
+Ohio [@Holland1999; @Jarecke2016; @smyth2019using]. Each included location was measured on at least 50 dates. 
 Sampling locations spanned a hydrologic gradient from upland to seasonal wetland.
 See Appendix \ref{SM-Data_details} for additional data details. 
 
@@ -336,7 +336,38 @@ called the "bivariate" datasets in the sense that they comprise two quantities m
 different locations or for different species. The phenology and population datasets are 
 "multivariate" in that they comprise, for each taxon, measurements through time at multiple locations; 
 copula structure can be studied for each pair of locations. Likewise the ecosystem 
-functioning (methane flux) dataset was  multivariate in this sense.
+functioning (methane flux) dataset was  multivariate in this sense (see \ref{tab_data_info}).
+
+<!--summary table with info of all data used in Paper-->
+```{r tab_summary_data_info, echo=F, results="asis",message=F}
+library(kableExtra)
+library(dplyr)
+tab_data_info<-as.data.frame(matrix(NA,nrow=8,ncol=4))
+colnames(tab_data_info)<-c("Data","Category","No. of measurements we used", "References")
+tab_data_info$Data<-c("Soil C and N","Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data", 
+                      "Green spruce aphid abundance", "Leaf-curling plum aphid first flight","Ceratium furca abundance","Methane flux")
+tab_data_info$Category<-c("Environmental","Species-trait","Species-trait","Community level",
+                          "Population","Phenological","Population","Ecosystem-functioning")
+tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations",sep=""),
+                                               paste(nrow(d_birdsBMR)," birds",sep=""),
+                                               paste(nrow(d_mammalsBMR)," mammals",sep=""),
+                                               paste(nrow(d_cc[[5]])," plots",sep=""),
+                                               "10 locations with atleast 30 yrs. of timeseries for each 20 sp.",
+                                               "10 locations with atleast 30 yrs. of timeseries for each 20 sp.",
+                                               "14 locations with atleast 45 yrs. of timeseries for each 22 taxa",
+                                               "13 locations with atleast 50 dates of data")
+tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills et al. (2014)", "McNab 2009","McNab 2008",
+                            "Cedar Creek Ecosystem Science Reserve",
+                            "Rothamsted Insect Survey","Rothamsted Insect Survey","Continuous Plankton Recorder Survey",
+                            "Great Miami Wetland Mitigation Bank, Smyth et al. (2019)")
+
+knitr::kable(tab_data_info, 
+             format="latex", align="l",
+             caption = "Summary table for data we used, bolds are the multivariate data, rest are bivariates. \\label{tab_data_info}", 
+             booktabs = T,linesep = "\\addlinespace") %>%
+             column_spec(1:4,width="2.8 cm")%>%
+             row_spec(5:8, bold=T)
+```
 
 # Background, concepts and methods for Q1: Detecting copula structure in data \label{Methods}
 
@@ -654,7 +685,7 @@ as well as for the 21 plankton taxa for which we had abundance data other than t
 non-N copula structure and tail dependence, as well as asymmetry of tail dependence, are 
 very common.
 
-<!--bivariate table summary-->
+<!--summary table : results with bivariate data-->
 ```{r tab_bivar_summaryl, echo=F, results='asis',message=F}
 tab_bivar_summary<-readRDS("./Results/tab_bivar_summary.RDS")
 row.names(tab_bivar_summary)<-NULL
@@ -683,7 +714,7 @@ knitr::kable(tab_bivar_summary[1:9,],
              column_spec(1, width = "8.5cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
 
-<!--multivariate table summary-->
+<!--summary table : results with multi-variate data-->
 ```{r tab_multivar_summaryl, echo=F, results='asis',message=F}
 tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
 tab1<-tab_multivar_summary[c(1:7,9,11,12,14,16),] # see carefully if you rearrange tab_multivar_summary's row

@@ -1174,7 +1174,9 @@ based approach in assessing the probability of vegetation related drought across
 <!--***DAN: Shya, what do you mean by "vegetation related drought"? Is this a kind of drought
 that is somehow caused by the vegetation? That's what it sounds like, and it sounds like what
 they studied was the probability that such a drought occurred. If that's not what you mean, please
-rephrase.-->
+rephrase.
+***Shya: I used the exact term "vegetation-related drought" they used in the paper @liu2016probabilistic, I think they 
+wanted to mean that you can monitor the drought risk by tracking change in NDVI spatial greenness with precipitation or temperature (climatic variable), which can be considered as a proxy indicator of vegetation response to climate change. They also showed vegatation-drought stress analysis, which I also noticed in some other papers too. There are several studies using drought and NDVI data (mainly using correlation, regression) but they reported it as the first study using joint probability for drought-risk assessment. I have highlighted the info which may be important to us and sent you in mail.-->
 In a majority of their cases, they found 
 non-N copula structure in the dependence between a vegatation index 
 and climatic variables (e.g., precipitation and temperature). 

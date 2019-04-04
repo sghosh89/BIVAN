@@ -12,10 +12,10 @@ d_allsp_data_plankton_north_sea<-function(d0){
   d0[d0==-999]<-NA
   Years<-1958:2013
   
-  d_allsp<-list() #this is a list with 20 elements, all the species
+  d_allsp<-list() #this is a list with 22 elements, all the species
   for (sp_c in 1:22)
   {
-    d_thissp<-list() #a list with 11 locations for the current species
+    d_thissp<-list() #a list with 26 locations for the current species
     d1<-d0[((sp_c-1)*26+1):(sp_c*26),]
     for (st_c in 1:26)
     {

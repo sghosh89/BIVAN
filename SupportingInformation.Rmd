@@ -383,7 +383,7 @@ averaged, producing a monthly time series for each year. Where data for a given 
 
  [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had at least 45 years time series data (see Figure \ref{fig_plankton_map}). 
  
- The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and Smyth et al, pending for
+ The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and** @smyth2019using, **pending for
 additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had at least 50 dates data.
 
 <!--generating table with information about 20 aphid species-->

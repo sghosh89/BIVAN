@@ -1,6 +1,6 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, P. Chris Reid, Daniel C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, Daniel C. Reuman"
 date: ""
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
 
@@ -42,7 +42,7 @@ Holder: Department of Ecology and Evolutionary Biology and Biodiversity Institut
 
 Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
 
-Reid: Marine Institute, Plymouth University, Drake Circus, Plymouth, United Kingdom; Mrine Biological Association of the UK, The Laboratory, Citadel Hill, Plymouth, United Kingdom
+Reid: School of Biological & Marine Sciences, University of Plymouth, Drake Circus, Plymouth PL4 8AA, United Kingdom
 
 Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA 
 
@@ -76,10 +76,16 @@ All branches of ecology study relationships among environmental and biological v
 \newpage
 # Introduction \label{Intro}
 
-Very generally, all branches of ecology and related areas study relationships among environmental and biological 
+Very generally, all branches of ecology and related areas <!--DAN : Reid said " Is this text needed. 
+Ecology covers 
+all branches of the biological sciences?
+What do you mean by related areas? 
+You use related fields later.
+Needs clarifying."-->
+study relationships among environmental and biological 
 variables. However, commonly used correlation and regression 
 approaches to studying 
-such relationships are limited - common statistical
+such relationships are limited - such statistical
 approaches provide only a very partial description of a relationship between variables. 
 For instance, datasets showing markedly different 
 relationships may nevertheless have the same correlation coefficient value 
@@ -93,7 +99,7 @@ were obtained from A and B through monotonic transformation
 (Appendix \ref{SM-pedagog1_details} for details),
 which alters the Pearson, but not the Spearman correlation. Although correlation
 is only one of numerous metrics for 
-studying relationships between variables, other common metrics also 
+studying relationships between variables, other common metrics <!--DAN : add example--> also 
 provide only partial information.
 
 \begin{figure}
@@ -112,8 +118,9 @@ stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
 
-Well-developed statistical tools do exist, and are 
-applied widely in other fields, that provide a demonstrably complete 
+Other well-developed statistical tools exist, that are 
+applied widely in other fields (e.g. finance, neuroscience, bioinformatics etc.), 
+and provide a demonstrably complete 
 description of the dependence 
 between two or more variables [@joe2014_dependence; @nelsen2006_copula]. 
 The goal of this paper is to illustrate the potential for 
@@ -145,14 +152,14 @@ functions (pdfs) corresponding to the copulas associated
 with Fig. \ref{fig_cop_pedag1}E-F are in Fig.
 \ref{fig_cop_pedag1}G-H, respectively. 
 See @nelsen2006_copula and @joe2014_dependence
-for general background. An theorem of A. Sklar 
+for general background. A theorem of A. @sklar1959_theorem
 states that copulas give a unique and complete 
 representation of the dependence
 between variables, in the sense that the joint distribution of $(X,Y)$ 
 can be reconstructed from the 
-copula and the marginal distributions [@sklar1959_theorem]. 
+copula and the marginal distributions. 
 Copula theory is also well developed for
-multivariate distributions.
+multivariate distributions [@joe1997multivariate].
 
 A principal benefit of a copula approach is 
 that it can sensitively detect and model
@@ -203,7 +210,7 @@ the relationship between the variables.
 
 A third reason we may expect a copula approach to benefit ecological
 research is that prior work has demonstrated important copula 
-stucture in the spatial dependence of environental 
+stucture in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
 @li2013]. One may expect copula structure in environmental variables 
 to take the form of strong tail dependence if
@@ -271,7 +278,7 @@ Copula approaches have been used to great benefit in neuroscience [@onken2009],
 bioinformatics 
 [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], finance, and other fields. 
-To our knowledge, these approaches have been used seldom or never in ecology. 
+To our knowledge, these approaches have never or seldom been used for ecological research. 
 We argue that benefits to ecology of using a complete statistical 
 desription of dependence will be substantial.
 
@@ -289,9 +296,9 @@ Datasets included environmental, species-trait, phenological,
 population, community, and ecosystem functioning data. Copula structure describing 
 the relationship between atmospheric weather variables such as rainfall or wind speed 
 as measured in multiple locations has been 
-examined previously in the meteorological literature (e.g., @Serinaldi2008, @li2013). We therefore 
+examined previously in the meteorological literature [e.g., @Serinaldi2008; @li2013]. We therefore 
 examined environmental variables from the soil instead, using the Rapid Carbon 
-Assessment database (RaCA; @Wills2014).
+Assessment database [RaCA; @Wills2014].
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
 nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
@@ -307,23 +314,23 @@ Species-trait data such as these reflect the coevolution of the two traits.
 Phenological data were aphid first-flight dates from 10 locations (Fig. \ref{SM-fig_aphid_map}) 
 across the United Kingdom (UK) for 20 aphid species (Table \ref{SM-tab_aphid_info}), for the 
 35 years 1976 to 2010. These time series were computed from the Rothamsted Insect 
-Survey suction-trap dataset [@Harrington2014; @Bell2015]. The first of our two 
+Survey (RIS) suction-trap dataset [@Harrington2014; @Bell2015]. The first of our two 
 population-level datasets was also derived from the RIS suction-trap data, and comprised 
 total counts of aphids trapped for the same locations, species, and years; these are 
 indicators of aphid migration counts. Data pre-processing for the aphid data was the same as 
 that of @Sheppard2016,
-but we exlcuded one of the 11 sites they used so as to include only sites with at least 30 
+but we excluded one of the 11 sites they used in order to only use sites with at least 30 
 years data.  Our second population dataset comprised average annual abundance estimates 
 for 14 locations (Fig. \ref{SM-fig_plankton_map})
 in the North Sea and British seas for 22 plankton taxa (Table \ref{SM-tab_plankton_info}) for the 
 56 years 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data 
-were obtained from the Continuous Plankton Recorder (CPR) dataset maintained by the Sir 
-Alistair Hardy Foundation for Ocean Science (SAHFOS), now part of the Marine Biological 
-Association of the UK. Data pre-processing was similar but not identical to that 
+were obtained from the Continuous Plankton Recorder (CPR) dataset now operated and maintained by 
+the Marine Biological Association. Data pre-processing was similar but not identical to that 
 of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
-Community-level data were plant aboveground biomass and Shannon's diversity index for `r nrow(d_cc[[5]])` 
-plots, each 9m by 9m, maintained at Cedar Creek Ecosystem Science Reserve and sampled in 
-the year 2000 [@Tilman2001; @Tilman2006]. 
+Community-level data obtained from the Cedar Creek Ecosystem Science Reserve were <!--DAN : check this rephrasing-->
+plant aboveground biomass and plant percent cover data (we used this percent cover data to calculate 
+Shannon's diversity index) for `r nrow(d_cc[[5]])` plots, each 9m by 9m, as sampled in 
+the year 2000 [@Tilman2001; @Tilman2006] <!--actually they collected data in each year of 1996,1997,1998,1999,2000,2007-->. 
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
 water surface and the troposphere, measured at 13 locations at daily to weekly intervals 
 from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, 
@@ -357,7 +364,7 @@ tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations"
                                                "14 locations with atleast 45 yrs. of timeseries for each 22 taxa",
                                                "13 locations with atleast 50 dates of data")
 tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills et al. (2014)", "McNab 2009","McNab 2008",
-                            "Cedar Creek Ecosystem Science Reserve",
+                            "Cedar Creek Ecosystem Science Reserve [biodiversity experiment e120]",
                             "Rothamsted Insect Survey","Rothamsted Insect Survey","Continuous Plankton Recorder Survey",
                             "Great Miami Wetland Mitigation Bank, Smyth et al. (2019)")
 
@@ -427,8 +434,8 @@ have visualizations of all the copulas we used.\label{fig_cop_pedag3}}
 \end{figure}
 
 We addressed Q1 principally via a model selection procedure in which the normal copula
-the alternative copulas listed above were fit to 
-our ecological datasets, and fits of the various copula models 
+the alternative copulas listed above were fitted to 
+our ecological datasets. The resulting fits of the various copula models 
 were compared via the Akaike and Bayesian 
 Information Criteria (AIC and BIC). For bivariate datasets 
 $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps. 
@@ -551,7 +558,7 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
 \caption{Upper panels show raw data plots for (A) soil C and N data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
-for birds, (C) $\log_{10}$(BMR) vs. $\log_{10}$(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index (H) from Cedar Creek. Bottom panels show the corresponding copula plots. See text for units used in upper panels. \label{fig_biv_multi_raw_cop}}
+for birds, (C) $\log_{10}$(BMR) vs. $\log_{10}$(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index \textit{(H)} from Cedar Creek. Bottom panels show the corresponding copula plots. See text for units used in upper panels. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
 
@@ -681,7 +688,7 @@ Figs \ref{SM-fig_aphid_count}-\ref{SM-fig_methane}.
 We also carried out the same analyses for abundance and first-flight data for the 18 
 aphid species for which we had data other than the green spruce and leaf-curling plum aphids,
 as well as for the 21 plankton taxa for which we had abundance data other than the
-\textit{Ceratium furca} (results not shown). The conclusions were generally supported that 
+\textit{Ceratium furca} (results not shown). The conclusions were generally supportive that 
 non-N copula structure and tail dependence, as well as asymmetry of tail dependence, are 
 very common.
 
@@ -759,7 +766,7 @@ knitr::kable(tab_multivar_summary[1:9,],
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green spruce aphid abundance",
                         "Leaf-curling plum aphid first flight",
-                        "Ceratium furca abundance","Methane flux")
+                        "\\textit{Ceratium furca} abundance","Methane flux")
              )%>%column_spec(2:5,width="2.5cm")%>%
              column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```

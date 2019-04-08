@@ -139,9 +139,9 @@ $u_i$ is the rank of $x_i$ in the set of the $x_j$ ($j=1,\ldots,n$), divided by
 $n+1$; and $v_i$ is defined in the same way but using the $y_i$. See, 
 for instance,
 Fig. \ref{fig_cop_pedag1}E-F, which show the copula structure of 
-A-B, respectively. Ranking serves to uniformize the 
-marginal distributions of the underlying random variables, isolating the 
-dependence structure only.
+A-B, respectively. Ranking makes marginals of 
+the underlying random variables uniformly distributed, isolating the 
+dependence structure only<!--DAN : check this-->.
 Mathematically, if $(X,Y)$ is a continuous bivariate random
 variable and the cumulative distribution functions (cdfs) of $X$ and $Y$ are 
 $F_X(x)=P[X\leq x]$ and $F_Y(y)=P[Y\leq y]$, then the dependence or copula structure
@@ -298,12 +298,12 @@ the relationship between atmospheric weather variables such as rainfall or wind 
 as measured in multiple locations has been 
 examined previously in the meteorological literature [e.g., @Serinaldi2008; @li2013]. We therefore 
 examined environmental variables from the soil instead, using the Rapid Carbon 
-Assessment database [RaCA; @Wills2014].
+Assessment database [[RaCA](https://www.nrcs.usda.gov/wps/portal/nrcs/detail/soils/survey/?cid=nrcs142p2_054164); @Wills2014].
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
 nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
-Measurments were from the central pedon of a soil core, to 1 m depth.
+Measurments were from the central pedon of a soil core, to 1 m depth.<!--DAN: we should ask Terry to explain pedon/ R horizon-->
 <!--***DAN: Terry to check the wording and accuracy here-->
 Species-trait data were average species basal metabolic rate (KJ per hour) and 
 body mass (grams) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
@@ -461,7 +461,7 @@ Fourth, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
 formulas [@burnham2003_modelselection]; likewise for BIC.
 Model selection methods will give the *relative* support of several models, but will not,
-on their own, indicate whether any of the models selected is an objectively good fit: all 
+on their own, indicate whether any of the models selected are an objectively good fit: all 
 models considered might poorly describe the data. To test this, and as the final step of
 our procedure, we tested the goodness of fit of our AIC-best copula family using a 
 bootstrapping procedure implemented in `BiCopGofTest` of `VineCopula`. The method performed 

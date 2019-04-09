@@ -1,3 +1,0 @@
-This is just to make git commit the directory it is in, once
-other files are added and committed, delete this using "git rm
-DELETEME.txt"

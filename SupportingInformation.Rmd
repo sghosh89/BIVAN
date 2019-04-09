@@ -141,6 +141,7 @@ set.seed(seed)
 # Input :
 #       db : a dataframe : smaller subset of ple_120 data to calculate avg. biomass for each plot
 #       dp : a dataframe : smaller subset of pce_120 data to calculate avg. shannon's H for those plots
+#       plots : a vector of given 168 plot ids as used in reference papers by Tilman
 #       year : the year for which you want to calculate biomass and shannon's index data
 #       rawplot : logical : T for rawdata plot, F for copula plot
 #       ploton : logical for optional plotting
@@ -150,42 +151,41 @@ set.seed(seed)
 #                   tab_dbp : a data-frame with 3 column : (plot no , avg.H, avg.Biomass(g/m2))
 #                   cop_tab_dbp : a data-frame with 3 column : (plot no, pobs(avg.H), pobs(avg.Biomass(g/m2)))
 
-cop_HB<-function(db,dp,year,rawplot,ploton){
+cop_HB<-function(db,dp,plots,year,rawplot,ploton){
   # db : biomass dataset for a specific year
   # dp : percent cover dataset for a specific year
   
-  plots<-sort(intersect(db$Plot,dp$Plot)) # common plots for both datasets for a specific year
   db<-subset(db,Plot%in%plots)
   dp<-subset(dp,Plot%in%plots)
-  
-  
+
   tab_dbp<-data.frame(Plot=plots,avg.H=NA,avg.Biomass=NA)
   for(i in 1:length(plots)){
-    # calculate biomass for each plot (averaged over all strips for that plot)
-    x<-subset(db,Plot==plots[i])
-    tab_dbp$avg.Biomass[i]<-mean(x$Biomass) 
-    
-    # calculate shannon's index H for each plot (averaged over all Quadrates for that plot)
-    x<-subset(dp,Plot==plots[i])
-    uniq_sp<-sort(as.character(unique(x$Species)))  # These are the species in a particular plot
-    Q<-as.character(unique(x$Quadrat))
-    
-    tab_each_sp<-data.frame(sp=uniq_sp,avg_cov=0,rel_avg_cov=0)
-    
-    for(sp in 1:length(uniq_sp)){
-      my_sp<-uniq_sp[sp]
-      tab_temp<-data.frame(Q=Q,abs_cov=0)
-      ind<-which(x$Species==my_sp)
-      li<-length(ind)
-      tab_temp$abs_cov[1:li]<-x$Abscover[ind]
-      tab_each_sp$avg_cov[[sp]]<-mean(tab_temp$abs_cov) # avg. over 4Quadrates for a sp.
-    }
-    
-    tab_each_sp$rel_avg_cov<-tab_each_sp$avg_cov/sum(tab_each_sp$avg_cov)
-    tab_dbp$avg.H[i]<- -sum((tab_each_sp$rel_avg_cov)*log(tab_each_sp$rel_avg_cov))
-
-  }
+   # calculate biomass for each plot (averaged over all strips for that plot)
+   x<-subset(db,Plot==plots[i])
+   tab_dbp$avg.Biomass[i]<-mean(x$Biomass) 
   
+   # calculate shannon's index H for each plot (averaged over all Quadrates for that plot)
+   x<-subset(dp,Plot==plots[i])
+   x$Species<-trimws(x$Species) # to remove duplicated names of sp. (cutting white spaces) : e.g. 1999 : plot no 339
+   uniq_sp<-sort(as.character(unique(x$Species)))  # These are the species in a particular plot
+   Q<-as.character(unique(x$Quadrat))
+  
+   tab_each_sp<-data.frame(sp=uniq_sp,avg_cov=0,rel_avg_cov=0)
+   #cat("=====================================plot : ",plots[i],"===========================\n")
+   for(sp in 1:length(uniq_sp)){
+    my_sp<-uniq_sp[sp]
+    #cat("---------- sp = ",my_sp,"--------------------\n")
+    tab_temp<-data.frame(Q=Q,abs_cov=0)
+    ind<-which(x$Species==my_sp)
+    li<-length(ind)
+    #print(li)
+    tab_temp$abs_cov[1:li]<-x$Abscover[ind]
+    tab_each_sp$avg_cov[[sp]]<-mean(tab_temp$abs_cov) # avg. over 4Quadrates for a sp.
+   }
+  
+  tab_each_sp$rel_avg_cov<-tab_each_sp$avg_cov/sum(tab_each_sp$avg_cov)
+  tab_dbp$avg.H[i]<- -sum((tab_each_sp$rel_avg_cov)*log(tab_each_sp$rel_avg_cov))
+ }
   tab_dbp<-na.omit(tab_dbp)
   
   cop_tab_dbp<-data.frame(Plot=tab_dbp$Plot,avg.H=NA,avg.Biomass=NA)
@@ -225,10 +225,28 @@ yr<-sort(intersect(y1,y2))
 
 a<-as.data.frame(table(sort(r_pce$Species)))
 b<-as.character(a$Var1)
-bad_sp<-c(b[51:53],b[156:158])
-
+bad_sp<-c(b[51:53],b[156:158],"Disturbance") 
+# bad sp : "Bare ground","Bare ground","BARE GROUND","Miscellaneous litter","Miscellaneous litter","MISCELLANEOUS LITTER"            
 ind<-which(r_pce$Species%in%bad_sp)
 r_pce_clean<-r_pce[-ind,]
+
+#----------------------------------------------------------------------------------------------
+# This sections selects 168 plots considered for both biomass and percent cover datasets in Tilman's papers 2001, 2006
+i<-5#for Yr=2000
+db<-subset(r_ple,Year==yr[i])
+dp<-subset(r_pce_clean,Year==yr[i])
+#------------------------------------------------------
+id_plot_nosp<-which(db$NumSp==0 & db$Biomass==0) # These plots have no sp. seeded initially and have no biomass data
+plots_no_biomass<-sort(unique(db$Plot[id_plot_nosp]))
+plots_no_biomass
+
+plots<-sort(intersect(db$Plot,dp$Plot)) # common plots for both datasets for a specific year
+length(plots)
+
+excluded_plots<-intersect(plots,plots_no_biomass) 
+
+plots_168<-setdiff(plots,excluded_plots)
+  
 #--------------------------------------------------------------------------------------------
 pdf("./Results/Ceder_creek_results/raw_HB_all_yr.pdf",height = 6,width = 10)
 op<-par(mfrow=c(2,3),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
@@ -236,7 +254,7 @@ for(i in 1:length(yr)){
   db<-subset(r_ple,Year==yr[i])
   dp<-subset(r_pce_clean,Year==yr[i])
   
-  sr<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=T,ploton = T)
+  sr<-cop_HB(db=db,dp=dp,year=yr[i],plots=plots_168,rawplot=T,ploton = T)
 }
 par(op)
 dev.off()
@@ -246,7 +264,7 @@ pdf("./Results/Ceder_creek_results/raw_HB_2000.pdf",height = 6,width = 6)
 i<-5
 db<-subset(r_ple,Year==yr[i])
 dp<-subset(r_pce_clean,Year==yr[i])
-sr<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=T,ploton = T)
+sr<-cop_HB(db=db,dp=dp,year=yr[i],plots=plots_168,rawplot=T,ploton = T)
 saveRDS(sr,"./Results/Ceder_creek_results/raw_cop_cc_2000.RDS")
 dev.off()
 #----------------------------------------------------------------------------------------
@@ -259,7 +277,7 @@ for(i in 1:length(yr)){
   db<-subset(r_ple,Year==yr[i])
   dp<-subset(r_pce_clean,Year==yr[i])
   
-  s<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=F,ploton = T)
+  s<-cop_HB(db=db,dp=dp,year=yr[i],plots=plots_168,rawplot=F,ploton = T)
   cop_HB_all_yr[[i]]<-s$cop_tab_dbp[,2:3]
 }
 par(op)
@@ -270,7 +288,7 @@ pdf("./Results/Ceder_creek_results/cop_HB_2000.pdf",height = 6,width = 6)
 i<-5
 db<-subset(r_ple,Year==yr[i])
 dp<-subset(r_pce_clean,Year==yr[i])
-s<-cop_HB(db=db,dp=dp,year=yr[i],rawplot=F,ploton = T)
+s<-cop_HB(db=db,dp=dp,year=yr[i],plots=plots_168,rawplot=F,ploton = T)
 cc_cop_2000<-s$cop_tab_dbp[,2:3]
 dev.off()
 #------------------

@@ -231,22 +231,24 @@ ind<-which(r_pce$Species%in%bad_sp)
 r_pce_clean<-r_pce[-ind,]
 
 #----------------------------------------------------------------------------------------------
+#=======================================================
 # This sections selects 168 plots considered for both biomass and percent cover datasets in Tilman's papers 2001, 2006
-i<-5#for Yr=2000
-db<-subset(r_ple,Year==yr[i])
-dp<-subset(r_pce_clean,Year==yr[i])
+plot_info<-read.delim("./Data/Ceder_creek_e120/edited_plots.txt")
+
+id_excluded_plots<-which(plot_info$Species=="Bargr") # there were 4 plots with no sp. seeded
+
+plots_168<-plot_info$Plot[-id_excluded_plots]
+
 #------------------------------------------------------
-id_plot_nosp<-which(db$NumSp==0 & db$Biomass==0) # These plots have no sp. seeded initially and have no biomass data
-plots_no_biomass<-sort(unique(db$Plot[id_plot_nosp]))
-plots_no_biomass
+# You can check that here too
+s<-subset(r_ple,NumSp==0)
+sb<-sort(unique(s$Plot))
 
-plots<-sort(intersect(db$Plot,dp$Plot)) # common plots for both datasets for a specific year
-length(plots)
+s<-subset(r_pce_clean,NumSp==0)
+spc<-sort(unique(s$Plot))
 
-excluded_plots<-intersect(plots,plots_no_biomass) 
-
-plots_168<-setdiff(plots,excluded_plots)
-  
+sb==spc # This should be all TRUE for 4 not seeded plots with id : 126, 166, 244, 248
+#=======================================================
 #--------------------------------------------------------------------------------------------
 pdf("./Results/Ceder_creek_results/raw_HB_all_yr.pdf",height = 6,width = 10)
 op<-par(mfrow=c(2,3),mar=c(3,3,3,3), mgp=c(1.5,0.5,0))
@@ -297,7 +299,6 @@ saveRDS(cop_HB_all_yr,"./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 #---------------------------------------------------------------------------------------
 cop_HB_all_yr<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
-
 
 <!--reading aphid and plankton data, then generating plots showing sampling locations-->
 ```{r map_plot_aphid_plankton,results="hide",echo=F}
@@ -762,170 +763,6 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \end{center}
 \end{figure}
 
-# Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
-
-For bivariate datasets, we compared values 
-of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
-$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
-$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ to 
-distributions of values of the same statistics computed on surrogate datasets that were produced from 
-the empirical data by randomizing it in a special way to have no 
-tail dependence (Appendix \ref{surrog_test}). 
-The surrogate/randomized datasets had exactly 
-the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
-correlation (the sorrogate algorithm had two versions, one for preserving each correlation coefficient), 
-but had normal copula structure. Thus our comparisons tested the null hypothesis 
-that our statistics took values on the empirical data no different from what would have been expected 
-if the copula structure of the data were normal, but the data were otherwise 
-statistically unchanged. The comparison of one of the
-statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
-empirical data, to the distribution
-of its values computed on many surrogate datasets 
-provides a test of whether dependence in the part of the distribution specified 
-by $l_b$ and $u_b$ is different from
-what would be expected from a null hypothesis of normal copula structure but 
-unchanged marginals and similar 
-Kendall (or Spearman)
-correlation. Thus the comparison helps answer the first two parts of Q1
-for bivariate datasets. 
-Significant deviations correspond to deviations from normal 
-copula structure. In particular, deviations 
-using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
-different from that of a normal copula;
-likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
-from that of a normal copula.
-The comparison of one of the statistics 
-$\cor_{0,u_b}-\cor_{1-u_b,1}$, 
-$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
-$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$,
-as computed on the empirical data, to the distribution of its values on many surrogate datasets 
-provides a test of asymmetry of dependence. Thus this comparison helps answer the
-third part of Q1 for bivariate 
-datasets. 
-
-The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
-C and N data
-were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates
-of the data,
-separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
-(Fig. \ref{fig_soilCN_nonparam}). Results show that tail dependence of data is stronger in 
-both the lower and upper tails than would be expected under a null hypothesis of a normal copula.
-The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
-$\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
-on 1000 Kendall- or Spearman-preserving N surrogates, separately in two 
-comparisons (Table \ref{tab_soilCN_asym}). Results showed that
-upper-tail dependence was significantly stronger than lower-tail dependence.
-
-For all four bivariate datasets the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and 
-for 1000 Kendall-preserving surrogate datasets with N copulas, and the rank of the real-data value in 
-the distribution of surrogate values was computed. If ranks were $>975$ or $<25$, asymmetry of tail 
-dependence was significant compared to a N-copula null hypothesis. Ranks were 1, 1, 1, 998
-<!--***DAN: Shya, please make the quantities in the previous line automatic links-->
-for, respectively, the soil C and N data, bird masses and metabolic rates, mammal masses
-and metabolic rates, and the Cedar Creek data. Thus the first three datasets showed stronger 
-upper- than lower-tail dependence, and the Cedar Creek data showed the reverse, confirming the 
-results based on model selection presented in the main text.
-
-# Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
-
-For bivariate datasets, surrogates were produced as follows.   
-
-- Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
-one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
-Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
-$\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
-study using the `iTau` function of the `copula` package). 
-- Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
-$\mathcal{B}(\theta_\tau)$. 
-- Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
-$(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ has $\rank(x_{\sigma_x(i)})$ equal to $\rank(a_i)$ for all $i$, where 
-$\rank(x_{\sigma_x(i)})$ is the rank of $x_{\sigma_x(i)}$ in the set $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$, and
-$\rank(a_i)$ is the rank of $a_i$ in the set $(a_1,\ldots,a_n)$ (here $\sigma_x$ is a permutation of the 
-indices $1,\ldots,n$). 
-- Likewise permute $(y_1,\ldots,y_n)$
-such that the permutation
-$(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
-another permutation of $1,\ldots,n$).
-- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
-
-\noindent Our code for this algorithm is `copsurrog2d` in the 
-`BIVAN` repository (https://github.com/sghosh89/BIVAN). 
-Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
-is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
-permutation 
-of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
-those of the original data. 
-Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
-Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
-will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
-a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
-as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
-sampling variation) the Spearman correlation of the empirical data.  
-
-# Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
-
-For multivariate datasets, we calculated Spearman and Kendall correlations
-and the statistics 
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$,
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
-for all pairs of sampling locations, and we then computed means across the pairs
-for each statistic. We used a spatial resampling scheme 
-(Appendix \ref{spatial_resamp}) to calculate confidence intervals of these means.
-
-For the green spruce aphid abundance data, mean values across all pairs of 
-locations of the Spearman and Kendall correlations and the statistics 
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
-confidence intervals excluded $0$ (Table \ref{tab_count_resamp}). 
-Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
-also were always positive and had confidence intervals that excluded $0$ 
-(Table \ref{tab_count_resamp}), confirming the results in the main text on 
-asymmetry of tail dependence and 
-stronger lower- than upper-tail dependence for this dataset. Each of the statistics 
-was plotted against geographic (great-circle) distances between sampling locations, 
-across all pairs of sampling locations (Fig. \ref{fig_aphid_count}). 
-
-Asymmetry of tail dependence was also verified by our nonparametric methods for
-the other multivariate datasets. For instance, the $95\%$ confidence intervals of the
-mean over pairs of sampling locations of the statistic $\Ps_l-\Ps_u$ were
-$(-0.085,-0.041)$ for the leaf-curling plum aphid first flight data, 
-indicating greater upper-tail dependence, and consistent with
-<!--***DAN: Shya, pls make above results autolink-->
-the results of Table \ref{MT-tab_multivar_summary} (row 9). 
-For the *Ceratium furca* abundance data, confidence intervals were
-$(0.011,0.044)$, indicating greater lower-tail dependence, and again
-<!--***DAN: Shya, pls make above results autolink-->
-consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
-For the methane flux data, confidence intervals were 
-$(-0.008,0.019)$.
-
-# Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
-
-The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 
-as part of a method for 
-performing model selection among matrix regression models. For each pair of 
-locations $i \neq j$, the statistic
-of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
-$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
-$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
-values $s_{ij}$ were then arranged in
-a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
-$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterizes the 
-average strength of 
-dependence, across all pairs of distinct locations, for data in the portion of the distributions 
-given by the bounds $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, 
-the mean characterizes average
-asymmetry of tail dependence across all pairs of locations. 
-Confidence intervals for the value of $\mean(S)$ were then computed as quantiles of a 
-distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
-revealed by the confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
-or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-N-copula null hypothesis, and answering question Q1 from the Introduction.
-Bootstrapping was performed by resampling the locations of measurement, with replacement. 
-This corresponds to 
-resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
-[@bjornstadfalck2001 ; @walteretal2017]. 
 
 <!--This chunk is for model selection results of soilCN dataset-->
 ```{r bivmodselect_Loecke, echo=F, cache=T, cache.extra=list(seed,v_CN,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -1142,8 +979,8 @@ names(stat_cc_ga)<-names(cop_HB_all_yr)
 for(i in 1:length(stat_cc_ga)){
   temp<-bivfunctionplot(v=cop_HB_all_yr[[i]],
                              resloc="./Results/Ceder_creek_results/",
-                             nametag=paste0(names(cop_HB_all_yr)[i],"cc_numbin_10",sep=""),
-                             numbin = 10)
+                             nametag=paste0(names(cop_HB_all_yr)[i],"cc_numbin_4",sep=""),
+                             numbin = 4)
   stat_cc_ga[[i]]<-temp
 }
 
@@ -1152,8 +989,8 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. Same format as Fig. \ref{fig_soilCN_nonparam}, see caption of that figure.\label{fig_cc2000_nonparam}}
+\includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_4_bivfunctionplot.pdf}
+\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1164,9 +1001,151 @@ tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
 knitr::kable(tab_cc_asym_2000,
              format="latex",linesep = "",escape=F,
              caption.short = "Nonparametric asymmetry tests against an N-copula null, Cedar Creek data",
-             caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. Same format as Table \\ref{tab_soilCN_asym}, see caption of that figure.\\label{tab_cc_asym_2000}",
+             caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.25}-\\cor_{0.75,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.25}-\\Ps_{0.75,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.75,1}-\\Dsq_{0,0.25}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $>X$ indicates the value of the given statistic on the data was higher than its value on $X$ of the surrogates, so entries of the form $>X$ for $X$ equal to $975$ or above would indicate that lower-tail dependence was significantly stronger than upper-tail dependence.\\label{tab_cc_asym_2000}",
              booktabs=T)
 ```
+
+<!--Function to generate a table containing summary results for all bivariate datasets-->
+```{r bivar_tab_summary_fn,echo=F}
+bivar_tab_summary_fn<-function(r,rs){
+  
+  m<-matrix(NA,1,10)
+  colnames(m)<-c("p.Independence.test","minimumAIC.bestfit.copula","Bestfit.copula.AICw",
+                 "Normal.copula.AICw","p.CvM","p.KS",
+                 "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
+                 "Rank.(Pl-Pu)")
+  m<-as.data.frame(m)
+  
+  m$p.Independence.test<-round(r$IndepTestRes,3)
+  m$minimumAIC.bestfit.copula<-r$InfCritRes$copname[which.min(r$InfCritRes$AIC)]
+  m$Bestfit.copula.AICw<-round(max(r$InfCritRes$AICw),3)
+  m$Normal.copula.AICw<-round(r$InfCritRes$AICw[1],3)
+  m$p.CvM<-r$GofRes_CvM
+  m$p.KS<-r$GofRes_KS
+  m$LT.model.avg<-round(r$relLTdep_AICw,3)
+  m$UT.model.avg<-round(r$relUTdep_AICw,3)
+  m$`(LT-UT).model.avg`<-m$LT.model.avg-m$UT.model.avg
+  m$`Rank.(Pl-Pu)`<-rs$Rank_PlmPu_K
+  mt<-as.data.frame(t(m))
+  return(mt)
+  
+}
+#----------------------------------
+#calling the above function on bivariable datasets
+m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
+m2<-bivar_tab_summary_fn(r=BivMS_birds,rs=stat_birds_ga)
+m3<-bivar_tab_summary_fn(r=BivMS_mammals,rs=stat_mammals_ga)
+m4<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
+tab_bivar_summary<-cbind(m1,m2,m3,m4)
+colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Mammals' BMR","Ceder-creek")
+saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
+```
+
+# Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
+
+For bivariate datasets, we compared values 
+of the statistics $\cor_{l_b,u_b}$,
+$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
+$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
+$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ to 
+distributions of values of the same statistics computed on surrogate datasets that were produced from 
+the empirical data by randomizing it in a special way to have no 
+tail dependence (Appendix \ref{surrog_test}). 
+The surrogate/randomized datasets had exactly 
+the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
+correlation (the sorrogate algorithm had two versions, one for preserving each correlation coefficient), 
+but had normal copula structure. Thus our comparisons tested the null hypothesis 
+that our statistics took values on the empirical data no different from what would have been expected 
+if the copula structure of the data were normal, but the data were otherwise 
+statistically unchanged. The comparison of one of the
+statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
+empirical data, to the distribution
+of its values computed on many surrogate datasets 
+provides a test of whether dependence in the part of the distribution specified 
+by $l_b$ and $u_b$ is different from
+what would be expected from a null hypothesis of normal copula structure but 
+unchanged marginals and similar 
+Kendall (or Spearman)
+correlation. Thus the comparison helps answer the first two parts of Q1
+for bivariate datasets. 
+Significant deviations correspond to deviations from normal 
+copula structure. In particular, deviations 
+using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
+different from that of a normal copula;
+likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
+from that of a normal copula.
+The comparison of one of the statistics 
+$\cor_{0,u_b}-\cor_{1-u_b,1}$, 
+$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
+$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$,
+as computed on the empirical data, to the distribution of its values on many surrogate datasets 
+provides a test of asymmetry of dependence. Thus this comparison helps answer the
+third part of Q1 for bivariate 
+datasets. 
+
+The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
+C and N data
+were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates
+of the data,
+separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
+(Fig. \ref{fig_soilCN_nonparam}). Results show that tail dependence of data is stronger in 
+both the lower and upper tails than would be expected under a null hypothesis of a normal copula.
+The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
+$\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
+on 1000 Kendall- or Spearman-preserving N surrogates, separately in two 
+comparisons (Table \ref{tab_soilCN_asym}). Results showed that
+upper-tail dependence was significantly stronger than lower-tail dependence.
+
+For first three bivariate datasets in Table \ref{MT-tab_bivar_summary},
+the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and 
+for 1000 Kendall-preserving surrogate datasets with N copulas. Due to relatively smaller sample size,
+for Cedar creek data we used a wider range of boundaries $(l_b,u_b)$ to compute $P_{0,0.25}-P_{0.75,1}$.
+For each data, rank of the said statistics with real-data value in 
+the distribution of surrogate values was computed. 
+If ranks were $>975$ or $<25$, asymmetry of tail 
+dependence was significant compared to a N-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
+for, respectively, the soil C and N data, bird masses and metabolic rates, mammal masses
+and metabolic rates, and the Cedar Creek data. Thus the first three datasets showed stronger 
+upper- than lower-tail dependence, and the Cedar Creek data which showed the reverse though not significantly with
+non-parametric analysis, confirming the 
+results based on model selection presented in the main text (see Table \ref{MT-tab_bivar_summary}, row 9 
+showed Cedar creek had relatively weak tail-dependence than the other three datasets).
+
+# Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
+
+For bivariate datasets, surrogates were produced as follows.   
+
+- Given data $(x_i,y_i)$ for $i=1,\ldots,n$ and a 
+one-parameter target copula family $\mathcal{B}(\theta)$ (here $\theta$ denotes the parameter), let $\tau$ be the
+Kendall correlation of the $x_i$ with the $y_i$ and find the parameter value $\theta_\tau$ for which 
+$\mathcal{B}(\theta_\tau)$ has Kendall correlation $\tau$ (this is possible for the one-parameter copula families of this 
+study using the `iTau` function of the `copula` package). 
+- Generate data $(a_i,b_i)$, $i=1,\ldots,n$ from 
+$\mathcal{B}(\theta_\tau)$. 
+- Permute the ordered set $(x_1,\ldots,x_n)$ such that the permutation
+$(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ has $\rank(x_{\sigma_x(i)})$ equal to $\rank(a_i)$ for all $i$, where 
+$\rank(x_{\sigma_x(i)})$ is the rank of $x_{\sigma_x(i)}$ in the set $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$, and
+$\rank(a_i)$ is the rank of $a_i$ in the set $(a_1,\ldots,a_n)$ (here $\sigma_x$ is a permutation of the 
+indices $1,\ldots,n$). 
+- Likewise permute $(y_1,\ldots,y_n)$
+such that the permutation
+$(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ has $\rank(y_{\sigma_y(i)})$ equal to $\rank(b_i)$ for all $i$ ($\sigma_y$ is 
+another permutation of $1,\ldots,n$).
+- The surrogate dataset is $(x_{\sigma_x(i)},y_{\sigma_y(i)})$ for $i=1,\ldots,n$. 
+
+\noindent Our code for this algorithm is `copsurrog2d` in the 
+`BIVAN` repository (https://github.com/sghosh89/BIVAN). 
+Because $(x_{\sigma_x(1)},\ldots,x_{\sigma_x(n)})$ 
+is a permutation of $(x_1,\ldots,x_n)$ and $(y_{\sigma_y(1)},\ldots,y_{\sigma_y(n)})$ is a 
+permutation 
+of $(y_1,\ldots,y_n)$, the marginal distributions of the surrogate data are exactly the same as 
+those of the original data. 
+Because ranks of the surrogate data are matched to ranks of the $a_i$ and $b_i$, the
+Kendall correlation of the surrogate dataset will be the same as that of the $a_i$ and $b_i$, and therefore 
+will be close to $\tau$ (differences arising only through sampling variation). If instead of $\theta_\tau$
+a parameter value $\theta_\rho$ is used such that the Spearman correlation of $\mathcal{B}(\theta_\rho)$ is the same
+as that of the $x_i$ with the $y_i$, then Spearman correlations of surrogates will very nearly equal (except for 
+sampling variation) the Spearman correlation of the empirical data.  
 
 <!--Load the raw data for aphid-->
 ```{r read_aphid_data, echo=F}
@@ -2083,42 +2062,6 @@ knitr::kable(s,digits = 3,
 \end{center}
 \end{figure}
 
-<!--Function to generate a table containing summary results for all bivariate datasets-->
-```{r bivar_tab_summary_fn,echo=F}
-bivar_tab_summary_fn<-function(r,rs){
-  
-  m<-matrix(NA,1,10)
-  colnames(m)<-c("p.Independence.test","minimumAIC.bestfit.copula","Bestfit.copula.AICw",
-                 "Normal.copula.AICw","p.CvM","p.KS",
-                 "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
-                 "Rank.(Pl-Pu)")
-  m<-as.data.frame(m)
-  
-  m$p.Independence.test<-round(r$IndepTestRes,3)
-  m$minimumAIC.bestfit.copula<-r$InfCritRes$copname[which.min(r$InfCritRes$AIC)]
-  m$Bestfit.copula.AICw<-round(max(r$InfCritRes$AICw),3)
-  m$Normal.copula.AICw<-round(r$InfCritRes$AICw[1],3)
-  m$p.CvM<-r$GofRes_CvM
-  m$p.KS<-r$GofRes_KS
-  m$LT.model.avg<-round(r$relLTdep_AICw,3)
-  m$UT.model.avg<-round(r$relUTdep_AICw,3)
-  m$`(LT-UT).model.avg`<-m$LT.model.avg-m$UT.model.avg
-  m$`Rank.(Pl-Pu)`<-rs$Rank_PlmPu_K
-  mt<-as.data.frame(t(m))
-  return(mt)
-  
-}
-#----------------------------------
-#calling the above function on bivariable datasets
-m1<-bivar_tab_summary_fn(r=BivMS_res_Loecke,rs=stat_soilCN_ga)
-m2<-bivar_tab_summary_fn(r=BivMS_birds,rs=stat_birds_ga)
-m3<-bivar_tab_summary_fn(r=BivMS_mammals,rs=stat_mammals_ga)
-m4<-bivar_tab_summary_fn(r=BivMS_res_cc$`2000`,rs=stat_cc_ga$`2000`)
-tab_bivar_summary<-cbind(m1,m2,m3,m4)
-colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Mammals' BMR","Ceder-creek")
-saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
-```
-
 <!--Function to generate a table containing summary results for all multivariate datasets-->
 ```{r multivar_tab_summary_fn,echo=F}
 source("normal_cop_AICw.R")
@@ -2184,6 +2127,70 @@ tab_multivar_summary<-cbind(m1,m2,m3,m4)
 colnames(tab_multivar_summary)<-c("Green-spruce aphid_count","Leaf-plum curling aphid_firstflight","C. furca_count","Methane-flux")
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
+
+# Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
+
+For multivariate datasets, we calculated Spearman and Kendall correlations
+and the statistics 
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$,
+$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
+for all pairs of sampling locations, and we then computed means across the pairs
+for each statistic. We used a spatial resampling scheme 
+(Appendix \ref{spatial_resamp}) to calculate confidence intervals of these means.
+
+For the green spruce aphid abundance data, mean values across all pairs of 
+locations of the Spearman and Kendall correlations and the statistics 
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
+confidence intervals excluded $0$ (Table \ref{tab_count_resamp}). 
+Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
+also were always positive and had confidence intervals that excluded $0$ 
+(Table \ref{tab_count_resamp}), confirming the results in the main text on 
+asymmetry of tail dependence and 
+stronger lower- than upper-tail dependence for this dataset. Each of the statistics 
+was plotted against geographic (great-circle) distances between sampling locations, 
+across all pairs of sampling locations (Fig. \ref{fig_aphid_count}). 
+
+Asymmetry of tail dependence was also verified by our nonparametric methods for
+the other multivariate datasets. For instance, the $95\%$ confidence intervals of the
+mean over pairs of sampling locations of the statistic $\Ps_l-\Ps_u$ were
+$(-0.085,-0.041)$ for the leaf-curling plum aphid first flight data, 
+indicating greater upper-tail dependence, and consistent with
+<!--***DAN: Shya, pls make above results autolink-->
+the results of Table \ref{MT-tab_multivar_summary} (row 9). 
+For the *Ceratium furca* abundance data, confidence intervals were
+$(0.011,0.044)$, indicating greater lower-tail dependence, and again
+<!--***DAN: Shya, pls make above results autolink-->
+consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
+For the methane flux data, confidence intervals were 
+$(-0.008,0.019)$.
+
+# Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
+
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+as part of a method for 
+performing model selection among matrix regression models. For each pair of 
+locations $i \neq j$, the statistic
+of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
+$\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 
+$\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$) was computed for those locations. The 
+values $s_{ij}$ were then arranged in
+a matrix, $S$, with diagonal entries NA. The mean of the non-NA entries of $S$ was computed. For 
+$\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, or $\Dsq_{l_b,u_b}$ this mean characterizes the 
+average strength of 
+dependence, across all pairs of distinct locations, for data in the portion of the distributions 
+given by the bounds $l_b$ and $u_b$. For $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, or $\Dsq_u-\Dsq_l$, 
+the mean characterizes average
+asymmetry of tail dependence across all pairs of locations. 
+Confidence intervals for the value of $\mean(S)$ were then computed as quantiles of a 
+distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
+revealed by the confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
+or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
+N-copula null hypothesis, and answering question Q1 from the Introduction.
+Bootstrapping was performed by resampling the locations of measurement, with replacement. 
+This corresponds to 
+resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
+[@bjornstadfalck2001 ; @walteretal2017]. 
 
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}

@@ -624,9 +624,14 @@ model-averaged tail-dependence statistics may have been biased
 because even the lowest-AIC copula was a poor fit in some cases 
 (Table \ref{tab_bivar_summary}, rows 5-6).
 But our nonparametric statistics confirmed the same conclusions 
-(Appendices \ref{SM-Q1bivarnonparam}, \ref{SM-surrog_test}).
-Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} 
-and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
+(Appendices \ref{SM-Q1bivarnonparam}, \ref{SM-surrog_test}) for first three bivariate datasets.
+The fourth bivariate datasets we analyzed was above-ground biomass and percent cover data (i.e. 
+the data used to compute Shannon's diversity index) for the year 2000, but we did the same analysis 
+with Cedar creek data sampled over 168 plots from other available years (1996-1999, 2007) too. For 1996 and 
+2007 copula structures showed no dependence between two variables concerned, for other years (1997-1999), 
+we found similar results as of year 2000 (i.e. best fit non-Normal copula and overall lower tail-dependence).
+Due to smaller sample size relative to other three bivariate datasets, we chose a wider range with 
+non-parametric analysis (see Appendix \ref{SI-Q1bivarnonparam}). Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
 
 We present our analysis of the green spruce aphid abundance data (see Data)
 as an example multivariate analysis.

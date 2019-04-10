@@ -1,0 +1,173 @@
+Plot	Species
+002	Lesca 
+003	Asctu Liaas Monfi Panvi Solri
+005	Andge
+006	Panvi Schsc
+009	Achmi Agrsm Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+011	Achmi
+012	Achmi Koecr Luppe Monfi Petca Petvi Poapr Schsc Solri Sornu
+014	Asctu Liaas
+015	Agrsm Elyca Monfi Petca Petpu Petvi Poapr Queel Quema Solri
+016	Asctu
+020	Amoca
+022	Agrsm Asctu Elyca Koecr Liaas Monfi Petca Petvi Quema Solri
+024	Asctu Elyca Panvi Schsc
+026	Agrsm Elyca Petpu Sornu
+027	Achmi Agrsm Amoca Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+028	Lesca Petpu Queel Quema
+029	Lesca
+030	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Poapr Queel Quema Schsc Solri Sornu
+031	Schsc
+032	Andge Queel
+033	Agrsm Andge Liaas Petca Petvi
+034	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+035	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+044	Asctu Panvi Petca Petpu Petvi
+045	Andge Liaas Petpu Quema
+046	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+048	Koecr Lesca
+050	Achmi Elyca Koecr Lesca Petca Petpu Petvi Poapr Quema
+053	Lesca Poapr Quema Sornu
+056	Luppe Schsc
+057	Achmi Agrsm Koecr Lesca Monfi Petca Petvi Poapr Schsc Solri
+058	Andge Monfi Poapr Solri Sornu
+062	Elyca Lesca Petca Petvi Quema
+067	Agrsm Koecr Luppe Monfi Petca Petvi Queel Quema Solri Sornu
+068	Achmi Agrsm Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+069	Achmi
+070	Andge Asctu Luppe Schsc
+073	Monfi Queel Solri
+074	Achmi Agrsm Asctu Elyca Koecr Petca Petvi Quema Sornu
+075	Asctu Panvi
+081	Achmi Agrsm Elyca Lesca Liaas Petpu Poapr Schsc
+082	Achmi Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+083	Luppe
+087	Sornu
+089	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Panvi Petpu Poapr Queel Quema Schsc Sornu
+092	Sornu
+093	Agrsm Koecr Luppe Petpu
+094	Lesca
+098	Achmi Agrsm Andge Koecr Luppe Panvi Poapr Queel
+104	Achmi Elyca Koecr Liaas Luppe Petpu Queel Schsc
+107	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+108	Achmi Agrsm Amoca Andge Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+109	Andge
+110	Elyca Lesca Luppe Panvi
+111	Achmi Agrsm Lesca Monfi Petca Petvi Poapr Queel Quema Solri
+115	Agrsm Andge Asctu Elyca Koecr Monfi Poapr Queel Solri
+117	Asctu Luppe
+118	Achmi Agrsm Andge Asctu Koecr Monfi Petpu Quema Solri
+125	Petpu Schsc
+126	Bargr
+127	Lesca Quema
+129	Liaas
+130	Achmi Asctu Elyca Liaas Panvi Petpu Quema Schsc
+133	Lesca Monfi Petca Petvi Schsc Solri
+135	Schsc
+136	Achmi Agrsm Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+137	Amoca
+138	Achmi Elyca Koecr Liaas
+139	Agrsm Elyca Koecr Lesca
+142	Koecr
+146	Achmi Andge Lesca Monfi Panvi Poapr Queel Quema Solri
+149	Monfi Petca Petvi Quema Solri Sornu
+151	Queel
+153	Agrsm
+156	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+157	Agrsm Koecr
+160	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+161	Quema
+163	Sornu
+164	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+165	Poapr Sornu
+166	Bargr
+167	Liaas
+168	Andge Koecr
+169	Achmi Agrsm Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Solri Sornu
+170	Achmi Asctu Elyca Koecr Monfi Petca Petpu Petvi Queel Solri
+171	Koecr Luppe
+174	Achmi Agrsm Amoca Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+175	Luppe Sornu
+176	Agrsm Liaas Panvi Poapr
+177	Andge Asctu Koecr Liaas Petca Petvi Quema Schsc Sornu
+178	Achmi Agrsm Elyca Koecr Liaas Monfi Panvi Schsc Solri
+185	Petpu
+186	Achmi Agrsm Amoca Asctu Elyca Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+189	Queel Schsc
+190	Lesca Liaas Petpu Quema
+193	Andge Luppe
+197	Asctu Panvi
+199	Luppe Queel Quema Schsc
+201	Lesca Petpu Queel Sornu
+202	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Schsc Solri Sornu
+205	Petpu
+206	Agrsm Andge Asctu Lesca Luppe Monfi Poapr Solri Sornu
+208	Achmi Agrsm Koecr Lesca Luppe Panvi Poapr Schsc
+210	Achmi Elyca Koecr Lesca Liaas Luppe Poapr Schsc
+211	Monfi Petca Petvi Solri
+213	Achmi Andge Koecr Lesca Petca Petvi Poapr Quema Schsc
+220	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+221	Queel Quema
+223	Koecr Liaas Poapr Queel
+224	Achmi Sornu
+225	Elyca Petpu Queel Schsc
+227	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+229	Andge Petpu Poapr Schsc
+230	Panvi
+232	Koecr Luppe Monfi Panvi Petca Petvi Queel Schsc Solri Sornu
+233	Liaas Petpu Poapr Queel
+234	Elyca Luppe
+235	Achmi Agrsm Amoca Andge Asctu Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+236	Lesca Panvi
+237	Poapr
+239	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Luppe Monfi Petpu Poapr Queel Quema Schsc Solri Sornu
+242	Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+244	Bargr
+248	Bargr
+253	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+255	Queel
+256	Agrsm
+257 	Achmi Agrsm Amoca Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+259	Lesca Schsc
+265	Luppe
+266	Achmi Agrsm Andge Petca Petpu Petvi Quema Schsc Sornu
+267	Liaas
+268	Koecr
+272	Petca Petvi Queel
+273	Achmi Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+278	Elyca Sornu
+280	Schsc
+282	Sornu
+283	Achmi Agrsm Andge Asctu Elyca Panvi Schsc Sornu
+286	Lesca Poapr Schsc Sornu
+287	Achmi Elyca Monfi Schsc Solri
+290	Monfi Solri
+291	Petpu
+292	Andge Elyca Koecr Lesca Luppe Petca Petvi Poapr Sornu
+293	Andge Asctu Lesca Luppe Petpu Queel Quema Schsc
+296	Quema
+299	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+300	Luppe Panvi
+301	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Poapr Quema Schsc Solri Sornu
+302	Liaas Luppe Monfi Quema Solri
+303	Achmi Agrsm Koecr Liaas Luppe Monfi Petca Petvi Poapr Solri
+304	Agrsm Koecr
+307	Asctu Luppe Monfi Panvi Petpu Queel Quema Schsc Solri
+308	Asctu
+311	Koecr Panvi
+313	Achmi Koecr Lesca Liaas Luppe Petca Petpu Petvi Quema
+318	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Luppe Monfi Panvi Poapr Queel Quema Schsc Solri Sornu
+322	Queel Schsc
+324	Elyca Poapr
+325	Koecr Monfi Panvi Petpu Solri
+328	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri
+329	Achmi Agrsm Amoca Andge Elyca Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+330	Andge Liaas
+331	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri
+333	Elyca
+334	Elyca Sornu
+335	Koecr Petca Petvi
+336	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Queel Quema Schsc Solri Sornu
+338	Monfi Solri
+339	Achmi Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+342	Luppe Monfi Solri

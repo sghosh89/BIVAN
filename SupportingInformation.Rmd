@@ -397,8 +397,8 @@ within each column.\label{fig_cop_pedag}}
 
 <!--additional details about Cedar creek data-->
 Above-ground biomass and percent cover data were obtained from long-term (? or short-term)
-biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by 
-@Tilman2001; @Tilman2006. In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
+biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by Tilman *et al*.
+In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
 were seeded with 1, 2, 4, 8, or 16 perennials, respectively, chosen randomly from a pool of 
 18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; 2 species of woody
 plants). All plots received, in total, 10 $gm^{-2}$ of pure live seed in May 1994 and 5 $gm^{-2}$ in May, 1995 

@@ -395,7 +395,7 @@ within each column.\label{fig_cop_pedag}}
 
 <!--***DAN: This is a dumping ground at the moment, but needs to be organized into a section that gives all the necessary details about the data-->
 
-<!--additional details about Cedar creek data-->
+<!--additional details about Cedar creek data, etc.-->
 Above-ground biomass and percent cover data were obtained from long-term (? or short-term)
 biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by Tilman *et al*.
 In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,

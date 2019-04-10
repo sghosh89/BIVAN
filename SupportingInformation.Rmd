@@ -180,7 +180,7 @@ cop_HB<-function(db,dp,plots,year,rawplot,ploton){
     li<-length(ind)
     #print(li)
     tab_temp$abs_cov[1:li]<-x$Abscover[ind]
-    tab_each_sp$avg_cov[[sp]]<-mean(tab_temp$abs_cov) # avg. over 4Quadrates for a sp.
+    tab_each_sp$avg_cov[[sp]]<-mean(tab_temp$abs_cov) # avg. over Quadrats for a sp.
    }
   
   tab_each_sp$rel_avg_cov<-tab_each_sp$avg_cov/sum(tab_each_sp$avg_cov)
@@ -394,6 +394,24 @@ within each column.\label{fig_cop_pedag}}
 # Details of the data \label{Data_details}
 
 <!--***DAN: This is a dumping ground at the moment, but needs to be organized into a section that gives all the necessary details about the data-->
+
+<!--additional details about Cedar creek data-->
+Above-ground biomass and percent cover data were obtained from long-term (? or short-term)
+biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by 
+@Tilman2001; @Tilman2006. In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
+were seeded with 1, 2, 4, 8, or 16 perennials, respectively, chosen randomly from a pool of 
+18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; 2 species of woody
+plants). All plots received, in total, 10 $gm^{-2}$ of pure live seed in May 1994 and 5 $gm^{-2}$ in May, 1995 
+with seed mass divided equally among species. Treatments were maintained by weeding manually 3-4 times a year 
+and sometimes selective herbicides were used to set up the monocultures either with only grasses or with only forbs.
+We downloaded the data on July, 2018 from Cedar Creek website \url{http://www.cedarcreek.umn.edu/research/experiments/e120} and 
+analyzed those [data](https://github.com/sghosh89/BIVAN/tree/master/Data/Ceder_creek_e120) for 6 common years 
+(1996-2000, 2007) when both biomass and percent cover data were available. Each plots were annually sampled by clipping 
+different locations each year. For each available year, we computed above-ground biomass ($gm^{-2}$) 
+and Shannon's biodiversity index (using percent cover data) averaged over the sampled strips/ quadrats taken from each 
+of 168 plots.
+
+<!--we need to add aphid and plankton data details, Lawrence will give those-->
 
 <!--The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
 unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and

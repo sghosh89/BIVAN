@@ -8,6 +8,6 @@ These data came from the biodiversity experiment (E120) conducted in Cedar Creek
 
 For our purpose of analysis, we extracted necessary data we used in our Paper and saved those extracted data in the following files as text format:
 
-(i) edited_ple120.txt : extracted from (1)
-(ii) edited_pce120.txt : extracted from (2)
-(iii) edited_plots.txt : extracted from (3)
+(i) edited_ple120.txt : extracted from (1) : used to calculate average above-ground biomass for each 168 plots
+(ii) edited_pce120.txt : extracted from (2) : used to calculate average Shannon's diversity index for each 168 plots
+(iii) edited_plots.txt : extracted from (3) : used to filter the plots left as bare ground

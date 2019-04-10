@@ -1,0 +1,13 @@
+We downloaded the following three text-based data files with descriptions on July, 2018 from Cedar Creek website http://www.cedarcreek.umn.edu/research/experiments/e120
+
+(1) e120_Plant aboveground biomass data.txt  
+(2) e120_Plant species percent cover data.txt
+(3) e120_Plot coordinates for the E120 Big Biodiversity Field.txt
+
+These data came from the biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by Tilman et al.
+
+For our purpose of analysis, we extracted necessary data we used in our Paper and saved those extracted data in the following files as text format:
+
+(i) edited_ple120.txt : extracted from (1) : used to calculate above-ground biomass averaged over all sampled strips/ quadrats for each 168 plots in each available year
+(ii) edited_pce120.txt : extracted from (2) : used to calculate Shannon's diversity index averaged over all sampled strips/ quadrats for each 168 plots in each available year
+(iii) edited_plots.txt : extracted from (3) : used to filter the plots left as bare ground

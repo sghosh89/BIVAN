@@ -169,7 +169,7 @@ cop_HB<-function(db,dp,plots,year,rawplot,ploton){
    x$Species<-trimws(x$Species) # to remove duplicated names of sp. (cutting white spaces) : e.g. 1999 : plot no 339
    uniq_sp<-sort(as.character(unique(x$Species)))  # These are the species in a particular plot
    Q<-as.character(unique(x$Quadrat))
-  
+   #cat("----------total unique quadrats = ",length(Q),"--------------------\n")
    tab_each_sp<-data.frame(sp=uniq_sp,avg_cov=0,rel_avg_cov=0)
    #cat("=====================================plot : ",plots[i],"===========================\n")
    for(sp in 1:length(uniq_sp)){

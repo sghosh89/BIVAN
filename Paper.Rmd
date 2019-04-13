@@ -71,7 +71,7 @@ Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Sur
 \newpage
 # Abstract
 
-All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information content of the relationships. Statistical tools do exist that provide a complete description of relationships, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning dataset we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe two mechanisms by which observed copula structure and tail dependence can arise in ecological data: a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to elevate copula approaches to widespread use in ecology.
+All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information content of the relationships. Other statistical tools exist that provide a complete description of relationships, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning dataset we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe two mechanisms by which observed copula structure and tail dependence can arise in ecological data: a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to elevate copula approaches to widespread use in ecology.
 
 \newpage
 # Introduction \label{Intro}
@@ -871,16 +871,16 @@ local noise, independent across time and sampling locations. We used $a=0.2$, an
 $b=0.1, -0.1, 0.5, -0.5$ in different simulations. 
 Negative values of $b$ correspond to overcompensating dynamics 
 and positive values correspond to undercompensating dynamics; larger-magnitude $b$
-mean slower return time of the model to equilibrium after a perturbation. 
+means that the model has a slower return time to equilibrium after a perturbation. 
 The $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
 $\cov(\epsilon_1,\epsilon_2)=0.8$. 
 We used $g$ equal to $g_1$ or $g_2$ in two different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise; and 
 $g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
-$g_1$ represent environmental effects that occur only for negative 
-values of the environmental variables, and $g_2$ represent environmental effects 
-that occur only for positive values. Note that both $(\epsilon_1,\epsilon_2)$
+$g_1$ represents environmental effects that occur only for negative 
+values and $g_2$ only for positive values of the environmental variables.
+Note that both $(\epsilon_1,\epsilon_2)$
 and $(\delta_1,\delta_2)$ have N copula structure, being drawn from 
 bivariate normal distributions. Hence the Moran-like mechanism discussed
 previously cannot be operating in this model.
@@ -902,7 +902,7 @@ variables measured through time in different locations can produce similar
 structure in ecological variables influenced by the environmental variables was
 largely confirmed, though similarities between environmental- and 
 ecological-variable copula structure and tail dependencies can be reduced when the
-intrinsic dynamics of the ecological variable is strongly nonlinear.
+intrinsic dynamics of the ecological variable are strongly nonlinear.
 For simulations using AR(1) models (see section on methods for Q2), copula 
 statistics were always very similar for noise and populations 
 (Fig \ref{fig_Cause4copula_scatter_C_kend_ar1}, 
@@ -979,8 +979,8 @@ for both $g_1$ and $g_2$,
 asymmetric tail dependence and non-N copula structure were visually apparent.
 We also got similar results from simulations with $b=\pm 0.5$ (Figs \ref{SM-fig_ms_asym_b_0.5} - 
 \ref{SM-fig_ms_asym_b_-0.5}).
-Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, resp., $g_2$) 
-produced lower-tail (resp., upper-tail) dependence in the ecological variable.
+Lower-tail (respectively, upper-tail) effects of the noise ($g_1$, respectively, $g_2$) 
+produced lower-tail (respectively, upper-tail) dependence in the ecological variable.
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) confirmed that
 non-Normal copula was always best fit for $b= \pm 0.1$ and $\pm 0.5$, but their model 
 AIC-wieght averaged tail dependence could not reflect the asymmetry for each case 
@@ -1154,7 +1154,7 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 # Discussion \label{Discussion}
 
 <!--what we did and why is it important to study?-->
-We showed that non-N copula structure and asymmetric tail dependence are 
+We have shown that non-N copula structure and asymmetric tail dependence are 
 exceedingly common in datasets that range across multiple sub-disciplines
 and levels of organization in ecology, in spite of the fact that no published 
 ecological research we are aware of has 
@@ -1201,7 +1201,11 @@ has a geography of the kind studied in Walter et al.-->
 One may expect our Moran-like mechanism for non-N copula structure and tail dependence to 
 operate commonly, because Moran effects are common [@Liebhold2004], and 
 non-N and tail-dependent copula structures have often been found in prior analyses of 
-environmental variables. If large meteorological events are also spatially widespread, then
+environmental variables. A recent study [@agliardi2019relationship] found non-N 
+copulas (mainly Gumbel and Survival Clayton) were better fit in modelling the 
+upper tail dependence between extreme large values for global 
+temperature and annual mean green house gas concentrations for an extensively
+long datasets (1880-2017). If large meteorological events are also spatially widespread, then
 one would expect environmental variables associated with these events to take extreme
 values simultaneously across large spatial areas, producing tail dependence in measurements
 made at different locations. Non-extreme values, not associated with extreme events, may
@@ -1322,7 +1326,7 @@ macro-scale evolutionary biology?-->
 # Acknowledgments
 
 We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). 
-The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
+This survey, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
 
 \clearpage
 

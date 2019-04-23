@@ -34,9 +34,6 @@ def read_trait_offsets(csv_filepath):
         ri = iter(reader)
         header = next(ri)
         for n, row in enumerate(ri):
-            if n > 10:
-                warn('cutting off traits at 10 values!')
-                break
             p = tuple([float(row[-2]), float(row[-1])])
             trait_pairs.append(p)
     return tuple(trait_pairs)

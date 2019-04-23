@@ -1,0 +1,1 @@
+phylo-trait-sim.py DEBUG: setting RNG seed=6156780594814132835

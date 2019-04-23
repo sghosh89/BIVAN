@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%% Simulation text
+
+%%%%%%%%%%%%%%%%%%%%%%%% Discussion text
+
+Performing statistical tests for associations between continuous traits in different species
+    was a primary motivating example of phylogenetic comparative methods.
+For example, Felsenstein's method of phylogenetically independent contrasts 
+    \citep{Felsenstein1985} is currently the second most-cited paper in the history
+    of the journal {\em The American Naturalist} \citep{HueyGT2019}.
+Frustratingly, the field still lacks a dependable procedure for dealing with branch lengths, 
+    which are a crucial input to the method.
+Ideally, the branch lengths used to correct for phylogenetic effects would represent
+    the expected amounts of change for the characters that are being analyzed.
+Because researchers almost never have a reliable method for providing such branch lengths,
+    most researchers rely on ultrametric trees -- those for which the branch
+    length can be treated as a proxy for the duration of the branch in time.
+Frequently these branch lengths are transformed to assess sensitivity to different 
+    assumptions about the degree of phylogenetic inertia displayed by the traits
+    under study \citep[See recent reviews, ][]{Ives2018,Harmon2018}.
+Even if one were able to simply use a time-based set of branch lengths, assign
+    dates to nodes in phylogenies is difficult.
+DNA sequence data can provide estimates of branch lengths, but these estimates
+    are dependent on the adequacy of models which correct sequences for multiple
+    substitutions occurring at the same location.
+Biases in estimating the evolutionary distance can affect down stream analyses \citep[See][]{Phillips2009}.
+Additionally, changes
+    in the rate of molecular evolution make the estimation of dates difficult \citep[See][]{HeathM2014} even when branch lengths are accurately estimated.
+
+Without reliable branch length estimates, it is difficult to interpret the significance
+    of the magnitude of changes in traits across a tree.
+Developing tests of association based on copula structure could lead the way to more
+    robust methods for studying associations when we lack defensible estimates of
+    branch lengths.
+We note that our phylogenetic analyses here consisted merely of simulations to assess
+    whether interesting copula structure in a simple evolutionary process could 
+    leave a detectable signal on the data.
+Significant work remains to be done before we have a copula-based method for 
+    analyzing data on a phylogenetic tree.
+
+%%%%%%%%%%%%%%%%%%%%%%%%  Refs
+
+@article{Phillips2009,
+title = "Branch-length estimation bias misleads molecular dating for a vertebrate mitochondrial phylogeny",
+journal = "Gene",
+volume = "441",
+number = "1",
+pages = "132 - 140",
+year = "2009",
+note = "Phylogenomics and its Future: Devoted to Masami Hasegawa",
+issn = "0378-1119",
+doi = "https://doi.org/10.1016/j.gene.2008.08.017",
+url = "http://www.sciencedirect.com/science/article/pii/S0378111908004150",
+author = "Matthew J. Phillips",
+keywords = "Fossil calibration, Maximum likelihood, Mitochondrion, Model misspecification, RY-coding",
+abstract = "Despite recent methodological advances in inferring the time-scale of biological evolution from molecular data, the fundamental question of whether our substitution models are sufficiently well specified to accurately estimate branch-lengths has received little attention. I examine this implicit assumption of all molecular dating methods, on a vertebrate mitochondrial protein-coding dataset. Comparison with analyses in which the data are RY-coded (AG→R; CT→Y) suggests that even rates-across-sites maximum likelihood greatly under-compensates for multiple substitutions among the standard (ACGT) NT-coded data, which has been subject to greater phylogenetic signal erosion. Accordingly, the fossil record indicates that branch-lengths inferred from the NT-coded data translate into divergence time overestimates when calibrated from deeper in the tree. Intriguingly, RY-coding led to the opposite result. The underlying NT and RY substitution model misspecifications likely relate respectively to “hidden” rate heterogeneity and changes in substitution processes across the tree, for which I provide simulated examples. Given the magnitude of the inferred molecular dating errors, branch-length estimation biases may partly explain current conflicts with some palaeontological dating estimates."
+}
+
+
+@misc{Ives2018,
+  title={Mixed and phylogenetic models: a conceptual introduction to correlated data},
+  author={Ives, AR},
+  year={2018},
+  publisher={Leanpub}
+}
+
+@article{Harmon2018,
+  title={Phylogenetic comparative methods: learning from trees},
+  author={Harmon, LJ},
+  journal={Self published under a CC-BY-4.0 license},
+  year={2018}
+}
+
+@article{HeathM2014,
+  title={Bayesian inference of species divergence times},
+  author={Heath, TA and Moore, BR},
+  journal={Bayesian phylogenetics: methods, algorithms, and applications},
+  pages={277--318},
+  year={2014},
+  publisher={Sinauer Associates, Sunderland, MA}
+}

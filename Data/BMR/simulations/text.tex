@@ -1,4 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%% Simulation text
+We simulated bivariate character evolution on an estimate of 
+  phylogeny for 817 mammal species taken from \citep{GenoudIM2018}.
+The simulator was written in Python and used version 4.4 of 
+  the DendroPy \citep{DendroPy} package.
 
 %%%%%%%%%%%%%%%%%%%%%%%% Discussion text
 
@@ -78,3 +82,37 @@ abstract = "Despite recent methodological advances in inferring the time-scale o
   year={2014},
   publisher={Sinauer Associates, Sunderland, MA}
 }
+
+
+@article{GenoudIM2018,
+author = {Genoud, Michel and Isler, Karin and Martin, Robert D.},
+title = {Comparative analyses of basal rate of metabolism in mammals: data selection does matter},
+journal = {Biological Reviews},
+volume = {93},
+number = {1},
+pages = {404-438},
+keywords = {basal rate of metabolism, BMR, brain, encephalization, allometric scaling, phylogenetic generalized least-squares regression, mammals},
+doi = {10.1111/brv.12350},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/brv.12350},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/brv.12350},
+year = {2018}
+}
+
+
+@article{DendroPy,
+    author = {Sukumaran, Jeet and Holder, Mark T.},
+    title = "{DendroPy: a Python library for phylogenetic computing}",
+    journal = {Bioinformatics},
+    volume = {26},
+    number = {12},
+    pages = {1569-1571},
+    year = {2010},
+    month = {04},
+    abstract = "{Summary: DendroPy is a cross-platform library for the Python programming language that provides for object-oriented reading, writing, simulation and manipulation of phylogenetic data, with an emphasis on phylogenetic tree operations. DendroPy uses a splits-hash mapping to perform rapid calculations of tree distances, similarities and shape under various metrics. It contains rich simulation routines to generate trees under a number of different phylogenetic and coalescent models. DendroPy's data simulation and manipulation facilities, in conjunction with its support of a broad range of phylogenetic data formats (NEXUS, Newick, PHYLIP, FASTA, NeXML, etc.), allow it to serve a useful role in various phyloinformatics and phylogeographic pipelines.Availability: The stable release of the library is available for download and automated installation through the Python Package Index site (http://pypi.python.org/pypi/DendroPy), while the active development source code repository is available to the public from GitHub (http://github.com/jeetsukumaran/DendroPy).Contact:jeet@ku.edu}",
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/btq228},
+    url = {https://doi.org/10.1093/bioinformatics/btq228},
+    eprint = {http://oup.prod.sis.lan/bioinformatics/article-pdf/26/12/1569/809362/btq228.pdf},
+}
+
+

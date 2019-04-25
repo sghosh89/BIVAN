@@ -56,7 +56,8 @@ d<-d[,c("SOCstock100","TSNstock100","lat","long")]
 d<-na.omit(d)
 pdf("./Results/SoilCNraw.pdf")
 op<-par(mar=c(6, 6, 0.2, 2.1))
-plot(d[,1],d[,2],type="p",col="black",xlab="Soil C",ylab="Soil N",cex.lab=2.5,cex.axis=2.5)
+d_log<-log10(d[,c(1:2)])
+plot(d_log[,1],d_log[,2],type="p",col="black",xlab="log(Soil C)",ylab="log(Soil N)",cex.lab=2.5,cex.axis=2.5)
 par(op)
 dev.off()
 ```
@@ -66,7 +67,7 @@ dev.off()
 source("getcopula.R")
 #convert to a copula and plot
 pdf("./Results/SoilCNcop.pdf")
-v_CN<-getcopula(d=d[,c(1:2)],rankon=T,ploton=T) 
+v_CN<-getcopula(d=d_log,rankon=T,ploton=T) 
 dev.off()
 ```
 

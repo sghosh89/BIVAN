@@ -26,10 +26,10 @@ d1<-readRDS("./Data/dataForShymolinaCoord.rds")
 d1<-d1[,c("SOCstock100","TSNstock100")]
 d1<-na.omit(d1)
 d1c<-copula::pobs(d1)
-plot(d1$SOCstock100,d1$TSNstock100,type='p',pch=pchval,cex=cexvalpts,
+plot(log10(d1$SOCstock100),log10(d1$TSNstock100),type='p',pch=pchval,cex=cexvalpts,
      col="grey")
-mtext("Soil C",1,1.15)
-mtext("Soil N",2,1.15)
+mtext("log(Soil C)",1,1.15)
+mtext("log(Soil N)",2,1.15)
 mtext("A",3,-1.4,cex=cexvalpl,adj=.05)
 
 #panel 2 : raw data plot for Birds' BMR

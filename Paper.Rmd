@@ -631,7 +631,7 @@ with Cedar creek data sampled over 168 plots from other available years (1996-19
 2007 copula structures showed no dependence between two variables concerned, for other years (1997-1999), 
 we found similar results as of year 2000 (i.e. best fit non-Normal copula and overall lower tail-dependence).
 Due to smaller sample size relative to other three bivariate datasets, we chose a wider range with 
-non-parametric analysis (see Appendix \ref{SI-Q1bivarnonparam}). Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
+non-parametric analysis (Appendix \ref{SM-Q1bivarnonparam}). Detailed results for each dataset are in Tables \ref{SM-tab_soilCNfit} - \ref{SM-tab_cc_asym_2000} and Figs. \ref{SM-fig_soilCN_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
 
 We present our analysis of the green spruce aphid abundance data (see Data)
 as an example multivariate analysis.
@@ -665,7 +665,7 @@ indicating that lower-tail dependence across space was much stronger than upper-
 dependence. Thus the spatial synchrony of rarity in green spruce aphid is stronger 
 than the spatial synchrony of outbreak events. This also answers the third part of Q1.
 Nonparametric statistics verified that tail dependence was asymmetric for the green 
-spruce aphid abundance data (Appendix \ref{SM-Q1multvarnonparam}).
+spruce aphid abundance data (Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatial_resamp}).
 
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes some of our results using our
@@ -687,7 +687,7 @@ or marginally stronger lower- than upper-tail dependence
 (Table \ref{tab_multivar_summary}, rows 7-9), whereas leaf-curling plum aphid first flight
 data showed the reverse. Asymmetry results were verified by nonparametric approaches 
 <!--(e.g., Table \ref{tab_multivar_summary}, row 10)-->
-(Appendix \ref{SM-Q1multvarnonparam}). Detailed results are in 
+(Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatial_resamp}). Detailed results are in 
 Tables \ref{SM-tab_count_bestcop}-\ref{SM-tab_methane_resamp} and 
 Figs \ref{SM-fig_aphid_count}-\ref{SM-fig_methane}.
 We also carried out the same analyses for abundance and first-flight data for the 18 
@@ -781,8 +781,8 @@ knitr::kable(tab_multivar_summary[1:9,],
 
 Having demonstrated that non-N copula structure and asymmetric tail dependence are common
 features of ecological data, we addressed Q2 by exploring via mathematical 
-models two possible mechanisms of this structure which 
-seem likely to operate in diverse ecological scenarios. The first mechanism 
+models and simulations three possible mechanisms of this structure which 
+seem likely to operate in diverse ecological and evolutionary scenarios. The first mechanism 
 is an extension of the well known Moran
 effect, and was summarized conceptually in the Introduction. 
 It explores the hypothesis that non-N copula structure and asymmetric tail dependence 
@@ -830,30 +830,6 @@ correct that copula structure between locations of environmental noise can be
 transmitted to produce similar dependence structure for ecological variables, 
 plots should be similar for populations and noises. 
 
-<!--***DAN: Note to self, this model, and also the other one we study in this section,
-are actually much more general than population. Should replace P_i with E_i where E_i is
-just some ecological variable. Could be deviaitons from a pop from carrying capacity, could be a 
-biogeochemical variable, could maybe even be an evolutinary variable. Anything that is
-affected by an environmental variable and could reasonably be modelled by an AR process. 
-So the generalization to biogeochemical and community
-data seems pretty straightforward. Need to think this through and reword the corresponding
-part of the intro to encompass this greater generality. How would the evolutionary case work?
-Well, suppose the two "patches" are actually traits, and the perturbations epsilon are somehow
-the "drift events" or something like that? This does not really make sense, strictly speaking,
-now that I am thinking about it, but maybe the model could be modified to make it make sense?
-At least I have straightforward generalization to biogeochem and community cases. 
-More on evolutionary: suppose we model traits as a bivariate random walk where the perturbations
-in the traits are related with a copula with some tail dependence. Suppose you have a tree and 
-you model evolution down the tree in this way and then look at the bivariate distribution of
-trait on the tips of the tree. What do you get? I guess you get some copula structure? maybe
-this thinking can lead to some isnights into how copula structure we observed in the species
-trait data might have come about?-->
-
-<!--***DAN: note to self. Suppose deviations from the 
-regression line for log met rate v log M are 
-more costly at one end than at another, for whatever reason. That is a proximate
-mechanism for asymmetric tail dependence?-->
-
 The second mechanism we explored, which was also summarized in the 
 Introduction,
 relates to Liebig's law of the minimum, or, more generally, to the fact that 
@@ -894,6 +870,29 @@ simulation outputs to discover if the model could
 give rise to non-N copula structure and asymmetric tail dependence in the 
 ecological variable, in spite of the absence of such structure in the driver
 environmental variables.
+
+The third mechanism we explored is evolutionary, and pertains to bivariate 
+trait data across species, e.g., to our bird and mammal BMR versus body mass 
+data. This mechanism is a hypothetical explanation for the right tail dependence
+observed in those data (Fig. \ref{fig_biv_multi_raw_cop}F,G). 
+We simulated bivariate character evolution on an estimate of 
+phylogeny for $817$ mammal species taken from @GenoudIM2018.
+The root character state and the change 
+across each branch were randomly chosen from matrices of one million different
+bivariate draws from distributions showing one of five distinct types of copula 
+structure: 1) extreme left-tail dependence, 2) moderate left-tail dependence,
+3) symmetric tail dependence, 4) moderate right-tail dependence, and 5) extreme
+right-tail dependence (Appendix \ref{SM-evol_mech} for details). 
+All marginal distributions were standard normal, and distributions all had Spearman 
+correlation $0.875$, so simulations assess the impact of copula structure of character
+changes on evolutionary outcomes, controlling for marginals and correlations of character
+changes. For each of the five copula structures, mammalian character
+evolution was simulated 100 times. For each simulation, symmetry of tail dependence 
+of the two characters was assessed across the phylogeny tips.
+We hypothesized that cases 1 and 2 above would yield stronger left- than right-tail 
+dependence, and cases 4 and 5 would yield the reverse. 
+The simulator was written in Python and used version 4.4 of the DendroPy 
+package [@DendroPy].
 
 # Results for Q2: Moran-like effects and asymmetric dependencies produce non-normal copula structure\label{Results_Q2}
 
@@ -998,7 +997,9 @@ $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the t
 \end{center}
 \end{figure}
 
-<!--***DAN: Maybe need to think about mechanisms for biogeochemical, evolutionary, and community data-->
+Our hypothesis was correct that asymmetric tail dependence in evolutionary changes in bivariate
+characters can give rise to similarly asymmetric tail dependence in character distributions across
+phylogeny tips (Appendix \ref{SM-evol_mech}). This topic is revisited in the Discussion.
 
 <!--Question 3 analyses-->
 # Background, concepts and methods for Q3: Consequences of non-normal copula structure for our understanding of ecology \label{Consequences}
@@ -1181,7 +1182,7 @@ tail dependence between local populations. In our view, our results demonstrate 
 ecological phenomena, complete understanding is impossible without 
 characterizing dependence between variables using copulas. 
 
-<!--8) A para about what is available in the copula and VineCopula packages. Maybe make it a broader para about emthods, and state in there that we developed some new surrogate methods that may be broadly useful for researches trying to incorporate copula approaches.-->
+<!--A para about what is available in the copula and VineCopula packages. Maybe make it a broader para about emthods, and state in there that we developed some new surrogate methods that may be broadly useful for researches trying to incorporate copula approaches.-->
 Copula approaches are
 well developed, statistically [@joe2014_dependence; @nelsen2006_copula], and 
 computer implementations exist (e.g., the `copula` and 
@@ -1246,32 +1247,33 @@ Environmental variables influence not only ecological populations, but also phys
 community, and ecosystem functioning measurements. So our two mechanism may well operate
 to produce spatial copula structure in a wide variety of ecological measurements.
 
-<!--4) We have only given two mechanisms, but there are likely to be others, and discoverig
-additional mechanisms of copula structure is certain worthy of future work. Maybe I can think
-of some ideas and make a paragraph.
-5) If Van gives us some ideas, they may fit in the Discussion here.
-6) Maybe give Holder a bunch of draws from a bivariate dist with standard normals marginals but with 
-some tail-dependent copula structure and ask him to simulate evolution down a mammal or bird tree and
-see what you get. Then give him the other tail dependence, and no tail dependence (bivariate standard
-normal). Maybe this will lead to more results, and also a Discussion para on why evolutionary steps 
-might be tail dependent. A result that tail dependent steps lead to tail dependent character dists
-in the end would replace one question (why are there tail-dependent characters) with another (why are
-there tail dependent steps). Of course it could also be the case that steps are not tail dependent and 
-the tail dependence of characters arises in another way. Would also lead in to alternative thinking in 
-evolutionary biology - Mark could write a para on why it would matter for evolutionary biol if there are 
-tail dependent steps.
--->
-Other mechanisms that we have not considered likely also operate to produce copula structure
-in ecological datasets.
-For instance, we detected non-N structure and tail dependence in our 
-metabolic rate-versus-body mass datasets,
-but the mechanisms discussed above do not apply directly in a macroevolutionary context.
-We hope by enumerating two potential mechanisms we help inspire additional theoretical and
-empirical research on the
-potentially numerous mechanisms of copula structure that may apply in diverse ecological datasets.
-<!--***DAN: beef this up if/when we get inputs from Mark and Van-->
+<!--Holder stuff-->
+Our simulations of character evolution suggest the hypothesis that evolutionary
+changes in bird and mammal BMR and body size may exhibit right-tail dependence. This is
+a hypothesis only, because the tail dependence of Fig. \ref{fig_biv_multi_raw_cop}F,G
+could have come about in another, unknown way: our simulations show that tail dependence 
+in evolutionary changes is sufficient, but may not be necessary, to produce tail
+dependence in characters of extant species. Even if the hypothesized mechanism
+is correct, our results simply replace one question, i.e., why do we see right-tail
+dependence between BMR and body mass for birds and mammals, with another question,
+i.e., why might we see right-tail dependence in evolutionary changes of these traits.
+See Appendix \ref{evol_mech} for additional thoughts on the potential importance of 
+copulas for studies of character evolution when phylogeny branch lengths are not available.
 
-<!--***DAN: some consequences paragraphs next-->
+<!-- We have only given three mechanisms, but there are likely to be others, and discoverig
+additional mechanisms of copula structure is certain worthy of future work. -->
+Other mechanisms that we have not considered likely also operate to produce copula structure
+in ecological and evolutionary datasets, and should be considered in future work. For instance, 
+measurement error may modify copula structure, though one would have to have information
+on the precise nature of measurement error in a dataset to explore its influence. 
+Not only did the models we used to explore mechanisms not consider measurement error, 
+they were extremely simple in other respects, as well, not including phenomena such as 
+delayed density dependence, dispersal, stage structure in population dynamics, and trophic
+interactions.
+We hope by enumerating three potential mechanisms we help inspire additional research on the
+potentially numerous mechanisms of copula structure that may apply in diverse datasets.
+
+<!--some consequences paragraphs next-->
 
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
 Our results showed that the skewness of the 
@@ -1319,14 +1321,15 @@ can affect extinction risk. It seems
 important for future work to explore whether such effects are of sufficient 
 commonness and magnitude to interest conservationists. 
 
-<!--Maybe a para from Holder on his thoughts in the importance of copulas for
-macro-scale evolutionary biology?-->
-
-
 # Acknowledgments
 
-We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). 
-This survey, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
+We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data 
+extraction; and Joel E. Cohen, David Tilman, Lauren Hallet, Jim Bever, Jonathan Walter, Thomas 
+Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey 
+(RIS). 
+The RIS, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council 
+under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National 
+Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
 
 \clearpage
 

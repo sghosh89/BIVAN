@@ -2211,6 +2211,71 @@ This corresponds to
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
 
+# Hypothetical evolutionary mechanism for tail dependence between traits \label{evol_mech}
+
+\noindent The matrices from which root character states and changes 
+across phylogeny branches were randomly chosen were generated as follows.
+For extreme right-tail dependent noise, we first produced
+a $1000000$ by $2$ matrix, $m$, of 
+independent standard-normal random draws. Then, each row of $m$ 
+was identified for a first set of modifications randomly 
+and independently with a $50\%$ chance; 
+for those rows identified, every element of the row was replaced with the 
+absolute value of the first element of the row (including the first element itself).
+For other rows, every element in the row was replaced by the negative of its
+own absolute value. This produces right-tail dependent noise, normally distributed
+for each location. If left-tail dependent noise was desired, we took the negative of the
+entire matrix. The moderately left-tail dependent matrix was based on a C copula 
+with parameter chosen (using the `iRho` function in the `copula` package) so that
+the Spearman correlation would be the same as for the extreme tail dependence 
+datasets. The moderately right-tail dependent matrix and the symmetric tail dependence
+matrix were constructed similarly, but using an SC copula and a N copula,
+respectively. 
+
+Once character evolution was simulated 100 times for each dependence structure, 
+we had 817 bivariate characters for each of 500 simulations. 
+<!--***DAN: Shya to insert as the rest of this paragraph a description of what 
+you did to each of these datasets to assess symmetry or asymmetry of tail dependence-->
+
+<!--***DAN: Shya, please insert a new para here with a description of results, including a new figure with 5 panels showing the 5 histograms you showed me.-->
+
+<!--***DAN: Dan does not understand the following two paragraphs yet, but is planning to
+speak to Mark about them-->
+Performing statistical tests for associations between continuous traits in different species
+    was a primary motivating example of phylogenetic comparative methods.
+For example, Felsenstein's method of phylogenetically independent contrasts 
+    [@Felsenstein1985] is currently the second most-cited paper in the history
+    of the journal the American Naturalist [@HueyGT2019].
+Frustratingly, the field still lacks a dependable procedure for dealing with branch lengths, 
+    which are a crucial input to the method.
+Ideally, the branch lengths used to correct for phylogenetic effects would represent
+    the expected amounts of change for the characters that are being analyzed.
+Because researchers almost never have a reliable method for providing such branch lengths,
+    most researchers rely on ultrametric trees -- those for which the branch
+    length can be treated as a proxy for the duration of the branch in time.
+Frequently these branch lengths are transformed to assess sensitivity to different 
+    assumptions about the degree of phylogenetic inertia displayed by the traits
+    under study [@Ives2018;@Harmon2018].
+Even if one were able to simply use a time-based set of branch lengths, assigning
+    dates to nodes in phylogenies is difficult.
+DNA sequence data can provide estimates of branch lengths, but these estimates
+    are dependent on the adequacy of models which correct sequences for multiple
+    substitutions occurring at the same location.
+Biases in estimating the evolutionary distance can affect down stream analyses [@Phillips2009].
+Additionally, changes
+    in the rate of molecular evolution make the estimation of dates difficult [@HeathM2014] even when branch lengths are accurately estimated.
+
+Without reliable branch length estimates, it is difficult to interpret the significance
+    of the magnitude of changes in traits across a tree.
+Developing tests of association based on copula structure could lead the way to more
+    robust methods for studying associations when we lack defensible estimates of
+    branch lengths.
+We note that our phylogenetic analyses here consisted merely of simulations to assess
+    whether interesting copula structure in a simple evolutionary process could 
+    leave a detectable signal on the data.
+Substantial work remains to be done before we have a copula-based method for 
+    analyzing data on a phylogenetic tree.
+
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")

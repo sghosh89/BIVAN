@@ -2263,18 +2263,22 @@ DNA sequence data can provide estimates of branch lengths, but these estimates
     substitutions occurring at the same location.
 Biases in estimating the evolutionary distance can affect down stream analyses [@Phillips2009].
 Additionally, changes
-    in the rate of molecular evolution make the estimation of dates difficult [@HeathM2014] even when branch lengths are accurately estimated.
+    in the rate of molecular evolution make the estimation of dates difficult [@HeathM2014] even when branch lengths in time are accurately estimated.
 
 Without reliable branch length estimates, it is difficult to interpret the significance
     of the magnitude of changes in traits across a tree.
-Developing tests of association based on copula structure could lead the way to more
+Developing tests of association based on copula structure may possibly lead the way to more
     robust methods for studying associations when we lack defensible estimates of
-    branch lengths.
+    branch lengths. 
 We note that our phylogenetic analyses here consisted merely of simulations to assess
     whether interesting copula structure in a simple evolutionary process could 
     leave a detectable signal on the data.
 Substantial work remains to be done before we have a copula-based method for 
-    analyzing data on a phylogenetic tree.
+    analyzing data on a phylogenetic tree. 
+But the nonparametric nature of approaches
+    based solely on data ranks, as some of our copula methods are, may be a promising avenue for 
+    avoiding inaccuracies that arise via the highly structured model assumptions implicit
+    in the method of phylogenetically independent contrasts and related methods.
 
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}

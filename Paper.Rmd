@@ -1257,7 +1257,7 @@ dependence in characters of extant species. Even if the hypothesized mechanism
 is correct, our results simply replace one question, i.e., why do we see right-tail
 dependence between BMR and body mass for birds and mammals, with another question,
 i.e., why might we see right-tail dependence in evolutionary changes of these traits.
-See Appendix \ref{evol_mech} for additional thoughts on the potential importance of 
+See Appendix \ref{SM-evol_mech} for additional thoughts on the potential importance of 
 copulas for studies of character evolution when phylogeny branch lengths are not available.
 
 <!-- We have only given three mechanisms, but there are likely to be others, and discoverig

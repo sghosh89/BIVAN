@@ -2233,11 +2233,33 @@ matrix were constructed similarly, but using an SC copula and a N copula,
 respectively. 
 
 Once character evolution was simulated 100 times for each dependence structure, 
-we had 817 bivariate characters for each of 500 simulations. 
-<!--***DAN: Shya to insert as the rest of this paragraph a description of what 
-you did to each of these datasets to assess symmetry or asymmetry of tail dependence-->
+we had 817 bivariate characters for each of 500 simulations. We generated 500 bivariate copulas 
+each made of 817 points. To assess the symmetry or asymmetry of tail dependence, we computed 
+our three non-parametric statistics ($\cor$, $\Ps$, $\Dsq$) on both extreme tips (lower, henceforth subscripted with `l` 
+and upper, henceforth subscripted with `u`) of each copula.
+To measure lower tail and upper tail statistics we used the bounds as $(l_b=0,u_b=0.2)$ and 
+$(l_b=0.8,u_b=1)$, respectively. Therefore, positive (or negative) difference of tail dependence statistics
+($\cor_l-\cor_u$, $\Ps_l - \Ps_u$ and $\Dsq_u - \Dsq_l$) would indicate asymmetry in dependence structure with
+stronger association in lower tail (or upper tail) of the bivariate copula. 
 
-<!--***DAN: Shya, please insert a new para here with a description of results, including a new figure with 5 panels showing the 5 histograms you showed me.-->
+Five separate histograms were made with those 500 $\cor_l-\cor_u$ statistics, where each 100 
+sets were representative of 
+five different groups of simulations. These five groups of simulations used random draws from
+1) extreme left-tail, 2) moderate left-tail,
+3) symmetric tail (bivariate `N` copula), 4) moderate right-tail,
+and 5) extreme right-tail dependence copula, respectively, as two traits evolved through each branch.
+Five histograms each consisting 100 $\Ps_l - \Ps_u$ statistics and another five histograms each consisting
+100 $\Dsq_u - \Dsq_l$ statistics were produced in a similar way. Fig. \ref{fig_cop_evo} represents 
+three statistics for each five sets of dependence structure. If most of the statistics showed major
+occurrence on either side of zero line (vertical dashed line in Fig. \ref{fig_cop_evo}), then
+asymmetry in copula structure was confirmed. Fig. \ref{fig_cop_evo}(A-C, D-F) showing 
+stronger lower tail dependence with three statistics majorly distributed 
+on positive side were consistent with left tail-dependent copula as mentioned (1) and (2), respectively. 
+Similarly, Fig. \ref{fig_cop_evo}(J-L, M-O) showing 
+stronger upper tail dependence with three statistics majorly distributed 
+on negative side were consistent with right tail-dependent copula as mentioned (4) and (5), respectively.
+Evenly distributed tail dependence-difference statistics (see Fig. \ref{fig_cop_evo}G-I) 
+around zero line was indicative of symmetric dependence as emerged from bivariate normal copula.
 
 <!--***DAN: Dan does not understand the following two paragraphs yet, but is planning to
 speak to Mark about them-->
@@ -4091,6 +4113,47 @@ lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
+
+<!--Following chunk is to examine the hypothesis for third probable mechanism : 
+asymmetric tail dependence in evolutionary changes in bivariate characters can give
+rise to similarly asymmetric tail dependence in character distributions across phylogeny tips-->
+
+```{r mechanism_evo_cop, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("explore_evo_cop.R"),mtime("CopulaFunctions_flexible.R"))}
+set.seed(seed)
+
+source("explore_evo_cop.R")
+```
+
+<!--adding plots showing results to confirm hypothesis behind third mechanism-->
+\begin{figure}[!h]
+\textbf{ \hspace{6.5 cm} (A) \hspace{2 cm} (B) \hspace{2 cm} (C)} \\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeL_hist_taildep.pdf}\\
+\end{center}
+\textbf{ \hspace{6.5 cm} (D) \hspace{2 cm} (E) \hspace{2 cm} (F)} \\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatL_hist_taildep.pdf}\\
+\end{center}
+\textbf{ \hspace{6.5 cm} (G) \hspace{2 cm} (H) \hspace{2 cm} (I)} \\
+\vspace{-0.7 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/BivNormal_hist_taildep.pdf}\\
+\end{center}
+\textbf{ \hspace{6.5 cm} (J) \hspace{2 cm} (K) \hspace{2 cm} (L)} \\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatR_hist_taildep.pdf}\\
+\end{center}
+\textbf{ \hspace{6.5 cm} (M) \hspace{2 cm} (N) \hspace{2 cm} (O)} \\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeR_hist_taildep.pdf}\\
+\caption[Non-parametric statistics to check probable mechanism behind asymmetric tail dependence in character distributions across phylogeny tips]{Three measures of asymmetric tail dependence using non-parametric statistics ($\cor,\Ps$ and $\Dsq$)
+on lower ($l_b=0,u_b=0.2$) and upper ($l_b=0.8,u_b=1$) tips confirms our hypothesis that copula structure in evolutionary changes in bivariate characters can give rise to similar tail dependent copula in character distributions across phylogeny tips (for details see Appendix \ref{evol_mech}). Stronger lower tail dependence (distributed more on positive values) was found in bivariate traits when (A-C) extreme left tail and (D-F) moderately left tail dependent copula was used in evolutionary shifts through each branch. Similarly, non-parametric statistics showed symmetric tail dependence for (G-I) normal copula and stronger upper tail dependence for (J-L) moderately right tail and (M-O) extreme right tail dependent copula, respectively.\label{fig_cop_evo}}
+\end{center}
+\end{figure}
 
 <!--Following chunk examine the consequence of non-Normal copula atructure on skewness using green spruce aphid abundance data-->
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}

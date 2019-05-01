@@ -142,23 +142,26 @@ ans<-do_evo_NPA(coplist=coplist,bound = 0.2)
 saveRDS(ans,paste(resloc,nametag,"_NPA_results.RDS",sep=""))
 
 pdf(paste(resloc,nametag,"_hist_taildep.pdf",sep=""),height=2,width=6)
-op<-par(mfrow=c(1,3),mar=c(5,5,0.5,1),mgp=c(3.5,1,0))
+op<-par(mfrow=c(1,3),mar=c(5,5,2,1),mgp=c(3.5,1,0))
 
 res<-ans$CorlmCoru_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
      #main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$PlmPu_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$D2umD2l_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
@@ -173,23 +176,26 @@ resloc<-"./Results/BMR_results/evo_cop/"
 saveRDS(ans,paste(resloc,nametag,"_NPA_results.RDS",sep=""))
 
 pdf(paste(resloc,nametag,"_hist_taildep.pdf",sep=""),height=2,width=6)
-op<-par(mfrow=c(1,3),mar=c(5,5,0.5,1),mgp=c(3.5,1,0))
+op<-par(mfrow=c(1,3),mar=c(5,5,2,1),mgp=c(3.5,1,0))
 
 res<-ans$CorlmCoru_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$PlmPu_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$D2umD2l_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
@@ -204,23 +210,26 @@ resloc<-"./Results/BMR_results/evo_cop/"
 saveRDS(ans,paste(resloc,nametag,"_NPA_results.RDS",sep=""))
 
 pdf(paste(resloc,nametag,"_hist_taildep.pdf",sep=""),height=2,width=6)
-op<-par(mfrow=c(1,3),mar=c(5,5,0.5,1),mgp=c(3.5,1,0))
+op<-par(mfrow=c(1,3),mar=c(5,5,2,1),mgp=c(3.5,1,0))
 
 res<-ans$CorlmCoru_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$PlmPu_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$D2umD2l_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
@@ -235,23 +244,26 @@ resloc<-"./Results/BMR_results/evo_cop/"
 saveRDS(ans,paste(resloc,nametag,"_NPA_results.RDS",sep=""))
 
 pdf(paste(resloc,nametag,"_hist_taildep.pdf",sep=""),height=2,width=6)
-op<-par(mfrow=c(1,3),mar=c(5,5,0.5,1),mgp=c(3.5,1,0))
+op<-par(mfrow=c(1,3),mar=c(5,5,2,1),mgp=c(3.5,1,0))
 
 res<-ans$CorlmCoru_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$PlmPu_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$D2umD2l_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
@@ -266,23 +278,26 @@ resloc<-"./Results/BMR_results/evo_cop/"
 saveRDS(ans,paste(resloc,nametag,"_NPA_results.RDS",sep=""))
 
 pdf(paste(resloc,nametag,"_hist_taildep.pdf",sep=""),height=2,width=6)
-op<-par(mfrow=c(1,3),mar=c(5,5,0.5,1),mgp=c(3.5,1,0))
+op<-par(mfrow=c(1,3),mar=c(5,5,2,1),mgp=c(3.5,1,0))
 
 res<-ans$CorlmCoru_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(cor[l]-cor[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$PlmPu_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(P[l]-P[u]),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 
 res<-ans$D2umD2l_list
 mres<-round(median(res),4)
-hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main="")
+n<-sum(res<=0)
+hist(res,border=F,col="grey",breaks = 10,xlab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=1.5)
 #     main=paste("median=",mres,sep=""))
 abline(v=0,lty="dashed")
 

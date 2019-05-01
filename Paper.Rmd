@@ -876,7 +876,7 @@ trait data across species, e.g., to our bird and mammal BMR versus body mass
 data. This mechanism is a hypothetical explanation for the right tail dependence
 observed in those data (Fig. \ref{fig_biv_multi_raw_cop}F,G). 
 We simulated bivariate character evolution on an estimate of 
-phylogeny for $817$ mammal species taken from @GenoudIM2018.
+the phylogeny, taken from @GenoudIM2018, for $817$ mammal species.
 The root character state and the change 
 across each branch were randomly chosen from matrices of one million different
 bivariate draws from distributions showing one of five distinct types of copula 

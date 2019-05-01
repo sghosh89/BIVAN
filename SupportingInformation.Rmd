@@ -2229,40 +2229,20 @@ entire matrix. The moderately left-tail dependent matrix was based on a C copula
 with parameter chosen (using the `iRho` function in the `copula` package) so that
 the Spearman correlation would be the same as for the extreme tail dependence 
 datasets. The moderately right-tail dependent matrix and the symmetric tail dependence
-matrix were constructed similarly, but using an SC copula and a N copula,
+matrix were constructed similarly, but using an SC copula and an N copula,
 respectively. 
 
 Once character evolution was simulated 100 times for each dependence structure, 
-we had 817 bivariate characters for each of 500 simulations. We generated 500 bivariate copulas 
-each made of 817 points. To assess the symmetry or asymmetry of tail dependence, we computed 
-our three non-parametric statistics ($\cor$, $\Ps$, $\Dsq$) on both extreme tips (lower, henceforth subscripted with `l` 
-and upper, henceforth subscripted with `u`) of each copula.
-To measure lower tail and upper tail statistics we used the bounds as $(l_b=0,u_b=0.2)$ and 
-$(l_b=0.8,u_b=1)$, respectively. Therefore, positive (or negative) difference of tail dependence statistics
-($\cor_l-\cor_u$, $\Ps_l - \Ps_u$ and $\Dsq_u - \Dsq_l$) would indicate asymmetry in dependence structure with
-stronger association in lower tail (or upper tail) of the bivariate copula. 
+we had 817 bivariate characters for each of 500 simulations. We thus analyzed 500 corresponding 
+bivariate copulas (one for each simulation), each comprised of 817 points. 
+To assess the symmetry or asymmetry of tail dependence for each copula, we computed 
+the three non-parametric statistics $\cor_{0,0.2}-\cor{0.8,1}$, $\Ps_{0,0.2}-\Ps{0.8,1}$,
+and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ for each copula. For each statistic and for each
+dependence structure, we made a histogram (Fig. \ref{fig_cop_evo}). Values of these statistics less than 0
+indicate lower-tail dependence in characters of extant species, whereas values greater
+than 0 indicate upper-tail dependence. Asymmetry of tail dependence in evolutionary changes to characters
+was associated with similar asymmetry of tail dependence in extant characters.
 
-Five separate histograms were made with those 500 $\cor_l-\cor_u$ statistics, where each 100 
-sets were representative of 
-five different groups of simulations. These five groups of simulations used random draws from
-1) extreme left-tail, 2) moderate left-tail,
-3) symmetric tail (bivariate `N` copula), 4) moderate right-tail,
-and 5) extreme right-tail dependence copula, respectively, as two traits evolved through each branch.
-Five histograms each consisting 100 $\Ps_l - \Ps_u$ statistics and another five histograms each consisting
-100 $\Dsq_u - \Dsq_l$ statistics were produced in a similar way. Fig. \ref{fig_cop_evo} represents 
-three statistics for each five sets of dependence structure. If most of the statistics showed major
-occurrence on either side of zero line (vertical dashed line in Fig. \ref{fig_cop_evo}), then
-asymmetry in copula structure was confirmed. Fig. \ref{fig_cop_evo}(A-C, D-F) showing 
-stronger lower tail dependence with three statistics majorly distributed 
-on positive side were consistent with left tail-dependent copula as mentioned (1) and (2), respectively. 
-Similarly, Fig. \ref{fig_cop_evo}(J-L, M-O) showing 
-stronger upper tail dependence with three statistics majorly distributed 
-on negative side were consistent with right tail-dependent copula as mentioned (4) and (5), respectively.
-Evenly distributed tail dependence-difference statistics (see Fig. \ref{fig_cop_evo}G-I) 
-around zero line was indicative of symmetric dependence as emerged from bivariate normal copula.
-
-<!--***DAN: Dan does not understand the following two paragraphs yet, but is planning to
-speak to Mark about them-->
 Performing statistical tests for associations between continuous traits in different species
     was a primary motivating example of phylogenetic comparative methods.
 For example, Felsenstein's method of phylogenetically independent contrasts 
@@ -2294,7 +2274,7 @@ Developing tests of association based on copula structure may possibly lead the 
     branch lengths. 
 We note that our phylogenetic analyses here consisted merely of simulations to assess
     whether interesting copula structure in a simple evolutionary process could 
-    leave a detectable signal on the data.
+    leave a detectable signal on the trait data for extant species.
 Substantial work remains to be done before we have a copula-based method for 
     analyzing data on a phylogenetic tree. 
 But the nonparametric nature of approaches
@@ -4150,8 +4130,15 @@ source("explore_evo_cop.R")
 \vspace{-0.5 cm}
 \begin{center}
 \includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeR_hist_taildep.pdf}\\
-\caption[Non-parametric statistics to check probable mechanism behind asymmetric tail dependence in character distributions across phylogeny tips]{Three measures of asymmetric tail dependence using non-parametric statistics ($\cor,\Ps$ and $\Dsq$)
-on lower ($l_b=0,u_b=0.2$) and upper ($l_b=0.8,u_b=1$) tips confirms our hypothesis that copula structure in evolutionary changes in bivariate characters can give rise to similar tail dependent copula in character distributions across phylogeny tips (for details see Appendix \ref{evol_mech}). Stronger lower tail dependence (distributed more on positive values) was found in bivariate traits when (A-C) extreme left tail and (D-F) moderately left tail dependent copula was used in evolutionary shifts through each branch. Similarly, non-parametric statistics showed symmetric tail dependence for (G-I) normal copula and stronger upper tail dependence for (J-L) moderately right tail and (M-O) extreme right tail dependent copula, respectively.\label{fig_cop_evo}}
+\caption[Non-parametric statistics on a mechanism of tail dependence in character distributions]{Three 
+measures of asymmetry of tail dependence between two characters, across extant species ($\cor_{0,0.2}-\cor_{0.8,1}$ (A, D, G, J, M), 
+$\Ps_{0,0.2}-\Ps_{0.8,1}$ (B, E, H, K, N), and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ (C, F, I, L, O)) were 
+computed for each of 100 simulations for each of five types of tail dependence between 
+evolutionary changes in the characters (extreme left-tail dependence (A-C), moderate left-tail dependence (D-F), 
+symmetry of tail dependence (G-I), moderate right-tail dependence (J-L), and extreme right-tail dependence 
+(M-O)). Asymmetry of tail dependence in evolutionary changes in characters tended to beget similar
+asymmetry in the characters across extant species. For additional details see 
+Appendix \ref{evol_mech}.\label{fig_cop_evo}}
 \end{center}
 \end{figure}
 

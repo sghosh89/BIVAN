@@ -1,5 +1,5 @@
 ---
-title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
+title: "Supporting Information : The importance of a complete description of dependence between variables for ecology and related fields"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
@@ -394,7 +394,20 @@ within each column.\label{fig_cop_pedag}}
 
 # Details of the data \label{Data_details}
 
-\textbf{Population data, plankton abundances.} 
+\textbf{Environmental data, soil C and N.} Measurments were from the central pedon of a soil 
+core, to 1m depth. 
+
+\textby{Phenological and population data on aphids.}
+Data pre-processing for the aphid data was the same as 
+that of @Sheppard2016,
+but we excluded one of the 11 sites they used in order to only use sites with at least 30 
+years data.
+
+\textbf{Population data, plankton abundances.}
+These data 
+were obtained from the Continuous Plankton Recorder (CPR) dataset, now operated and maintained by 
+the Marine Biological Association of the United Kingdom. Data pre-processing was similar but not identical to that 
+of @Sheppard2017. 
 The CPR plankton data presented in @Sheppard2017 was aggregated in the following way. Fifty 
 $2^\circ$ by $2^\circ$ location boxes were examined between $-10^\circ$ and $10^\circ$ longitude 
 and between $50^\circ$ and $60^\circ$ latitude (Fig. \ref{fig_plankton_map}). For each species, for each box, 

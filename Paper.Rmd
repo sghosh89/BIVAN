@@ -371,7 +371,7 @@ tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills e
 
 knitr::kable(tab_data_info, 
              format="latex", align="l",
-             caption = "Summary table for the data we used. Bolds entries are the multivariate data, the rest are bivariate datasets (see Data section). Basal metabolic rate=BMR \\label{tab_data_info}", 
+             caption = "Summary table for the data we used. Bolds entries are the multivariate data, the rest are bivariate datasets (see Data section). Basal metabolic rate=BMR. \\label{tab_data_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(1:4,width="2.8 cm")%>%
              row_spec(5:8, bold=T)
@@ -383,12 +383,11 @@ To make results interpretable
 to readers unfamiliar with copulas, we first introduce the normal copula and 
 some other copulas we used; and we operationally introduce measures of tail dependence
 and asymmetry of tail dependence. 
-Conceptually, a bivariate copula is essentially a probability density function (pdf)
+Conceptually, a bivariate copula is a probability density function (pdf)
 on the unit square with uniform maginals. 
-Strictly speaking, 
-the copula is actually defined as the bivariate 
-cdf of the distribution rather than as the pdf,
-but this makes little conceptual difference. 
+The copula is actually defined as the bivariate 
+cdf of the distribution rather than as the pdf itself,
+but this makes little difference. 
 The normal copula family is a one-parameter
 family of copulas, with parameter corresponding to the correlation of the related 
 bivariate normal distribtion, and controlling the degree of dependence 
@@ -435,7 +434,7 @@ have visualizations of all the copulas we used.\label{fig_cop_pedag3}}
 \end{figure}
 
 We addressed Q1 principally via a model selection procedure in which the normal copula
-the alternative copulas listed above were fitted to 
+and the alternative copulas listed above were fitted to 
 our ecological datasets. The resulting fits of the various copula models 
 were compared via the Akaike and Bayesian 
 Information Criteria (AIC and BIC). For bivariate datasets 
@@ -541,7 +540,8 @@ in the last of these); for large datasets, $\cor_{0,u_b}-\cor_{1-u_b,1}$,
 $\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
 $\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ (again note the opposite order) with $u_b$ close 
 to $0$.
-We tested our statistics in Appendix \ref{SM-Test_npa_stat} (see also Figs \ref{SM-fig_stat_testing35}-\ref{SM-fig_stat_testing1000}). 
+We tested our statistics in Appendix \ref{SM-Test_npa_stat} (see also Figs \ref{SM-fig_stat_testing35}-\ref{SM-fig_stat_testing1000}). All code for this
+project is archived at \url{www.github.com/sghosh89/BIVAN}.
 
 # Results for Q1: Ecological datasets often have non-normal copula structure and asymmetric tail dependence \label{Results}
 
@@ -1284,7 +1284,7 @@ little association - resources not allocated to X can instead be allocated
 to $Y_1$ or $Y_2$ or to some combination. This constitutes 
 asymmetric tail dependence between X and $Y_1$. For instance, \cite{Winemiller1992}
 described a three-way trade-off in North American fishes between age of reproductive
-maturity, juvenile survivorship, and fecundity. The trade-off should
+maturity, juvenile survivorship, and fecundity. The trade-off should, in theory,
 produce a tight association between age of maturity and fecundity for 
 fishes with low age of maturity, but little association between those
 variables for later-maturing

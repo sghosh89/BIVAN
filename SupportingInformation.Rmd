@@ -2245,7 +2245,7 @@ Once character evolution was simulated 100 times for each dependence structure,
 we had 817 bivariate characters for each of 500 simulations. We thus analyzed 500 corresponding 
 bivariate copulas (one for each simulation), each comprised of 817 points. 
 To assess the symmetry or asymmetry of tail dependence for each copula, we computed 
-the three non-parametric statistics $\cor_{0,0.2}-\cor{0.8,1}$, $\Ps_{0,0.2}-\Ps{0.8,1}$,
+the three non-parametric statistics $\cor_{0,0.2}-\cor_{0.8,1}$, $\Ps_{0,0.2}-\Ps_{0.8,1}$,
 and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ for each copula. For each statistic and for each
 dependence structure, we made a histogram of values 
 (Fig. \ref{fig_cop_evo}). Asymmetry of tail dependence in evolutionary changes to characters
@@ -4155,7 +4155,7 @@ evolutionary changes in the characters (extreme left-tail dependence (A-C), mode
 symmetry of tail dependence (G-I), moderate right-tail dependence (J-L), and extreme right-tail dependence 
 (M-O)). Asymmetry of tail dependence in evolutionary changes in characters tended to beget similar
 asymmetry in the characters across extant species. For additional details see 
-Appendix \ref{evol_mech}. The number in the upper right of each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ therefore indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
+Appendix \ref{evol_mech}. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ therefore indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
 \end{center}
 \end{figure}
 

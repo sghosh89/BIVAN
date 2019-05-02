@@ -76,7 +76,7 @@ Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Sur
 All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information content of the relationships. Other statistical tools exist that provide a complete description of relationships, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here examine the potential for copula approaches to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning dataset we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe two mechanisms by which observed copula structure and tail dependence can arise in ecological data: a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete statistical description of dependence, advancing conceptual frameworks, and demonstrating powerful methods, we aim to elevate copula approaches to widespread use in ecology.
 
 \newpage
-# Introduction \label{Intro}
+# Introduction\label{Intro}
 
 Very generally, all branches of ecology and related areas <!--DAN : Reid said " Is this text needed. 
 Ecology covers 
@@ -1282,7 +1282,7 @@ limitations, there may be a strong
 association between X and $Y_1$. Whereas for small values of X there may be
 little association - resources not allocated to X can instead be allocated 
 to $Y_1$ or $Y_2$ or to some combination. This constitutes 
-asymmetric tail dependence between X and $Y_1$. For instance, \cite{Winemiller1992}
+asymmetric tail dependence between X and $Y_1$. For instance, @Winemiller1992
 described a three-way trade-off in North American fishes between age of reproductive
 maturity, juvenile survivorship, and fecundity. The trade-off should
 produce a tight association between age of maturity and fecundity for 

@@ -5044,7 +5044,7 @@ copula structure, we first generated 5000 points from a bivariate N copula
 with parameter `r ncopparm` (Fig. \ref{fig:missingdata}A), and then 
 randomly deleted `r 100*fracdelete`% of the points that occurred in the
 upper-right triangle of the copula plot. Data were then re-ranked as
-described in the Introduction to produce a new copula plot based
+described in the \nameref{MT-Intro} to produce a new copula plot based
 only on the censored dataset (Fig. \ref{fig:missingdata}B). Copula
 structure in the tails was affected. Although real datasets have 
 typically not been censored in the precise way we censored our

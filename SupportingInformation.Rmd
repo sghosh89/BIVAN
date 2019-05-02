@@ -1,6 +1,6 @@
 ---
 title: "Supporting Information : The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, Daniel C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
@@ -394,35 +394,44 @@ within each column.\label{fig_cop_pedag}}
 
 # Details of the data \label{Data_details}
 
-<!--***DAN: This is a dumping ground at the moment, but needs to be organized into a section that gives all the necessary details about the data-->
+\textbf{Population data, plankton abundances.} 
+The CPR plankton data presented in @Sheppard2017 was aggregated in the following way. Fifty 
+$2^\circ$ by $2^\circ$ location boxes were examined between $-10^\circ$ and $10^\circ$ longitude 
+and between $50^\circ$ and $60^\circ$ latitude (Fig. \ref{fig_plankton_map}). For each species, for each box, 
+for each year, for each month, the average of any available CPR samples was taken to give monthly 
+time series of population densities with some missing values. Missing monthly values were then 
+replaced with the median value for that species for that location for that month. The data for each 
+species for each box for each year was then averaged over all twelve months, and 26 usable annual 
+time series were identified for wavelet analysis. The CPR plankton data used here is aggregated in 
+the same way, except that for any species, box and year for which more than 4 months data were missing, 
+missing values were not replaced with medians and those species, box, year combinations were not used.
+We used only data from the 14 locations which had at least 45 years of annual data subject to this 
+restriction, shown by blue markers in Fig. \ref{fig_plankton_map}. The CPR data are described in
+great detail elsewhere, e.g., by  @Batten2003 and @Raitsos2014.
 
-<!--additional details about Cedar creek data, etc.-->
-Above-ground biomass and percent cover data were obtained from long-term (? or short-term)
-biodiversity experiment (E120) conducted in Cedar Creek Ecosystem Science Reserve by Tilman *et al*.
-In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
+\textbf{Community-level data, Cedar Creek.} Above-ground biomass and percent cover data were 
+obtained from biodiversity experiment E120 conducted at the Cedar Creek Ecosystem Science Reserve 
+by Tilman *et al*. In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
 were seeded with 1, 2, 4, 8, or 16 perennials, respectively, chosen randomly from a pool of 
-18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; 2 species of woody
+18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; and 2 species of woody
 plants). All plots received, in total, 10 $gm^{-2}$ of pure live seed in May 1994 and 5 $gm^{-2}$ in May, 1995 
 with seed mass divided equally among species. Treatments were maintained by weeding manually 3-4 times a year 
-and sometimes selective herbicides were used to set up the monocultures either with only grasses or with only forbs.
-We downloaded the data on July, 2018 from Cedar Creek website \url{http://www.cedarcreek.umn.edu/research/experiments/e120} and 
-analyzed those [data](https://github.com/sghosh89/BIVAN/tree/master/Data/Ceder_creek_e120) for 6 common years 
-(1996-2000, 2007) when both biomass and percent cover data were available. Each plots were annually sampled by clipping 
-different locations each year. For each available year, we computed above-ground biomass ($gm^{-2}$) 
-and Shannon's biodiversity index (using percent cover data) averaged over the sampled strips/ quadrats taken from each 
+and sometimes selective herbicides were used. We downloaded the data on July, 2018 from the Cedar Creek website \url{http://www.cedarcreek.umn.edu/research/experiments/e120} and 
+analyzed those data for 6 years 
+(1996-2000, 2007) for which both biomass and percent cover data were available. Plots were annually 
+sampled by clipping 
+different locations each year. For each available year, we analyzed above-ground biomass ($gm^{-2}$) 
+and Shannon's biodiversity index (computed using percent cover data) averaged over the 
+sampled strips/quadrats taken from each 
 of 168 plots.
 
-<!--we need to add aphid and plankton data details, Lawrence will give those-->
-
-<!--The CPR is a device which is towed across the ocean behind a ship, filtering plankton from seawater with a continuously
-unwinding silk ribbon. The ribbon was cut into 4 inch segments, each corresponding to a particular time and
-location in the ocean. Organisms were identified and counted (possibly with sub-sampling) microscopically [@Colebrook1979]. All the samples available for a given variable in a given area in a given month of a given year were
-averaged, producing a monthly time series for each year. Where data for a given month was unavailable the missing value was replaced with a median value for that month (drawn from all years in which data was available).-->
-
- [@Sheppard2017] converted monthly values to yearly values by averaging over all months. But here we only allowed maximum 4 months in a year with missing data which were replaced by median value for that month (drawn from all years in which data was available). We used data from 14 locations which had at least 45 years time series data (see Figure \ref{fig_plankton_map}). 
- 
- The Great Miami Wetland Mitigation Bank  was at $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W) in Trotwood, Montgomery County, Ohio. Additional information on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method was used [@Holland1999] to measure $CH_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016. **See and** @smyth2019using, **pending for
-additional details???** on greenhouse gas flux methods for this site. We considered 13 locations that had at least 50 dates data.
+\textbf{Ecosystem functioning data on methane flux.} The Great Miami Wetland Mitigation Bank  was at 
+$36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W, in Trotwood, Montgomery County, Ohio. Additional information 
+on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method 
+was used [@Holland1999] to measure $\text{CH}_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to 
+seasonal wetland) at daily to weekly interval from September 2015 to September 2016. See @smyth2019using for
+additional details on greenhouse gas flux methods for this site. We considered 13 locations for which data were
+gathered for at least 50 dates.
 
 <!--generating table with information about 20 aphid species-->
 ```{r tab_aphid_info, echo=F, results='asis',message=F}
@@ -2238,9 +2247,8 @@ bivariate copulas (one for each simulation), each comprised of 817 points.
 To assess the symmetry or asymmetry of tail dependence for each copula, we computed 
 the three non-parametric statistics $\cor_{0,0.2}-\cor{0.8,1}$, $\Ps_{0,0.2}-\Ps{0.8,1}$,
 and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ for each copula. For each statistic and for each
-dependence structure, we made a histogram (Fig. \ref{fig_cop_evo}). Values of these statistics less than 0
-indicate lower-tail dependence in characters of extant species, whereas values greater
-than 0 indicate upper-tail dependence. Asymmetry of tail dependence in evolutionary changes to characters
+dependence structure, we made a histogram of values 
+(Fig. \ref{fig_cop_evo}). Asymmetry of tail dependence in evolutionary changes to characters
 was associated with similar asymmetry of tail dependence in extant characters.
 
 Performing statistical tests for associations between continuous traits in different species
@@ -2281,6 +2289,16 @@ But the nonparametric nature of approaches
     based solely on data ranks, as some of our copula methods are, may be a promising avenue for 
     avoiding inaccuracies that arise via the highly structured model assumptions implicit
     in the method of phylogenetically independent contrasts and related methods.
+
+Additionally, character evolution was simulated using one random draw from the relevant matrix
+per phylogeny branch. This was principally because branch lengths are often hugely
+uncertain. If branch lengths were well know, alternative simulation strategies may
+include selecting one draw from the matrix of evolutionary changes per unit time, 
+or selecting one draw for the whole branch but rescaling variance according to the 
+length of the branch. These choices amount to the same thing for normal copula
+structure, but not otherwise. Modelling choices such as these may have influenced
+our results. Additional research also seems warranted testing the realism 
+of our hypothesized mechanism and simulations.
 
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -4097,7 +4115,6 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 <!--Following chunk is to examine the hypothesis for third probable mechanism : 
 asymmetric tail dependence in evolutionary changes in bivariate characters can give
 rise to similarly asymmetric tail dependence in character distributions across phylogeny tips-->
-
 ```{r mechanism_evo_cop, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("explore_evo_cop.R"),mtime("CopulaFunctions_flexible.R"))}
 set.seed(seed)
 
@@ -4133,7 +4150,7 @@ source("explore_evo_cop.R")
 \caption[Non-parametric statistics on a mechanism of tail dependence in character distributions]{Three 
 measures of asymmetry of tail dependence ($\cor_{0,0.2}-\cor_{0.8,1}$ (A, D, G, J, M), 
 $\Ps_{0,0.2}-\Ps_{0.8,1}$ (B, E, H, K, N), and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ (C, F, I, L, O)) between two characters, across extant species,  were 
-computed for each of 100 simulations of mammalian evolution for each of five types of tail dependence between 
+computed for each of 100 simulations of mammalian character evolution for each of five types of tail dependence between 
 evolutionary changes in the characters (extreme left-tail dependence (A-C), moderate left-tail dependence (D-F), 
 symmetry of tail dependence (G-I), moderate right-tail dependence (J-L), and extreme right-tail dependence 
 (M-O)). Asymmetry of tail dependence in evolutionary changes in characters tended to beget similar
@@ -4971,6 +4988,89 @@ draws from $C$.
 - For each $k$ and $i$, replace the $k$th-smallest element of the time series $a_i(t)$, 
 $t=1,\ldots,T$ by the $k$th smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
 result $y_i(t)$. This is the surrogate dataset.
+
+# A means by which missing data can influence perceived copula structure\label{sect:missingdata}
+
+```{r missing_data, echo=FALSE, results="hide", cache=TRUE}
+set.seed(101)
+
+#generate data from a normal copula
+ncopparm<-0.8
+ncop<-normalCopula(ncopparm,2)
+d<-rCopula(5000,ncop)
+
+#censor it - randomly delete many of the points that are in the upper right 
+#triangle of the copula plot
+inds<-which(d[,2]>-d[,1]+1)
+fracdelete<-4/5
+inds<-inds[sample(1:length(inds),size=round(fracdelete*length(inds)),replace=FALSE)]
+dc<-d[-inds,]
+  
+#reperform the ranking
+dc<-pobs(dc)
+
+#now make a plot
+panwd<-2
+panht<-panwd
+xaxht<-.6
+yaxwd<-xaxht
+gap<-0.1
+totwd<-yaxwd+2*panwd+2*gap
+totht<-xaxht+panht+gap
+pdf(file="./Results/MissingDataInfluencesCopula.pdf",width=totwd,height=totht)
+par(fig=c(yaxwd/totwd, #panel 1 - the original data
+          (yaxwd+panwd)/totwd,
+          (xaxht)/totht,
+          (xaxht+panht)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
+plot(d[,1],d[,2],pch=20,cex=.5,xlim=c(0,1),ylim=c(0,1))
+text(0,1,"A",adj=c(0,1),cex=1.5)
+mtext("x",1,1.5,cex=2)
+mtext("y",2,1.5,cex=2)
+par(fig=c((yaxwd+panwd+gap)/totwd, #panel 2 - the censored data, re-ranked
+          (yaxwd+2*panwd+gap)/totwd,
+          (xaxht)/totht,
+          (xaxht+panht)/totht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=TRUE)
+plot(dc[,1],dc[,2],pch=20,cex=.5,xlim=c(0,1),ylim=c(0,1),yaxt="n")
+axis(2,labels=FALSE)
+text(0,1,"B",adj=c(0,1),cex=1.5)
+mtext("x",1,1.5,cex=2)
+dev.off()
+```
+
+To illustrate the potential for missing data to influence perceived
+copula structure, we first generated 5000 points from a bivariate N copula
+with parameter `r ncopparm` (Fig. \ref{fig:missingdata}A), and then 
+randomly deleted `r 100*fracdelete`% of the points that occurred in the
+upper-right triangle of the copula plot. Data were then re-ranked as
+described in the Introduction to produce a new copula plot based
+only on the censored dataset (Fig. \ref{fig:missingdata}B). Copula
+structure in the tails was affected. Although real datasets have 
+typically not been censored in the precise way we censored our
+artificial data, it may be common for species characters to be 
+measured on a subset of the extant species from the clade of interest,
+and the probability of a species having been included in the dataset
+may depend on one or both of the character values. 
+For instance, if larger or smaller bird or mammal species were more likely
+to have been measured for body mass or BMR, such accidental 
+censoring of the data could have influenced our measurements of tail 
+dependence. We have no reason to believe this is the case for our 
+BMR versus body mass datasets, but we admit the possibility. Any systematic 
+use of copulas to study life-history tradeoffs should take the possibility
+into account of artefacts such as described here.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7in]{./Results/MissingDataInfluencesCopula.pdf}
+\caption[Missing data can influence perceived copula structure]{Missing
+data can influence perceived copula structure. Points were randomly 
+removed from the upper right portion of the copula dataset pictured in A, and
+then remaining values were re-ranked to make B. Thus removing data in a 
+non-random fashion can influence copula structure and tail dependence. See 
+Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
+\end{center}
+\end{figure}
 
 \clearpage
 

@@ -1,6 +1,6 @@
 ---
 title: "The importance of a complete statistical description of dependence between variables for ecology and related fields"
-author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, Daniel C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 date: ""
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
 
@@ -43,6 +43,8 @@ Holder: Department of Ecology and Evolutionary Biology and Biodiversity Institut
 Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
 
 Reid: School of Biological & Marine Sciences, University of Plymouth, Drake Circus, Plymouth PL4 8AA, United Kingdom
+ 
+Bever: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
 
 Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA 
 
@@ -293,19 +295,18 @@ d_cc<-readRDS("./Results/Ceder_creek_results/cop_HB_all_yr.RDS")
 ```
 
 Datasets included environmental, species-trait, phenological, 
-population, community, and ecosystem functioning data. Copula structure describing 
+population, community, and ecosystem functioning data (Table \ref{tab_data_info}). Copula structure describing 
 the relationship between atmospheric weather variables such as rainfall or wind speed 
 as measured in multiple locations has been 
 examined previously in the meteorological literature [e.g., @Serinaldi2008; @li2013]. We therefore 
 examined environmental variables from the soil instead, using the Rapid Carbon 
-Assessment database [[RaCA](https://www.nrcs.usda.gov/wps/portal/nrcs/detail/soils/survey/?cid=nrcs142p2_054164); @Wills2014].
+Assessment database [RaCA; @Wills2014].
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
 nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
-Measurments were from the central pedon of a soil core, to 1 m depth.<!--DAN: we should ask Terry to explain pedon/ R horizon-->
-<!--***DAN: Terry to check the wording and accuracy here-->
-Species-trait data were average species basal metabolic rate (KJ per hour) and 
+Measurments were from the central pedon of a soil core, to 1 m depth.
+Species-trait data were average species basal metabolic rate (BMR, KJ per hour) and 
 body mass (grams) data for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
 and `r nrow(d_mammalsBMR)`  species of mammals [@Mcnab_2008].
 These data have been much studied, but to our knowledge the copula structure 
@@ -320,17 +321,17 @@ total counts of aphids trapped for the same locations, species, and years; these
 indicators of aphid migration counts. Data pre-processing for the aphid data was the same as 
 that of @Sheppard2016,
 but we excluded one of the 11 sites they used in order to only use sites with at least 30 
-years data.  Our second population dataset comprised average annual abundance estimates 
+years data.  Our second population dataset comprised average annual plankton abundance estimates 
 for 14 locations (Fig. \ref{SM-fig_plankton_map})
-in the North Sea and British seas for 22 plankton taxa (Table \ref{SM-tab_plankton_info}) for the 
+in the North Sea and British seas for 22 taxa (Table \ref{SM-tab_plankton_info}) for the 
 56 years 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. These data 
-were obtained from the Continuous Plankton Recorder (CPR) dataset now operated and maintained by 
-the Marine Biological Association. Data pre-processing was similar but not identical to that 
+were obtained from the Continuous Plankton Recorder (CPR) dataset, now operated and maintained by 
+the Marine Biological Association of the United Kingdom. Data pre-processing was similar but not identical to that 
 of @Sheppard2017; see Appendix \ref{SM-Data_details} for details.
-Community-level data obtained from the Cedar Creek Ecosystem Science Reserve were <!--DAN : check this rephrasing-->
-plant aboveground biomass and plant percent cover data (we used this percent cover data to calculate 
-Shannon's diversity index) for `r nrow(d_cc[[5]])` plots, each 9m by 9m, as sampled in 
-the year 2000 [@Tilman2001; @Tilman2006] <!--actually they collected data in each year of 1996,1997,1998,1999,2000,2007-->. 
+Community-level data, obtained from the Cedar Creek Ecosystem Science Reserve, were 
+plant aboveground biomass and Shannon's diversity index for `r nrow(d_cc[[5]])` plots, each 9m by 9m, as sampled in 
+the years 1996-2000 and 2007, each year analyzed separately [@Tilman2001; @Tilman2006]. 
+Shannon's index was computed from plant species percent cover data.  
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
 water surface and the troposphere, measured at 13 locations at daily to weekly intervals 
 from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, 
@@ -343,7 +344,7 @@ called the "bivariate" datasets in the sense that they comprise two quantities m
 different locations or for different species. The phenology and population datasets are 
 "multivariate" in that they comprise, for each taxon, measurements through time at multiple locations; 
 copula structure can be studied for each pair of locations. Likewise the ecosystem 
-functioning (methane flux) dataset was  multivariate in this sense (see \ref{tab_data_info}).
+functioning (methane flux) dataset was  multivariate in this sense (Table \ref{tab_data_info}).
 
 <!--summary table with info of all data used in Paper-->
 ```{r tab_summary_data_info, echo=F, results="asis",message=F}
@@ -351,10 +352,10 @@ library(kableExtra)
 library(dplyr)
 tab_data_info<-as.data.frame(matrix(NA,nrow=8,ncol=4))
 colnames(tab_data_info)<-c("Data","Category","No. of measurements we used", "References")
-tab_data_info$Data<-c("Soil C and N","Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data", 
-                      "Green spruce aphid abundance", "Leaf-curling plum aphid first flight","Ceratium furca abundance","Methane flux")
+tab_data_info$Data<-c("Soil C and N","Bird body masses and BMR", "Mammal body masses and BMR", "Cedar Creek data", 
+                      "Green spruce and other aphid species abundances", "Leaf-curling plum and other aphid first flight dates","Ceratium furca and other plankton taxa abundances","Methane flux")
 tab_data_info$Category<-c("Environmental","Species-trait","Species-trait","Community level",
-                          "Population","Phenological","Population","Ecosystem-functioning")
+                          "Population","Phenological","Population","Ecosystem functioning")
 tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations",sep=""),
                                                paste(nrow(d_birdsBMR)," birds",sep=""),
                                                paste(nrow(d_mammalsBMR)," mammals",sep=""),
@@ -363,14 +364,14 @@ tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations"
                                                "10 locations with atleast 30 yrs. of timeseries for each 20 sp.",
                                                "14 locations with atleast 45 yrs. of timeseries for each 22 taxa",
                                                "13 locations with atleast 50 dates of data")
-tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills et al. (2014)", "McNab 2009","McNab 2008",
-                            "Cedar Creek Ecosystem Science Reserve [biodiversity experiment e120]",
+tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills et al. (2014)", "McNab (2009)","McNab (2008)",
+                            "Cedar Creek Ecosystem Science Reserve, biodiversity experiment e120",
                             "Rothamsted Insect Survey","Rothamsted Insect Survey","Continuous Plankton Recorder Survey",
                             "Great Miami Wetland Mitigation Bank, Smyth et al. (2019)")
 
 knitr::kable(tab_data_info, 
              format="latex", align="l",
-             caption = "Summary table for data we used, bolds are the multivariate data, rest are bivariates. \\label{tab_data_info}", 
+             caption = "Summary table for the data we used. Bolds entries are the multivariate data, the rest are bivariate datasets (see Data section). Basal metabolic rate=BMR \\label{tab_data_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(1:4,width="2.8 cm")%>%
              row_spec(5:8, bold=T)
@@ -876,19 +877,19 @@ trait data across species, e.g., to our bird and mammal BMR versus body mass
 data. This mechanism is a hypothetical explanation for the right tail dependence
 observed in those data (Fig. \ref{fig_biv_multi_raw_cop}F,G). 
 We simulated bivariate character evolution on an estimate of 
-the phylogeny, taken from @GenoudIM2018, for $817$ mammal species.
+the phylogeny, taken from @GenoudIM2018, of $817$ mammal species.
 The root character state and the change 
 across each branch were randomly chosen from matrices of one million different
 bivariate draws from distributions showing one of five distinct types of copula 
-structure: 1) extreme left-tail dependence, 2) moderate left-tail dependence,
+structures: 1) extreme left-tail dependence, 2) moderate left-tail dependence,
 3) symmetric tail dependence, 4) moderate right-tail dependence, and 5) extreme
 right-tail dependence (Appendix \ref{SM-evol_mech} for details). 
 All marginal distributions were standard normal, and distributions all had Spearman 
-correlation $0.875$, so simulations assess the impact of copula structure of character
-changes on evolutionary outcomes, controlling for marginals and correlations of character
-changes. For each of the five copula structures, mammalian character
+correlation $0.875$ between their two components, so our simulations assess 
+the impact only of copula structure in evolutionary character
+changes on evolutionary outcomes. For each of the five copula structures, mammalian character
 evolution was simulated 100 times. For each simulation, symmetry of tail dependence 
-of the two characters was assessed across the phylogeny tips.
+of the two characters across the phylogeny tips was assessed.
 We hypothesized that cases 1 and 2 above would yield stronger left- than right-tail 
 dependence, and cases 4 and 5 would yield the reverse. 
 The simulator was written in Python and used version 4.4 of the DendroPy 
@@ -1249,29 +1250,66 @@ to produce spatial copula structure in a wide variety of ecological measurements
 
 <!--Holder stuff-->
 Our simulations of character evolution suggest the hypothesis that evolutionary
-changes in bird and mammal BMR and body size may exhibit right-tail dependence. This is
-a hypothesis only, because the tail dependence of Fig. \ref{fig_biv_multi_raw_cop}F,G
+changes through time in bird and mammal BMR and body size may exhibit right-tail dependence. This is
+a hypothesis only, because the right-tail dependence of Fig. \ref{fig_biv_multi_raw_cop}F,G
 could have come about in another, unknown way: our simulations show that tail dependence 
 in evolutionary changes is sufficient, but may not be necessary, to produce tail
-dependence in characters of extant species. Even if the hypothesized mechanism
+dependence in characters of extant species. For instance, as discussed below and in
+Appendix \ref{SM-sect:missingdata} (see also Fig. \ref{SM-fig:missingdata}), 
+systematically missing data can produce tail dependence and may
+have influenced results for the BMR versus body mass datasets. Even if the hypothesized 
+evolutionary mechanism
 is correct, our results simply replace one question, i.e., why do we see right-tail
 dependence between BMR and body mass for birds and mammals, with another question,
-i.e., why might we see right-tail dependence in evolutionary changes of these traits.
+i.e., why might we see right-tail dependence in evolutionary changes of these traits?
 See Appendix \ref{SM-evol_mech} for additional thoughts on the potential importance of 
 copulas for studies of character evolution when phylogeny branch lengths are not available.
 
-<!-- We have only given three mechanisms, but there are likely to be others, and discoverig
-additional mechanisms of copula structure is certain worthy of future work. -->
-Other mechanisms that we have not considered likely also operate to produce copula structure
+<!--Discuss stuff here on tradeoff and life history that Bever told me about-->
+The relationships we studied between BMR and body mass relate
+to a trade-off between mass-specific BMR (i.e., BMR per unit body mass) and body
+mass itself. Trade-offs between life history characteristics are a focal topic in 
+evolutionary ecology. There are reasons to believe copulas interrelate with 
+life-history theory in additional ways beyond what we could demonstrate 
+with the data we used.
+It is well known that energy allocation to a life function, X (e.g., reproduction)
+will reduce the energy that can be allocated to other functions, $Y_1$, $Y_2$, $Y_3$ 
+(e.g., growth, predation avoidance; this is sometimes called the principle of 
+allocation).
+But it is equally well known that X can trade-off against any or all of 
+the $Y_i$. Therefore, for large values of X which approach absolute 
+limitations, there may be a strong 
+association between X and $Y_1$. Whereas for small values of X there may be
+little association - resources not allocated to X can instead be allocated 
+to $Y_1$ or $Y_2$ or to some combination. This constitutes 
+asymmetric tail dependence between X and $Y_1$. For instance, \cite{Winemiller1992}
+described a three-way trade-off in North American fishes between age of reproductive
+maturity, juvenile survivorship, and fecundity. The trade-off should
+produce a tight association between age of maturity and fecundity for 
+fishes with low age of maturity, but little association between those
+variables for later-maturing
+fishes because those fishes may invest much or little in juvenile survival.
+Although copulas may be very useful for studying multi-dimensional trade-offs, 
+applications will 
+require careful attention to the possible consequences of biased sampling:
+if the degree of completeness of a dataset is associated with one or
+more of the quantities being studied then statistical artefacts
+may bias conclusions of copula analyses (Appendix \ref{SM-sect:missingdata}, 
+Fig. \ref{SM-fig:missingdata}).
+
+<!-- We have only given a few mechanisms, but there are likely to be others, and discoverig
+additional mechanisms of copula structure is certainly worthy of future work. -->
+Other mechanisms that we have not considered probably also operate to produce copula structure
 in ecological and evolutionary datasets, and should be considered in future work. For instance, 
 measurement error may modify copula structure, though one would have to have information
 on the precise nature of measurement error in a dataset to explore its influence. 
 Not only did the models we used to explore mechanisms not consider measurement error, 
-they were extremely simple in other respects, as well, not including phenomena such as 
+they were intentionally simple in other respects, as well, not including phenomena such as 
 delayed density dependence, dispersal, stage structure in population dynamics, and trophic
 interactions.
-We hope by enumerating three potential mechanisms we help inspire additional research on the
-potentially numerous mechanisms of copula structure that may apply in diverse datasets.
+We hope by enumerating a few potential mechanisms of copula structure in data 
+we help inspire additional research on the
+potentially numerous mechanisms that may operate in diverse datasets.
 
 <!--some consequences paragraphs next-->
 
@@ -1324,7 +1362,7 @@ commonness and magnitude to interest conservationists.
 # Acknowledgments
 
 We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data 
-extraction; and Joel E. Cohen, David Tilman, Lauren Hallet, Jim Bever, Jonathan Walter, Thomas 
+extraction; and Joel E. Cohen, David Tilman, Lauren Hallet, Jonathan Walter, Thomas 
 Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey 
 (RIS). 
 The RIS, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council 

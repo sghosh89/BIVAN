@@ -397,7 +397,7 @@ within each column.\label{fig_cop_pedag}}
 \textbf{Environmental data, soil C and N.} Measurments were from the central pedon of a soil 
 core, to 1m depth. 
 
-\textby{Phenological and population data on aphids.}
+\textbf{Phenological and population data on aphids.}
 Data pre-processing for the aphid data was the same as 
 that of @Sheppard2016,
 but we excluded one of the 11 sites they used in order to only use sites with at least 30 

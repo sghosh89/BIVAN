@@ -1005,7 +1005,7 @@ colnames(h)<-c("copname","AICw","BICw","LT","UT")
 knitr::kable(h,
              format='latex',linesep = "",
              caption.short = "Model fitting results for the Cedar Creek dataset",
-             caption = "Results of fitting our 16 copula families to the Cedar Creek dataset. Analogous to Fig. \\ref{tab_soilCNfit}, see caption of that figure for details. \\label{tab_cc2000fit}",
+             caption = "Results of fitting our 16 copula families to the Cedar Creek dataset, year 2000. Analogous to Fig. \\ref{tab_soilCNfit}, see caption of that figure for details. \\label{tab_cc2000fit}",
              booktabs=T)
 ```
 
@@ -1031,7 +1031,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_4_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data, year 2000. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving N surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1042,7 +1042,7 @@ tab_cc_asym_2000<-make_table_stat_fn(data=stat_cc_ga$`2000`)
 knitr::kable(tab_cc_asym_2000,
              format="latex",linesep = "",escape=F,
              caption.short = "Nonparametric asymmetry tests against an N-copula null, Cedar Creek data",
-             caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.25}-\\cor_{0.75,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.25}-\\Ps_{0.75,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.75,1}-\\Dsq_{0,0.25}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $>X$ indicates the value of the given statistic on the data was higher than its value on $X$ of the surrogates, so entries of the form $>X$ for $X$ equal to $975$ or above would indicate that lower-tail dependence was significantly stronger than upper-tail dependence.\\label{tab_cc_asym_2000}",
+             caption = "Cedar Creek dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis, year 2000. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.25}-\\cor_{0.75,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.25}-\\Ps_{0.75,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.75,1}-\\Dsq_{0,0.25}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving N surrogates, in seperate comparisons. A table entry $>X$ indicates the value of the given statistic on the data was higher than its value on $X$ of the surrogates, so entries of the form $>X$ for $X$ equal to $975$ or above would indicate that lower-tail dependence was significantly stronger than upper-tail dependence.\\label{tab_cc_asym_2000}",
              booktabs=T)
 ```
 
@@ -1094,7 +1094,7 @@ the empirical data by randomizing it in a special way to have no
 tail dependence (Appendix \ref{surrog_test}). 
 The surrogate/randomized datasets had exactly 
 the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
-correlation (the sorrogate algorithm had two versions, one for preserving each correlation coefficient), 
+correlation (the surrogate algorithm had two versions, one for preserving each correlation coefficient), 
 but had normal copula structure. Thus our comparisons tested the null hypothesis 
 that our statistics took values on the empirical data no different from what would have been expected 
 if the copula structure of the data were normal, but the data were otherwise 
@@ -1140,17 +1140,21 @@ upper-tail dependence was significantly stronger than lower-tail dependence.
 For first three bivariate datasets in Table \ref{MT-tab_bivar_summary},
 the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and 
 for 1000 Kendall-preserving surrogate datasets with N copulas. Due to relatively smaller sample size,
-for Cedar creek data we used a wider range of boundaries $(l_b,u_b)$ to compute $P_{0,0.25}-P_{0.75,1}$.
-For each data, rank of the said statistics with real-data value in 
+for Cedar Creek data we used $P_{0,0.25}-P_{0.75,1}$.
+For each dataset, the rank of the statistic for real-data in 
 the distribution of surrogate values was computed. 
 If ranks were $>975$ or $<25$, asymmetry of tail 
-dependence was significant compared to a N-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
-for, respectively, the soil C and N data, bird masses and metabolic rates, mammal masses
-and metabolic rates, and the Cedar Creek data. Thus the first three datasets showed stronger 
-upper- than lower-tail dependence, and the Cedar Creek data which showed the reverse though not significantly with
-non-parametric analysis, confirming the 
-results based on model selection presented in the main text (see Table \ref{MT-tab_bivar_summary}, row 9 
-showed Cedar creek had relatively weak tail-dependence than the other three datasets).
+dependence was significant compared to an N-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
+for, respectively, the soil C and N dataset, the bird body masses and metabolic rates dataset, 
+the mammal body masses and metabolic rates dataset, and the Cedar Creek data for the year 2000. 
+Thus the first three datasets showed stronger 
+upper- than lower-tail dependence, and the Cedar Creek data showed the reverse 
+(though not significantly), confirming the 
+results based on model selection presented in the main text (see 
+Table \ref{MT-tab_bivar_summary}, row 9). Model selection results for Cedar Creek showed 
+only slightly stronger lower- than upper-tail dependence, consistent with the non-significant 
+tendency toward lower-tail dependence also revealed by the non-parametric analysis for that
+dataset.
 
 # Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
 

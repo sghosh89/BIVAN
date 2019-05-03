@@ -1,0 +1,10 @@
+Closed static flux chamber method was used (Holland et al. 1999) to measure methane fluxes
+at 28 chambers across a hydrologic gradient (upland to seasonal wetland) at daily to weekly interval from September 2015 to September 2016 (Jarecke et al. 2016). See Smyth et al. (2019) for additional details on greenhouse gas flux methods for the Great Miami Wetland Mitigation Bank in Trotwood, Ohio. 
+
+References :
+
+Holland, E.A., Robertson, G.P., Greenberg, J., Groffman, P., Boone, R. & Gosz, J. (1999). Soil CO2, N2O, and CH4 exchange. In: Standard soil methods for long-term ecological research (eds. Robertson, G.P., Bledsoe, C.S., Coleman, D.C. & Sollins, P.). Oxford University Press, pp. 185–201.
+
+Jarecke, K.M., Loecke, T.D. & Burgin, A.J. (2016). Coupled soil oxygen and greenhouse gas dynamics under variable hydrology. Soil Biology and Biochemistry, 95, 164–172.
+
+Smyth, A.R., Loecke, T.D., Franz, T.E. & Burgin, A.J. (2019). Using high-frequency soil oxygen sensors to predict greenhouse gas emissions from wetlands. Soil Biology and Biochemistry, 128, 182–192.

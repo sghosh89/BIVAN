@@ -533,10 +533,6 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shannon's index \textit{(H)} from Cedar Creek. Bottom panels show the corresponding copula plots. See text for units used in upper panels. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
-<!--***DAN: Shya, it say "Avg. H" and "Avg. biomass" on the axes of D. Reading the sup mat
-data section carefully, I presume this is because there were multiple strips per plot
-and these were averaged. However, the averaging is not mentioned in the main text, so I think
-this will be confusing for some readers. Can you please change the axes to read "Biomas" and "H"?--> 
 
 Across essentially all our datasets, copula structures were typically non-normal and 
 commonly showed asymmetric tail 

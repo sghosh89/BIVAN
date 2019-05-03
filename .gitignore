@@ -3,7 +3,7 @@
 *.RDS
 *.msg
 #*.jpg
-*.csv
+#*.csv
 *.RData
 .Rhistory
 *_cache

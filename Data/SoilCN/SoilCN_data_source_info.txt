@@ -1,0 +1,6 @@
+SoilCNdata.csv contains soil C (column name "SOCstocks100") and N stocks (column name "TSNctocks100") for each pedon (column name "upedon"). Latitude and longitude are also given for each pedon location in "lat" and "long" column, respectively.
+
+Given SoilCNdata.csv is constructed using data sets available from RaCA database (https://www.nrcs.usda.gov/wps/portal/nrcs/detail/soils/survey/?cid=nrcs142p2_054164) and following procedures as described in Wills et al. 2014. 
+
+Reference :
+Wills, S., Loecke, T., Sequeira, C., Teachman, G., Grunwald, S. & West, L.T. (2014). Overview of the U.S. rapid carbon assessment project: Sampling design, initial summary and uncertainty estimates. In: Soil carbon (eds. Hartemink, A.E. & McSweeney, K.). Springer International Publishing, Cham, pp. 95–104.  

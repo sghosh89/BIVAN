@@ -144,7 +144,8 @@ a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g.,
 Fig. \ref{fig_cop_pedag1}A-B), the associated dependence
 structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
 $u_i$ is the rank of $x_i$ in the set of the $x_j$ ($j=1,\ldots,n$), divided by
-$n+1$; and $v_i$ is defined in the same way but using the $y_i$. See, 
+$n+1$; and $v_i$ is defined in the same way but using the $y_i$. The $u_i$ and 
+$v_i$ are called *normalized ranks* of the $x_i$ and $y_i$. See, 
 for instance,
 Fig. \ref{fig_cop_pedag1}E-F, which show the copula structure of 
 A-B, respectively. Ranking makes marginals of 
@@ -326,8 +327,6 @@ The phenology, population, and ecosystem functioning datasets are
 "multivariate" in that they comprise, for each taxon, measurements through time at multiple locations; 
 copula structure can be studied for each pair of locations.
 
-<!--***DAN: made it to here in my editing for length, 2019 05 02-->
-
 <!--summary table with info of all data used in Paper-->
 ```{r tab_summary_data_info, echo=F, results="asis",message=F}
 library(kableExtra)
@@ -362,166 +361,158 @@ knitr::kable(tab_data_info,
 # Background, concepts and methods for Q1: Detecting copula structure in data \label{Methods}
 
 To make results interpretable
-to readers unfamiliar with copulas, we first introduce the normal copula and 
-some other copulas we used; and we operationally introduce measures of tail dependence
-and asymmetry of tail dependence. 
+to unfamiliar readers, we first introduce the copula families we used, and 
+measures of tail dependence. 
 Conceptually, a bivariate copula is a probability density function (pdf)
 on the unit square with uniform maginals. 
-The copula is actually defined as the bivariate 
-cdf of the distribution rather than as the pdf itself,
-but this makes little difference. 
-The normal copula family is a one-parameter
+The copula is actually defined as the corresponding 
+cdf rather than as the pdf,
+but both functions contain essentially the same information. 
+The normal copula family (henceforth abreviated N) is a one-parameter
 family of copulas, with parameter corresponding to the correlation of the related 
 bivariate normal distribtion, and controlling the degree of dependence 
 (Fig. \ref{fig_cop_pedag3}A-B for an example).
-Left- and right-tail dependence are $0$ for the normal copula, and this 
+Left- and right-tail dependence are $0$ for the N copula, and this 
 serves as a benchmark for tail dependence in other copulas - positive values of our
-tail dependence measures correspond to dependence stronger than that of a normal
+tail dependence measures correspond to dependence stronger than a normal
 copula. The Clayton and 
 survival-Clayton families (Fig. \ref{fig_cop_pedag1}G-H) are two more one-parameter 
 families. The Clayton has positive lower-tail dependence ($0.87$ for
 the example of Fig. \ref{fig_cop_pedag1}G) and $0$ upper-tail dependence; the 
-survival-Clayton, which is a rotation of the Clayton by $180^\circ$, has 
-positive upper-tail dependence ($0.87$ in Fig. \ref{fig_cop_pedag1}H)
+survival-Clayton is a rotation of the Clayton by $180^\circ$ and has 
+positive upper-tail ($0.87$ in Fig. \ref{fig_cop_pedag1}H)
 and $0$ lower-tail dependence. For our model selection procedure (see below), we used 
-several one- and two-parameter families of copulas exhibiting a wide variety of 
+several one- and two-parameter families of copulas exhibiting a variety of 
 positive lower-tail dependence values 
 (Clayton, survival-Gumbel, survival-Joe, survival-BB6, henceforth
-abbreviated, respectively, C, SG, SJ, SBB6) and upper-tail dependence values
-(survival-Clayton, Gumbel, Joe, BB6, henceforth abbreviated, respectively, 
+abbreviated C, SG, SJ, SBB6) and upper-tail dependence values
+(survival-Clayton, Gumbel, Joe, BB6, henceforth abbreviated 
 SC, G, J, BB6). We also considered families that could exhibit positive upper- or lower-tail
 dependence, or both, depending on parameters (BB1, survival-BB1, BB7, survival-BB7, henceforth 
-abbreviated, respectively, BB1, SBB1, BB7, SBB7). 
-If LT and UT are used to denote 
-lower- and upper-tail dependence, their difference is a measure of asymmetry of 
+abbreviated BB1, SBB1, BB7, SBB7). 
+If LT and UT denote 
+lower- and upper-tail dependence measures, their difference measures asymmetry of 
 tail dependence. We also used two families that were asymmetric in their non-tail parts, 
-but that had zero tail dependence (BB8, survival-BB8, abbreviated BB8 and SBB8).
-In addition to the normal copula, we used another symmetric copula,
+but that had zero tail dependence (BB8, survival-BB8, abbreviated BB8 and SBB8), and
+a symmetric copula called 
 the Frank copula (abbreviated F; Fig. \ref{fig_cop_pedag3}C-D). 
 Copulas are implemented in the `copula` and `VineCopula` packages for the 
-R statistical computing language.
-Additional details are in introductory texts 
-on copulas [@nelsen2006_copula ; @joe2014_dependence] and in `VineCopula` documentation.
-Visualizations of the copulas we used are in Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8}. 
+R language. Visualizations of the copulas we used are in Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8}. 
+See @nelsen2006_copula, @joe2014_dependence and the `VineCopula` documentation
+for more details. 
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig3.pdf}
 \caption{Log-transformed pdfs (A, C) and samples from (B, D) example copulas.
-Shown are the normal copula with parameter $0.8$ and the Frank copula with 
-parameter $10$. See also Fig. \ref{fig_cop_pedag1}E-H for the Clayton and  
-survival-Clayton copulas with parameter 5. Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8}
+Shown are the normal (N) copula with parameter $0.8$ and the Frank (F) copula with 
+parameter $10$. See also Fig. \ref{fig_cop_pedag1}E-H for the Clayton (C) and  
+survival-Clayton (SC) copulas with parameter 5. Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8}
 have visualizations of all the copulas we used.\label{fig_cop_pedag3}}
 \end{center}
 \end{figure}
 
-We addressed Q1 principally via a model selection procedure in which the normal copula
-and the alternative copulas listed above were fitted to 
-our ecological datasets. The resulting fits of the various copula models 
-were compared via the Akaike and Bayesian 
+We addressed Q1 principally via a model selection procedure in which the 
+copulas listed above were fitted to 
+our ecological datasets and fits were compared via the Akaike and Bayesian 
 Information Criteria (AIC and BIC). For bivariate datasets 
 $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps. 
-First, as in the Introduction, we produced ranks 
-$(\tilde{u}_i,\tilde{v}_i)$ where $\tilde{u}_i$ is the rank of $x_i$ in the set 
-$\{x_i:i=1,...,n\}$ and $\tilde{v}_i$ is the rank of $y_i$ in the set $\{y_i:i=1,...,n\}$.
-Ranks were $1$ for the smallest element in a set. We then 
-set $u_i=\tilde{u}_i/(n+1)$ and $v_i=\tilde{v}_i/(n+1)$; subsequent analysis used these 
-*normalized ranks* $u_i$ and $v_i$. 
-Second, we did a test of the independence of the $u_i$ and $v_i$ 
-(implemented in `BiCopIndTest` in the `VineCopula` package). 
-Subsequent model 
-selection algorithms are ineffective if data could not be distinguished from independent data 
-since most or all bivariate copula families we considered include the independent copula in the 
+First, we produced normalized ranks 
+$u_i$ and $v_i$ as in the Introduction. 
+Second, we tested the independence of the $u_i$ and $v_i$ 
+(using `BiCopIndTest` in the `VineCopula` package). 
+Our model 
+selection algorithms were ineffective if data could not be distinguished from independent data 
+since many of the bivariate copula families we considered include the independent copula in the 
 family or as a boundary case. If independence could be rejected ($0.05$ significance level), model 
-selection proceeded. Third, we fit the bivariate copula families listed previously to the ranked data 
-$(u_i,v_i)$ via maximum likelihood, using the `BiCopEst` function in `VineCopula`, and 
-obtained AIC and BIC values and accompanying model weights, $\text{AIC}_{\text{w}}$ and 
-$\text{BIC}_{\text{w}}$ [@burnham2003_modelselection]. The weight of a model represents the 
-relative support of data for the model; weights sum to 1 across models considered. The lower- and 
-upper-tail dependence of the best-fitting member of each family was also provided by `BiCopEst`. 
-Fourth, $\text{AIC}_{\text{w}}$ values for all fitted models were used to get
+selection proceeded. Third, we fit the bivariate copula families listed previously to the 
+normalized ranks via maximum likelihood, using the `BiCopEst` function in `VineCopula`, 
+then obtaining AIC and BIC values and accompanying model weights $\text{AIC}_{\text{w}}$ and 
+$\text{BIC}_{\text{w}}$ [@burnham2003_modelselection]. `BiCopEst` also provided the lower- and 
+upper-tail dependence of the best-fitting member of each family. 
+Fourth, $\text{AIC}_{\text{w}}$ values were used to get
 model-averaged lower- and upper-tail dependence values using standard model averaging 
 formulas [@burnham2003_modelselection]; likewise for BIC.
-Model selection methods will give the *relative* support of several models, but will not,
-on their own, indicate whether any of the models selected are an objectively good fit: all 
-models considered might poorly describe the data. To test this, and as the final step of
+Model selection methods give the *relative* support of several models, but do not 
+indicate whether any of the models are an objectively good fit. To test that, 
+and as the final step of
 our procedure, we tested the goodness of fit of our AIC-best copula family using a 
-bootstrapping procedure implemented in `BiCopGofTest` of `VineCopula`. The method performed 
-two tests, one based on a Cramer-von Mises statistic, and one based on a 
+bootstrapping procedure (`BiCopGofTest` of `VineCopula`). The method performed 
+one test based on a Cramer-von Mises statistic and another based on a 
 Kolmogorov-Smirnov statistic. To keep computation times reasonable, 
-an initial run using $100$ bootstraps was performed, and if
-the $p$-value resulting from either test was less than $0.2$, tests were re-run with 
+an initial run using $100$ bootstraps was performed; if
+the $p$-value from either test was less than $0.2$, tests were re-run with 
 $1000$ boostraps.
 
 The first part of Q1 was answered for a bivariate dataset 
-by comparing the AIC weights of the non-normal copula
-families with that of the normal family. 
+by comparing the AIC weights of the non-N copula
+families with that of the N family. 
 The second part of Q1 was answered by comparing 
 the model-averaged lower- and upper-tail dependence
-values to the lower- and upper-tail dependence values of a normal copula (which 
-are 0). The third part of Q1
+values to the lower- and upper-tail dependence values of an N copula (i.e., 0). The third part of Q1
 was answered by comparing the difference of the model-averaged lower- and upper-tail 
-dependence values to the analogous difference for a normal copula, again 0.
-For multivariate datasets,
-each of which consists of time series from multiple locations, we carried out the bivariate analysis
-for all possible pairwise combinations of locations and compared AIC weights and tail-dependence of 
-minimum-AIC copulas with that of the normal copula. We also counted the number of location pairs 
+dependence values to the analogous difference for an N copula, again 0.
+For multivariate datasets, we carried out the bivariate analysis
+for all possible pairwise combinations of locations, and compared AIC weights and tail-dependence of 
+minimum-AIC copulas with that of an N copula. We also counted the number of location pairs 
 for which model-averaged lower-tail dependence was greater than model-averaged upper-tail dependence 
 or vice-versa, and reported the percentage of pairs showing stronger lower-tail dependence out of 
 the total number of non-independent location pairs considered.
 
+<!--***DAN-->
+
 In addition to our model selection approach, we also used nonparametric approaches to 
-quantify lower- and upper-tail dependence and to answer Q1. Using two approaches can provide greater 
-confidence in results. We used three nonparametric
-statistics which can quantify the extent to which 
-two normalized ranks $u_i$ and $v_i$ are 
+provide greater 
+confidence in our answer to Q1. We used three 
+statistics which quantify the extent to which 
+the normalized ranks $u_i$ and $v_i$ are 
 related in any part of their distributions; we here describe the 
-statistics operationally, with details in Appendix \ref{SM-nonparam_stats}.
-The statistics were formulated with positively associated
+statistics conceptually, with details in Appendix \ref{SM-nonparam_stats}.
+The statistics are defined with positively associated
 variables in mind. All the variables we study were positively associated
-when they were significantly associated. So definitions and associated 
-diagrams will assume positive associations. Given two bounds 
-$0 \leq l_b < u_b \leq 1$, we define the parallel lines $u+v=2l_b$ and 
+when they were significantly associated.  
+Given two bounds 
+$0 \leq l_b < u_b \leq 1$, define the lines $u+v=2l_b$ and 
 $u+v=2u_b$, which intersect the unit square (Fig. \ref{SM-fig_stat_image}). 
 Our statistics quantify the dependence
 between $u_i$ and $v_i$ in the region bounded by these lines.
-Using $l_b=0$ and some value $u_b\leq 0.5$ can give information about 
+Using $l_b=0$ and $u_b\leq 0.5$ gives information about 
 dependence in the left parts of the distributions of $u$ and $v$, and 
-using $u_b=1$ and $l_b \geq 0.5$ can give information about dependence in 
-the right parts of the distributions. The first statistic, denoted 
+using $u_b=1$ and $l_b \geq 0.5$ gives information about dependence in 
+the right parts. The first statistic, 
 $\cor_{l_b,u_b}(u,v)$, is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
-lying in the region given by the bounds.
-Larger values of $\cor_{l_b,u_b}$ indicate stronger positive association
-between $u$ and $v$ in the region.
+between the bounds.
+Larger values indicate stronger positive association
+between between the bounds.
 We also defined a statistic $\Ps_{l_b,u_b}$ (Appendix \ref{SM-nonparam_stats}), 
 which has a similar 
 interpretation to $\cor_{l_{b},u_{b}}(u,v)$.
 Our third statistic, $\Dsq_{l_b,u_b}(u,v)$, is the average squared 
 distance between points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ and the line $v=u$.
-
 Unlike $\cor_{l_b,u_b}$ and 
 $\Ps_{l_b,u_b}$, for which large values inidicate strong dependence
-in the portions of the the distributions of $u$ and $v$ given by 
-the bounds, small values of 
+for points between the bounds, small values of 
 $\Dsq_{l_b,u_b}$ indicate strong dependence. 
+
 For large datasets (large $n$),
-we could use $l_b$ and $u_b$ close together without incurring undue
-sampling variation in our statistics, and we could consider 
+we used $l_b$ and $u_b$ close together without incurring undue
+sampling variation in our statistics, and we considered 
 multiple bands $(l_b,u_b)$ to understand how dependence
 varies in different parts of the distributions. But for datasets with 
-smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$.
-We use the shorthand $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
-and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"); likewise $\Ps_l=\Ps_{0,.5}$,
+smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$,
+abbreviating $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
+and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"). Likewise $\Ps_l=\Ps_{0,.5}$,
 $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, and $\Dsq_u=\Dsq_{0.5,1}$.
+
 To test for asymmetry of dependence in upper and lower portions of distributions,
-we used differences of upper and lower statistics: for smaller datasets, 
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$ (note the opposite order
-in the last of these); for large datasets, $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
+we used differences $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
+for smaller datasets, (note the opposite order
+in the last of these); and $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
 $\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
-$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ (again note the opposite order) with $u_b$ close 
-to $0$.
+$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ with $u_b$ close 
+to $0$ for large datasets.
 We tested our statistics in Appendix \ref{SM-Test_npa_stat} (see also Figs \ref{SM-fig_stat_testing35}-\ref{SM-fig_stat_testing1000}). All code for this
 project is archived at \url{www.github.com/sghosh89/BIVAN}.
 
@@ -541,9 +532,13 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
 \caption{Upper panels show raw data plots for (A) $\log_{10}$(soil C) and $\log_{10}$(soil N) data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
-for birds, (C) $\log_{10}$(BMR) vs. $\log_{10}$(body mass) for mammals, and (D) above-ground plant biomass vs. Shannon's index \textit{(H)} from Cedar Creek. Bottom panels show the corresponding copula plots. See text for units used in upper panels. \label{fig_biv_multi_raw_cop}}
+for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shannon's index \textit{(H)} from Cedar Creek. Bottom panels show the corresponding copula plots. See text for units used in upper panels. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
+<!--***DAN: Shya, it say "Avg. H" and "Avg. biomass" on the axes of D. Reading the sup mat
+data section carefully, I presume this is because there were multiple strips per plot
+and these were averaged. However, the averaging is not mentioned in the main text, so I think
+this will be confusing for some readers. Can you please change the axes to read "Biomas" and "H"?--> 
 
 Across essentially all the sub-fields and levels of organization within ecology for which we 
 examined a dataset, copula structures were typically non-normal and variables 

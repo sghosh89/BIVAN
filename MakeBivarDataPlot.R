@@ -82,8 +82,8 @@ d4<-sr$tab_dbp[,c(2:3)]
 d4c<-sr$cop_tab_dbp[,c(2:3)]
 plot(d4$avg.H,d4$avg.Biomass,type='p',pch=pchval,cex=cexvalpts,
      col="grey")
-mtext("Avg. H",1,1.15)
-mtext("Avg. biomass",2,1.15)
+mtext("H",1,1.15)
+mtext("Biomass",2,1.15)
 mtext("D",3,-1.4,cex=cexvalpl,adj=.05)
 
 #***bottom row of panels : copula plots of corresponding figs of upper panel

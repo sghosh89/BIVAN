@@ -50,9 +50,15 @@ source("./MakeCopulaPedagogFigs.R")
 
 <!--reading data and generaing plot for soilCN-->
 ```{r load_and_plot_data_soilCN, echo=F, results='hide'}
-#fig.cap="Plot of the raw soil C and N data.\\label{fig_raw_cop_soilCN}(A)", fig.height=3, fig.width=3}
-d<-readRDS("Data/dataForShymolinaCoord.rds")
+#d_old<-readRDS("Data/dataForShymolinaCoord.rds")
+#write.csv(d_old,"./Data/SoilCN/SoilCNdata.csv")
+d<-read.csv("./Data/SoilCN/SoilCNdata.csv")
+rownames(d)<-d$X
+d<-d[,-1]
+#sapply(dCN,class)
+
 d<-d[,c("SOCstock100","TSNstock100","lat","long")]
+#identical(d_old[,c("SOCstock100","TSNstock100","lat","long")],d) # checked : they are identical :)
 d<-na.omit(d)
 pdf("./Results/SoilCNraw.pdf")
 op<-par(mar=c(6, 6, 0.2, 2.1))
@@ -487,12 +493,6 @@ idn<-which(plankton_info$c1%ni%cns)
 knitr::kable(plankton_info, "latex", booktabs = T, linesep = "",
       caption = "Species names of 22 plankton taxa for which data were available \\label{tab_plankton_info}",
       col.names = c("Plankton taxon name"))%>%row_spec(row=idn,italic=T)
-```
-
-<!--reading multivariate methane flux data-->
-```{r read_methane_data, echo=F, results="markup"}
-set.seed(seed)
-methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
 ```
 
 <!--embedding plot with sampling locations : soilCN, aphids, planktons-->
@@ -1907,8 +1907,16 @@ knitr::kable(s, digits = 3,
 
 <!--Load and format the data : methane flux-->
 ```{r read_format_methane_data, echo=F}
+#latlon_methane_old<-readRDS("./Data/Methane_data/chamberLocations.rds")
+#write.csv(latlon_methane_old,"./Data/Methane_data/chamberLocations.csv",row.names = F)
+latlon_methane<-read.csv("./Data/Methane_data/chamberLocations.csv")
+#identical(latlon_methane_old,latlon_methane)  # checked : they are identical :)
 
-methane_raw<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
+#methane_raw_old<-readRDS("./Data/Methane_data/methane_data_for_Shyamolina.rds")
+#write.csv(methane_raw_old,"./Data/Methane_data/methane_data.csv",row.names = F)
+methane_raw<-read.csv("./Data/Methane_data/methane_data.csv")
+methane_raw$dates<-as.Date(methane_raw$dates) # converting factor class to date class
+#identical(methane_raw_old,methane_raw)  # checked : they are identical :)
 
 myls <- vector("list", length = dim(methane_raw)[2]-1)
 for(i in 2:dim(methane_raw)[2]){
@@ -2031,7 +2039,7 @@ knitr::kable(h,
 ```
 
 <!--Do the main computations for nonparametric analysis of methane flux data-->
-```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
+```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,methane_raw,latlon_methane,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
 source("NonParamStat.R")
@@ -2041,7 +2049,7 @@ resloc<-"./Results/stat_results/stat_methane/"
 data_pt_thrs<-50
 good_loc <- good_loclist(d_allsp=methane_data,sp=1,data_pt_thrs=data_pt_thrs)
 
-latlon<-readRDS("./Data/Methane_data/chamberLocations.rds")
+latlon<-latlon_methane
 chamber_name<-colnames(methane_raw[,c(2:dim(methane_raw)[2])])
 ndim<-length(chamber_name)
 
@@ -4282,7 +4290,7 @@ dev.off()
 ```
 
 <!--Following chunk examine the consequence of non-Normal copula atructure on skewness using methane flux data-->
-```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
+```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
 

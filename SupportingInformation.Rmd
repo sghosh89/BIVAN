@@ -385,7 +385,7 @@ Fig. \ref{MT-fig_cop_pedag1}E can be obtained from Fig. \ref{MT-fig_cop_pedag1}A
 of both variables by the cdf of the standard normal distribution.
 Fig. \ref{MT-fig_cop_pedag1}F can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
 \caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 copula (see section on methods for Q1) 
@@ -1931,7 +1931,7 @@ for(i in 2:dim(methane_raw)[2]){
 methane_data<-list(myls=myls)
 ``` 
 
-<!--Do the model selection for methane flux data and then showing results in Tables-->
+<!--Do the model selection for methane-flux data and then showing results in Tables-->
 ```{r RES_methane, echo=F, cache=T, results="hide", cache.extra=list(seed,methane_data,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 source("FittingCopula_selective_loc.R")  # top most hierarchy source file
@@ -1945,29 +1945,29 @@ resloc<-"./Results/fitting_results/"
 saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.RDS",sep=""))
 ```
 
-<!--table for Best-fitting copulas, methane flux data-->
+<!--table for Best-fitting copulas, methane-flux data-->
 ```{r tab_methane_bestcop, echo=F, results="markup"}
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',linesep = "",
-             caption.short = "Best-fitting copulas, methane flux data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane flux data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             caption.short = "Best-fitting copulas, methane-flux data",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )
 ```
 
-<!--table for AIC-weights of best-fitting copulas, methane flux data-->
+<!--table for AIC-weights of best-fitting copulas, methane-flux data-->
 ```{r tab_methane_AICw,echo=F,results="markup"}
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="AIC weights, best-fitting copulas, methane flux data",
-             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane flux data.\\label{tab_methane_AICw}",
+             caption.short="AIC weights, best-fitting copulas, methane-flux data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane-flux data.\\label{tab_methane_AICw}",
              booktabs=TRUE)
 ```
 
-<!--table for AIC-weights of Normal copula used for fitting, methane flux data-->
+<!--table for AIC-weights of Normal copula used for fitting, methane-flux data-->
 ```{r tab_methane_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
@@ -1975,74 +1975,74 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="AIC weights, N copulas, methane flux data",
-             caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for methane flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
+             caption.short="AIC weights, N copulas, methane-flux data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the N copula family for each location pair for methane-flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
 ```
 
-<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, methane flux data-->
+<!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, methane-flux data-->
 ```{r tab_methane_p_CvM,echo=F,results="markup"}
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="Goodness of fit of best-fitting copulas, methane flux data",
-             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane flux data.\\label{tab_methane_p_CvM}",
+             caption.short="Goodness of fit of best-fitting copulas, methane-flux data",
+             caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane-flux data.\\label{tab_methane_p_CvM}",
              booktabs=TRUE)
 ```
 
-<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, methane flux data-->
+<!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, methane-flux data-->
 ```{r tab_methane_p_KS,echo=F,results="markup"}
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="Goodness of fit of best-fitting copulas, methane flux data",
+             caption.short="Goodness of fit of best-fitting copulas, methane-flux data",
              caption = "$P$-value results of a Kolmogorov-Smirnov-based test of
 the goodness of fit of the lowest-AIC copula family for each pair of
-locations for methane flux data.\\label{tab_methane_p_KS}",
+locations for methane-flux data.\\label{tab_methane_p_KS}",
              booktabs=TRUE)
 ```
 
-<!--table for model averaged lower tail dep., methane flux data-->
+<!--table for model averaged lower tail dep., methane-flux data-->
 ```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="Lower-tail dependence, methane flux data",
-             caption = "Model-averaged lower-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_LTdep_AICw}",
+             caption.short="Lower-tail dependence, methane-flux data",
+             caption = "Model-averaged lower-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_LTdep_AICw}",
              booktabs=TRUE)
 ```
 
-<!--table for model averaged upper tail dep., methane flux data-->
+<!--table for model averaged upper tail dep., methane-flux data-->
 ```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="Upper-tail dependence, methane flux data",
-             caption = "Model-averaged upper-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_UTdep_AICw}",
+             caption.short="Upper-tail dependence, methane-flux data",
+             caption = "Model-averaged upper-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_UTdep_AICw}",
              booktabs=TRUE)
 ```
 
-<!--table for model averaged lower- minus upper-tail dep., methane flux data-->
+<!--table for model averaged lower- minus upper-tail dep., methane-flux data-->
 ```{r tab_methane_LTmUT,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="Lower- minus upper-tail dependence, methane flux data",
-             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for methane flux data.\\label{tab_methane_LTmUT}",
+             caption.short="Lower- minus upper-tail dependence, methane-flux data",
+             caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_LTmUT}",
              booktabs=TRUE)
 ```
 
-<!--Do the main computations for nonparametric analysis of methane flux data-->
+<!--Do the main computations for nonparametric analysis of methane-flux data-->
 ```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,methane_raw,latlon_methane,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
 
 source("good_loclist.R")
@@ -2071,7 +2071,7 @@ stat_methane<-multcall(d_allsp=methane_data,sp=1,lats=latlon_arranged$lat,longs=
 saveRDS(stat_methane,paste(resloc,file="stat_methane.RDS",sep='')) 
 ```
 
-<!--Show the statistical results in a table for methane flux data-->
+<!--Show the statistical results in a table for methane-flux data-->
 ```{r tab_methane_resamp,echo=F,results="markup"}
 s<-stat_methane$numericdf[,c(3,2,4)]
 
@@ -2083,8 +2083,8 @@ s<-cbind(sc,s)
 knitr::kable(s,digits = 3,
              format = "latex",linesep = "", escape = F,align="c",
              col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
-             caption.short="Results for nonparametric statistics, methane flux data",
-             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for methane flux data.\\label{tab_methane_resamp}",
+             caption.short="Results for nonparametric statistics, methane-flux data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for methane-flux data.\\label{tab_methane_resamp}",
              booktabs=TRUE)
 ```
 
@@ -2214,7 +2214,7 @@ For the *Ceratium furca* abundance data, confidence intervals were
 $(0.011,0.044)$, indicating greater lower-tail dependence, and again
 <!--***DAN: Shya, pls make above results autolink-->
 consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
-For the methane flux data, confidence intervals were 
+For the methane-flux data, confidence intervals were 
 $(-0.008,0.019)$.
 
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
@@ -4293,7 +4293,7 @@ par(op)
 dev.off()
 ```
 
-<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using methane flux data-->
+<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using methane-flux data-->
 ```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -5085,7 +5085,7 @@ BMR versus body mass datasets, but we admit the possibility. Any systematic
 use of copulas to study life-history tradeoffs should take the possibility
 into account of artefacts such as described here.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7in]{./Results/MissingDataInfluencesCopula.pdf}
 \caption[Missing data can influence perceived copula structure]{Missing
@@ -5098,6 +5098,10 @@ Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
 \end{figure}
 
 # References
+\setlength{\parindent}{-0.2in}
+\setlength{\leftskip}{0.2in}
+\setlength{\parskip}{1pt}
+\noindent
 
 <!--
 <div id="refs"></div>

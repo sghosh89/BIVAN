@@ -110,7 +110,7 @@ is only one way to
 study relationships between variables, other common metrics also 
 provide partial information.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
 \caption{(A-F, I, J) Bivariate datasets showing diverse relationships between 
@@ -401,7 +401,7 @@ R language. Visualizations of the copulas we used are in Figs \ref{SM-figped_N}-
 See @nelsen2006_copula, @joe2014_dependence and the `VineCopula` documentation
 for more details. 
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig3.pdf}
 \caption{Log-transformed pdfs (A, C) and samples from (B, D) example copulas.
@@ -526,7 +526,7 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
 \caption{Upper panels show raw data plots for (A) $\log_{10}$(soil C) and $\log_{10}$(soil N) data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
@@ -1143,7 +1143,7 @@ showed that a G copula (which has upper tail dependence) could effectively model
 the spatial dependence of drought variables in the study area.
 Bivariate copula analysis was also used in forecasting the 
 co-occurrence of extreme events (flood or drought) 
-over the North Sikkim Himalayas, India, using spatial data sets [@Goswami2018]. 
+over the North Sikkim Himalayas, India, using spatial datasets [@Goswami2018]. 
 
 <!--a para on how likely one is to get copula structure via the Liebig mechanism-->
 There are also reasons to expect that our second mechanism operates commonly. 

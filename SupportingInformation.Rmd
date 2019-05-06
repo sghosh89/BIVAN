@@ -5097,9 +5097,7 @@ Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
 \end{center}
 \end{figure}
 
-\clearpage
-
-#  References
+# References
 
 <!--
 <div id="refs"></div>

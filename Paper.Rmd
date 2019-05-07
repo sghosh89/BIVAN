@@ -21,8 +21,6 @@ csl: ecology-letters.csl
 bibliography: REF_ALL.bib
 ---
 
-updated on `r Sys.Date()`
-
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 options(scipen = 1, digits = 5) #This option round all numbers appeared in the inline r code upto 5th digit
@@ -1232,7 +1230,7 @@ variability, through time, of total-community
 properties such as total biomass. Typically, variability through time of total-community
 properties is measured with the coefficient of variation, but the skewness of such a time series
 may also be of interest because it can characterize the extent to
-which community properties show "spikiness".  
+which community properties show "spikiness".
 Future work on copula structure of interspecific relationships in communities and its
 implications for community stability seems likely to be an exciting avenue of research.
 

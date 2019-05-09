@@ -48,7 +48,30 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 
 \noindent \emph{Possible alternative titles:}
 
-\noindent A complete statistical description of dependence between variables for ecology and related fields
+The importance of a complete copula description of dependence between variables for ecology and related fields
+
+Complex, informative, and previously ignored dependencies propogate throughout ecology and can be revealed with copulas
+
+Complex, informative, and previously ignored dependencies propogate throughout ecology and are revealed using copulas
+
+Copulas reveal complex, informative, and previously ignored dependence
+structures between variables across ecological disciplines
+
+Copulas reveal complex, informative, and previously ignored dependence
+structures which in turn illuminate multiple ecological disciplines
+
+Copulas reveal complex, informative, and previously ignored dependence
+structures which in turn can illuminate every subdiscipline of ecology
+
+Copulas reveal complex, informative, and previously ignored dependence
+structures which in turn can illuminate every subfield of ecology
+
+Copulas reveal complex, informative and previously ignored dependence
+structure between variables throughout ecology
+
+The complexity of dependencies between ecological variables, previously
+ignored, is revealed by copulas and in turn illuminates multiple 
+disciplines of ecology
 
 \noindent \emph{Keywords:}
 
@@ -331,21 +354,21 @@ library(kableExtra)
 library(dplyr)
 tab_data_info<-as.data.frame(matrix(NA,nrow=8,ncol=4))
 colnames(tab_data_info)<-c("Data","Category","No. of measurements we used", "References")
-tab_data_info$Data<-c("Soil C and N","Bird body masses and BMR", "Mammal body masses and BMR", "Cedar Creek data", 
-                      "Green spruce and other aphid species abundances", "Leaf-curling plum and other aphid first flight dates","Ceratium furca and other plankton taxa abundances","Methane flux")
-tab_data_info$Category<-c("Environmental","Species-trait","Species-trait","Community level",
-                          "Population","Phenological","Population","Ecosystem functioning")
+tab_data_info$Data<-c("Soil C and N","Bird body masses and BMR", "Mammal body masses and BMR", 
+                      "Green spruce and other aphid species abundances", "Leaf-curling plum and other aphid first flight dates","Ceratium furca and other plankton taxa abundances", "Plant diversity and aboveground biomass","Methane flux")
+tab_data_info$Category<-c("Environmental","Species-trait","Species-trait",
+                          "Population","Phenological","Population","Community level","Ecosystem functioning")
 tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations",sep=""),
                                                paste(nrow(d_birdsBMR)," birds",sep=""),
                                                paste(nrow(d_mammalsBMR)," mammals",sep=""),
-                                               paste(nrow(d_cc[[5]])," plots",sep=""),
                                                "10 locations with atleast 30 yrs. of timeseries for each 20 sp.",
                                                "10 locations with atleast 30 yrs. of timeseries for each 20 sp.",
                                                "14 locations with atleast 45 yrs. of timeseries for each 22 taxa",
+                                               paste(nrow(d_cc[[5]])," plots",sep=""),
                                                "13 locations with atleast 50 dates of data")
 tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills et al. (2014)", "McNab (2009)","McNab (2008)",
-                            "Cedar Creek Ecosystem Science Reserve, biodiversity experiment e120",
                             "Rothamsted Insect Survey","Rothamsted Insect Survey","Continuous Plankton Recorder Survey",
+                            "Cedar Creek Ecosystem Science Reserve, biodiversity experiment e120",
                             "Great Miami Wetland Mitigation Bank, Smyth et al. (2019)")
 
 knitr::kable(tab_data_info, 
@@ -353,7 +376,7 @@ knitr::kable(tab_data_info,
              caption = "Summary table for the data we used. Bolds entries are the multivariate data, the rest are bivariate datasets (see Data section). Basal metabolic rate=BMR. \\label{tab_data_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(1:4,width="2.8 cm")%>%
-             row_spec(5:8, bold=T)
+             row_spec(c(4,5,6,8), bold=T)
 ```
 
 # Background, concepts and methods for Q1: Detecting copula structure in data \label{Methods}
@@ -946,7 +969,7 @@ An idea was presented in the Introduction that
 the distribution (through time) of a spatially averaged quantity should be influenced by the 
 dependence between the local quantities being averaged, including their
 copula structure and tail dependence. For instance, suppose an ecological variable 
-$E_i(t)$ is measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and  
+$E_i(t)$ is measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and
 the distribution and temporal dynamics of the spatial mean $\sum_i E_i(t)/N$ is of
 interest. The $E_i(t)$ could be, for instance, local abundances of a pest or 
 exploited species, or local fluxes of a greenhouse gas. If  $E_i$ and $E_j$ are 

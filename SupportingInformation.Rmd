@@ -444,7 +444,7 @@ and Shannon's biodiversity index (computed using percent cover data) averaged ov
 sampled strips/quadrats taken from each 
 of 168 plots.
 
-\textbf{Ecosystem functioning data on methane flux.} The Great Miami Wetland Mitigation Bank  was at 
+\textbf{Ecosystem functioning data on methane-flux.} The Great Miami Wetland Mitigation Bank  was at 
 $36^{\circ}46^{'}51^{''}$ N, $84^{\circ}20^{'}26^{''}$ W, in Trotwood, Montgomery County, Ohio. Additional information 
 on the history of the site and soil types is detailed in @Jarecke2016. Briefly, the closed static flux chamber method 
 was used [@Holland1999] to measure $\text{CH}_{4}$ fluxes at 28 locations across a hydrologic gradient (upland to 
@@ -1909,7 +1909,7 @@ knitr::kable(s, digits = 3,
 \end{center}
 \end{figure}
 
-<!--Load and format the data : methane flux-->
+<!--Load and format the data : methane-flux-->
 ```{r read_format_methane_data, echo=F}
 #latlon_methane_old<-readRDS("./Data/Methane_data/chamberLocations.rds")
 #write.csv(latlon_methane_old,"./Data/Methane_data/chamberLocations.csv",row.names = F)

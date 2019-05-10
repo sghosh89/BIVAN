@@ -10,6 +10,8 @@ Terrance E. Loecke, University of Kansas
 
 Philip C. Reid, University of Plymouth
 
+James D. Bever, University of Kansas
+
 Daniel C. Reuman, University of Kansas
 
 # Introduction

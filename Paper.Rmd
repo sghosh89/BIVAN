@@ -40,7 +40,7 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 
 \noindent Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
 
-\noindent Reid: School of Biological & Marine Sciences, University of Plymouth, Drake Circus, Plymouth PL4 8AA, United Kingdom
+\noindent Reid: School of Biological & Marine Sciences, University of Plymouth, Drake Circus, Plymouth PL4 8AA, UK; Continuous Plankton Recorder Survey, The Marine Biological Association, The Laboratory, Citadel Hill, Plymouth PL1 2PB, UK
  
 \noindent Bever: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
 
@@ -105,7 +105,7 @@ disciplines of ecology
 
 # Abstract
 
-All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information contained in the relationships. Other statistical tools exist that provide a complete description of relationships between variables, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here explore the concepts that underpin copulas and examine the potential for those concepts to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning dataset we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe mechanisms by which observed copula structure and tail dependence can arise in ecological data, including a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete description of dependence, advancing conceptual frameworks, and demonstrating a powerful approach, we aim to elevate copula reasoning to widespread use in ecology.
+All branches of ecology study relationships among environmental and biological variables. However, ubiquitously used approaches to studying such relationships, based on correlation and regression, provide only a small slice of the complex information contained in the relationships. Other statistical tools exist that provide a complete description of relationships between variables, based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, but not in ecology. We here explore the concepts that underpin copulas and examine the potential for those concepts to improve our understanding of ecology. We find that informative copula structure in dependences between variables is exceedingly common across all the environmental, species-trait, phenological, population, community, and ecosystem functioning datasets we considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more strongly related in their left compared to right tails, or vice versa. Copula structure and tail dependence can help reveal causal relationships between variables. We describe mechanisms by which observed copula structure and tail dependence can arise in ecological data, including a Moran-like effect whereby dependence structures between environmental variables are inherited by ecological variables; and asymmetric or nonlinear influences of environments on ecological variables, such as under Liebig's law of the minimum. We describe consequences of copula structure, including impacts on extinction risk and the stability through time of ecosystem services. By documenting the importance of a complete description of dependence, advancing conceptual frameworks, and demonstrating a powerful approach, we aim to elevate copula reasoning to widespread use in ecology.
 
 \newpage
 # Introduction\label{Intro}
@@ -404,7 +404,7 @@ library(dplyr)
 tab_data_info<-as.data.frame(matrix(NA,nrow=8,ncol=4))
 colnames(tab_data_info)<-c("Data","Category","No. of measurements we used", "References")
 tab_data_info$Data<-c("Soil C and N","Bird body masses and BMR", "Mammal body masses and BMR", 
-                      "Green spruce and other aphid species abundances", "Leaf-curling plum and other aphid first flight dates","Ceratium furca and other plankton taxa abundances", "Plant diversity and aboveground biomass","Methane flux")
+                      "Green spruce and other aphid species abundances", "Leaf-curling plum and other aphid first flight dates","\\textit{Ceratium furca} and other plankton taxa abundances", "Plant diversity and aboveground biomass","Methane-flux")
 tab_data_info$Category<-c("Environmental","Species-trait","Species-trait",
                           "Population","Phenological","Population","Community level","Ecosystem functioning")
 tab_data_info$`No. of measurements we used`<-c(paste(nrow(d_soilCN)," locations",sep=""),
@@ -421,7 +421,8 @@ tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills e
                             "Great Miami Wetland Mitigation Bank, Smyth et al. (2019)")
 
 knitr::kable(tab_data_info, 
-             format="latex", align="l",
+             #format="latex", align="l",
+             format="latex", align="l",escape=F,
              caption = "Summary table for the data we used. Bold entries are the multivariate data, the rest are bivariate datasets (see Data section). Basal metabolic rate=BMR. \\label{tab_data_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(1:4,width="2.8 cm")%>%
@@ -607,7 +608,7 @@ for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shan
 Across essentially all our datasets, copula structures were typically non-normal and 
 commonly showed asymmetric tail 
 dependence. To make results easier to absorb: we first 
-present results in for an example bivariate dataset; then we summarize results
+present results for an example bivariate dataset; then we summarize results
 for all bivariate datasets; then we present results for an example multivariate dataset; then we summarize for all multivariate datasets.
 
 <!--bivariate example-->
@@ -690,7 +691,7 @@ OH. These data have greater tail dependence
 (lower and upper) than would be expected from an N-copula null hypothesis. 
 Model-averaged lower- minus upper-tail dependence statistics 
 (Table \ref{SM-tab_count_LTmUT}) were positive 
-for all but a few locations pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
+for all but a few location pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
 out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`). Thus the spatial synchrony of rarity in the green spruce aphid is stronger 
 than the spatial synchrony of outbreaks. This also answers the third part of OH.
 Nonparametric statistics verified that tail dependence was asymmetric for the green 
@@ -702,14 +703,14 @@ presentation of skewness results below. Only do it if you are desperate to cut.-
 Table \ref{tab_multivar_summary} summarizes OH results from
 multivariate data. Results supported the 
 conclusions that non-N copula structure, non-N tail dependence, and asymmetric tail 
-dependence were common. Most locations pairs were non-independent 
+dependence were common. Most location pairs were non-independent 
 (Table \ref{tab_multivar_summary}, row 2). The large majority of non-independent location 
 pairs had best-fitting copula that was not the N copula (Table \ref{tab_multivar_summary}, 
 row 3), and AIC weights of best-fitting copulas were 
 better than those of N copulas (Table \ref{tab_multivar_summary}, rows 4-5).
 Best-fitting copulas were nearly always considered an adequate fit 
 (Table \ref{tab_multivar_summary}, row 6). Some of the datasets (green spruce aphid
-abundance, \textit{Ceratium furca} abundance, methane flux) showed stronger 
+abundance, \textit{Ceratium furca} abundance, methane-flux) showed stronger 
 or marginally stronger lower- than upper-tail dependence 
 (Table \ref{tab_multivar_summary}, rows 7-9), whereas leaf-curling plum aphid first flight
 data showed the reverse. Asymmetry results were verified by nonparametric approaches 
@@ -798,7 +799,7 @@ knitr::kable(tab_multivar_summary[1:9,],
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ","Green spruce aphid abundance",
                         "Leaf-curling plum aphid first flight",
-                        "\\textit{Ceratium furca} abundance","Methane flux")
+                        "\\textit{Ceratium furca} abundance","Methane-flux")
              )%>%column_spec(2:5,width="2.5cm")%>%
              column_spec(1, width = "7cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
@@ -1179,7 +1180,7 @@ These observations could have implications for numerous exploited and pest speci
 for which the spatial average time series have applied importance.
 Second, metapopulation extinction risk can be accentuated or reduced by tail dependence
 properties of environmental variables. We also showed effects of copula 
-structure on Taylor's law, which is has been applied in many fields.
+structure on Taylor's law, which has been applied in many fields.
 In our view, our results demonstrate that comprehensive understanding 
 of many ecological phenomena is impossible without 
 a complete characterization of dependence between variables. 
@@ -1302,9 +1303,7 @@ variability, through time, of total-community
 properties such as total biomass. Typically, variability through time of total-community
 properties is measured with the coefficient of variation, but the skewness of such a time series
 may also be of interest because it can characterize the extent to
-which community properties show "spikiness".
-Future work on copula structure of interspecific relationships in communities and its
-implications for community stability seems likely to be an exciting avenue of research.
+which community properties show "spikiness". Future work on copula structure of interspecific relationships in communities and its implications for community stability seems likely to be an exciting avenue of research.
 
 <!--***DAN: could remove the next para if you need to save words-->
 <!--A para that sets up Shya's extinction risk paper-->

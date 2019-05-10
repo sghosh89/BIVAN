@@ -90,11 +90,6 @@ rg1<-0
 rg2<-1
 plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
 mtext(expression(z[v]),2,line=1.15)
-text(rg1,rg2,"C",cex=cexvalpl,adj=c(0,1))
-text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5[,1],dcc5[,2]),2)),
-     adj=c(1,0),cex=cexvaltxt)
-text(rg2,rg1,paste0("S=",round(cor(dcc5[,1],dcc5[,2],method="spearman"),2)),
-     adj=c(1,0),cex=cexvaltxt)
 #the contours
 x<-seq(from=0,to=1,length.out=101)
 y<-x
@@ -104,6 +99,11 @@ z<-matrix(z,101,101)
 contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),col="grey",labels ="",add=T)
 #contour(x,y,log10(z),nlevels=5,lty=0, add=T)
 #contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1))
+text(rg1,rg2,"C",cex=cexvalpl,adj=c(0,1))
+text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5[,1],dcc5[,2]),2)),
+     adj=c(1,0),cex=cexvaltxt)
+text(rg2,rg1,paste0("S=",round(cor(dcc5[,1],dcc5[,2],method="spearman"),2)),
+     adj=c(1,0),cex=cexvaltxt)
 
 #2nd row of panels, right, uniform marginals, right-tail dependence
 par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
@@ -113,11 +113,6 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 #the data
 plot(dsc5[,1],dsc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
-text(rg1,rg2,"D",cex=cexvalpl,adj=c(0,1))
-text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5[,1],dsc5[,2]),2)),
-     adj=c(1,0),cex=cexvaltxt)
-text(rg2,rg1,paste0("S=",round(cor(dsc5[,1],dsc5[,2],method="spearman"),2)),
-     adj=c(1,0),cex=cexvaltxt)
 #the contours
 x<-seq(from=0,to=1,length.out=101)
 y<-x
@@ -126,6 +121,11 @@ z<-dCopula(dcarg,sc5)
 z<-matrix(z,101,101)
 contour(x,y,log10(z),nlevels=5,xlim=c(0,1),ylim=c(0,1),col="grey",labels ="",add=T)
 #contour(x,y,log10(z),nlevels=5,lty=0, add=T)
+text(rg1,rg2,"D",cex=cexvalpl,adj=c(0,1))
+text(rg2,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5[,1],dsc5[,2]),2)),
+     adj=c(1,0),cex=cexvaltxt)
+text(rg2,rg1,paste0("S=",round(cor(dsc5[,1],dsc5[,2],method="spearman"),2)),
+     adj=c(1,0),cex=cexvaltxt)
 
 #3th row of panels, left
 par(fig=c((ymarg_wd+numsp)/tot_wd,

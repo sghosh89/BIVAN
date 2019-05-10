@@ -1,5 +1,5 @@
 ---
-title: "Supporting Information : The importance of a complete description of dependence between variables for ecology and related fields"
+title: "Supporting Information : Complex, informative, and previously ignored dependencies propogate throughout ecology and can be revealed using copulas"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
@@ -373,17 +373,30 @@ dev.off()
 source("./MakeBivarDataPlot.R")
 ```
 
-# Transformations used in Fig. \ref{MT-fig_cop_pedag1} \label{pedagog1_details}
+# Transformation alters Pearson but not Spearman correlation \label{pedagog1_details}
 
 The data of Fig. \ref{MT-fig_cop_pedag1}A-B were generated to have standard normal marginals.
-Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
-of both variables by the cdf of the standard normal distribution, and then by the inverse of 
+Fig. \ref{fig_transf_pearson_spearman}A can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+of both variables by the cummulative distribution function (cdf) of the standard normal distribution, and then by the inverse of 
 the cdf of the gamma distribution with shape and scale parameters 2. 
-The function `qgamma` in R was used.
-Fig. \ref{MT-fig_cop_pedag1}D can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way.
-Fig. \ref{MT-fig_cop_pedag1}E can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+The functions `pnorm` and `qgamma` in R were used.
+Fig. \ref{fig_transf_pearson_spearman}B can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way.
+The Pearson correlations differ substantially after transformation, 
+but the Spearman correlations are unchanged (Figs \ref{MT-fig_cop_pedag1}A-B, \ref{fig_transf_pearson_spearman}).
+Fig. \ref{MT-fig_cop_pedag1}C (the points, not the contours) can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
 of both variables by the cdf of the standard normal distribution.
-Fig. \ref{MT-fig_cop_pedag1}F can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
+Fig. \ref{MT-fig_cop_pedag1}D can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=10 cm]{./Results/PedagogFig_SMExport.pdf}
+\caption[Transformation alters Pearson but not Spearman correlation]{Transformation alters Pearson but not Spearman correlation. 
+Displayed data are transformed from the data pictured on
+Fig. \ref{MT-fig_cop_pedag1}A-B. See Appendix \ref{pedagog1_details} for 
+details. P=Pearson, S=Spearman 
+correlation.\label{fig_transf_pearson_spearman}}
+\end{center}
+\end{figure}
 
 \begin{figure}[!h]
 \begin{center}

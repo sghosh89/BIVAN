@@ -5039,9 +5039,10 @@ result $y_i(t)$. This is the surrogate dataset.
 
 # From causes to consequences for green spruce aphid abundance, details \label{sect:greenspruce}
 Winter temperature for year $t$ was for December of year $t-1$ to March of 
-year $t$. Data, which pertained to the same locations and years as the aphid data,
-were obtained and processed exactly as in [@Sheppard2016]. Copulas
-with winter temperature are in Fig. \ref{fig:greenspruce}. Results of analyses of these
+year $t$. Temperature data, which pertained to the same locations and years as the aphid data,
+were obtained and processed exactly as in @Sheppard2016. Copulas
+describing the relationship between green spruce aphid abundance and winter 
+temperature are in Fig. \ref{fig:greenspruce}. Results of analyses of these
 copulas that paralleled the analyses applied to bivariate ecological datasets 
 (see section on methods for the observational hypotheses) are in Table \ref{tab:greenspruce}.
 
@@ -5075,11 +5076,11 @@ op<-par(mfrow=c(2,5),mar=c(3,3,3,3), mgp=c(1.5,0.5,0)) # each row for each sp fo
    
       if(IndepTestRes<0.05 && tauval>0){
         plot(vi,vj,type='p',col=rgb(0,0,0,0.3),pch=19,xlim=c(0,1),ylim=c(0,1),
-             xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
-        mtext(paste0("Loc = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
+             xlab="Aphid abundance",ylab="winter temp.",cex.lab=1.5)
+        mtext(paste0("Location = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
       }else if(IndepTestRes<0.05 && tauval<0){
         plot(vi,vj,type='p',col=rgb(0,1,0,0.3),pch=19,xlim=c(0,1),ylim=c(0,1),
-             xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
+             xlab="Aphid abundance",ylab="winter temp.",cex.lab=1.5)
         mtext(paste0("Location = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
       }else{
         plot(-1,0,xlim=c(0,1),ylim=c(0,1),xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
@@ -5097,8 +5098,9 @@ dev.off()
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
-\caption[Copula plot for green spruce aphid abundance data with winter temperature]{Copula plot for green spruce 
-aphid abundance data with winter temperature for each selected locations. \label{fig:greenspruce}}
+\caption[Copula plots for winter temperature versus green spruce aphid abundance]{Copula plots 
+for winter temperature versus green spruce 
+aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for the observational hypothesis).\label{fig:greenspruce}}
 \end{center}
 \end{figure}
 
@@ -5206,15 +5208,20 @@ set.seed(seed)
 res<-ms_npa_RES_greenspruceaphid_count_temp$sp10_Green_spruce_aphid$ms_summary_allloc
 #row.names(res)<-NULL
 #res<-cbind(c(2:11),res)
-colnames(res)<-c("p-value from indep. test","bestfit copula",
-                 "bestfit copula AICw","Normal Copula AICw","p-value from CvM stats","p value from KS stats","LT dependence","UT dependence","(LT - UT) dependence","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
+colnames(res)<-c("p-value, independence test","Best-fit copula",
+                 "Best-fit copula AICw","N-copula AICw","p, CvM","p, KS","Model-avg. LT","Model-avg. UT","Model-avg. LT minus UT","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
 res<-res[,-1]
 knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
-             caption.short="Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations",
-      caption = "Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations, tail dependence were calculated using model averaged AIC-weights, NA represents copula was independent at given location as p-value from independence test was beyond the threshold 0.05. Last three columns indicate non-parametric statistics computed on $(0,0.5)$ and $(0.5,1)$ bounds for lower and upper statistics, respectively.\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
+             caption.short="Summary results for copulas for winter temperature versus green spruce aphid abundance",
+      caption = "Summary results for analysis of copulas for winter temperature versus green spruce 
+aphid abundance for each of the 10 sampling locations. The column labeled p, CvM is the p-value 
+result for the goodness of fit test using the Cramer-von Mises statistic (see section on 
+methods for the observational hypothesis). The 
+column labeled p, KS is the p-value 
+result for the goodness of fit test using the Kolmogorov-Smirnov statistic. Entries with an NA are because model selection and other statistics
+were only employed for copulas for which independence was rejected (5 percent significance level).\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
 #kable_styling(latex_options = c("scale_down"))
 ```
-
 
 # A means by which missing data can influence perceived copula structure\label{sect:missingdata}
 

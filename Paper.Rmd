@@ -291,7 +291,7 @@ correlation were unchanged, would have more benign effects. We will
 later frame consequential hypotheses Y, about extinction risk, and Z, about Taylor's law.
 
 Our causal and consequential hypotheses imply, or rely on, an "observational
-hypothesis" (O in Fig. \ref{MasteFigure}), which we here frame: datasets in 
+hypothesis" (O in Fig. \ref{MasterFigure}), which we here frame: datasets in 
 ecology will commonly have copula structure
 distinct from that of a Gaussian/normal distribution (here called 
 non-normal copula structure); they will commonly show tail dependence 
@@ -982,7 +982,7 @@ regime.
 For the model we examined, causal hypothesis D (Fig. \ref{MasterFigure}) was 
 correct that asymmetric tail dependence in evolutionary changes 
 can produce similarly asymmetric tail dependence in character distributions across
-phylogeny tips (Appendix \ref{SM-evol_mech} fro details). This topic is revisited in the Discussion.
+phylogeny tips (Appendix \ref{SM-evol_mech} for details). This topic is revisited in the Discussion.
 
 <!--Question 3 analyses-->
 # Background, concepts and methods for testing the consequential hypotheses\label{Consequences}

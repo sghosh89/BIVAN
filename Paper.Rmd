@@ -1332,7 +1332,7 @@ Appendix \ref{SM-Data_details}),
 is known to be strongly influenced by temperature the previous winter (@Sheppard2016,
 supplementary fig. 6).
 For each of our 10 sampling locations, we examined (Appendix \ref{SM-sect:greenspruce}, 
-Fig. \ref{}) the copula of winter temperature
+Fig. \ref{SM-fig:greenspruce}) the copula of winter temperature
 and green spruce aphid abundance time series for the location, finding 
 substantial left-tail dependence: apparently winter temperature has an asymmetric
 influence on abundance in the sense that cold winters produce low abundances

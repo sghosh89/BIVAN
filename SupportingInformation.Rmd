@@ -1,5 +1,5 @@
 ---
-title: "Supporting Information : Complex, informative, and previously ignored dependencies propogate throughout ecology and can be revealed using copulas"
+title: "Supporting Information : Complex and informative dependencies propogate throughout ecology and can be revealed using copulas"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
@@ -401,10 +401,12 @@ correlation.\label{fig_transf_pearson_spearman}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
-\caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 copula (see section on methods for Q1) 
+\caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and 
+upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 
+copula (see section on methods for the observational hypothesis) 
 with three different 
 sets of parameters chosen to produce a variety of 
-lower-tail (LT) and upper-tail (UT) dependence strengths (methods for Q1), but the same 
+lower-tail (LT) and upper-tail (UT) dependence strengths, but the same 
 Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
 with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
 within each column.\label{fig_cop_pedag}}
@@ -5026,6 +5028,15 @@ draws from $C$.
 - For each $k$ and $i$, replace the $k$th-smallest element of the time series $a_i(t)$, 
 $t=1,\ldots,T$ by the $k$th smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
 result $y_i(t)$. This is the surrogate dataset.
+
+# From causes to consequences for green spruce aphid abundance data\label{sect:greenspruce}
+Describe the winter temp data
+Show the copulas with winter temp, 10 locations
+
+<!--***DAN: Shya, please insert here a figure showing the 10 copulas between winter
+temp and green aphid count data as 10 panels. Insert the code that generates that figure 
+in an appropriate place so it is part of the overall workflow. Please use the label 
+fig:greenspruce, since that is what I refer to this fig by in the main text.-->
 
 # A means by which missing data can influence perceived copula structure\label{sect:missingdata}
 

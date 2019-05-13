@@ -1219,10 +1219,7 @@ data_aphid_count<-d_allsp_data(d0_count)
 d0_firstflight<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsfirstflight141117.csv",header=F))
 data_aphid_ff<-d_allsp_data(d0_firstflight) 
 
-# Aphid raw data for flight duration   
-#d0_flightduration<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidtsflightduration141117.csv",header=F))
-
-# Time series analysis aphids winter avg temp (here taken as -ve)
+# Time series analysis aphids winter avg temp 
 temp_aphid_raw<-as.matrix(read.csv("./Data/Aphid_data/APHID_DATA_RAW/aphidmonthlytempdata.csv",header = F))
 
 temp_aphid<-vector("list",dim(temp_aphid_raw)[1])
@@ -1249,16 +1246,27 @@ for(il in 1:length(temp_aphid)){
   }
 }
 
-aphid_winter_neg_temp<-vector("list",11) #initializing
-names(aphid_winter_neg_temp)<-rownames(winter_avg_temp)
+aphid_winter_temp<-vector("list",11) #initializing
+names(aphid_winter_temp)<-rownames(winter_avg_temp)
 
 for(i in 1:11){
-  aphid_winter_neg_temp[[i]]<-data.frame(Year=c(1976:2010),Dat=-winter_avg_temp[i,])
+  aphid_winter_temp[[i]]<-data.frame(Year=c(1976:2010),Dat=winter_avg_temp[i,])
 }
 
-temp_aphid<-list(aphid_winter_neg_temp)
-names(temp_aphid)<-"aphid_winter_neg_temp"
-saveRDS(temp_aphid,"./Results/temp_aphid_winter_neg_temp_avg_data.RDS")
+temp_aphid<-list(aphid_winter_temp)
+
+#-------------------------------------------------------------------------
+# append winter avg temp data as sp 21 in aphid's count data
+
+data_aphid_count_with_temp<-append(data_aphid_count,temp_aphid)
+names(data_aphid_count_with_temp)[[21]]<-"winter_avg_temp"
+
+# create res folder
+if(!dir.exists("./Results/aphid_count_winter_temp_results")){
+  dir.create("./Results/aphid_count_winter_temp_results/")
+}
+
+saveRDS(data_aphid_count_with_temp,"./Results/aphid_count_winter_temp_results/data_aphid_count_with_temp.RDS")
 ```
 
 <!--Simulation for model selection and non-parametric analysis with aphids count data for all 20 sp.-->
@@ -5037,13 +5045,176 @@ with winter temperature are in Fig. \ref{fig:greenspruce}. Results of analyses o
 copulas that paralleled the analyses applied to bivariate ecological datasets 
 (see section on methods for the observational hypotheses) are in Table \ref{tab:greenspruce}.
 
-<!--***DAN: Shya, please insert here a figure showing the 10 copulas between winter
-temp and green aphid count data as 10 panels. Insert the code that generates that figure 
-in an appropriate place so it is part of the overall workflow. Please use the label 
-fig:greenspruce, since that is what I refer to this fig by in the main text.-->
+```{r copulaplot_greenspruceaphid_with_temp,echo=F,results="hide"}
+source("./getcopula.R")
+source("./good_loclist.R")
+sp<-10 #only for green spruce aphid
 
-<!--***DAN: Shya, please insert here a table like Table 2 in your recent doc "explore_aphid_abund_wintertemp_dep". Please label it tab:greenspruce. Note that 
-currently there are two NA values in the first column, but there should be none.--> 
+aphid_temp_coplist<-vector("list",1) 
+names(aphid_temp_coplist)<-c("sp10_Green_spruce_aphid")
+
+loclist<-good_loclist(d_allsp=data_aphid_count_with_temp,sp=sp,data_pt_thrs=30)
+ 
+
+pdf("./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf",height=4,width = 10)
+op<-par(mfrow=c(2,5),mar=c(3,3,3,3), mgp=c(1.5,0.5,0)) # each row for each sp for 2:11 locations
+
+  gsa_temp_coplist<-vector("list",10) # for 10 selective locations which had atleast 30 datapoints
+  names(gsa_temp_coplist)<-paste("loc",loclist,sep="")
+ 
+  for(iloc in c(1:length(loclist))){
+    loc<-loclist[iloc]
+    s1<-cbind(data_aphid_count_with_temp[[sp]][[loc]]$Dat,data_aphid_count_with_temp[[21]][[loc]]$Dat)
+    c1<-getcopula(d=s1,rankon=T,ploton=F)
+    vi<-c1[,1]
+    vj<-c1[,2]
+    
+    IndepTestRes<-VineCopula::BiCopIndTest(vi,vj)$p.value
+    ct<-cor.test(vi,vj,alternative = "two.sided",method="kendall",exact=F)
+    tauval<-unname(ct$estimate)
+   
+      if(IndepTestRes<0.05 && tauval>0){
+        plot(vi,vj,type='p',col=rgb(0,0,0,0.3),pch=19,xlim=c(0,1),ylim=c(0,1),
+             xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
+        mtext(paste0("Loc = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
+      }else if(IndepTestRes<0.05 && tauval<0){
+        plot(vi,vj,type='p',col=rgb(0,1,0,0.3),pch=19,xlim=c(0,1),ylim=c(0,1),
+             xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
+        mtext(paste0("Location = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
+      }else{
+        plot(-1,0,xlim=c(0,1),ylim=c(0,1),xlab=names(data_aphid_count_with_temp)[sp],ylab="winter temp.",cex.lab=1.5)
+        text(0.5,0.5,"Indep.",adj=c(0.5,.5),cex=2)
+        mtext(paste0("Location = ",loc," , p = ",round(IndepTestRes,3)),side = 3, line=0.15, adj=0.5)
+      }
+    
+    gsa_temp_coplist[[iloc]]<-c1
+  }
+aphid_temp_coplist[[1]]<- gsa_temp_coplist
+par(op)
+dev.off()
+```
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
+\caption[Copula plot for green spruce aphid abundance data with winter temperature]{Copula plot for green spruce 
+aphid abundance data with winter temperature for each selected locations. \label{fig:greenspruce}}
+\end{center}
+\end{figure}
+
+```{r ms_npa_greenspruceaphid_count_temp, echo=F, results="hide", cache=T, cache.extra=list(seed,aphid_temp_coplist,mtime("CopulaFunctions_flexible.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
+
+set.seed(seed)
+source("./OurBiCopSelect.R")
+source("./CopulaFunctions_flexible.R")
+
+
+#====================== FUNCTION TO GET MS RESULTS FOR Green spruce aphid abundance with temp copula from all 10 locs===========================
+
+get_ms_aphid_temp<-function(sp,d_copsp){
+  
+  cop_eachsp_allloc<-d_copsp[[sp]]
+  
+  lengoodloc<-length(cop_eachsp_allloc)
+  
+  # model selection with a copula (made of aphid-count and winter avg temp ts) from each location 2:11
+  ms_summary_allloc<-c()
+  ms_res_allloc<-vector("list",lengoodloc)
+  names(ms_res_allloc)<-paste("Loc",c(2:11),sep="")
+    
+  for(loc in 1:lengoodloc){
+    
+    cop_eachloc<-cop_eachsp_allloc[[loc]]
+    u1<-cop_eachloc[,1]
+    u2<-cop_eachloc[,2]
+      
+    #----------------- model selection -----------------------------
+    ms_res<-OurBiCopSelect(u1=u1,u2=u2,families=c(1,3:10,13:14,16:20),
+                           level=0.05,AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                           gofnormal=F,status=F)
+    ms_res_allloc[[loc]]<-ms_res
+    
+    m<-as.data.frame(matrix(NA,1,12))
+    colnames(m)<-c("p.Indep","minAIC.bestfit.cop","Bestfit.cop.AICw",
+                   "Normal.cop.AICw","p.CvM","p.KS",
+                   "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
+                   "CorlmCoru","PlmPu","D2umD2l")
+    m$p.Indep<-ms_res$IndepTestRes
+    
+    if(ms_res$IndepTestRes<0.05){
+      #------------------------------ non-param analysis ---------------------------
+      #Cor stat
+      Corl<-Corbds(vi=u1,vj=u2,lb=0,ub=0.5)
+      Coru<-Corbds(vi=u1,vj=u2,lb=0.5,ub=1)
+      CorlmCoru<-Corl-Coru
+      
+      #P stat
+      res_l<-Pbds(vi=u1,vj=u2,lb=0,ub=0.5)
+      Pl<-res_l$abs_res
+      
+      res_u<-Pbds(vi=u1,vj=u2,lb=0.5,ub=1)
+      Pu<-res_u$abs_res
+      PlmPu<-Pl-Pu
+      
+      #D2 stat
+      D2l<-D2bds(vi=u1,vj=u2,lb=0,ub=0.5)
+      D2u<-D2bds(vi=u1,vj=u2,lb=0.5,ub=1)
+      D2umD2l<-D2u-D2l
+      
+      m$minAIC.bestfit.cop<-ms_res$InfCritRes$copname[which.min(ms_res$InfCritRes$AIC)]
+      m$Bestfit.cop.AICw<-round(max(ms_res$InfCritRes$AICw),3)
+      m$Normal.cop.AICw<-round(ms_res$InfCritRes$AICw[1],3)
+      m$p.CvM<-ms_res$GofRes_CvM
+      m$p.KS<-ms_res$GofRes_KS
+      m$LT.model.avg<-round(ms_res$relLTdep_AICw,3)
+      m$UT.model.avg<-round(ms_res$relUTdep_AICw,3)
+      m$`(LT-UT).model.avg`<-m$LT.model.avg-m$UT.model.avg
+      m$CorlmCoru<-CorlmCoru
+      m$PlmPu<-PlmPu
+      m$D2umD2l<-D2umD2l
+    }
+    
+    ms_summary_allloc<-rbind(ms_summary_allloc,m)
+    #cat("loc=",loc,"=========ok=========","\n")
+    
+  }
+  rownames(ms_summary_allloc)<-names(ms_res_allloc)
+  return(list(ms_res_allloc=ms_res_allloc,
+              ms_summary_allloc=ms_summary_allloc))
+}
+
+#===================== call above function for green spruce aphid abundance and winter temp data =================
+
+d_copsp<-aphid_temp_coplist
+splist<-c(1:length(d_copsp))
+ms_npa_RES_greenspruceaphid_count_temp<-vector("list",length(splist))
+names(ms_npa_RES_greenspruceaphid_count_temp)<-c("sp10_Green_spruce_aphid")
+
+for(isp in splist){
+  #cat("--------------sp =",isp,"-----------------------","\n")
+  res<-get_ms_aphid_temp(sp=isp,d_copsp=d_copsp)
+  ms_npa_RES_greenspruceaphid_count_temp[[isp]]<-res
+}
+
+saveRDS(ms_npa_RES_greenspruceaphid_count_temp,"./Results/aphid_count_winter_temp_results/ms_npa_RES_greenspruceaphid_count_temp.RDS")
+```
+
+```{r tab_greenspruceaphid_temp_summary, echo=F, results='asis',message=F}
+library(kableExtra)
+set.seed(seed)
+
+res<-ms_npa_RES_greenspruceaphid_count_temp$sp10_Green_spruce_aphid$ms_summary_allloc
+#row.names(res)<-NULL
+#res<-cbind(c(2:11),res)
+colnames(res)<-c("p-value from indep. test","bestfit copula",
+                 "bestfit copula AICw","Normal Copula AICw","p-value from CvM stats","p value from KS stats","LT dependence","UT dependence","(LT - UT) dependence","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
+res<-res[,-1]
+knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
+             caption.short="Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations",
+      caption = "Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations, tail dependence were calculated using model averaged AIC-weights, NA represents copula was independent at given location as p-value from independence test was beyond the threshold 0.05. Last three columns indicate non-parametric statistics computed on $(0,0.5)$ and $(0.5,1)$ bounds for lower and upper statistics, respectively.\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
+#kable_styling(latex_options = c("scale_down"))
+```
+
 
 # A means by which missing data can influence perceived copula structure\label{sect:missingdata}
 

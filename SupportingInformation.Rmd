@@ -5214,7 +5214,7 @@ colnames(res)<-c("p-value from indep. test","bestfit copula",
                  "bestfit copula AICw","Normal Copula AICw","p-value from CvM stats","p value from KS stats","LT dependence","UT dependence","(LT - UT) dependence","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
 res<-res[,-1]
 knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
-             caption.short="Summary results for copula made with time-series of \\textbf{green spruce aphid} abundance data and winter temperature for each selected locations",
+             caption.short="Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations",
       caption = "Summary results for copula made with time-series of green spruce aphid abundance data and winter temperature for each selected locations, tail dependence were calculated using model averaged AIC-weights, NA represents copula was independent at given location as p-value from independence test was beyond the threshold 0.05. Last three columns indicate non-parametric statistics computed on $(0,0.5)$ and $(0.5,1)$ bounds for lower and upper statistics, respectively.\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
 #kable_styling(latex_options = c("scale_down"))
 ```

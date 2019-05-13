@@ -982,7 +982,8 @@ regime.
 For the model we examined, causal hypothesis D (Fig. \ref{MasterFigure}) was 
 correct that asymmetric tail dependence in evolutionary changes 
 can produce similarly asymmetric tail dependence in character distributions across
-phylogeny tips (Appendix \ref{SM-evol_mech} for details). This topic is revisited in the Discussion.
+phylogeny tips (Appendix \ref{SM-evol_mech}, Fig. \ref{SM-fig_cop_evo} for details). This topic 
+is revisited in the Discussion.
 
 <!--Question 3 analyses-->
 # Background, concepts and methods for testing the consequential hypotheses\label{Consequences}
@@ -1120,7 +1121,7 @@ extinction risk for the spatially
 extended Lewontin-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}). 
 This was true for both $N=5$ and $N=25$ habitat patches, and for both local 
 (Fig. \ref{fig_extrisk_lcohen_local}) and global (Fig. \ref{SM-fig_extrisk_lcohen_global})
-dispersal. We also substantiated using models (Appendix \ref{SM-Consequence_TL_simulation}, \ref{SM-sect:copsurrognd})
+dispersal. We also substantiated using models (Appendix \ref{SM-Consequence_TL_simulation}, \ref{SM-sect:copsurrognd}, Fig. \ref{SM-fig_spTL})
 a consequential hypothesis Z (Fig. \ref{MasterFigure}), that 
 Taylor's law can be strongly influenced by
 tail dependence between populations.
@@ -1142,43 +1143,37 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 <!--what we did and why is it important to study?-->
 We showed that non-N copula structure and asymmetric tail dependence are 
 common in datasets across multiple sub-disciplines
-and levels of organization in ecology (Fig. \ref{MasterFigure}, O), although no published 
+and levels of organization in ecology, although no published 
 research we are aware of has 
 taken this structure into account. We hypothesized four 
-mechanisms (Fig. \ref{MasterFigure}, A-D) that may cause non-N copula structures. One
-mechanism (Fig. \ref{MasterFigure}, A) was via nonlinear environmental influences
-on ecological variables. A second mechanism (Fig. \ref{MasterFigure}, B) produces tail dependence via
-a Moran effect, whereby dependencies between environmental variables 
-beget similar dependencies between ecological variables in different locations. 
-We discuss below how commonly these and other
+mechanisms that may cause non-N copula structures.
+We discuss below how commonly some of our
 potential mechanisms may opperate. 
 We also hypothesized and demonstrated important consequences of 
-non-N and tail-dependent copula structure in ecology 
-(Fig. \ref{MasterFigure}, X-Z). First (Fig. \ref{MasterFigure}, X), the skewness
+non-N copula structure and tail-dependence in ecology. 
+For instance, the skewness
 of a spatial-average time series is influenced by tail dependencies between its 
-constituent time series. Thus right-tail-dependent local time series 
+constituent time series: right-tail-dependent local time series 
 lead to "spiky" spatially averaged time series, with large outbreaks.
-These observations could have implications for numerous exploited and pest species
-for which the spatial average time series have applied importance.
-Second (Fig. \ref{MasterFigure}, Y), metapopulation extinction risk can be accentuated or reduced by tail dependence
-properties of environmental variables. We also showed effects of copula 
-structure on Taylor's law (Fig. \ref{MasterFigure}, Z), which has been applied in many fields.
-In our view, our results make our "overall hypothesis," framed in the Introduction,
-reasonable and worthy of broader testing by the research community. We have illustrated 
-extensively how such tests might be carried out by performing them ourselves on 
-example datasets and models. Further suggestions for future possible tests are below. 
-<!--***DAN: make sure you have enough of this, Dan-->
+Thus tail dependence could have implications for numerous exploited and pest species
+for which the spatial average has applied importance.
+Extinction risk can be accentuated or reduced by tail dependence
+properties of environmental variables. 
+In our view, our results make our "overall hypothesis" from the Introduction
+reasonable and worthy of broader testing. We illustrated 
+how such tests might be carried out by performing them ourselves on 
+example datasets and models. Further suggestions for future tests are below.
 It already seems likely that comprehensive understanding 
 of many ecological phenomena is impossible without 
-a complete copula characterization of dependence between variables. 
+a complete copula characterization of dependence. 
 
 Copula approaches are
-well developed, statistically [@joe2014_dependence; @nelsen2006_copula], and 
-computer implementations exist (e.g., the `copula` and 
-`VineCopula` packages in R). Ecologists can start applying these tools
-immediately. We created a variety of interrelated randomization procedures
+well developed [@joe2014_dependence; @nelsen2006_copula], and 
+computer implementations exist (the `copula` and 
+`VineCopula` packages). Ecologists can start applying these tools
+immediately. We created several interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
-that build upon existing methods and may be especially useful for ecological applications.
+that build upon existing methods and may be especially useful for ecology.
 
 <!--a para on how likely one is to get copula structure via the Liebig mechanism-->
 Our first causal mechanism (Fig. \ref{MasterFigure}, A) seems likely to operate commonly.
@@ -1191,7 +1186,7 @@ These parts of A could be tested
 straightforwardly for numerous datasets by examing copulas describing dependencies
 between environmental and ecological
 variables (see below discussion about the green spruce aphid, and 
-Appendix \ref{SM-sect:greenspruce}, which illstrate how to do this).
+Appendix \ref{SM-sect:greenspruce}, which illustrate how to do this).
 Causal mechanism C, which we also did not test, could be tested straightforwardly
 by analyzing copulas of abundances of competing species, across space or
 through time.

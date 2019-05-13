@@ -2348,6 +2348,252 @@ structure, but not otherwise. Modelling choices such as these may have influence
 our results. Additional research also seems warranted testing the realism 
 of our hypothesized mechanism and simulations.
 
+<!--Following two chunks examine asymetric dependence mechanism with model selection and non-parametric statistics approach-->
+```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
+set.seed(seed)
+#-----------------------------------------------------------------------------------
+source("OurBiCopSelect.R")
+source("bivfunctionplot.R")
+source("asym_sensitivity.R")
+#-----------------------------------------------------------------------------------
+# This function takes 
+# Input :
+#       mg : global noise matrix (dim = N by 2)
+#       ml : local noise matrix (dim = N by 2)
+#       a : a number : local noise coeeficient
+#       b : growth factor of pop
+#       decrease : logical (controls the nature of global noise)
+#       numkeep_last : number of points you want to keep for the pop matrix from the end
+#       ploton : logical for optional plot
+
+# Output :
+#     a list of 4 pop matrices 
+#                         1. (for b=+ve, decrease=F)
+#                         2. (for b=+ve, decrease=T)
+#                         3. (for b=-ve, decrease=F)
+#                         4. (for b=-ve, decrease=T)
+
+plotter_asym_sens_b_varn<-function(mg,ml,a,b,numkeep_last,ploton,resloc){
+  
+  pop_g<-Simulator_asym_sens(mg=mg,ml=ml,a=a,b=b,p0=c(0,0),decrease=F,numkeep_last=numkeep_last)
+  pop_d_g<-Simulator_asym_sens(mg=mg,ml=ml,a=a,b=b,p0=c(0,0),decrease=T,numkeep_last=numkeep_last)
+  
+  if(ploton==T){
+    pdf(paste0(resloc,"a_",a,"_b_",b,"_r_",r,"_asym_sens.pdf",sep=""),height=3,width=6)
+    op<-par(mfrow=c(1,2),mar=c(4,4.2,1.5,1),mgp=c(2.5,0.6,0))
+    #plot(pop[,1],pop[,2],col="red",main = bquote(beta ==.(beta)))
+    pop<-pop_g$pop
+    geps<-pop_g$g_noise
+    #plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=1")
+    #plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=2")
+    plot(pop[,1],pop[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2,col="grey",pch=20,cex=1.4)
+    #title(expression(paste("g = ",g[1]," , ")), adj=0.06,cex.main=1.5)
+    #mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
+    
+    pop_d<-pop_d_g$pop
+    geps<-pop_d_g$g_noise
+    #plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=1")
+    #plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=2")
+    plot(pop_d[,1],pop_d[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2,col="grey",pch=20,cex=1.4)
+    #title(expression(paste("g = ",g[2]," , ")), adj=0.06,cex.main=1.5)
+    #mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
+    
+    par(op)
+    dev.off()
+  }
+  
+  return(list(pop=pop,
+              pop_d=pop_d))
+  
+}
+#----------------------------------------------------------
+N<-25000
+r<-0.8
+a<-0.2
+numkeep_last<-2500
+temp<-get_noise_glob_loc_mat(N=N,r=r)
+mg<-temp$mg
+ml<-temp$ml
+
+resloc<-"./Results/asym_sens_results/"
+ans_b_0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+ans_b_neg0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+ans_b_0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+ans_b_neg0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
+
+vlist_b_0.1_b_0.5<-c(ans_b_0.1,ans_b_neg0.1,ans_b_0.5,ans_b_neg0.5) # a list of 8 matrices
+
+summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
+rownames(summary_stat)<-c("bestcop_AICw","N_AICw","relLTdep_AICw","relUTdep_AICw","p_CvM","p_KS","BS_success%")
+#bg <- intToUtf8(0x03B2) 
+cnm<-c("b_0.1_g~1~","b_0.1_g~2~","b_-0.1_g~1~","b_-0.1_g~2~","b_0.5_g~1~","b_0.5_g~2~","b_-0.5_g~1~","b_-0.5_g~2~")
+#cname<-paste0(bg,cnm)
+colnames(summary_stat)<-cnm
+
+ms_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store model selection results for all possible b variation
+names(ms_asym_b_0.1_b_0.5)<-cnm
+
+stat_npa_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible b variation
+names(stat_npa_asym_b_0.1_b_0.5)<-cnm
+
+for(ic in c(1:8)){
+  v<-vlist_b_0.1_b_0.5[[ic]]
+  res<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=c(1,3:10,13:14,16:20),level=0.05,
+                      AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
+                      gofnormal=F,status=F)
+  
+  ms_asym_b_0.1_b_0.5[[ic]]<-res
+  
+  summary_stat[1,ic]<-max(res$InfCritRes$AICw)
+  summary_stat[2,ic]<-res$InfCritRes$AICw[1]
+  summary_stat[3,ic]<-res$relLTdep_AICw
+  summary_stat[4,ic]<-res$relUTdep_AICw
+  summary_stat[5,ic]<-res$GofRes_CvM
+  summary_stat[6,ic]<-res$GofRes_KS
+  summary_stat[7,ic]<-(res$Numboot_success/res$Numboot)*100
+  
+  stat_npa_asym_b_0.1_b_0.5[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cnm[ic],numbin=10)
+  
+}
+
+saveRDS(summary_stat,"./Results/asym_sens_results/b_variation_summary_stat.RDS")
+saveRDS(ms_asym_b_0.1_b_0.5,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.5.RDS")
+saveRDS(stat_npa_asym_b_0.1_b_0.5,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
+```
+
+```{r overwritting_plots_asym_cop,echo=F,results="hide"}
+pdf("./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
+pop<-ans_b_0.1$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_0.1$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
+pop<-ans_b_neg0.1$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_neg0.1$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
+pop<-ans_b_0.5$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_0.5$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+
+pdf("./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf",height=3,width=6)
+op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
+pop<-ans_b_neg0.5$pop
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"A",cex=2)
+pop<-ans_b_neg0.5$pop_d
+plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
+     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
+text(0.1,0.95,"B",cex=2)
+par(op)
+dev.off()
+```
+
+<!--adding plots from asymmetric dependence analysis results-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
+\end{center}
+\end{figure}
+
+<!--Displaying summary table with model selection results from asymmetric dependence analysis-->
+```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
+summary_stat<-summary_stat[c(1:6),]
+rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
+knitr::kable(summary_stat, booktabs = T, escape=F,
+             format = "latex", linesep = "",
+             digits=4, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
+                                   "b=-0.1, g$_{1}$","b=-0.1, g$_{2}$",
+                                   "b=0.5, g$_{1}$","b=0.5, g$_{2}$",
+                                   "b=-0.5, g$_{1}$","b=-0.5, g$_{2}$"),
+      caption.short="Asymmetric sensitivity model, model selection results",
+      caption="Asymmetric sensitivity model, model selection results. 
+The output of simulations from the second model detailed in 
+the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
+selection procedures detailed in the 
+methods section for the observational hypothesis. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
+N-copula AICw: the AIC weight of the N copula family; Model-avg. LT: the lower-tail 
+statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
+upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula
+family using the test based on the Cramer-von Mises statistic; p, KS: p-value for goodness of fit 
+test of the best-fitting copula family using the test based on the Kolmogorov-Smirnov 
+statistic.\\label{tab_summary_stat_asym_sens}")
+```
+
+<!--Displaying summary table with non-parametric approach results of asymmetric dependence analysis-->
+```{r tab_stat_npa_asym,echo=F,results="markup"}
+library(kableExtra)
+
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
+tab_stat_npa_asym<-c()
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
+}
+gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.5, g$_{1}$","b=0.5, g$_{2}$","b=-0.5, g$_{1}$","b=-0.5, g$_{2}$")
+tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.5,0.5,-0.5,-0.5),each=3),
+  g=rep(c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),each=3),tab_stat_npa_asym)
+knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
+             format = "latex",linesep = "",escape=F,
+             caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
+             caption ="Asymmetric sensitivity model, nonparametric statistics results. 
+The output of simulations from the second model detailed in 
+the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
+analyses decribed in the methods section for the observational hypothesis. The listed statistic was computed for the
+output of the model with the indicated b and g, and the value was compared to 1000 values
+of the same statistic computed on surrogate time series randomized to have N-copula structure
+(see methods for the observational hypothesis). A table entry $<X$ (respectively, $>X$) indicates the value of the 
+given statistic on the data was less (respectively, more) than its value on $X$ of the 
+surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
+indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
+lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice'
+and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
+0.9 to 1.\\label{tab_stat_npa_asym}")
+```
+
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 source("Cause4copula.R")
@@ -3913,253 +4159,6 @@ see captions of those figures for details.\label{fig_Cause4copula_SJ_kend_sRicke
 \end{center}
 \end{figure}
 
-
-<!--Following two chunks examine asymetric dependence mechanism with model selection and non-parametric statistics approach-->
-```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
-set.seed(seed)
-#-----------------------------------------------------------------------------------
-source("OurBiCopSelect.R")
-source("bivfunctionplot.R")
-source("asym_sensitivity.R")
-#-----------------------------------------------------------------------------------
-# This function takes 
-# Input :
-#       mg : global noise matrix (dim = N by 2)
-#       ml : local noise matrix (dim = N by 2)
-#       a : a number : local noise coeeficient
-#       b : growth factor of pop
-#       decrease : logical (controls the nature of global noise)
-#       numkeep_last : number of points you want to keep for the pop matrix from the end
-#       ploton : logical for optional plot
-
-# Output :
-#     a list of 4 pop matrices 
-#                         1. (for b=+ve, decrease=F)
-#                         2. (for b=+ve, decrease=T)
-#                         3. (for b=-ve, decrease=F)
-#                         4. (for b=-ve, decrease=T)
-
-plotter_asym_sens_b_varn<-function(mg,ml,a,b,numkeep_last,ploton,resloc){
-  
-  pop_g<-Simulator_asym_sens(mg=mg,ml=ml,a=a,b=b,p0=c(0,0),decrease=F,numkeep_last=numkeep_last)
-  pop_d_g<-Simulator_asym_sens(mg=mg,ml=ml,a=a,b=b,p0=c(0,0),decrease=T,numkeep_last=numkeep_last)
-  
-  if(ploton==T){
-    pdf(paste0(resloc,"a_",a,"_b_",b,"_r_",r,"_asym_sens.pdf",sep=""),height=3,width=6)
-    op<-par(mfrow=c(1,2),mar=c(4,4.2,1.5,1),mgp=c(2.5,0.6,0))
-    #plot(pop[,1],pop[,2],col="red",main = bquote(beta ==.(beta)))
-    pop<-pop_g$pop
-    geps<-pop_g$g_noise
-    #plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=1")
-    #plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[1])),main="location=2")
-    plot(pop[,1],pop[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2,col="grey",pch=20,cex=1.4)
-    #title(expression(paste("g = ",g[1]," , ")), adj=0.06,cex.main=1.5)
-    #mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
-    
-    pop_d<-pop_d_g$pop
-    geps<-pop_d_g$g_noise
-    #plot(mg[,1],geps[,1],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=1")
-    #plot(mg[,2],geps[,2],cex.lab=2,cex.axis=2,xlab=expression(epsilon),ylab=expression(paste(g[2])),main="location=2")
-    plot(pop_d[,1],pop_d[,2],xlab=expression(paste(P[1])), ylab=expression(paste(P[2])),cex.lab=2,cex.axis=2,col="grey",pch=20,cex=1.4)
-    #title(expression(paste("g = ",g[2]," , ")), adj=0.06,cex.main=1.5)
-    #mtext(paste("a = ",a,", b = ",b),side = 3, line=0.2, adj=0.9)
-    
-    par(op)
-    dev.off()
-  }
-  
-  return(list(pop=pop,
-              pop_d=pop_d))
-  
-}
-#----------------------------------------------------------
-N<-25000
-r<-0.8
-a<-0.2
-numkeep_last<-2500
-temp<-get_noise_glob_loc_mat(N=N,r=r)
-mg<-temp$mg
-ml<-temp$ml
-
-resloc<-"./Results/asym_sens_results/"
-ans_b_0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-ans_b_neg0.1<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.1,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-ans_b_0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-ans_b_neg0.5<-plotter_asym_sens_b_varn(mg=mg,ml=ml,a=a,b=-0.5,numkeep_last=numkeep_last,ploton=T,resloc=resloc)
-
-vlist_b_0.1_b_0.5<-c(ans_b_0.1,ans_b_neg0.1,ans_b_0.5,ans_b_neg0.5) # a list of 8 matrices
-
-summary_stat<-as.data.frame(matrix(NA,7,8),stringsAsFactors = F) # Table for model selection summary
-rownames(summary_stat)<-c("bestcop_AICw","N_AICw","relLTdep_AICw","relUTdep_AICw","p_CvM","p_KS","BS_success%")
-#bg <- intToUtf8(0x03B2) 
-cnm<-c("b_0.1_g~1~","b_0.1_g~2~","b_-0.1_g~1~","b_-0.1_g~2~","b_0.5_g~1~","b_0.5_g~2~","b_-0.5_g~1~","b_-0.5_g~2~")
-#cname<-paste0(bg,cnm)
-colnames(summary_stat)<-cnm
-
-ms_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store model selection results for all possible b variation
-names(ms_asym_b_0.1_b_0.5)<-cnm
-
-stat_npa_asym_b_0.1_b_0.5<-vector(mode = "list", length = 8) # initializing list to store NPA results for all possible b variation
-names(stat_npa_asym_b_0.1_b_0.5)<-cnm
-
-for(ic in c(1:8)){
-  v<-vlist_b_0.1_b_0.5[[ic]]
-  res<-OurBiCopSelect(u1=v[,1],u2=v[,2],families=c(1,3:10,13:14,16:20),level=0.05,
-                      AICBIC="AIC",numBSsmall=100,pthresh=0.2,numBSlarge=1000,
-                      gofnormal=F,status=F)
-  
-  ms_asym_b_0.1_b_0.5[[ic]]<-res
-  
-  summary_stat[1,ic]<-max(res$InfCritRes$AICw)
-  summary_stat[2,ic]<-res$InfCritRes$AICw[1]
-  summary_stat[3,ic]<-res$relLTdep_AICw
-  summary_stat[4,ic]<-res$relUTdep_AICw
-  summary_stat[5,ic]<-res$GofRes_CvM
-  summary_stat[6,ic]<-res$GofRes_KS
-  summary_stat[7,ic]<-(res$Numboot_success/res$Numboot)*100
-  
-  stat_npa_asym_b_0.1_b_0.5[[ic]]<-bivfunctionplot(v=v,resloc="./Results/asym_sens_results/",nametag=cnm[ic],numbin=10)
-  
-}
-
-saveRDS(summary_stat,"./Results/asym_sens_results/b_variation_summary_stat.RDS")
-saveRDS(ms_asym_b_0.1_b_0.5,"./Results/asym_sens_results/ms_asym_b_0.1_b_0.5.RDS")
-saveRDS(stat_npa_asym_b_0.1_b_0.5,"./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
-```
-
-```{r overwritting_plots_asym_cop,echo=F,results="hide"}
-pdf("./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf",height=3,width=6)
-op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_0.1$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"A",cex=2)
-pop<-ans_b_0.1$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
-text(0.1,0.95,"B",cex=2)
-par(op)
-dev.off()
-
-pdf("./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf",height=3,width=6)
-op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_neg0.1$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,pch=20,col=rgb(0,0,0,0.2),cex=0.6)
-text(0.1,0.95,"A",cex=2)
-pop<-ans_b_neg0.1$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"B",cex=2)
-par(op)
-dev.off()
-
-pdf("./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf",height=3,width=6)
-op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_0.5$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"A",cex=2)
-pop<-ans_b_0.5$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"B",cex=2)
-par(op)
-dev.off()
-
-pdf("./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf",height=3,width=6)
-op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
-pop<-ans_b_neg0.5$pop
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"A",cex=2)
-pop<-ans_b_neg0.5$pop_d
-plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
-     cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"B",cex=2)
-par(op)
-dev.off()
-```
-
-<!--adding plots from asymmetric dependence analysis results-->
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
-\end{center}
-\end{figure}
-
-<!--Displaying summary table with model selection results from asymmetric dependence analysis-->
-```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
-summary_stat<-summary_stat[c(1:6),]
-rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
-knitr::kable(summary_stat, booktabs = T, escape=F,
-             format = "latex", linesep = "",
-             digits=4, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
-                                   "b=-0.1, g$_{1}$","b=-0.1, g$_{2}$",
-                                   "b=0.5, g$_{1}$","b=0.5, g$_{2}$",
-                                   "b=-0.5, g$_{1}$","b=-0.5, g$_{2}$"),
-      caption.short="Asymmetric sensitivity model, model selection results",
-      caption="Asymmetric sensitivity model, model selection results. 
-The output of simulations from the second model detailed in 
-the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
-selection procedures detailed in the 
-methods section for the observational hypothesis. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
-N-copula AICw: the AIC weight of the N copula family; Model-avg. LT: the lower-tail 
-statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
-upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula
-family using the test based on the Cramer-von Mises statistic; p, KS: p-value for goodness of fit 
-test of the best-fitting copula family using the test based on the Kolmogorov-Smirnov 
-statistic.\\label{tab_summary_stat_asym_sens}")
-```
-
-<!--Displaying summary table with non-parametric approach results of asymmetric dependence analysis-->
-```{r tab_stat_npa_asym,echo=F,results="markup"}
-library(kableExtra)
-
-tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
-tab_stat_npa_asym<-c()
-for(i in c(1:8)){
-  temp<-make_table_stat_fn(data=tab_asym[[i]])
-  tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
-}
-gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.5, g$_{1}$","b=0.5, g$_{2}$","b=-0.5, g$_{1}$","b=-0.5, g$_{2}$")
-tab_stat_npa_asym<-cbind(b=rep(c(0.1,0.1,-0.1,-0.1,0.5,0.5,-0.5,-0.5),each=3),
-  g=rep(c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),each=3),tab_stat_npa_asym)
-knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
-             format = "latex",linesep = "",escape=F,
-             caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
-             caption ="Asymmetric sensitivity model, nonparametric statistics results. 
-The output of simulations from the second model detailed in 
-the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
-analyses decribed in the methods section for the observational hypothesis. The listed statistic was computed for the
-output of the model with the indicated b and g, and the value was compared to 1000 values
-of the same statistic computed on surrogate time series randomized to have N-copula structure
-(see methods for the observational hypothesis). A table entry $<X$ (respectively, $>X$) indicates the value of the 
-given statistic on the data was less (respectively, more) than its value on $X$ of the 
-surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
-indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
-lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice'
-and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
-0.9 to 1.\\label{tab_stat_npa_asym}")
-```
-
 <!--Following chunk is to examine the hypothesis for third probable mechanism : 
 asymmetric tail dependence in evolutionary changes in bivariate characters can give
 rise to similarly asymmetric tail dependence in character distributions across phylogeny tips-->
@@ -4702,36 +4701,6 @@ par(op)
 dev.off()
 ```
 
-<!--adding plots showing influences of non-Normal copula on spatial Taylors law-->
-\begin{figure}[!h]
-\textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
-\vspace{-0.5 cm} 
-\begin{center}
-\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
-\end{center}
-\textbf{ \hspace{1.8 cm} (E) \hspace{1.6 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.8 cm} (I) \hspace{1.8 cm} (J) \hspace{1.8 cm} (K)}\\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
-\caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
-log(spatial mean) relationships for $1000$ simulations over $50$ time steps for $25$ locations 
-using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
-locations. Results from all $1000$ 
-simulations were plotted on the same axes for each panel, but two example simulations are 
-shown in red and green to help assess to what extent variation on the plots was between 
-simulations or within simulations. For each simulation, we tested the linearity 
-(E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
-and quantified the root mean squared error of points from the linear regression line (G).
-We also calculated the linear regression intercept (H) and slope (I), the quadratic
-term of a quadratic regression through the points on the log(variance) vs. log(mean) plot
-(J), and the curvature of that quadratic regression (K). Distributions of values 
-across all 1000 simulations are displayed. Spearman-preserving surrogates were used, 
-though results using Kendall-preserving surrogates were very similar. See 
-Appendix \ref{Consequence_TL_simulation} for 
-simulation and plotting details.\label{fig_spTL}}
-\end{center}
-\end{figure}
-
 <!--Following 2 chunks examine the effect of non-Normal asymmetric copula on extinction risk-->
 ```{r sim_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
@@ -4821,6 +4790,36 @@ dev.off()
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
 \caption{Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal.\label{fig_extrisk_lcohen_global}}
+\end{center}
+\end{figure}
+
+<!--adding plots showing influences of non-Normal copula on spatial Taylors law-->
+\begin{figure}[!h]
+\textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
+\vspace{-0.5 cm} 
+\begin{center}
+\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
+\end{center}
+\textbf{ \hspace{1.8 cm} (E) \hspace{1.6 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.8 cm} (I) \hspace{1.8 cm} (J) \hspace{1.8 cm} (K)}\\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
+\caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
+log(spatial mean) relationships for $1000$ simulations over $50$ time steps for $25$ locations 
+using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
+locations. Results from all $1000$ 
+simulations were plotted on the same axes for each panel, but two example simulations are 
+shown in red and green to help assess to what extent variation on the plots was between 
+simulations or within simulations. For each simulation, we tested the linearity 
+(E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
+and quantified the root mean squared error of points from the linear regression line (G).
+We also calculated the linear regression intercept (H) and slope (I), the quadratic
+term of a quadratic regression through the points on the log(variance) vs. log(mean) plot
+(J), and the curvature of that quadratic regression (K). Distributions of values 
+across all 1000 simulations are displayed. Spearman-preserving surrogates were used, 
+though results using Kendall-preserving surrogates were very similar. See 
+Appendix \ref{Consequence_TL_simulation} for 
+simulation and plotting details.\label{fig_spTL}}
 \end{center}
 \end{figure}
 
@@ -5095,15 +5094,6 @@ par(op)
 dev.off()
 ```
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
-\caption[Copula plots for winter temperature versus green spruce aphid abundance]{Copula plots 
-for winter temperature versus green spruce 
-aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for the observational hypothesis).\label{fig:greenspruce}}
-\end{center}
-\end{figure}
-
 ```{r ms_npa_greenspruceaphid_count_temp, echo=F, results="hide", cache=T, cache.extra=list(seed,aphid_temp_coplist,mtime("CopulaFunctions_flexible.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
 
 set.seed(seed)
@@ -5303,6 +5293,15 @@ removed from the upper right portion of the copula dataset pictured in A, and
 then remaining values were re-ranked to make B. Thus removing data in a 
 non-random fashion can influence copula structure and tail dependence. See 
 Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
+\caption[Copula plots for winter temperature versus green spruce aphid abundance]{Copula plots 
+for winter temperature versus green spruce 
+aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for the observational hypothesis).\label{fig:greenspruce}}
 \end{center}
 \end{figure}
 

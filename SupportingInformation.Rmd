@@ -5033,10 +5033,14 @@ result $y_i(t)$. This is the surrogate dataset.
 Describe the winter temp data
 Show the copulas with winter temp, 10 locations
 
+
 <!--***DAN: Shya, please insert here a figure showing the 10 copulas between winter
 temp and green aphid count data as 10 panels. Insert the code that generates that figure 
 in an appropriate place so it is part of the overall workflow. Please use the label 
 fig:greenspruce, since that is what I refer to this fig by in the main text.-->
+
+<!--***DAN: Shya, please insert here a table like Table 2 in your recent doc "explore_aphid_abund_wintertemp_dep". Please label it tab:greenspruce. Note that 
+currently there are two NA values in the first column, but there should be none.--> 
 
 # A means by which missing data can influence perceived copula structure\label{sect:missingdata}
 

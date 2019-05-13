@@ -48,69 +48,35 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 
 \noindent \emph{Possible alternative titles:}
 
-The importance of a complete copula description of dependence between variables for ecology and related fields
+Copulas and their importance for ecology
 
-The importance of a complete description of dependence between variables for ecology and related fields
+Copulas and their importance throughout ecology
 
-Complex, informative, and previously ignored dependencies propogate throughout ecology and are revealed using copulas
+Copulas and their potential for ecology
 
-Complex, informative, and previously ignored dependencies propagate throughout ecology and can be revealed using copulas
+Copulas and their potential throughout ecology
 
-The complexity of ecological relationships is revealed by copulas
+Copulas and their importance
 
-The true complexity of ecological relationships is revealed by copulas
+Copulas in ecology
 
-The true complexity of ecological relationships is only revealed by copulas
+Copulas
 
-Copulas reveal complex, informative, and previously ignored dependence
-structures between variables across ecological disciplines
+\noindent \emph{Keywords:} dependence, regression, correlation, copula, population, community
 
-Copulas reveal complex and informative dependence
-structures between variables across ecological disciplines
-
-Copulas reveal complex, informative, and previously ignored dependence
-structures which in turn illuminate multiple ecological disciplines
-
-Copulas reveal complex, informative, and previously ignored dependence
-structures which in turn can illuminate every subdiscipline of ecology
-
-Copulas reveal complex, informative, and previously ignored dependence
-structures which in turn can illuminate every subfield of ecology
-
-Copulas reveal complex, informative and previously ignored dependence
-structure between variables throughout ecology
-
-The complexity of dependencies between ecological variables, previously
-ignored, is revealed by copulas and in turn illuminates multiple 
-disciplines of ecology
-
-\noindent \emph{Keywords:}
-
-\noindent dependence, regression, correlation, copula, population, community
-
-\noindent \emph{Type of Article:}
-
-\noindent Ideas and Perspectives
+\noindent \emph{Type of Article:} Ideas and Perspectives
 
 \noindent \emph{The number of words in the abstract:}
 
-\noindent 
-
 \noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 
 
-\noindent \emph{The number of words in each text box:}
-
-\noindent No text boxes
+\noindent \emph{The number of words in each text box:} No text boxes
 
 \noindent \emph{The number of references:}
 
-\noindent \emph{The number of figures, tables, and text boxes:}
+\noindent \emph{The number of figures, tables, and text boxes:} 7 figures, 3 tables, 0 text boxes
 
-\noindent X figures, X tables, 0 text boxes
-
-\noindent \emph{The name and complete mailing address (including telephone and fax numbers and e-mail address) of the person to whom correspondence should be sent:} 
-
-\noindent Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
+\noindent \emph{The name and complete mailing address (including telephone and fax numbers and e-mail address) of the person to whom correspondence should be sent:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
 \newpage
 
@@ -125,15 +91,15 @@ All branches of ecology
 study relationships among environmental and biological 
 variables. However, commonly used correlation and regression 
 approaches to studying 
-such relationships are limited - standard 
-approaches provide only a very partial description of a relationship between variables. 
+such relationships are limited, and 
+provide only a partial description of a relationship between variables. 
 For instance, datasets showing markedly different 
-relationships may nevertheless have the same correlation coefficient value 
+relationships may have the same correlation coefficient
 (Fig. \ref{fig_cop_pedag1}A-B). The variables of Fig. \ref{fig_cop_pedag1}A 
 (respectively, Fig. \ref{fig_cop_pedag1}B) are principally 
 related in the left (respectively, right) portions of their distributions, 
 an asymmetric pattern of dependence that can
-have profound ecological significance, as discussed below, but is not captured by 
+have profound significance, as discussed below, but is not captured by 
 correlation. 
 Monotonic transformations can alter the Pearson, but not the Spearman
 correlation (Appendix \ref{SM-pedagog1_details}, 
@@ -148,11 +114,11 @@ provide partial information.
 \caption{(A-D) Bivariate datasets showing diverse relationships between 
 variables; many of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. (C, D) Contours 
-of density functions of Clayton (C) and survival-Clayton 
+of probability density functions (pdf) of Clayton (C) and survival-Clayton 
 (D) copulas with parameter 5 (see section on methods for the observational hypothesis), together
 with samples from the corresponding distributions. (E,F) Reflections
 of C, D, respectively, about a vertical axis. (G) Contours of the
-density function of a normal copula (methods for the observational hypothesis) with 
+pdf function of a normal copula (methods for the observational hypothesis) with 
 parameter chosen to
 have the same Spearman correlation as A-D, together with a sample.
 (H) The portion of the Spearman correlation within a band (diagonal lines
@@ -166,38 +132,35 @@ stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{figure}
 
 Well-developed approaches do exist, however, and are 
-applied widely in finance, neuroscience, bioinformatics and other fields, 
+applied widely in other fields, 
 that provide a description of the dependence 
 between two or more variables that can be mathematically proven 
 to be complete [@joe2014_dependence; @nelsen2006_copula]. 
 The approaches are based on 
-the statistical concept of the *copula*, which we here 
-introduce. Copula approaches separate the information contained in a bivariate 
-random variable into two distinct parts: the information contained in the 
+the concept of the *copula*, which we here 
+introduce. Copula approaches separate the information of a bivariate 
+random variable into two distinct parts: the information in the 
 marginal distributions (which says nothing about the dependence between the 
 variables), and the remaining information (which is solely about
 the dependence). From a data perspective, given 
 a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g., 
-Fig. \ref{fig_cop_pedag1}A-B), the associated dependence
+Fig. \ref{fig_cop_pedag1}A-B), the dependence
 structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
-$u_i$ is the rank of $x_i$ in the set of the $x_j$ ($j=1,\ldots,n$), divided by
+$u_i$ is the rank of $x_i$ in the set $x_j$ ($j=1,\ldots,n$), divided by
 $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$. See, 
 for instance,
 Fig. \ref{fig_cop_pedag1}C-D (the points), which show the copula structures of 
 A-B, respectively. Ranking makes the marginal distributions of 
 the underlying random variables uniform, isolating the 
-dependence structure only.
-Probability density 
-functions (pdfs) corresponding to the copulas associated 
-with Fig. \ref{fig_cop_pedag1}C-D are superimposed on those panels. 
+dependence structure.
 See @nelsen2006_copula and @joe2014_dependence
 for general background. A theorem of @sklar1959_theorem
 states that copulas give a unique and complete 
 representation of the dependence
 between variables.
 
-A principal benefit of a copula approach is 
+A main benefit of a copula approach is 
 that it can sensitively detect tail dependence and asymmetries of tail dependence. 
 Tail dependence is association between extreme values of variables. 
 If smaller values of two positively associated variables are more 
@@ -207,11 +170,11 @@ have stronger lower- or left-tail dependence than right- or upper-tail dependenc
 and \emph{vice versa} if larger values are more strongly associated than smaller
 ones (Fig. \ref{fig_cop_pedag1}B, D). Datasets of the same 
 correlation can have a range of tail dependence 
-characteristics (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
+(Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
 methods for the observational hypothesis).
 
 The goal of this paper is to illustrate the potential for 
-broader application of copulas in ecology. 
+applications of copulas in ecology. 
 Our results provide initial support for the following 
 overall hypothesis: environmental, ecological and evolutionary processes 
 generate and transmit copula structure and tail dependence, with substantial 
@@ -220,7 +183,7 @@ applications across ecology. This is a broad hypothesis, and
 even the substantial empirical and theoretical
 evidence we present here has only begun to test it. So we hope our work stimulates further
 evaluation of the hypothesis by the research community.
-Our overall hypothesis is examined by assessing several more specific 
+We examine our overall hypothesis by assessing several more specific 
 hypotheses, described below and outlined in Fig. 
 \ref{MasterFigure}, all of which bear upon the overall hypothesis. 
 
@@ -232,9 +195,9 @@ overall hypothesis. Labels are defined
 in the text to refer to parts of the figure. "Causal hypotheses" (i.e., hypotheses about 
 causes of copula structure) are labeled with letters A-D. "Consequential 
 hypothesis" (i.e., hypothesis about 
-consequences of copula structure) are labeled with letters X-Z. The "observational 
+consequences of copula structure) are labeled with X-Z. The "observational 
 hypothesis" (i.e., our hypothesis about 
-copula structure of data) is labeled with O.\label{MasterFigure}}
+copula structure of data) is labeled O.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
@@ -348,7 +311,7 @@ bioinformatics [@Kim2008], medical research [@Emura2016], direct study of enviro
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000]. 
 To our knowledge, these concepts have never been used in ecology. 
 We argue that benefits to ecology of using a complete 
-copula desription of dependence will be substantial.
+copula description of dependence will be substantial.
 
 # Data \label{Data} 
 
@@ -750,7 +713,7 @@ dt <- tibble(Description = c("1. p-value, independence test",
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 knitr::kable(tab_bivar_summary[1:9,], 
              format="latex",
-             caption = "Summary of OH results for bivariate datasets. The $p$-values in rows 5-6 are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. Cedar Creek results are for the year 2000.\\label{tab_bivar_summary}",
+             caption = "Summary of results of testing the observational hypothesis for bivariate datasets. The $p$-values in rows 5-6 are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. Cedar Creek results are for the year 2000.\\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.4cm")%>%
@@ -1019,7 +982,7 @@ regime.
 For the model we examined, causal hypothesis D (Fig. \ref{MasterFigure}) was 
 correct that asymmetric tail dependence in evolutionary changes 
 can produce similarly asymmetric tail dependence in character distributions across
-phylogeny tips (Appendix \ref{SM-evol_mech}). This topic is revisited in the Discussion.
+phylogeny tips (Appendix \ref{SM-evol_mech} fro details). This topic is revisited in the Discussion.
 
 <!--Question 3 analyses-->
 # Background, concepts and methods for testing the consequential hypotheses\label{Consequences}
@@ -1183,27 +1146,27 @@ and levels of organization in ecology (Fig. \ref{MasterFigure}, O), although no 
 research we are aware of has 
 taken this structure into account. We hypothesized four 
 mechanisms (Fig. \ref{MasterFigure}, A-D) that may cause non-N copula structures. One
-mechanism (A) was via nonlinear environmental influences
-on ecological variables. A second mechanism (B) produces tail dependence via
+mechanism (Fig. \ref{MasterFigure}, A) was via nonlinear environmental influences
+on ecological variables. A second mechanism (Fig. \ref{MasterFigure}, B) produces tail dependence via
 a Moran effect, whereby dependencies between environmental variables 
 beget similar dependencies between ecological variables in different locations. 
 We discuss below how commonly these and other
 potential mechanisms may opperate. 
 We also hypothesized and demonstrated important consequences of 
 non-N and tail-dependent copula structure in ecology 
-(Fig. \ref{MasterFigure}, X-Z). First (X), the skewness
+(Fig. \ref{MasterFigure}, X-Z). First (Fig. \ref{MasterFigure}, X), the skewness
 of a spatial-average time series is influenced by tail dependencies between its 
 constituent time series. Thus right-tail-dependent local time series 
 lead to "spiky" spatially averaged time series, with large outbreaks.
-These observations could have implications for numerous exploited and pest species,
+These observations could have implications for numerous exploited and pest species
 for which the spatial average time series have applied importance.
-Second (Y), metapopulation extinction risk can be accentuated or reduced by tail dependence
+Second (Fig. \ref{MasterFigure}, Y), metapopulation extinction risk can be accentuated or reduced by tail dependence
 properties of environmental variables. We also showed effects of copula 
-structure on Taylor's law (Z), which has been applied in many fields.
-In our view, our results make our "overall hypothesis," framed in the Introduction, quite 
+structure on Taylor's law (Fig. \ref{MasterFigure}, Z), which has been applied in many fields.
+In our view, our results make our "overall hypothesis," framed in the Introduction,
 reasonable and worthy of broader testing by the research community. We have illustrated 
 extensively how such tests might be carried out by performing them ourselves on 
-example datasets and models. Further suggestions future possible tests are below. 
+example datasets and models. Further suggestions for future possible tests are below. 
 <!--***DAN: make sure you have enough of this, Dan-->
 It already seems likely that comprehensive understanding 
 of many ecological phenomena is impossible without 
@@ -1219,18 +1182,19 @@ that build upon existing methods and may be especially useful for ecological app
 
 <!--a para on how likely one is to get copula structure via the Liebig mechanism-->
 Our first causal mechanism (Fig. \ref{MasterFigure}, A) seems likely to operate commonly.
-Liebig's law and the idea of a "limiting 
-nutrient" of growth are dominant paradigms in ecology.
+Liebig's law and the idea of a limiting 
+nutrient of growth are dominant paradigms in ecology.
 Although we did not systematically test the first two parts of causal 
 hypothesis A, many studies document nonlinear influences of environmental
 variables on ecological quantities at all levels of organization. 
 These parts of A could be tested
-straightforwardly for numerous datasets by examing the copulas of environmental and ecological
+straightforwardly for numerous datasets by examing copulas describing dependencies
+between environmental and ecological
 variables (see below discussion about the green spruce aphid, and 
 Appendix \ref{SM-sect:greenspruce}, which illstrate how to do this).
-
-<!--***DAN: stoped here and went back to put in Shya/Lawrence recent results with 
-aphid counts and winter temp-->
+Causal mechanism C, which we also did not test, could be tested straightforwardly
+by analyzing copulas of abundances of competing species, across space or
+through time.
 
 <!--para on how likely one is to get copula structure via the Moran mechanism-->
 There are also reasons to expect that our Moran mechanism (Fig. \ref{MasterFigure}, B) for 
@@ -1242,12 +1206,12 @@ If large meteorological events are
 also spatially widespread, then
 one would expect environmental variables associated with these events to take extreme
 values simultaneously across large spatial areas, producing tail dependence in measurements
-made through time at different locations. Non-extreme values, not associated with extreme, 
+made through time at different locations. Non-extreme values, not associated with 
 spatially extensive weather events, may
 be more associated with local phenomena, and therefore 
 less prone to being correlated across large areas.
-For instance, @Serinaldi2008 examined the spatial dependence 
-of rainfall observations in Central Italy. G or Student 2-copulas 
+@Serinaldi2008 examined the spatial dependence 
+of rainfall observations in Central Italy; G or Student 2-copulas 
 were possible candidates for modelling dependence, and 
 neither of these is an N copula.
 A long-term study (1950–2014) in the Loess Plateau of China [@She2018]
@@ -1268,7 +1232,7 @@ dependence in characters of extant species. For instance, as discussed below and
 Appendix \ref{SM-sect:missingdata} (also Fig. \ref{SM-fig:missingdata}), 
 systematically missing data can produce tail dependence and may
 have influenced results for the BMR-body mass datasets. Even if the hypothesized 
-evolutionary mechanism
+evolutionary mechanism (Fig. \ref{MasterFigure}, D)
 is correct, our results simply replace one question, i.e., why do we see right-tail
 dependence between BMR and body mass for birds and mammals, with another question,
 i.e., why might we see right-tail dependence in evolutionary changes in these traits?
@@ -1286,19 +1250,19 @@ It is well known that energy allocation to a life function, X (e.g., reproductio
 will reduce the energy that can be allocated to other functions, $Y_1$, $Y_2$, $Y_3$ 
 (e.g., growth, predation avoidance; this is called the principle of 
 allocation).
-But it is equally well known that X can trade-off against any or all of 
+But it is equally well known that X can trade off against any or all of 
 the $Y_i$. Therefore, for large values of X which approach absolute 
 limitations, there may be a strong 
 association between X and $Y_1$. Whereas for small values of X there may be
 little association - resources not allocated to X can instead be allocated 
-to $Y_1$, $Y_2$, $Y_3$ or to some combination. This constitutes 
+to $Y_1$, $Y_2$, $Y_3$ or to any combination thereof. This constitutes 
 asymmetric tail dependence between X and $Y_1$. For instance, @Winemiller1992
 described a three-way trade-off in North American fishes between age of reproductive
 maturity, juvenile survivorship, and fecundity. The trade-off should, in theory,
 produce a tight association between age of maturity and fecundity for 
 fishes with low age of maturity, but little association between those
 variables for later-maturing
-fishes because those fishes may invest much or little in juvenile survival.
+fishes because such fishes may invest much or little in juvenile survival.
 Although copulas may be very useful for studying multi-dimensional trade-offs, 
 applications will 
 require careful attention to the possible consequences of biased sampling:
@@ -1322,24 +1286,36 @@ potentially numerous mechanisms that may operate in diverse datasets.
 
 <!--some consequences paragraphs next-->
 
-<!--***DAN: green spruce aphid all the way from causes to consequences-->
+<!--green spruce aphid all the way from causes to consequences-->
 Our hypotheses cover propagation of copula structure from causes, 
 to observable data, to consequences for human concerns.
 We here take a closer look at the green spruce aphid, which illustrates 
 all these stages in one example.
 Green spruce aphid abundance, as detected in the suction trap data we use (Data,
 Appendix \ref{SM-Data_details}),
-is known to be strongly influenced by temperature the previous winter (@Sheppard2016,
+is strongly influenced by temperature the previous winter (@Sheppard2016,
 supplementary fig. 6).
-For each of our 10 sampling locations, we examined (Appendix \ref{SM-sect:greenspruce}, 
-Fig. \ref{}) the copula of winter temperature
+For each of our 10 sampling locations, we therefore 
+examined (Appendix \ref{SM-sect:greenspruce}, 
+Fig. \ref{SM-fig:greenspruce}, Table \ref{SM-tab:greenspruce}) the copula of winter temperature
 and green spruce aphid abundance time series for the location, finding 
 substantial left-tail dependence: apparently winter temperature has an asymmetric
 influence on abundance in the sense that cold winters produce low abundances
-but warm winters do not yield especially higher abundances than moderate winters
-(in passing, this is evidence for the first two parts of causal mechanism A).
-
-
+but warm winters do not yield especially higher abundances than moderate winters.
+Although we did not systematically test the first two 
+parts of causal hypothesis A due to much existing evidence, this result 
+illustrates how parts one and two of the hypothesis can be tested using copula
+techniques. The third part of causal hypothesis A, which our modelling results
+supported, now suggests spatial dependence between green spruce aphid counts
+should exhibit left-tail dependence - exactly what was observed 
+(Table \ref{tab_multivar_summary}). And the consequences of that spatial tail 
+dependence for skewness of spatially averaged aphid counts was described already 
+(Fig. \ref{fig_skewness_spearman}A). Thus the asymmetric influence of winter 
+temperature ultimately causes spatially averaged green spruce aphid abundances to have
+lower skew than they would otherwise, because negative impacts of cold winter
+are spatially synchronous but positive impacts of warmer winters and other factors
+are less spatially or temporally consistent.
+ 
 <!--***DAN: could remove the next para if you need to save words-->
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
 Our results showed that the skewness of the 
@@ -1350,19 +1326,19 @@ Another potential application is time series of all species from a single commun
 plants in a quadrat surveyed repeatedly over time. A huge 
 literature has focused on synchrony versus 
 compensatory dynamics between such time series, and 
-the influence of such interspecific relationships on the 
-variability, through time, of total-community
+the influence of interspecific relationships on the 
+variability of total-community
 properties such as total biomass. Typically, variability through time of total-community
 properties is measured with the coefficient of variation, but the skewness of such a time series
-may also be of interest because it can characterize the extent to
-which community properties show "spikiness". Future work on copula structure of interspecific relationships in communities and its implications for community stability seems likely to be an exciting avenue of research.
+may also be of interest because it can help characterize "spikiness". Future work on copula 
+structure of interspecific relationships in communities and its implications for community 
+stability seems likely to be an exciting avenue of research.
 
 <!--***DAN: could remove the next para if you need to save words-->
 <!--A para that sets up Shya's extinction risk paper-->
 Although we demonstrated that tail dependence between environmental variables
-can influence extinction risk, substantial work remains regarding the 
-circumstances under which this result holds, and its magnitude in different scenarios. 
-First, we used 
+can influence extinction risk, substantial work remains to determine the magnitude 
+of this effect in different scenarios. First, we used 
 a non-density-dependent model to examine extinction risk. Do similar results pertain
 when density dependence
 plays a role? Second, we considered metapopulation extinction risk, but the large field 

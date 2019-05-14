@@ -22,7 +22,11 @@ par(fig=c(((px+1)*ymarg_wd+px*pan_wd+px*gap)/tot_wd,
           ((py+1)*xmarg_ht+py*pan_ht+py*gap)/tot_ht,
           ((py+1)*xmarg_ht+(py+1)*pan_ht+py*gap)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-d1<-readRDS("./Data/dataForShymolinaCoord.rds")
+
+d1<-read.csv("./Data/SoilCN/SoilCNdata.csv")
+rownames(d1)<-d1$X
+d1<-d1[,-1]
+
 d1<-d1[,c("SOCstock100","TSNstock100")]
 d1<-na.omit(d1)
 d1c<-copula::pobs(d1)

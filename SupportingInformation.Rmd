@@ -2273,7 +2273,7 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 \noindent The matrices from which root character states and changes 
 across phylogeny branches were randomly chosen were generated as follows.
 For extreme right-tail dependent noise, we first produced
-a $1000000$ by $2$ matrix, $m$, of 
+a 1,000,000 by $2$ matrix, $m$, of 
 independent standard-normal random draws. Then, each row of $m$ 
 was identified for a first set of modifications randomly 
 and independently with a $50\%$ chance; 
@@ -2319,7 +2319,7 @@ Even if one were able to simply use a time-based set of branch lengths, assignin
 DNA sequence data can provide estimates of branch lengths, but these estimates
     are dependent on the adequacy of models which correct sequences for multiple
     substitutions occurring at the same location.
-Biases in estimating the evolutionary distance can affect down stream analyses [@Phillips2009].
+Biases in estimating the evolutionary distance can affect downstream analyses [@Phillips2009].
 Additionally, changes
     in the rate of molecular evolution make the estimation of dates difficult [@HeathM2014] even when branch lengths in time are accurately estimated.
 
@@ -2340,9 +2340,10 @@ But the nonparametric nature of approaches
 
 Additionally, character evolution was simulated using one random draw from the relevant matrix
 per phylogeny branch. This was principally because branch lengths are often hugely
-uncertain. If branch lengths were well know, alternative simulation strategies may
+uncertain. If branch lengths were well known, alternative simulation strategies may
 include selecting one draw from the matrix of evolutionary changes per unit time, 
-or selecting one draw for the whole branch but rescaling variance according to the 
+or selecting one draw for the whole branch but rescaling the variances of the selected
+character changes according to the 
 length of the branch. These choices amount to the same thing for normal copula
 structure, but not otherwise. Modelling choices such as these may have influenced
 our results. Additional research also seems warranted testing the realism 

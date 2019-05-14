@@ -2228,17 +2228,17 @@ across all pairs of sampling locations (Fig. \ref{fig_aphid_count}).
 
 Asymmetry of tail dependence was also verified by our nonparametric methods for
 the other multivariate datasets. For instance, the $95\%$ confidence intervals of the
-mean over pairs of sampling locations of the statistic $\Ps_l-\Ps_u$ were
-$(-0.085,-0.041)$ for the leaf-curling plum aphid first flight data, 
+mean over pairs of sampling locations of the statistic $\Ps_l-\Ps_u$ were 
+(`r unname(round(stat_aphid_ff$numericdf[10,c(3,4)],3))`)
+for the leaf-curling plum aphid first flight data, 
 indicating greater upper-tail dependence, and consistent with
-<!--***DAN: Shya, pls make above results autolink-->
 the results of Table \ref{MT-tab_multivar_summary} (row 9). 
 For the *Ceratium furca* abundance data, confidence intervals were
-$(0.011,0.044)$, indicating greater lower-tail dependence, and again
-<!--***DAN: Shya, pls make above results autolink-->
+(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`), 
+indicating greater lower-tail dependence, and again 
 consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
 For the methane-flux data, confidence intervals were 
-$(-0.008,0.019)$.
+(`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`).
 
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
 

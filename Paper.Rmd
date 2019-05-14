@@ -1,5 +1,5 @@
 ---
-title: "Complex and informative dependencies propagate throughout ecology and can be revealed using copulas"
+title: "Copulas reveal complex and informative dependencies propagating throughout ecology"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 date: ""
 geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
@@ -46,7 +46,9 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 
 \noindent Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA
 
-\noindent \emph{Possible alternative titles:}
+<!--\noindent \emph{Possible alternative titles:}
+
+Complex and informative dependencies propagate throughout ecology and can be revealed using copulas
 
 Copulas and their importance for ecology
 
@@ -66,7 +68,7 @@ Copulas
 
 The importance of copulas
 
-The importance of copulas in ecology
+The importance of copulas in ecology-->
 
 \noindent \emph{Keywords:} dependence, regression, correlation, copula, population, community
 

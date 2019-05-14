@@ -58,6 +58,14 @@ The makefile makes a system call to pdflatex, so software supporting that needs 
  - On Linux, install latex (e.g., sudo apt-get install texlive), and
  - On Mac, use the MacTeX installer (http://www.tug.org/mactex/)
 
+## Dependencies on data
+All data except for aphids and planktons are archieved in `Data` folder of present repository. Each subfolder 
+in `Data` has a text file (named as XYZ_data_source_info.txt) containing the information of data source and 
+references. Rothamsted Insect Survey (https://www.rothamsted.ac.uk/insect-survey) and
+Continuous Plankton Recorder Survey (https://www.cprsurvey.org/) are the competent authorities for aphid and plankton data,
+respectively, to request for data accessibility. In our SupportingInformation.Rmd aphid and plankton data were 
+called using "Data/Aphid_data/APHID_DATA_RAW/" and "Data/Plankton_North_Sea_data/" folder path, respectively.
+
 ## Additional dependencies?
 If you find additional dependencies were needed on your system, please let us know: reuman@ku.edu. The compilation process was tested by Reuman on........... using R version ......... and R studio version ......... ; and by Ghosh on Ubuntu 16.04.5 LTS using R version 3.4.4 and R studio version 1.1.463. It has not been tested on Mac. We have endeavored to list all dependencies we can think of above, but we have only compiled on our own machines, so we cannot guarantee that additional dependencies will not also be needed on other machines. This repository is intended to record a workflow, and is not designed or tested for distribution and wide use on multiple machines. It is not guaranteed to work on the first try without any hand-holding on arbitrary computing setups.
 
@@ -66,8 +74,11 @@ Knitting the makefile automatically produces a lot of 'intermediate' files. File
 
 # Acknowlegements :
 
-We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data extraction; and Joel E. Cohen, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We thank James Bell of the Rothamsted Insect Survey (RIS). The Rothamsted Insect Survey, a National Capability, is funded by the Biotechnology and Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation. 
-
+We thank the many contributors to the large datasets we used; D. Stevens and P. Verrier for data extraction; and Joel
+E. Cohen, David Tilman, Lauren Hallet, Jonathan Walter, Thomas Anderson, and Lei Zhao for helpful suggestions. We
+thank James Bell of the Rothamsted Insect Survey (RIS). The RIS, a UK Capability, is funded by the Biotechnology and
+Biological Sciences Research Council under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were
+partly funded by US National Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundation.
 
 
 

@@ -1,3 +1,8 @@
-This is just to make git commit the directory it is in, once
-other files are added and committed, delete this using "git rm
-DELETEME.txt"
+We thank James Bell of the Rothamsted Insect Survey (RIS). We used the aphid abundance, first flight date 
+and monthly temperature data saved in APHID_DATA_RAW folder. These data were computed from the Rothamsted Insect Survey (RIS) suction-trap dataset (Harrington 2014; Bell et al. 2015) and can be accessed upon requesting the competent authority.
+
+References:
+
+Harrington, R. (2014). The Rothamsted Insect Survey strikes gold. Antenna, 38, 159–166.
+
+Bell, J.R., Alderson, L., Izera, D., Kruger, T., Parker, S. & Pickup, J. et al. (2015). Long-term phenological trends, species accumulation rates, aphid traits and climate: Five decades of change in migrating aphids. Journal of Animal Ecology, 84, 21–34.

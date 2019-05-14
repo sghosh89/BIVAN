@@ -48,23 +48,19 @@ To compile the documents from the command line, use the following: Rscript -e "l
 
 ### Data dependencies
 Of eight datasets used, 5 are included in the Data folder. Data source information is provided
-in the Data folder and in the paper itself. Inclusion of data in the same repository as the code
-used to analyze the data helps ensure the correct data version is used, and analyses are
-reproduciple. For three datasets (the aphid phenology, aphid abundance, and plankton abundance
-datasets), we do not have rights to release the data. The aphid data come from the Rothamsted
-Insect Survey (RIS) of Rothamsted Research. The plankton data come from the Continuous Plankton
-Recorder (CPR) dataset of the Marine Biological Association of the UK. Both organizations 
+in the Data folder and in the paper itself. Each subfolder of the Data folder has a text file 
+(named as XYZ_data_source_info.txt) containing the data source and references. Inclusion of data
+in the same repository as the code used to analyze the data helps ensure the correct data version 
+is used, and analyses are reproduciple. For three datasets (the aphid phenology, aphid abundance, 
+and plankton abundance datasets), we do not have rights to release the data, so those datasets 
+are not in the repository. This means makefile.Rmd will not knit on any machine for which these 
+data have not been added in the local copy of the repository. The aphid data came from the 
+Rothamsted Insect Survey (RIS) of Rothamsted Research (https://www.rothamsted.ac.uk/insect-survey). The plankton data came from the Continuous Plankton
+Recorder (CPR) dataset of the Marine Biological Association of the UK (https://www.cprsurvey.org/). Both organizations 
 have clear policies for sharing data on their websites. James Bell (james.bell@rothamsted.ac.uk) 
 is our contact at RIS and P. Chris Reid (pchrisreid@googlemail.com) is our contact at CPR. 
 If a user obtains written permission from these organizations then we will be happy to provide 
 these datasets in the format expected by repository code.
-
-All data except for aphids and planktons are archieved in `Data` folder of present repository. Each subfolder 
-in `Data` has a text file (named as XYZ_data_source_info.txt) containing the information of data source and 
-references. Rothamsted Insect Survey (https://www.rothamsted.ac.uk/insect-survey) and
-Continuous Plankton Recorder Survey (https://www.cprsurvey.org/) are the competent authorities for aphid and plankton data,
-respectively, to request for data accessibility. In our SupportingInformation.Rmd aphid and plankton data were 
-called using "Data/Aphid_data/APHID_DATA_RAW/" and "Data/Plankton_North_Sea_data/" folder path, respectively.
 
 ### Dependencies on the R checkpoint package
 
@@ -100,9 +96,10 @@ reuman@ku.edu. The compilation process was tested by Ghosh on Ubuntu 16.04.5 LTS
 3.4.4 and R studio version 1.1.463, and by Reuman on a similar computing setup. It has not been 
 tested on Mac. We have endeavored to list all dependencies we can think of above, but we have 
 only compiled on our own machines, so we cannot guarantee that additional dependencies will not 
-also be needed on other machines. This repository is intended to record a workflow, and is not 
-designed or tested for distribution and wide use on multiple platforms. It is not guaranteed to 
-work on the first try without any hand-holding on arbitrary computing setups.
+also be needed on other machines, even after data are included (see above). This repository is 
+intended to record a workflow, and is not designed or tested for distribution and wide use on 
+multiple platforms. It is not guaranteed to work on the first try without any hand-holding on 
+arbitrary computing setups.
 
 ## Intermediate files:
 Knitting the makefile automatically produces a lot of 'intermediate' files. Files ending in .tex 

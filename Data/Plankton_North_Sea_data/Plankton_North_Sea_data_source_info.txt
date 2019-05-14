@@ -1,0 +1,5 @@
+Plankton abundance data along with lattitudes, longitudes of the surveying co-ordinates can be accessed upon request from Continuous Plankton Recorder (CPR) dataset, now operated and maintained by the Marine Biological Association of the United Kingdom. Data pre-processing was similar but not identical to that of Sheppard et al. (2017). To see how we processed the data, please see Appendix S2 in Supporting Information.
+
+Reference:
+
+Sheppard, L.W., Reid, P.C. & Reuman, D.C. (2017). Rapid surrogate testing of wavelet coherences. EPJ Nonlinear Biomedical Physics, 5, 1.

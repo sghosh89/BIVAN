@@ -59,6 +59,13 @@ is our contact at RIS and P. Chris Reid (pchrisreid@googlemail.com) is our conta
 If a user obtains written permission from these organizations then we will be happy to provide 
 these datasets in the format expected by repository code.
 
+All data except for aphids and planktons are archieved in `Data` folder of present repository. Each subfolder 
+in `Data` has a text file (named as XYZ_data_source_info.txt) containing the information of data source and 
+references. Rothamsted Insect Survey (https://www.rothamsted.ac.uk/insect-survey) and
+Continuous Plankton Recorder Survey (https://www.cprsurvey.org/) are the competent authorities for aphid and plankton data,
+respectively, to request for data accessibility. In our SupportingInformation.Rmd aphid and plankton data were 
+called using "Data/Aphid_data/APHID_DATA_RAW/" and "Data/Plankton_North_Sea_data/" folder path, respectively.
+
 ### Dependencies on the R checkpoint package
 
 Code uses the R *checkpoint* package. This is set up in the master file makefile.Rmd in the 
@@ -113,8 +120,6 @@ US National Science Foundation (grant numbers 1714195 and 1442595) and the James
 Foundation. Any opinions, findings, and conclusions or recommendations expressed in this 
 material are those of the author(s) and do not necessarily reflect the views of the National 
 Science Foundation or the McDonnell Foundation.
-
-
 
 
 

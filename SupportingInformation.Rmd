@@ -443,9 +443,9 @@ We used only data from the 14 locations which had at least 45 years of annual da
 restriction, shown by blue markers in Fig. \ref{fig_plankton_map}. The CPR data are described in
 great detail elsewhere, e.g., by  @Batten2003 and @Raitsos2014.
 
-\textbf{Community-level data, Cedar Creek.} Above-ground biomass and percent cover data were 
+\textbf{Community-level data, Cedar Creek.} Above-ground biomass [@ccdataple120] and percent cover data [@ccdatapce120] were 
 obtained from biodiversity experiment E120 conducted at the Cedar Creek Ecosystem Science Reserve 
-by Tilman *et al*. In 1994, 168 plots (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
+by Tilman *et al*. In 1994, 168 plots [@ccdataplotse120] (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
 were seeded with 1, 2, 4, 8, or 16 perennials, respectively, chosen randomly from a pool of 
 18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; and 2 species of woody
 plants). All plots received, in total, 10 $gm^{-2}$ of pure live seed in May 1994 and 5 $gm^{-2}$ in May, 1995 
@@ -5311,6 +5311,7 @@ aphid abundance for each of the 10 sampling locations. The $p$-values in the hea
 \setlength{\leftskip}{0.2in}
 \setlength{\parskip}{1pt}
 \noindent
+\sloppy
 
 <!--
 <div id="refs"></div>

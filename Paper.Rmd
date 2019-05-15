@@ -378,10 +378,10 @@ for 14 locations (Fig. \ref{SM-fig_plankton_map})
 in the North Sea and British seas for 22 taxa (Table \ref{SM-tab_plankton_info}) for the 
 56 years 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells. 
 Community-level data, obtained from the Cedar Creek Ecosystem Science Reserve, were 
-plant aboveground biomass [@ccdataple120] and Shannon's diversity index 
-for `r nrow(d_cc[[5]])` plots[@ccdataplotse120], each 9m by 9m, as sampled in 
-the years 1996-2000 and 2007, each year analyzed separately [@Tilman2001; @Tilman2006]. 
-Shannon's index was computed from plant species percent cover data[@ccdatapce120]. 
+plant aboveground biomass [@ccdataple120] and Shannon's diversity index (computed from plant 
+species percent cover data [@ccdatapce120]) for `r nrow(d_cc[[5]])` plots [@ccdataplotse120], 
+each 9m by 9m, as sampled in the years 1996-2000 and 2007, each year 
+analyzed separately [@Tilman2001; @Tilman2006]. 
 Finally, ecosystem functioning data were methane (CH$_{4}$) fluxes between the soil or 
 water surface and the troposphere, measured at 13 locations at daily to weekly intervals 
 from September 2015 to September 2016 at the Great Miami Wetland mitigation bank in Trotwood, 

@@ -173,7 +173,8 @@ a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g.,
 Fig. \ref{fig_cop_pedag1}A-B), the dependence
 structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
 $u_i$ is the rank of $x_i$ in the set $x_j$ ($j=1,\ldots,n$), divided by
-$n+1$; and $v_i$ is defined in the same way but using the $y_i$. The $u_i$ and 
+$n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
+of the smallest element in a set is $1$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$. See, 
 for instance,
 Fig. \ref{fig_cop_pedag1}C-D (the points), which show the copula structures of 

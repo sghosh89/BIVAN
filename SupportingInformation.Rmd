@@ -419,10 +419,10 @@ within each column.\label{fig_cop_pedag}}
 core, to 1m depth. 
 
 \textbf{Phenological and population data on aphids.}
-Data pre-processing for the aphid data was the same as 
-that of @Sheppard2016,
-but we excluded one of the 11 sites they used in order to only use sites with at least 30 
-years data.
+Data pre-processing for the aphid data was the same as that of @Sheppard2016, 
+except that years for which data was unavailable were excluded rather than being 
+replaced by median values. We also excluded one of the 11 sites they used in 
+order to only use sites with at least 30 years data.
 
 \textbf{Population data, plankton abundances.}
 These data 

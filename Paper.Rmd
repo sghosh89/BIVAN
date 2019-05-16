@@ -76,7 +76,7 @@ The importance of copulas in ecology-->
 
 \noindent \emph{The number of words in the abstract:} 250
 
-\noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 7509
+\noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 7497
 
 \noindent \emph{The number of words in each text box:} No text boxes
 
@@ -144,14 +144,15 @@ of probability density functions (pdf) of Clayton (C) and survival-Clayton
 (D) copulas with parameter 5 (see section on methods for the observational hypothesis), together
 with samples from the corresponding distributions. (E,F) Reflections
 of C, D, respectively, about a vertical axis. (G) Contours of the
-pdf function of a normal copula (methods for the observational hypothesis) with 
+pdf of a normal copula (methods for the observational hypothesis) with 
 parameter chosen to
 have the same Spearman correlation as A-D, together with a sample.
-(H) The portion of the Spearman correlation within a band (diagonal lines
-show two bands, the data in the left/lower band showing stronger
-dependence than the right/upper band) can be computed 
+(H) The portion of the Spearman correlation within a band 
+can be computed
 for any band (methods for the observational hypothesis) to describe how dependence
-varies from one part of the two distributions to another.
+varies from one part of the two distributions to another. Diagonal lines
+show two bands, the data in the left/lower band showing stronger
+dependence than the right/upper band.
 Subscripts h and v 
 stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
@@ -168,7 +169,7 @@ introduce. Copula approaches separate the information of a bivariate
 random variable into two distinct parts: the information in the 
 marginal distributions (which says nothing about the dependence between the 
 variables), and the remaining information (which is solely about
-the dependence). From a data perspective, given 
+dependence). From a data perspective, given 
 a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g., 
 Fig. \ref{fig_cop_pedag1}A-B), the dependence
 structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
@@ -221,7 +222,7 @@ hypotheses, described below and outlined in Fig.
 overall hypothesis. Labels are defined 
 in the text to refer to parts of the figure. "Causal hypotheses" (i.e., hypotheses about 
 causes of copula structure) are labeled with letters A-D. "Consequential 
-hypothesis" (i.e., hypothesis about 
+hypotheses" (i.e., hypotheses about 
 consequences of copula structure) are labeled with X-Z. The "observational 
 hypothesis" (i.e., our hypothesis about 
 copula structure of data) is labeled O.\label{MasterFigure}}
@@ -232,11 +233,11 @@ One way we may expect a copula approach
 to better reflect ecological relationships relates to Liebig's law of the
 minimum. If, for instance, the growth of a plant depends on soil 
 nitrogen, N, and other factors, a plot of plant growth rates versus N may 
-look more like Fig. \ref{fig_cop_pedag1}A or E than like 
-Fig. \ref{fig_cop_pedag1}B or F. Nitrogen 
+look more like Fig. \ref{fig_cop_pedag1}A or C than like 
+Fig. \ref{fig_cop_pedag1}B or D. Nitrogen 
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
-The portions of the distributions that dominate the association is visible in the copula
+The portion of the distributions that dominate the association is visible in the copula
 approach, but not via standard techniques. We therefore frame "causal hypothesis" A 
 (labeled in Fig. \ref{MasterFigure}): 
 copulas of dependencies between environmental and 
@@ -318,7 +319,7 @@ correlation were unchanged, would have more benign effects. We will
 later frame consequential hypotheses Y, about extinction risk, and Z, about Taylor's law.
 
 Our causal and consequential hypotheses imply, or rely on, an "observational
-hypothesis" (O in Fig. \ref{MasterFigure}), which we here frame: datasets in 
+hypothesis" (O in Fig. \ref{MasterFigure}), which we here frame. Datasets in 
 ecology will commonly have copula structure
 distinct from that of a Gaussian/normal distribution (here called 
 non-normal copula structure); they will commonly show tail dependence 
@@ -436,6 +437,7 @@ $F_X(x)=P[X\leq x]$ and $F_Y(y)=P[Y\leq y]$, then the dependence structure
 of $(X,Y)$ is revealed by the random variable $(F_X(X),F_Y(Y))$,
 which takes values in $[0,1] \times [0,1]$ and has 
 uniform marginals. 
+
 We introduce the copula families we used, and 
 measures of tail dependence.
 The normal copula family (henceforth N) is a one-parameter
@@ -494,7 +496,7 @@ and as our final step, we tested the goodness of fit of our AIC-best copula fami
 bootstrapping procedure (`BiCopGofTest` of `VineCopula`). The procedure performed 
 one test based on a Cramer-von Mises statistic and another based on a 
 Kolmogorov-Smirnov statistic. To keep computation times reasonable, 
-an initial run using $100$ bootstraps was performed; if
+a run using $100$ bootstraps was performed; if
 the $p$-value from either test was less than $0.2$, tests were re-run with 
 $1000$ boostraps.
 
@@ -507,7 +509,7 @@ values to the lower- and upper-tail dependence values of an N copula (i.e., 0).
 The third part 
 was tested by comparing the difference of the model-averaged lower- and upper-tail 
 dependence values to the analogous difference for an N copula, again 0.
-For multivariate datasets, we carried out the bivariate analysis
+For multivariate datasets, we performed the bivariate analysis
 for all possible pairwise combinations of locations, and 
 compared AIC weights and tail-dependence of 
 minimum-AIC copulas with that of an N copula. We also counted the number of location pairs 
@@ -563,7 +565,7 @@ $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, $\Dsq_u=\Dsq_{0.5,1}$.
 
 To test for asymmetry of dependence in upper and lower portions of distributions,
 we used differences $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
-for smaller datasets, (note the opposite order
+for smaller datasets (note the opposite order
 in the last of these); and $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
 $\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
 $\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ with $u_b$ close 
@@ -593,7 +595,7 @@ for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shan
 
 Across essentially all our datasets, copula structures were typically non-N and 
 commonly showed asymmetric tail 
-dependence: the observational hypothesis was supported (Fig. \ref{MasterFigure}). To make results easier to absorb, we first 
+dependence: the observational hypothesis (Fig. \ref{MasterFigure}) was supported. To make results easier to absorb, we first 
 present results for an example bivariate dataset, then we summarize results
 for all bivariate datasets, then we present results for an example multivariate dataset, then we summarize for all multivariate datasets.
 
@@ -830,7 +832,7 @@ and positive values to undercompensating dynamics; larger $|b|$
 means slower return to equilibrium after a disturbance. 
 Because $(\epsilon_1,\epsilon_2)$
 and $(\delta_1,\delta_2)$ have N copula structure, the Moran 
-mechanism analyzed below (B on Fig. \ref{MasterFigure}) 
+mechanism analyzed below (Fig. \ref{MasterFigure}, B) 
 does not operate here.
 
 For each $b$ and $g_i$, we simulated the model for $25000$ time
@@ -863,7 +865,7 @@ $\sigma=1$, model dynamics are strongly nonlinear. We refer to these as
 the weak-noise and strong-noise cases, though the importance of the noise here
 is that, when it is strong, it brings the nonlinearities of the model into play. 
 
-For each of the three model setups above, for each of several copula families, for each $\tau=0.1,0.2,\ldots,0.9$, and for each of
+For each of the model setups above, for each of several copula families, for each $\tau=0.1,0.2,\ldots,0.9$, and for each of
 $50$ replicate simulations, we generated 5000 noise pairs 
 $(\epsilon_1(t),\epsilon_2(t))$ from the
 bivariate random variable with the given copula family and the given $\tau$.
@@ -877,7 +879,7 @@ Values were plotted against $\tau$ for noises and populations. If causal hypothe
 correct, plots should be similar for populations and noises. 
 
 Hypothesis C was not tested. Our next 
-causal hypothesis, D on Fig. \ref{MasterFigure}, 
+causal hypothesis, Fig. \ref{MasterFigure}, D, 
 is evolutionary, and pertains to bivariate 
 trait data across species, e.g., our bird and mammal 
 data. This mechanism is a hypothetical explanation for the right tail dependence
@@ -943,6 +945,24 @@ statistics were always very similar for noise and populations
 \ref{SM-fig_Cause4copula_C_kend_ar1}-\ref{SM-fig_Cause4copula_SJ_kend_ar1}),
 though there were significant but minor differences for some statistics
 and simulations.
+For weak noise and our nonlinear model, copula statistics
+were again very similar for noise and model outputs 
+(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-
+\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}).
+Though there were again significant but small differences for some statistics
+and simulations, the hypothesis was supported that copula structure in the noise translates
+to similar but not identical copula structure in output populations. 
+Since many ecological models are nonlinear, this result provides the 
+expectation that there will be a Moran-effect-like correspondence 
+between noise and model-output copula structure for typical ecological dynamics,
+as long as noise is small enough that dynamics stay relatively close
+to the model equilibrium. Results that hold for "weak noise" in this sense
+are common in ecology. 
+We repeated the analysis with $r=1.3$, with similar results. The deterministic 
+one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
+at $K$ when $r<1$ (undercompensating dynamics, e.g., the value $r=0.5$ used initially), 
+but exhibits an oscillatory approach to $K$ when $r>1$ (overcompensating
+dynamics, e.g., $r=1.3$).
 
 \begin{figure}[!h]
 \begin{center}
@@ -966,25 +986,6 @@ the nonlinear models described in the methods for the causal hypotheses.\label{f
 \end{center}
 \end{figure}
 
-For weak noise and our nonlinear model, copula statistics
-were again very similar for noise and model outputs 
-(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-
-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}).
-Though there were again significant but small differences for some statistics
-and simulations, the hypothesis was supported that copula structure in the noise translates
-to similar but not identical copula structure in output populations. 
-Since many ecological models are nonlinear, this result provides the 
-expectation that there will be a Moran-effect-like correspondence 
-between noise and model-output copula structure for typical ecological dynamics,
-as long as noise is small enough that dynamics stay relatively close
-to the model equilibrium. Results that hold for "weak noise" in this sense
-are common in ecology. 
-We repeated the analysis with $r=1.3$, with similar results. The deterministic 
-one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
-at $K$ when $r<1$ (undercompensating dynamics, e.g., the value $r=0.5$ used initially), 
-but exhibits an oscillatory approach to $K$ when $r>1$ (overcompensating
-dynamics, e.g., $r=1.3$).
-
 For strong noise and using our nonlinear model, 
 copula statistics, generally speaking, were approximately similar 
 between noise and model
@@ -1000,10 +1001,10 @@ similarities between noise and model-output copula structure
 were more noticable than discrepancies, in spite of nonlinearities.
 We repeated the analysis with $r=1.3$. Discrepancies between noise and population
 copula structure in this case were often glaring. Apparently noise of standard deviation 1
-interacted very strongly with model nonlinearities when the model was in its overcompensatory 
+interacted strongly with model nonlinearities when the model was in its overcompensatory 
 regime.  
 
-For the model we examined, causal hypothesis D (Fig. \ref{MasterFigure}) was 
+For our model, hypothesis D (Fig. \ref{MasterFigure}) was 
 correct that asymmetric tail dependence in evolutionary changes 
 can produce similarly asymmetric tail dependence in character distributions across
 phylogeny tips (Appendix \ref{SM-evol_mech}, Fig. \ref{SM-fig_cop_evo} for details). This topic 
@@ -1031,7 +1032,7 @@ spatial mean corresponds to "spikiness" of the spatial-mean time series.
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
 pest or resource abundance, for which extreme values (spikes) 
-in the spatial-mean have large effects.
+in the spatial mean have large effects.
 
 We tested hypothesis X 
 using our multivariate datasets (Table \ref{tab_multivar_summary}).
@@ -1066,7 +1067,7 @@ in the right tail. The test examines whether upper-tail dependence caused the sp
 average to have significantly higher skewness than 
 expected without tail dependence.
 
-We also examined hypothesis Y on Fig. \ref{MasterFigure}, i.e., that spatial 
+We also examined hypothesis Y (Fig. \ref{MasterFigure}), i.e., that spatial 
 tail dependence of an environmental variable can influence the 
 extinction risk of a metapopulation. We hypothesized that environmental noises
 exhibiting greater left-tail dependence across different habitat patches would 
@@ -1100,7 +1101,7 @@ and calculated extinction risk after $25$ time steps.
 # Results of testing the consequential hypotheses: Tail dependence influences skewness of the spatial average, extinction risk, and Taylor's law
 
 \noindent Skewness results were consistent with 
-consequential hypothesis X. For datasets that
+hypothesis X. For datasets that
 exhibited strong lower-tail (respectively, upper-tail) 
 dependence in earlier analyses (green spruce 
 aphid abundance data for lower-tail, and leaf-curling plum aphid first flight data
@@ -1179,8 +1180,8 @@ constituent time series: right-tail-dependent local time series
 lead to "spiky" spatially averaged time series, with large outbreaks.
 Thus tail dependence could have implications for exploited and pest species.
 Extinction risk can be altered by tail dependence
-properties of environmental variables. 
-In our view, our results make our "overall hypothesis" (Introduction)
+in environmental variables. 
+In our view, our results make our overall hypothesis (Introduction)
 reasonable and worthy of broader testing. We illustrated 
 how such tests might be carried out by performing tests ourselves on 
 example datasets and models. Further suggestions for tests are below.
@@ -1242,7 +1243,7 @@ contrary to standard normality assumptions of character evolution models. This i
 a hypothesis only, because the right-tail dependence of Fig. \ref{fig_biv_multi_raw_cop}F,G
 could have come about in another, unknown way. Our simulations show that tail dependence 
 in evolutionary changes is sufficient, but may not be necessary, to produce tail
-dependence in characters of extant species. For instance, (see below, 
+dependence in characters of extant species. For instance (see below, 
 Appendix \ref{SM-sect:missingdata}, Fig. \ref{SM-fig:missingdata}), 
 systematically missing data can also produce tail dependence and may
 have influenced results for the BMR-body mass datasets. Even if the hypothesized 
@@ -1288,9 +1289,9 @@ Other mechanisms probably also operate,
 and should be considered. For instance, 
 measurement error may modify copula structure. 
 Our models were intentionally simple in other respects, 
-too, not including
+too, and did not include
 delayed density dependence, dispersal, population stage structure, trophic
-interactions, and other factors.
+interactions, etc.
 We hope by enumerating a few potential mechanisms of copula structure,
 we inspire additional research on the
 potentially numerous mechanisms that may operate in diverse datasets.
@@ -1322,7 +1323,7 @@ in different locations should show left-tail dependence - exactly as observed
 dependence for the skewness of spatially averaged aphid counts was described previously 
 (Fig. \ref{fig_skewness_spearman}A). Thus the asymmetric influence of winter 
 temperature ultimately causes spatially averaged aphid abundances to have
-lower skew than they would otherwise, because negative impacts of cold winter
+lower skew than they would otherwise, because negative impacts of cold winters
 are spatially synchronous.
  
 <!--***DAN: could remove the next para if you need to save words-->

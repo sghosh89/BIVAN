@@ -76,11 +76,11 @@ The importance of copulas in ecology-->
 
 \noindent \emph{The number of words in the abstract:} 250
 
-\noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 7493
+\noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 7509
 
 \noindent \emph{The number of words in each text box:} No text boxes
 
-\noindent \emph{The number of references:} 31
+\noindent \emph{The number of references:} 34
 
 \noindent \emph{The number of figures, tables, and text boxes:} 7 figures, 3 tables, 0 text boxes
 

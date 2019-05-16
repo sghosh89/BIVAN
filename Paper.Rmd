@@ -344,7 +344,9 @@ copula description of dependence will be substantial.
 # Data \label{Data} 
 
 ```{r read_somedata, echo=F, results='hide'}
-d_soilCN<-readRDS("Data/dataForShymolinaCoord.rds")
+d_soilCN<-read.csv("./Data/SoilCN/SoilCNdata.csv")
+rownames(d_soilCN)<-d_soilCN$X
+d_soilCN<-d_soilCN[,-1]
 d_soilCN<-na.omit(d_soilCN)
 d_birdsBMR<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
 d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")
@@ -576,7 +578,9 @@ project is archived at \url{www.github.com/sghosh89/BIVAN}.
 # Results of testing the observational hypothesis: Ecological datasets often have non-normal copula structure and asymmetric tail dependence \label{Results}
 
 ```{r read_BivMS_soilCN_data,echo=F}
-d<-readRDS("Data/RaCA_soilorganicC_soiltotalN_stocks100cm.RDS")
+d<-read.csv("./Data/SoilCN/SoilCNdata.csv")
+rownames(d)<-d$X
+d<-d[,-1]
 d<-d[,c("SOCstock100","TSNstock100")] #raw soilCN data
 BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 ```

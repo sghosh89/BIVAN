@@ -343,7 +343,9 @@ copula description of dependence will be substantial.
 # Data \label{Data} 
 
 ```{r read_somedata, echo=F, results='hide'}
-d_soilCN<-readRDS("Data/dataForShymolinaCoord.rds")
+d_soilCN<-read.csv("./Data/SoilCN/SoilCNdata.csv")
+rownames(d_soilCN)<-d_soilCN$X
+d_soilCN<-d_soilCN[,-1]
 d_soilCN<-na.omit(d_soilCN)
 d_birdsBMR<-readRDS("./Data/BMR/BirdBodyMassesMetabolicRates/my_birdsBMR_data.RDS")
 d_mammalsBMR<-readRDS("./Data/BMR/MammalianBodyMassesMetabolicRates/my_mammalsBMR_data.RDS")

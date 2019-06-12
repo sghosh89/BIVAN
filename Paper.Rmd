@@ -185,35 +185,33 @@ correlation can have a range of tail dependence
 (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
 methods for the observational hypothesis).
 
-The goal of this paper is to illustrate the potential for 
+The goal of this paper is to explore the potential for 
 applications of copulas in ecology. 
-Our results provide initial support for the following 
-overall hypothesis: environmental, ecological and evolutionary processes 
-generate and transmit copula structure and tail dependence, with substantial 
+Our results provide support for the idea that environmental, ecological and evolutionary processes 
+generate and transmit nontrivial copula structure and tail dependence, with substantial 
 consequences for theoretical and conceptual understanding, for inference, and for 
-applications across ecology. This is a broad hypothesis, and 
-even the substantial empirical and theoretical
-evidence we present here has only begun to test it. So we hope our work stimulates further
+applications across ecology. The work we present here has begun to test this
+hypothesis, and we hope our results stimulate further
 evaluation of the hypothesis by the research community.
-We examine our overall hypothesis by assessing several more specific 
-hypotheses, described below and outlined in Fig. 
-\ref{MasterFigure}, all of which bear upon the overall hypothesis. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7in]{./MasterFigure.pdf}
-\caption{Guide for hypotheses addressed in the text and how each instantiates the
-overall hypothesis. Labels are defined 
-in the text to refer to parts of the figure. "Causal hypotheses" (i.e., hypotheses about 
-causes of copula structure) are labeled with letters A-D. "Consequential 
-hypotheses" (i.e., hypotheses about 
-consequences of copula structure) are labeled with X-Z. The "observational 
-hypothesis" (i.e., our hypothesis about 
-copula structure of data) is labeled O.\label{MasterFigure}}
+\caption{Summary and guide for analyses presented in the text. Middle boxes
+correspond to ecological datasets for which Q1 was examined (in the 
+second through
+fourth sections of the text, see also Table \ref{tab_data_info}). Upper boxes 
+correspond to potential causes of non-normal (NN) copula structure that
+were examined (in the fifth and sixth sections of the text). Lower boxes 
+correspond to potential consequences we examined of NN copula structure for
+ecological understanding and for applications (in the seventh and eighth
+sections of the text). Arrow labels (A-D for analyses pertaining 
+to causes, Q2; and X-Z for analyses pertaining to consequences, Q3) 
+link to locations in the text.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
-One way we may expect a copula approach 
+One way we may expect, *a priori*, a copula approach 
 to better reflect ecological relationships relates to Liebig's law of the
 minimum. If, for instance, the growth of a plant depends on soil 
 nitrogen, N, and other factors, a plot of plant growth rates versus N may 
@@ -222,15 +220,7 @@ Fig. \ref{fig_cop_pedag1}B or D. Nitrogen
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
 The portion of the distributions that dominate the association is visible in the copula
-approach, but not via standard techniques. We therefore frame "causal hypothesis" A 
-(labeled in Fig. \ref{MasterFigure}): 
-copulas of dependencies between environmental and 
-ecological variables will sensitively reveal 
-nonlinear, asymmetric and threshold effects for population, community, 
-and ecosystem functioning variables; copulas between 
-environmental and ecological variables
-will commonly show tail dependence; such tail dependence will lead to 
-tail dependence across space in ecological variables.
+approach, but not via standard techniques. 
 
 A second reason we may expect a copula approach to benefit ecological
 research is that prior work has demonstrated important copula 
@@ -251,11 +241,7 @@ from environmental to ecological variables, then we may expect important
 copula structure to be a common feature of the spatial synchrony of population, community, 
 biogeochemical and other ecological variables.
 Synchrony is a phenomenon of great interest in 
-ecology [@Liebhold2004; @Sheppard2016; @walteretal2017]. We therefore frame 
-causal hypothesis B (again labeled in Fig. \ref{MasterFigure}): Moran effects
-transmit copula structure in spatial dependence from environmental to 
-ecological variables, and hence copula structure and tail dependence will be 
-common features of spatial synchrony in ecological variables. 
+ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
 A third reason we may expect a copula approach to benefit 
 ecological research is that such an approach may help illuminate 
@@ -272,24 +258,18 @@ limiting factors other than Sp1.
 Alternatively, Fig. \ref{fig_cop_pedag1}F suggests that Sp2
 is dominant. The copula approach again reveals which portions of the
 distributions are principally responsible for the association between variables, and this 
-information can help support or refute alternative causal hypotheses. We
-frame causal hypothesis C (Fig. \ref{MasterFigure}): copulas of abundances
-through time or space of two competing or otherwise interacting species will
-reflect any asymmetries in the interaction. We will later
-frame causal hypothesis D, which concerns character evolution.
+information can help support or refute alternative causal hypotheses. 
 
-Another reason we may expect copula structure to be important
+A fourth reason we may expect copula structure to be important
 in ecology has to do with spatially aggregated or averaged quantities. 
 Many ecological variables of applied importance 
 depend on the spatial average or sum of local 
 quantities. For instance, regional methane and CO$_2$ 
 fluxes are the sum of local fluxes; 
 and the total economic value of a fishery is the sum of local catches. 
-We therefore frame "consequential hypothesis" X (labeled on Fig. \ref{MasterFigure}):
-details, revealed by copulas, of the 
-dependence between local quantities can influence the spatial 
-mean or sum, and this may influence higher organizational levels in 
-ecology and human concerns.
+We will explore how details, captured by copulas, of the dependence between local
+quantities can influence the spatial mean or sum, and how this may influence 
+higher organizational levels in eoclogy and human concerns.
 Illustrating the idea here, prior work demonstrated that the overall 
 reliability of wind-generated electricity depends sensitively on details
 of the dependence between wind speeds at multiple generator sites [@li2013]. 
@@ -299,29 +279,38 @@ pest species in different locations are all positively associated and also stron
 related to each other in their right tails, then local outbreaks will tend 
 to occur together, creating regional epidemics. 
 On the other hand left-tail dependence in a pest species, even if overall 
-correlation were unchanged, would have more benign effects. We will
-later frame consequential hypotheses Y, about extinction risk, and Z, about Taylor's law.
+correlation were unchanged, would have more benign effects. 
 
-Our causal and consequential hypotheses imply, or rely on, an "observational
-hypothesis" (O in Fig. \ref{MasterFigure}), which we here frame. Datasets in 
-ecology will commonly have copula structure
-distinct from that of a Gaussian/normal distribution (here called 
-non-normal copula structure); they will commonly show tail dependence 
-distinct from that of a normal distribution; in particular they will
-show asymmetric tail dependence.
-
-Because the observational hypothesis bears upon all the causal
-and consequential hypotheses, we test it first, in sections 2-4 of the paper.
-We analyze several datasets, including 
+We approached our overall goal of exploring the potential of copula approaches 
+for ecology by addressing the following specific questions. (Q1) Do datasets
+in ecology have copula structure distinct from that of a Gaussian/normal
+distribution (here called non-normal copula structure)? Do they show tail 
+dependence distinct from that of a normal distribution, and in particular
+do they show asymmetric tail dependence? Normal copula structure is assumed
+by standard approaches that use multivariate 
+normal distributions or distributions obtained by transforming
+the marginals of normal distribution. Such 
+approaches do not utilize the power of copulas, so Q1 asks whether ecological
+data contain dependency information distinct from what can be modelled with
+standard approaches. (Q2) If the answer to
+Q1 is "yes," what are some possible causes/mechanisms of non-normal
+copula structure? And (Q3) what are the consequences of non-normal copula
+structure and tail dependence for our understanding of ecology and for 
+applications? To address Q1 (second through fourth sections of the paper), 
+we analyze several datasets, including 
 environmental, species-trait, phenological, population, community, and 
 ecosystem functioning data, selected to span multiple 
 sub-fields and organizational levels of ecology. 
-Sections 5 and 6 test the causal hypotheses, and sections 7 and 8 test the
-consequential hypotheses. Section 9 is the Discussion.
+The fifth and sixth sections of the paper 
+address Q2 using simple models. The seventh and eigths sections address
+Q3 using both data and models. The ninth section is the Discussion.
+Multiple analyses are brought to bear on each question, and these
+are summarized diagramatically in Fig. \ref{MasterFigure}, which can 
+serve as a *post hoc* guide to the paper. 
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000]. 
-To our knowledge, these concepts have never been used in ecology. 
+To our knowledge, non-normal copulas have never been used in ecology. 
 We argue that benefits to ecology of using a complete 
 copula description of dependence will be substantial.
 

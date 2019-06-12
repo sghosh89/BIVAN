@@ -1,8 +1,9 @@
 ---
-title: "Copulas reveal complex and informative dependencies propagating throughout ecology"
+title: "Copulas and their potential for ecology"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 date: ""
-geometry: "left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.8cm"
+fontsize: 12pt
+geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
 
 output: 
   pdf_document:
@@ -28,21 +29,15 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 #source("mtime.R") #A function needed for caching
 ```
 
-# Front matter
-
 \noindent \emph{Affiliations:}
 
-\noindent Ghosh: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
-
-\noindent Sheppard: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
+\noindent Ghosh, Sheppard, Bever: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
 
 \noindent Holder: Department of Ecology and Evolutionary Biology and Biodiversity Institute, University of Kansas, Lawrence, KS, 66045, USA
 
 \noindent Loecke: Environmental Studies Program and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA
 
 \noindent Reid: School of Biological & Marine Sciences, University of Plymouth, Drake Circus, Plymouth PL4 8AA, UK; Continuous Plankton Recorder Survey, The Marine Biological Association, The Laboratory, Citadel Hill, Plymouth PL1 2PB, UK
- 
-\noindent Bever: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
 
 \noindent Reuman: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66047, USA; Laboratory of Populations, Rockefeller University, 1230 York Ave, New York, NY, 10065, USA
 
@@ -50,13 +45,13 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 
 Complex and informative dependencies propagate throughout ecology and can be revealed using copulas
 
+Copulas reveal complex and informative dependencies propagating throughout ecology
+
 Copulas and their importance for ecology
 
 Copulas and their importance in ecology
 
 Copulas and their importance throughout ecology
-
-Copulas and their potential for ecology
 
 Copulas and their potential throughout ecology
 
@@ -70,23 +65,11 @@ The importance of copulas
 
 The importance of copulas in ecology-->
 
-\noindent \emph{Keywords:} dependence, regression, correlation, copula, population, community
+\noindent \emph{Correspondence:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
-\noindent \emph{Type of Article:} Ideas and Perspectives
+\noindent \emph{Type of Submission:} Article
 
-\noindent \emph{The number of words in the abstract:} 250
-
-\noindent \emph{The number of words in the main text (excluding abstract, acknowledgements, references, table and figure legends):} 7497
-
-\noindent \emph{The number of words in each text box:} No text boxes
-
-\noindent \emph{The number of references:} 34
-
-\noindent \emph{The number of figures, tables, and text boxes:} 7 figures, 3 tables, 0 text boxes
-
-\noindent \emph{The name and complete mailing address (including telephone and fax numbers and e-mail address) of the person to whom correspondence should be sent:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
-
-\newpage
+\noindent \emph{The number of words in the abstract:} 
 
 # Abstract
 
@@ -110,7 +93,8 @@ on extinction risk and the stability through time of ecosystem services. By docu
 importance of a complete description of dependence, advancing conceptual frameworks, and 
 demonstrating a powerful approach, we aim to elevate copula reasoning to widespread use in ecology.
 
-\newpage
+\noindent \emph{Keywords:} dependence, regression, correlation, copula, population, community
+
 # Introduction\label{Intro}
 
 All branches of ecology 

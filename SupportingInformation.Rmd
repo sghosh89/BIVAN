@@ -1,5 +1,5 @@
 ---
-title: "Supporting information: Copulas reveal complex and informative dependencies propagating throughout ecology"
+title: "Supporting information: Copulas and their potential for ecology"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
@@ -403,7 +403,7 @@ correlation.\label{fig_transf_pearson_spearman}}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
 \caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and 
 upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 
-copula (see section on methods for the observational hypothesis) 
+copula (see section on methods for Q1) 
 with three different 
 sets of parameters chosen to produce a variety of 
 lower-tail (LT) and upper-tail (UT) dependence strengths, but the same 
@@ -1097,7 +1097,7 @@ colnames(tab_bivar_summary)<-c("SoilCN","Birds' BMR","Mammals' BMR","Ceder-creek
 saveRDS(tab_bivar_summary,"./Results/tab_bivar_summary.RDS")
 ```
 
-# Verifying model selection results of testing the observational hypothesis on bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
+# Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
 
 For bivariate datasets, we compared values 
 of the statistics $\cor_{l_b,u_b}$,
@@ -1122,7 +1122,7 @@ by $l_b$ and $u_b$ is different from
 what would be expected from a null hypothesis of normal copula structure but 
 unchanged marginals and similar 
 Kendall (or Spearman)
-correlation. Thus the comparison addresses the first two parts of the observational hypothesis
+correlation. Thus the comparison addresses the first two parts of Q1
 for bivariate datasets. 
 Significant deviations correspond to deviations from normal 
 copula structure. In particular, deviations 
@@ -1136,7 +1136,7 @@ $\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
 $\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$,
 as computed on the empirical data, to the distribution of its values on many surrogate datasets 
 provides a test of asymmetry of dependence. Thus this comparison helps address the
-third part of the observational hypothesis for bivariate 
+third part of Q1 for bivariate 
 datasets. 
 
 The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
@@ -1350,7 +1350,7 @@ knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
              caption.short = "Best-fitting copulas, green spruce aphid abundance data",
              caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for green spruce aphid abundance data. Copulas 
 considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
-survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas, with abbreviations in the methods for the observational hypothesis. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
+survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
              booktabs=TRUE
              )#%>% # only with 'latex'/'html' format
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
@@ -1563,7 +1563,7 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='latex',linesep = "",
              caption.short = "Best-fitting copulas, leaf-curling plum aphid first flight data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for leaf-curling plum aphid first flight data. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations in the methods for the observational hypothesis. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for leaf-curling plum aphid first flight data. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1783,7 +1783,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='latex', linesep = "",
              caption.short = "Best-fitting copulas, \\textit{Ceratium furca} abundance data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for \\textit{Ceratium furca} abundance data. See methods for the observational hypothesis for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for \\textit{Ceratium furca} abundance data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1973,7 +1973,7 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',linesep = "",
              caption.short = "Best-fitting copulas, methane-flux data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See methods for the observational hypothesis for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -2204,7 +2204,7 @@ colnames(tab_multivar_summary)<-c("Green-spruce aphid_count","Leaf-plum curling 
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
-# Verifying model selection results of testing the observational hypothesis on multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
+# Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
 
 For multivariate datasets, we calculated Spearman and Kendall correlations
 and the statistics 
@@ -2550,11 +2550,11 @@ knitr::kable(summary_stat, booktabs = T, escape=F,
                                    "b=-0.5, g$_{1}$","b=-0.5, g$_{2}$"),
       caption.short="Asymmetric sensitivity model, model selection results",
       caption="Asymmetric sensitivity model, model selection results. 
-The output of simulations from the second model detailed in 
-the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+The output of simulations from the first model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
 \\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
 selection procedures detailed in the 
-methods section for the observational hypothesis. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
+methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
 N-copula AICw: the AIC weight of the N copula family; Model-avg. LT: the lower-tail 
 statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
 upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula
@@ -2580,13 +2580,13 @@ knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              format = "latex",linesep = "",escape=F,
              caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
              caption ="Asymmetric sensitivity model, nonparametric statistics results. 
-The output of simulations from the second model detailed in 
-the methods section for the causal hypotheses (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+The output of simulations from the first model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
 \\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
-analyses decribed in the methods section for the observational hypothesis. The listed statistic was computed for the
+analyses decribed in the methods section for Q1. The listed statistic was computed for the
 output of the model with the indicated b and g, and the value was compared to 1000 values
 of the same statistic computed on surrogate time series randomized to have N-copula structure
-(see methods for the observational hypothesis). A table entry $<X$ (respectively, $>X$) indicates the value of the 
+(see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
 given statistic on the data was less (respectively, more) than its value on $X$ of the 
 surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
@@ -2714,7 +2714,7 @@ $P$-values (purple points, right axis) are for a
 paired $t$-test of the null hypothesis that the distributions of 50 noise and 
 output values have the same mean; $p$-values less than $0.05$ indicate that 
 copula structure as measured by the listed statistic differs significant
-between noise inputs and model outputs. See methods section for the causal hypotheses 
+between noise inputs and model outputs. See methods section for Q2 
 for additional details.\label{fig_Cause4copula_C_kend_ar1}}
 \end{center}
 \end{figure}
@@ -5044,7 +5044,7 @@ were obtained and processed exactly as in @Sheppard2016. Copulas
 describing the relationship between green spruce aphid abundance and winter 
 temperature are in Fig. \ref{fig:greenspruce}. Results of analyses of these
 copulas that paralleled the analyses applied to bivariate ecological datasets 
-(see section on methods for the observational hypotheses) are in Table \ref{tab:greenspruce}.
+(see section on methods for Q1) are in Table \ref{tab:greenspruce}.
 
 ```{r copulaplot_greenspruceaphid_with_temp,echo=F,results="hide"}
 source("./getcopula.R")
@@ -5207,7 +5207,7 @@ knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtabl
       caption = "Summary results for analysis of copulas for winter temperature versus green spruce 
 aphid abundance for each of the 10 sampling locations. The column labeled p, CvM is the p-value 
 result for the goodness of fit test using the Cramer-von Mises statistic (see section on 
-methods for the observational hypothesis). The 
+methods for Q1). The 
 column labeled p, KS is the p-value 
 result for the goodness of fit test using the Kolmogorov-Smirnov statistic. Entries with an NA are because model selection and other statistics
 were only employed for copulas for which independence was rejected (5 percent significance level).\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
@@ -5302,7 +5302,7 @@ Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
 \includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
 \caption[Copula plots for winter temperature versus green spruce aphid abundance]{Copula plots 
 for winter temperature versus green spruce 
-aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for the observational hypothesis).\label{fig:greenspruce}}
+aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for Q1).\label{fig:greenspruce}}
 \end{center}
 \end{figure}
 

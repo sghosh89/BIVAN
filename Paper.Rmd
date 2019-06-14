@@ -187,7 +187,7 @@ and *vice versa* if larger values are more strongly associated than smaller
 ones (Fig. \ref{fig_cop_pedag1}B, D). Datasets of the same 
 correlation can have a range of tail dependence 
 (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
-methods for Q1).
+methods for Q1 below).
 
 The goal of this paper is to explore the potential for 
 applications of copulas in ecology. 
@@ -218,33 +218,38 @@ link to locations in the text.\label{MasterFigure}}
 One way we may expect, *a priori*, a copula approach 
 to better reflect ecological relationships relates to Liebig's law of the
 minimum. If, for instance, the growth of a plant depends on soil 
-nitrogen, N, and other factors, a plot of plant growth rates versus N may 
+nitrogen, N, and other factors, a plot of plant growth rates versus soil N may 
 look more like Fig. \ref{fig_cop_pedag1}A or C than like 
 Fig. \ref{fig_cop_pedag1}B or D. Nitrogen 
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
-The portion of the distributions that dominate the association is visible in the copula
-approach, but not via standard techniques. 
+The portions of the distributions that dominate the association is visible in the copula
+approach, but may not be revealed by standard techniques. 
 
 A second reason we may expect a copula approach to benefit ecological
 research is that prior work has demonstrated important copula 
 stucture in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
-@li2013]. One may expect copula structure in environmental variables 
-to take the form of strong tail dependence if
+@li2013]. One may expect an environmental variable 
+measured through time in two locations to show strong tail dependence between
+the locations if
 intense meteorological events are also widespread in their effects, as seems 
-frequently to be the case.
+frequently to be the case: extreme values are associated with intense events,
+so happen in both places at the same time, whereas moderate values of the 
+environmental variable are associated with local phenomena, which differ
+between the locations.
 Spatial dependence in an environmental variable 
 tends to beget spatial dependence 
 in fluctuations of populations or other ecosystem variables 
 (this is called \emph{spatial synchrony}) which are influenced by the environmental 
-variable. This is called the \emph{Moran effect}. 
+variable. This influence is called the \emph{Moran effect}. 
 If copula structure is transmitted, 
 possibly in modified form, 
 from environmental to ecological variables, then we may expect important 
-copula structure to be a common feature of the spatial synchrony of population, community, 
-biogeochemical and other ecological variables.
-Synchrony is a phenomenon of great interest in 
+copula structure to be a common feature of the 
+spatial synchrony of population, community, 
+biogeochemical and other environmentally influenced ecological variables.
+Synchrony is a phenomenon of substantial interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
 A third reason we may expect a copula approach to benefit 
@@ -260,9 +265,11 @@ whereas when Sp1 is rare, Sp2
 may be abundant, or may also be relatively rare due to 
 limiting factors other than Sp1. 
 Alternatively, Fig. \ref{fig_cop_pedag1}F suggests that Sp2
-is dominant. The copula approach again reveals which portions of the
-distributions are principally responsible for the association between variables, and this 
-information can help support or refute alternative causal hypotheses. 
+is the dominant competitor. The copula approach again reveals which portions of the
+distributions are principally responsible for the association between 
+variables, and this 
+information can then help support or refute alternative causal hypotheses
+about which species is driving the dynamics of the other. 
 
 A fourth reason we may expect a copula approach to be important
 for ecology has to do with spatially aggregated or averaged quantities. 
@@ -271,8 +278,10 @@ depend on the spatial average or sum of local
 quantities. For instance, regional methane and CO$_2$ 
 fluxes are the sum of local fluxes; 
 and the total economic value of a fishery is the sum of local catches. 
-We will explore how details, captured by copulas, of the dependence between local
-quantities can influence the spatial mean or sum, and how this may influence 
+We will explore how details, captured by copulas, of the dependence between 
+fluctuations of local
+quantities can influence fluctuations of 
+the spatial mean or sum, and how this may influence 
 higher organizational levels in ecology and human concerns.
 Illustrating the idea here, prior work demonstrated that the overall 
 reliability of wind-generated electricity depends sensitively on details
@@ -288,7 +297,8 @@ correlation were unchanged, would have more benign effects.
 
 We approached our overall goal of exploring the potential of copula approaches 
 for ecology by addressing the following specific questions. (Q1) Do datasets
-in ecology have copula structure distinct from that of a Gaussian/normal
+in ecology have copula structure distinct from that of a multivariate 
+Gaussian/normal
 distribution (here called non-normal copula structure)? Do they show tail 
 dependence distinct from that of a normal distribution, and in particular
 do they show asymmetric tail dependence? Normal copula structure is assumed

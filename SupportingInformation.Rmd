@@ -403,10 +403,10 @@ correlation.\label{fig_transf_pearson_spearman}}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
 \caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and 
 upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 
-copula (see section on methods for Q1) 
+copula (see section on methods for Q1 in the main text) 
 with three different 
 sets of parameters chosen to produce a variety of 
-lower-tail (LT) and upper-tail (UT) dependence strengths, but the same 
+lower-tail (LT) and upper-tail (UT) dependence strengths, but with the same 
 Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
 with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
 within each column.\label{fig_cop_pedag}}

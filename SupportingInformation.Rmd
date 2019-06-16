@@ -2273,7 +2273,7 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 \noindent The matrices from which root character states and changes 
 across phylogeny branches were randomly chosen were generated as follows.
 For extreme right-tail dependent noise, we first produced
-a 1,000,000 by $2$ matrix, $m$, of 
+a 1,000,000 by $2$ matrix, $m$, filled with 2,000,000 
 independent standard-normal random draws. Then, each row of $m$ 
 was identified for a first set of modifications randomly 
 and independently with a $50\%$ chance; 
@@ -2281,7 +2281,8 @@ for those rows identified, every element of the row was replaced with the
 absolute value of the first element of the row (including the first element itself).
 For other rows, every element in the row was replaced by the negative of its
 own absolute value. This produces right-tail dependent noise, normally distributed
-for each location. If left-tail dependent noise was desired, we took the negative of the
+for each of the two locations. 
+If left-tail dependent noise was desired, we took the negative of the
 entire matrix. The moderately left-tail dependent matrix was based on a C copula 
 with parameter chosen (using the `iRho` function in the `copula` package) so that
 the Spearman correlation would be the same as for the extreme tail dependence 

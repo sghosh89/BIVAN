@@ -29,6 +29,10 @@ options(scipen = 1, digits = 5) #This option round all numbers appeared in the i
 #source("mtime.R") #A function needed for caching
 ```
 
+\raggedright
+\setlength\parindent{2em}
+\setlength{\parskip}{6pt}
+
 \noindent \emph{Affiliations:}
 
 \noindent Ghosh, Sheppard, Bever: Department of Ecology and Evolutionary Biology and Kansas Biological Survey, University of Kansas, Lawrence, KS, 66045, USA
@@ -69,7 +73,7 @@ The importance of copulas in ecology-->
 
 \noindent \emph{Type of Submission:} Articles, or Concepts and Synthesis
 
-\noindent \emph{The number of words in the abstract:} 
+\noindent \emph{The number of words in the abstract:} 266 
 
 \newpage
 
@@ -1002,7 +1006,7 @@ dynamics, e.g., $r=1.3$).
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption{Example results showing similarity of copula statistics for 
-environmental-noise inputs and ecological-variable outputs of a dynamical model.  
+environmental-noise inputs and ecological-variable outputs of a dynamical model.
 Asymmetric tail dependence was similar in both noise inputs and model outputs
 for this model. The 
 AR(1) model and a Clayton copula were used (see methods section for Q2).
@@ -1463,18 +1467,22 @@ Science Foundation grants 0075516 and 1442595 and the James S McDonnell Foundati
 
 # References
 
-<div id="refs"></div>
-
-<!--\setlength{\parindent}{-0.2in}
+\setlength{\parindent}{-0.2in}
 \setlength{\leftskip}{0.2in}
 \setlength{\parskip}{1pt}
 \noindent
-\sloppy-->
+\sloppy
+
+<div id="refs"></div>
 
 \clearpage
 \newpage
 
 # Figure captions
+
+\setlength{\parindent}{0in}
+\setlength{\leftskip}{0in}
+\setlength{\parskip}{6pt}
 
 \noindent \textbf{Figure 1.} (A-D) Bivariate datasets showing diverse relationships between 
 variables; many of these datasets nevertheless have the same Pearson (P)
@@ -1524,7 +1532,7 @@ $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the t
 \hspace{1in}
 
 \noindent \textbf{Figure 5.} Example results showing similarity of copula statistics for 
-environmental-noise inputs and ecological-variable outputs of a dynamical model.  
+environmental-noise inputs and ecological-variable outputs of a dynamical model.
 Asymmetric tail dependence was similar in both noise inputs and model outputs
 for this model. The 
 AR(1) model and a Clayton copula were used (see methods section for Q2).

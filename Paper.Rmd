@@ -78,7 +78,7 @@ The importance of copulas in ecology-->
 \newpage
 
 # Abstract
-
+<!--***DANr: I have not edited this abstract at all since Ecol Monogr-->
 All branches of ecology study relationships among environmental and biological variables. However, 
 standard approaches to studying such relationships, based on correlation and regression, 
 provide only a small slice of the complex information contained in the relationships. Other 
@@ -117,14 +117,10 @@ relationships may have the same correlation coefficient
 (respectively, Fig. \ref{fig_cop_pedag1}B) are principally 
 related in the left (respectively, right) portions of their distributions, 
 an asymmetric pattern of dependence that can
-have significance, as discussed below, but is not captured by 
-correlation. 
-Monotonic transformations can alter the Pearson, but not the Spearman
-correlation (Appendix \ref{SM-pedagog1_details}, 
-Fig. \ref{SM-fig_transf_pearson_spearman}). Although correlation
-is only one way to 
+have ecological significance, as discussed below, but is not captured by 
+correlation. Although correlation is only one way to 
 study relationships between variables, other common metrics also 
-provide partial information.
+provide only partial information.
 
 \begin{figure}[!h]
 \begin{center}
@@ -150,7 +146,7 @@ stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
 
-<!--***DANr: reword this para so people don't think the ranks *are* the 
+<!--DONE ***DANr: reword this para so people don't think the ranks *are* the 
 copulas, and to try to pre-defend against some of what ref 1 said. Also,
 state that these are conceptual introductions only and are not formal,
 a more comprehensive introduction is in xyz-->
@@ -160,57 +156,72 @@ that provide a description of the dependence
 between two or more variables that can be mathematically proven 
 to be complete [@joe2014_dependence; @nelsen2006_copula]. 
 The approaches are based on 
-the concept of the *copula*, which we here 
-introduce. Copula approaches separate the information of a bivariate 
+the concept of the *copula*; copula approaches separate the information of a bivariate 
 random variable into two distinct parts: the information in the 
 marginal distributions (which says nothing about the dependence between the 
 variables), and the remaining information (which is solely about
-dependence). From a data perspective, given 
+dependence). We here introduce some simple concepts, based on taking ranks,
+that relate to copulas and give a conceptual 
+flavor of copula ideas to be introduced 
+more formally in the section on Background below. Given 
 a sample $(x_i,y_i)$, $i=1,2,\ldots,n$ (e.g., 
-Fig. \ref{fig_cop_pedag1}A-B), the dependence
-structure is revealed by the bivariate plot of $u_i$ versus $v_i$, where
+Fig. \ref{fig_cop_pedag1}A-B), information about the structure of the dependence
+between $x$ and $y$ can be separated from information contained 
+in the marginal distributions by 
+considering the bivariate plot of $u_i$ versus $v_i$, where
 $u_i$ is the rank of $x_i$ in the set $x_j$ ($j=1,\ldots,n$), divided by
 $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
 of the smallest element in a set is $1$. The $u_i$ and 
-$v_i$ are called *normalized ranks* of the $x_i$ and $y_i$. See, 
-for instance,
-Fig. \ref{fig_cop_pedag1}C-D (the points), which show the copula structures of 
+$v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
+the empirical cummulative distribution function (cdf) of the $x_i$ and $y_i$,
+respectively. See, for instance,
+Fig. \ref{fig_cop_pedag1}C-D (the points), which show the normalized ranks of 
 A-B, respectively. Ranking makes the marginal distributions of 
-the underlying random variables uniform, isolating the 
-dependence structure.
-<!--***DANr: Maybe move the below two sentences into the new section on Background-->
-See @nelsen2006_copula and @joe2014_dependence
-for general background. A theorem of @sklar1959_theorem
-states that copulas give a unique and complete 
-representation of the dependence
-between variables.
+the component datasets uniform, isolating the 
+dependence structure. Dependence structure and marginals can then be studied 
+separately. Normalized rank plots such as Fig. \ref{fig_cop_pedag1}C-D}
+relate to copulas in a way to be described in the section on Background below, 
+after a definition of copulas
+is provided. Note that Pearson correlation, even though it is the most commonly
+used measure of relationships between variables, is modified by monotonic
+tranformation of the component variables (Appendix 
+\ref{SM-pedagog1_details}, Fig. \ref{SM-fig_transf_pearson_spearman}),
+and therefore reflects not only dependence information, but also
+information on the marginals. Spearman and Kendall correlations, being rank-based, 
+are not influenced by monotonic transformations of the component variables; 
+they provide information solely on the dependence between those variables.
 
 A main benefit of a copula approach is 
 that it can detect tail dependence and asymmetries of tail dependence. 
-Tail dependence is association between extreme values of variables. 
+Tail dependence (defined precisely in the section on Background, below) 
+is association between extreme values of variables. 
 If smaller values of two positively associated variables are more 
 strongly associated than are larger values, the variables are said to
 have stronger lower- or left-tail dependence than right- or upper-tail dependence
-(Fig. \ref{fig_cop_pedag1}A, C);
+(Fig. \ref{fig_cop_pedag1}C);
 and *vice versa* if larger values are more strongly associated than smaller
-ones (Fig. \ref{fig_cop_pedag1}B, D). Datasets of the same 
-correlation can have a range of tail dependence 
+ones (Fig. \ref{fig_cop_pedag1}D). Datasets of the same 
+Spearman or Kendall correlation can have a range of tail dependence 
 (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
-methods for Q1 below).
+methods for Q1 below). Although copulas can be used to model the entire
+complex dependence structure of data, we have found tail dependence to be
+a useful aspect of the full structure of dependence, so tail dependence 
+is one of the main foci of this paper.
 
 The goal of this paper is to explore the potential for 
-applications of copulas in ecology. 
-<!--***DANr: Maybe emphasize here that we provide some, but not a comprehensive,
-intro to copulas - for that go elsewhere. Instead we are trying to determine
-to what extent they may be useful in ecology.-->
-Our results provide support for the hypothesis that environmental, ecological and evolutionary processes 
-generate and transmit nontrivial 
-<!--***DANr: nontrivial? what does it mean-->
-copula structure and tail dependence, with substantial 
-consequences for theoretical and conceptual understanding, for inference, and for 
-applications across ecology. The work we present here has begun to test this
-hypothesis, and we hope our results stimulate further
-evaluation of the hypothesis by the research community.
+applications of copulas in ecology. We provide a sketch of an introduction
+to copula concepts in the Background section below, but this is a sketch
+only - readers can find comprehensive introductions elsewhere
+[@nelsen2006_copula; @joe2014_dependence]. Instead our goal is to 
+help determine to what extent ecological understanding may benefit from
+using copulas to help understand complex dependence 
+structures between variables.
+Our results provide support for the hypothesis that environmental, 
+ecological and evolutionary processes 
+generate and transmit complex dependence structures, including tail dependence, 
+with consequences for theory and 
+applications. We hope our results will stimulate further
+evaluation of this hypothesis by other researchers.
 
 \begin{figure}[!h]
 \begin{center}
@@ -229,23 +240,27 @@ link to locations in the text.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
-<!--***DANr: Maybe use the words tail dependence more and the word copula
-less in the below? Generally the words "copula structure" may be rubbing some
+<!--DONE ***DANr: Maybe use the words tail dependence more and the word copula
+less in the below few paras? Generally the words "copula structure" may be rubbing some
 people wrong. Replacement words? What do you actually mean here? Maybe call it
 asymmetric dependence, or complex dependence structure?-->
-One way we may expect, *a priori*, a copula approach 
+One way we may expect, *a priori*, a copula 
+study of complex dependence structures between
+ecological variables
 to better reflect ecological relationships relates to Liebig's law of the
-minimum. If, for instance, the growth of a plant depends on soil 
+minimum (the idea that growth is controlled not by total resources but by the scarcest 
+resources). If, for instance, the growth of a plant depends on soil 
 nitrogen, N, and other factors, a plot of plant growth rates versus soil N may 
 look more like Fig. \ref{fig_cop_pedag1}A or C than like 
 Fig. \ref{fig_cop_pedag1}B or D. Nitrogen 
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
-The portions of the distributions that dominate the association is visible in the copula
-approach, but may not be revealed by standard techniques. 
+The portions of the distributions that dominate the association is visible in rank-based
+plot, but may not be revealed by standard correlation techniques. 
 
-A second reason we may expect a copula approach to benefit ecological
-research is that prior work has demonstrated important copula 
+A second reason we may expect understanding of complex dependence structures
+to benefit ecological
+research is that prior work has demonstrated (using copulas) complex 
 stucture in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
 @li2013]. One may expect an environmental variable 
@@ -254,52 +269,57 @@ the locations if
 intense meteorological events are also widespread in their effects, as seems 
 frequently to be the case: extreme values are associated with intense events,
 so happen in both places at the same time, whereas moderate values of the 
-environmental variable are associated with local phenomena, which differ
+environmental variable may be associated with local phenomena, which differ
 between the locations.
 Spatial dependence in an environmental variable 
 tends to beget spatial dependence 
 in fluctuations of populations or other ecosystem variables 
 (this is called \emph{spatial synchrony}) which are influenced by the environmental 
 variable. This influence is called the \emph{Moran effect}. 
-If copula structure is transmitted, 
+If complex dependence structure is transmitted, 
 possibly in modified form, 
-from environmental to ecological variables, then we may expect important 
-copula structure to be a common feature of the 
+from environmental to ecological variables, then we may expect complex dependence 
+structure to be a common feature of the 
 spatial synchrony of population, community, 
 biogeochemical and other environmentally influenced ecological variables.
 Synchrony is a phenomenon of substantial interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
-<!--***DANr: Need some caveating here to accommodate the people who slavishly
+<!--DONE ***DANr: Need some caveating here to accommodate the people who slavishly
 follow the old maxim that correlation is not causation.-->
-A third reason we may expect a copula approach to benefit 
+A third reason we may expect an understanding of complex 
+dependence structures to benefit 
 ecological research is that such an approach may help illuminate 
 the causal mechanisms between variables. For instance, if two species
 Sp1 and Sp2 are strong competitors, abundances of the two species
 across quadrats should be negatively related, as in 
 Fig. \ref{fig_cop_pedag1}E-F. If Sp1 is plotted on the horizontal axis
 and Sp2 on the vertical, then Fig. \ref{fig_cop_pedag1}E 
-would suggest Sp1 is the dominant 
+may suggest Sp1 is the dominant 
 competitor: when Sp1 is abundant, Sp2 is necessarily rare because it is suppressed; 
 whereas when Sp1 is rare, Sp2
 may be abundant, or may also be relatively rare due to 
 limiting factors other than Sp1. 
-Alternatively, Fig. \ref{fig_cop_pedag1}F suggests that Sp2
-is the dominant competitor. The copula approach again reveals which portions of the
-distributions are principally responsible for the association between 
-variables, and this 
-information can then help support or refute alternative causal hypotheses
-about which species is driving the dynamics of the other. 
+Alternatively, Fig. \ref{fig_cop_pedag1}F may suggest that Sp2
+is the dominant competitor. Although other causal hypotheses may produce 
+similar dependence structure, and it is usually impossible to obtain
+complete information on causal pathways from analyses which are
+fundamentally based on association data, more detailed 
+examination of the patterns of dependence of variables may
+well be combined with biological and other reasoning to rule out
+some causal hypotheses which could not be eliminated solely 
+with standard correlation approaches.
 
-A fourth reason we may expect a copula approach to be important
+A fourth reason we may expect a copula understanding of complex 
+dependence structures to be useful
 for ecology has to do with spatially aggregated or averaged quantities. 
 Many ecological variables of applied importance 
 depend on the spatial average or sum of local 
 quantities. For instance, regional methane and CO$_2$ 
 fluxes are the sum of local fluxes; 
 and the total economic value of a fishery is the sum of local catches. 
-We will explore how details, captured by copulas, of the dependence between 
-fluctuations of local
+We will explore how details, which can be captured using copulas, 
+of the dependence between fluctuations of local
 quantities can influence fluctuations of 
 the spatial mean or sum, and how this may influence 
 higher organizational levels in ecology and human concerns.
@@ -308,7 +328,7 @@ reliability of wind-generated electricity depends sensitively on details
 of the dependence between wind speeds at multiple generator sites [@li2013]. 
 Spatially aggregated ecological variables may be subject to a similar 
 effect, with
-potentially substantial consequences. For instance, if populations of a 
+possible consequences. For instance, if populations of a 
 pest species in different locations are all positively associated and also strongly
 related to each other in their right tails, then local outbreaks will tend 
 to occur together, creating regional epidemics. 
@@ -317,39 +337,59 @@ correlation were unchanged, would have more benign effects.
 
 We approached our overall goal of exploring the potential of copula approaches 
 for ecology by addressing the following specific questions. (Q1) Do datasets
-in ecology have copula structure distinct from that of a multivariate 
+in ecology have dependence structure distinct from that of a multivariate 
 Gaussian/normal
 distribution (here called non-normal copula structure)? Do they show tail 
 dependence distinct from that of a normal distribution, and in particular
 do they show asymmetric tail dependence? Normal copula structure is assumed
 by standard approaches that use multivariate 
 normal distributions or distributions obtained by transforming
-the marginals of a normal distribution. Such 
-approaches do not utilize the power of copulas, so Q1 asks whether ecological
+the marginals of a normal distribution. So Q1 asks whether ecological
 data contain dependency information distinct from what can be modelled with
 standard approaches. (Q2) If the answer to
 Q1 is "yes," what are some possible causes/mechanisms of non-normal
-copula structure and tail dependence? And (Q3) what are the consequences of non-normal copula
-structure and tail dependence for our understanding of ecology and for 
-applications? We address Q1, in the second through fourth sections of the paper, 
+copula structure and tail dependence? And (Q3) what are the 
+consequences of non-normal copula
+structure and tail dependence for ecological understanding and
+applications? After a Background section (the second section), we address Q1 
+(third through fifth sections of the paper) 
 by analyzing several datasets, including 
 environmental, species-trait, phenological, population, community, and 
 ecosystem functioning data, selected to span multiple 
 sub-fields and organizational levels of ecology. 
-We address Q2, in the fifth and sixth sections of the paper, using 
-simple models. We address Q3, in the seventh and eigths sections of the paper, using 
-both data and models. The ninth section is the Discussion.
+We address Q2 (sixth and seventh sections of the paper), using 
+simple models. We address Q3 (eighth and ninth sections of the paper) using 
+both data and models. The final section is the Discussion.
 Multiple analyses are brought to bear on each question, and these
 are summarized diagramatically in Fig. \ref{MasterFigure}, which can 
 serve as a *post hoc* guide to the paper. 
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
-variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000]. 
-To our knowledge, non-normal copulas have not been used in ecology. 
-We argue that benefits to ecology of using a complete 
-copula description of dependence will be substantial.
+variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000],
+but have been used only rarely in ecology. 
+We argue that benefits of using a complete 
+copula description of dependence in ecology will be substantial.
 
-\newpage
+
+
+# Background on copulas
+
+<!--***DANr: Add a new section above this one called Background on copulas.
+It can have the following kinds of stuff (probably not exhaustive, and probably
+not in order, and some of this material is currently below):
+The definition
+The explanation of how ranks relate to estimating the copula parameters
+How to estimate carry out fitting (basically, MLE fitting on ranks)
+What some of the different copula families look like
+What tail dependence actually is
+-->
+
+<!--***DANr: Maybe move the below two sentences into the new section on Background-->
+See @nelsen2006_copula and @joe2014_dependence
+for general background. A theorem of @sklar1959_theorem
+states that copulas give a unique and complete 
+representation of the dependence
+between variables.
 
 # Data \label{Data} 
 
@@ -440,19 +480,6 @@ knitr::kable(tab_data_info,
              row_spec(c(4,5,6,8), bold=T)
 ```
 
-\newpage
-
-# Background on copulas
-
-<!--***DANr: Add a new section above this one called Background on copulas.
-It can have the following kinds of stuff (probably not exhaustive, and probably
-not in order, and some of this material is currently below):
-The definition
-The explanation of how ranks relate to estimating the copula parameters
-How to estimate carry out fitting (basically, MLE fitting on ranks)
-What some of the different copula families look like
-What tail dependence actually is
--->
 
 # Concepts and methods for Q1 \label{Methods} 
 

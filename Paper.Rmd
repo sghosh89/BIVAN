@@ -117,7 +117,7 @@ relationships may have the same correlation coefficient
 (respectively, Fig. \ref{fig_cop_pedag1}B) are principally 
 related in the left (respectively, right) portions of their distributions, 
 an asymmetric pattern of dependence that can
-have profound significance, as discussed below, but is not captured by 
+have significance, as discussed below, but is not captured by 
 correlation. 
 Monotonic transformations can alter the Pearson, but not the Spearman
 correlation (Appendix \ref{SM-pedagog1_details}, 
@@ -150,6 +150,10 @@ stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
 
+<!--***DANr: reword this para so people don't think the ranks *are* the 
+copulas, and to try to pre-defend against some of what ref 1 said. Also,
+state that these are conceptual introductions only and are not formal,
+a more comprehensive introduction is in xyz-->
 Well-developed approaches do exist, however, and are 
 applied widely in other fields, 
 that provide a description of the dependence 
@@ -174,6 +178,7 @@ Fig. \ref{fig_cop_pedag1}C-D (the points), which show the copula structures of
 A-B, respectively. Ranking makes the marginal distributions of 
 the underlying random variables uniform, isolating the 
 dependence structure.
+<!--***DANr: Maybe move the below two sentences into the new section on Background-->
 See @nelsen2006_copula and @joe2014_dependence
 for general background. A theorem of @sklar1959_theorem
 states that copulas give a unique and complete 
@@ -181,7 +186,7 @@ representation of the dependence
 between variables.
 
 A main benefit of a copula approach is 
-that it can sensitively detect tail dependence and asymmetries of tail dependence. 
+that it can detect tail dependence and asymmetries of tail dependence. 
 Tail dependence is association between extreme values of variables. 
 If smaller values of two positively associated variables are more 
 strongly associated than are larger values, the variables are said to
@@ -195,8 +200,13 @@ methods for Q1 below).
 
 The goal of this paper is to explore the potential for 
 applications of copulas in ecology. 
+<!--***DANr: Maybe emphasize here that we provide some, but not a comprehensive,
+intro to copulas - for that go elsewhere. Instead we are trying to determine
+to what extent they may be useful in ecology.-->
 Our results provide support for the hypothesis that environmental, ecological and evolutionary processes 
-generate and transmit nontrivial copula structure and tail dependence, with substantial 
+generate and transmit nontrivial 
+<!--***DANr: nontrivial? what does it mean-->
+copula structure and tail dependence, with substantial 
 consequences for theoretical and conceptual understanding, for inference, and for 
 applications across ecology. The work we present here has begun to test this
 hypothesis, and we hope our results stimulate further
@@ -219,6 +229,10 @@ link to locations in the text.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
+<!--***DANr: Maybe use the words tail dependence more and the word copula
+less in the below? Generally the words "copula structure" may be rubbing some
+people wrong. Replacement words? What do you actually mean here? Maybe call it
+asymmetric dependence, or complex dependence structure?-->
 One way we may expect, *a priori*, a copula approach 
 to better reflect ecological relationships relates to Liebig's law of the
 minimum. If, for instance, the growth of a plant depends on soil 
@@ -256,6 +270,8 @@ biogeochemical and other environmentally influenced ecological variables.
 Synchrony is a phenomenon of substantial interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
+<!--***DANr: Need some caveating here to accommodate the people who slavishly
+follow the old maxim that correlation is not causation.-->
 A third reason we may expect a copula approach to benefit 
 ecological research is that such an approach may help illuminate 
 the causal mechanisms between variables. For instance, if two species
@@ -425,6 +441,18 @@ knitr::kable(tab_data_info,
 ```
 
 \newpage
+
+# Background on copulas
+
+<!--***DANr: Add a new section above this one called Background on copulas.
+It can have the following kinds of stuff (probably not exhaustive, and probably
+not in order, and some of this material is currently below):
+The definition
+The explanation of how ranks relate to estimating the copula parameters
+How to estimate carry out fitting (basically, MLE fitting on ranks)
+What some of the different copula families look like
+What tail dependence actually is
+-->
 
 # Concepts and methods for Q1 \label{Methods} 
 

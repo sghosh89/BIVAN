@@ -154,7 +154,7 @@ Well-developed approaches do exist, however, and are
 applied widely in other fields, 
 that provide a description of the dependence 
 between two or more variables that can be mathematically proven 
-to be complete [@joe2014_dependence; @nelsen2006_copula]. 
+to be complete [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]. 
 The approaches are based on 
 the concept of the *copula*; copula approaches separate the information of a bivariate 
 random variable into two distinct parts: the information in the 
@@ -179,7 +179,7 @@ Fig. \ref{fig_cop_pedag1}C-D (the points), which show the normalized ranks of
 A-B, respectively. Ranking makes the marginal distributions of 
 the component datasets uniform, isolating the 
 dependence structure. Dependence structure and marginals can then be studied 
-separately. Normalized rank plots such as Fig. \ref{fig_cop_pedag1}C-D}
+separately. Normalized rank plots such as Fig. \ref{fig_cop_pedag1}C-D
 relate to copulas in a way to be described in the section on Background below, 
 after a definition of copulas
 is provided. Note that Pearson correlation, even though it is the most commonly
@@ -209,19 +209,19 @@ a useful aspect of the full structure of dependence, so tail dependence
 is one of the main foci of this paper.
 
 The goal of this paper is to explore the potential for 
-applications of copulas in ecology. We provide a sketch of an introduction
+applications of copulas in ecology. We provide a basic introduction
 to copula concepts in the Background section below, but this is a sketch
-only - readers can find comprehensive introductions elsewhere
-[@nelsen2006_copula; @joe2014_dependence]. Instead our goal is to 
-help determine to what extent ecological understanding may benefit from
-using copulas to help understand complex dependence 
-structures between variables.
-Our results provide support for the hypothesis that environmental, 
+only - readers can find abbreviated [@Anderson2018] 
+and comprehensive introductions elsewhere
+[@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]. Instead our goal is to 
+help determine to what extent ecological understanding may benefit generally from
+using copulas. Copulas have already been used very effectively 
+in a few studies to illuminate ecological phenomena 
+[@Valpine2014; @Anderson2018; @Popovic2018], but such usage is
+still rare. Our results suggest that environmental, 
 ecological and evolutionary processes 
-generate and transmit complex dependence structures, including tail dependence, 
-with consequences for theory and 
-applications. We hope our results will stimulate further
-evaluation of this hypothesis by other researchers.
+may commonly generate and transmit complex dependence structures, including tail 
+dependence, and that greater use of copulas can illuminate the underlying processes.
 
 \begin{figure}[!h]
 \begin{center}
@@ -248,14 +248,16 @@ One way we may expect, *a priori*, a copula
 study of complex dependence structures between
 ecological variables
 to better reflect ecological relationships relates to Liebig's law of the
-minimum (the idea that growth is controlled not by total resources but by the scarcest 
-resources). If, for instance, the growth of a plant depends on soil 
+minimum. Liebig's law is 
+the idea that growth is controlled not by total resources but by the resources which
+are scarcest relative to organism needs. 
+If, for instance, the growth of a plant depends on soil 
 nitrogen, N, and other factors, a plot of plant growth rates versus soil N may 
 look more like Fig. \ref{fig_cop_pedag1}A or C than like 
 Fig. \ref{fig_cop_pedag1}B or D. Nitrogen 
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
-The portions of the distributions that dominate the association is visible in rank-based
+The portions of the distributions that dominate the association are visible in a rank-based
 plot, but may not be revealed by standard correlation techniques. 
 
 A second reason we may expect understanding of complex dependence structures
@@ -304,11 +306,13 @@ Alternatively, Fig. \ref{fig_cop_pedag1}F may suggest that Sp2
 is the dominant competitor. Although other causal hypotheses may produce 
 similar dependence structure, and it is usually impossible to obtain
 complete information on causal pathways from analyses which are
-fundamentally based on association data, more detailed 
+fundamentally based on associations, more detailed 
 examination of the patterns of dependence of variables may
 well be combined with biological and other reasoning to rule out
 some causal hypotheses which could not be eliminated solely 
-with standard correlation approaches.
+with standard correlation approaches. @Popovic2018 has previously
+used copulas to help illuminate causal aspects of relationships
+between species. 
 
 A fourth reason we may expect a copula understanding of complex 
 dependence structures to be useful
@@ -366,30 +370,135 @@ serve as a *post hoc* guide to the paper.
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000],
-but have been used only rarely in ecology. 
-We argue that benefits of using a complete 
-copula description of dependence in ecology will be substantial.
-
-
+but have been used only rarely so far in ecology (but see @Valpine2014, 
+@Anderson2018 and @Popovic2018). 
+We argue that benefits wider usage of complete 
+copula descriptions of dependence in ecology will be substantial.
 
 # Background on copulas
 
-<!--***DANr: Add a new section above this one called Background on copulas.
+We give a brief introduction to copulas, focusing, for simplicity, on bivariate copulas
+and on concepts needed
+for the rest of the paper. See @nelsen2006_copula, @joe2014_dependence, and
+@MaiScherer2017 for general background, and see also @Anderson2018, part of 
+which is a short introduction to 
+copulas for ecologists. A bivariate *copula* can be defined as a bivariate distribution
+function with both margins uniform on $(0,1)$ (@joe2014_dependence, p. 7). 
+This will be the
+distribution function of a bivariate random variable with uniform marginals, and 
+the terminology *copula* is sometimes also applied to the random variable. 
+A foundational theorem of
+@sklar1959_theorem (see also @MaiScherer2017, p. 16) 
+says that if $F$ is the bivariate distribution function
+of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$, then there 
+exists a copula $C$
+such that for all $(x,y)$ in the Euclidean plane, $F(x,y)=C(F_X(x),F_Y(y))$.
+The theorem also says $C$ is unique if $F_X$ and $F_Y$ are continuous.
+Thus $C$ couples the bivariate distribution, $F$, with the two marginal distributions. 
+Finally, Sklar's theorem says that if $D$ is any bivariate copula and 
+$G_A$ and $G_B$ are univariate distribution functions, then 
+$D(G_A(x),G_B(y))$ is a distribution function.
+The applications of this study fall within the case in which univariate marginal 
+distributions have continuous, strictly 
+monotonic distribution functions, and this case is simpler, so we 
+henceforth make such an assumption. 
+Then, "the" copula (now guaranteed unique) 
+associated with $(X,Y)$ is the distribution
+function of the random variable $(U,V)=(F_X(X),F_Y(Y))$ 
+(Appendix \ref{ContStrictMonoton}). And 
+$D(G_A(x),G_B(y))$ is the distribution function of the random variable 
+$(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ is the random
+vector with distribution function $D$ and
+$G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
+(Appendix \ref{ContStrictMonoton}).
+
+Thus Sklar's theorem implies that
+any random vector can be constructed from a copula and marginal 
+distributions. And conversely,
+any copula and any univariate distribution functions give rise to a random vector. 
+Marginals contain no information about the
+dependence structure of a random vector, so the copula contains
+all such information - it is a complete description of the dependence
+between variables. Sklar's theorem makes it possible to construct
+bivariate distributions in two separate steps: by specifying the marginal 
+distributions and by specifying the dependence structure. The theorem
+also make it possible to study and model dependence independently 
+from marginal distributions. For instance, in a pedagogical 
+example, [@Anderson2018] modelled the dependence between abundance
+data for two fish species, red moki and black angelfish, by first 
+modelling the marginal distributions and then separately modelling 
+the dependence using Gaussian copulas (their section 2).
+See the Discussion for a few words on multivariate copulas, which can
+be developed in the same way as above [@nelsen2006_copula; @joe2014_dependence;
+@MaiScherer2017; @Anderson2018].
+<!--***DAN: dont forget to put these few words in!-->
+
+<!--***DAN: I still feel like we have to make this more intuitive for people
+at this point. Maybe a figure with two panels showing two copulas on
+the left, and two panels shwoing two sets of marginals at the top,
+and then four panels showing what you get when each of these combine?
+Good idea. Steps: split the current Fig 1 so the new Fig 1 has the first four panels,
+but C-D should only have the points. Then make a Fig 2 as above, and edit the
+text in the above para to use that figure. 
+The rest of the panels of the current Fig 1 will make a new Fig 3 later.-->
+
+
+
+<!--***DANr: Add a new section called Background on copulas.
 It can have the following kinds of stuff (probably not exhaustive, and probably
 not in order, and some of this material is currently below):
-The definition
-The explanation of how ranks relate to estimating the copula parameters
-How to estimate carry out fitting (basically, MLE fitting on ranks)
+1) DONE - The definition, Sklar's theorem
+2) What good are copulas - intuitive idea, basically, but also have to be linked to 
+the formalities of the definition
+
 What some of the different copula families look like
+The explanation of how ranks relate to copulas and estimating the copula parameters
+How to carry out fitting (basically, MLE fitting on ranks - Genest et al paper)
 What tail dependence actually is
 -->
 
-<!--***DANr: Maybe move the below two sentences into the new section on Background-->
-See @nelsen2006_copula and @joe2014_dependence
-for general background. A theorem of @sklar1959_theorem
-states that copulas give a unique and complete 
-representation of the dependence
-between variables.
+
+<!--***DAN: In the Discussion, you need to point out not only that we
+use only bivariate copulas (and there are multivariate ones), but also
+that we use only continuous marginals. Probably an adequate approximation
+for our data, but see the other papers I've seen recently which use count data,
+and discrete marginals. Approaches such as that will be necessary for some 
+datasets-->
+
+
+
+
+We introduce the copula families and 
+measures of tail dependence we used.
+The normal copula family (henceforth N) is a one-parameter
+family, with parameter corresponding to the correlation of the related 
+bivariate normal distribtion, and controlling the degree of dependence 
+(Fig. \ref{fig_cop_pedag1}G for an example).
+Left- and right-tail dependence are $0$ for the N copula, and this 
+serves as a benchmark for tail dependence in other copulas - positive values of our
+tail dependence measures correspond to dependence stronger than an N
+copula. The Clayton and 
+survival-Clayton families (Fig. \ref{fig_cop_pedag1}C-D) are two more one-parameter 
+families. The Clayton has positive lower-tail dependence ($0.87$ for
+the example of Fig. \ref{fig_cop_pedag1}C) and $0$ upper-tail dependence; the 
+survival-Clayton is a rotation of the Clayton by $180^\circ$ and has 
+positive upper-tail ($0.87$ in Fig. \ref{fig_cop_pedag1}D)
+and $0$ lower-tail dependence. For our model selection procedure (see below), we used 
+several families of copulas exhibiting various 
+lower- and upper-tail dependence characteristics 
+(Clayton, survival-Clayton, Gumbel, survival-Gumbel, Joe, survival-Joe, Frank,
+BB1, survival-BB1,
+BB6, survival-BB6, BB7, survival-BB7, BB8, survival-BB8, henceforth
+abbreviated C, SC, G, SG, J, SJ, F, BB1, SBB1, BB6, SBB6, BB7, SBB7, BB8, SBB8).
+Copulas are implemented in the R packages `copula` and `VineCopula`. 
+Visualizations of these families (Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8})
+can be compared with normalized rank plots to estimate visually 
+which families may effectively model a given bivariate dataset. 
+If LT and UT denote 
+lower- and upper-tail dependence measures, their difference measures asymmetry of 
+tail dependence.
+See @nelsen2006_copula, @joe2014_dependence for further background. 
+
 
 # Data \label{Data} 
 
@@ -483,45 +592,8 @@ knitr::kable(tab_data_info,
 
 # Concepts and methods for Q1 \label{Methods} 
 
-Conceptually, a bivariate copula is a random variable 
-on the unit square, $[0,1] \times [0,1]$, with uniform maginals. 
-If $(X,Y)$ is a continuous random
-variable and the cummulative distribution functions of $X$ and $Y$ are 
-$F_X(x)=P[X\leq x]$ and $F_Y(y)=P[Y\leq y]$, then the dependence structure
-of $(X,Y)$ is revealed by the random variable $(F_X(X),F_Y(Y))$,
-which takes values in $[0,1] \times [0,1]$ and has 
-uniform marginals. 
-
-We introduce the copula families and 
-measures of tail dependence we used.
-The normal copula family (henceforth N) is a one-parameter
-family, with parameter corresponding to the correlation of the related 
-bivariate normal distribtion, and controlling the degree of dependence 
-(Fig. \ref{fig_cop_pedag1}G for an example).
-Left- and right-tail dependence are $0$ for the N copula, and this 
-serves as a benchmark for tail dependence in other copulas - positive values of our
-tail dependence measures correspond to dependence stronger than an N
-copula. The Clayton and 
-survival-Clayton families (Fig. \ref{fig_cop_pedag1}C-D) are two more one-parameter 
-families. The Clayton has positive lower-tail dependence ($0.87$ for
-the example of Fig. \ref{fig_cop_pedag1}C) and $0$ upper-tail dependence; the 
-survival-Clayton is a rotation of the Clayton by $180^\circ$ and has 
-positive upper-tail ($0.87$ in Fig. \ref{fig_cop_pedag1}D)
-and $0$ lower-tail dependence. For our model selection procedure (see below), we used 
-several families of copulas exhibiting various 
-lower- and upper-tail dependence characteristics 
-(Clayton, survival-Clayton, Gumbel, survival-Gumbel, Joe, survival-Joe, Frank,
-BB1, survival-BB1,
-BB6, survival-BB6, BB7, survival-BB7, BB8, survival-BB8, henceforth
-abbreviated C, SC, G, SG, J, SJ, F, BB1, SBB1, BB6, SBB6, BB7, SBB7, BB8, SBB8).
-Copulas are implemented in the R packages `copula` and `VineCopula`. 
-Visualizations of these families (Figs \ref{SM-figped_N}-\ref{SM-figped_SBB8})
-can be compared with normalized rank plots to estimate visually 
-which families may effectively model a given bivariate dataset. 
-If LT and UT denote 
-lower- and upper-tail dependence measures, their difference measures asymmetry of 
-tail dependence.
-See @nelsen2006_copula, @joe2014_dependence for further background. 
+<!--***DANr: I moved some text from here and have not smoothed the transtion,
+if it needs smoothing-->
 
 We addressed Q1 principally via a model selection procedure in which the 
 copulas listed above were fitted to 

@@ -413,6 +413,47 @@ within each column.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
 
+# Proofs of statements related to Skalr's theorem in the case of continuous, strictly monotonic margins \label{ContStrictMonoton}
+
+Let $F$ be the bivariate distribution function
+of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$ assumed to be 
+continuous and strictly monotonic. We show the copula associated with
+$(X,Y)$, which exists and is unique by Sklar's theorem, is the distrbution function
+of the random variable $(U,V)=(F_X(X),F_Y(Y))$. Let $C$ denote the distribution
+function of $(U,V)$, which has uniform margins. By the uniqueness
+statement of Sklar's theorem, it suffices to show that $F(x,y)=C(F_X(x),F_Y(y))$
+for all $(x,y)$ in the Euclidean plane. But 
+$C(F_X(x),F_Y(y)) = P[U \leq F_X(x), V \leq F_Y(y)]
+= P[F_X(X) \leq F_X(x), F_Y(Y) \leq F_Y(y)]
+= P[X \leq x, Y \leq y]
+= F(x,y),$
+where the third equality follows from the strict monotonicity assumption. In fact, 
+that equality should hold even with non-strict monotonicity, so a stronger 
+statement is possible (see below for more on this topic). The continuity assumption 
+for $F_X$ and $F_Y$ is necessary, however: without it the random variables 
+$U$ and $V$ are not uniformly distributed, so their joint distribution function 
+is not even a copula.
+
+Now let $D$ be any bivariate copula and let 
+$G_A$ and $G_B$ be univariate distribution functions, so that 
+$D(G_A(x),G_B(y))$ is guaranteed by Sklar's theorem to be a a distribution function.
+We here show that if $G_A$ and $G_B$ and continuous and strictly monotonic, then
+$D(G_A(x),G_B(y))$ is the distribution function of the random variable 
+$(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ is the random
+vector with uniform marginals associated with $D$ and
+$G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$.
+The inverses exist because of the strict monotonicity assumption.
+To see this, note that the distribution function of 
+$(G_A^{-1}(U),G_B^{-1}(V))$ is $P[G_A^{-1}(U) \leq x, G_B^{-1}(V) \leq y]$,
+which equals $P[U \leq G_A(x), V \leq G_B(y)]$, by strict monotonicity.
+But this is $D(G_A(x),G_B(y))$ because $D$ is the distribution function of 
+$(U,V)$, which proves the statement. In fact, a stronger statement assuming
+neither continuity nor strict monotonicity is possible, if one uses generalized
+inverses for $G_A^{-1}$ and $G_B^{-1}$ [@MaiScherer2017]. We adopt the weaker
+statements for simplicity and because our applications are solely under the case
+of continuous, strictly monotonic margins. But see @Anderson2018 and 
+@Popovic2018 for applications of copulas outside this case. 
+
 # Details of the data \label{Data_details}
 
 \textbf{Environmental data, soil C and N.} Measurments were from the central pedon of a soil 

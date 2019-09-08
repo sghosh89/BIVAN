@@ -125,9 +125,15 @@ provide only partial information.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{(A-D) Bivariate datasets showing diverse relationships between 
-variables; many of these datasets nevertheless have the same Pearson (P)
-or Spearman (S) correlation coefficients. (C, D) Contours 
+\caption{Bivariate datasets showing diverse relationships between 
+variables; some of these datasets nevertheless have the same Pearson (P)
+or Spearman (S) correlation coefficients. Subscripts h and v 
+in the axis labels stand for "horizontal" and "vertical".\label{fig_cop_pedag1}}
+\end{center}
+\end{figure}
+<!--***DAN: When I cut panels out of this figure (saving them for use in a 
+later figure), I also cut the caption, and here is the cut stuff for later use:
+(C, D) Contours 
 of probability density functions (pdf) of Clayton (C) and survival-Clayton 
 (D) copulas with parameter 5 (see section on methods for Q1), together
 with samples from the corresponding distributions. (E,F) Reflections
@@ -142,9 +148,8 @@ varies from one part of the two distributions to another. Diagonal lines
 show two bands, the data in the left/lower band showing stronger
 dependence than the right/upper band.
 Subscripts h and v 
-stand for "horizontal" and "vertical". \label{fig_cop_pedag1}}
-\end{center}
-\end{figure}
+stand for "horizontal" and "vertical".
+-->
 
 <!--DONE ***DANr: reword this para so people don't think the ranks *are* the 
 copulas, and to try to pre-defend against some of what ref 1 said. Also,

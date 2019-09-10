@@ -117,7 +117,7 @@ relationships may have the same correlation coefficient
 (respectively, Fig. \ref{fig_cop_pedag1}B) are principally 
 related in the left (respectively, right) portions of their distributions, 
 an asymmetric pattern of dependence that can
-have ecological significance, as discussed below, but is not captured by 
+have ecological significance, as discussed below, but that is not captured by 
 correlation. Although correlation is only one way to 
 study relationships between variables, other common metrics also 
 provide only partial information.
@@ -137,7 +137,7 @@ in the axis labels stand for "horizontal" and "vertical".\label{fig_cop_pedag1}}
 later figure), I also cut the caption, and here is the cut stuff for later use:
 (C, D) Contours 
 of probability density functions (pdf) of Clayton (C) and survival-Clayton 
-(D) copulas with parameter 5 (see section on methods for Q1), together
+(D) copulas with parameter 5 (see sections on methods for Q1), together
 with samples from the corresponding distributions. (E,F) Reflections
 of C, D, respectively, about a vertical axis. (G) Contours of the
 pdf of a normal copula (methods for Q1) with 
@@ -209,7 +209,7 @@ have stronger lower- or left-tail dependence than right- or upper-tail dependenc
 and *vice versa* if larger values are more strongly associated than smaller
 ones (Fig. \ref{fig_cop_pedag1}D). Datasets of the same 
 Spearman or Kendall correlation can have a range of tail dependence 
-(Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see section on
+(Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see sections on Background and
 methods for Q1 below). Although copulas can be used to model the entire
 complex dependence structure of data, we have found tail dependence to be
 a useful aspect of the full structure of dependence, so tail dependence 
@@ -356,10 +356,10 @@ do they show asymmetric tail dependence? Normal copula structure is assumed
 by standard approaches that use multivariate 
 normal distributions or distributions obtained by transforming
 the marginals of a normal distribution. So Q1 asks whether ecological
-data contain dependency information distinct from what can be modelled with
-standard approaches. (Q2) If the answer to
-Q1 is "yes," what are some possible causes/mechanisms of non-normal
-copula structure and tail dependence? And (Q3) what are the 
+data contain dependency information distinct from that standard or default cases. 
+(Q2) If the answer to
+Q1 is "yes," then what are some possible causes/mechanisms of non-normal
+copula structure and tail dependence in ecology? And (Q3) what are the 
 consequences of non-normal copula
 structure and tail dependence for ecological understanding and
 applications? After a Background section (the second section), we address Q1 
@@ -377,9 +377,9 @@ serve as a *post hoc* guide to the paper.
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000],
-but have been used only rarely so far in ecology (but see @Valpine2014, 
-@Anderson2018 and @Popovic2018). 
-We argue that benefits wider usage of complete 
+and have been used very effectively, but rarely so far in ecology [@Valpine2014; 
+@Anderson2018; @Popovic2018]. 
+We argue that benefits of wider usage of complete 
 copula descriptions of dependence in ecology will be substantial.
 
 # Background on copulas
@@ -411,13 +411,16 @@ monotonic distribution functions, and this case is simpler, so we
 henceforth make such an assumption. 
 Then, "the" copula (now guaranteed unique) 
 associated with $(X,Y)$ is the distribution
-function of the random variable $(U,V)=(F_X(X),F_Y(Y))$ 
-(Appendix \ref{ContStrictMonoton}). And 
+function of the random variable $(F_X(X),F_Y(Y))$ 
+(Appendix \ref{SM-ContStrictMonoton}). And 
 $D(G_A(x),G_B(y))$ is the distribution function of the random variable 
 $(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ is the random
 vector with distribution function $D$ and
 $G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
-(Appendix \ref{ContStrictMonoton}).
+(Appendix \ref{SM-ContStrictMonoton}). Application of the 
+distributions functions of the component random variables translates
+between the uniform-marginal context, which isolates the 
+dependence information, and the context of the original random variable.
 
 Thus Sklar's theorem implies that
 any random vector can be constructed from a copula and marginal 
@@ -428,12 +431,20 @@ dependence structure of a random vector, so the copula contains
 all such information - it is a complete description of the dependence
 between variables. Sklar's theorem makes it possible to construct
 bivariate distributions in two separate steps: by specifying the marginal 
-distributions and by specifying the dependence structure. The theorem
-also make it possible to study and model dependence independently 
+distributions and by specifying the dependence structure. For instance,
+construction of several bivariate distributions is carried out in this way in
+Fig. \ref{PedagogFigCopThry}. The contrast between Fig. \ref{PedagogFigCopThry}C and D
+illustrates in particular how a bivariate distribution can be changed, while retaining 
+the same marginals, by changing the copula. Fig. \ref{PedagogFigCopThry}C is a 
+bivariate normal distribution, but Fig. \ref{PedagogFigCopThry}D clearly 
+is not, although its marginals
+are the same. Fig. \ref{PedagogFigCopThry}D shows stronger left- than right-tail dependence. 
+Sklar's theorem
+also makes it possible to study and model dependence separately 
 from marginal distributions. For instance, in a pedagogical 
-example, [@Anderson2018] modelled the dependence between abundance
+example, @Anderson2018 modelled the dependence between abundance
 data for two fish species, red moki and black angelfish, by first 
-modelling the marginal distributions and then separately modelling 
+modelling the marginal distributions and then modelling 
 the dependence using Gaussian copulas (their section 2).
 See the Discussion for a few words on multivariate copulas, which can
 be developed in the same way as above [@nelsen2006_copula; @joe2014_dependence;
@@ -447,9 +458,35 @@ and then four panels showing what you get when each of these combine?
 Good idea. Steps: 
 DONE split the current Fig 1 so the new Fig 1 has the first 6 panels,
 but C-D should only have the points. 
-Then make a Fig 2 as above, and edit the text in the above para to use that figure. 
-The rest of the panels of the current Fig 1 will make a new Fig 3 later.
+DONE Then make a Fig 2 as above, 
+DONE and edit the text in the above para to use that figure. 
+STILL HAVE TO DO The rest of the panels of the current Fig 1 will make a new Fig 3 later.
 -->
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=6.5in]{./Results/PedagogFigCopThry.pdf}
+\caption{Normal (A) and Clayton (B) copulas were combined with standard normal 
+marginals (C, D) and gamma marginals (E, F) via Sklar's theorem to produce 
+bivariate distributions. Note that a normal copula is distinct from a normal marginal 
+distribution: a normal copula is the copula of a bivariate normal distribution.
+See the Background section for more information on normal, Clayton,
+and other copulas. Each copula was used with both sets of marginals and each
+set of marginals was used with both copulas, to demonstrate that: both copula and 
+marginals contribute fundamentally to the resulting distribution, the copula 
+contributing the information on the dependence between the variables; and that 
+one can select the copula and marginals independently. Bivariate
+distributions, including the copulas, are depicted via their log-scale probability density functions (pdfs), 
+and marginals are depicted via their linear-scale pdfs. Grey dots are
+50 random samples from each distribution. The parameter $0.7$ was used for the normal 
+copula, the parameter $2$ for the Clayton 
+copula, and shape and scale parameters $5$ and $1$ for the gamma marginals. 
+Variables $u$ and $v$ were used for copulas
+and $x$ and $y$ for distributions created by pairing a copula with
+(non-uniform) marginals.
+\label{PedagogFigCopThry}}
+\end{center}
+\end{figure}
 
 
 
@@ -457,15 +494,17 @@ The rest of the panels of the current Fig 1 will make a new Fig 3 later.
 It can have the following kinds of stuff (probably not exhaustive, and probably
 not in order, and some of this material is currently below):
 1) DONE - The definition, Sklar's theorem
-2) What good are copulas - intuitive idea, basically, but also have to be linked to 
+2) DONE What good are copulas - intuitive idea, basically, but also have to be linked to 
 the formalities of the definition
+3) What some of the different copula families look like - in particular you will use BB1 in Fig S2 and cite Background, so mention it
+  Three new figures: Normal, Clayton, BB1
+4) What tail dependence actually is
 
-What some of the different copula families look like
 The explanation of how ranks relate to copulas and estimating the copula parameters
 How to carry out fitting (basically, MLE fitting on ranks - Genest et al paper)
-What tail dependence actually is
--->
 
+You are going to have to rearrange the order of some figs in Sup Mat because now the data section comes after Bacground, in which the different copula famlies are introduced
+-->
 
 <!--***DAN: In the Discussion, you need to point out not only that we
 use only bivariate copulas (and there are multivariate ones), but also
@@ -474,7 +513,7 @@ for our data, but see the other papers I've seen recently which use count data,
 and discrete marginals. Approaches such as that will be necessary for some 
 datasets-->
 
-
+We introduce some standard copula families, as example illustran
 
 
 We introduce the copula families and 
@@ -507,6 +546,38 @@ If LT and UT denote
 lower- and upper-tail dependence measures, their difference measures asymmetry of 
 tail dependence.
 See @nelsen2006_copula, @joe2014_dependence for further background. 
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Normal.pdf}
+\caption[Example N copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example N copulas. 
+S is Spearman correlation; p is the value of the parameter for the N 
+family (it is a 
+one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, respectively (see Background section for definition).\label{figped_N}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Clayton.pdf}
+\caption[Example C copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example C 
+copulas. S is Spearman correlation; p is the value of the parameter for the C family (it 
+is a one-parameter family); and LT and UT are the measures of lower- and 
+upper-tail dependence, 
+respectively (see Background section for definition).\label{figped_C}}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB1.pdf}
+\caption[Example BB1 copulas]{Log-transformed pdfs for example BB1 copulas. K is Kendall correlation; p1 and p2
+denote the two parameters of the family (it is a 
+two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
+respectively (see Background section for definition).\label{figped_BB1}}
+\end{center}
+\end{figure}
 
 
 # Data \label{Data} 

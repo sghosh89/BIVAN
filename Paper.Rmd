@@ -125,9 +125,11 @@ provide only partial information.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
-\caption{Bivariate datasets showing diverse relationships between 
+\caption{(A-D) Bivariate datasets showing diverse relationships between 
 variables; some of these datasets nevertheless have the same Pearson (P)
-or Spearman (S) correlation coefficients. Subscripts h and v 
+or Spearman (S) correlation coefficients. C and D show normalized ranks of A, B, 
+respectively. (E,F) Reflections
+of C, D, respectively, about a vertical axis. Subscripts h and v 
 in the axis labels stand for "horizontal" and "vertical".\label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
@@ -180,7 +182,7 @@ of the smallest element in a set is $1$. The $u_i$ and
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
 the empirical cummulative distribution function (cdf) of the $x_i$ and $y_i$,
 respectively. See, for instance,
-Fig. \ref{fig_cop_pedag1}C-D (the points), which show the normalized ranks of 
+Fig. \ref{fig_cop_pedag1}C-D, which show the normalized ranks of 
 A-B, respectively. Ranking makes the marginal distributions of 
 the component datasets uniform, isolating the 
 dependence structure. Dependence structure and marginals can then be studied 
@@ -442,10 +444,12 @@ be developed in the same way as above [@nelsen2006_copula; @joe2014_dependence;
 at this point. Maybe a figure with two panels showing two copulas on
 the left, and two panels shwoing two sets of marginals at the top,
 and then four panels showing what you get when each of these combine?
-Good idea. Steps: split the current Fig 1 so the new Fig 1 has the first four panels,
-but C-D should only have the points. Then make a Fig 2 as above, and edit the
-text in the above para to use that figure. 
-The rest of the panels of the current Fig 1 will make a new Fig 3 later.-->
+Good idea. Steps: 
+DONE split the current Fig 1 so the new Fig 1 has the first 6 panels,
+but C-D should only have the points. 
+Then make a Fig 2 as above, and edit the text in the above para to use that figure. 
+The rest of the panels of the current Fig 1 will make a new Fig 3 later.
+-->
 
 
 

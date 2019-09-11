@@ -488,7 +488,45 @@ and $x$ and $y$ for distributions created by pairing a copula with
 \end{center}
 \end{figure}
 
+<!--***DAN: In the Discussion, you need to point out not only that we
+use only bivariate copulas (and there are multivariate ones), but also
+that we use only continuous marginals. Probably an adequate approximation
+for our data, but see the other papers I've seen recently which use count data,
+and discrete marginals. Approaches such as that will be necessary for some 
+datasets-->
 
+We introduce some standard copula families, as examples of copulas and also
+because we will fit these families to data later. The bivariate normal
+copula family (henceforth abbreviated N), which consists of copulas of bivariate normal
+distributions, is a one-parameter family. The parameter, which we here call $p$,
+corresponds to the correlation
+of the related bivariate normal distribution, and controls the degree of dependence
+between the variables. An N copula with $p=0.7$ was already introduced (Fig.
+\ref{PedagogFigCopThry}A). The formula for the
+copula is $\Phi_{2,p}(\Phi_{1}^{-1}(u),\Phi_{1}^{-1}(v))$, where $\Phi_1^{-1}$ is the inverse of the
+cdf of a (univariate) standard normal and $\Phi_{2,p}$ is the joint cdf of a
+bivariate normal distribution with mean $(0,0)$ and covariance matrix having $1$s on the diagonal
+and $p$ in the off diagonal positions. However, formulas for copulas are often not as 
+directly informative about copula properties as pdf diagrams; Fig. \ref{figped_N} has 
+example pdfs correspondng to bivariate N copulas for various values of $p$.
+Note that the pdfs are symmetric
+around the diagonal line $v=-u+1$ (Fig. \ref{figped_N}), so normal copulas have symmetric 
+tail dependence (see
+below for a more precise defintion of tail dependence). 
+The Clayton copula family (henceforth abbreviated C),
+of which we also already pictured an example (Fig.
+\ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to N copulas, C copulas
+have stronger left- than right-tail dependence. The formula is 
+$\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
+less direct intuition than do example pdfs (Fig. \ref{figped_C}). The survival
+Clayton family (here abbreviated SC) is the symmetric opposite of the C family, showing
+stronger right- than left tail dependence (Fig. \ref{SM-figped_C}). The BB1 copula 
+family is a two-parameter family, thereby providing more flexibility: for some parameters
+BB1 copulas have stronger left- than right-tail dependence, and for others the reverse
+(Fig. \ref{figped_BB1}). See @nelsen2006_copula and @joe2014_dependence for further
+information on these and other copula families.
+
+Next intro tail dependence
 
 <!--***DANr: Add a new section called Background on copulas.
 It can have the following kinds of stuff (probably not exhaustive, and probably
@@ -496,7 +534,7 @@ not in order, and some of this material is currently below):
 1) DONE - The definition, Sklar's theorem
 2) DONE What good are copulas - intuitive idea, basically, but also have to be linked to 
 the formalities of the definition
-3) What some of the different copula families look like - in particular you will use BB1 in Fig S2 and cite Background, so mention it
+3) DONE What some of the different copula families look like - in particular you will use BB1 in Fig S2 and cite Background, so mention it
   Three new figures: Normal, Clayton, BB1
 4) What tail dependence actually is
 
@@ -506,22 +544,7 @@ How to carry out fitting (basically, MLE fitting on ranks - Genest et al paper)
 You are going to have to rearrange the order of some figs in Sup Mat because now the data section comes after Bacground, in which the different copula famlies are introduced
 -->
 
-<!--***DAN: In the Discussion, you need to point out not only that we
-use only bivariate copulas (and there are multivariate ones), but also
-that we use only continuous marginals. Probably an adequate approximation
-for our data, but see the other papers I've seen recently which use count data,
-and discrete marginals. Approaches such as that will be necessary for some 
-datasets-->
-
-We introduce some standard copula families, as example illustran
-
-
-We introduce the copula families and 
-measures of tail dependence we used.
-The normal copula family (henceforth N) is a one-parameter
-family, with parameter corresponding to the correlation of the related 
-bivariate normal distribtion, and controlling the degree of dependence 
-(Fig. \ref{fig_cop_pedag1}G for an example).
+<!--***DAN: text storage for later:
 Left- and right-tail dependence are $0$ for the N copula, and this 
 serves as a benchmark for tail dependence in other copulas - positive values of our
 tail dependence measures correspond to dependence stronger than an N
@@ -531,7 +554,13 @@ families. The Clayton has positive lower-tail dependence ($0.87$ for
 the example of Fig. \ref{fig_cop_pedag1}C) and $0$ upper-tail dependence; the 
 survival-Clayton is a rotation of the Clayton by $180^\circ$ and has 
 positive upper-tail ($0.87$ in Fig. \ref{fig_cop_pedag1}D)
-and $0$ lower-tail dependence. For our model selection procedure (see below), we used 
+and $0$ lower-tail dependence. -->
+
+<!--***DAN: put this text in the methods. It won't help people here in the ms to have all
+these copulas intro'd. The sole purpose of them is give a variety of options to have a robust model
+selection and multi-model inference procedure for tail dependence, so mention them in that context in 
+the Methods in a way that make clear we don't need to give a damn about these things:
+For our model selection procedure (see below), we used 
 several families of copulas exhibiting various 
 lower- and upper-tail dependence characteristics 
 (Clayton, survival-Clayton, Gumbel, survival-Gumbel, Joe, survival-Joe, Frank,
@@ -545,12 +574,12 @@ which families may effectively model a given bivariate dataset.
 If LT and UT denote 
 lower- and upper-tail dependence measures, their difference measures asymmetry of 
 tail dependence.
-See @nelsen2006_copula, @joe2014_dependence for further background. 
+See @nelsen2006_copula, @joe2014_dependence for further background. -->
 
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Normal.pdf}
+\includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Normal.pdf}
 \caption[Example N copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example N copulas. 
 S is Spearman correlation; p is the value of the parameter for the N 
 family (it is a 
@@ -560,7 +589,7 @@ one-parameter family); and LT and UT are the measures of lower- and upper-tail d
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=7.5in]{./Results/PedagogSuppMat_Clayton.pdf}
+\includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Clayton.pdf}
 \caption[Example C copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example C 
 copulas. S is Spearman correlation; p is the value of the parameter for the C family (it 
 is a one-parameter family); and LT and UT are the measures of lower- and 
@@ -571,7 +600,7 @@ respectively (see Background section for definition).\label{figped_C}}
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB1.pdf}
+\includegraphics[width=\textwidth]{./Results/PedagogSuppMat_BB1.pdf}
 \caption[Example BB1 copulas]{Log-transformed pdfs for example BB1 copulas. K is Kendall correlation; p1 and p2
 denote the two parameters of the family (it is a 
 two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 

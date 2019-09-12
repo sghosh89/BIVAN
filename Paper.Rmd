@@ -526,7 +526,25 @@ BB1 copulas have stronger left- than right-tail dependence, and for others the r
 (Fig. \ref{figped_BB1}). See @nelsen2006_copula and @joe2014_dependence for further
 information on these and other copula families.
 
-Next intro tail dependence
+Having introduced tail dependence in a conceptual way and referred conceptually to it
+in examples, we now need a more precise definition. 
+<!--***DAN: fill in-->
+
+Plots using normalized ranks were proposed in the Introduction as being conceptually
+similar to copulas. We here explain the connection. As stated above, the copula associated
+with a random variable $(X,Y)$ is the joint distribution function of the random variable
+$(F_X(X),F_Y(Y))$. Given a sample $(x_i,y_i)$, $i=1,\ldots,n$, from $(X,Y)$, let $\hat{F}_X$ and
+$\hat{F}_Y$ be the empirical cdfs associated with the $x_i$ and $y_i$, respectively.
+These are step functions of $x$ and $y$, respectively, that start at $0$ for low values of 
+$x$ and $y$ and jump by $1/n$
+at each of the data points; for large $n$ they approximate the cdfs $F_X$ and $F_Y$. 
+But $\hat{F}_X(x_i)$ equals the normalized rank of $x_i$ times
+$n/(n+1)$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ times
+$n/(n+1)$. So the normalized rank in turn approximates the empirical cdf and therefore 
+the cdf. Thus the normalized rank pairs $(u_i,v_i)$ for $i=1,\ldots,n$ can be 
+regarded, for large $n$, as a sample from the bivariate pdf associated with the copula of $(X,Y)$,
+and the scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula structure
+(see section on methods for Q1 below).
 
 <!--***DANr: Add a new section called Background on copulas.
 It can have the following kinds of stuff (probably not exhaustive, and probably
@@ -536,11 +554,12 @@ not in order, and some of this material is currently below):
 the formalities of the definition
 3) DONE What some of the different copula families look like - in particular you will use BB1 in Fig S2 and cite Background, so mention it
   Three new figures: Normal, Clayton, BB1
-4) What tail dependence actually is
-
-The explanation of how ranks relate to copulas and estimating the copula parameters
+STILL HAVE TO DO 4) What tail dependence actually is
+DONE 5) The explanation of how ranks relate to copulas and estimating the copula parameters
 How to carry out fitting (basically, MLE fitting on ranks - Genest et al paper)
+-->
 
+<!--***DAN:
 You are going to have to rearrange the order of some figs in Sup Mat because now the data section comes after Bacground, in which the different copula famlies are introduced
 -->
 
@@ -575,7 +594,6 @@ If LT and UT denote
 lower- and upper-tail dependence measures, their difference measures asymmetry of 
 tail dependence.
 See @nelsen2006_copula, @joe2014_dependence for further background. -->
-
 
 \begin{figure}[!h]
 \begin{center}

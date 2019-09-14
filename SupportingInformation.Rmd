@@ -410,7 +410,8 @@ sets of parameters chosen to produce a variety of
 lower-tail (LT) and upper-tail (UT) dependence strengths, but with the same 
 Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
 with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
-within each column.\label{fig_cop_pedag}}
+within each column. See Background section in the main text for a formal description of 
+tail dependence and other measures of association in the tails.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
 

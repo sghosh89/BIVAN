@@ -78,7 +78,7 @@ The importance of copulas in ecology-->
 \newpage
 
 # Abstract
-<!--***DANr: I have not edited this abstract at all since Ecol Monogr-->
+<!--***DANr: I have not edited this abstract at all since Ecol Monogr, it needs to be redone-->
 All branches of ecology study relationships among environmental and biological variables. However, 
 standard approaches to studying such relationships, based on correlation and regression, 
 provide only a small slice of the complex information contained in the relationships. Other 
@@ -153,10 +153,6 @@ Subscripts h and v
 stand for "horizontal" and "vertical".
 -->
 
-<!--DONE ***DANr: reword this para so people don't think the ranks *are* the 
-copulas, and to try to pre-defend against some of what ref 1 said. Also,
-state that these are conceptual introductions only and are not formal,
-a more comprehensive introduction is in xyz-->
 Well-developed approaches do exist, however, and are 
 applied widely in other fields, 
 that provide a description of the dependence 
@@ -199,20 +195,20 @@ are not influenced by monotonic transformations of the component variables;
 they provide information solely on the dependence between those variables.
 
 A main benefit of a copula approach is 
-that it can detect tail dependence and asymmetries of tail dependence. 
-Tail dependence (defined precisely in the section on Background, below) 
+that it can detect associations in the tails of distributions, and asymmetries of such associations. 
+Tail association (introduced formally in the section on Background, below) 
 is association between extreme values of variables. 
 If smaller values of two positively associated variables are more 
 strongly associated than are larger values, the variables are said to
-have stronger lower- or left-tail dependence than right- or upper-tail dependence
+have stronger lower- or left-tail association than right- or upper-tail association
 (Fig. \ref{fig_cop_pedag1}C);
 and *vice versa* if larger values are more strongly associated than smaller
 ones (Fig. \ref{fig_cop_pedag1}D). Datasets of the same 
-Spearman or Kendall correlation can have a range of tail dependence 
+Spearman or Kendall correlation can have a range of tail association 
 (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see sections on Background and
 methods for Q1 below). Although copulas can be used to model the entire
-complex dependence structure of data, we have found tail dependence to be
-a useful aspect of the full structure of dependence, so tail dependence 
+complex dependence structure of data, we have found tail associations to be
+a useful aspect of the full structure of dependence, so tail associations 
 is one of the main foci of this paper.
 
 The goal of this paper is to explore the potential for 
@@ -235,22 +231,18 @@ dependence, and that greater use of copulas can illuminate the underlying proces
 \includegraphics[width=7in]{./MasterFigure.pdf}
 \caption{Summary and guide for analyses presented in the text. Middle boxes
 correspond to ecological datasets for which Q1 was examined (in the 
-second through
-fourth sections of the text, see also Table \ref{tab_data_info}). Upper boxes 
+third through
+fifth sections of the text, see also Table \ref{tab_data_info}). Upper boxes 
 correspond to potential causes of non-normal (non-N) copula structure that
-were examined (in the fifth and sixth sections of the text). Lower boxes 
+were examined (in the sixth and seventh sections of the text). Lower boxes 
 correspond to potential consequences we examined of non-N copula structure for
-ecological understanding and for applications (in the seventh and eighth
+ecological understanding and for applications (in the eighth and ninth
 sections of the text). Arrow labels (A-D for analyses pertaining 
 to causes, Q2; and X-Z for analyses pertaining to consequences, Q3) 
 link to locations in the text.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
-<!--DONE ***DANr: Maybe use the words tail dependence more and the word copula
-less in the below few paras? Generally the words "copula structure" may be rubbing some
-people wrong. Replacement words? What do you actually mean here? Maybe call it
-asymmetric dependence, or complex dependence structure?-->
 One way we may expect, *a priori*, a copula 
 study of complex dependence structures between
 ecological variables
@@ -273,7 +265,7 @@ research is that prior work has demonstrated (using copulas) complex
 stucture in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
 @li2013]. One may expect an environmental variable 
-measured through time in two locations to show strong tail dependence between
+measured through time in two locations to show strong tail associations between
 the locations if
 intense meteorological events are also widespread in their effects, as seems 
 frequently to be the case: extreme values are associated with intense events,
@@ -294,8 +286,6 @@ biogeochemical and other environmentally influenced ecological variables.
 Synchrony is a phenomenon of substantial interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
-<!--DONE ***DANr: Need some caveating here to accommodate the people who slavishly
-follow the old maxim that correlation is not causation.-->
 A third reason we may expect an understanding of complex 
 dependence structures to benefit 
 ecological research is that such an approach may help illuminate 
@@ -340,10 +330,10 @@ of the dependence between wind speeds at multiple generator sites [@li2013].
 Spatially aggregated ecological variables may be subject to a similar 
 effect, with
 possible consequences. For instance, if populations of a 
-pest species in different locations are all positively associated and also strongly
+pest species in different locations are all positively associated and also more strongly
 related to each other in their right tails, then local outbreaks will tend 
 to occur together, creating regional epidemics. 
-On the other hand left-tail dependence in a pest species, even if overall 
+On the other hand, stronger left-tail associations in a pest species, even if overall 
 correlation were unchanged, would have more benign effects. 
 
 We approached our overall goal of exploring the potential of copula approaches 
@@ -351,17 +341,17 @@ for ecology by addressing the following specific questions. (Q1) Do datasets
 in ecology have dependence structure distinct from that of a multivariate 
 Gaussian/normal
 distribution (here called non-normal copula structure)? Do they show tail 
-dependence distinct from that of a normal distribution, and in particular
-do they show asymmetric tail dependence? Normal copula structure is assumed
+associations distinct from those of a normal distribution, and in particular
+do they show asymmetric tail associations? Normal copula structure is assumed
 by standard approaches that use multivariate 
 normal distributions or distributions obtained by transforming
 the marginals of a normal distribution. So Q1 asks whether ecological
 data contain dependency information distinct from that standard or default cases. 
 (Q2) If the answer to
 Q1 is "yes," then what are some possible causes/mechanisms of non-normal
-copula structure and tail dependence in ecology? And (Q3) what are the 
+copula structure and asymmetric tail associations in ecology? And (Q3) what are the 
 consequences of non-normal copula
-structure and tail dependence for ecological understanding and
+structure and asymmetric tail associations for ecological understanding and
 applications? After a Background section (the second section), we address Q1 
 (third through fifth sections of the paper) 
 by analyzing several datasets, including 
@@ -438,8 +428,8 @@ illustrates in particular how a bivariate distribution can be changed, while ret
 the same marginals, by changing the copula. Fig. \ref{PedagogFigCopThry}C is a 
 bivariate normal distribution, but Fig. \ref{PedagogFigCopThry}D clearly 
 is not, although its marginals
-are the same. Fig. \ref{PedagogFigCopThry}D shows stronger left- than right-tail dependence. 
-Sklar's theorem
+are the same. Fig. \ref{PedagogFigCopThry}D shows stronger association of the two variables
+in the left than in the right tails. Sklar's theorem
 also makes it possible to study and model dependence separately 
 from marginal distributions. For instance, in a pedagogical 
 example, @Anderson2018 modelled the dependence between abundance
@@ -511,24 +501,47 @@ directly informative about copula properties as pdf diagrams; Fig. \ref{figped_N
 example pdfs correspondng to bivariate N copulas for various values of $p$.
 Note that the pdfs are symmetric
 around the diagonal line $v=-u+1$ (Fig. \ref{figped_N}), so normal copulas have symmetric 
-tail dependence (see
-below for a more precise defintion of tail dependence). 
+associations between the two variables in the left and right tails (see
+below for a more precise defintion of tail associations). 
 The Clayton copula family (henceforth abbreviated C),
 of which we also already pictured an example (Fig.
 \ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to N copulas, C copulas
-have stronger left- than right-tail dependence. The formula is 
+have stronger left- than right-tail association. The formula is 
 $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
 less direct intuition than do example pdfs (Fig. \ref{figped_C}). The survival
 Clayton family (here abbreviated SC) is the symmetric opposite of the C family, showing
-stronger right- than left tail dependence (Fig. \ref{SM-figped_C}). The BB1 copula 
+stronger right- than left tail association (Fig. \ref{SM-figped_C}). The BB1 copula 
 family is a two-parameter family, thereby providing more flexibility: for some parameters
-BB1 copulas have stronger left- than right-tail dependence, and for others the reverse
+BB1 copulas have stronger left- than right-tail association, and for others the reverse
 (Fig. \ref{figped_BB1}). See @nelsen2006_copula and @joe2014_dependence for further
 information on these and other copula families.
 
-Having introduced tail dependence in a conceptual way and referred conceptually to it
-in examples, we now need a more precise definition. 
-<!--***DAN: fill in-->
+<!--***DAN: Note: I am using tail dependence for the specific thing defined on p 62 of Joe,
+and tail associations as a more general term. I have changed this in parts of the ms
+upsteam from this point, but need to remember to change it as I move downstream.-->
+
+Having introduced tail association conceptually and referred to it
+in examples, we now need a more precise definition of a measure of tail association.
+We use the term *tail association* to describe the general idea of the strength of
+associations between two variables in the tails of their distributions. One of the
+ways this is measured is called *tail dependence* (@joe2014_dependence, section 2.13; 
+@nelsen2006_copula, section 5.4), which we here define. Given a random vector $(X,Y)$
+with margins $F_X$, $F_Y$ and defining $U=F_X(X)$, $V=F_Y(Y)$, the upper-tail
+dependence of $X$ and $Y$ is defined as 
+$\lambda_U = \lim_{u \rightarrow 1^-} P[Y>F_Y^{-1}(u) | X>F_X^{-1}(u)]$. This equals
+$\lim_{u \rightarrow 1^-} P[U>u | V>u]$, which in turn equals 
+$\lim_{u \rightarrow 1^-} P[U>u, V>u]/P[V>u]=\lim_{u \rightarrow 1^-} P[U>u, V>u]/(1-u)$,
+which shows upper-tail dependence is defined symmetrically in the two random variables.
+Lower tail dependence is defined analogously as 
+$\lambda_L = \lim_{u \rightarrow 1^-} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
+Tail dependence is a property of the random variable $(U,V)$, so depends only
+on the copula and not on the marginals combined with it. It can be shown 
+(@nelsen2006_copula, section 5.4) that $\lambda_L=\lambda_U=0$ for the N copula,
+$\lambda_L=2^{-1/p}$ and $\lambda_U=0$ for a C copula with parameter $p>0$,
+and $\lambda_L=0$ and $\lambda_U=2^{-1/p}$ for an SC copula with parameter $p>0$.
+In the section on methods for Q1 we will introduce
+ways tail dependence can be applied to data, by first fitting copulas to the data. We will also 
+introduce nonparametric measures of tail association that apply directly to data.
 
 Plots using normalized ranks were proposed in the Introduction as being conceptually
 similar to copulas. We here explain the connection. As stated above, the copula associated
@@ -546,34 +559,9 @@ regarded, for large $n$, as a sample from the bivariate pdf associated with the 
 and the scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula structure
 (see section on methods for Q1 below).
 
-<!--***DANr: Add a new section called Background on copulas.
-It can have the following kinds of stuff (probably not exhaustive, and probably
-not in order, and some of this material is currently below):
-1) DONE - The definition, Sklar's theorem
-2) DONE What good are copulas - intuitive idea, basically, but also have to be linked to 
-the formalities of the definition
-3) DONE What some of the different copula families look like - in particular you will use BB1 in Fig S2 and cite Background, so mention it
-  Three new figures: Normal, Clayton, BB1
-STILL HAVE TO DO 4) What tail dependence actually is
-DONE 5) The explanation of how ranks relate to copulas and estimating the copula parameters
-How to carry out fitting (basically, MLE fitting on ranks - Genest et al paper)
--->
-
 <!--***DAN:
 You are going to have to rearrange the order of some figs in Sup Mat because now the data section comes after Bacground, in which the different copula famlies are introduced
 -->
-
-<!--***DAN: text storage for later:
-Left- and right-tail dependence are $0$ for the N copula, and this 
-serves as a benchmark for tail dependence in other copulas - positive values of our
-tail dependence measures correspond to dependence stronger than an N
-copula. The Clayton and 
-survival-Clayton families (Fig. \ref{fig_cop_pedag1}C-D) are two more one-parameter 
-families. The Clayton has positive lower-tail dependence ($0.87$ for
-the example of Fig. \ref{fig_cop_pedag1}C) and $0$ upper-tail dependence; the 
-survival-Clayton is a rotation of the Clayton by $180^\circ$ and has 
-positive upper-tail ($0.87$ in Fig. \ref{fig_cop_pedag1}D)
-and $0$ lower-tail dependence. -->
 
 <!--***DAN: put this text in the methods. It won't help people here in the ms to have all
 these copulas intro'd. The sole purpose of them is give a variety of options to have a robust model

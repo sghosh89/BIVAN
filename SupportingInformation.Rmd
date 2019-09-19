@@ -585,7 +585,6 @@ were used for our study. \label{fig_plankton_map}}
 \end{figure}
 
 <!--Now the copula figures that were not presented in the main text-->
-
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvClayton.pdf}
@@ -593,7 +592,8 @@ were used for our study. \label{fig_plankton_map}}
 from example SC 
 copulas. S is Spearman correlation; p is the value of the parameter for the SC 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
-upper-tail dependence, respectively.\label{figped_SC}}
+upper-tail dependence, respectively. The parameter range for the family is $p \in (0,\infty)$, upper-tail dependence is $2^{-1/p}$ and lower-tail
+dependence is $0$.\label{figped_SC}}
 \end{center}
 \end{figure}
 
@@ -601,9 +601,10 @@ upper-tail dependence, respectively.\label{figped_SC}}
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Gumbel.pdf}
 \caption[Example G copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example G copulas. S is 
-Spearman correlation; p is the value of the parameter for the G family (it is a 
+Spearman correlation; $p$ is the value of the parameter for the G family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
-respectively.\label{figped_G}}
+respectively. The parameter range for the family is $p \in [1,\infty)$, lower-tail dependence is $0$ and upper-tail
+dependence is $2-2^{1/p}$.\label{figped_G}}
 \end{center}
 \end{figure}
 
@@ -611,18 +612,20 @@ respectively.\label{figped_G}}
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvGumbel.pdf}
 \caption[Example SG copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example SG 
-copulas. S is Spearman correlation; p is the value of the parameter for the SG 
+copulas. S is Spearman correlation; $p$ is the value of the parameter for the SG 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
-upper-tail dependence, respectively.\label{figped_SG}}
+upper-tail dependence, respectively. The parameter range for the family is $p \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
+dependence is $2-2^{1/p}$.\label{figped_SG}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Joe.pdf}
-\caption[Example J copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; p is the value of the parameter for the J family (it is a 
+\caption[Example J copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; $p$ is the value of the parameter for the J family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
-respectively.\label{figped_J}}
+respectively. The parameter range for the family is $p \in [1,\infty)$, lower-tail dependence is $0$ and upper-tail
+dependence is $2-2^{1/p}$.\label{figped_J}}
 \end{center}
 \end{figure}
 
@@ -630,108 +633,110 @@ respectively.\label{figped_J}}
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvJoe.pdf}
 \caption[Example SJ copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example SJ 
-copulas. K is Spearman correlation; p is the value of the parameter for the SJ 
+copulas. K is Spearman correlation; $p$ is the value of the parameter for the SJ 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
-upper-tail dependence, respectively.\label{figped_SJ}}
+upper-tail dependence, respectively. The parameter range for the family is $p \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
+dependence is $2-2^{1/p}$.\label{figped_SJ}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Frank.pdf}
-\caption[Example F copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example F copulas. S is Kendall correlation; p is the value of the parameter for the F family (it is a 
+\caption[Example F copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example F copulas. S is Kendall correlation; $p$ is the value of the parameter for the F family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
-respectively.\label{figped_F}}
+respectively. The parameter range for the family is $p \in (0,\infty)$, lower-tail dependence is $0$ and upper-tail
+dependence is $0$.\label{figped_F}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB1.pdf}
-\caption[Example SBB1 copulas]{Log-transformed pdfs for example SBB1 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB1 copulas]{Log-transformed pdfs for example SBB1 copulas. K is Kendall correlation; $p_1$ and $p_2$ 
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_SBB1}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in (0,\infty)$
+and $p_2 \in [1,\infty)$, lower-tail dependence is $2-2^{1/p_2}$ and upper-tail
+dependence is $2^{-1/(p_1 p_2)}$.\label{figped_SBB1}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB6.pdf}
-\caption[Example BB6 copulas]{Log-transformed pdfs for example BB6 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB6 copulas]{Log-transformed pdfs for example BB6 copulas. K is Kendall correlation; $p_1$ and $p_2$
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_BB6}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in [1,\infty)$, lower-tail dependence is $0$ and upper-tail
+dependence is $2-2^{1/(p_1 p_2)}$. \label{figped_BB6}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB6.pdf}
-\caption[Example SBB6 copulas]{Log-transformed pdfs for example SBB6 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB6 copulas]{Log-transformed pdfs for example SBB6 copulas. K is Kendall correlation; $p_1$ and $p_2$ 
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_SBB6}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
+dependence is $2-2^{1/(p_1 p_2)}$.\label{figped_SBB6}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB7.pdf}
-\caption[Example BB7 copulas]{Log-transformed pdfs for example BB7 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB7 copulas]{Log-transformed pdfs for example BB7 copulas. K is Kendall correlation; $p_1$ and $p_2$
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_BB7}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in (0,\infty)$, lower-tail dependence is $2^{-1/p_2}$ and upper-tail
+dependence is $2-2^{1/p_1}$.\label{figped_BB7}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB7.pdf}
-\caption[Example SBB7 copulas]{Log-transformed pdfs for example SBB7 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB7 copulas]{Log-transformed pdfs for example SBB7 copulas. K is Kendall correlation; $p_1$ and $p_2$ 
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_SBB7}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in (0,\infty)$, upper-tail dependence is $2^{-1/p_2}$ and lower-tail
+dependence is $2-2^{1/p_1}$.\label{figped_SBB7}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_BB8.pdf}
-\caption[Example BB8 copulas]{Log-transformed pdfs for example BB8 copulas. K is Kendall correlation; p1 and p2
+\caption[Example BB8 copulas]{Log-transformed pdfs for example BB8 copulas. K is Kendall correlation; $p_1$ and $p_2$
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_BB8}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in (0,1]$, lower-tail dependence is $0$ and upper-tail
+dependence is $2-2^{1/p_1}$ of $p_2=1$ and $0$ otherwise.\label{figped_BB8}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SBB8.pdf}
-\caption[Example SBB8 copulas]{Log-transformed pdfs for example SBB8 copulas. K is Kendall correlation; p1 ad p2 
+\caption[Example SBB8 copulas]{Log-transformed pdfs for example SBB8 copulas. K is Kendall correlation; $p_1$ and $p_2$ 
 denote the two parameters of the family (it is a 
-two-parameter family); and LT and UT are our measures of lower- and upper-tail dependence, 
-respectively.\label{figped_SBB8}}
+two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
+respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
+and $p_2 \in (0,1]$, upper-tail dependence is $0$ and lower-tail
+dependence is $2-2^{1/p_1}$ of $p_2=1$ and $0$ otherwise.\label{figped_SBB8}}
 \end{center}
 \end{figure}
 
 # Nonparametric statistics \label{nonparam_stats}
 
-\noindent We here define
-\begin{equation}\label{eq.Cor}
-   \cor_{l_b,u_b}(u,v) = \frac{\sum 
-   (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}}.
-\end{equation}
-\noindent Here means and sample variances are computed using all $n$ data 
-points, but the
-sum is over only the indices $i$ for which $u_i+v_i > 2l_b$ and 
-$u_i+v_i < 2u_b$. 
-The sum of 
-$\cor_{0,0.5}(u,v)$ and $\cor_{0.5,1}(u,v)$ (or some other choice of 
-$\cor_{l_{b_k},u_{b_k}}(u,v)$ for bounds $l_{b_k},u_{b_k}$ that partition the
-interval $(0,1)$) equals the standard Spearman correlation.
-
-We also define $\Ps_{l_b,u_b}$, using the bounds
+\noindent We define $\Ps_{l_b,u_b}$, using the bounds
 $u+v=2l_b$ and $u+v=2u_b$ defined in the main text, as follows. For a distance $h$, we define
 $S(h)$ to be the number of points $(u_i,v_i)$ within the bounds 
 and a distance less than $h$ from the line $v=u$, divided by the 
@@ -755,12 +760,13 @@ because $\cor_{l_{b_k},u_{b_k}}(u,v)$ is more familiar, but
 in some instances $\Ps_{l_b,u_b}$ appears to have more power to
 reveal tail dependence.
 
+<!--Decided we do not need this fig.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6 cm,height=6 cm]{./stat_image.jpg} \hspace{0.6 cm}
 \caption[For definitions of nonparametric statistics]{Schematic diagram supporting definitions of nonparametric tail dependence statistics. The blue and red lines are, respectively, $u+v=2l_b$ and $u+v=2u_b$.\label{fig_stat_image}}
 \end{center}
-\end{figure}
+\end{figure}-->
 
 # Testing the nonparametric statistics \label{Test_npa_stat}
 

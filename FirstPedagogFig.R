@@ -205,6 +205,28 @@ mtext(expression(z[h]),1,line=1.15)
 
 dev.off()
 
+#***A pedagog fig for intro-ing the nonparam stats
+
+tot_wd<-ymarg_wd+numsp+pan_wd+gap
+tot_ht<-xmarg_ht+numsp+pan_ht+gap
+pdf(file="./Results/NonparamStatsFig.pdf",width=tot_wd,height=tot_ht)
+
+par(fig=c((ymarg_wd+numsp)/tot_wd,
+          (ymarg_wd+numsp+pan_wd)/tot_wd,
+          (xmarg_ht+numsp)/tot_ht,
+          (xmarg_ht+numsp+pan_ht)/tot_ht),
+    mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
+plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+lines(c(0,.4),c(.4,0),type='l')
+lines(c(0,.65),c(.65,0),type='l')
+lines(c(0,1.6),c(1.6,0),type='l')
+lines(c(0,1.35),c(1.35,0),type='l')
+mtext("u",1,line=1.15)
+mtext("v",2,line=1.15)
+#text(rg1,rg2,"H",cex=cexvalpl,adj=c(0,1))
+
+dev.off()
+
 #***a pedagog fig for the sup mat about monotonic transformations
 
 #plot dimensions, units inches
@@ -254,3 +276,5 @@ text(rg2,rg1,paste0("S=",round(cor(dsc5_gm[,1],dsc5_gm[,2],method="spearman"),2)
 mtext(expression(z[h]),1,line=1.15)
 
 dev.off()
+
+

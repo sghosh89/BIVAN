@@ -876,8 +876,6 @@ to $0$ for large datasets.
 We tested our statistics in Appendix \ref{SM-Test_npa_stat} (see also Figs \ref{SM-fig_stat_testing35}-\ref{SM-fig_stat_testing1000}). Code and data for this
 project is archived at \url{www.github.com/sghosh89/BIVAN}.
 
-<!--***DAN: got to here 9/19-->
-
 # Results for Q1: Ecological datasets have non-normal copula structure and asymmetric tail dependence \label{Results}
 
 ```{r read_BivMS_soilCN_data,echo=F}
@@ -892,11 +890,34 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
 
+<!--***SHYAMOLINA: Please do the following to help me revise this section, so far only covering changes in the presentation of the bivariate results. Please let me know if any of this is unclear or you want to discuss anything.
+1) Replace the pithy abbreviations for the different copulas (N, C, SC, G, etc.) with their full names throughout the main text and sup mat, including in figure and table captions. This will not affect BB1, BB6, etc., but it will affect SBB1, SBB6, etc., which will now be called survival BB1, survival BB6, etc.
+2) Add AIC and BIC columsn to table S3, and all analogous figures (e.g., S5, S7, S9, etc). Also reduce the number of digits shown after the decimal to 2 for AIC and BIC and 4 for the other columns.
+3) Sort the rows of Table S3 (and all analogous tables, e.g., S5, S7, etc.) by AIC, putting the lowest AIC at the top. This should mean the highest AICw is also at the top.
+3) Move Table S3 to an appropriate place in the main text. Choose the place based on where it is first cited in the main text. Same for Fig. S21 and Table S4.
+7) Combine tables S6, S8, S10 into one table, and fix it so
+whenever we currently cite one of those, change it so we cite the combined table instead.
+8) Put the cor results only, for Spearman only (or is Kendall more consistent with what we do elsewhere - what do you think?) from tables S4, S6, S8, S10 into Table 2 as a new row.
+-->
+
+<!--***DAN: Notes on what needs to be done to this section, so far only getting up through the presentation of the bivariate results:
+1) be more nuanced in the presentation, don't give the appearance of sweeping results that dont agree with the general conclusions under the rug
+2) Add AIC and BIC columsn to table S3, and all analogous figures (e.g., S5, S7, S9, etc). Also reduce the number of digits shown after the decimal to 2 for AIC and BIC and 4 for the other columns.
+3) Move Table S3 to an appropriate place in the main text. Choose the place based on where it is first cited in the main text.
+4) Sort the rows of Table S2 (and all analogous tables) AIC, putting the lowest
+AIC at the top. This should mean the highest AICw is at the top.
+5) move some of the content from appendices S6 and S7 into methods, and move fig S21 and table S4 into main text. These are non-parametric results for
+soil C and N. So we will be presenting the nonparam results more comprehensively in the main text.
+6) That means you also need to summarize the nonparm results for the other 3 bivariate systems in Table 2. How to do this? Maybe put the cor results only, for Spearman only (or Kendall, not sure which to choose) into Table 2.  
+7) Probably ought to combine tables S6, S8, S10 into one table, and fix it so
+whenever we currently cite one of those, change it so we cite the combined table instead.
+-->
+
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
 \caption{Upper panels show raw data plots for (A) $\log_{10}$(soil C) and $\log_{10}$(soil N) data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
-for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shannon's index (\textit{H}) from Cedar Creek. Bottom panels show the corresponding copula plots. See Data section for units used in upper panels. \label{fig_biv_multi_raw_cop}}
+for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shannon's index (\textit{H}) from Cedar Creek. Bottom panels show the corresponding normalized rank plots. See Data section for units used in upper panels. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
 

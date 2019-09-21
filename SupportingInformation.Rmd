@@ -384,7 +384,7 @@ The functions `pnorm` and `qgamma` in R were used.
 Fig. \ref{fig_transf_pearson_spearman}B can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way.
 The Pearson correlations differ substantially after transformation, 
 but the Spearman correlations are unchanged (Figs \ref{MT-fig_cop_pedag1}A-B, \ref{fig_transf_pearson_spearman}).
-A scatterploy very simlar to Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+A scatterplot very simlar to Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
 of both variables by the cdf of the standard normal distribution.
 Likewise a scatterplot similar to Fig. \ref{MT-fig_cop_pedag1}D can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
 
@@ -438,8 +438,8 @@ is not even a copula.
 
 Now let $D$ be any bivariate copula and let 
 $G_A$ and $G_B$ be univariate distribution functions, so that 
-$D(G_A(x),G_B(y))$ is guaranteed by Sklar's theorem to be a a distribution function.
-We here show that if $G_A$ and $G_B$ and continuous and strictly monotonic, then
+$D(G_A(x),G_B(y))$ is guaranteed by Sklar's theorem to be a distribution function.
+We here show that if $G_A$ and $G_B$ are continuous and strictly monotonic, then
 $D(G_A(x),G_B(y))$ is the distribution function of the random variable 
 $(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ now denotes the random
 vector with uniform marginals associated with $D$ and
@@ -632,7 +632,7 @@ dependence is $2-2^{1/p}$.\label{figped_J}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvJoe.pdf}
-\caption[Example survival Joe  copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example survival Joe  
+\caption[Example survival Joe copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example survival Joe  
 copulas. K is Spearman correlation; $p$ is the value of the parameter for the survival Joe  
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively. The parameter range for the family is $p \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
@@ -773,10 +773,10 @@ reveal tail dependence.
 Normal and Frank copula families 
 are known to have symmetric tail dependence,
 i.e., strengths of dependence in the lower and upper tails are the same, for all copulas
-in these families [@nelsen2006_copula]. C copulas are known to have stronger lower- than 
-upper-tail dependence, and survival Clayton copulas, being rotations of C copulas by 
+in these families [@nelsen2006_copula]. Clayton copulas are known to have stronger lower- than 
+upper-tail dependence, and survival Clayton copulas, being rotations of Clayton copulas by 
 $180^\circ$, have stronger upper- than lower tail dependence [@nelsen2006_copula].
-Using the `iRho` function from the `copula` package, for each of the four families Normal, 
+Using the `iRho` function from the `copula` package, for each of the four families normal, 
 Frank, Clayton, and survival Clayton, we obtained parameters for which the expected value of 
 Spearman's $\rho$ was, separately, $0,0.1,0.2,...,0.9$. For each copula family and for each 
 of the selected parameter values we generated  $n$ points, 100 times, and thereby 
@@ -790,9 +790,9 @@ of ecology. The mean and standard error of the three difference statistics were 
 each copula family, parameter value, and value of $n$, and results were plotted against 
 Spearman's rho (Figs \ref{fig_stat_testing35} and \ref{fig_stat_testing1000}), 
 the expectation being that the difference statistics would be positive for 
-C copulas, negative for survival Clayton copulas (except for the case of $\rho=0$, a 
+Clayton copulas, negative for survival Clayton copulas (except for the case of $\rho=0$, a 
 boundary case of these families corresponding to independence), and not significantly different 
-from $0$ for Frank and Normal 
+from $0$ for Frank and normal 
 copulas.
 We used a $t$-test with a significance threshold of $0.05$ to judge significance here.
 These expectations were fulfilled (Figs \ref{fig_stat_testing35} and 
@@ -828,14 +828,14 @@ plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the Normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the Normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -888,7 +888,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for bird body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
+\caption[Nonparametric tests against a normal copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for bird body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -925,7 +925,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
+\caption[Nonparametric tests against a normal copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
@@ -982,7 +982,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_4_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for Cedar Creek data, year 2000. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving Normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against a normal copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for Cedar Creek data, year 2000. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1079,8 +1079,8 @@ tab_3biv_npa_summary<-tab_biv_npa_summary[c(4:12),]
 
 knitr::kable(tab_3biv_npa_summary, booktabs = T, escape=F,
              format = "latex",linesep = "", row.names=F,
-      caption.short = "Nonparametric asymmetry tests against an Normal-copula null model with birds, mammals and Cedar Creek data",
-      caption = "Nonparametric asymmetry tests against an Normal-copula null model with birds, mammals and Cedar creek data: for birds and mammals data, results should be interpreted as of soil C and N results (see Table \\ref{MT-tab_soilCN_asym} which shows stronger upper tail dependence). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for $(0,0.25)$ and $(0.75,1)$ range of lower and upper bounds. Though the non-parametric result does not indicate significantly stronger lower tail dependence for Cedar Creek data, the 
+      caption.short = "Nonparametric asymmetry tests against a normal copula null model with birds, mammals and Cedar Creek data",
+      caption = "Nonparametric asymmetry tests against an normal copula null model with birds, mammals and Cedar creek data: for birds and mammals data, results should be interpreted as of soil C and N results (see Table \\ref{MT-tab_soilCN_asym} which shows stronger upper tail dependence). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for $(0,0.25)$ and $(0.75,1)$ range of lower and upper bounds. Though the non-parametric result does not indicate significantly stronger lower tail dependence for Cedar Creek data, the 
 greater than (>) sign before the numbers do show the opposite direction in tail-dependence compared to other bivariate datasets.\\label{tab_3biv_npa_summary}")
 ```
 
@@ -1128,25 +1128,25 @@ datasets.
 
 The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
 C and N data
-were compared to distributions of their values on 1000 Kendall- or Spearman-preserving Normal surrogates
+were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates
 of the data,
 separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
 (Fig. \ref{MT-fig_soilCN_nonparam}). Results show that tail dependence of data is stronger in 
 both the lower and upper tails than would be expected under a null hypothesis of a normal copula.
 The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
 $\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
-on 1000 Kendall- or Spearman-preserving Normal surrogates, separately in two 
+on 1000 Kendall- or Spearman-preserving normal surrogates, separately in two 
 comparisons (Table \ref{MT-tab_soilCN_asym}). Results showed that
 upper-tail dependence was significantly stronger than lower-tail dependence.
 
 For first three bivariate datasets in Table \ref{MT-tab_bivar_summary},
 the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and 
-for 1000 Kendall-preserving surrogate datasets with Normal copulas. Due to relatively smaller sample size,
+for 1000 Kendall-preserving surrogate datasets with normal copulas. Due to relatively smaller sample size,
 for Cedar Creek data we used $P_{0,0.25}-P_{0.75,1}$.
 For each dataset, the rank of the statistic for real-data in 
 the distribution of surrogate values was computed. 
 If ranks were $>975$ or $<25$, asymmetry of tail 
-dependence was significant compared to an N-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
+dependence was significant compared to a normal copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
 for, respectively, the soil C and N dataset, the bird body masses and metabolic rates dataset, 
 the mammal body masses and metabolic rates dataset, and the Cedar Creek data for the year 2000. 
 Thus the first three datasets showed stronger 
@@ -1353,13 +1353,13 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
              )
 ```
 
-<!--table for AIC-weights of Normal copula used for fitting, green spruce aphid abundance data-->
+<!--table for AIC-weights of normal copula used for fitting, green spruce aphid abundance data-->
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
              format='latex',linesep = "",digits=3,
-             caption.short = "AIC weights, Normal copulas, green spruce aphid abundance data",
-             caption = "$\\text{AIC}_{\\text{w}}$ for the Normal copula family for each location pair for green spruce aphid abundance data, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
+             caption.short = "AIC weights, normal copulas, green spruce aphid abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for green spruce aphid abundance data, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
              booktabs=TRUE
              )
 ```
@@ -1565,12 +1565,12 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              )
 ```
 
-<!--table for AIC-weights of Normal copula used for fitting, leaf plum curling aphid first flight data-->
+<!--table for AIC-weights of normal copula used for fitting, leaf plum curling aphid first flight data-->
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
              format='latex',linesep = "",digits=3,
-             caption.short="AIC weights, Normal copulas, leaf-curling plum aphid first flight data",
+             caption.short="AIC weights, normal copulas, leaf-curling plum aphid first flight data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for leaf-curlung plum aphid first flight data, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
              booktabs=TRUE
              )
@@ -1787,7 +1787,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--table for AIC-weights of Normal copula used for fitting, Ceratium furca abundance data-->
+<!--table for AIC-weights of normal copula used for fitting, Ceratium furca abundance data-->
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
@@ -1795,8 +1795,8 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="AIC weights, Normal copulas, \\textit{Ceratium furca} abundance data",
-             caption = "$\\text{AIC}_{\\text{w}}$ for the Normal copula family for each location pair for \\textit{Ceratium furca} abundance data, for comparison with Table \\ref{tab_pns_AICw}.\\label{tab_pns_AICw_normal}",
+             caption.short="AIC weights, normal copulas, \\textit{Ceratium furca} abundance data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for \\textit{Ceratium furca} abundance data, for comparison with Table \\ref{tab_pns_AICw}.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
 
@@ -1977,7 +1977,7 @@ knitr::kable(h,
              booktabs=TRUE)
 ```
 
-<!--table for AIC-weights of Normal copula used for fitting, methane-flux data-->
+<!--table for AIC-weights of normal copula used for fitting, methane-flux data-->
 ```{r tab_methane_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
@@ -1985,8 +1985,8 @@ h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
              digits=3,
-             caption.short="AIC weights, Normal copulas, methane-flux data",
-             caption = "$\\text{AIC}_{\\text{w}}$ for the Normal copula family for each location pair for methane-flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
+             caption.short="AIC weights, normal copulas, methane-flux data",
+             caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for methane-flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
 ```
 
@@ -2249,7 +2249,7 @@ Confidence intervals for the value of $\mean(S)$ were then computed as quantiles
 distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
 revealed by the confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
 or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-N-copula null hypothesis.
+normal copula null hypothesis.
 Bootstrapping was performed by resampling the locations of measurement, with replacement. 
 This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
@@ -2274,7 +2274,7 @@ entire matrix. The moderately left-tail dependent matrix was based on a Clayton 
 with parameter chosen (using the `iRho` function in the `copula` package) so that
 the Spearman correlation would be the same as for the extreme tail dependence 
 datasets. The moderately right-tail dependent matrix and the symmetric tail dependence
-matrix were constructed similarly, but using an survival Clayton copula and an Normal copula,
+matrix were constructed similarly, but using an survival Clayton copula and an normal copula,
 respectively. 
 
 Once character evolution was simulated 100 times for each dependence structure, 
@@ -2529,7 +2529,7 @@ dev.off()
 <!--Displaying summary table with model selection results from asymmetric dependence analysis-->
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
-rownames(summary_stat)<-c("Best-fit copula AICw","N-copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
+rownames(summary_stat)<-c("Best-fit copula AICw","Normal copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
 knitr::kable(summary_stat, booktabs = T, escape=F,
              format = "latex", linesep = "",
              digits=4, col.names=c("b=0.1, g$_{1}$","b=0.1, g$_{2}$",
@@ -2543,7 +2543,7 @@ the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and
 \\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
 selection procedures detailed in the 
 methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
-N-copula AICw: the AIC weight of the Normal copula family; Model-avg. LT: the lower-tail 
+Normal copula AICw: the AIC weight of the normal copula family; Model-avg. LT: the lower-tail 
 statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
 upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula
 family using the test based on the Cramer-von Mises statistic; p, KS: p-value for goodness of fit 
@@ -2573,12 +2573,12 @@ the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and
 \\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
 analyses decribed in the methods section for Q1. The listed statistic was computed for the
 output of the model with the indicated b and g, and the value was compared to 1000 values
-of the same statistic computed on surrogate time series randomized to have N-copula structure
+of the same statistic computed on surrogate time series randomized to have normal copula structure
 (see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
 given statistic on the data was less (respectively, more) than its value on $X$ of the 
 surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
-lower-tail dependence compared to an N-copula null hypothesis. `FS' stands for `first slice'
+lower-tail dependence compared to a normal copula null hypothesis. `FS' stands for `first slice'
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
@@ -4195,7 +4195,7 @@ Appendix \ref{evol_mech}. The number above each panel indicates how many statist
 \end{center}
 \end{figure}
 
-<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using green spruce aphid abundance data-->
+<!--Following chunk examine the consequence of non-normal copula atructure on skewness using green spruce aphid abundance data-->
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4231,7 +4231,7 @@ par(op)
 dev.off()
 ```
 
-<!--Following chunk examine the consequence of non-Normal copula atructure on skewness 
+<!--Following chunk examine the consequence of non-normal copula atructure on skewness 
 using leaf plum curling aphids' first flight data-->
 ```{r skewness_ff_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -4268,7 +4268,7 @@ par(op)
 dev.off()
 ```
 
-<!--Following chunk examine the consequence of non-Normal copula atructure on skewness 
+<!--Following chunk examine the consequence of non-normal copula atructure on skewness 
 using ceratium furca's abundance data-->
 ```{r skewness_pns_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_plankton_north_sea,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -4304,7 +4304,7 @@ par(op)
 dev.off()
 ```
 
-<!--Following chunk examine the consequence of non-Normal copula atructure on skewness using methane-flux data-->
+<!--Following chunk examine the consequence of non-normal copula atructure on skewness using methane-flux data-->
 ```{r skewness_methane_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,methane_data,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
 # Only done for "Spearman" method
@@ -4340,7 +4340,7 @@ dev.off()
 ```
 
 
-<!--Following 4 chunks are examining consequence of non-Normal copula structure on Taylors law using made up data-->
+<!--Following 4 chunks are examining consequence of non-normal copula structure on Taylors law using made up data-->
 
 <!--first, make surrogate datasets for TL analysis to follow-->
 ```{r taylors_law_make_surrogs, echo=F, cache=T, cache.extra=list(seed,mtime("copsurrognd.R"))}
@@ -4690,7 +4690,7 @@ par(op)
 dev.off()
 ```
 
-<!--Following 2 chunks examine the effect of non-Normal asymmetric copula on extinction risk-->
+<!--Following 2 chunks examine the effect of non-normal asymmetric copula on extinction risk-->
 ```{r sim_ext_risk, echo=F,  results="hide", cache=T, cache.extra=list(seed,mtime("mydispersal.R"),mtime("ExtremeTailDep.R"))}
 
 source("mydispersal.R")
@@ -4782,7 +4782,7 @@ dev.off()
 \end{center}
 \end{figure}
 
-<!--adding plots showing influences of non-Normal copula on spatial Taylors law-->
+<!--adding plots showing influences of non-normal copula on spatial Taylors law-->
 \begin{figure}[!h]
 \textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
 \vspace{-0.5 cm} 
@@ -4879,7 +4879,7 @@ any given time step, equally distributed to the two or one nearest neighbors.
 For global dispersal, the fraction $d$ that dispersed from each patch was divided up equally
 among all other patches.
 
-# Effects of non-Normal copula structure on Taylor's law \label{Consequence_TL_simulation}
+# Effects of non-normal copula structure on Taylor's law \label{Consequence_TL_simulation}
 
 \noindent Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
 tested whether the copula structure of the dependences between population variables 
@@ -4937,7 +4937,7 @@ refer to the new arrays as our
 constructed as follows; the others were constructed analogously. First, we constructed an
 $n$-dimensional Clayton copula with parameter chosen so that the 
 Spearman correlations between each pair of the $n$ components were the same as those
-of the Normal distribution constructed above. This was done using the `rho` and `iRho` functions 
+of the normal distribution constructed above. This was done using the `rho` and `iRho` functions 
 in the `copula` package in R. Because the Clayton copula is a one-paremeter family, this 
 step relies on the fact that all pairs of locations were 
 equally correlated with each other in the original multivariate normal distribution
@@ -4986,11 +4986,11 @@ of $y$ versus $x$, as well as the intercept and slope of the linear regression.
 Finally we recorded the quadratic coefficient of the regression of $y$ against
 $x$ and $x^2$, and the mean curvature of the quadratic regression equation itself
 across the values $x$. The distrubutions of all these statistics across 1000 replicate 
-simulations were compared for the Clayton, Normal, Frank, and survival Clayton simulations to determine if copula structure 
+simulations were compared for the Clayton, normal, Frank, and survival Clayton simulations to determine if copula structure 
 influences Taylor's law.
 
 Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
-linearity and homoskedasticity, by non-Normal copula structure. For Normal copula structure 
+linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
 (i.e., for simulations in our N-copula population array), $p$-values for the linearty
 and homoskedasticity tests were roughly uniformly distributed across replicate 
 simulations and Taylor's law appeared visually to be a reasonable approximation
@@ -4998,14 +4998,14 @@ of the $\log(v_t)$ versus $\log(m_t)$ relationship (Fig. \ref{fig_spTL}B,E,F).
 Furthermore, quadratic coefficients
 and curvature values were close to $0$ (Fig. \ref{fig_spTL}J,K), and root mean squared
 errors from the linear regression were relatively small (Fig. \ref{fig_spTL}G).
-But linearity or homoskedasticity were violated more frequently for non-Normal copula structure
+But linearity or homoskedasticity were violated more frequently for non-normal copula structure
 (Fig. \ref{fig_spTL}A,C,D,E,F); quadratic coefficients and curvatures were frequently 
 non-zero (Fig. \ref{fig_spTL}J,K); and root mean squared
 errors from the linear regression were much higher (Fig. \ref{fig_spTL}G). Slopes 
 and intercepts of the linear regression were also strongly affected by copula
 structure (Fig. \ref{fig_spTL}H,I), though some of the effect here was because
 linear regressions do not always adequately represent the $\log(v_t)$ versus $\log(m_t)$
-relationship when copula structure was not N.
+relationship when copula structure was not normal.
 
 # Another tool for producing surrogates for multivariate datasets\label{sect:copsurrognd}
 
@@ -5188,7 +5188,7 @@ res<-ms_npa_RES_greenspruceaphid_count_temp$sp10_Green_spruce_aphid$ms_summary_a
 #row.names(res)<-NULL
 #res<-cbind(c(2:11),res)
 colnames(res)<-c("p-value, independence test","Best-fit copula",
-                 "Best-fit copula AICw","N-copula AICw","p, CvM","p, KS","Model-avg. LT","Model-avg. UT","Model-avg. LT minus UT","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
+                 "Best-fit copula AICw","Normal copula AICw","p, CvM","p, KS","Model-avg. LT","Model-avg. UT","Model-avg. LT minus UT","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
 res<-res[,-1]
 knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
              caption.short="Summary results for copulas for winter temperature versus green spruce aphid abundance",
@@ -5253,7 +5253,7 @@ dev.off()
 ```
 
 To illustrate the potential for missing data to influence perceived
-copula structure, we first generated 5000 points from a bivariate Normal copula
+copula structure, we first generated 5000 points from a bivariate normal copula
 with parameter `r ncopparm` (Fig. \ref{fig:missingdata}A), and then 
 randomly deleted `r 100*fracdelete`% of the points that occurred in the
 upper-right triangle of the copula plot. Data were then re-ranked as

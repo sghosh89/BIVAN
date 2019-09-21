@@ -217,7 +217,7 @@ third through
 fifth sections of the text, see also Table \ref{tab_data_info}). Upper boxes 
 correspond to potential causes of non-normal (non-N) copula structure that
 were examined (in the sixth and seventh sections of the text). Lower boxes 
-correspond to potential consequences we examined of non-Normalcopula structure for
+correspond to potential consequences we examined of non-normal copula structure for
 ecological understanding and for applications (in the eighth and ninth
 sections of the text). Arrow labels (A-D for analyses pertaining 
 to causes, Q2; and X-Z for analyses pertaining to consequences, Q3) 
@@ -390,7 +390,7 @@ $(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ is the random
 vector with distribution function $D$ and
 $G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
 (Appendix \ref{SM-ContStrictMonoton}). Application of the 
-distributions functions of the component random variables translates
+distribution functions of the component random variables translates
 between the uniform-marginal context, which isolates the 
 dependence information, and the context of the original random variable.
 
@@ -457,29 +457,29 @@ datasets-->
 
 We introduce some standard copula families, as examples of copulas and also
 because we will fit these families to data later. The bivariate normal
-copula family (henceforth abbreviated N), which consists of copulas of bivariate normal
+copula family, which consists of copulas of bivariate normal
 distributions, is a one-parameter family. The parameter, which we here call $p$,
 corresponds to the correlation
 of the related bivariate normal distribution, and controls the degree of dependence
-between the variables. An Normal copula with $p=0.7$ was already introduced (Fig.
+between the variables. A normal copula with $p=0.7$ was already introduced (Fig.
 \ref{PedagogFigCopThry}A). The formula for the
 copula is $\Phi_{2,p}(\Phi_{1}^{-1}(u),\Phi_{1}^{-1}(v))$, where $\Phi_1^{-1}$ is the inverse of the
 cdf of a (univariate) standard normal and $\Phi_{2,p}$ is the joint cdf of a
 bivariate normal distribution with mean $(0,0)$ and covariance matrix having $1$s on the diagonal
 and $p$ in the off diagonal positions. However, formulas for copulas are often not as 
 directly informative about copula properties as pdf diagrams; Fig. \ref{figped_N} has 
-example pdfs corresponding to bivariate Normalcopulas for various values of $p$.
+example pdfs corresponding to bivariate normal copulas for various values of $p$.
 Note that the pdfs are symmetric
 around the diagonal line $v=-u+1$ (Fig. \ref{figped_N}), so normal copulas have symmetric 
 associations between the two variables in the left and right tails (see
 below for a more precise defintion of tail associations). 
-The Clayton copula family (henceforth abbreviated C),
+The Clayton copula family,
 of which we also already pictured an example (Fig.
-\ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to Normalcopulas, Clayton copulas
+\ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to normal copulas, Clayton copulas
 have stronger left- than right-tail association. The formula is 
 $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
 less direct intuition than do example pdfs (Fig. \ref{figped_C}). The survival
-Clayton family (here abbreviated SC) is the symmetric opposite of the Claytonfamily, showing
+Clayton family is the symmetric opposite of the Clayton family, showing
 stronger right- than left tail association (Fig. \ref{SM-figped_SC}). The BB1 copula 
 family is a two-parameter family, thereby providing more flexibility: for some parameters
 BB1 copulas have stronger left- than right-tail association, and for others the reverse
@@ -506,9 +506,9 @@ Lower tail dependence is defined analogously, as
 $\lambda_L = \lim_{u \rightarrow 1^-} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
 Tail dependence is a property of the random variable $(U,V)$, so depends only
 on the copula and not on the marginals combined with it. It can be shown 
-(@nelsen2006_copula, section 5.4) that $\lambda_L=\lambda_U=0$ for the Normalcopula,
+(@nelsen2006_copula, section 5.4) that $\lambda_L=\lambda_U=0$ for the normal copula,
 $\lambda_L=2^{-1/p}$ and $\lambda_U=0$ for a Clayton copula with parameter $p>0$,
-and $\lambda_L=0$ and $\lambda_U=2^{-1/p}$ for an survival Clayton  copula with parameter $p>0$.
+and $\lambda_L=0$ and $\lambda_U=2^{-1/p}$ for a survival Clayton  copula with parameter $p>0$.
 In the section on methods for Q1 we will introduce
 ways tail dependence can be applied to data, by first fitting copulas to the data. We will also 
 introduce nonparametric measures of tail association that apply directly to data.
@@ -533,8 +533,8 @@ and the scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Normal.pdf}
-\caption[Example Normalcopulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Normalcopulas. 
-S is Spearman correlation; $p$ is the value of the parameter for the Normal
+\caption[Example normal copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example normal copulas. 
+S is Spearman correlation; $p$ is the value of the parameter for the normal
 family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, respectively (see Background section for definition). The 
 parameter range for the family is $p \in [-1,1]$, and lower- and upper-tail
@@ -545,8 +545,8 @@ dependence are always $0$.\label{figped_N}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Clayton.pdf}
-\caption[Example Clayton  copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Clayton  
-copulas. S is Spearman correlation; $p$ is the value of the parameter for the Clayton  family (it 
+\caption[Example Clayton copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Clayton  
+copulas. S is Spearman correlation; $p$ is the value of the parameter for the Clayton family (it 
 is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, 
 respectively (see Background section for definition). The parameter range for the family is $p \in (0,\infty)$, lower-tail dependence is $2^{-1/p}$ and upper-tail
@@ -661,8 +661,8 @@ knitr::kable(tab_data_info,
 We addressed Q1 first via a model selection procedure in which several
 families of copulas were fitted to 
 our ecological datasets and fits were compared via the Akaike and Bayesian 
-Information Criteria (AIC and BIC). One of the fitted copulas was the N
-copula, making possible comparisons of the degree to which the Normalcopula versus
+Information Criteria (AIC and BIC). One of the fitted copulas was the normal
+copula, making possible comparisons of the degree to which the normal copula versus
 other copula families were good descriptions of data. 
 
 For bivariate datasets 
@@ -727,7 +727,7 @@ $1000$ boostraps.
 For multivariate datasets, we performed the bivariate analysis
 for all possible pairwise combinations of locations, and 
 compared AIC weights and tail-dependence of 
-minimum-AIC copulas with that of an Normalcopula. We also counted the number of location pairs 
+minimum-AIC copulas with that of a normal copula. We also counted the number of location pairs 
 for which model-averaged lower-tail dependence was 
 greater than model-averaged upper-tail dependence 
 or vice-versa, and reported the percentage of non-independent 
@@ -930,7 +930,7 @@ for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shan
 \end{center}
 \end{figure}
 
-Across essentially all our datasets, copula structures were typically non-Normaland 
+Across essentially all our datasets, copula structures were typically non-normal and 
 commonly showed asymmetric tail 
 dependence, answering Q1 in the affirmative. 
 To make results easier to absorb, we first 
@@ -948,25 +948,25 @@ and computed AIC and BIC weights and corresponding
 lower- and upper-tail statistics for the fitted distributions (Table \ref{tab_soilCNfit}).
 `r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]` was the 
 minimum-AIC copula, with AIC weight `r round(max(BivMS_res_Loecke$InfCritRes$AICw),2)`, whereas the 
-Normal copula had AIC weight essentially 0, answering the 
+normal copula had AIC weight essentially 0, answering the 
 first part of Q1 for these data. 
 Model-averaged lower- and upper-tail dependence statistics were `r round(BivMS_res_Loecke$relLTdep_AICw,3)` 
 and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were used for averaging). 
-These values are distinct from what an Normal copula would give, namely, 0, answering the second part 
+These values are distinct from what a normal copula would give, namely, 0, answering the second part 
 Q1 for these data. The values also differed substantially 
 from each other, answering the third part of Q1. 
 The numbers reflect stronger upper- than lower-tail
 dependence, and this is also visible in the extreme upper-right
 and lower-left corners of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
 
-Although these results convincingly show non-Normal copula structure, 
+Although these results convincingly show non-normal copula structure, 
 we caution that the model-averaged tail-dependence statistics may have been biased 
 because even the lowest-AIC copula 
 (`r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]`) 
 was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$GofRes_KS` for the 
 Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
 available from `BiCopGofTest`). However, nonparametric statistics verified
-both that tail dependence was distinct from that of an Normal copula, and that it 
+both that tail dependence was distinct from that of a normal copula, and that it 
 was asymmetric (Appendices \ref{SM-Q1bivarnonparam}, \ref{SM-surrog_test}, 
 Fig. \ref{fig_soilCN_nonparam}, Table \ref{tab_soilCN_asym}). Our 
 affirmative, empirically based answer to Q1 for the soil C and N data is 
@@ -977,10 +977,10 @@ in the right-most box in the middle row.
 Table \ref{tab_bivar_summary} summarizes Q1 results 
 for the bivariate datasets. The two 
 variables were significantly related for all datasets 
-(Table \ref{tab_bivar_summary}, row 1). A non-Normal copula 
+(Table \ref{tab_bivar_summary}, row 1). A non-normal copula 
 always emerged as the lowest-AIC (highest-AIC-weight) copula 
 (Table \ref{tab_bivar_summary}, row 2). 
-The Normal copula was always a poor fit compared to the highest-AIC-weight copula 
+The normal copula was always a poor fit compared to the highest-AIC-weight copula 
 (Table \ref{tab_bivar_summary}, rows 3-4), answering the first
 part of Q1. 
 Lower- and upper-tail dependence statistics often differed substantially from 0 
@@ -988,7 +988,7 @@ Lower- and upper-tail dependence statistics often differed substantially from 0
 answering the second and third parts of Q1. 
 The first three datasets had stronger upper- 
 than lower-tail dependence, and the last dataset had the reverse, though weakly. 
-Although these results convincingly show non-Normal copula structure, the 
+Although these results convincingly show non-normal copula structure, the 
 model-averaged tail-dependence statistics may have been biased 
 because even the lowest-AIC copula was a poor fit in some cases 
 (Table \ref{tab_bivar_summary}, rows 5-6).
@@ -1013,7 +1013,7 @@ Best-fitting (lowest-AIC) copulas were non-N
 for the large majority of location pairs (Table \ref{SM-tab_count_bestcop}), and 
 AIC weights for best-fitting copulas (Table \ref{SM-tab_count_AICw}) 
 were typically substantially 
-larger than N-copula weights (Table \ref{SM-tab_count_AICw_normal}), answering the first part of Q1. Goodness of fit tests 
+larger than normal copula weights (Table \ref{SM-tab_count_AICw_normal}), answering the first part of Q1. Goodness of fit tests 
 (Tables \ref{SM-tab_count_p_CvM}, \ref{SM-tab_count_p_KS}) in every case 
 failed to reject the hypothesis that the AIC-best copula family was also 
 an objectively adequate description of 
@@ -1022,7 +1022,7 @@ copula families we used was sufficiently broad to characterize these data.
 Model-averaged lower- (Table \ref{SM-tab_count_LTdep_AICw}) and upper-tail
 (Table \ref{SM-tab_count_UTdep_AICw}) dependence statistics were exclusively 
 positive and were frequently large, thereby differing 
-from what an Normal copula would give (i.e., 0), and answering the second
+from what a normal copula would give (i.e., 0), and answering the second
 part of Q1: these data have greater tail dependence 
 (lower and upper) than would be expected from an N-copula null hypothesis. 
 Model-averaged lower- minus upper-tail dependence statistics 
@@ -1036,13 +1036,13 @@ spruce aphid abundance data (Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatia
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes Q1 results for
 multivariate data. Results supported the 
-conclusions that non-Normal copula structure, non-Normal tail dependence, and asymmetric tail 
+conclusions that non-normal copula structure, non-normal tail dependence, and asymmetric tail 
 dependence were common, answering Q1 in the affirmative for these data. 
 Most location pairs were non-independent 
 (Table \ref{tab_multivar_summary}, row 2). The large majority of non-independent location 
-pairs had best-fitting copulas that were not the Normal copula (Table \ref{tab_multivar_summary}, 
+pairs had best-fitting copulas that were not the normal copula (Table \ref{tab_multivar_summary}, 
 row 3), and AIC weights of best-fitting copulas were 
-better than those of Normal copulas (Table \ref{tab_multivar_summary}, rows 4-5).
+better than those of normal copulas (Table \ref{tab_multivar_summary}, rows 4-5).
 Best-fitting copulas were nearly always considered an adequate fit 
 (Table \ref{tab_multivar_summary}, row 6). Some of the datasets (green spruce aphid
 abundance, \textit{Ceratium furca} abundance, methane-flux) showed stronger 
@@ -1061,7 +1061,7 @@ We also carried out the same analyses for abundance and first-flight data for th
 aphid species for which we had data other than the green spruce and leaf-curling plum aphids,
 as well as for the 21 plankton taxa for which we had abundance data other than
 \textit{Ceratium furca} (results not shown); results supported the conclusion that 
-non-Normal copula structure and tail dependence, and asymmetry of tail dependence are 
+non-normal copula structure and tail dependence, and asymmetry of tail dependence are 
 common.
 
 <!--bivariate results for soil CN data-->
@@ -1076,7 +1076,7 @@ h_ord <- h[order(h$AIC),] #sorting data: min AIC to max AIC
 knitr::kable(h_ord, #longtable = T, 
              format = "latex",linesep = "",row.names = F, digits = c(4,2,2,2,2,4,4),
       caption.short = "Model fitting results for soil C and N dataset",
-      caption = "Results of fitting our 16 copula families to the soil C and N dataset. Copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family, with fitted parameters; UT = the same for upper-tail dependence. Wights and tail dependences are rounded upto 2 and 4 digits, respectively. \\label{tab_soilCNfit}",
+      caption = "Model fitting results for soil C and N dataset using 16 copula families: copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family, with fitted parameters; UT = the same for upper-tail dependence. Wights and tail dependences are rounded upto 2 and 4 digits, respectively. \\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 
@@ -1087,13 +1087,13 @@ tab_soilCN_asym<-tab_biv_npa_summary[1:3,2:4]
 knitr::kable(tab_soilCN_asym, booktabs = T, escape=F,
              format = "latex",linesep = "",
       caption.short = "Nonparametric asymmetry tests against an N-copula null, soil C and N",
-      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to an N-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving Normal surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
+      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to a normal copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving normal surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
 ```
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from N-copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving Normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Nonparametric tests against an N-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1116,14 +1116,14 @@ library(tibble)
 dt <- tibble(Description = c("1. p-value, independence test",
            "2. Minimum-AIC copula",
            "3. AIC weight of minimum-AIC copula",
-           "4. AIC weight of Normal copula",
+           "4. AIC weight of normal copula",
            "5. p-value, Cramer-von Mises goodness of fit test",
            "6. p-value, Kolmogorov-Smirnov goodness of fit test",
            "7. Model averaged lower-tail dependence",
            "8. Model averaged upper-tail dependence",
            "9. Model averaged lower- minus upper-tail dependence",
            "10. Asymmetry rank in surrogates", # this row will be commented out, that's why the numbering starts from 10 in the next line
-           "10. How many times Non-parametric tail asymmetry ($Cor_{FS}-Cor_{LS}$) on given data are less (or greater) than the Spearman-preserving Normal surrogates")
+           "10. How many times non-parametric tail asymmetry ($Cor_{FS}-Cor_{LS}$) on given data are less (or greater) than the Spearman-preserving normal surrogates")
 )
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 tab_bivar_summary<-tab_bivar_summary[c(1:9,11),]
@@ -1163,9 +1163,9 @@ library(tibble)
 dt <- tibble(
             Description = c("1. Location pairs (excluding self comparisons)",
            "2. Number of non-independent pairs",
-           "3. Number of pairs with non-Normal copula as best fit",
+           "3. Number of pairs with non-normal copula as best fit",
            "4. Average AIC-weights of best-fitting copulas across location pairs",
-           "5. Average AIC-weights of Normal copula across pairs",
+           "5. Average AIC-weights of normal copula across pairs",
            "6. Number of well-fitting location pairs",
            "7. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. lower-tail dependence",
            "8. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. upper-tail dependence",
@@ -1190,7 +1190,7 @@ knitr::kable(tab_multivar_summary[1:9,],
 <!--Question 2 analyses-->
 # Concepts and methods for Q2 \label{Causes}
 
-Having demonstrated that non-Normal copula structure and asymmetric tail dependence are 
+Having demonstrated that non-normal copula structure and asymmetric tail dependence are 
 common in ecological variables, we 
 addressed Q2 by exploring, using models, three possible mechanisms
 by which these phenomena may arise. 
@@ -1225,9 +1225,9 @@ steps and retained the $E_i(t)$ for the final $2500$ time
 steps. We applied our model selection algorithms and 
 non-parametric statistics (see section on methods for Q1) to these 
 outputs to discover if the model could
-produce non-Normal copula structure and asymmetric tail dependence in the 
+produce non-normal copula structure and asymmetric tail dependence in the 
 $E_i(t)$. Because $(\epsilon_1,\epsilon_2)$
-and $(\delta_1,\delta_2)$ have Normal copula structure, the Moran 
+and $(\delta_1,\delta_2)$ have normal copula structure, the Moran 
 mechanism analyzed below 
 does not operate here.
 
@@ -1303,7 +1303,7 @@ package [@DendroPy].
 Our model with asymmetric environmental effects 
 produces outputs with visually apparent asymmetry 
 of tail dependence, to an extent that depended on the value of $b$;
-thus this is a mechanism that can produce non-Normal copula structure and
+thus this is a mechanism that can produce non-normal copula structure and
 asymmetric tail dependence across space in ecological variables.
 This result is represented in Fig. \ref{MasterFigure} as the solid box around 
 "Nonlinear environmental effects, Liebig's law" and the arrows labelled "A".
@@ -1322,7 +1322,7 @@ effects of noise ($g_1$, respectively, $g_2$)
 produced lower-tail (respectively, upper-tail) spatial 
 dependence in the ecological variable.
 Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) confirmed that
-ecological outputs had non-Normal copula structure, but did not always reflect 
+ecological outputs had non-normal copula structure, but did not always reflect 
 asymmetry of tail dependence, perhaps because those methods measured
 dependence in the extreme tails. Results using our nonparametric statistics, however,
 reflected the visually apparent asymmetry (Tables \ref{SM-tab_stat_npa_asym}). 
@@ -1331,7 +1331,7 @@ reflected the visually apparent asymmetry (Tables \ref{SM-tab_stat_npa_asym}).
 \begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.1_r_0.8_asym_sens.pdf}
 \caption{If environmental effects operate asymmetrically in their tails on
-ecological variables, it can result in non-Normal copula structure and asymmetric 
+ecological variables, it can result in non-normal copula structure and asymmetric 
 tail dependence across space in the ecological variables. Shown are the last
 $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the text, $b=0.1$.\label{fig_ms_asym_b_0.1}}
 \end{center}
@@ -1344,7 +1344,7 @@ variable was largely confirmed;
 however, similarities between environmental- and 
 ecological-variable copula structure were reduced when 
 dynamics were strongly nonlinear.
-Thus this is a mechanism that can produce non-Normal copula structure and
+Thus this is a mechanism that can produce non-normal copula structure and
 asymmetric tail dependence across space in ecological variables.
 This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
 "Moran effects" and the arrows labelled "B".
@@ -1420,7 +1420,7 @@ correct that asymmetric tail dependence in evolutionary changes
 can produce similarly asymmetric tail dependence between characters across
 phylogeny tips (Appendix \ref{SM-evol_mech}, Fig. \ref{SM-fig_cop_evo} 
 for details). 
-Thus this is a mechanism that may produce non-Normal copula structure and
+Thus this is a mechanism that may produce non-normal copula structure and
 asymmetric tail dependence between characters.
 This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
 "If character evolution has copula structure" and the arrow labelled "D".
@@ -1474,7 +1474,7 @@ hypothesis that the skewness of the spatial
 mean took values on the empirical data no different 
 from what one would expect if the copula
 structure of the data were multivariate N, but the data were otherwise statistically
-unchanged. Significant differences indicate that non-Normal copula structure in the data 
+unchanged. Significant differences indicate that non-normal copula structure in the data 
 contributed to the skewness of the spatial mean time series, 
 i.e., to its instability and "spikiness" through time.
 
@@ -1596,15 +1596,15 @@ for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 # Discussion \label{Discussion}
 
 <!--what we did and why is it important to study?-->
-We showed that non-Normal copula structure and asymmetric tail dependence are 
+We showed that non-normal copula structure and asymmetric tail dependence are 
 common across multiple sub-disciplines
 in ecology, although no research we know of has 
 taken this structure into account. We hypothesized 
-mechanisms that may cause non-Normal copula structures and tail dependence;
+mechanisms that may cause non-normal copula structures and tail dependence;
 we discuss below how commonly some of our
 mechanisms may opperate. 
 We also hypothesized and demonstrated important consequences of 
-non-Normal copula structure and tail-dependence for the field of ecology. 
+non-normal copula structure and tail-dependence for the field of ecology. 
 For instance, the skewness
 of a spatial-average time series is influenced by tail dependencies between its 
 constituent time series: right-tail-dependent local time series 
@@ -1624,7 +1624,7 @@ computer implementations exist (`copula` and
 immediately. We created several interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
 that build upon existing copula methods. 
-To our knowledge, only Normal copulas have 
+To our knowledge, only normal copulas have 
 been used in ecology [@Valpine2014; @Anderson2018; @Popovic2018].
 Such use is equivalent to using normal distributions with transformed
 marginals; i.e., it is equivalent to an approach not using copulas at all, and
@@ -1643,7 +1643,7 @@ are very commonly correlated across space.
 Because these factors, which are the essential ingredients of
 the mechanism, are so common, it is reasonable to suppose the mechanism
 opperates commonly. It may be a dominant cause of 
-tail depencence and non-Normal copula struture of ecological dependencies 
+tail depencence and non-normal copula struture of ecological dependencies 
 across space.
 We provide some empirical support for the mechanism 
 in our discussion of green sprice aphids and
@@ -1653,7 +1653,7 @@ winter temperature below.
 There are also reasons to expect that 
 our Moran mechanism (Fig. \ref{MasterFigure}, B) 
 operates commonly: Moran effects are common [@Liebhold2004], and 
-non-Normal and tail-dependent copula structures are often found in 
+non-normal and tail-dependent copula structures are often found in 
 environmental variables. If intense meteorological events are 
 also widespread, then
 environmental variables associated with these events should take extreme
@@ -1664,7 +1664,7 @@ less correlated across large areas.
 @Serinaldi2008 examined the spatial dependence 
 of rainfall in Central Italy; Gumbel or Student 2-copulas 
 were candidates for modelling dependence, and 
-neither of these is an Normal copula.
+neither of these is a normal copula.
 A long-term study (1950–2014) in the Loess Plateau of China [@She2018]
 showed that a Gumbel copula effectively modeled 
 the spatial dependence of drought variables.
@@ -1675,7 +1675,7 @@ over the North Sikkim Himalayas using spatial datasets [@Goswami2018].
 <!--Causal mechanism C, which we also did not test-->
 We suggested in the Introduction that asymmetric competitive relationships
 between species could yield tail dependence between abundance data for the 
-species. This is another theoretical mechanism for non-Normal copula
+species. This is another theoretical mechanism for non-normal copula
 structure and tail dependence, represented in Fig. \ref{MasterFigure} 
 by the box "Asymmetric species interactions" and the arrow labelled "C".
 It could be tested by analyzing copulas of abundances of competing 
@@ -1748,7 +1748,7 @@ and their relative importance under different circumstances.
 
 <!--green spruce aphid all the way from causes to consequences-->
 Our hypotheses and results cover the presence, causes, and consequences
-of non-Normal copula structure and tail dependence in ecological 
+of non-normal copula structure and tail dependence in ecological 
 datasets (Fig. \ref{MasterFigure}).
 We here take a closer look at the green spruce aphid, which simultaneously 
 illustrates causes and consequences.

@@ -914,6 +914,9 @@ soil C and N. So we will be presenting the nonparam results more comprehensively
 6) That means you also need to summarize the nonparm results for the other 3 bivariate systems in Table 2. How to do this? Maybe put the cor results only, for Spearman only (or Kendall, not sure which to choose) into Table 2.  
 7) Probably ought to combine tables S6, S8, S10 into one table, and fix it so
 whenever we currently cite one of those, change it so we cite the combined table instead.
+8) The nonparam stats are not estimators of tail dependence, they measure 
+something else (though related). Make it clear we know this. It turns out there are estimators
+of tail dependence. Do we want to mention that?
 -->
 
 \begin{figure}[!h]

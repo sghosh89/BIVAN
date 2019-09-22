@@ -57,7 +57,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   mtext("v",2,1.15)
   mtext("A",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(corvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
   lbds<-unname(lambda(coplist[[px+1]]))
   mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
@@ -76,7 +76,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("B",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(corvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
   lbds<-unname(lambda(coplist[[px+1]]))
   mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
@@ -95,7 +95,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("C",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(corvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
   lbds<-unname(lambda(coplist[[px+1]]))
   mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
@@ -114,7 +114,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("D",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(corvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
   lbds<-unname(lambda(coplist[[px+1]]))
   mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
@@ -133,7 +133,7 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
   axis(1,labels=FALSE)
   axis(2,labels=FALSE)
   mtext("E",3,.05,cex=cexvalpl,adj=0)
-  mtext(paste0(cortype,"=",signif(spearvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
+  mtext(paste0(cortype,"=",signif(corvals[px+1],2),"; p=",signif(thetavals[px+1],2)),3,1.55,cex=cexvaltxt)
   lbds<-unname(lambda(coplist[[px+1]]))
   mtext(paste0("LT=",signif(lbds[1],2),"; UT=",signif(lbds[2],2)),3,1,cex=cexvaltxt)
   
@@ -219,69 +219,69 @@ muvcpp<-function(coplist,numpts,corvals,cortype,thetavals,tot_wd,filename)
 
 library(copula)
 numpts<-250
-spearvals<-c(.1,.6,.7,.8,.9)
+kendvals<-c(.1,.6,.7,.8,.9)
 
 #normal
 h<-normalCopula(.2,2,dispstr="un")
-parms<-apply(X=matrix(spearvals,1,5),MARGIN=2,FUN=function(x){iRho(h,x)})
+parms<-apply(X=matrix(kendvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
 coplist<-list(normalCopula(parms[1],2,dispstr = "un"),
               normalCopula(parms[2],2,dispstr = "un"),
               normalCopula(parms[3],2,dispstr = "un"),
               normalCopula(parms[4],2,dispstr = "un"),
               normalCopula(parms[5],2,dispstr = "un"))
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Normal")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Normal")
 
 #clayton
 h<-claytonCopula(3,2)
-parms<-apply(X=matrix(spearvals,1,5),MARGIN=2,FUN=function(x){iRho(h,x)})
+parms<-apply(X=matrix(kendvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
 coplist<-list(claytonCopula(parms[1]),
               claytonCopula(parms[2]),
               claytonCopula(parms[3]),
               claytonCopula(parms[4]),
               claytonCopula(parms[5]))
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Clayton")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Clayton")
 
 #survival Clayton
 coplist<-lapply(FUN=rotCopula,X=coplist)
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvClayton")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvClayton")
 
 #gumbel
 h<-gumbelCopula(3,2)
-parms<-apply(X=matrix(spearvals,1,5),MARGIN=2,FUN=function(x){iRho(h,x)})
+parms<-apply(X=matrix(kendvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
 coplist<-list(gumbelCopula(parms[1]),
               gumbelCopula(parms[2]),
               gumbelCopula(parms[3]),
               gumbelCopula(parms[4]),
               gumbelCopula(parms[5]))
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Gumbel")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Gumbel")
 
 #survival Gumbel
 coplist<-lapply(FUN=rotCopula,X=coplist)
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvGumbel")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvGumbel")
 
 #frank
 h<-frankCopula(3,2)
-parms<-apply(X=matrix(spearvals,1,5),MARGIN=2,FUN=function(x){iRho(h,x)})
+parms<-apply(X=matrix(kendvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
 coplist<-list(frankCopula(parms[1]),
               frankCopula(parms[2]),
               frankCopula(parms[3]),
               frankCopula(parms[4]),
               frankCopula(parms[5]))
-muvcpp(coplist,numpts,spearvals,"S",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Frank")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Frank")
 
 #joe
 h<-joeCopula(3,2)
-parms<-apply(X=matrix(spearvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
+parms<-apply(X=matrix(kendvals,1,5),MARGIN=2,FUN=function(x){iTau(h,x)})
 coplist<-list(joeCopula(parms[1]),
               joeCopula(parms[2]),
               joeCopula(parms[3]),
               joeCopula(parms[4]),
               joeCopula(parms[5]))
-muvcpp(coplist,numpts,spearvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Joe")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_Joe")
 
 #survival Joe
 coplist<-lapply(FUN=rotCopula,X=coplist)
-muvcpp(coplist,numpts,spearvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvJoe")
+muvcpp(coplist,numpts,kendvals,"K",parms,tot_wd=7.5,filename="./Results/PedagogSuppMat_SurvJoe")
 
 #' Make a pedagogical plot for a bivariate copula
 #'

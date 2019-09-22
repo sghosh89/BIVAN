@@ -590,7 +590,7 @@ were used for our study. \label{fig_plankton_map}}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvClayton.pdf}
 \caption[Example survival Clayton copulas]{Log-transformed pdfs (A-E) and samples (F-J) 
 from example survival Clayton 
-copulas. S is Spearman correlation; p is the value of the parameter for the survival Clayton 
+copulas. K is Kendall correlation; p is the value of the parameter for the survival Clayton 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively. The parameter range for the family is $p \in (0,\infty)$, upper-tail dependence is $2^{-1/p}$ and lower-tail
 dependence is $0$.\label{figped_SC}}
@@ -600,8 +600,8 @@ dependence is $0$.\label{figped_SC}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Gumbel.pdf}
-\caption[Example Gumbel copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Gumbel copulas. S is 
-Spearman correlation; $p$ is the value of the parameter for the Gumbel family (it is a 
+\caption[Example Gumbel copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Gumbel copulas. K is Kendall 
+correlation; $p$ is the value of the parameter for the Gumbel family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively. The parameter range for the family is $p \in [1,\infty)$, lower-tail dependence is $0$ and upper-tail
 dependence is $2-2^{1/p}$.\label{figped_G}}
@@ -612,7 +612,7 @@ dependence is $2-2^{1/p}$.\label{figped_G}}
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvGumbel.pdf}
 \caption[Example survival Gumbel copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example survival Gumbel 
-copulas. S is Spearman correlation; $p$ is the value of the parameter for the survival Gumbel 
+copulas. K is Kendall correlation; $p$ is the value of the parameter for the survival Gumbel 
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively. The parameter range for the family is $p \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
 dependence is $2-2^{1/p}$.\label{figped_SG}}
@@ -633,7 +633,7 @@ dependence is $2-2^{1/p}$.\label{figped_J}}
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_SurvJoe.pdf}
 \caption[Example survival Joe copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example survival Joe  
-copulas. K is Spearman correlation; $p$ is the value of the parameter for the survival Joe  
+copulas. K is Kendall correlation; $p$ is the value of the parameter for the survival Joe  
 family (it is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, respectively. The parameter range for the family is $p \in [1,\infty)$, upper-tail dependence is $0$ and lower-tail
 dependence is $2-2^{1/p}$.\label{figped_SJ}}
@@ -643,7 +643,7 @@ dependence is $2-2^{1/p}$.\label{figped_SJ}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Frank.pdf}
-\caption[Example Frank copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Frank copulas. S is Kendall correlation; $p$ is the value of the parameter for the Frank family (it is a 
+\caption[Example Frank copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Frank copulas. K is Kendall correlation; $p$ is the value of the parameter for the Frank family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively. The parameter range for the family is $p \in (0,\infty)$, lower-tail dependence is $0$ and upper-tail
 dependence is $0$.\label{figped_F}}

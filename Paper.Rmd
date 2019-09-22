@@ -534,7 +534,7 @@ and the scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula
 \begin{center}
 \includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Normal.pdf}
 \caption[Example normal copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example normal copulas. 
-S is Spearman correlation; $p$ is the value of the parameter for the normal
+K is Kendall correlation; $p$ is the value of the parameter for the normal
 family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, respectively (see Background section for definition). The 
 parameter range for the family is $p \in [-1,1]$, and lower- and upper-tail
@@ -546,7 +546,7 @@ dependence are always $0$.\label{figped_N}}
 \begin{center}
 \includegraphics[width=\textwidth]{./Results/PedagogSuppMat_Clayton.pdf}
 \caption[Example Clayton copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Clayton  
-copulas. S is Spearman correlation; $p$ is the value of the parameter for the Clayton family (it 
+copulas. K is Kendall correlation; $p$ is the value of the parameter for the Clayton family (it 
 is a one-parameter family); and LT and UT are the measures of lower- and 
 upper-tail dependence, 
 respectively (see Background section for definition). The parameter range for the family is $p \in (0,\infty)$, lower-tail dependence is $2^{-1/p}$ and upper-tail
@@ -892,20 +892,14 @@ RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_coun
 
 <!--***SHYAMOLINA: Please do the following to help me revise this section, so far only covering changes in the presentation of the bivariate results. Please let me know if any of this is unclear or you want to discuss anything.
 1) Replace the pithy abbreviations for the different copulas (N, C, SC, G, etc.) with their full names throughout the main text and sup mat, including in figure and table captions. This will not affect BB1, BB6, etc., but it will affect SBB1, SBB6, etc., which will now be called survival BB1, survival BB6, etc.
-
 >>>> Done. I don't know whether it should be called as a Normal copula or an Normal copula? Now, we use "an".
-
 2) Add AIC and BIC columsn to table S3, and all analogous figures (e.g., S5, S7, S9, etc). Also reduce the number of digits shown after the decimal to 2 for AIC and BIC and 4 for the other columns.
 3) Sort the rows of Table S3 (and all analogous tables, e.g., S5, S7, etc.) by AIC, putting the lowest AIC at the top. This should mean the highest AICw is also at the top.
-
-
 >>>> Added, sorting based on min AIC.
-
 3) Move Table S3 to an appropriate place in the main text. Choose the place based on where it is first cited in the main text. Same for Fig. S21 and Table S4.
 7) Combine tables S6, S8, S10 into one table, and fix it so
 whenever we currently cite one of those, change it so we cite the combined table instead.
 8) Put the cor results only, for Spearman only (or is Kendall more consistent with what we do elsewhere - what do you think?) from tables S4, S6, S8, S10 into Table 2 as a new row.
-
 >>>> All done.
 -->
 

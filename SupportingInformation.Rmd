@@ -888,7 +888,7 @@ stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nam
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/birds/birds_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against a normal copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for bird body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
+\caption[Nonparametric tests against a normal-copula null, bird body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for bird body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_birds_nonparam}}
 \end{center}
 \end{figure}
 
@@ -925,7 +925,7 @@ stat_mammals_ga<-bivfunctionplot(v=cop_m,resloc="./Results/BMR_results/mammals/"
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/BMR_results/mammals/mammals_numbin_10_bivfunctionplot.pdf}
-\caption[Nonparametric tests against a normal copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
+\caption[Nonparametric tests against a normal-copula null, mammal body mass and BMR data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for mammal body mass and BMR data. Same format as Fig. \ref{MT-fig_soilCN_nonparam}, see caption of that figure. \label{fig_bmr_mammals_nonparam}}
 \end{center}
 \end{figure}
 
@@ -982,7 +982,7 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/Ceder_creek_results/2000cc_numbin_4_bivfunctionplot.pdf}
-\caption[Nonparametric tests against a normal copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for Cedar Creek data, year 2000. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
+\caption[Nonparametric tests against a normal-copula null, Cedar Creek data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for Cedar Creek data, year 2000. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.25),\ldots,(0.75,1)$. If the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis.\label{fig_cc2000_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1079,8 +1079,8 @@ tab_3biv_npa_summary<-tab_biv_npa_summary[c(4:12),]
 
 knitr::kable(tab_3biv_npa_summary, booktabs = T, escape=F,
              format = "latex",linesep = "", row.names=F,
-      caption.short = "Nonparametric asymmetry tests against a normal copula null model with birds, mammals and Cedar Creek data",
-      caption = "Nonparametric asymmetry tests against an normal copula null model with birds, mammals and Cedar creek data: for birds and mammals data, results should be interpreted as of soil C and N results (see Table \\ref{MT-tab_soilCN_asym} which shows stronger upper tail dependence). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for $(0,0.25)$ and $(0.75,1)$ range of lower and upper bounds. Though the non-parametric result does not indicate significantly stronger lower tail dependence for Cedar Creek data, the 
+      caption.short = "Nonparametric asymmetry tests against a normal-copula null model with birds, mammals and Cedar Creek data",
+      caption = "Nonparametric asymmetry tests against a normal-copula null model with birds, mammals and Cedar creek data: for birds and mammals data, results should be interpreted as of soil C and N results (see Table \\ref{MT-tab_soilCN_asym} which shows stronger upper tail dependence). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for $(0,0.25)$ and $(0.75,1)$ range of lower and upper bounds. Though the non-parametric result does not indicate significantly stronger lower tail dependence for Cedar Creek data, the 
 greater than (>) sign before the numbers do show the opposite direction in tail-dependence compared to other bivariate datasets.\\label{tab_3biv_npa_summary}")
 ```
 
@@ -1146,7 +1146,7 @@ for Cedar Creek data we used $P_{0,0.25}-P_{0.75,1}$.
 For each dataset, the rank of the statistic for real-data in 
 the distribution of surrogate values was computed. 
 If ranks were $>975$ or $<25$, asymmetry of tail 
-dependence was significant compared to a normal copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
+dependence was significant compared to a normal-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
 for, respectively, the soil C and N dataset, the bird body masses and metabolic rates dataset, 
 the mammal body masses and metabolic rates dataset, and the Cedar Creek data for the year 2000. 
 Thus the first three datasets showed stronger 
@@ -2249,7 +2249,7 @@ Confidence intervals for the value of $\mean(S)$ were then computed as quantiles
 distribution of bootstrapped values. If $\mean(S)$ was significantly different from 0, as
 revealed by the confidence intervals, for the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, 
 or $\Dsq_u-\Dsq_l$, then tail dependence was significantly asymmetric, in contrast to a 
-normal copula null hypothesis.
+normal-copula null hypothesis.
 Bootstrapping was performed by resampling the locations of measurement, with replacement. 
 This corresponds to 
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
@@ -2578,7 +2578,7 @@ of the same statistic computed on surrogate time series randomized to have norma
 given statistic on the data was less (respectively, more) than its value on $X$ of the 
 surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
-lower-tail dependence compared to a normal copula null hypothesis. `FS' stands for `first slice'
+lower-tail dependence compared to a normal-copula null hypothesis. `FS' stands for `first slice'
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```

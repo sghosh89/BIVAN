@@ -4949,19 +4949,19 @@ These transformations made gamma distributed the marginal distributions of popul
 each sampling location for each simulation. 
 A skewed population marginal distribution is an 
 important factor in Taylor's law [@Cohen2015; @Reuman2017]. We refer henceforth to the 
-resulting $N \times n \times 1000$ array as our *N-copula population array* 
+resulting $N \times n \times 1000$ array as our *normal-copula population array* 
 for this simulation exercise;
 copula structure of dependences between populations in different locations
-was normal (N) for this array. 
+was normal for this array. 
 
-We then generated an series of arrays that were the same dimensions ($N \times n \times 1000$)
-as the N-copula population array, and that were statistically similar to 
-the N-copula population array in all ways except the new
+We then generated a series of arrays that were the same dimensions ($N \times n \times 1000$)
+as the normal-copula population array, and that were statistically similar to 
+the normal-copula population array in all ways except the new
 arrays were constructed to have Clayton (respectively, Frank, survival Clayton) copula structure for 
 the dependences between 
 populations in different sampling locations within a simulation. We 
 refer to the new arrays as our
-*C-copula*, *F-copula*, and *SC-copula population arrays*, respectively. The C-copula array was
+*Clayton-copula*, *Frank-copula*, and *Survival Clayton-copula population arrays*, respectively. The Clayton-copula array was
 constructed as follows; the others were constructed analogously. First, we constructed an
 $n$-dimensional Clayton copula with parameter chosen so that the 
 Spearman correlations between each pair of the $n$ components were the same as those
@@ -4970,19 +4970,19 @@ in the `copula` package in R. Because the Clayton copula is a one-paremeter fami
 step relies on the fact that all pairs of locations were 
 equally correlated with each other in the original multivariate normal distribution
 constructed above. We then randomized each simulation in 
-the N-copula population array in a special way 
+the normal-copula population array in a special way 
 (see Appendix \ref{sect:copsurrognd}) so that the resulting 
 surrogate/randomized dataset had the copula structure
 of the Clayton copula just constructed. The randomization procedure worked 
-by permuting time series of values in the N-copula array, separately for each 
+by permuting time series of values in the normal-copula array, separately for each 
 sampling location and simulation. So population marginal distrbutions for each location
-and simulation were *exactly* the same as those in the N-copula population array. 
+and simulation were *exactly* the same as those in the normal-copula population array. 
 Permutations were done in such a way
-that resulting pairwise Spearman correlations were the same as the C-copula 
-constructed above, and hence were the same as the N-copula array, 
+that resulting pairwise Spearman correlations were the same as the Clayton copula 
+constructed above, and hence were the same as the normal-copula array, 
 except for sampling variation. Thus, to summarize using mathematical notation,
-if $m^{(\text{N})}$ is our N-copula population array and $m^{(\text{C})}$ is our 
-C-copula population array, then,
+if $m^{(\text{N})}$ is our normal-copula population array and $m^{(\text{C})}$ is our 
+Clayton-copula population array, then,
 for any given $i$ and $j$, the sets $\{m^{(\text{N})}_{tij}: t=1,\ldots,N\}$ and 
 $\{m^{(\text{C})}_{tij}: t=1,\ldots,N\}$ are exactly the same (when considered 
 as unordered sets); 
@@ -5019,7 +5019,7 @@ influences Taylor's law.
 
 Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
 linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
-(i.e., for simulations in our N-copula population array), $p$-values for the linearty
+(i.e., for simulations in our normal-copula population array), $p$-values for the linearty
 and homoskedasticity tests were roughly uniformly distributed across replicate 
 simulations and Taylor's law appeared visually to be a reasonable approximation
 of the $\log(v_t)$ versus $\log(m_t)$ relationship (Fig. \ref{fig_spTL}B,E,F). 

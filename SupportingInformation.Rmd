@@ -869,10 +869,20 @@ saveRDS(BivMS_birds,file="./Results/BMR_results/birds/BivMS_birds.RDS")
 <!--Display model selection results for BMR:birds data in a table-->
 ```{r tab_bmr_birds_fit, echo=F, results='markup'}
 h<-BivMS_birds$InfCritRes[,c("copname","AIC","AICw","BIC","BICw","LTdep","UTdep")]
-colnames(h)<-c("copula","AIC","AICw","BIC","BICw","LT","UT")
+colnames(h)<-c("Copula","AIC","AICw","BIC","BICw","LT","UT")
 h_ord <- h[order(h$AIC),] #sorting data: min AIC to max AIC
+
+#---- This line forces the formating which is not always true by using digits arg in kable function ----
+h_ord$AIC<-formatC(h_ord$AIC,2,format="f")
+h_ord$AICw<-formatC(h_ord$AICw,2,format="f")
+h_ord$BIC<-formatC(h_ord$BIC,2,format="f")
+h_ord$BICw<-formatC(h_ord$BICw,2,format="f")
+h_ord$LT<-formatC(h_ord$LT,4,format="f")
+h_ord$UT<-formatC(h_ord$UT,4,format="f")
+#-------------------------------------------------
+
 knitr::kable(h_ord,
-             format='latex',linesep = "",row.names = F, digits = c(4,2,2,4,4),
+             format='latex',linesep = "",row.names = F, #digits = c(4,2,2,2,2,4,4),
              caption.short = "Model fitting results for the bird body mass and BMR dataset",
              caption = "Results of fitting our 16 copula families to the bird body mass and BMR dataset. Analogous to Fig. \\ref{MT-tab_soilCNfit}, see caption of that figure for details. \\label{tab_bmr_birds_fit}",
              booktabs=T)
@@ -906,10 +916,20 @@ saveRDS(BivMS_mammals,file="./Results/BMR_results/mammals/BivMS_mammals.RDS")
 <!--Display model selection results for BMR:mammals data in a table-->
 ```{r tab_bmr_mammals_fit, echo=F, results='markup'}
 h<-BivMS_mammals$InfCritRes[,c("copname","AIC","AICw","BIC","BICw","LTdep","UTdep")]
-colnames(h)<-c("copula","AIC","AICw","BIC","BICw","LT","UT")
+colnames(h)<-c("Copula","AIC","AICw","BIC","BICw","LT","UT")
 h_ord <- h[order(h$AIC),] #sorting data: min AIC to max AIC
+
+#---- This line forces the formating which is not always true by using digits arg in kable function ----
+h_ord$AIC<-formatC(h_ord$AIC,2,format="f")
+h_ord$AICw<-formatC(h_ord$AICw,2,format="f")
+h_ord$BIC<-formatC(h_ord$BIC,2,format="f")
+h_ord$BICw<-formatC(h_ord$BICw,2,format="f")
+h_ord$LT<-formatC(h_ord$LT,4,format="f")
+h_ord$UT<-formatC(h_ord$UT,4,format="f")
+#-------------------------------------------------
+
 knitr::kable(h_ord,
-             format='latex',linesep = "",row.names = F, digits = c(4,2,2,4,4),
+             format='latex',linesep = "",row.names = F, #digits = c(4,2,2,2,2,4,4),
              caption.short = "Model fitting results for the mammal body mass and BMR dataset",
              caption = "Results of fitting our 16 copula families to the mammal body mass and BMR dataset. Analogous to Fig. \\ref{MT-tab_soilCNfit}, see caption of that figure for details. \\label{tab_bmr_mammals_fit}",
              booktabs=T)
@@ -951,10 +971,20 @@ BivMS_res_cc<-readRDS("./Results/Ceder_creek_results/BivMS_res_cc.RDS")
 <!--Display model selection results for Cedar-creek data for year 2000 in a table-->
 ```{r tab_cc2000fit, echo=F, results='markup'}
 h<-BivMS_res_cc$`2000`$InfCritRes[,c("copname","AIC","AICw","BIC","BICw","LTdep","UTdep")]
-colnames(h)<-c("copula","AIC","AICw","BIC","BICw","LT","UT")
+colnames(h)<-c("Copula","AIC","AICw","BIC","BICw","LT","UT")
 h_ord <- h[order(h$AIC),] #sorting data: min AIC to max AIC
+
+#---- This line forces the formating which is not always true by using digits arg in kable function ----
+h_ord$AIC<-formatC(h_ord$AIC,2,format="f")
+h_ord$AICw<-formatC(h_ord$AICw,2,format="f")
+h_ord$BIC<-formatC(h_ord$BIC,2,format="f")
+h_ord$BICw<-formatC(h_ord$BICw,2,format="f")
+h_ord$LT<-formatC(h_ord$LT,4,format="f")
+h_ord$UT<-formatC(h_ord$UT,4,format="f")
+#-------------------------------------------------
+
 knitr::kable(h_ord,
-             format='latex',linesep = "",row.names = F, digits = c(4,2,2,4,4),
+             format='latex',linesep = "",row.names = F, #digits = c(4,2,2,2,2,4,4),
              caption.short = "Model fitting results for the Cedar Creek dataset",
              caption = "Results of fitting our 16 copula families to the Cedar Creek dataset, year 2000. Analogous to Fig. \\ref{MT-tab_soilCNfit}, see caption of that figure for details. \\label{tab_cc2000fit}",
              booktabs=T)
@@ -1335,9 +1365,7 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
              format='latex',linesep = "",
              caption.short = "Best-fitting copulas, green spruce aphid abundance data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for green spruce aphid abundance data. Copulas 
-considered were the normal, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, survival Clayton, survival Gumbel, 
-survival Joe, survival BB1, survival BB6, survival BB7, and survival BB8 copulas, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for green spruce aphid abundance data. Copulas considered were the normal (N), Clayton (C), Gumbel (G), Frank (F), Joe (J), BB1, BB6, BB7, BB8, survival Clayton (SC), survival Gumbel (SG), survival Joe (SJ), survival BB1 (SBB1), survival BB6 (SBB6), survival BB7 (SBB7), and survival BB8 (SBB8) copulas. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.\\label{tab_count_bestcop}",
              booktabs=TRUE
              )#%>% # only with 'latex'/'html' format
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
@@ -1550,7 +1578,7 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='latex',linesep = "",
              caption.short = "Best-fitting copulas, leaf-curling plum aphid first flight data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for leaf-curling plum aphid first flight data. Copulas considered were as in Table \\ref{tab_count_bestcop}, with abbreviations in the methods for Q1. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for leaf-curling plum aphid first flight data. Copulas considered were as in Table \\ref{tab_count_bestcop}. NA occurs along the diagonal of the matrix because the diagonal represents a sampling location compared to itself.  \\label{tab_ff_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1770,7 +1798,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='latex', linesep = "",
              caption.short = "Best-fitting copulas, \\textit{Ceratium furca} abundance data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for \\textit{Ceratium furca} abundance data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for \\textit{Ceratium furca} abundance data. Copula families were considered as in Table \\ref{tab_count_bestcop}. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_pns_bestcop}",
              booktabs=TRUE
              )
 ```
@@ -1960,7 +1988,7 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',linesep = "",
              caption.short = "Best-fitting copulas, methane-flux data",
-             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. See methods for Q1 for copula abbreviations. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
+             caption = "Best-fitting copulas for each location pair from among those considered, according to AIC, for methane-flux data. Copula families were considered as in Table \\ref{tab_count_bestcop}. Indep.=Independent. NA occurs along the diagonal because diagonal entries represent a sampling location compared to itself.\\label{tab_methane_bestcop}",
              booktabs=TRUE
              )
 ```

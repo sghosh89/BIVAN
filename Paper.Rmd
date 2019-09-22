@@ -1068,12 +1068,22 @@ common.
 #knitr::opts_knit$set(kable.force.latex = TRUE)
 BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 h<-BivMS_res_Loecke$InfCritRes[,c("copname","AIC","AICw","BIC","BICw","LTdep","UTdep")]
-colnames(h)<-c("copula","AIC","AICw","BIC","BICw","LT","UT")
+colnames(h)<-c("Copula","AIC","AICw","BIC","BICw","LT","UT")
 h_ord <- h[order(h$AIC),] #sorting data: min AIC to max AIC
+
+#---- This line forces the formating which is not always true by using digits arg in kable function ----
+h_ord$AIC<-formatC(h_ord$AIC,2,format="f")
+h_ord$AICw<-formatC(h_ord$AICw,2,format="f")
+h_ord$BIC<-formatC(h_ord$BIC,2,format="f")
+h_ord$BICw<-formatC(h_ord$BICw,2,format="f")
+h_ord$LT<-formatC(h_ord$LT,4,format="f")
+h_ord$UT<-formatC(h_ord$UT,4,format="f")
+#-------------------------------------------------
+
 knitr::kable(h_ord, #longtable = T, 
-             format = "latex",linesep = "",row.names = F, digits = c(4,2,2,2,2,4,4),
+             format = "latex",linesep = "",row.names = F, #digits = c(4,2,2,2,2,4,4), 
       caption.short = "Model fitting results for soil C and N dataset",
-      caption = "Model fitting results for soil C and N dataset using 16 copula families: copula name abbreviations are given in the main text. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family, with fitted parameters; UT = the same for upper-tail dependence. Wights and tail dependences are rounded upto 2 and 4 digits, respectively. \\label{tab_soilCNfit}",
+      caption = "Model fitting results for soil C and N dataset using 16 copula families: normal (N), Frank (F), Clayton (C), survival Clayton (SC), Gumbel (G), survival Gumbel (SG), Joe (J), survival Joe (SJ), BB1, survival BB1 (SBB1), BB6, survival BB6 (SBB6), BB7, survival BB7 (SBB7), BB8, survival BB8 (SBB8). Copulas are sorted according to their AIC values (2nd column). AICw = AIC weight; BIC = BIC value; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family, with fitted parameters; UT = the same for upper-tail dependence. AIC, BIC and their corresponding weights are rounded upto 2 decimal place whereas tail dependences are rounded upto 4 decimal places. \\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 

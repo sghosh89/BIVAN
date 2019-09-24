@@ -1116,45 +1116,9 @@ greater than (>) sign before the numbers do show the opposite direction in tail-
 
 # Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
 
-For bivariate datasets, we compared values 
-of the statistics $\cor_{l_b,u_b}$,
-$\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
-$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
-$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ to 
-distributions of values of the same statistics computed on surrogate datasets that were produced from 
-the empirical data by randomizing it in a special way to have no 
-tail dependence (Appendix \ref{surrog_test}). 
-The surrogate/randomized datasets had exactly 
-the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
-correlation (the surrogate algorithm had two versions, one for preserving each correlation coefficient), 
-but had normal copula structure. Thus our comparisons tested the null hypothesis 
-that our statistics took values on the empirical data no different from what would have been expected 
-if the copula structure of the data were normal, but the data were otherwise 
-statistically unchanged. The comparison of one of the
-statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, $\Dsq_{l_b,u_b}$, as computed on the 
-empirical data, to the distribution
-of its values computed on many surrogate datasets 
-provides a test of whether dependence in the part of the distribution specified 
-by $l_b$ and $u_b$ is different from
-what would be expected from a null hypothesis of normal copula structure but 
-unchanged marginals and similar 
-Kendall (or Spearman)
-correlation. Thus the comparison addresses the first two parts of Q1
-for bivariate datasets. 
-Significant deviations correspond to deviations from normal 
-copula structure. In particular, deviations 
-using $l_b=0$ and $u_b$ small (say, $0.1$) correspond to lower tail dependence 
-different from that of a normal copula;
-likewise, using $l_b=0.9$ and $u_b=1$ tests for upper tail dependence different 
-from that of a normal copula.
-The comparison of one of the statistics 
-$\cor_{0,u_b}-\cor_{1-u_b,1}$, 
-$\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
-$\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$,
-as computed on the empirical data, to the distribution of its values on many surrogate datasets 
-provides a test of asymmetry of dependence. Thus this comparison helps address the
-third part of Q1 for bivariate 
-datasets. 
+<!--***DAN: This appendix will eventually be eliminated when we move all the content to the 
+main text. The next appendix (S7) will be retained pretty much as is. Probably S8 will all be moved to
+the main text and S9 will be kept as it is.-->
 
 The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
 C and N data
@@ -2221,13 +2185,6 @@ saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 
 # Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
 
-For multivariate datasets, we calculated Spearman and Kendall correlations
-and the statistics 
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, $\Dsq_u$,
-$\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
-for all pairs of sampling locations, and we then computed means across the pairs
-for each statistic. We used a spatial resampling scheme 
-(Appendix \ref{spatial_resamp}) to calculate confidence intervals of these means.
 
 For the green spruce aphid abundance data, mean values across all pairs of 
 locations of the Spearman and Kendall correlations and the statistics 
@@ -2257,10 +2214,7 @@ For the methane-flux data, confidence intervals were
 
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
 
-The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 
-as part of a method for 
-performing model selection among matrix regression models. For each pair of 
+For each pair of 
 locations $i \neq j$, the statistic
 of interest, here denoted $s_{ij}$ ($\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$, 
 $\Dsq_{l_b,u_b}$, $\cor_l-\cor_u$, 

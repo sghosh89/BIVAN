@@ -1021,20 +1021,20 @@ saveRDS(stat_cc_ga,"./Results/Ceder_creek_results/stat_cc_ga.RDS")
 bivar_tab_summary_fn<-function(r,rs){
   
   m<-matrix(NA,1,10)
-  colnames(m)<-c("p.Independence.test","minimumAIC.bestfit.copula","Bestfit.copula.AICw",
-                 "Normal.copula.AICw","p.CvM","p.KS",
+  colnames(m)<-c("p.Independence.test","minimumAIC.bestfit.copula","Bestfit.copula.AIC",
+                 "Normal.copula.AIC","p.CvM","p.KS",
                  "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
                  "Rank.(Pl-Pu)")
   m<-as.data.frame(m)
   
   m$p.Independence.test<-round(r$IndepTestRes,3)
   m$minimumAIC.bestfit.copula<-r$InfCritRes$copname[which.min(r$InfCritRes$AIC)]
-  m$Bestfit.copula.AICw<-round(max(r$InfCritRes$AICw),3)
-  m$Normal.copula.AICw<-round(r$InfCritRes$AICw[1],3)
+  m$Bestfit.copula.AIC<-round(min(r$InfCritRes$AIC),2)
+  m$Normal.copula.AIC<-round(r$InfCritRes$AIC[1],2)
   m$p.CvM<-r$GofRes_CvM
   m$p.KS<-r$GofRes_KS
-  m$LT.model.avg<-round(r$relLTdep_AICw,3)
-  m$UT.model.avg<-round(r$relUTdep_AICw,3)
+  m$LT.model.avg<-round(r$relLTdep_AICw,4)
+  m$UT.model.avg<-round(r$relUTdep_AICw,4)
   m$`(LT-UT).model.avg`<-m$LT.model.avg-m$UT.model.avg
   m$`Rank.(Pl-Pu)`<-rs$Rank_PlmPu_K
   mt<-as.data.frame(t(m))
@@ -1309,7 +1309,10 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
 <!--table for AIC-weights of normal copula used for fitting, green spruce aphid abundance data-->
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_count),
+h<-normal_cop_AICw_matrix(r=RES_aphid_count)
+h<-h$normal_cop_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format='latex',linesep = "",digits=3,
              caption.short = "AIC weights, normal copulas, green spruce aphid abundance data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for green spruce aphid abundance data, for comparison with Table \\ref{tab_count_AICw}. \\label{tab_count_AICw_normal}",
@@ -1521,7 +1524,10 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
 <!--table for AIC-weights of normal copula used for fitting, leaf plum curling aphid first flight data-->
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
-knitr::kable(normal_cop_AICw_matrix(r=RES_aphid_ff),
+h<-normal_cop_AICw_matrix(r=RES_aphid_ff)
+h<-h$normal_cop_AICw
+h[is.infinite(h)]<-NA
+knitr::kable(h,
              format='latex',linesep = "",digits=3,
              caption.short="AIC weights, normal copulas, leaf-curling plum aphid first flight data",
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for leaf-curlung plum aphid first flight data, for comparison with Table \\ref{tab_ff_AICw}.\\label{tab_ff_AICw_normal}",
@@ -1744,6 +1750,7 @@ knitr::kable(h,
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
+h<-h$normal_cop_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
@@ -1934,6 +1941,7 @@ knitr::kable(h,
 ```{r tab_methane_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
+h<-h$normal_cop_AICw
 h[is.infinite(h)]<-NA
 knitr::kable(h,
              format="latex",linesep = "",
@@ -2086,24 +2094,35 @@ multivar_tab_summary_fn<-function(r,rs){
   
   m<-matrix(NA,1,17)
   colnames(m)<-c("num.pairs","num.non-indep","num.non-N",
-                 "Avg.best.AICw","Avg.N.AICw","num.good.fit",
+                 "Avg.N_minus_bestfit.AICw","Avg.N_minus_bestfit.AIC","num.good.fit",
                  "0.025-CI.LT","0.975-CI.LT","0.025-CI.UT","0.975-CI.UT",
                  "percent.LT-UT>0",
                  "0.025-CI.Pl","0.975-CI-Pl","0.025-CI.Pu","0.975-CI.Pu","0.025-CI.Pl-Pu","0.975-CI.Pl-Pu")
   m<-as.data.frame(m)
   
-  normal_AICw<-normal_cop_AICw_matrix(r=r)
+  call_AICs_N<-normal_cop_AICw_matrix(r=r)
+  normal_AICw<-call_AICs_N$normal_cop_AICw
+  normal_AICw[normal_AICw==Inf]<-NaN
+  normal_AIC<-call_AICs_N$normal_cop_AIC
+  normal_AIC[normal_AIC==Inf]<-NaN
   
   d<-dim(r$gfc_numBS)[1]
   m$num.pairs<-(d^2)-d 
   m$`num.non-indep`<- (d^2)-d-2*(r$num_indep_loc_pair+r$num_neg_cor_loc_pair)
+  
   bcop<-r$info_ord_copcode[,,1] # matrix with best fit copula name
   bcop[bcop==Inf]<-NaN # replacing Independent pairs with NaN
   m$`num.non-N`<-sum(bcop!=1,na.rm = T)
-  r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN
-  m$Avg.best.AICw<-round(mean(r$info_ord_AICw[,,1],na.rm = T),3)
-  normal_AICw[normal_AICw==Inf]<-NaN
-  m$Avg.N.AICw<-round(mean(normal_AICw,na.rm=T),3)
+  
+  r$info_ord_AIC[r$info_ord_AIC==Inf] <- NaN # replacing non-ind loc pair value by NaN
+  r$info_ord_AICw[r$info_ord_AICw==Inf] <- NaN # replacing non-ind loc pair value by NaN
+  
+  bestfit.AIC<-r$info_ord_AIC[,,1]
+  bestfit.AICw<-r$info_ord_AICw[,,1]
+  
+  m$Avg.N_minus_bestfit.AICw<-round(mean(normal_AICw - bestfit.AICw, na.rm = T),3)
+  m$Avg.N_minus_bestfit.AIC<-round(mean(normal_AIC - bestfit.AIC, na.rm = T),3)
+  
   pcvm<-r$gfc_p_CvM
   pcvm[pcvm==Inf]<-NaN
   pks<-r$gfc_p_KS

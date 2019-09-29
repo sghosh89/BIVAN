@@ -779,16 +779,36 @@ BB8 (10) - 0 LT dep, UT dep 0 except in a boundary case for the parameters
 SBB8 (20) - reverse of BB8-->
 
 For multivariate datasets, we performed the bivariate analysis
-for all possible pairwise combinations of locations, and 
+for all possible pairwise combinations of distinct locations. We carried out
+pairwise bivariate analyses instead of trying to fit a multivariate copula,
+for simplicity and because that approach was
+sufficient to answer our research questions; but see the Discussion
+for a few words on multivariate copulas. We present
+the number of pairs for which a non-normal copula
+was the AIC-best copula. We also computed the model-averaged lower- and
+upper-tail statistics for each pair of locations, and computed the
+mean.  
+
+
+We used a spatial resampling scheme 
+(Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals of these means.
+The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
+widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+as part of a method for 
+performing model selection among matrix regression models.
+Code and data for this
+project are archived at \url{www.github.com/sghosh89/BIVAN}.
+
+
 compared AIC weights and tail-dependence of 
 minimum-AIC copulas with that of a normal copula. We also counted the number of location pairs 
 for which model-averaged lower-tail dependence was 
 greater than model-averaged upper-tail dependence 
 or vice-versa, and reported the percentage of non-independent 
-location pairs showing stronger lower-tail dependence. We carried out
-pairwise bivariate analyses for simplicity and because they were
-sufficient to answer our research questions. But see the Discussion
-for a few words on multivariate copulas.
+location pairs showing stronger lower-tail dependence. 
+
+
+
 
 In addition to our model selection approach, we also used a
 nonparametric approach, to provide greater 
@@ -881,7 +901,7 @@ $\Ps_{0,u_b}-\Ps_{1-u_b,1}$ and
 $\Dsq_{1-u_b,1}-\Dsq_{0,u_b}$ to 
 distributions of values of the same statistics computed on surrogate datasets that were produced from 
 the empirical data by randomizing it in a special way to have no 
-tail dependence (Appendix \ref{surrog_test}). 
+tail dependence (Appendix \ref{SM-surrog_test}). 
 The surrogate/randomized datasets had exactly 
 the same marginal distributions as the empirical data and had very similar Kendall or Spearman 
 correlation (the surrogate algorithm had two versions, one for preserving each correlation coefficient), 
@@ -926,7 +946,7 @@ performing model selection among matrix regression models.
 Code and data for this
 project are archived at \url{www.github.com/sghosh89/BIVAN}.
 
-# Results for Q1: Ecological datasets have non-normal copula structure and asymmetric tail dependence \label{Results}
+# Results for Q1: Ecological datasets have non-normal copula structure and asymmetric tail associations \label{Results}
 
 ```{r read_BivMS_soilCN_data,echo=F}
 d<-read.csv("./Data/SoilCN/SoilCNdata.csv")
@@ -940,18 +960,6 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
 ```
 
-<!--***SHYAMOLINA: Please do the following to help me revise this section, so far only covering changes in the presentation of the bivariate results. Please let me know if any of this is unclear or you want to discuss anything.
-1) Replace the pithy abbreviations for the different copulas (N, C, SC, G, etc.) with their full names throughout the main text and sup mat, including in figure and table captions. This will not affect BB1, BB6, etc., but it will affect SBB1, SBB6, etc., which will now be called survival BB1, survival BB6, etc.
->>>> Done. I don't know whether it should be called as a Normal copula or an Normal copula? Now, we use "an".
-2) Add AIC and BIC columsn to table S3, and all analogous figures (e.g., S5, S7, S9, etc). Also reduce the number of digits shown after the decimal to 2 for AIC and BIC and 4 for the other columns.
-3) Sort the rows of Table S3 (and all analogous tables, e.g., S5, S7, etc.) by AIC, putting the lowest AIC at the top. This should mean the highest AICw is also at the top.
->>>> Added, sorting based on min AIC.
-3) Move Table S3 to an appropriate place in the main text. Choose the place based on where it is first cited in the main text. Same for Fig. S21 and Table S4.
-7) Combine tables S6, S8, S10 into one table, and fix it so
-whenever we currently cite one of those, change it so we cite the combined table instead.
-8) Put the cor results only, for Spearman only (or is Kendall more consistent with what we do elsewhere - what do you think?) from tables S4, S6, S8, S10 into Table 2 as a new row.
->>>> All done.
--->
 
 <!--***DAN: Notes on what needs to be done to this section, so far only getting up through the presentation of the bivariate results:
 1) be more nuanced in the presentation, don't give the appearance of sweeping results that dont agree with the general conclusions under the rug
@@ -978,7 +986,7 @@ for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shan
 \end{center}
 \end{figure}
 
-Across datasets, copula structures were often non-normal and 
+Copula structures were often non-normal and 
 commonly showed asymmetric tail 
 dependence, answering Q1 in the affirmative. 
 To make results easier to absorb, we first 
@@ -1008,10 +1016,9 @@ from each other, helping answer the third part of Q1.
 The numbers reflect stronger upper- than lower-tail
 dependence, and this is also visible in the extreme upper-right
 and lower-left corners of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
-Our model selection procedures do not reveal whether the tail dependence values are 
-*significantly* different from $0$ and from each other; @burnham2003_modelselection do
-not recommend attempts to make statements about statistical significance of 
-information-criterion-based, model selection results. 
+
+Our model selection procedures do not reveal whether tail dependence parameters are 
+*significantly* different from $0$ and from each other. 
 Furthermore, we caution that, while our model selection results do convincingly show 
 non-normal copula structure, model-averaged tail-dependence statistics may have been biased 
 because even the lowest-AIC copula 
@@ -1020,53 +1027,85 @@ was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$Gof
 Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
 available from `BiCopGofTest`).
 Our alternative nonparametric
-approach, results detailed below, provides informaton about significance of tail
+approach, results detailed next, provides informaton about significance of tail
 associations and asymmetries of tail associations.
 
-<!--***DAN: Stopped here. Now do the nonpram results.-->
-
-However, nonparametric statistics verified
-both that tail dependence was distinct from that of a normal copula, and that it 
-was asymmetric (Appendices \ref{SM-Q1bivarnonparam}, \ref{SM-surrog_test}, 
-Fig. \ref{fig_soilCN_nonparam}, Table \ref{tab_soilCN_asym}). Our 
-affirmative, empirically based answer to Q1 for the soil C and N data is 
+The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
+C and N data
+were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates
+of the data,
+separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
+(Fig. \ref{fig_soilCN_nonparam}). Results showed that tail associations of data are stronger in 
+both the lower and upper tails than would be expected under a null hypothesis of a normal copula (Fig. \ref{fig_soilCN_nonparam}B-F).
+The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
+$\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
+on surrogates, separately in two 
+comparisons (Table \ref{tab_soilCN_asym}). Results showed that
+upper-tail association was significantly stronger than lower-tail association. These results
+are consistent with the model selection results, but go beyond them by providing information
+about statistical significance. Thus our results provide an
+affirmative answer to Q1 for the soil C and N data; this answer is 
 represented in Fig. \ref{MasterFigure} as a solid outline around "soil C and N"
 in the right-most box in the middle row.
+<!--***DAN: you may need to change the box around the Cedar Creek data-->
 
 <!--bivariate summary-->
 Table \ref{tab_bivar_summary} summarizes Q1 results 
-for the bivariate datasets. The two 
+for the bivariate datasets, with some details in the Appendices. The two 
 variables were significantly related for all datasets 
 (Table \ref{tab_bivar_summary}, row 1). A non-normal copula 
-always emerged as the lowest-AIC (highest-AIC-weight) copula 
+always emerged as the lowest-AIC copula 
 (Table \ref{tab_bivar_summary}, row 2). 
-The normal copula was always a poor fit compared to the highest-AIC-weight copula 
-(Table \ref{tab_bivar_summary}, rows 3-4), answering the first
-part of Q1. 
-Lower- and upper-tail dependence statistics often differed substantially from 0 
-(Table \ref{tab_bivar_summary}, rows 7-8) and from each other (Table \ref{tab_bivar_summary}, row 9), 
-answering the second and third parts of Q1. 
+The normal copula was a poor fit compared to the lowest-AIC copula 
+(Table \ref{tab_bivar_summary}, rows 3-4), except for Cedar Creek, for which the AIC
+difference between these fits was not meaningfully large (Table \ref{SM-tab_cc2000fit}).
+Thus we answer the first part of Q1 in the affirmative for 3 of 4 of our bivariate datasets. 
+Often, either lower- and upper-tail dependence statistics differed substantially from 0 
+(Table \ref{tab_bivar_summary}, rows 7-8), and/or these statistics differed from each other (Table \ref{tab_bivar_summary}, row 9), 
+helping to answering the second and third parts of Q1. Though again the model
+selection results do not provide 
+information on statistical significance of these differences, and are subject to the
+caveat that, for some datasets, even the lowest-AIC copula was not an objectively good fit
+(Table \ref{tab_bivar_summary}, rows 5 and 6), nonparametric results 
+(Table \ref{tab_bivar_summary}, row 10) showed that tail associations
+deviated significantly from what would be expected from a normal-copula
+null model, and were also significantly asymmetric, except for the Cedar Creek data.
+See Figs \ref{SM-fig_bmr_birds_nonparam}-\ref{SM-fig_cc2000_nonparam} for analogues to 
+Fig. \ref{fig_soilCN_nonparam} for the bivariate datasets other than the soil C and N
+data, and see Table \ref{SM-tab_3biv_npa_summary} for analogues to Table \ref{tab_soilCN_asym}.
 The first three datasets had stronger upper- 
-than lower-tail dependence, and the last dataset had the reverse, though weakly. 
-Although these results convincingly show non-normal copula structure, the 
-model-averaged tail-dependence statistics may have been biased 
-because even the lowest-AIC copula was a poor fit in some cases 
-(Table \ref{tab_bivar_summary}, rows 5-6).
-But our nonparametric statistics confirmed the same conclusions 
-(Appendices \ref{SM-Q1bivarnonparam}, \ref{SM-surrog_test}).
-Our 
-affirmative, empirically based answer to Q1 for the bivariate datasets is 
-represented in Fig. \ref{MasterFigure} as solid outlines around the names of those
+than lower-tail dependence, and the last dataset had the reverse, though non-sgnificantly. Our 
+generally affirmative, empirically based answer to Q1 for the bivariate datasets is 
+represented in Fig. \ref{MasterFigure} as solid outlines around the names of the soil C and N and bird and mammal body mass versus metabolic rate
 datasets, in the middle row of boxes.
+<!--***DAN: change the box for Cedar Creek-->
 We did the same analysis 
 with Cedar Creek data from other available years, 1996-1999 and 2007. For 1996 and 
 2007, biomass and Shannon's index were independent; for 1997-1999, results 
-were similar to 2000: the best-fitting copula was not N, and there was slightly stronger lower- 
-than upper-tail dependence. Detailed results for each dataset are in 
-Tables \ref{tab_soilCNfit} - \ref{tab_soilCN_asym},  \ref{SM-tab_bmr_birds_fit} - \ref{SM-tab_3biv_npa_summary} and 
-Figs. \ref{fig_soilCN_nonparam},  \ref{SM-fig_bmr_birds_nonparam} - \ref{SM-fig_cc2000_nonparam}. 
+were similar to 2000. 
 
-We present green spruce aphid abundance (Table \ref{tab_data_info}) results
+<!--***DAN: to do for dealing with multivariate results
+1) Here is all you want to present for each system
+a) number of total pairs and nonindep pairs
+b) number of pairs for which non-N was best; skip AICw values, i.e., rows 4 and 5 of Table 5
+c) number of well-fitting locs
+d) also keep rows 7-9 of table 5
+
+Get rid of the statement in the methods that says we should not try to combine
+model selection results with p-values
+
+Delete the following stuff from sup mat:
+Figures S24-27
+Tables S7-14, keep Table S15
+Tables S16-23, keep S24
+S25-32, keep S33
+S34-42, keep S42
+
+You will have to go back to the methods and revise those parts
+-->
+
+
+We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
 Independence was rejected for each pair of the 10 sampling locations. 
 Best-fitting (lowest-AIC) copulas were non-N
@@ -1146,7 +1185,7 @@ h_ord$UT<-formatC(h_ord$UT,4,format="f")
 knitr::kable(h_ord, #longtable = T, 
              format = "latex",linesep = "",row.names = F, #digits = c(4,2,2,2,2,4,4), 
       caption.short = "Model fitting results for soil C and N dataset",
-      caption = "Model fitting results for soil C and N dataset using 16 copula families: normal (N), Frank (F), Clayton (C), survival Clayton (SC), Gumbel (G), survival Gumbel (SG), Joe (J), survival Joe (SJ), BB1, survival BB1 (SBB1), BB6, survival BB6 (SBB6), BB7, survival BB7 (SBB7), BB8, and survival BB8 (SBB8). Table rows are sorted according by AIC. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family with fitted parameters; UT = the same for upper-tail dependence. \\label{tab_soilCNfit}",
+      caption = "Model fitting results for soil C and N dataset using 16 copula families: normal (N), Frank (F), Clayton (C), survival Clayton (SC), Gumbel (G), survival Gumbel (SG), Joe (J), survival Joe (SJ), BB1, survival BB1 (SBB1), BB6, survival BB6 (SBB6), BB7, survival BB7 (SBB7), BB8, and survival BB8 (SBB8). Table rows are sorted by AIC. AICw = AIC weight; BICw = BIC weight; LT = the lower-tail dependence statistic for the indicated copula family with fitted parameters; UT = the same for upper-tail dependence. \\label{tab_soilCNfit}",
       booktabs = TRUE)
 ```
 
@@ -1157,13 +1196,13 @@ tab_soilCN_asym<-tab_biv_npa_summary[1:3,2:4]
 knitr::kable(tab_soilCN_asym, booktabs = T, escape=F,
              format = "latex",linesep = "",
       caption.short = "Nonparametric asymmetry tests against a normal-copula null, soil C and N",
-      caption = "Soil C and N dataset results for nonparametric tests of whether asymmetry of tail dependence was significant, compared to a normal-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving normal surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence.\\label{tab_soilCN_asym}")
+      caption = "Soil C and N results for nonparametric tests of whether asymmetry of tail association was significant, compared to a normal-copula null hypothesis. The values of the listed statistics (cor$_{FS}$-cor$_{LS}$ = $\\cor_{0,0.1}-\\cor_{0.9,1}$, P$_{FS}$-P$_{LS}$ = $\\Ps_{0,0.1}-\\Ps_{0.9,1}$, D$_{LS}^2$-D$_{FS}^2$ = $\\Dsq_{0.9,1}-\\Dsq_{0,0.1}$; here FS stands for `first slice' and LS for `last slice') for real data were compared to their values for 1000 Kendall- or Spearman-preserving normal surrogates, in seperate comparisons. A table entry $<X$ indicates the value of the given statistic on the data was less than its value on $X$ of the surrogates, so entries of the form $<X$ for $X$ equal to $975$ or above indicate that upper-tail dependence was significantly stronger than lower-tail dependence. Results were significant only for the $P$ and $D^2$ statistics.\\label{tab_soilCN_asym}")
 ```
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Nonparametric tests against a normal-copula null, soil C and N data]{Nonparametric tests for tail dependence and other deviations from normal copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means dependence in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\caption[Nonparametric tests against a normal-copula null, soil C and N data]{Nonparametric tests for tail association and other deviations from normal copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means association in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1193,14 +1232,14 @@ dt <- tibble(Description = c("1. p-value, independence test",
            "8. Model averaged upper-tail dependence",
            "9. Model averaged lower- minus upper-tail dependence",
            "10. Asymmetry rank in surrogates", # this row will be commented out, that's why the numbering starts from 10 in the next line
-           "10. How many times non-parametric tail asymmetry ($Cor_{FS}-Cor_{LS}$) on given data are less (or greater) than the Spearman-preserving normal surrogates")
+           "10. Placement of cor$_{FS}$-cor$_{LS}$ in surrogate distribution (see caption)")
 )
 tab_bivar_summary<-cbind(dt,tab_bivar_summary)
 tab_bivar_summary<-tab_bivar_summary[c(1:9,11),]
 
 knitr::kable(tab_bivar_summary, 
              format="latex", escape=F,row.names=F,
-             caption = "Summary of Q1 results for bivariate datasets. The $p$-values (rows 5-6) are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. First 3 bivariate data use the default range for first slice (FS) is (0,0.1) and for last slice (LS) is (0.9, 1), whereas Cedar Creek result uses range (0, 0.25) for FS and (0.75, 1) for LS for the year 2000.\\label{tab_bivar_summary}",
+             caption = "Summary of Q1 results for bivariate datasets. The $p$-values (rows 5-6) are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. Row 10 shows values as in Table \\ref{tab_soilCN_asym}, upper right table entry. Although the result shown in row 10 for the soil C and N data is non-significant, see Table \\ref{tab_soilCN_asym} for significant results using the $P$ and $D^2$ statistics. The first 3 datasets use $(l_b,u_b)=(0,0.1)$ for the first slice (FS) and $(0.9,1)$ for last slice (LS), whereas $(0, 0.25)$ and $(0.75,1)$ were used for Cedar Creek due to fewer data for that system. Results for Cedar Creek for the year 2000 are shown. See Table \\ref{tab_soilCNfit} for copula family abbreviations.\\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.4cm")%>%

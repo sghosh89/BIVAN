@@ -1110,47 +1110,8 @@ tab_3biv_npa_summary<-tab_biv_npa_summary[c(4:12),]
 knitr::kable(tab_3biv_npa_summary, booktabs = T, escape=F,
              format = "latex",linesep = "", row.names=F,
       caption.short = "Nonparametric asymmetry tests against a normal-copula null model with birds, mammals and Cedar Creek data",
-      caption = "Nonparametric asymmetry tests against a normal-copula null model with birds, mammals and Cedar creek data: for birds and mammals data, results should be interpreted as of soil C and N results (see Table \\ref{MT-tab_soilCN_asym} which shows stronger upper tail dependence). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for $(0,0.25)$ and $(0.75,1)$ range of lower and upper bounds. Though the non-parametric result does not indicate significantly stronger lower tail dependence for Cedar Creek data, the 
-greater than (>) sign before the numbers do show the opposite direction in tail-dependence compared to other bivariate datasets.\\label{tab_3biv_npa_summary}")
+      caption = "Nonparametric asymmetry tests against a normal-copula null model with birds, mammals and Cedar Creek data. For bird and mammal data, results should be interpreted in the same way as soil C and N results (Table \\ref{MT-tab_soilCN_asym}). For Cedar Creek data, first slice ($FS$) and last slice ($LS$) stand for the ranges $(0,0.25)$ and $(0.75,1)$ for the lower and upper bounds.\\label{tab_3biv_npa_summary}")
 ```
-
-# Verifying Q1 results for bivariate datasets using nonparametric statistics \label{Q1bivarnonparam}
-
-<!--***DAN: This appendix will eventually be eliminated when we move all the content to the 
-main text. The next appendix (S7) will be retained pretty much as is. Probably S8 will all be moved to
-the main text and S9 will be kept as it is.-->
-
-The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
-C and N data
-were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates
-of the data,
-separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
-(Fig. \ref{MT-fig_soilCN_nonparam}). Results show that tail dependence of data is stronger in 
-both the lower and upper tails than would be expected under a null hypothesis of a normal copula.
-The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
-$\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
-on 1000 Kendall- or Spearman-preserving normal surrogates, separately in two 
-comparisons (Table \ref{MT-tab_soilCN_asym}). Results showed that
-upper-tail dependence was significantly stronger than lower-tail dependence.
-
-For first three bivariate datasets in Table \ref{MT-tab_bivar_summary},
-the statistic $P_{0,0.1}-P_{0.9,1}$ was computed for real data and 
-for 1000 Kendall-preserving surrogate datasets with normal copulas. Due to relatively smaller sample size,
-for Cedar Creek data we used $P_{0,0.25}-P_{0.75,1}$.
-For each dataset, the rank of the statistic for real-data in 
-the distribution of surrogate values was computed. 
-If ranks were $>975$ or $<25$, asymmetry of tail 
-dependence was significant compared to a normal-copula null hypothesis. Ranks were `r unname(tab_bivar_summary[10,])`
-for, respectively, the soil C and N dataset, the bird body masses and metabolic rates dataset, 
-the mammal body masses and metabolic rates dataset, and the Cedar Creek data for the year 2000. 
-Thus the first three datasets showed stronger 
-upper- than lower-tail dependence, and the Cedar Creek data showed the reverse 
-(though not significantly), confirming the 
-results based on model selection presented in the main text (see 
-Table \ref{MT-tab_bivar_summary}, row 9). Model selection results for Cedar Creek showed 
-only slightly stronger lower- than upper-tail dependence, consistent with the non-significant 
-tendency toward lower-tail dependence also revealed by the non-parametric analysis for that
-dataset.
 
 # Surrogate testing with bivariate datasets for nonparametric statistics \label{surrog_test}
 
@@ -2185,6 +2146,8 @@ saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 
 # Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
 
+<!--***DAN: I'm inclined to eliminate this appendix and put the material
+in the main text-->
 
 For the green spruce aphid abundance data, mean values across all pairs of 
 locations of the Spearman and Kendall correlations and the statistics 
@@ -2213,6 +2176,9 @@ For the methane-flux data, confidence intervals were
 (`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`).
 
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
+<!--***DAN: leave this section exactly as it is, but it may be out of order
+now that we describe how this is done in the methods. In fact, I think I
+have to do this more generally.-->
 
 For each pair of 
 locations $i \neq j$, the statistic

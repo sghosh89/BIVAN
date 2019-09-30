@@ -2235,37 +2235,6 @@ colnames(tab_multivar_summary)<-c("Green-spruce aphid_count","Leaf-plum curling 
 saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
-# Verifying Q1 results for multivariate datasets using nonparametric statistics \label{Q1multvarnonparam}
-
-<!--***DAN: I'm inclined to eliminate this appendix and put the material
-in the main text-->
-
-For the green spruce aphid abundance data, mean values across all pairs of 
-locations of the Spearman and Kendall correlations and the statistics 
-$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
-confidence intervals excluded $0$ (Table \ref{tab_count_resamp}). 
-Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
-also were always positive and had confidence intervals that excluded $0$ 
-(Table \ref{tab_count_resamp}), confirming the results in the main text on 
-asymmetry of tail dependence and 
-stronger lower- than upper-tail dependence for this dataset. Each of the statistics 
-was plotted against geographic (great-circle) distances between sampling locations, 
-across all pairs of sampling locations (Fig. \ref{fig_aphid_count}). 
-
-Asymmetry of tail dependence was also verified by our nonparametric methods for
-the other multivariate datasets. For instance, the $95\%$ confidence intervals of the
-mean over pairs of sampling locations of the statistic $\Ps_l-\Ps_u$ were 
-(`r unname(round(stat_aphid_ff$numericdf[10,c(3,4)],3))`)
-for the leaf-curling plum aphid first flight data, 
-indicating greater upper-tail dependence, and consistent with
-the results of Table \ref{MT-tab_multivar_summary} (row 9). 
-For the *Ceratium furca* abundance data, confidence intervals were
-(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`), 
-indicating greater lower-tail dependence, and again 
-consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
-For the methane-flux data, confidence intervals were 
-(`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`).
-
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
 <!--***DAN: leave this section exactly as it is, but it may be out of order
 now that we describe how this is done in the methods. In fact, I think I

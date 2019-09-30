@@ -1075,26 +1075,6 @@ with Cedar Creek data from other available years, 1996-1999 and 2007. For 1996 a
 2007, biomass and Shannon's index were independent; for 1997-1999, results 
 were similar to 2000. 
 
-<!--***DAN: to do for dealing with multivariate results
-1) Here is all you want to present for each system
-a) number of total pairs and nonindep pairs
-b) number of pairs for which non-N was best; skip AICw values, i.e., rows 4 and 5 of Table 5
-c) number of well-fitting locs
-d) also keep rows 7-9 of table 5
-
-Get rid of the statement in the methods that says we should not try to combine
-model selection results with p-values
-
-Delete the following stuff from sup mat:
-DONE Figures S24-27
-DONE Tables S7-14, keep Table S15
-DONE Tables S16-23, keep S24
-DONE S25-32, keep S33
-DONE S34-42, keep S42
-
-DONE You will have to go back to the methods and revise those parts
--->
-
 We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
 Independence was rejected for each pair of the 10 sampling locations. 
@@ -1132,14 +1112,14 @@ copula families we used was sufficiently broad to characterize
 these data. Model-averaged lower- and upper-tail
 dependence statistics had $2.5$th and $97.5$th quantiles
 $(0.123,0.721)$ and $(0.002,0.41)$, respectively,
-<!--***DAN: Shyamolina, autolink pls -->
+<!--***DAN: Shyamolina, autolinks pls -->
 thereby commonly differing 
 from what a normal copula would give (i.e., 0), and helping to
 answer the second
 part of Q1: these data have greater tail dependence 
 (lower and upper) than would be expected from a normal-copula null hypothesis. We note however that our model selection 
 procedures again do not reveal whether tail-dependence 
-parameters are significantly different from $0$, and we refer 
+parameters are *significantly* different from $0$, and we refer 
 the reader to nonparametric results below for information
 on significance. 
 Model-averaged lower- minus upper-tail dependence statistics 
@@ -1152,34 +1132,69 @@ again low, $`r 1-pbinom(86/2-1,45,.5)`$.
 <!--***DAN: Shyamolina, please autolink this, and use 3 sig figs as 
 before-->
 Thus the spatial synchrony of rarity in the green spruce aphid is stronger 
-than the spatial synchrony of outbreaks. This also answers the third part of Q1.
+than the spatial synchrony of outbreaks. This answers the third part of Q1.
 
-<!--***DAN: got to here. Next step, put in the actual nonparam stats results which are currently in the Appendices-->
+Nonparametric statistics verified that tail associations were asymmetric for the green 
+spruce aphid abundance data. Mean values across all pairs of 
+locations of the Spearman and Kendall correlations and the statistics 
+$\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, $\Dsq_l$, and $\Dsq_u$ were positive and
+confidence intervals excluded $0$ (Table \ref{tab_count_resamp}). 
+Mean values of the statistics $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$
+also were always positive and had confidence intervals that 
+excluded $0$ 
+(Table \ref{tab_count_resamp}).
 
-Nonparametric statistics verified that tail dependence was asymmetric for the green 
-spruce aphid abundance data (Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatial_resamp}). 
+<!--***DAN: Shyamolina, can you please insert code to make what
+is currently Table S7 appear here? Please also make it disappear from
+the sup mat. I want to move it from there to here, please. I am
+talking about the table with label tab_count_resamp. Please also
+search both the main text and the supp mat for that label, and 
+fix references - you may have to fix some prefixes (SM-, MT-), since
+the table will have moved from sup mat to main text.-->
 
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes Q1 results for
 multivariate data. Results supported the 
 conclusions that non-normal copula structure, non-normal tail dependence, and asymmetric tail 
-dependence were common, answering Q1 in the affirmative for these data. 
+dependence were common, though not universal, answering 
+Q1 in the affirmative for these data. 
 Most location pairs were non-independent 
 (Table \ref{tab_multivar_summary}, row 2). The large majority of non-independent location 
 pairs had best-fitting copulas that were not the normal copula (Table \ref{tab_multivar_summary}, 
-row 3), and AIC weights of best-fitting copulas were 
-better than those of normal copulas (Table \ref{tab_multivar_summary}, rows 4-5).
-Best-fitting copulas were nearly always considered an adequate fit 
-(Table \ref{tab_multivar_summary}, row 6). Some of the datasets (green spruce aphid
+row 3), and AIC values of best-fitting copulas were, on average
+across location pairs, between $2.714$ (*Ceratium furca* abundance data)
+and $5.764$ (leaf-curling plum aphid first-flight data) lower than
+AIC values for the normal copula (Table \ref{tab_multivar_summary}, 
+row 4). Best-fitting copulas were nearly always considered an adequate fit 
+(Table \ref{tab_multivar_summary}, row 5). Some of the datasets (green spruce aphid
 abundance, \textit{Ceratium furca} abundance, methane-flux) showed stronger 
-or marginally stronger lower- than upper-tail dependence 
-(Table \ref{tab_multivar_summary}, rows 7-9), whereas leaf-curling plum aphid first flight
-data showed the reverse. Asymmetry results were verified by nonparametric approaches 
-<!--(e.g., Table \ref{tab_multivar_summary}, row 10)-->
-(Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatial_resamp}). Detailed results are in 
-Tables \ref{SM-tab_count_bestcop}-\ref{SM-tab_methane_resamp} and 
-Figs \ref{SM-fig_aphid_count}-\ref{SM-fig_methane}.
-Our 
+lower- than upper-tail dependence 
+(Table \ref{tab_multivar_summary}, rows 6-8), whereas leaf-curling plum aphid first flight
+data showed the reverse. All of the values in Table \ref{tab_multivar_summary}, rows 8 deviated highly significantly
+from what would have been expected under a null hypothesis 
+of equal chances for positive and negative values. 
+
+Asymmetry results were generally verified by nonparametric approaches,
+with the exception of the methane-flux data. 
+For instance, the $95\%$ confidence intervals of the
+mean over pairs of sampling locations of the statistic $\cor_l-\cor_u$ were 
+(`r unname(round(stat_aphid_ff$numericdf[10,c(3,4)],3))`)
+for the leaf-curling plum aphid first flight data
+(Table \ref{tab_multivar_summary}, row 9), 
+indicating greater upper-tail dependence, and consistent with
+the results of Table \ref{MT-tab_multivar_summary}, row 8. 
+For the *Ceratium furca* abundance data, confidence intervals were
+(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`), 
+indicating greater lower-tail dependence, and again 
+consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
+For the methane-flux data, confidence intervals were 
+(`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`);
+the asymmetry in tail dependence revealed by the model selection
+results for the methane-flux data was apparently not strong enough to
+also be revealed by the nonparametric analyses. 
+Analogues to Table \ref{tab_count_resamp} are in Tables
+\ref{SM-tab_ff_resamp}-\ref{SM-tab_methane_resamp}.
+Our generally
 affirmative, empirically based answer to Q1 for the multivariate datasets is 
 represented in Fig. \ref{MasterFigure} as solid outlines around the names
 of those datasets, in the middle row of boxes.

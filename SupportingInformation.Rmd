@@ -1284,6 +1284,7 @@ saveRDS(RES_aphid_count,paste(resloc,file="AphidCopulaFit_selecloc_count_species
 ```
 
 <!--table for Best-fitting copulas, green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_bestcop, echo=F, results="markup"}
 #library(dplyr)
 #knitr::opts_knit$set(kable.force.latex = TRUE)
@@ -1295,8 +1296,10 @@ knitr::kable(RES_aphid_count$info_ord_copname[,,1], #longtable = T,
              )#%>% # only with 'latex'/'html' format
  # kableExtra::kable_styling(latex_options = c("striped","HOLD_position"))
 ```
+-->
 
 <!--table for AIC-weights of best-fitting copulas, green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$info_ord_AICw[,,1], 
              format='latex',linesep = "",digits=3,
@@ -1305,8 +1308,10 @@ knitr::kable(RES_aphid_count$info_ord_AICw[,,1],
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for AIC-weights of normal copula used for fitting, green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_aphid_count)
@@ -1319,8 +1324,10 @@ knitr::kable(h,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_CvM,
              format='latex',linesep = "",digits=3,
@@ -1329,8 +1336,10 @@ knitr::kable(RES_aphid_count$gfc_p_CvM,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$gfc_p_KS,
              format='latex',linesep = "",digits=3,
@@ -1339,8 +1348,10 @@ knitr::kable(RES_aphid_count$gfc_p_KS,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged lower tail dep., green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1349,8 +1360,10 @@ knitr::kable(RES_aphid_count$LTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged upper tail dep., green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$UTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1359,8 +1372,10 @@ knitr::kable(RES_aphid_count$UTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged lower- minus upper-tail dep., green spruce aphid abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_count_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              digits = 3,linesep = "",
@@ -1370,6 +1385,7 @@ knitr::kable(RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw,
              booktabs=TRUE
              )
 ```
+--> 
 
 <!--Do the main computations for nonparametric analysis of green spruce aphid abundance data-->
 ```{r stat_aphid_count, echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -1402,6 +1418,7 @@ knitr::kable(s, digits = 3,
              booktabs=TRUE)
 ```
 
+<!--***DAN: decided to remove this for AER
 \begin{figure}[!h]
 \textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.4 cm} (D)} \\
 \vspace{-0.5 cm}
@@ -1428,6 +1445,7 @@ knitr::kable(s, digits = 3,
 \caption[Nonparametric tail statistics versus distance between locations for green spruce aphid abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for green spruce aphid abundance data. \label{fig_aphid_count}}
 \end{center}
 \end{figure}
+-->
 
 <!--Simulation for model selection and non-parametric analysis with aphids first flight data for all 20 sp.-->
 ```{r modelsel_and_npa_aphid_ff_allsp, echo=F, cache=T, cache.extra=list(seed,busycores,data_aphid_ff,mtime("FittingCopula_selective_loc.R"), mtime("vivj_matrix.R"),mtime("good_loclist.R"),mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("NonParamStat.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -1502,6 +1520,7 @@ saveRDS(RES_aphid_ff,paste(resloc,file="AphidCopulaFit_selecloc_firstflight_spec
 ```
 
 <!--table for Best-fitting copulas, leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_bestcop, echo=F, results="markup"}
 knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              format='latex',linesep = "",
@@ -1510,8 +1529,10 @@ knitr::kable(RES_aphid_ff$info_ord_copname[,,1], #longtable = T,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for AIC-weights of best-fitting copulas, leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$info_ord_AICw[,,1], 
              format='latex',linesep = "",digits=3,
@@ -1520,8 +1541,10 @@ knitr::kable(RES_aphid_ff$info_ord_AICw[,,1],
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for AIC-weights of normal copula used for fitting, leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_AICw_normal, echo=F, results='markup'}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_aphid_ff)
@@ -1534,9 +1557,11 @@ knitr::kable(h,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, 
 leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_p_CvM, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_CvM,
              format='latex',linesep = "",digits=3,
@@ -1545,9 +1570,11 @@ knitr::kable(RES_aphid_ff$gfc_p_CvM,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, 
 leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_p_KS, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$gfc_p_KS,
              format='latex',linesep = "",digits=3,
@@ -1556,8 +1583,10 @@ knitr::kable(RES_aphid_ff$gfc_p_KS,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged lower tail dep., leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_LTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1566,8 +1595,10 @@ knitr::kable(RES_aphid_ff$LTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged upper tail dep., leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_UTdep_AICw, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$UTdep_AICw,
              format='latex',linesep = "",digits=3,
@@ -1576,8 +1607,10 @@ knitr::kable(RES_aphid_ff$UTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for model averaged lower- minus upper-tail dep., leaf plum curling aphid first flight data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_ff_LTmUT, echo=F, results='markup'}
 knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              digits = 3,
@@ -1587,6 +1620,7 @@ knitr::kable(RES_aphid_ff$LTdep_AICw-RES_aphid_ff$UTdep_AICw,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--Do the main computations for nonparametric analysis of leaf plum curling aphid first flight data-->
 ```{r stat_aphid_ff, echo=F, cache=T,  cache.extra=list(seed,data_aphid_ff,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -1619,6 +1653,7 @@ knitr::kable(s, digits = 3,
              booktabs=TRUE)
 ```
 
+<!--***DAN: decided to remove this for AER
 \begin{figure}[!h]
 \textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.4 cm} (D)} \\
 \vspace{-0.5 cm}
@@ -1645,6 +1680,7 @@ knitr::kable(s, digits = 3,
 \caption[Nonparametric tail statistics versus distance between locations for leaf-curling plum aphid first flight data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for leaf-curling plum aphid first flight data. \label{fig_aphid_ff}}
 \end{center}
 \end{figure}
+-->
 
 <!--Load the data : planktons-->
 ```{r read_plankton_north_sea_data, echo=F}
@@ -1725,6 +1761,7 @@ saveRDS(RES_plankton_north_sea,paste(resloc,file="Plankton_North_Sea_CopulaFit_s
 ```
 
 <!--table for Best-fitting copulas, Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_bestcop, echo=F, results="markup"}
 knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              format='latex', linesep = "",
@@ -1733,8 +1770,10 @@ knitr::kable(RES_plankton_north_sea$info_ord_copname[,,1], #longtable=T,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for AIC-weights of best-fitting copulas, Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
@@ -1745,8 +1784,10 @@ knitr::kable(h,
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for AIC-weights of normal copula used for fitting, Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_plankton_north_sea)
@@ -1759,8 +1800,10 @@ knitr::kable(h,
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for \\textit{Ceratium furca} abundance data, for comparison with Table \\ref{tab_pns_AICw}.\\label{tab_pns_AICw_normal}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_p_CvM,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_CvM
 h[is.infinite(h)]<-NA
@@ -1771,8 +1814,10 @@ knitr::kable(h,
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_CvM}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_p_KS,echo=F,results="markup"}
 h<-RES_plankton_north_sea$gfc_p_KS
 h[is.infinite(h)]<-NA
@@ -1785,8 +1830,10 @@ the goodness of fit of the lowest-AIC copula family for each pair of
 locations for \\textit{Ceratium furca} abundance data.\\label{tab_pns_p_KS}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged lower tail dep., Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_LTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw
 h[is.infinite(h)]<-NA
@@ -1797,8 +1844,10 @@ knitr::kable(h,
              caption = "Model-averaged lower-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_LTdep_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged upper tail dep., Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_UTdep_AICw,echo=F,results="markup"}
 h<-RES_plankton_north_sea$UTdep_AICw
 h[is.infinite(h)]<-NA
@@ -1809,8 +1858,10 @@ knitr::kable(h,
              caption = "Model-averaged upper-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_UTdep_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged lower- minus upper-tail dep., Ceratium furca abundance data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_pns_LTmUT,echo=F,results="markup"}
 h<-RES_plankton_north_sea$LTdep_AICw-RES_plankton_north_sea$UTdep_AICw
 h[is.nan(h)]<-NA
@@ -1821,6 +1872,7 @@ knitr::kable(h,
              caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for \\textit{Ceratium furca} abundance data.\\label{tab_pns_LTmUT}",
              booktabs=TRUE)
 ```
+-->
 
 <!--Do the main computations for nonparametric analysis of Ceratium furca abundance data-->
 ```{r stat_plankton_north_sea, echo=F, cache=T, cache=T,  cache.extra=list(seed,data_plankton_north_sea,longs_pns,lats_pns,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -1852,6 +1904,7 @@ knitr::kable(s, digits = 3,
              booktabs=TRUE)
 ```
 
+<!--***DAN: decided to remove this for AER
 \begin{figure}[!h]
 \textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.4 cm} (D)} \\
 \vspace{-0.5 cm}
@@ -1878,6 +1931,7 @@ knitr::kable(s, digits = 3,
 \caption[Nonparametric tail statistics versus distance between locations for \textit{Ceratium furca} abundance data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for \textit{Ceratium furca} abundance data. \label{fig_pns}}
 \end{center}
 \end{figure}
+-->
 
 <!--Load and format the data : methane-flux-->
 ```{r read_format_methane_data, echo=F}
@@ -1916,6 +1970,7 @@ saveRDS(RES_methane,paste(resloc,file="MethaneFluxFit_selecloc_data_pt_thrs_50.R
 ```
 
 <!--table for Best-fitting copulas, methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_bestcop, echo=F, results="markup"}
 knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              format='latex',linesep = "",
@@ -1924,8 +1979,10 @@ knitr::kable(RES_methane$info_ord_copname[,,1], #longtable=T,
              booktabs=TRUE
              )
 ```
+-->
 
 <!--table for AIC-weights of best-fitting copulas, methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_AICw,echo=F,results="markup"}
 h<-RES_methane$info_ord_AICw[,,1]
 h[is.infinite(h)]<-NA
@@ -1936,8 +1993,10 @@ knitr::kable(h,
              caption = "$\\text{AIC}_{\\text{w}}$ for the best-fitting (lowest AIC) copula family for each location pair for methane-flux data.\\label{tab_methane_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for AIC-weights of normal copula used for fitting, methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_AICw_normal,echo=F,results="markup"}
 source("normal_cop_AICw.R")
 h<-normal_cop_AICw_matrix(r=RES_methane)
@@ -1950,8 +2009,10 @@ knitr::kable(h,
              caption = "$\\text{AIC}_{\\text{w}}$ for the normal copula family for each location pair for methane-flux data, for comparison with Table \\ref{tab_methane_AICw}.\\label{tab_methane_AICw_normal}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Cramer-von Mises-based test) with best-fit copula, methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_p_CvM,echo=F,results="markup"}
 h<-RES_methane$gfc_p_CvM
 h[is.infinite(h)]<-NA
@@ -1962,8 +2023,10 @@ knitr::kable(h,
              caption = "$P$-value results of a Cramer-von Mises-based test of the goodness of fit of the lowest-AIC copula family for each pair of locations for methane-flux data.\\label{tab_methane_p_CvM}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for p-values from goodness of fit test (Kolmogorov-Smirnov-based test) with best-fit copula, methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_p_KS,echo=F,results="markup"}
 h<-RES_methane$gfc_p_KS
 h[is.infinite(h)]<-NA
@@ -1976,8 +2039,10 @@ the goodness of fit of the lowest-AIC copula family for each pair of
 locations for methane-flux data.\\label{tab_methane_p_KS}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged lower tail dep., methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_LTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw
 h[is.infinite(h)]<-NA
@@ -1988,8 +2053,10 @@ knitr::kable(h,
              caption = "Model-averaged lower-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_LTdep_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged upper tail dep., methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_UTdep_AICw,echo=F,results="markup"}
 h<-RES_methane$UTdep_AICw
 h[is.infinite(h)]<-NA
@@ -2000,8 +2067,10 @@ knitr::kable(h,
              caption = "Model-averaged upper-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_UTdep_AICw}",
              booktabs=TRUE)
 ```
+-->
 
 <!--table for model averaged lower- minus upper-tail dep., methane-flux data-->
+<!--***DAN: decided to remove this for AER
 ```{r tab_methane_LTmUT,echo=F,results="markup"}
 h<-RES_methane$LTdep_AICw-RES_methane$UTdep_AICw
 h[is.nan(h)]<-NA
@@ -2012,6 +2081,7 @@ knitr::kable(h,
              caption = "Model-averaged lower-tail dependence statistics minus model-averaged upper-tail dependence statistics for each location pair for methane-flux data.\\label{tab_methane_LTmUT}",
              booktabs=TRUE)
 ```
+-->
 
 <!--Do the main computations for nonparametric analysis of methane-flux data-->
 ```{r stat_methane, echo=F, cache=T, cache=T,  cache.extra=list(seed,methane_data,methane_raw,latlon_methane,mtime("good_loclist.R"),mtime("NonParamStat.R"),mtime("vivj_matrix.R"),mtime("CopulaFunctions.R"), mtime("CopulaFunctions_flexible.R"))}
@@ -2059,6 +2129,7 @@ knitr::kable(s,digits = 3,
              booktabs=TRUE)
 ```
 
+<!--***DAN: decided to remove this for AER
 \begin{figure}[!h]
 \textbf{ \hspace{3.4 cm} (A) \hspace{3.2 cm} (B) \hspace{3.2 cm} (C) \hspace{3.4 cm} (D)} \\
 \vspace{-0.5 cm}
@@ -2085,6 +2156,7 @@ knitr::kable(s,digits = 3,
 \caption[Nonparametric tail statistics versus distance between locations for methane-flux data]{Nonparametric tail statistics versus great-circle distance, $D$, between sampling locations for methane-flux data. \label{fig_methane}}
 \end{center}
 \end{figure}
+-->
 
 <!--Function to generate a table containing summary results for all multivariate datasets-->
 ```{r multivar_tab_summary_fn,echo=F}

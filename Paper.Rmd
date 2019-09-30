@@ -71,8 +71,6 @@ The importance of copulas in ecology-->
 
 \noindent \emph{Correspondence:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
-\noindent \emph{Type of Submission:} Articles, or Concepts and Synthesis
-
 \noindent \emph{The number of words in the abstract:} 266 
 
 \newpage
@@ -687,7 +685,7 @@ and recommended by @Genest1995 and @Shih1995. Their estimator of copula
 parameters, which we use, was shown to be consistent, asymptotically normal,
 and fully efficient at indepencence [@Genest1995]. @Genest2007
 recommend carrying out inferences of dependence structures (which was our
-goal here) using ranks.
+goal here) using normalized ranks.
 We used the fitting implementation given in `BiCopEst` in `VineCopula`.
 Fourth, we obtained AIC and BIC values and accompanying model weights 
 $\text{AIC}_{\text{w}}$ and 
@@ -746,11 +744,10 @@ and Frank families. These families have pdfs symmetric about the line
 $v=-u+1$. We also used several families that can show both upper- and
 lower-tail dependence, in relative amounts that depend on parameter
 values: the BB1, survival BB1, BB7 and survival BB7 families. 
-We also used the BB8 copula, which shows zero lower-tail dependence,
+We also used the BB8 family, which shows zero lower-tail dependence,
 and zero upper-tail dependence except for a boundary case for the parameters.
-We used the survival BB8 copula, which shows zero upper-tail dependence, 
-and zero lower-tail dependence except for a boundary case for the 
-paremeters.
+And we used the survival BB8 copula, which shows zero upper-tail dependence, 
+and zero lower-tail dependence except for a boundary case.
 "Survival" families are rotations of the copula with the similar name by
 180 degrees. 
 See @Joe1997 for details on all these families. We used the implementations
@@ -783,32 +780,16 @@ for all possible pairwise combinations of distinct locations. We carried out
 pairwise bivariate analyses instead of trying to fit a multivariate copula,
 for simplicity and because that approach was
 sufficient to answer our research questions; but see the Discussion
-for a few words on multivariate copulas. We present
+for a few words on multivariate copulas. 
+<!--***DAN: dont forget to put these in!-->
+We present
 the number of pairs for which a non-normal copula
-was the AIC-best copula. We also computed the model-averaged lower- and
-upper-tail statistics for each pair of locations, and computed the
-mean.  
-
-
-We used a spatial resampling scheme 
-(Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals of these means.
-The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 
-as part of a method for 
-performing model selection among matrix regression models.
-Code and data for this
-project are archived at \url{www.github.com/sghosh89/BIVAN}.
-
-
-compared AIC weights and tail-dependence of 
-minimum-AIC copulas with that of a normal copula. We also counted the number of location pairs 
-for which model-averaged lower-tail dependence was 
-greater than model-averaged upper-tail dependence 
-or vice-versa, and reported the percentage of non-independent 
-location pairs showing stronger lower-tail dependence. 
-
-
-
+was the AIC-best copula, and we characterize AIC differences between
+the normal and AIC-best copulas across location pairs. 
+We also computed the model-averaged lower- and
+upper-tail statistics, and differences
+between these, for each pair of locations, and we characterize
+the distribution of these values across location pairs.  
 
 In addition to our model selection approach, we also used a
 nonparametric approach, to provide greater 
@@ -986,9 +967,10 @@ for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shan
 \end{center}
 \end{figure}
 
-Copula structures were often non-normal and 
-commonly showed asymmetric tail 
-dependence, answering Q1 in the affirmative. 
+Copula structures were non-normal and 
+showed asymmetric tail 
+associations for most, but not all datasets we examined, 
+answering Q1 in the affirmative. 
 To make results easier to absorb, we first 
 present results for an example bivariate dataset, then we summarize results
 for all bivariate datasets, then we present results for an example multivariate dataset, then we 
@@ -1004,9 +986,16 @@ to the normalized ranks (Fig. \ref{fig_biv_multi_raw_cop}E)
 and computed AIC and BIC weights and corresponding
 lower- and upper-tail statistics for the fitted distributions (Table \ref{tab_soilCNfit}).
 `r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]` was the 
-minimum-AIC copula, with AIC weight `r round(max(BivMS_res_Loecke$InfCritRes$AICw),2)`, whereas the 
-normal copula had AIC weight essentially 0, answering the 
-first part of Q1 for these data. 
+minimum-AIC copula, with AIC `r round(min(BivMS_res_Loecke$InfCritRes$AIC),2)`, whereas the 
+normal copula had a much higher AIC, $-6333.16$, 
+<!--***DAN: Shyamolina, please make this an autolink. Please make 
+sure to round to two digits after the decimal, as with the AIC best value
+presented just above.-->
+answering the 
+first part of Q1 for these data. Recall that AIC differences of $2$
+or $3$ are considered meaningful and differences of $8$ or greater
+are considered diffinitive, so that data provide essentially no support
+for the higher-AIC model in that case [@burnham2003_modelselection].
 Model-averaged lower- and upper-tail dependence statistics were `r round(BivMS_res_Loecke$relLTdep_AICw,3)` 
 and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were used for averaging). 
 These values are distinct from what a normal copula would give, namely, 0, helping to answer 
@@ -1060,7 +1049,7 @@ The normal copula was a poor fit compared to the lowest-AIC copula
 (Table \ref{tab_bivar_summary}, rows 3-4), except for Cedar Creek, for which the AIC
 difference between these fits was not meaningfully large (Table \ref{SM-tab_cc2000fit}).
 Thus we answer the first part of Q1 in the affirmative for 3 of 4 of our bivariate datasets. 
-Often, either lower- and upper-tail dependence statistics differed substantially from 0 
+Often, either lower- or upper-tail dependence statistics differed substantially from 0 
 (Table \ref{tab_bivar_summary}, rows 7-8), and/or these statistics differed from each other (Table \ref{tab_bivar_summary}, row 9), 
 helping to answering the second and third parts of Q1. Though again the model
 selection results do not provide 
@@ -1074,9 +1063,11 @@ See Figs \ref{SM-fig_bmr_birds_nonparam}-\ref{SM-fig_cc2000_nonparam} for analog
 Fig. \ref{fig_soilCN_nonparam} for the bivariate datasets other than the soil C and N
 data, and see Table \ref{SM-tab_3biv_npa_summary} for analogues to Table \ref{tab_soilCN_asym}.
 The first three datasets had stronger upper- 
-than lower-tail dependence, and the last dataset had the reverse, though non-sgnificantly. Our 
-generally affirmative, empirically based answer to Q1 for the bivariate datasets is 
-represented in Fig. \ref{MasterFigure} as solid outlines around the names of the soil C and N and bird and mammal body mass versus metabolic rate
+than lower-tail dependence, and the last dataset had the reverse, though non-significantly. Our 
+generally affirmative (except for Cedar Creek), 
+empirically based answer to Q1 for the bivariate datasets is 
+represented in Fig. \ref{MasterFigure} as solid outlines around the names of 
+the soil C and N and bird and mammal body mass versus metabolic rate
 datasets, in the middle row of boxes.
 <!--***DAN: change the box for Cedar Creek-->
 We did the same analysis 
@@ -1095,40 +1086,76 @@ Get rid of the statement in the methods that says we should not try to combine
 model selection results with p-values
 
 Delete the following stuff from sup mat:
-Figures S24-27
-Tables S7-14, keep Table S15
-Tables S16-23, keep S24
-S25-32, keep S33
-S34-42, keep S42
+DONE Figures S24-27
+DONE Tables S7-14, keep Table S15
+DONE Tables S16-23, keep S24
+DONE S25-32, keep S33
+DONE S34-42, keep S42
 
-You will have to go back to the methods and revise those parts
+DONE You will have to go back to the methods and revise those parts
 -->
-
 
 We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
 Independence was rejected for each pair of the 10 sampling locations. 
-Best-fitting (lowest-AIC) copulas were non-N
-for the large majority of location pairs (Table \ref{SM-tab_count_bestcop}), and 
-AIC weights for best-fitting copulas (Table \ref{SM-tab_count_AICw}) 
-were typically substantially 
-larger than normal copula weights (Table \ref{SM-tab_count_AICw_normal}), answering the first part of Q1. Goodness of fit tests 
-(Tables \ref{SM-tab_count_p_CvM}, \ref{SM-tab_count_p_KS}) in every case 
-failed to reject the hypothesis that the AIC-best copula family was also 
+Best-fitting (lowest-AIC) copulas were non-normal
+for the large majority of location pairs (72 of 90 pairs), 
+<!--***DAN: Shyamolina, please make these numbers autolinks-->
+and the AIC
+of the normal copula minus the minimum AIC, averaged across 
+location pairs, was $2.732$.
+<!--***DAN: Shyamolina, please make this an autolink, so the value is
+automatically filled in even if it changes-->
+Whereas $2.732$
+<!--***DAN: Shyamolna, again, autolink, please-->
+would be only a marginally meaningful AIC difference for a single
+location pair, it is more meaningful as an average across many
+pairs. Relatedly, and illustrating the concept here, 
+the chances of getting 72 or more 
+non-normal location pairs if the chances were equal of getting
+a normal versus a non-normal result (and taking into account that
+the location pair (A,B) will necessarily 
+produce the same result as the pair
+(B,A)) is low, $`r 1-pbinom(72/2-1,45,.5)`$. 
+<!--***DAN: Shyamolina, please replace the 72 in the above expression
+by an autolink, and make this show
+3 significant digits, i.e., it should show 3.29e-5, not 3.287332e-05-->
+These results help answer the first part of Q1: non-normal
+copula structure appears to be meaningfully common in
+these data, even if not universal.
+Goodness of fit tests in every case 
+failed to reject the hypothesis that the AIC-best copula 
+family was also 
 an objectively adequate description of 
 the data; i.e., the collection of 
-copula families we used was sufficiently broad to characterize these data.
-Model-averaged lower- (Table \ref{SM-tab_count_LTdep_AICw}) and upper-tail
-(Table \ref{SM-tab_count_UTdep_AICw}) dependence statistics were exclusively 
-positive and were frequently large, thereby differing 
-from what a normal copula would give (i.e., 0), and answering the second
+copula families we used was sufficiently broad to characterize 
+these data. Model-averaged lower- and upper-tail
+dependence statistics had $2.5$th and $97.5$th quantiles
+$(0.123,0.721)$ and $(0.002,0.41)$, respectively,
+<!--***DAN: Shyamolina, autolink pls -->
+thereby commonly differing 
+from what a normal copula would give (i.e., 0), and helping to
+answer the second
 part of Q1: these data have greater tail dependence 
-(lower and upper) than would be expected from a normal-copula null hypothesis. 
+(lower and upper) than would be expected from a normal-copula null hypothesis. We note however that our model selection 
+procedures again do not reveal whether tail-dependence 
+parameters are significantly different from $0$, and we refer 
+the reader to nonparametric results below for information
+on significance. 
 Model-averaged lower- minus upper-tail dependence statistics 
-(Table \ref{SM-tab_count_LTmUT}) were positive 
-for all but a few location pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
-out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`). Thus the spatial synchrony of rarity in the green spruce aphid is stronger 
+were positive for all but a few location pairs (`r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
+out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1])-2*RES_aphid_count$num_indep_loc_pair`). The chances
+of getting `r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
+or more positive values, here, under a null hypothesis of equal chances 
+for positive and negative values (and again accounting for the fact that location pairs (A,B) and (B,A) will show the same result) was
+again low, $`r 1-pbinom(86/2-1,45,.5)`$. 
+<!--***DAN: Shyamolina, please autolink this, and use 3 sig figs as 
+before-->
+Thus the spatial synchrony of rarity in the green spruce aphid is stronger 
 than the spatial synchrony of outbreaks. This also answers the third part of Q1.
+
+<!--***DAN: got to here. Next step, put in the actual nonparam stats results which are currently in the Appendices-->
+
 Nonparametric statistics verified that tail dependence was asymmetric for the green 
 spruce aphid abundance data (Appendix \ref{SM-Q1multvarnonparam}, \ref{SM-spatial_resamp}). 
 
@@ -1223,8 +1250,8 @@ library(dplyr)
 library(tibble)
 
 dt <- tibble(Description = c("1. p-value, independence test",
-           "2. Minimum-AIC bestfit copula",
-           "3. AIC for bestfit copula",
+           "2. Minimum-AIC copula",
+           "3. AIC for best copula",
            "4. AIC for normal copula",
            "5. p-value, Cramer-von Mises goodness of fit test",
            "6. p-value, Kolmogorov-Smirnov goodness of fit test",
@@ -1239,7 +1266,7 @@ tab_bivar_summary<-tab_bivar_summary[c(1:9,11),]
 
 knitr::kable(tab_bivar_summary, 
              format="latex", escape=F,row.names=F,
-             caption = "Summary of Q1 results for bivariate datasets. The $p$-values (rows 5-6) are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. Row 10 shows values as in Table \\ref{tab_soilCN_asym}, upper right table entry. Although the result shown in row 10 for the soil C and N data is non-significant, see Table \\ref{tab_soilCN_asym} for significant results using the $P$ and $D^2$ statistics. The first 3 datasets use $(l_b,u_b)=(0,0.1)$ for the first slice (FS) and $(0.9,1)$ for last slice (LS), whereas $(0, 0.25)$ and $(0.75,1)$ were used for Cedar Creek due to fewer data for that system. Results for Cedar Creek for the year 2000 are shown. See Table \\ref{tab_soilCNfit} for copula family abbreviations.\\label{tab_bivar_summary}",
+             caption = "Summary of Q1 results for bivariate datasets. The $p$-values (rows 5-6) are for the minimum-AIC copula. Model averaging used for rows 7-9 was based on AIC weights. Row 10 shows values as in Table \\ref{tab_soilCN_asym}, upper right table entry. Although the result shown in row 10 for the soil C and N data is non-significant, see Table \\ref{tab_soilCN_asym} for significant results using the $P$ and $D^2$ statistics. The first 3 datasets use $(l_b,u_b)=(0,0.1)$ for the first slice (FS) and $(0.9,1)$ for the last slice (LS), whereas $(0, 0.25)$ and $(0.75,1)$ were used for Cedar Creek due to fewer data for that system. Results for Cedar Creek for the year 2000 are shown. See Table \\ref{tab_soilCNfit} for copula family abbreviations.\\label{tab_bivar_summary}",
              booktabs=T, linesep = "\\addlinespace",
              col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.5cm")%>%
@@ -1274,7 +1301,7 @@ dt <- tibble(
            "2. Number of non-independent pairs",
            "3. Number of pairs with non-normal copula as best fit",
            #"4. Avg. of normal-AICw minus bestfit-copula AICw across location pairs",
-           "4. Average of AIC differences (normal minus bestfit-copula) across location pairs",
+           "4. Average of AIC differences (normal AIC minus min AIC) across location pairs",
            "5. Number of well-fitting location pairs",
            "6. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. lower-tail dependence",
            "7. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. upper-tail dependence",

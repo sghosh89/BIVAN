@@ -752,7 +752,7 @@ and zero lower-tail dependence except for a boundary case.
 180 degrees. 
 See @Joe1997 for details on all these families. We used the implementations
 of these families provided in the `VineCopula` package for the R programming
-language. See Figs \ref{figped_N}-\ref{figped_BB1} and \ref{SM-figped_SC}-\ref{SM-figped_SBB8} 
+language. See Figs \ref{figped_N}-\ref{figped_BB1} and \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
 pdfs and tail dependence are influenced by the parameters.
 
@@ -947,23 +947,6 @@ stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
 tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
 ```
 
-<!--***DAN: Notes on what needs to be done to this section, so far only getting up through the presentation of the bivariate results:
-1) be more nuanced in the presentation, don't give the appearance of sweeping results that dont agree with the general conclusions under the rug
-DONE 2) Add AIC and BIC columsn to table S3, and all analogous figures (e.g., S5, S7, S9, etc). Also reduce the number of digits shown after the decimal to 2 for AIC and BIC and 4 for the other columns.
-3) Move Table S3 to an appropriate place in the main text. Choose the place based on where it is first cited in the main text.
-DONE 4) Sort the rows of Table S2 (and all analogous tables) AIC, putting the lowest
-AIC at the top. This should mean the highest AICw is at the top.
-DONE 5a) move some of the content from appendices S6 and S7 into methods, 
-5b) and move fig S21 and table S4 into main text. These are non-parametric results for
-soil C and N. So we will be presenting the nonparam results more comprehensively in the main text.
-6) That means you also need to summarize the nonparm results for the other 3 bivariate systems in Table 2. How to do this? Maybe put the cor results only, for Spearman only (or Kendall, not sure which to choose) into Table 2.  
-7) Probably ought to combine tables S6, S8, S10 into one table, and fix it so
-whenever we currently cite one of those, change it so we cite the combined table instead.
-DONE 8) The nonparam stats are not estimators of tail dependence, they measure 
-something else (though related). Make it clear we know this. It turns out there are estimators
-of tail dependence. Do we want to mention that?
--->
-
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
@@ -1037,7 +1020,7 @@ about statistical significance. Thus our results provide an
 affirmative answer to Q1 for the soil C and N data; this answer is 
 represented in Fig. \ref{MasterFigure} as a solid outline around "soil C and N"
 in the right-most box in the middle row.
-<!--***DAN: you may need to change the box around the Cedar Creek data-->
+<!--***DAN: you need to change the box around the Cedar Creek data-->
 
 <!--bivariate summary-->
 Table \ref{tab_bivar_summary} summarizes Q1 results 
@@ -1048,7 +1031,7 @@ always emerged as the lowest-AIC copula
 (Table \ref{tab_bivar_summary}, row 2). 
 The normal copula was a poor fit compared to the lowest-AIC copula 
 (Table \ref{tab_bivar_summary}, rows 3-4), except for Cedar Creek, for which the AIC
-difference between these fits was not meaningfully large (Table \ref{SM-tab_cc2000fit}).
+difference between these fits was not meaningfully large.
 Thus we answer the first part of Q1 in the affirmative for 3 of 4 of our bivariate datasets. 
 Often, either lower- or upper-tail dependence statistics differed substantially from 0 
 (Table \ref{tab_bivar_summary}, rows 7-8), and/or these statistics differed from each other (Table \ref{tab_bivar_summary}, row 9), 
@@ -1062,7 +1045,8 @@ deviated significantly from what would be expected from a normal-copula
 null model, and were also significantly asymmetric, except for the Cedar Creek data.
 See Figs \ref{SM-fig_bmr_birds_nonparam}-\ref{SM-fig_cc2000_nonparam} for analogues to 
 Fig. \ref{fig_soilCN_nonparam} for the bivariate datasets other than the soil C and N
-data, and see Table \ref{SM-tab_3biv_npa_summary} for analogues to Table \ref{tab_soilCN_asym}.
+data, see Tables \ref{SM-tab_bmr_birds_fit}-\ref{SM-tab_cc2000fit} for analogues to Table \ref{tab_soilCNfit},
+and see Table \ref{SM-tab_3biv_npa_summary} for analogues to Table \ref{tab_soilCN_asym}.
 The first three datasets had stronger upper- 
 than lower-tail dependence, and the last dataset had the reverse, though non-significantly. Our 
 generally affirmative (except for Cedar Creek), 
@@ -1105,7 +1089,8 @@ an objectively adequate description of
 the data; i.e., the collection of 
 copula families we used was sufficiently broad to characterize 
 these data. Model-averaged lower- and upper-tail
-dependence statistics had $2.5^{th}$ and $97.5^{th}$ quantiles
+dependence statistics had $2.5^{th}$ and $97.5^{th}$ quantiles (across
+location pairs)
 (`r tab_multivar_summary$Green_spruce_aphid_count$LT_0.025_CI`, `r tab_multivar_summary$Green_spruce_aphid_count$LT_0.975_CI`) and 
 (`r tab_multivar_summary$Green_spruce_aphid_count$UT_0.025_CI`, `r tab_multivar_summary$Green_spruce_aphid_count$UT_0.975_CI`), respectively,
 thereby commonly differing 
@@ -1138,33 +1123,11 @@ also were always positive and had confidence intervals that
 excluded $0$ 
 (Table \ref{tab_count_resamp}).
 
-<!--***DAN: Shyamolina, can you please insert code to make what
-is currently Table S7 appear here? Please also make it disappear from
-the sup mat. I want to move it from there to here, please. I am
-talking about the table with label tab_count_resamp. Please also
-search both the main text and the supp mat for that label, and 
-fix references - you may have to fix some prefixes (SM-, MT-), since
-the table will have moved from sup mat to main text.-->
-<!--Show the statistical results in a table for green spruce aphid abundance data-->
-
-```{r tab_count_resamp,echo=F,results="markup"}
-s<-stat_aphid_count$numericdf[,c(3,2,4)]
-sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
-                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
-s<-cbind(sc,s)
-knitr::kable(s, digits = 3,
-             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
-             format = "latex",linesep = "", escape = F,align="c",
-             caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
-             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
-             booktabs=TRUE)
-```
-
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes Q1 results for
 multivariate data. Results supported the 
 conclusions that non-normal copula structure, non-normal tail dependence, and asymmetric tail 
-dependence were common, though not universal, answering 
+associations were common, though not universal, answering 
 Q1 in the affirmative for these data. 
 Most location pairs were non-independent 
 (Table \ref{tab_multivar_summary}, row 2). The large majority of non-independent location 
@@ -1187,16 +1150,19 @@ with the exception of the methane-flux data.
 For instance, the $95\%$ confidence intervals of the
 mean over pairs of sampling locations of the statistic $\cor_l-\cor_u$ were 
 (`r unname(round(stat_aphid_ff$numericdf[10,c(3,4)],3))`)
+<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
 for the leaf-curling plum aphid first flight data
 (Table \ref{tab_multivar_summary}, row 9), 
 indicating greater upper-tail dependence, and consistent with
 the results of Table \ref{tab_multivar_summary}, row 8. 
 For the *Ceratium furca* abundance data, confidence intervals were
-(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`), 
+(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`),
+<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
 indicating greater lower-tail dependence, and again 
 consistent with the results of Table \ref{tab_multivar_summary} (row 9).
 For the methane-flux data, confidence intervals were 
 (`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`);
+<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
 the asymmetry in tail dependence revealed by the model selection
 results for the methane-flux data was apparently not strong enough to
 also be revealed by the nonparametric analyses. 
@@ -1210,7 +1176,7 @@ We also carried out the same analyses for abundance and first-flight data for th
 aphid species for which we had data other than the green spruce and leaf-curling plum aphids,
 as well as for the 21 plankton taxa for which we had abundance data other than
 \textit{Ceratium furca} (results not shown); results supported the conclusion that 
-non-normal copula structure and tail dependence, and asymmetry of tail dependence are 
+non-normal copula structure and tail dependence, and asymmetry of tail associations, are 
 common.
 
 <!--bivariate results for soil CN data-->
@@ -1294,6 +1260,19 @@ knitr::kable(tab_bivar_summary,
              col.names = c(" ", "Soil C and N", "Bird masses and BMR", "Mammal masses and BMR", "Cedar Creek data")
              )%>%column_spec(2:5,width="1.5cm")%>%
              column_spec(1, width = "8.4cm")%>%kable_styling(latex_options = "basic",position = "center")
+```
+
+```{r tab_count_resamp,echo=F,results="markup"}
+s<-stat_aphid_count$numericdf[,c(3,2,4)]
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+knitr::kable(s, digits = 3,
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
+             format = "latex",linesep = "", escape = F,align="c",
+             caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
+             booktabs=TRUE)
 ```
 
 <!--summary table : results with multi-variate data-->
@@ -1944,7 +1923,6 @@ temperature ultimately causes spatially averaged aphid abundance time series
 to have lower skewness (i.e., less spikiness, and greater stability through time) 
 than they would otherwise.
  
-<!--***DAN: could remove the next para if you need to save words-->
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
 Our results showed that the skewness of the 
 spatial average of local time series is influenced 

@@ -24,7 +24,7 @@ bibliography: REF_ALL.bib
 
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
-options(scipen = 1, digits = 5) #This option round all numbers appeared in the inline r code upto 5th digit
+options(scipen = 1, digits = 2) #This option round all numbers appeared in the inline r code upto specified digit
 #seed<-101
 #source("mtime.R") #A function needed for caching
 ```
@@ -939,8 +939,13 @@ BivMS_res_Loecke<-readRDS("./Results/fitting_results/BivMS_soilCN.RDS")
 
 ```{r read_RES_aphid_count, echo=F}
 RES_aphid_count<-readRDS("./Results/fitting_results/AphidCopulaFit_selecloc_count_species_10.RDS")
+#------------ also reading some extra stuffs -------
+stat_aphid_count<-readRDS("./Results/stat_results/stat_aphid_count/stat_aphid_count_sp_10.RDS")
+stat_aphid_ff<-readRDS("./Results/stat_results/stat_aphid_ff/stat_aphid_ff_sp_11.RDS")
+stat_plankton_north_sea<-readRDS("./Results/stat_results/stat_plankton_north_sea/stat_plankton_north_sea_sp_16.RDS")
+stat_methane<-readRDS("./Results/stat_results/stat_methane/stat_methane.RDS")
+tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
 ```
-
 
 <!--***DAN: Notes on what needs to be done to this section, so far only getting up through the presentation of the bivariate results:
 1) be more nuanced in the presentation, don't give the appearance of sweeping results that dont agree with the general conclusions under the rug
@@ -985,13 +990,9 @@ The Kendall correlation was `r round(BivMS_res_Loecke$TauVal,2)`. We fitted our 
 to the normalized ranks (Fig. \ref{fig_biv_multi_raw_cop}E) 
 and computed AIC and BIC weights and corresponding
 lower- and upper-tail statistics for the fitted distributions (Table \ref{tab_soilCNfit}).
-`r BivMS_res_Loecke$InfCritRes$copname[which.max(BivMS_res_Loecke$InfCritRes$AICw)]` was the 
+`r BivMS_res_Loecke$InfCritRes$copname[which.min(BivMS_res_Loecke$InfCritRes$AIC)]` was the 
 minimum-AIC copula, with AIC `r round(min(BivMS_res_Loecke$InfCritRes$AIC),2)`, whereas the 
-normal copula had a much higher AIC, $-6333.16$, 
-<!--***DAN: Shyamolina, please make this an autolink. Please make 
-sure to round to two digits after the decimal, as with the AIC best value
-presented just above.-->
-answering the 
+normal copula had a much higher AIC, `r round(BivMS_res_Loecke$InfCritRes$AIC[1],2)`, answering the 
 first part of Q1 for these data. Recall that AIC differences of $2$
 or $3$ are considered meaningful and differences of $8$ or greater
 are considered diffinitive, so that data provide essentially no support
@@ -1079,27 +1080,21 @@ We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}
 as an example multivariate analysis.
 Independence was rejected for each pair of the 10 sampling locations. 
 Best-fitting (lowest-AIC) copulas were non-normal
-for the large majority of location pairs (72 of 90 pairs), 
-<!--***DAN: Shyamolina, please make these numbers autolinks-->
+for the large majority of location pairs (`r tab_multivar_summary$Green_spruce_aphid_count$num.non_N` of `r tab_multivar_summary$Green_spruce_aphid_count$num.pairs` pairs), 
 and the AIC
 of the normal copula minus the minimum AIC, averaged across 
-location pairs, was $2.732$.
-<!--***DAN: Shyamolina, please make this an autolink, so the value is
-automatically filled in even if it changes-->
-Whereas $2.732$
-<!--***DAN: Shyamolna, again, autolink, please-->
+location pairs, was `r tab_multivar_summary$Green_spruce_aphid_count$Avg.N_minus_bestfit.AIC`.
+Whereas `r tab_multivar_summary$Green_spruce_aphid_count$Avg.N_minus_bestfit.AIC`
 would be only a marginally meaningful AIC difference for a single
 location pair, it is more meaningful as an average across many
 pairs. Relatedly, and illustrating the concept here, 
-the chances of getting 72 or more 
+the chances of getting `r tab_multivar_summary$Green_spruce_aphid_count$num.non_N` or more 
 non-normal location pairs if the chances were equal of getting
 a normal versus a non-normal result (and taking into account that
 the location pair (A,B) will necessarily 
 produce the same result as the pair
-(B,A)) is low, $`r 1-pbinom(72/2-1,45,.5)`$. 
-<!--***DAN: Shyamolina, please replace the 72 in the above expression
-by an autolink, and make this show
-3 significant digits, i.e., it should show 3.29e-5, not 3.287332e-05-->
+(B,A)) is low, 
+$`r 1-pbinom(tab_multivar_summary$Green_spruce_aphid_count$num.non_N/2-1,45,0.5)`$. 
 These results help answer the first part of Q1: non-normal
 copula structure appears to be meaningfully common in
 these data, even if not universal.
@@ -1110,9 +1105,9 @@ an objectively adequate description of
 the data; i.e., the collection of 
 copula families we used was sufficiently broad to characterize 
 these data. Model-averaged lower- and upper-tail
-dependence statistics had $2.5$th and $97.5$th quantiles
-$(0.123,0.721)$ and $(0.002,0.41)$, respectively,
-<!--***DAN: Shyamolina, autolinks pls -->
+dependence statistics had $2.5^{th}$ and $97.5^{th}$ quantiles
+(`r tab_multivar_summary$Green_spruce_aphid_count$LT_0.025_CI`, `r tab_multivar_summary$Green_spruce_aphid_count$LT_0.975_CI`) and 
+(`r tab_multivar_summary$Green_spruce_aphid_count$UT_0.025_CI`, `r tab_multivar_summary$Green_spruce_aphid_count$UT_0.975_CI`), respectively,
 thereby commonly differing 
 from what a normal copula would give (i.e., 0), and helping to
 answer the second
@@ -1128,9 +1123,8 @@ out of `r (dim(RES_aphid_count$gfc_p_CvM)[1]^2-dim(RES_aphid_count$gfc_p_CvM)[1]
 of getting `r sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)` 
 or more positive values, here, under a null hypothesis of equal chances 
 for positive and negative values (and again accounting for the fact that location pairs (A,B) and (B,A) will show the same result) was
-again low, $`r 1-pbinom(86/2-1,45,.5)`$. 
-<!--***DAN: Shyamolina, please autolink this, and use 3 sig figs as 
-before-->
+again low, 
+$`r 1-pbinom(sum((RES_aphid_count$LTdep_AICw-RES_aphid_count$UTdep_AICw)>0,na.rm=T)/2-1,45,0.5)`$.
 Thus the spatial synchrony of rarity in the green spruce aphid is stronger 
 than the spatial synchrony of outbreaks. This answers the third part of Q1.
 
@@ -1151,6 +1145,20 @@ talking about the table with label tab_count_resamp. Please also
 search both the main text and the supp mat for that label, and 
 fix references - you may have to fix some prefixes (SM-, MT-), since
 the table will have moved from sup mat to main text.-->
+<!--Show the statistical results in a table for green spruce aphid abundance data-->
+
+```{r tab_count_resamp,echo=F,results="markup"}
+s<-stat_aphid_count$numericdf[,c(3,2,4)]
+sc<-as.data.frame(c("Spearman","Kendall","cor$_{l}$","cor$_{u}$","P$_{l}$","P$_{u}$","D$_{l}^2$","D$_{u}^2$",
+                    "cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$"))
+s<-cbind(sc,s)
+knitr::kable(s, digits = 3,
+             col.names=c("","2.5$^{th}$ quantile", "Mean", "97.5$^{th}$ quantile"),
+             format = "latex",linesep = "", escape = F,align="c",
+             caption.short="Results for nonparametric statistics, green spruce aphid abundance data",
+             caption = "Average values of statistics across all locations pairs and confidence intervals based on spatial resampling for green spruce aphid abundance data.\\label{tab_count_resamp}",
+             booktabs=TRUE)
+```
 
 <!--multivariate summary-->
 Table \ref{tab_multivar_summary} summarizes Q1 results for
@@ -1182,11 +1190,11 @@ mean over pairs of sampling locations of the statistic $\cor_l-\cor_u$ were
 for the leaf-curling plum aphid first flight data
 (Table \ref{tab_multivar_summary}, row 9), 
 indicating greater upper-tail dependence, and consistent with
-the results of Table \ref{MT-tab_multivar_summary}, row 8. 
+the results of Table \ref{tab_multivar_summary}, row 8. 
 For the *Ceratium furca* abundance data, confidence intervals were
 (`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`), 
 indicating greater lower-tail dependence, and again 
-consistent with the results of Table \ref{MT-tab_multivar_summary} (row 9).
+consistent with the results of Table \ref{tab_multivar_summary} (row 9).
 For the methane-flux data, confidence intervals were 
 (`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`);
 the asymmetry in tail dependence revealed by the model selection
@@ -1290,24 +1298,31 @@ knitr::kable(tab_bivar_summary,
 
 <!--summary table : results with multi-variate data-->
 ```{r tab_multivar_summaryl, echo=F, results='asis',message=F}
-tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
-tab1<-tab_multivar_summary[c(1:7,9,11,12,14,16),] # see carefully if you rearrange tab_multivar_summary's row
+tab_multivar_summaryl<-tab_multivar_summary[-c(4,12:15),] #exclude extra rows for AICw, Corl, Coru
+
+tab1<-tab_multivar_summaryl[c(6,8,12),] # see carefully if you rearrange tab_multivar_summary's row
                                                    #in suppmat this will change
-tab2<-tab_multivar_summary[c(8,10,13,15,17),]  # see carefully if you rearrange tab_multivar_summary's row
+tab2<-tab_multivar_summaryl[c(7,9,13),]  # see carefully if you rearrange tab_multivar_summary's row
                                                    #in suppmat this will change
 
-two_tab_in1 <- as.data.frame(do.call(cbind, lapply(1:ncol(tab1), function(i) paste0(" (",tab1[c(7:8,10:12),i], ", ",tab2[ , i], ")") )))   # see carefully if you rearrange tab_multivar_summary's row in suppmat this will change
+two_tab_in1 <- as.data.frame(do.call(cbind, lapply(1:ncol(tab1), function(i) paste0(" (",tab1[,i], ", ", tab2[ , i], ")") )))   # see carefully if you rearrange tab_multivar_summary's row in suppmat this will change
 
-colnames(two_tab_in1)<-colnames(tab_multivar_summary)
-rownames(two_tab_in1)<-c("CI_LT","CI_UT","CI_Pl","CI_Pu","CI_Pl-Pu")
+two_tab_in1_again <- as.data.frame(do.call(cbind, lapply(1:ncol(two_tab_in1), 
+                                                         function(i) paste0(tab_multivar_summaryl[11,i], ", ", two_tab_in1[3,i]) ))) 
+  
+colnames(two_tab_in1)<-colnames(two_tab_in1_again)<-colnames(tab_multivar_summaryl)
 
-tab_multivar_summary<-rbind(tab_multivar_summary[c(1:3,5,6),],
-                            two_tab_in1[1:2,], #CI of LT, CI of UT
-                            tab_multivar_summary[11,],
-                            two_tab_in1[5,] #CI of Pl-Pu
+
+compiled_tab<-rbind(two_tab_in1[1:2,],two_tab_in1_again)
+rownames(compiled_tab)<-c("CI_LT","CI_UT","Avg_CI_Corl-Coru")
+
+tab_multivar_summary_ed<-rbind(tab_multivar_summaryl[c(1:5),],
+                            compiled_tab[1:2,], #CI of LT, CI of UT
+                            tab_multivar_summaryl[10,],
+                            compiled_tab[3,] #avg and CI of Corl-Coru
                            )
 
-row.names(tab_multivar_summary)<-NULL
+row.names(tab_multivar_summary_ed)<-NULL
 library(kableExtra)
 library(dplyr)
 library(tibble)
@@ -1315,18 +1330,17 @@ dt <- tibble(
             Description = c("1. Location pairs (excluding self comparisons)",
            "2. Number of non-independent pairs",
            "3. Number of pairs with non-normal copula as best fit",
-           #"4. Avg. of normal-AICw minus bestfit-copula AICw across location pairs",
            "4. Average of AIC differences (normal AIC minus min AIC) across location pairs",
            "5. Number of well-fitting location pairs",
            "6. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. lower-tail dependence",
            "7. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. upper-tail dependence",
            "8. Percent pairs showing stronger lower tail dependence",
-           "9. 2.5$^{th}$ and 97.5$^{th}$ quantiles of $<$P$_{l}$ - P${_u}$$>$ across all location pair")
+           "9. Mean with 2.5$^{th}$ and 97.5$^{th}$ quantiles of Cor$_{l}$ - Cor${_u}$ across all location pair")
            )
 
-tab_multivar_summary<-cbind(dt,tab_multivar_summary)
+tab_multivar_summary_ed<-cbind(dt,tab_multivar_summary_ed)
 
-knitr::kable(tab_multivar_summary[1:8,], 
+knitr::kable(tab_multivar_summary_ed, 
              format="latex", escape = F,
              caption.short = "Summary of results for multivariate datasets",
              caption = "Summary of Q1 results for multivariate datasets. Rows 3-8 of the table were computed for the non-independent pairs (row 2) only. A well-fitting location pair (row 5) was one for which the best-fitting copula had $p$-values $>0.01$ for both the Cramer-von Mises and Kolmogorov-Smirnov goodness of fit tests. \\label{tab_multivar_summary}",
@@ -1334,7 +1348,7 @@ knitr::kable(tab_multivar_summary[1:8,],
              col.names = c(" ","Green spruce aphid abundance",
                         "Leaf-curling plum aphid first flight",
                         "\\textit{Ceratium furca} abundance","Methane-flux")
-             )%>%column_spec(2:5,width="2.4cm")%>%
+             )%>%column_spec(2:5,width="2.5cm")%>%
              column_spec(1, width = "6cm")%>%kable_styling(latex_options = "basic",position = "center")
 ```
 

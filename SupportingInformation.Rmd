@@ -2479,11 +2479,11 @@ op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_0.5$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
      cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"A",cex=2)
+text(0.1,0.95,"C",cex=2)
 pop<-ans_b_0.5$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
      cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"B",cex=2)
+text(0.1,0.95,"D",cex=2)
 par(op)
 dev.off()
 
@@ -2492,34 +2492,23 @@ op<-par(mfrow=c(1,2),mar=c(3.5,4,1,1),mgp=c(2.2,0.5,0))
 pop<-ans_b_neg0.5$pop
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
      cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"A",cex=2)
+text(0.1,0.95,"E",cex=2)
 pop<-ans_b_neg0.5$pop_d
 plot(pop[,1],pop[,2],xlab=expression(paste(E[1])), ylab=expression(paste(E[2])),cex.lab=1.5,
      cex.axis=1,col=rgb(0,0,0,0.2),pch=20,cex=0.6)
-text(0.1,0.95,"B",cex=2)
+text(0.1,0.95,"F",cex=2)
 par(op)
 dev.off()
 ```
 
 <!--adding plots from asymmetric dependence analysis results-->
+
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$.\label{fig_ms_asym_b_-0.1}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=0.5$.\label{fig_ms_asym_b_0.5}}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.5$.\label{fig_ms_asym_b_-0.5}}
+\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$ (A-B), $b=0.5$ (C-D) and $b=-0.5$ (E-F).\label{fig_ms_asym_b_-0.1_0.5_-0.5}}
 \end{center}
 \end{figure}
 
@@ -2537,7 +2526,7 @@ knitr::kable(summary_stat, booktabs = T, escape=F,
       caption="Asymmetric sensitivity model, model selection results. 
 The output of simulations from the first model detailed in 
 the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to the model 
+\\ref{fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to the model 
 selection procedures detailed in the 
 methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
 Normal copula AICw: the AIC weight of the normal copula family; Model-avg. LT: the lower-tail 
@@ -2548,7 +2537,8 @@ test of the best-fitting copula family using the test based on the Kolmogorov-Sm
 statistic.\\label{tab_summary_stat_asym_sens}")
 ```
 
-<!--Displaying summary table with non-parametric approach results of asymmetric dependence analysis-->
+<!--*** Keeping old complex table for future use:
+Displaying summary table with non-parametric approach results of asymmetric dependence analysis
 ```{r tab_stat_npa_asym,echo=F,results="markup"}
 library(kableExtra)
 
@@ -2567,8 +2557,51 @@ knitr::kable(tab_stat_npa_asym, booktabs = T, longtable=T,
              caption ="Asymmetric sensitivity model, nonparametric statistics results. 
 The output of simulations from the first model detailed in 
 the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
-\\ref{fig_ms_asym_b_-0.1}-\\ref{fig_ms_asym_b_-0.5}) were subjected to nonparamtric statistical 
+\\ref{fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to nonparamtric statistical 
 analyses decribed in the methods section for Q1. The listed statistic was computed for the
+output of the model with the indicated b and g, and the value was compared to 1000 values
+of the same statistic computed on surrogate time series randomized to have normal copula structure
+(see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
+given statistic on the data was less (respectively, more) than its value on $X$ of the 
+surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
+indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
+lower-tail dependence compared to a normal-copula null hypothesis. `FS' stands for `first slice'
+and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
+0.9 to 1.\\label{tab_stat_npa_asym}")
+```
+-->
+
+<!---Simpler version: Displaying summary table with non-parametric approach results of asymmetric dependence analysis--->
+```{r tab_stat_npa_asym_simple,echo=F,results="markup"}
+library(kableExtra)
+
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
+tab_stat_npa_asym<-c()
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
+}
+
+ind_corstat<-which(tab_stat_npa_asym$Statistic %in% c("cor$_{FS}$-cor$_{LS}$"))
+tab_corstat_asym<-tab_stat_npa_asym[ind_corstat,]
+tab_corstat_asym<-tab_corstat_asym[,-1]
+
+#gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.5, g$_{1}$","b=0.5, g$_{2}$","b=-0.5, #g$_{1}$","b=-0.5, g$_{2}$")
+#tab_stat_npa_asym<-cbind(gtext,tab_corstat_asym)
+
+tab_corstat_asym<-cbind(b=c(0.1,0.1,-0.1,-0.1,0.5,0.5,-0.5,-0.5),
+  g=c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),tab_corstat_asym)
+
+rownames(tab_corstat_asym)<-NULL
+
+knitr::kable(tab_corstat_asym, booktabs = T, 
+             format = "latex",linesep = "",escape=F, 
+             caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
+             caption ="Asymmetric sensitivity model, nonparametric statistics results. 
+The output of simulations from the first model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+\\ref{fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to nonparamtric statistical 
+analyses decribed in the methods section for Q1. The statistic ($cor_{FS} - cor_{LS}$) was computed for the
 output of the model with the indicated b and g, and the value was compared to 1000 values
 of the same statistic computed on surrogate time series randomized to have normal copula structure
 (see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 

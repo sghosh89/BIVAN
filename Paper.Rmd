@@ -1500,16 +1500,16 @@ are solid, instead of dashed, although the results we
 present in this section are theoretical.
 <!--***DAN: move the above to the end of this part-->
 For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ 
-(Fig. \ref{SM-fig_ms_asym_b_-0.1}), 
+(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}A,B), 
 for both $g_1$ and $g_2$,
 asymmetry of tail dependence was strong; for 
 $b=\pm 0.5$, asymmetry was weaker but still apparent
-(Figs \ref{SM-fig_ms_asym_b_0.5} - 
-\ref{SM-fig_ms_asym_b_-0.5}).
+(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}C-F).
 <!--***DAN: Shyamolina, can you please combine Figs S24-S26 into one single figure
 with 6 panels? Please also search for citations in the main text and sup mat that 
 used to refer to the three figures and replace them with a citation to the
-new, combined figure.-->
+new, combined figure.
+***Shya: Done.-->
 Lower-tail (respectively, upper-tail) spatial dependence in 
 effects of noise ($g_1$, respectively, $g_2$) 
 produced lower-tail (respectively, upper-tail) spatial 
@@ -1530,7 +1530,8 @@ and then maybe bring the resulting table to main text?
 results? That also means the third column will be unnecessary. Please do this as follows:
 1) keep but comment out the code that produces the old table; 2) write new code (presumably
 starting from a copy of the old code) that makes the new, simpler version of the table. 
-That will make it very easy to produce the old version again if we ever want to.-->
+That will make it very easy to produce the old version again if we ever want to.
+***Shya: Done.-->
 
 \begin{figure}[!h]
 \begin{center}

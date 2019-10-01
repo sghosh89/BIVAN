@@ -623,7 +623,7 @@ dependence is $2-2^{1/p}$.\label{figped_SG}}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=7.5in]{./Results/PedagogSuppMat_Joe.pdf}
-\caption[Example J copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example J copulas. K is Kendall correlation; $p$ is the value of the parameter for the J family (it is a 
+\caption[Example Joe copulas]{Log-transformed pdfs (A-E) and samples (F-J) from example Joe copulas. K is Kendall correlation; $p$ is the value of the parameter for the Joe family (it is a 
 one-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively. The parameter range for the family is $p \in [1,\infty)$, lower-tail dependence is $0$ and upper-tail
 dependence is $2-2^{1/p}$.\label{figped_J}}
@@ -2936,7 +2936,7 @@ Plotter_Cause4copula_stat(res=readres)
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, AR(1) model, 
-Gumbelcopula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+Gumbel copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
 model, Gumbelcopula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
 \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
 details.\label{fig_Cause4copula_G_kend_ar1}}
@@ -3164,8 +3164,8 @@ Plotter_Cause4copula_stat(res=readres)
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, AR(1) model, 
-J copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, J copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+Joe copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+model, Joe copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
 \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
 details.\label{fig_Cause4copula_J_kend_ar1}}
 \end{center}
@@ -3970,8 +3970,8 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, J copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, J copula. Same format as Figs 
+model, weak noise, Joe copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, weak noise, Joe copula. Same format as Figs 
 \ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
 see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
 \end{center}
@@ -3999,8 +3999,8 @@ see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/Joe_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, J copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, J copula. Same format as Figs 
+model, strong noise, Joe copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, Joe copula. Same format as Figs 
 \ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
 see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
 \end{center}

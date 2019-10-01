@@ -24,7 +24,7 @@ bibliography: REF_ALL.bib
 
 ```{r setup_Paper, echo=F}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
-options(scipen = 1, digits = 2) #This option round all numbers appeared in the inline r code upto specified digit
+options(scipen = 1, digits = 3) #This option round all numbers appeared in the inline r code upto specified digit
 #seed<-101
 #source("mtime.R") #A function needed for caching
 ```
@@ -1149,20 +1149,17 @@ Asymmetry results were generally verified by nonparametric approaches,
 with the exception of the methane-flux data. 
 For instance, the $95\%$ confidence intervals of the
 mean over pairs of sampling locations of the statistic $\cor_l-\cor_u$ were 
-(`r unname(round(stat_aphid_ff$numericdf[10,c(3,4)],3))`)
-<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
+(`r unname(round(stat_aphid_ff$numericdf[9,c(3,4)],3))`)
 for the leaf-curling plum aphid first flight data
 (Table \ref{tab_multivar_summary}, row 9), 
 indicating greater upper-tail dependence, and consistent with
 the results of Table \ref{tab_multivar_summary}, row 8. 
 For the *Ceratium furca* abundance data, confidence intervals were
-(`r unname(round(stat_plankton_north_sea$numericdf[10,c(3,4)],3))`),
-<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
+(`r unname(round(stat_plankton_north_sea$numericdf[9,c(3,4)],3))`),
 indicating greater lower-tail dependence, and again 
 consistent with the results of Table \ref{tab_multivar_summary} (row 9).
 For the methane-flux data, confidence intervals were 
-(`r unname(round(stat_methane$numericdf[10,c(3,4)],3))`);
-<!--***DAN: Shyamolina, these do not match with the value in table 6! Please check BOTH values and make them correct, and make them agree! You seemed to have used the values for the P statistic by mistake.-->
+(`r unname(round(stat_methane$numericdf[9,c(3,4)],3))`);
 the asymmetry in tail dependence revealed by the model selection
 results for the methane-flux data was apparently not strong enough to
 also be revealed by the nonparametric analyses. 
@@ -1314,7 +1311,7 @@ dt <- tibble(
            "6. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. lower-tail dependence",
            "7. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. upper-tail dependence",
            "8. Percent pairs showing stronger lower tail dependence",
-           "9. Mean with 2.5$^{th}$ and 97.5$^{th}$ quantiles of Cor$_{l}$ - Cor${_u}$ across all location pair")
+           "9. Mean with 2.5$^{th}$ and 97.5$^{th}$ quantiles of cor$_{l}$ - cor${_u}$ across all location pair")
            )
 
 tab_multivar_summary_ed<-cbind(dt,tab_multivar_summary_ed)

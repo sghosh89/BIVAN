@@ -1513,7 +1513,7 @@ Table \ref{tab_stat_npa_asym}. \label{fig_ms_asym_b_0.1}}
 
 ```{r tab_stat_npa_asym_simple,echo=F,results="markup"}
 library(kableExtra)
-
+source("./make_table_stat_fn.R")
 tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
 tab_stat_npa_asym<-c()
 for(i in c(1:8)){
@@ -1643,21 +1643,25 @@ the nonlinear models described in the methods section for Q2.\label{fig_Cause4co
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
 \vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf} \\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\vspace{-0.2 cm}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\vspace{-0.2 cm}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\vspace{-0.2 cm}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf} \\
+\hspace{-0.6 cm}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption{Comparison of correlation and tail association statistics between 
 environmental-noise inputs and ecological-variable 
 outputs, AR(1) model, Clayton copula. Red and blue points give 
@@ -1676,7 +1680,9 @@ for details.\label{fig_Cause4copula_C_kend_ar1}}
 <!--***DAN: Shyamolina, the panels in the bottom row do not line up with the others. 
 I remember you fixed this before for the sup mat figs, can you plase fix it again here?
 Also, can you make the panels smaller or more tightly packed or soemthing
-so the whole figure plus caption fits on a page?-->
+so the whole figure plus caption fits on a page?
+***Shya: Ok, now I fixed it. See the margin specifications are different for Paper and Suuppmat, 
+that's why I have to downsize the figure here in the maintext.-->
 
 <!--***DAN: Got to here in results for Q2-->
 

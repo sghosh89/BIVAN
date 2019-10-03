@@ -2709,38 +2709,6 @@ readres<-readRDS(paste(resloc,"ar1_C_kend_negbeta0.5.RDS",sep=""))
 Plotter_Cause4copula_stat(res=readres)
 ```
 
-<!--Plots for AR(1) with Clayton-->
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, AR(1) model,
-Clayton copula.]{Comparison of copula structure of noise inputs and model 
-outputs, AR(1) model, Clayton copula. Red and blue points give 
-means over 50 replicate simulations of the statistics listed on the left axes, 
-red points are values for noise inputs and blue points are for
-model outputs. Error bars are standard errors. 
-$P$-values (purple points, right axis) are for a 
-paired $t$-test of the null hypothesis that the distributions of 50 noise and 
-output values have the same mean; $p$-values less than $0.05$ indicate that 
-copula structure as measured by the listed statistic differs significant
-between noise inputs and model outputs. See methods section for Q2 
-for additional details.\label{fig_Cause4copula_C_kend_ar1}}
-\end{center}
-\end{figure}
-
 <!--Following two chunks examine Moran-like mechanism with survival clayton copula noises in AR(1) model 
 and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_survivalclayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}
@@ -2854,8 +2822,8 @@ Plotter_Cause4copula_stat(res=readres)
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, AR(1) model, 
 survival Clayton copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, survival Clayton copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
-\ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
+model, survival Clayton copula. Same format as Fig. \ref{MT-fig_Cause4copula_C_kend_ar1}, 
+see caption of that figure for 
 details.\label{fig_Cause4copula_SC_kend_ar1}}
 \end{center}
 \end{figure}
@@ -2952,6 +2920,7 @@ Plotter_Cause4copula_stat(res=readres)
 ```
 
 <!--Plots for AR(1) with Gumbel-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -2974,11 +2943,12 @@ Plotter_Cause4copula_stat(res=readres)
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Gumbel/Gumbel_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, AR(1) model, 
 Gumbel copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
-model, Gumbelcopula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
+model, Gumbel copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and 
 \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, see captions of those figures for 
 details.\label{fig_Cause4copula_G_kend_ar1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with survival gumbel copula noises in AR(1) model 
 and then generate plots with the simulated results-->
@@ -3072,6 +3042,7 @@ Plotter_Cause4copula_stat(res=readres)
 ```
 
 <!--Plots for AR(1) with Survival Gumbel-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -3099,6 +3070,7 @@ model, survival Gumbel copula. Same format as Figs \ref{fig_Cause4copula_C_kend_
 details.\label{fig_Cause4copula_SG_kend_ar1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with joe copula noises in AR(1) model 
 and then generate plots with the simulated results-->
@@ -3180,6 +3152,7 @@ Plotter_Cause4copula_stat(res=readres)
 ```
 
 <!--Plots for AR(1) with Joe-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Joe/common_legend_cause4copula_stat.pdf}\\
@@ -3207,6 +3180,7 @@ model, Joe copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar1} and
 details.\label{fig_Cause4copula_J_kend_ar1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with survival joe copula noises in AR(1) model
 and then generate plots with the simulated results-->
@@ -3288,6 +3262,7 @@ Plotter_Cause4copula_stat(res=readres)
 ```
 
 <!--Plots for AR(1) with Survival Joe-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Joe/common_legend_cause4copula_stat.pdf}\\
@@ -3315,6 +3290,7 @@ model, survival Joe  copula. Same format as Figs \ref{fig_Cause4copula_C_kend_ar
 details.\label{fig_Cause4copula_SJ_kend_ar1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with clayton copula noises in Ricker model and 
 then generate plots with the simulated results-->
@@ -3430,38 +3406,9 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
 model, weak noise, Clayton copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, Clayton copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
-\end{center}
-\end{figure}
-
-<!--Plots for stochastic ricker with strong noise (Clayton copula): nsd=1-->
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
-\vspace{-0.4 cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
-\hspace{-0.8cm}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
-\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
-\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, Clayton copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, Clayton copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
+outputs, stochastic Ricker model, weak noise, Clayton copula. Same format as Fig. 
+\ref{MT-fig_Cause4copula_C_kend_ar1}, 
+see caption of that figure for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
 
@@ -3577,9 +3524,38 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
 model, weak noise, survival Clayton copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, weak noise, survival Clayton copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
+outputs, stochastic Ricker model, weak noise, survival Clayton copula. Same format as Fig. 
+\ref{MT-fig_Cause4copula_C_kend_ar1}, 
+see caption of that figure for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
+\end{center}
+\end{figure}
+
+<!--Plots for stochastic ricker with strong noise (Clayton copula): nsd=1-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf}\\
+\hspace{-0.8cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption[Comparison of copula structure of noise and model output, stochastic Ricker 
+model, strong noise, Clayton copula.]{Comparison of copula structure of noise inputs and model 
+outputs, stochastic Ricker model, strong noise, Clayton copula. Same format as Fig. 
+\ref{MT-fig_Cause4copula_C_kend_ar1}, 
+see caption of that figure for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3606,9 +3582,9 @@ see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRick
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
 model, strong noise, survival Clayton copula.]{Comparison of copula structure of noise inputs and model 
-outputs, stochastic Ricker model, strong noise, survival Clayton copula. Same format as Figs 
-\ref{fig_Cause4copula_C_kend_ar1} and \ref{MT-fig_Cause4copula_scatter_C_kend_ar1}, 
-see captions of those figures for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
+outputs, stochastic Ricker model, strong noise, survival Clayton copula. Same format as Fig. 
+\ref{MT-fig_Cause4copula_C_kend_ar1}, 
+see caption of that figure for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
 
@@ -3701,6 +3677,7 @@ for(insd in nsdlist){
 ```
 
 <!--Plots for stochastic ricker with weak noise (Gumbel copula) : nsd=0.1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -3728,8 +3705,10 @@ outputs, stochastic Ricker model, weak noise, Gumbel copula. Same format as Figs
 see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Plots for stochastic ricker with strong noise (Gumbel copula): nsd=1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -3757,6 +3736,7 @@ outputs, stochastic Ricker model, strong noise, Gumbel copula. Same format as Fi
 see captions of those figures for details.\label{fig_Cause4copula_G_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with survival gumbel copula noises in Ricker model and 
 then generate plots with the simulated results-->
@@ -3847,6 +3827,7 @@ for(insd in nsdlist){
 ```
 
 <!--Plots for stochastic ricker with weak noise (Survival Gumbel copula)  : nsd=0.1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -3874,8 +3855,10 @@ outputs, stochastic Ricker model, weak noise, survival Gumbel copula. Same forma
 see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Plots for stochastic ricker with strong noise (Survival Gumbel copula): nsd=1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Gumbel/common_legend_cause4copula_stat.pdf}\\
@@ -3903,6 +3886,7 @@ outputs, stochastic Ricker model, strong noise, survival Gumbel copula. Same for
 see captions of those figures for details. \label{fig_Cause4copula_SG_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with joe copula noises in Ricker model and 
 then generate plots with the simulated results-->
@@ -3986,6 +3970,7 @@ for(insd in nsdlist){
 ```
 
 <!--Plots for stochastic ricker with weak noise (Joe copula) : nsd=0.1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
@@ -4013,8 +3998,10 @@ outputs, stochastic Ricker model, weak noise, Joe copula. Same format as Figs
 see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Plots for stochastic ricker with strong noise (Joe copula) : nsd=1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Joe/common_legend_cause4copula_stat.pdf}\\
@@ -4042,6 +4029,7 @@ outputs, stochastic Ricker model, strong noise, Joe copula. Same format as Figs
 see captions of those figures for details.\label{fig_Cause4copula_J_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following two chunks examine Moran-like mechanism with survival joe copula noises in Ricker model and 
 then generate plots with the simulated results-->
@@ -4125,6 +4113,7 @@ for(insd in nsdlist){
 ```
 
 <!--Plots for stochastic ricker with weak noise (Survival Joe): nsd=0.1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
@@ -4152,8 +4141,10 @@ outputs, stochastic Ricker model, weak noise, survival Joe  copula. Same format 
 see captions of those figures for details.\label{fig_Cause4copula_SJ_kend_sRicker_nsd_0.1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Plots for stochastic ricker with strong noise (Survival Joe): nsd=1-->
+<!--Removed from AER version
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Joe/common_legend_cause4copula_stat.pdf}\\
@@ -4181,6 +4172,7 @@ outputs, stochastic Ricker model, strong noise, survival Joe copula. Same format
 see captions of those figures for details.\label{fig_Cause4copula_SJ_kend_sRicker_nsd_1}}
 \end{center}
 \end{figure}
+-->
 
 <!--Following chunk is to examine the hypothesis for third probable mechanism : 
 asymmetric tail dependence in evolutionary changes in bivariate characters can give

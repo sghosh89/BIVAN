@@ -1357,7 +1357,7 @@ the $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
 $\cov(\epsilon_1,\epsilon_2)=0.8$. Thus basic ecological dynamics follow the
 very simple AR(1) formulation, influenced by a "regional" environmental factor which
-is correlated across locatons ($\epsilon$) and by a local factor ($\delta$). 
+is correlated across locatons ($\epsilon$) and by an entirely local factor ($\delta$). 
 The function $g$ describes how the environmental factor $\epsilon_i(t)$ influences
 $E_i(t)$. We used $g$ equal to $g_1$ or $g_2$ in different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise;
@@ -1378,7 +1378,7 @@ steps and retained the $E_i(t)$ for the final $2500$ time
 steps. We applied our 
 nonparametric statistic $\cor_{0,0.1}-\cor_{0.9,1}$ 
 and our Spearman- or Kendall-preserving normal-copula 
-surrogates (see section on methods for Q1) to these 
+surrogate comparison methods (see section on methods for Q1) to these 
 outputs to discover if the model could
 produce asymmetric tail associations (and therefore non-normal copula structure)
 between the $E_i(t)$. Because $(\epsilon_1,\epsilon_2)$
@@ -1391,13 +1391,13 @@ want to insert a point at the end of the Methids section here again emphasizing
 that these are simple models for an initial exploration, and we discuss in the 
 Discussion how...-->
 
-<!--***DAN: stopped here in Q2 methods in order to go on to the correspondng
-section of Q2 results-->
-
 Our second mechanism is an extension of the well known Moran
 effect, and was summarized conceptually in the Introduction. 
-Let $E_i(t)$ again be an ecological variable, $i=1,2$.
-We initially assume the AR(1) dynamics 
+We consider a linear model, as well as 
+two parameterizations of a nonlinear population model which includes density dependence
+of population growth. For the linear model, let $E_i(t)$ 
+again be an ecological variable, $i=1,2$.
+We use AR(1) dynamics, 
 $E_i(t+1)=\beta E_{i}(t)+ \sqrt{1-\beta^2} \epsilon_i(t)$, with $\beta=0.5$. 
 The environmental noises $\epsilon_i(t)$ were 
 standard-normal random variables that were independent for distinct times, $t$, but 
@@ -1407,47 +1407,25 @@ The variable $E$ is very general, and could represent deviations
 of a population density from a carrying capacity, deviations of
 total plant community biomass from an average value,
 flux of a biogeochemical variable such as methane, or other quantities.
-
-To explore the importance of nonlinear dynamics for our proposed mechanism, 
-we also considered a
-nonlinear population model $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right)$, using $r=0.5$, $K=100$, and $\sigma=0.1$ or 
-$\sigma=1$. When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
-$K$, and the nonlinearities of the model have limited influence on dynamics. When
-$\sigma=1$, model dynamics are strongly nonlinear. We refer to these as
+The nonlinear population model was $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right)$ for $i=1,2$, using $r=0.5$, $K=100$, $\epsilon_i(t)$
+as above, and $\sigma=0.1$ or 
+$\sigma=1$ in different simulations. 
+When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
+$K$, where the model equation can be well approximated by a linear equation,
+and the nonlinearities of the model therefore have limited influence on dynamics. When
+$\sigma=1$, model dynamics are strongly nonlinear because the stochastic 
+component of the model causes populations to stray far from the carrying capacity, $K$. 
+We refer to these as
 the weak-noise and strong-noise cases, though the importance of the noise here
 is that, when it is strong, it brings the nonlinearities of the model into play. 
-<!--***DAN: Didn't we use another value of r as well, and present results
-on it? If so, probably should mention it here, in part so the exploration
-seems a bit broader? Well, we mentioned that we did those and we verbally summarize
-results but we did not show any. So maybe leave things as is in this respect.-->
 
-For each of the model setups above, for each of several copula families, 
-<!--***DAN: I currently use C, SC, G, SG, J, SJ. Do I really need all those? 
-Surely it would be enough to just do C and SC and then state that the others 
-give similar results? And if I move one of the result figure from this section
-into the main text, that will mean only one such fig in the sup mat, at least
-for AR(1)? I mean, right now we have 18 figure in sup mat from this analysis,
-and only part of one of them in main text! See if the results are actually similar across
-S/SC, G/SG, J/SJ, and if so consider keeping only the S/SC results in either the
-main text or the sup mat, and just stating the others were similar. Then you would presumably
-move the full C fig into the main text, replacing the current partial version.
-So instead of having 18 figs in sup mat and half a fig in main text, you would
-have 5 figs in sup mat and 1 in main text, and then you would just say "we did the
-same thing for G, SG, J, SJ and got similar results."
-So let's check, are results, broadly speaking, independent of which of the 6 copulas
-I used?:
-A) for AR(1) models, yes
-B) for Ricker, weak noise, yes
-C) for Ricker, strong noise, its more complicated. It's generally true that you get
-more approximate agreement between noise and pop stats, with some rather glaring disagreement.
-But which stats disagree the most depends on which cop we used!
-So I guess we can still just display the C and SC results, as planned above, and explain
-in text.
--->
+For each of the three model setups above (the linear model and the nonlinear model
+with weak and strong stochasticity), for the Clayton and survival Clayton copula families, 
 for each $\tau=0.1,0.2,\ldots,0.9$, and for each of
 $50$ replicate simulations, we generated 5000 noise pairs 
 $(\epsilon_1(t),\epsilon_2(t))$ from the
-bivariate random variable with the given copula family and the given Kendall
+bivariate random variable with standard-normal marginals and with 
+the given copula family and the given Kendall
 correlation $\tau$.
 We then used this noise to drive the model, and retained both the
 noise and population values for the final 500 
@@ -1456,11 +1434,13 @@ statistics were then computed for both noises and populations:
 Pearson, Spearman and Kendall correlations, $\cor_l$, $\cor_u$, $\Ps_l$, $\Ps_u$, 
 $\Dsq_l$, $\Dsq_u$, $\cor_l - \cor_u$, $\Ps_l - \Ps_u$, and $\Dsq_u - \Dsq_l$. 
 Values were plotted against $\tau$ for noises and populations. If the 
-hypothesis from the Introduction was correct that characteristics of 
+hypothesis from the Introduction was reasonable that characteristics of 
 the copula structure of spatial dependence in an
-ecological variable can be inherited from the copula structure of spatial 
-dependence in an environmental variables, then 
+ecological variable may be inherited from characteristics of spatial 
+dependence in an environmental variable through a Moran-like effect, then 
 plots should be similar for populations and noises. 
+
+<!--***DAN: stopped here for methods of Q2-->
 
 <!--***DAN: How much of the material from Appendix S8 should be moved into
 the main text? I am thinking a fair amount of it. Currrently there
@@ -1510,15 +1490,14 @@ effects of noise ($g_1$, respectively, $g_2$)
 produced lower-tail (respectively, upper-tail) spatial 
 associations in the ecological variable, $E_i$.
 Results using our statistic $\cor_{0,0.1}-\cor_{0.9,1}$ 
-strongly reflected the visually apparent asymmetry (Tables \ref{tab_stat_npa_asym}). 
+strongly reflected the visually apparent asymmetry (Table \ref{tab_stat_npa_asym}). 
 Thus asymmetry of environmental effects is a mechanism that may be partly 
 responsible for non-normal copula structure and
-asymmetric tail dependence across space in ecological variables.
+asymmetric tail associations across space in ecological variables.
 This result is represented in Fig. \ref{MasterFigure} as the solid box around 
 "Nonlinear environmental effects, Liebig's law" and the arrows labelled "A".
-It is explained in the Discussion why the box and some of those arrows 
-are solid, instead of dashed, although the results we 
-present so far in this section are theoretical.
+It is explained in the Discussion why the box and some of the arrows 
+are solid, instead of dashed, although the results of this section are theoretical.
 
 \begin{figure}[!h]
 \begin{center}
@@ -1526,7 +1505,9 @@ present so far in this section are theoretical.
 \caption{If environmental effects operate asymmetrically in their tails on
 ecological variables, it can result in non-normal copula structure and asymmetric 
 tail dependence across space in the ecological variables. Shown are the last
-$500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the text, $b=0.1$.\label{fig_ms_asym_b_0.1}}
+$500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the text, $b=0.1$. 
+Asymmetric tail associations are visually apparent, but were also elaborated statistically in 
+Table \ref{tab_stat_npa_asym}. \label{fig_ms_asym_b_0.1}}
 \end{center}
 \end{figure}
 
@@ -1571,54 +1552,69 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
 
-<!--***DAN: got to here so far in editing the result for Q2-->
-
 <!--Second mechanism, the Moran one-->
 The hypothesis that characteristics of 
-spatial copula structure and tail dependence
+the copula structure of spatial dependence 
 in an ecological variable can be inherited from an environmental 
-variable was largely confirmed; 
-<!--***DAN: You are using language about confirming hypotheses, here and elsewhere,
-but this may rub some people the wrong way because we have not confirmed anything
-empirically, we are just doing models, and only a cursory exploration of each
-model, at that! So change the language.-->
+variable was found to be reasonable, because it held for the models we examined; 
 however, similarities between environmental- and 
 ecological-variable copula structure were reduced when 
 dynamics were strongly nonlinear.
-Thus this is a mechanism that can produce non-normal copula structure and
-asymmetric tail dependence 
-<!--****DAN: Don't firget to replace @tail dependence@ by @tail asociation@ as appropriate-->
-across space in ecological variables.
-<!--***DAN: move the below to end of this part-->
-This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
-"Moran effects" and the arrows labelled "B".
-<!--***DAN: move the above to end of this part-->
-For simulations using AR(1) models, copula 
-statistics were always very similar for noise and populations 
-(Fig \ref{fig_Cause4copula_scatter_C_kend_ar1}, 
-\ref{SM-fig_Cause4copula_C_kend_ar1}-\ref{SM-fig_Cause4copula_SJ_kend_ar1}),
-though there were significant but minor differences for some statistics
-and simulations.
-For weak noise and our nonlinear model, copula statistics
-were again very similar for noise and model outputs 
-(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}).
-Though there were again significant but small differences for some statistics
-and simulations, the hypothesis was supported that copula 
-structure in the noise translates
-to similar but not identical copula structure in output populations. 
+For simulations using AR(1) models, our correlation and tail asymmetry statistics 
+were always similar for noise and populations 
+(Fig. \ref{fig_Cause4copula_C_kend_ar1} for the Clayon copula, 
+Fig. \ref{SM-fig_Cause4copula_SC_kend_ar1} for the survival Clayton copula).
+<!--***DAN: reorder sup mat figs so they are cited in order-->
+Though there were significant differences for many statistics
+and simulations, these were small compared to the overall tendency for
+larger (respectively, smaller) values of our statistics, as applied to
+noise, to be paired with larger (respectively, smaller) values of the same
+statistics as applied to model outputs. 
+For our nonlinear model with weak noise, values of the statistics
+were again quite similar for noise and model outputs 
+(Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1} for Clayton, 
+Fig. \ref{SM-fig_Cause4copula_SC_kend_sRicker_nsd_0.1} for survival Clayton).
+Though there were again significant differences for many statistics
+and simulations, these were again small relative to overall variation of 
+values of the statistics.
 Since many ecological models are nonlinear, this result provides the 
-expectation that there will be a Moran-effect-like correspondence 
-between noise and model-output copula structure across space 
+reasonable expectation that there may be a Moran-effect-like correspondence 
+between noise and model-output dependence structure across space 
 for typical ecological dynamics,
-as long as noise is small enough that dynamics stay relatively close
+as long as environmental noise is small enough that dynamics stay relatively close
 to the model equilibrium. Results that hold for "weak noise" in this sense
-are common in ecology. 
-We repeated the analysis with $r=1.3$, with similar results. The deterministic 
+are common in ecology.
+For strong noise and using our nonlinear model, 
+our correlation and tail-asymmetry statistics, generally 
+speaking, were approximately similar between noise and model
+outputs; however, similarity was reduced relative to previous results, 
+and for a few simulations, asymmetry statistics
+had opposite signs for noise and model outputs 
+(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1} and \ref{SM-fig_Cause4copula_SC_kend_sRicker_nsd_1}). For instance, 
+using a Clayton  copula with a large Kendall $\tau$,
+$\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
+population model outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}).
+
+We repeated our analyses using the nonlinear model with $r=1.3$. The deterministic 
 one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
 at $K$ when $r<1$ (undercompensating dynamics, e.g., the value $r=0.5$ used initially), 
 but exhibits an oscillatory approach to $K$ when $r>1$ (overcompensating
-dynamics, e.g., $r=1.3$).
+dynamics, e.g., $r=1.3$). For weak noise, similarities were again dominant between
+values of our statistics on noise and population time series. 
+For strong noise, however, discrepancies were often glaring. Apparently 
+noise of standard deviation 1 interacted especially strongly with 
+model nonlinearities when the model was in its overcompensatory 
+regime. We repeated all analyses using the Gumbel, survival Gumbel, Joe, and 
+survival Joe copulas, with substantially similar main conclusions (not shown).
+ 
+Thus it is reasonable to hypothesize that a Moran-effect-like 
+mechanism may produce non-normal copula structure and
+asymmetric tail associations across space in ecological variables.
+This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
+"Moran effects" and the arrows labelled "B".
 
+<!--***DAN: Decided to remove this simplified version of the figure for AER
+and replace by the bigger one which was in the supp mat, now below.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
@@ -1640,25 +1636,49 @@ Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-\ref{SM-fig_Cause4copula_S
 the nonlinear models described in the methods section for Q2.\label{fig_Cause4copula_scatter_C_kend_ar1}}
 \end{center}
 \end{figure}
+-->
 
-For strong noise and using our nonlinear model, 
-copula statistics, generally speaking, were approximately similar 
-between noise and model
-outputs; however, similarity was reduced relative to previous results, 
-and for a few simulations, tail dependence asymmetry statistics
-had opposite signs for noise and model outputs 
-(Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_0.1}-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). For instance, using a Clayton  copula with a large Kendall $\tau$,
-$\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
-population model outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}); 
-and likewise for survival Gumbel and survival Joe copulas (Figs \ref{SM-fig_Cause4copula_SG_kend_sRicker_nsd_1}, 
-\ref{SM-fig_Cause4copula_SJ_kend_sRicker_nsd_1}). Overall,
-similarities between noise and model-output copula statistics
-were more noticable than discrepancies, in spite of nonlinearities.
-We repeated the analysis with $r=1.3$. Discrepancies between noise and population
-copula structure in this case were often glaring. Apparently 
-noise of standard deviation 1 interacted especially strongly with 
-model nonlinearities when the model was in its overcompensatory 
-regime.  
+<!--Plots for AR(1) with Clayton-->
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=13 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/common_legend_cause4copula_stat.pdf}\\
+\vspace{-0.4 cm}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Spearman_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Kendall_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pearson_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Coru_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Corl-Coru_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pu_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_Pl-Pu_vs_Kendall's Tau.pdf}\\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2l_vs_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_D2u-D2l_vs_Kendall's Tau.pdf} \\
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
+\includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
+\caption{Comparison of correlation and tail association statistics between 
+environmental-noise inputs and ecological-variable 
+outputs, AR(1) model, Clayton copula. Red and blue points give 
+means over 50 replicate simulations of the listed statistics, 
+red points are for noise inputs and blue points are for
+model outputs. Error bars are standard errors. 
+$P$-values (purple points, right axis) are for a 
+paired $t$-test of the null hypothesis that the distributions have the same mean. 
+For bottom panels, headers give Pearson correlations for
+the points. The regression line through the points (black) was similar
+to the 1-1 line (green). 
+See methods section for Q2 
+for details.\label{fig_Cause4copula_C_kend_ar1}}
+\end{center}
+\end{figure}
+<!--***DAN: Shyamolina, the panels in the bottom row do not line up with the others. 
+I remember you fixed this before for the sup mat figs, can you plase fix it again here?
+Also, can you make the panels smaller or more tightly packed or soemthing
+so the whole figure plus caption fits on a page?-->
+
+<!--***DAN: Got to here in results for Q2-->
 
 For our evolutionary model, the hypothesis was 
 correct that asymmetric tail dependence in evolutionary changes 

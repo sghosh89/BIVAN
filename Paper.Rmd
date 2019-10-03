@@ -1335,17 +1335,16 @@ Having demonstrated that non-normal copula structure and asymmetric tail associa
 common in ecological variables, we 
 addressed Q2 by exploring, using models, three possible mechanisms
 by which these phenomena may arise. 
-<!--***DAN: Maybe insert some text indicating these are first, exploratory models, and are not intended to comprehensively explore
-a mechanism (that can be done in future work), but rather to get a sense
-for whether observed copula structure may be partly due to the
-mechanism, and whether the mechanism is worthy of more comprehensive
-exploration in that connection in future work. One way these are noncomprehensive
-explorations is that I chose particular limited sets of parameters.-->
+Models presented are initial explorations, only, of whether the proposed mechanisms have the 
+potential to explain observed patterns. As such, simple models were used, 
+and comprehensive explorations of
+model parameter space and alternative model formulations were left for future work.
+
 The first mechanism relates to the ideas in the Introduction about 
 Liebig's law of the minimum, and to nonlinear influences of environmental
 variables on ecological variables.
 If an environmental variables influences an ecological variable 
-more strongly in one of its tails, we explored whether the ecological
+disproportionately strongly in one of its tails, we explored whether the ecological
 variable could then exhibit asymmetric tail dependence across space.
 Let $E_i(t)$ be an ecological variable 
 measured at location $i$ ($i=1,2$) at time $t$.
@@ -1356,8 +1355,10 @@ and independent across time and locations, $a=0.2$,
 $b=0.1, -0.1, 0.5, -0.5$ in different simulations, and 
 the $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
-$\cov(\epsilon_1,\epsilon_2)=0.8$.
-The function $g$ describes how the environment $\epsilon_i(t)$ influences
+$\cov(\epsilon_1,\epsilon_2)=0.8$. Thus basic ecological dynamics follow the
+very simple AR(1) formulation, influenced by a "regional" environmental factor which
+is correlated across locatons ($\epsilon$) and by a local factor ($\delta$). 
+The function $g$ describes how the environmental factor $\epsilon_i(t)$ influences
 $E_i(t)$. We used $g$ equal to $g_1$ or $g_2$ in different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise;
 $g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
@@ -1365,26 +1366,33 @@ $g_1$ represents environmental effects that negatively impact populations,
 and that occur only below a threshold of $\epsilon=0$; 
 and $g_2$ represents effects that positively impact populations and 
 that occur only above a threshold of $\epsilon=0$.
-Negative values of $b$ correspond to overcompensating dynamics 
+The values of $b$ selected provide a modicum of exploration of the potential
+for ecological dynamics to influence how complex dependencies between
+the $E_i(t)$ may arise: 
+negative values of $b$ correspond to overcompensating dynamics 
 and positive values to undercompensating dynamics; larger $|b|$
 means slower return to equilibrium after a disturbance. 
 
 For each $b$ and $g_i$, we simulated the model for $25000$ time
 steps and retained the $E_i(t)$ for the final $2500$ time 
-steps. We applied our model selection algorithms and 
-nonparametric statistics (see section on methods for Q1) to these 
+steps. We applied our 
+nonparametric statistic $\cor_{0,0.1}-\cor_{0.9,1}$ 
+and our Spearman- or Kendall-preserving normal-copula 
+surrogates (see section on methods for Q1) to these 
 outputs to discover if the model could
-produce non-normal copula structure and asymmetric tail dependence in the 
-$E_i(t)$. Because $(\epsilon_1,\epsilon_2)$
+produce asymmetric tail associations (and therefore non-normal copula structure)
+between the $E_i(t)$. Because $(\epsilon_1,\epsilon_2)$
 and $(\delta_1,\delta_2)$ have normal copula structure (they were drawn
 from bivariate normal distributions), the Moran 
-mechanism analyzed below 
-does not operate here.
+mechanism analyzed below does not operate here.
 <!--***DAN: You may also want to have some additional commentary in the Discussion on
 how the models and related models can be explored more comprehensively. In fact you may already have some of that, though you may want to beef it up. You may
 want to insert a point at the end of the Methids section here again emphasizing
 that these are simple models for an initial exploration, and we discuss in the 
 Discussion how...-->
+
+<!--***DAN: stopped here in Q2 methods in order to go on to the correspondng
+section of Q2 results-->
 
 Our second mechanism is an extension of the well known Moran
 effect, and was summarized conceptually in the Introduction. 
@@ -1488,50 +1496,29 @@ package [@DendroPy].
 # Results for Q2: Moran effects and asymmetric dependencies produce non-normal copula structure\label{Results_Q2}
 
 Our model with asymmetric environmental effects 
-produces outputs with visually apparent asymmetry 
-of tail dependence, to an extent that depended on the value of $b$;
-thus this is a mechanism that can produce non-normal copula structure and
+produced outputs with visually apparent asymmetry 
+of tail associations between the ecological variables $E_i$ in the two locations, 
+to an extent that depended on the value of $b$.
+For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ 
+(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}A,B), 
+for both $g_1$ and $g_2$,
+asymmetry of tail association was strong; for 
+$b=\pm 0.5$, asymmetry was weaker but still apparent
+(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}C-F).
+Lower-tail (respectively, upper-tail) spatial associations in the 
+effects of noise ($g_1$, respectively, $g_2$) 
+produced lower-tail (respectively, upper-tail) spatial 
+associations in the ecological variable, $E_i$.
+Results using our statistic $\cor_{0,0.1}-\cor_{0.9,1}$ 
+strongly reflected the visually apparent asymmetry (Tables \ref{tab_stat_npa_asym}). 
+Thus asymmetry of environmental effects is a mechanism that may be partly 
+responsible for non-normal copula structure and
 asymmetric tail dependence across space in ecological variables.
-<!--***DAN: move the following to the end of this part-->
 This result is represented in Fig. \ref{MasterFigure} as the solid box around 
 "Nonlinear environmental effects, Liebig's law" and the arrows labelled "A".
 It is explained in the Discussion why the box and some of those arrows 
 are solid, instead of dashed, although the results we 
-present in this section are theoretical.
-<!--***DAN: move the above to the end of this part-->
-For $b=0.1$ (Fig. \ref{fig_ms_asym_b_0.1}) and $b=-0.1$ 
-(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}A,B), 
-for both $g_1$ and $g_2$,
-asymmetry of tail dependence was strong; for 
-$b=\pm 0.5$, asymmetry was weaker but still apparent
-(Fig. \ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}C-F).
-<!--***DAN: Shyamolina, can you please combine Figs S24-S26 into one single figure
-with 6 panels? Please also search for citations in the main text and sup mat that 
-used to refer to the three figures and replace them with a citation to the
-new, combined figure.
-***Shya: Done.-->
-Lower-tail (respectively, upper-tail) spatial dependence in 
-effects of noise ($g_1$, respectively, $g_2$) 
-produced lower-tail (respectively, upper-tail) spatial 
-dependence in the ecological variable.
-Model selection results (Table \ref{SM-tab_summary_stat_asym_sens}) confirmed that
-ecological outputs had non-normal copula structure, but did not always reflect 
-asymmetry of tail dependence, perhaps because those methods measured
-dependence in the extreme tails. Results using our nonparametric statistics, however,
-reflected the visually apparent asymmetry (Tables \ref{SM-tab_stat_npa_asym}). 
-<!--***DAN: Simplify as follows, maybe:
-1) get rid of table S10 (you will have to change the methods so it no longer says we
-do our model selection analysis here)
-2) simplify table S11 so it only shows the cor results (also means a change to methods)
-and then maybe bring the resulting table to main text?
--->
-
-<!--***DAN: Shyamolina, can you please simplify Table S11 so it only shows the cor
-results? That also means the third column will be unnecessary. Please do this as follows:
-1) keep but comment out the code that produces the old table; 2) write new code (presumably
-starting from a copy of the old code) that makes the new, simpler version of the table. 
-That will make it very easy to produce the old version again if we ever want to.
-***Shya: Done.-->
+present so far in this section are theoretical.
 
 \begin{figure}[!h]
 \begin{center}
@@ -1543,6 +1530,50 @@ $500$ points for (A) $g=g_1$ and (B) $g=g_2$ from simulations described in the t
 \end{center}
 \end{figure}
 
+```{r tab_stat_npa_asym_simple,echo=F,results="markup"}
+library(kableExtra)
+
+tab_asym<-readRDS("./Results/asym_sens_results/stat_npa_asym_b_0.1_b_0.5.RDS")
+tab_stat_npa_asym<-c()
+for(i in c(1:8)){
+  temp<-make_table_stat_fn(data=tab_asym[[i]])
+  tab_stat_npa_asym<-rbind(tab_stat_npa_asym,temp)
+}
+
+ind_corstat<-which(tab_stat_npa_asym$Statistic %in% c("cor$_{FS}$-cor$_{LS}$"))
+tab_corstat_asym<-tab_stat_npa_asym[ind_corstat,]
+tab_corstat_asym<-tab_corstat_asym[,-1]
+
+#gtext<-c("b=0.1, g$_{1}$","b=0.1, g$_{2}$","b=-0.1, g$_{1}$","b=-0.1, g$_{2}$","b=0.5, g$_{1}$","b=0.5, g$_{2}$","b=-0.5, #g$_{1}$","b=-0.5, g$_{2}$")
+#tab_stat_npa_asym<-cbind(gtext,tab_corstat_asym)
+
+tab_corstat_asym<-cbind(b=c(0.1,0.1,-0.1,-0.1,0.5,0.5,-0.5,-0.5),
+  g=c("g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$","g$_{1}$","g$_{2}$"),tab_corstat_asym)
+
+rownames(tab_corstat_asym)<-NULL
+
+knitr::kable(tab_corstat_asym, booktabs = T, 
+             format = "latex",linesep = "",escape=F, 
+             caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
+             caption ="Asymmetric sensitivity model, nonparametric statistics results. 
+Outputs of simulations from the first model detailed in 
+the methods section for Q2 (i.e., Figs \\ref{fig_ms_asym_b_0.1} and 
+\\ref{SM-fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to nonparamtric statistical 
+analyses decribed in the methods section for Q1. The statistic cor$_{FS}$ - cor$_{LS}$ was computed for the
+output of the model with the indicated b and g, and the value was compared to 1000 values
+of the same statistic computed on surrogate time series randomized to have normal copula structure
+(see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
+given statistic on the data was less (respectively, more) than its value on $X$ of the 
+surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
+indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
+lower-tail dependence compared to a normal-copula null hypothesis. `FS' stands for `first slice'
+and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
+0.9 to 1.\\label{tab_stat_npa_asym}")
+```
+
+<!--***DAN: got to here so far in editing the result for Q2-->
+
+<!--Second mechanism, the Moran one-->
 The hypothesis that characteristics of 
 spatial copula structure and tail dependence
 in an ecological variable can be inherited from an environmental 

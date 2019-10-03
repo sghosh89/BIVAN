@@ -2508,11 +2508,12 @@ dev.off()
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.1_r_0.8_asym_sens.pdf}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_0.5_r_0.8_asym_sens.pdf}
 \includegraphics[width=12 cm]{./Results/asym_sens_results/a_0.2_b_-0.5_r_0.8_asym_sens.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$ (A-B), $b=0.5$ (C-D) and $b=-0.5$ (E-F).\label{fig_ms_asym_b_-0.1_0.5_-0.5}}
+\caption[Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using different model parameters]{Analogous to Fig. \ref{MT-fig_ms_asym_b_0.1}, but using $b=-0.1$ (A-B), $b=0.5$ (C-D) and $b=-0.5$ (E-F).\label{fig_ms_asym_b_-0.1_0.5_-0.5}}
 \end{center}
 \end{figure}
 
 <!--Displaying summary table with model selection results from asymmetric dependence analysis-->
+<!--Decided to remove this from the AER version
 ```{r tab_summary_stat_asym_sens,echo=F,results="markup"}
 summary_stat<-summary_stat[c(1:6),]
 rownames(summary_stat)<-c("Best-fit copula AICw","Normal copula AICw","Model-avg. LT","Model-avg. UT","p, CvM","p, KS")
@@ -2536,8 +2537,9 @@ family using the test based on the Cramer-von Mises statistic; p, KS: p-value fo
 test of the best-fitting copula family using the test based on the Kolmogorov-Smirnov 
 statistic.\\label{tab_summary_stat_asym_sens}")
 ```
+-->
 
-<!--*** Keeping old complex table for future use:
+<!--*** Keeping old complex table for future use, simpler version now displayed in main text:
 Displaying summary table with non-parametric approach results of asymmetric dependence analysis
 ```{r tab_stat_npa_asym,echo=F,results="markup"}
 library(kableExtra)
@@ -2572,6 +2574,7 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 -->
 
 <!---Simpler version: Displaying summary table with non-parametric approach results of asymmetric dependence analysis--->
+<!--
 ```{r tab_stat_npa_asym_simple,echo=F,results="markup"}
 library(kableExtra)
 
@@ -2598,10 +2601,10 @@ knitr::kable(tab_corstat_asym, booktabs = T,
              format = "latex",linesep = "",escape=F, 
              caption.short = "Asymmetric sensitivity model, nonparametric statistics results",
              caption ="Asymmetric sensitivity model, nonparametric statistics results. 
-The output of simulations from the first model detailed in 
+Outputs of simulations from the first model detailed in 
 the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
 \\ref{fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to nonparamtric statistical 
-analyses decribed in the methods section for Q1. The statistic ($cor_{FS} - cor_{LS}$) was computed for the
+analyses decribed in the methods section for Q1. The statistic cor$_{FS}$ - cor$_{LS}$ was computed for the
 output of the model with the indicated b and g, and the value was compared to 1000 values
 of the same statistic computed on surrogate time series randomized to have normal copula structure
 (see methods for Q1). A table entry $<X$ (respectively, $>X$) indicates the value of the 
@@ -2612,6 +2615,7 @@ lower-tail dependence compared to a normal-copula null hypothesis. `FS' stands f
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
+-->
 
 <!--Following two chunks examine Moran-like mechanism with clayton copula and then generate plots with the simulated results-->
 ```{r cause4copula_stat_ar1_clayton, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("Cause4copula.R"),mtime("CopulaFunctions_flexible.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"))}

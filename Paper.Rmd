@@ -1440,19 +1440,12 @@ ecological variable may be inherited from characteristics of spatial
 dependence in an environmental variable through a Moran-like effect, then 
 plots should be similar for populations and noises. 
 
-<!--***DAN: stopped here for methods of Q2-->
-
-<!--***DAN: How much of the material from Appendix S8 should be moved into
-the main text? I am thinking a fair amount of it. Currrently there
-is really no results on that topic at all in the main text, and that seems
-a bit ridiculous and probably is why the referee said we treated this 
-material in a "breezy" way.-->
 The next mechanism we investigated is evolutionary, and pertains to bivariate 
 trait data across species, e.g., our bird and mammal 
-data. This mechanism is a hypothetical explanation for the right tail dependence
+data. This mechanism is a hypothetical explanation for the bias toward right tail association
 observed in those data (Fig. \ref{fig_biv_multi_raw_cop}F,G). 
-The hypothesis is that tail dependence occurs in evolutionary changes
-in bivariate characters, and gives rise to tail dependence between the 
+The hypothesis is that asymmetric tail association occurs in evolutionary changes
+in bivariate characters, and gives rise to asymmtric tail association between the 
 two character values across extant species.
 We simulated bivariate character evolution on an estimate of 
 the phylogeny, taken from @GenoudIM2018, of $817$ mammal species.
@@ -1467,9 +1460,10 @@ correlation $0.875$ between components, so our simulations assess
 the impact of copula structure only. For 
 each of the five copulas, mammalian character
 evolution was simulated 100 times. For each simulation, symmetry of tail dependence 
-of the two characters across phylogeny tips was assessed.
+of the two characters across phylogeny tips was assessed using our nonparametric
+statistics.
 We hypothesized that cases 1 and 2 above would yield stronger left- than right-tail 
-dependence in tip characters, and cases 4 and 5 would yield the reverse. 
+associations in tip characters, and cases 4 and 5 would yield the reverse. 
 The simulator was written in Python and used version 4.4 of the DendroPy 
 package [@DendroPy]. 
 
@@ -1614,7 +1608,8 @@ This result is represented in Fig. \ref{MasterFigure} as the dashed box around
 "Moran effects" and the arrows labelled "B".
 
 <!--***DAN: Decided to remove this simplified version of the figure for AER
-and replace by the bigger one which was in the supp mat, now below.
+and replace by the bigger one which was in the supp mat, now below. Keeping the
+code the simpler one here in case we ever need it.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_CorlmCoru_Kendall's Tau.pdf}
@@ -1677,26 +1672,71 @@ See methods section for Q2
 for details.\label{fig_Cause4copula_C_kend_ar1}}
 \end{center}
 \end{figure}
-<!--***DAN: Shyamolina, the panels in the bottom row do not line up with the others. 
-I remember you fixed this before for the sup mat figs, can you plase fix it again here?
-Also, can you make the panels smaller or more tightly packed or soemthing
-so the whole figure plus caption fits on a page?
-***Shya: Ok, now I fixed it. See the margin specifications are different for Paper and Suuppmat, 
-that's why I have to downsize the figure here in the maintext.-->
-
-<!--***DAN: Got to here in results for Q2-->
 
 For our evolutionary model, the hypothesis was 
-correct that asymmetric tail dependence in evolutionary changes 
-can produce similarly asymmetric tail dependence between characters across
-phylogeny tips (Appendix \ref{SM-evol_mech}, Fig. \ref{SM-fig_cop_evo} 
-for details). 
-Thus this is a mechanism that may produce non-normal copula structure and
-asymmetric tail dependence between characters.
+correct that asymmetric tail association in evolutionary changes 
+can produce similarly asymmetric tail association between characters across
+phylogeny tips.
+Once character evolution was simulated 100 times for each of the
+dependence structure we used on evolutionary changes, 
+we had 817 bivariate characters for each of 500 simulations (see methods 
+section for Q2). We 
+computed our nonparametric asymmetry statistics 
+$\cor_{0,0.2}-\cor_{0.8,1}$, $\Ps_{0,0.2}-\Ps_{0.8,1}$,
+and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ for each simulation output and 
+produced a histogram for each statistic and for each
+dependence structure (Fig. \ref{fig_cop_evo}). Results showed that 
+asymmetries of tail associations in evolutionary changes
+were associated with similar asymmetries of tail associations in extant characters.
+Thus, based on our simulations, we cannot reject the possibility that
+this is a mechanism behind observed asymmetric tail associations
+in our bird and mammal data.
 This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
 "If character evolution has copula structure" and the arrow labelled "D".
 This topic is revisited in the Discussion, as is the box "Asymmetric species
 interactions" and the arrow labelled "C" in Fig. \ref{MasterFigure}.
+
+<!--results for third mechanism-->
+\begin{figure}[!h]
+\textbf{ \hspace{3.5 cm} (A) \hspace{2 cm} (F) \hspace{2 cm} (K)} \\
+\vspace{-1 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeL_hist_taildep.pdf}\\
+\end{center}
+\vspace{-.33 cm}
+\textbf{ \hspace{3.5 cm} (B) \hspace{2 cm} (G) \hspace{2 cm} (L)} \\
+\vspace{-1 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatL_hist_taildep.pdf}\\
+\end{center}
+\vspace{-.33 cm}
+\textbf{ \hspace{3.5 cm} (C) \hspace{2 cm} (H) \hspace{2 cm} (M)} \\
+\vspace{-1 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/BivNormal_hist_taildep.pdf}\\
+\end{center}
+\vspace{-.33 cm}
+\textbf{ \hspace{3.5 cm} (D) \hspace{2 cm} (I) \hspace{2 cm} (N)} \\
+\vspace{-1 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatR_hist_taildep.pdf}\\
+\end{center}
+\vspace{-.33 cm}
+\textbf{ \hspace{3.5 cm} (E) \hspace{2 cm} (J) \hspace{2 cm} (O)} \\
+\vspace{-1 cm}
+\begin{center}
+\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeR_hist_taildep.pdf}\\
+\caption[Non-parametric statistics on a mechanism of tail dependence in character distributions]{Three 
+measures of asymmetry of tail associations ($\cor_{0,0.2}-\cor_{0.8,1}$, A-E; 
+$\Ps_{0,0.2}-\Ps_{0.8,1}$, F-J; $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ K-O) between two characters, across extant species,  were 
+computed for each of 100 simulations of mammalian character evolution for each of five types of tail dependence between 
+evolutionary changes in the characters (extreme left-tail dependence (A, F, K), moderate left-tail dependence (B, G, L), 
+symmetry of tail dependence (C, H, M), moderate right-tail dependence (D, I, N), and extreme right-tail dependence 
+(E, J, O)). See the methods section for Q2 for details. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
+\end{center}
+\end{figure}
+<!--***DAN: Shyamolina, can you please make this figure and its caption fit on one page,
+somehow?-->
 
 <!--Question 3 analyses-->
 # Concepts and methods for Q3 \label{Consequences}

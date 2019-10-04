@@ -2223,6 +2223,7 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 
 # Hypothetical evolutionary mechanism for tail dependence between traits \label{evol_mech}
 
+<!--***Methods for generating evolutionary changes, keep this here-->
 \noindent The matrices from which root character states and changes 
 across phylogeny branches were randomly chosen were generated as follows.
 For extreme right-tail dependent noise, we first produced
@@ -2243,16 +2244,8 @@ datasets. The moderately right-tail dependent matrix and the symmetric tail depe
 matrix were constructed similarly, but using an survival Clayton copula and an normal copula,
 respectively. 
 
-Once character evolution was simulated 100 times for each dependence structure, 
-we had 817 bivariate characters for each of 500 simulations. We thus analyzed 500 corresponding 
-bivariate copulas (one for each simulation), each comprised of 817 points. 
-To assess the symmetry or asymmetry of tail dependence for each copula, we computed 
-the three non-parametric statistics $\cor_{0,0.2}-\cor_{0.8,1}$, $\Ps_{0,0.2}-\Ps_{0.8,1}$,
-and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ for each copula. For each statistic and for each
-dependence structure, we made a histogram of values 
-(Fig. \ref{fig_cop_evo}). Asymmetry of tail dependence in evolutionary changes to characters
-was associated with similar asymmetry of tail dependence in extant characters.
-
+<!--Move all the rest of it into the Discussion, I think, but can decide when I get to the Discussion. If it is mved, then you may want to retitle this appendix to reflect the 
+fact it is onl methods-->
 Performing statistical tests for associations between continuous traits in different species
     was a primary motivating example of phylogenetic comparative methods.
 For example, Felsenstein's method of phylogenetically independent contrasts 
@@ -2790,7 +2783,7 @@ Plotter_Cause4copula_stat(res=readres)
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, AR(1) model, 
-survival Clayton copula.]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
+survival Clayton copula]{Comparison of copula structure of noise inputs and model outputs, AR(1) 
 model, survival Clayton copula. Same format as Fig. \ref{MT-fig_Cause4copula_C_kend_ar1}, 
 see caption of that figure for 
 details.\label{fig_Cause4copula_SC_kend_ar1}}
@@ -3374,7 +3367,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, Clayton copula.]{Comparison of copula structure of noise inputs and model 
+model, weak noise, Clayton copula]{Comparison of copula structure of noise inputs and model 
 outputs, stochastic Ricker model, weak noise, Clayton copula. Same format as Fig. 
 \ref{MT-fig_Cause4copula_C_kend_ar1}, 
 see caption of that figure for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_0.1}}
@@ -3492,7 +3485,7 @@ for(insd in nsdlist){
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_0.1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, weak noise, survival Clayton copula.]{Comparison of copula structure of noise inputs and model 
+model, weak noise, survival Clayton copula]{Comparison of copula structure of noise inputs and model 
 outputs, stochastic Ricker model, weak noise, survival Clayton copula. Same format as Fig. 
 \ref{MT-fig_Cause4copula_C_kend_ar1}, 
 see caption of that figure for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_0.1}}
@@ -3521,7 +3514,7 @@ see caption of that figure for details. \label{fig_Cause4copula_SC_kend_sRicker_
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, Clayton copula.]{Comparison of copula structure of noise inputs and model 
+model, strong noise, Clayton copula]{Comparison of copula structure of noise inputs and model 
 outputs, stochastic Ricker model, strong noise, Clayton copula. Same format as Fig. 
 \ref{MT-fig_Cause4copula_C_kend_ar1}, 
 see caption of that figure for details.\label{fig_Cause4copula_C_kend_sRicker_nsd_1}}
@@ -3550,7 +3543,7 @@ see caption of that figure for details.\label{fig_Cause4copula_C_kend_sRicker_ns
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_PlmPu_Kendall's Tau.pdf}
 \includegraphics[width=5 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ricker_nsd_1_r_0.5_K_100_Survival Clayton/Survival Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption[Comparison of copula structure of noise and model output, stochastic Ricker 
-model, strong noise, survival Clayton copula.]{Comparison of copula structure of noise inputs and model 
+model, strong noise, survival Clayton copula]{Comparison of copula structure of noise inputs and model 
 outputs, stochastic Ricker model, strong noise, survival Clayton copula. Same format as Fig. 
 \ref{MT-fig_Cause4copula_C_kend_ar1}, 
 see caption of that figure for details. \label{fig_Cause4copula_SC_kend_sRicker_nsd_1}}
@@ -4152,44 +4145,6 @@ set.seed(seed)
 source("explore_evo_cop.R")
 ```
 
-<!--adding plots showing results to confirm hypothesis behind third mechanism-->
-\begin{figure}[!h]
-\textbf{ \hspace{6.5 cm} (A) \hspace{2 cm} (B) \hspace{2 cm} (C)} \\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeL_hist_taildep.pdf}\\
-\end{center}
-\textbf{ \hspace{6.5 cm} (D) \hspace{2 cm} (E) \hspace{2 cm} (F)} \\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatL_hist_taildep.pdf}\\
-\end{center}
-\textbf{ \hspace{6.5 cm} (G) \hspace{2 cm} (H) \hspace{2 cm} (I)} \\
-\vspace{-0.7 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/BivNormal_hist_taildep.pdf}\\
-\end{center}
-\textbf{ \hspace{6.5 cm} (J) \hspace{2 cm} (K) \hspace{2 cm} (L)} \\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatR_hist_taildep.pdf}\\
-\end{center}
-\textbf{ \hspace{6.5 cm} (M) \hspace{2 cm} (N) \hspace{2 cm} (O)} \\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeR_hist_taildep.pdf}\\
-\caption[Non-parametric statistics on a mechanism of tail dependence in character distributions]{Three 
-measures of asymmetry of tail dependence ($\cor_{0,0.2}-\cor_{0.8,1}$ (A, D, G, J, M), 
-$\Ps_{0,0.2}-\Ps_{0.8,1}$ (B, E, H, K, N), and $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ (C, F, I, L, O)) between two characters, across extant species,  were 
-computed for each of 100 simulations of mammalian character evolution for each of five types of tail dependence between 
-evolutionary changes in the characters (extreme left-tail dependence (A-C), moderate left-tail dependence (D-F), 
-symmetry of tail dependence (G-I), moderate right-tail dependence (J-L), and extreme right-tail dependence 
-(M-O)). Asymmetry of tail dependence in evolutionary changes in characters tended to beget similar
-asymmetry in the characters across extant species. For additional details see 
-Appendix \ref{evol_mech}. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ therefore indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
-\end{center}
-\end{figure}
-
 <!--Following chunk examine the consequence of non-normal copula atructure on skewness using green spruce aphid abundance data-->
 ```{r skewness_count_plot, results='hide', echo=F, cache=T, cache.extra=list(seed,data_aphid_count,mtime("good_loclist.R"),mtime("skewness_multivar_dataset.R"),mtime("ncsurrog.R"),mtime("SkewnessAnd3CentMom.R"))}
 
@@ -4773,7 +4728,7 @@ dev.off()
 \vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
-\caption{Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal.\label{fig_extrisk_lcohen_global}}
+\caption[Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal]{Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal.\label{fig_extrisk_lcohen_global}}
 \end{center}
 \end{figure}
 

@@ -1740,11 +1740,11 @@ somehow?-->
 <!--Question 3 analyses-->
 # Concepts and methods for Q3 \label{Consequences}
 
-We next addressed Q3 by exploring, using both data and models, three hypothesized
+We addressed Q3 by exploring, using both data and models, three hypothesized
 ecological consequences of non-normal copula structure and asymmetric tail
 associations. As for Q2, models used are intended as initial explorations, only,
 of whether copula structure may possibly have a meaningful influence on important ecological
-phenomena. Therefore only simple models are used, and comprehensive explorations of the  
+phenomena. Therefore only simple models are used, and comprehensive explorations of the 
 sensitivity of results to model strucuture and parameters are left for future work.
 
 The hypothesis was presented in the Introduction that
@@ -1770,7 +1770,7 @@ principal importance for
 pest or resource abundance, for which extreme values (spikes) 
 in the spatial mean may have large effects.
 
-To help answer Q3, we tested the above hypothesis
+We tested the above hypothesis
 using our multivariate datasets (Table \ref{tab_data_info}).
 For each dataset we calculated the spatial mean time series, and then 
 the skewness through time of that
@@ -1842,9 +1842,9 @@ set to $0$. We simulated the model 10000 times for each combination of parameter
 starting from $p_0 = 50$ in each patch, 
 and calculated extinction risk after $25$ time steps.
 
-Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
+Finally, and pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
 tested whether the copula structure of the dependences between population variables 
-measured in different locations influences the spatial version of Taylor's
+measured in different locations has consequences for the spatial version of Taylor's
 law. Taylor's law is a commonly observed and widely studied 
 [@Taylor1961; @Taylor1988; @Cohen2013; @Xu2016; @Reuman2017] 
 empirical pattern that relates the 
@@ -1857,16 +1857,74 @@ There are several versions of Taylor's law. For spatial Taylor's law,
 given population density or abundance data $x_i(t)$ measured in locations
 $i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
 all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
-So means $m_g$ and variances $v_g$ are computed across space. We consider that 
+So means $m_g$ and variances $v_g$ are computed across space. We refer to the matrix
+with $x_i(t)$ in the $t$th row and the $i$th column as a *population matrix*. 
+We consider that 
 Taylor's law holds true for a dataset if the 
 $\log(v_g)$ versus $\log(m_g)$ scatter plot 
 for the dataset shows a linear, homoskedastic pattern.
 Taylor's law has been 
 verified empirically for hundreds of taxa and has been applied in numerous fields
 including fisheries management, estimation of species persistence times, and
-agriculture [@Cohen2015; @Reuman2017].
+agriculture [@Cohen2015; @Reuman2017], so the question of whether copula
+structure of spatial dependence influences Taylor's law may have applied
+significance.
 
-<!--***DAN: continung to add TL stuff here, and then next in the following results section-->
+To explore the influence of copula structure and tail associations on spatial Taylor's
+law, we carried out a series of simulations that generated sets of population 
+matrices that had 
+distinct copula structure between locations but that 
+were otherwise statistically similar. For $k=1,\ldots,1000$
+and X representing a Clayton, normal, Frank, or a survival Clayton copula family,
+we generated $N \times n$ population matrices $m^{(\text{X},k)}$ with the following properties:
+1) for any given values of $j$ and $k$, the values 
+$\{ m_{t,j}^{(\text{X},k)} : t=1,\ldots,N  \}$ were exactly the same, as unordered
+sets, for all X, i.e., the same actual population values were used for location $j$ 
+in simulation $k$, regardless of X;
+2) for any given $k$, $j_1 \neq j_2$, the Spearman correlations (computed through time)
+$\cor_t(m_{t,j_1}^{(\text{X},k)},m_{t,j_2}^{(\text{X},k)})$ were the same, to within sampling
+variation, i.e., correlations through time of populations in two locations were the same,
+up to sampling variation, regardless of X;
+3) the copula for the dependence between $m_{t,j_1}^{(\text{X},k)}$ and $m_{t,j_2}^{(\text{X},k)}$ was X.
+We used $N=50$ and $n=25$. Details of how these matrices were generated are in 
+Appendices \ref{SM-Consequence_TL_simulation} and \ref{SM-sect:copsurrognd}.
+Thus for each $k$, the poulation matrices $m^{(\text{X},k)}$
+for X taking the values Clayton, normal, Frank, and survival Clayton
+were statistically similar except for the copula structure between locations, which was
+X. Thus comparing how Taylor's law may manifest differently for $m^{(\text{X},k)}$
+for different values of X constitutes a test of the influence of copula
+structure on Taylor's law. We selected X equal to the Clayton, normal, Frank, and survival 
+Clayton copulas to explore a range of tail association patterns.  
+
+A variety of Taylor's law statistics were computed for each populaton matrix
+$m^{(\text{X},k)}$. First, the $N=50$ 
+spatial means,
+$m_g$, and variances, $v_g$, were computed, and $\log(v_g)$ vs. $\log(m_g)$ plots 
+were considered. Linearity of the $\log(v_g)$ vs. $\log(m_g)$ relationship was 
+tested for each simulation by comparing the linear regression
+through these $50$ points to a quadratic alternative via an $F$-test, 
+producing a $p$-value result. If 
+these $p$-values were uniformly distributed across the unit interval for the 1000 replicate 
+simulations which were generated for X, it supported the 
+linearity assumption of Taylor's law for X; whereas if 
+they were clustered toward smaller values
+the test tended to reject that assumption. We also tested, for each simulation, 
+the assumption of Taylor's 
+law that the $\log(v_g)$ vs. $\log(m_g)$ plot was homoskedastic: we regressed the absolute 
+residuals of the 
+linear regression of $\log(v_g)$ versus $\log(m_g)$ against the predictions of that 
+regression. A significant $p$-value
+result of this test indicates heteroskedasticity. For each simulation we also computed the
+root mean squared error of $\log(v_g)$ vs. $\log(m_g)$ data from the linear regression
+of $\log(v_g)$ versus $\log(m_g)$, as well as the 
+intercept and slope of the linear regression.
+Finally we recorded the quadratic coefficient of the regression of $\log(v_g)$ against
+$\log(m_g)$ and $(\log(m_g))^2$, and the mean curvature of 
+the quadratic regression equation itself
+across the values $\log(m_g)$. The distrubutions of all these 
+statistics across the 1000 replicate 
+simulations were compared for X the Clayton, normal, Frank, and survival Clayton copulas, 
+to determine if copula structure influences Taylor's law.
 
 # Results for Q3: Tail dependence influences skewness of the spatial average, extinction risk, and Taylor's law
 
@@ -1927,11 +1985,31 @@ dispersal (Fig. \ref{fig_extrisk_lcohen_local}). This result
 is represented in Fig. \ref{MasterFigure}
 as the dashed box around "Extinction risk" and the dashed arrow labelled "Y".
 
-<!--***DAN: the below is on TL and needs to be augmented if we keep TL results-->
-We also substantiated using models (Appendix \ref{SM-Consequence_TL_simulation}, \ref{SM-sect:copsurrognd}, Fig. \ref{SM-fig_spTL})
-a hypothesis (Fig. \ref{MasterFigure}, arrow labelled "Z") that 
-Taylor's law can be influenced by
-tail dependence.
+Also consistent with hypothesis, copula structure had a substantial effect on
+Taylor's law. 
+Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
+linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
+(i.e., for simulations that gave normal-copula dependence between populatons
+in different locations), $p$-values for the linearty
+and homoskedasticity tests were roughly uniformly distributed across replicate 
+simulations and Taylor's law appeared visually to be a reasonable approximation
+of the $\log(v_g)$ versus $\log(m_g)$ relationship (Fig. \ref{fig_spTL}B,E,F). 
+Furthermore, quadratic coefficients
+and curvature values were close to $0$ (Fig. \ref{fig_spTL}J,K), and root mean squared
+errors from the linear regression were relatively small (Fig. \ref{fig_spTL}G).
+But linearity or homoskedasticity were violated more frequently for non-normal 
+copula structure
+(Fig. \ref{fig_spTL}A,C,D,E,F); quadratic coefficients and curvatures were frequently 
+non-zero (Fig. \ref{fig_spTL}J,K); and root mean squared
+errors from the linear regression were much higher (Fig. \ref{fig_spTL}G). Slopes 
+and intercepts of the linear regression were also strongly affected by copula
+structure (Fig. \ref{fig_spTL}H,I), though some of the effect here was because
+linear regressions do not always adequately represent the $\log(v_g)$ versus $\log(m_g)$
+relationship when copula structure was not normal.  
+Thus our results substantiated the hypothesis, at least for the models we used,
+that Taylor's law can be influenced by copula structure and asymmetric
+tail associations. This is represented in Fig. \ref{MasterFigure} by the 
+arrow labelled "Z".
 
 \begin{figure}[!h]
 \textbf{ \hspace{3.6 cm} (A) \hspace{4.2 cm} (B)} \\
@@ -1950,6 +2028,38 @@ across space. Dispersal was local (A, B) or global (C, D),
 with dispersal rate $d$ (Appendix \ref{SM-ext_risk_model}). Simulations used $N$ patches
 for $N=5$ (A, C) and $N=25$ (B, D).\label{fig_extrisk_lcohen_local}}
 \end{figure}
+
+<!--adding plots showing influences of non-normal copula on spatial Taylors law-->
+\begin{figure}[!h]
+\textbf{ \hspace{1.4cm} (A) \hspace{2.92 cm} (B) \hspace{2.92 cm} (C) \hspace{2.92 cm} (D)} \\
+\vspace{-0.5 cm} 
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
+\end{center}
+\textbf{ \hspace{0.6 cm} (E) \hspace{1.4 cm} (F) \hspace{1.4 cm} (G) \hspace{1.4 cm} (H) \hspace{1.4 cm} (I) \hspace{1.4 cm} (J) \hspace{1.4 cm} (K)}\\
+\vspace{-0.5 cm}
+\begin{center}
+\includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
+\caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
+log(spatial mean) relationships for $1000$ simulations over $50$ time steps for $25$ locations 
+using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
+locations. Results from all $1000$ 
+simulations were plotted on the same axes for each panel, but two example simulations are 
+shown in red and green to help assess to what extent variation on the plots was between 
+simulations or within simulations. For each simulation, we tested the linearity 
+(E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
+and quantified the root mean squared error of points from the linear regression line (G).
+We also calculated the linear regression intercept (H) and slope (I), the quadratic
+term of a quadratic regression through the points on the log(variance) vs. log(mean) plot
+(J), and the curvature of that quadratic regression (K). Distributions of values 
+across all 1000 simulations are displayed. Spearman-preserving surrogates were used, 
+though results using Kendall-preserving surrogates were similar. See the methods
+section for Q3 and Appendices \ref{SM-Consequence_TL_simulation} and 
+\ref{SM-sect:copsurrognd} for details.\label{fig_spTL}}
+\end{center}
+\end{figure}
+<!--***DAN: Shyamolina, the spacing of the panel labels (A, B, C, etc.) is not quite 
+matched up with the spacing of the panels themselves, can you fix it please?-->
 
 # Discussion \label{Discussion}
 

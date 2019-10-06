@@ -4733,36 +4733,6 @@ dev.off()
 \end{figure}
 -->
 
-<!--adding plots showing influences of non-normal copula on spatial Taylors law-->
-\begin{figure}[!h]
-\textbf{ \hspace{2.8 cm} (A) \hspace{3.6 cm} (B) \hspace{3.8 cm} (C) \hspace{3.6 cm} (D)} \\
-\vspace{-0.5 cm} 
-\begin{center}
-\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
-\end{center}
-\textbf{ \hspace{1.8 cm} (E) \hspace{1.6 cm} (F) \hspace{1.8 cm} (G) \hspace{1.8 cm} (H) \hspace{1.8 cm} (I) \hspace{1.8 cm} (J) \hspace{1.8 cm} (K)}\\
-\vspace{-0.5 cm}
-\begin{center}
-\includegraphics[width=18 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
-\caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
-log(spatial mean) relationships for $1000$ simulations over $50$ time steps for $25$ locations 
-using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
-locations. Results from all $1000$ 
-simulations were plotted on the same axes for each panel, but two example simulations are 
-shown in red and green to help assess to what extent variation on the plots was between 
-simulations or within simulations. For each simulation, we tested the linearity 
-(E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
-and quantified the root mean squared error of points from the linear regression line (G).
-We also calculated the linear regression intercept (H) and slope (I), the quadratic
-term of a quadratic regression through the points on the log(variance) vs. log(mean) plot
-(J), and the curvature of that quadratic regression (K). Distributions of values 
-across all 1000 simulations are displayed. Spearman-preserving surrogates were used, 
-though results using Kendall-preserving surrogates were very similar. See 
-Appendix \ref{Consequence_TL_simulation} for 
-simulation and plotting details.\label{fig_spTL}}
-\end{center}
-\end{figure}
-
 # Surrogate testing with multivariate datasets\label{Surrog_multi}
 
 For multivariate datasets, surrogates were produced as follows:

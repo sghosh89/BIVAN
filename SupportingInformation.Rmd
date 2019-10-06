@@ -2223,7 +2223,6 @@ resampling, with replacement, the rows and columns of $S$, and is described in d
 
 # Hypothetical evolutionary mechanism for tail dependence between traits \label{evol_mech}
 
-<!--***Methods for generating evolutionary changes, keep this here-->
 \noindent The matrices from which root character states and changes 
 across phylogeny branches were randomly chosen were generated as follows.
 For extreme right-tail dependent noise, we first produced
@@ -2244,7 +2243,7 @@ datasets. The moderately right-tail dependent matrix and the symmetric tail depe
 matrix were constructed similarly, but using an survival Clayton copula and an normal copula,
 respectively. 
 
-<!--Move all the rest of it into the Discussion, I think, but can decide when I get to the Discussion. If it is mved, then you may want to retitle this appendix to reflect the 
+<!--***DAN: Move all the rest of it into the Discussion, I think, but can decide when I get to the Discussion. If it is mved, then you may want to retitle this appendix to reflect the 
 fact it is onl methods-->
 Performing statistical tests for associations between continuous traits in different species
     was a primary motivating example of phylogenetic comparative methods.
@@ -4723,6 +4722,7 @@ dev.off()
 ```
 
 <!--adding plots showing effects of asymmetric copula on extinction risk-->
+<!--Combined this with the main text fig for AER
 \begin{figure}[!h]
 \textbf{ \hspace{7.3 cm} (A) \hspace{4 cm} (B)} \\
 \vspace{-0.8 cm}
@@ -4731,6 +4731,7 @@ dev.off()
 \caption[Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal]{Analogous to Fig. \ref{MT-fig_extrisk_lcohen_local} in the main text, but with global dispersal.\label{fig_extrisk_lcohen_global}}
 \end{center}
 \end{figure}
+-->
 
 <!--adding plots showing influences of non-normal copula on spatial Taylors law-->
 \begin{figure}[!h]
@@ -4830,29 +4831,6 @@ For global dispersal, the fraction $d$ that dispersed from each patch was divide
 among all other patches.
 
 # Effects of non-normal copula structure on Taylor's law \label{Consequence_TL_simulation}
-
-\noindent Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
-tested whether the copula structure of the dependences between population variables 
-measured in different locations influences the spatial version of Taylor's
-law. Taylor's law is an extremely commonly observed and widely studied 
-[@Taylor1961; @Taylor1988; @Cohen2013; @Xu2016] empirical pattern that relates the 
-variances of groups, $g$, of population measurements to the means of the 
-groups via a power law, $v_g = a \times m_g^b$, or equivalently, 
-$\log(v_g)=\log(a)+b \times \log(m_g)$. Here $b$ is called 
-the Taylor's law *exponent* or 
-*slope*, and we refer to $\log(a)$ as the Taylor's law intercept. 
-There are several versions of Taylor's law. For spatial Taylor's law,
-given population density or abundance data $x_i(t)$ measured in locations
-$i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
-all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
-So means $m_g$ and variances $v_g$ are computed across space. We view the assumptions
-of Taylor's law to be validated for a dataset if the 
-$\log(v_g)$ versus $\log(m_g)$ scatter plot 
-for the dataset shows a linear, homoskedastic pattern.
-Taylor's law has been 
-verified empirically for hundreds of taxa and has been applied in numerous fields
-including fisheries management, estimation of species persistence times, and
-agriculture [@Cohen2015; @Reuman2017].
 
 We examined using simulations whether copula structure influences spatial Taylor's law, as 
 follows. First, an $n \times n$ covariance matrix $\Sigma$ was created

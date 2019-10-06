@@ -1558,7 +1558,6 @@ For simulations using AR(1) models, our correlation and tail asymmetry statistic
 were always similar for noise and populations 
 (Fig. \ref{fig_Cause4copula_C_kend_ar1} for the Clayon copula, 
 Fig. \ref{SM-fig_Cause4copula_SC_kend_ar1} for the survival Clayton copula).
-<!--***DAN: reorder sup mat figs so they are cited in order-->
 Though there were significant differences for many statistics
 and simulations, these were small compared to the overall tendency for
 larger (respectively, smaller) values of our statistics, as applied to
@@ -1745,24 +1744,24 @@ The hypothesis was presented in the Introduction that
 the distribution (through time) of a spatially 
 averaged quantity should be influenced by 
 dependencies between the local quantities being averaged, including their
-copula structure and tail dependence. 
+copula structure and tail associations. 
 To refine this hypothesis, suppose an ecological variable 
 $E_i(t)$ is measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and
 the spatial mean $\sum_i E_i(t)/N$ is of
 interest. The $E_i(t)$ could be, for instance, local abundances of a pest or 
 exploited species, or local fluxes of a greenhouse gas. If  $E_i$ and $E_j$ are 
-right-tail dependent for most location pairs $i$ and $j$, then
+associated primarily in their right tails for most location pairs $i$ and $j$, then
 exceptionally large values tend to occur at the same time in most locations.
 We hypothesize that this 
 will tend to increase the skewness of the distribution 
-of the spatial mean. Similarly, left-tail dependence between local variables
+of the spatial mean. Similarly, left-tail associations between local variables
 should tend to decrease skewness. Strong positive skewness of the 
 spatial-mean time series corresponds to "spikiness" of that time series,
 which corresponds to instability through time. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
 pest or resource abundance, for which extreme values (spikes) 
-in the spatial mean have large effects.
+in the spatial mean may have large effects.
 
 To help answer Q3, we tested the above hypothesis
 using our multivariate datasets (Table \ref{tab_data_info}).
@@ -1784,28 +1783,31 @@ Our comparisons therefore tested the null
 hypothesis that the skewness of the spatial 
 mean took values on the empirical data no different 
 from what one would expect if the copula
-structure of the data were multivariate N, but the data were otherwise statistically
+structure of the data were multivariate normal (i.e., the same copula as a 
+multivariate normal distribtion), but the data were otherwise statistically
 unchanged. Significant differences indicate that non-normal copula structure in the data 
 contributed to the skewness of the spatial mean time series, 
 i.e., to its instability and "spikiness" through time.
 
 For green spruce aphid abundance data, *C. furca* abundance data, and methane-flux
-data, because these datasets exhibited lower-tail dependence 
+data, because these datasets exhibited stronger lower- than upper-tail associations 
 (Table \ref{tab_multivar_summary}), we compared empirical and surrogate skewness values
 via a one-tailed test in the left tail: the $p$-value was the fraction
-of surrogate skewnesses less than the skewness for the empirical data; the test
-examines whether lower-tail dependence caused the spatial average to have significantly lower
-skewness than would have been expected without tail dependence. For
-leaf-curling plum aphid data, because that dataset exhibited upper-tail 
-dependence (Table \ref{tab_multivar_summary}), we did the analogous one-tailed test
-in the right tail. The test examines whether upper-tail dependence caused the spatial
+of surrogate skewnesses less than the skewness for the empirical data. The test
+examines whether stronger lower-tail associations between local time series 
+caused the spatial average to have significantly lower
+skewness than would have been expected with symmetric tail associations. For
+leaf-curling plum aphid data, because that dataset exhibited stronger upper-
+than lower-tail 
+associations (Table \ref{tab_multivar_summary}), we did the analogous one-tailed test
+in the right tail. The test examines whether upper-tail associations caused the spatial
 average to have significantly higher skewness than 
-expected without tail dependence.
+would have been expected with symmetric tail associations.
 
-To further address Q3, we also examined a hypothesis that spatial 
-tail dependence of an environmental variable can influence the 
+To further address Q3, we also examined a hypothesis that 
+asymmetric tail associations across space of an environmental variable can influence the 
 extinction risk of a metapopulation. We hypothesized that environmental noises
-exhibiting greater left-tail dependence across different habitat patches would 
+exhibiting greater left-tail associations across different habitat patches would 
 cause higher metapopulation extinction risks because then very bad years for the 
 component populations would occur simultaneously in many patches,
 reducing rescue effects. Here we assume, for simplicity, 
@@ -1822,7 +1824,7 @@ $\exp(r+\epsilon_i(t))$. Here $r$ is a growth rate; we used $r=0$. The
 $\epsilon_i(t)$ represent environmental noises. They were standard-normally 
 distributed, were independent through time, and showed the same 
 spatial correlations for every simulation, 
-but were made to exhibit right- or left-tail dependence between patches in
+but were made to exhibit stronger right- or left-tail associations between patches in
 different simulations (Appendix \ref{SM-ext_risk_model}). The $N \times N$
 matrix $D$ was a dispersal matrix
 modelling local or global dispersal at rate $d$, in different simulations
@@ -1833,27 +1835,67 @@ set to $0$. We simulated the model 10000 times for each combination of parameter
 starting from $p_0 = 50$ in each patch, 
 and calculated extinction risk after $25$ time steps.
 
+<!--***DAN: if you do decide to move the TL stuff to main text, this is where the 
+methods go. Other than this, I think I am done revising methods for Q3.-->
+
+<!--***DAN: Just ike in the Causes secton you added a comment saying these models
+were for initial exploration only and so we did not explore parameter space
+nor look at model variants, likewise we also need some commentary in this section 
+indicating that the modelling is simple and not comprehensively explored, because
+the purpose is just to get an idea of what kinds of consequences of copula 
+structure *may* pertain; further work is needed to understand to what extent these
+consequences are realized in real systems.-->
+
+Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
+tested whether the copula structure of the dependences between population variables 
+measured in different locations influences the spatial version of Taylor's
+law. Taylor's law is a commonly observed and widely studied 
+[@Taylor1961; @Taylor1988; @Cohen2013; @Xu2016; @Reuman2017] 
+empirical pattern that relates the 
+variances of groups, $g$, of population measurements to the means of the 
+groups via a power law, $v_g = a \times m_g^b$, or equivalently, 
+$\log(v_g)=\log(a)+b \times \log(m_g)$. Here $b$ is called 
+the Taylor's law *exponent* or 
+*slope*, and $\log(a)$ is the Taylor's law intercept. 
+There are several versions of Taylor's law. For spatial Taylor's law,
+given population density or abundance data $x_i(t)$ measured in locations
+$i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
+all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
+So means $m_g$ and variances $v_g$ are computed across space. We consider that 
+Taylor's law is validated for a dataset if the 
+$\log(v_g)$ versus $\log(m_g)$ scatter plot 
+for the dataset shows a linear, homoskedastic pattern.
+Taylor's law has been 
+verified empirically for hundreds of taxa and has been applied in numerous fields
+including fisheries management, estimation of species persistence times, and
+agriculture [@Cohen2015; @Reuman2017].
+
+
+
 # Results for Q3: Tail dependence influences skewness of the spatial average, extinction risk, and Taylor's law
 
 \noindent Results were consistent with the hypothesis that the skewness
-of a spatial-average time series is influenced by tail dependence
-between the local quantities being averaged. Thus copula 
-structure and tail dependence are important for spatially averaged 
-quantities. This result is represented in Fig. \ref{MasterFigure}
-as the solid box around "Instability/skewness of mean or total 
-time series" and the solid arrows labeled "X". For datasets that
-exhibited strong lower-tail (respectively, upper-tail) 
-dependence in earlier analyses (green spruce 
-aphid abundance data for lower-tail, and leaf-curling plum aphid first flight data
-for upper-tail, Table 
+of a spatial-average time series is influenced by tail associations
+between the local quantities being averaged. 
+For datasets that
+exhibited highly asymmetric tail associations in earlier analyses (green spruce 
+aphid abundance data had stronger lower-tail association, and, 
+respectively,  leaf-curling plum 
+aphid first flight data had stronger upper-tail association, Table 
 \ref{tab_multivar_summary}), skewness of the spatial average 
 was less than (respectively, greater than) a significant fraction of 
 surrogate skewness values 
-(Fig. \ref{fig_skewness_spearman}A,B). For datasets with moderate lower-tail 
+(Fig. \ref{fig_skewness_spearman}A,B). For datasets with moderately stronger 
+lower than upper-tail 
 dependence (\emph{Ceratium furca} abundance and methane data), 
 skewness of the spatial
 average showed a non-significant or marginally significant tendency 
 toward being less than surrogate skewnesses (Fig. \ref{fig_skewness_spearman}C,D). 
+Thus copula 
+structure and asymmetric tail associations are important for spatially averaged 
+quantities. This result is represented in Fig. \ref{MasterFigure}
+as the solid box around "Instability/skewness of mean or total 
+time series" and the solid arrows labeled "X". 
 
 \begin{figure}[!h]
 \textbf{ \hspace{6.6 cm} (A) \hspace{4.6 cm} (B)} \\
@@ -1875,33 +1917,42 @@ normal-copula null hypothesis. Black dots are empirical
 skewnesses; see text 
 and Appendix \ref{SM-Surrog_multi} for details of the null hypothesis. Results show a 
 tendency for skewness of the spatial average to be affected as hypothesized 
-by tail dependence. \label{fig_skewness_spearman}}
+by asymmetric tail associations. \label{fig_skewness_spearman}}
 \end{center}
 \end{figure}
 
 Consistent with our extinction risk hypothesis, 
-left-tail-dependent environmental fluctuations increased metapopulation
+left-tail-associated environmental fluctuations increased metapopulation
 extinction risk for the spatial 
-Lewontin-Cohen model (Fig. \ref{fig_extrisk_lcohen_local}), 
+Lewontin-Cohen model, 
 for $N=5$ and $N=25$ habitat patches, and for local 
-(Fig. \ref{fig_extrisk_lcohen_local}) and global (Fig. \ref{SM-fig_extrisk_lcohen_global})
-dispersal. This result is represented in Fig. \ref{MasterFigure}
+and global
+dispersal (Fig. \ref{fig_extrisk_lcohen_local}). This result 
+is represented in Fig. \ref{MasterFigure}
 as the dashed box around "Extinction risk" and the dashed arrow labelled "Y".
+
+<!--***DAN: the below is on TL and needs to be augmented if we keep TL results-->
 We also substantiated using models (Appendix \ref{SM-Consequence_TL_simulation}, \ref{SM-sect:copsurrognd}, Fig. \ref{SM-fig_spTL})
 a hypothesis (Fig. \ref{MasterFigure}, arrow labelled "Z") that 
 Taylor's law can be influenced by
 tail dependence.
 
 \begin{figure}[!h]
-\textbf{ \hspace{6.6 cm} (A) \hspace{4.2 cm} (B)} \\
+\textbf{ \hspace{3.6 cm} (A) \hspace{4.2 cm} (B)} \\
 \vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
-\caption{Extinction risk for the metapopulation extension of the Lewontin-Cohen model, after 
-$25$ time steps, was higher for left-tail-dependent environmental noise. Dispersal was local,
-with dispersal rate $d$ (Appendix \ref{SM-ext_risk_model}). Simulations used $N$ patches
-for $N=5$ (A) and $N=25$ (B).\label{fig_extrisk_lcohen_local}}
 \end{center}
+\textbf{ \hspace{3.6 cm} (C) \hspace{4.2 cm} (D)} \\
+\vspace{-0.8 cm}
+\begin{center}
+\includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
+\end{center}
+\caption{Extinction risk for the metapopulation extension of the Lewontin-Cohen model, after 
+$25$ time steps, was higher for environmental noise with stronger left-tail association
+across space. Dispersal was local (A, B) or global (C, D),
+with dispersal rate $d$ (Appendix \ref{SM-ext_risk_model}). Simulations used $N$ patches
+for $N=5$ (A, C) and $N=25$ (B, D).\label{fig_extrisk_lcohen_local}}
 \end{figure}
 
 # Discussion \label{Discussion}

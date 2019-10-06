@@ -1740,6 +1740,13 @@ somehow?-->
 <!--Question 3 analyses-->
 # Concepts and methods for Q3 \label{Consequences}
 
+We next addressed Q3 by exploring, using both data and models, three hypothesized
+ecological consequences of non-normal copula structure and asymmetric tail
+associations. As for Q2, models used are intended as initial explorations, only,
+of whether copula structure may possibly have a meaningful influence on important ecological
+phenomena. Therefore only simple models are used, and comprehensive explorations of the  
+sensitivity of results to model strucuture and parameters are left for future work.
+
 The hypothesis was presented in the Introduction that
 the distribution (through time) of a spatially 
 averaged quantity should be influenced by 
@@ -1835,17 +1842,6 @@ set to $0$. We simulated the model 10000 times for each combination of parameter
 starting from $p_0 = 50$ in each patch, 
 and calculated extinction risk after $25$ time steps.
 
-<!--***DAN: if you do decide to move the TL stuff to main text, this is where the 
-methods go. Other than this, I think I am done revising methods for Q3.-->
-
-<!--***DAN: Just ike in the Causes secton you added a comment saying these models
-were for initial exploration only and so we did not explore parameter space
-nor look at model variants, likewise we also need some commentary in this section 
-indicating that the modelling is simple and not comprehensively explored, because
-the purpose is just to get an idea of what kinds of consequences of copula 
-structure *may* pertain; further work is needed to understand to what extent these
-consequences are realized in real systems.-->
-
 Pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
 tested whether the copula structure of the dependences between population variables 
 measured in different locations influences the spatial version of Taylor's
@@ -1862,7 +1858,7 @@ given population density or abundance data $x_i(t)$ measured in locations
 $i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
 all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
 So means $m_g$ and variances $v_g$ are computed across space. We consider that 
-Taylor's law is validated for a dataset if the 
+Taylor's law holds true for a dataset if the 
 $\log(v_g)$ versus $\log(m_g)$ scatter plot 
 for the dataset shows a linear, homoskedastic pattern.
 Taylor's law has been 
@@ -1870,7 +1866,7 @@ verified empirically for hundreds of taxa and has been applied in numerous field
 including fisheries management, estimation of species persistence times, and
 agriculture [@Cohen2015; @Reuman2017].
 
-
+<!--***DAN: continung to add TL stuff here, and then next in the following results section-->
 
 # Results for Q3: Tail dependence influences skewness of the spatial average, extinction risk, and Taylor's law
 

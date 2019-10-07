@@ -1697,34 +1697,8 @@ interactions" and the arrow labelled "C" in Fig. \ref{MasterFigure}.
 
 <!--results for third mechanism-->
 \begin{figure}[!h]
-\textbf{ \hspace{3.5 cm} (A) \hspace{2 cm} (F) \hspace{2 cm} (K)} \\
-\vspace{-1 cm}
 \begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeL_hist_taildep.pdf}\\
-\end{center}
-\vspace{-.33 cm}
-\textbf{ \hspace{3.5 cm} (B) \hspace{2 cm} (G) \hspace{2 cm} (L)} \\
-\vspace{-1 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatL_hist_taildep.pdf}\\
-\end{center}
-\vspace{-.33 cm}
-\textbf{ \hspace{3.5 cm} (C) \hspace{2 cm} (H) \hspace{2 cm} (M)} \\
-\vspace{-1 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/BivNormal_hist_taildep.pdf}\\
-\end{center}
-\vspace{-.33 cm}
-\textbf{ \hspace{3.5 cm} (D) \hspace{2 cm} (I) \hspace{2 cm} (N)} \\
-\vspace{-1 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/SomewhatR_hist_taildep.pdf}\\
-\end{center}
-\vspace{-.33 cm}
-\textbf{ \hspace{3.5 cm} (E) \hspace{2 cm} (J) \hspace{2 cm} (O)} \\
-\vspace{-1 cm}
-\begin{center}
-\includegraphics[width=9 cm]{./Results/BMR_results/evo_cop/ExtremeR_hist_taildep.pdf}\\
+\includegraphics[width=15 cm]{./Results/BMR_results/evo_cop/singlepage_hist_taildep.pdf}\\
 \caption[Non-parametric statistics on a mechanism of tail dependence in character distributions]{Three 
 measures of asymmetry of tail associations ($\cor_{0,0.2}-\cor_{0.8,1}$, A-E; 
 $\Ps_{0,0.2}-\Ps_{0.8,1}$, F-J; $\Dsq_{0.8,1}-\Dsq_{0,0.2}$ K-O) between two characters, across extant species,  were 
@@ -1734,8 +1708,10 @@ symmetry of tail dependence (C, H, M), moderate right-tail dependence (D, I, N),
 (E, J, O)). See the methods section for Q2 for details. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
 \end{center}
 \end{figure}
-<!--***DAN: Shyamolina, can you please make this figure and its caption fit on one page,
-somehow?-->
+
+
+
+
 
 <!--Question 3 analyses-->
 # Concepts and methods for Q3 \label{Consequences}
@@ -1952,21 +1928,21 @@ as the solid box around "Instability/skewness of mean or total
 time series" and the solid arrows labeled "X". 
 
 \begin{figure}[!h]
-\textbf{ \hspace{6.6 cm} (A) \hspace{4.6 cm} (B)} \\
-\vspace{-0.4 cm}
+\textbf{ \hspace{5.6 cm} (A) \hspace{4 cm} (B)} \\
+\vspace{-0.6 cm}
 \begin{center}
 \includegraphics[width=5 cm]{./Results/skewness_results/skewness_aphid_count/skewness_aphid_count_sp_10_spearman.pdf}
 \includegraphics[width=5 cm]{./Results/skewness_results/skewness_aphid_ff/skewness_aphid_ff_sp_11_spearman.pdf}\\
 \end{center}
 \vspace{0.2 cm}
-\textbf{ \hspace{6.6 cm} (C) \hspace{4.6 cm} (D)} \\
-\vspace{-0.4 cm}
+\textbf{ \hspace{5.6 cm} (C) \hspace{4 cm} (D)} \\
+\vspace{-0.6 cm}
 \begin{center}
 \includegraphics[width=5 cm]{./Results/skewness_results/skewness_plankton_north_sea/skewness_plankton_north_sea_sp_16_spearman.pdf}
 \includegraphics[width=5 cm]{./Results/skewness_results/skewness_methane/skewness_methane_spearman.pdf}
-\caption{Skewness of spatially averaged green spruce aphid abundance $(A)$, leaf-curling plum 
-aphid first flight dates $(B)$, \emph{Ceratium furca} abundance $(C)$, and methane-flux
-$(D)$ time series compared to a multivariate 
+\caption{Skewness of spatially averaged green spruce aphid abundance (A), leaf-curling plum 
+aphid first flight dates (B), \emph{Ceratium furca} abundance (C), and methane-flux
+(D) time series compared to a multivariate 
 normal-copula null hypothesis. Black dots are empirical 
 skewnesses; see text 
 and Appendix \ref{SM-Surrog_multi} for details of the null hypothesis. Results show a 
@@ -2012,13 +1988,13 @@ tail associations. This is represented in Fig. \ref{MasterFigure} by the
 arrow labelled "Z".
 
 \begin{figure}[!h]
-\textbf{ \hspace{3.6 cm} (A) \hspace{4.2 cm} (B)} \\
-\vspace{-0.8 cm}
+\textbf{ \hspace{5.6 cm} (A) \hspace{4 cm} (B)} \\
+\vspace{-1 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_local_disp.pdf}
 \end{center}
-\textbf{ \hspace{3.6 cm} (C) \hspace{4.2 cm} (D)} \\
-\vspace{-0.8 cm}
+\textbf{ \hspace{5.6 cm} (C) \hspace{4 cm} (D)} \\
+\vspace{-1 cm}
 \begin{center}
 \includegraphics[width=10 cm]{./Results/ext_risk_copula/lcohen_ext_risk_global_disp.pdf}
 \end{center}
@@ -2031,13 +2007,13 @@ for $N=5$ (A, C) and $N=25$ (B, D).\label{fig_extrisk_lcohen_local}}
 
 <!--adding plots showing influences of non-normal copula on spatial Taylors law-->
 \begin{figure}[!h]
-\textbf{ \hspace{1.4cm} (A) \hspace{2.92 cm} (B) \hspace{2.92 cm} (C) \hspace{2.92 cm} (D)} \\
-\vspace{-0.5 cm} 
+\textbf{ \hspace{2cm} (A) \hspace{2.92 cm} (B) \hspace{2.92 cm} (C) \hspace{2.92 cm} (D)} \\
+\vspace{-0.8 cm} 
 \begin{center}
 \includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png}\\
 \end{center}
-\textbf{ \hspace{0.6 cm} (E) \hspace{1.4 cm} (F) \hspace{1.4 cm} (G) \hspace{1.4 cm} (H) \hspace{1.4 cm} (I) \hspace{1.4 cm} (J) \hspace{1.4 cm} (K)}\\
-\vspace{-0.5 cm}
+\textbf{ \hspace{1 cm} (E) \hspace{1.4 cm} (F) \hspace{1.2 cm} (G) \hspace{1.2 cm} (H) \hspace{1.4 cm} (I) \hspace{1.4 cm} (J) \hspace{1.2 cm} (K)}\\
+\vspace{-0.8 cm}
 \begin{center}
 \includegraphics[width=16 cm]{./Results/taylorslaw_results/SpatialTL_7stats_spearman.pdf}
 \caption[Spatial Taylor's law results]{Spatial Taylor's law results. Log(spatial variance) vs. 
@@ -2059,7 +2035,8 @@ section for Q3 and Appendices \ref{SM-Consequence_TL_simulation} and
 \end{center}
 \end{figure}
 <!--***DAN: Shyamolina, the spacing of the panel labels (A, B, C, etc.) is not quite 
-matched up with the spacing of the panels themselves, can you fix it please?-->
+matched up with the spacing of the panels themselves, can you fix it please?
+***Shya: check now, if is it ok?-->
 
 # Discussion \label{Discussion}
 
@@ -2306,5 +2283,5 @@ Science Foundation grants 1714195 and 1442595 and the James S McDonnell Foundati
 \noindent
 \sloppy
 
-<div id="refs"></div>
+<!--<div id="refs"></div>-->
 

@@ -319,6 +319,69 @@ abline(v=0,lty="dashed")
 par(op)
 dev.off()
 
+#==================== single page figure ===============
+# Alternate plot
+
+resloc<-"./Results/BMR_results/evo_cop/"
+
+nametag<-"BivNormal"
+ansN<-readRDS(paste(resloc,nametag,"_NPA_results.RDS",sep=""))
+
+nametag<-"ExtremeL"
+ansXL<-readRDS(paste(resloc,nametag,"_NPA_results.RDS",sep=""))
+
+nametag<-"ExtremeR"
+ansXR<-readRDS(paste(resloc,nametag,"_NPA_results.RDS",sep=""))
+
+nametag<-"SomewhatL"
+ansSL<-readRDS(paste(resloc,nametag,"_NPA_results.RDS",sep=""))
+
+nametag<-"SomewhatR"
+ansSR<-readRDS(paste(resloc,nametag,"_NPA_results.RDS",sep=""))
+
+pdf(paste(resloc,"singlepage_hist_taildep.pdf",sep=""),height=9,width=15)
+op<-par(mfrow=c(3,5),mar=c(6,7,4,2),mgp=c(4.5,1,0))
+
+ans_list<-list(ansXL=ansXL,ansSL=ansSL,ansN=ansN,ansSR=ansSR,ansXR=ansXR)
+
+for(i in 1:5){
+  ans<-ans_list[[i]]
+  res<-ans$CorlmCoru_list
+  mres<-round(median(res),4)
+  n<-sum(res<=0)
+  h<-hist(res,border=F,col="grey",breaks = 10,xlab=expression(paste("cor" ["0,0.2"]-"cor"["0.8,1"])),
+          cex.lab=2.5,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=2.5,xlim=c(-0.1,0.1))
+  abline(v=0,lty="dashed")
+  legend(x=-0.15,y=max(h$counts),legend=LETTERS[i],bty="n",cex=3)
+}
+
+for(i in 1:5){
+  ans<-ans_list[[i]]
+  res<-ans$PlmPu_list
+  mres<-round(median(res),4)
+  n<-sum(res<=0)
+  h<-hist(res,border=F,col="grey",breaks = 10,xlab=expression(paste("P" ["0,0.2"]-"P"["0.8,1"])),
+          cex.lab=2.5,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=2.5,xlim=c(-0.1,0.1))
+  abline(v=0,lty="dashed")
+  legend(x=-0.15,y=max(h$counts),legend=LETTERS[i+5],bty="n",cex=3)
+}
+
+for(i in 1:5){
+  ans<-ans_list[[i]]
+  res<-ans$D2umD2l_list
+  mres<-round(median(res),4)
+  n<-sum(res<=0)
+  h<-hist(res,border=F,col="grey",breaks = 10,xlab=expression(paste("D" ["0.8,1"]^2-"D"["0,0.2"]^2)),
+          cex.lab=2.5,cex.axis=2,main=paste("n = ",n,sep=""),cex.main=2.5,xlim=c(-0.01,0.01))
+  abline(v=0,lty="dashed")
+  legend(x=-0.015,y=max(h$counts),legend=LETTERS[i+10],bty="n",cex=3)
+}
+
+par(op)
+dev.off()
+
+
+
 
 
 

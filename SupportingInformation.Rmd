@@ -4937,8 +4937,9 @@ get_ms_aphid_temp<-function(sp,d_copsp){
     ms_res_allloc[[loc]]<-ms_res
     
     m<-as.data.frame(matrix(NA,1,12))
-    colnames(m)<-c("p.Indep","minAIC.bestfit.cop","Bestfit.cop.AICw",
-                   "Normal.cop.AICw","p.CvM","p.KS",
+    colnames(m)<-c("p.Indep","minAIC.bestfit.cop",
+                   "Bestfit.cop.AIC", "Normal.cop.AIC",
+                   "p.CvM","p.KS",
                    "LT.model.avg","UT.model.avg","(LT-UT).model.avg",
                    "CorlmCoru","PlmPu","D2umD2l")
     m$p.Indep<-ms_res$IndepTestRes
@@ -4964,8 +4965,10 @@ get_ms_aphid_temp<-function(sp,d_copsp){
       D2umD2l<-D2u-D2l
       
       m$minAIC.bestfit.cop<-ms_res$InfCritRes$copname[which.min(ms_res$InfCritRes$AIC)]
-      m$Bestfit.cop.AICw<-round(max(ms_res$InfCritRes$AICw),3)
-      m$Normal.cop.AICw<-round(ms_res$InfCritRes$AICw[1],3)
+      
+      m$Bestfit.cop.AIC<-round(min(ms_res$InfCritRes$AIC),3)
+      m$Normal.cop.AIC<-round(ms_res$InfCritRes$AIC[1],3)
+      
       m$p.CvM<-ms_res$GofRes_CvM
       m$p.KS<-ms_res$GofRes_KS
       m$LT.model.avg<-round(ms_res$relLTdep_AICw,3)
@@ -4999,28 +5002,6 @@ for(isp in splist){
 }
 
 saveRDS(ms_npa_RES_greenspruceaphid_count_temp,"./Results/aphid_count_winter_temp_results/ms_npa_RES_greenspruceaphid_count_temp.RDS")
-```
-
-```{r tab_greenspruceaphid_temp_summary, echo=F, results='asis',message=F}
-library(kableExtra)
-set.seed(seed)
-
-res<-ms_npa_RES_greenspruceaphid_count_temp$sp10_Green_spruce_aphid$ms_summary_allloc
-#row.names(res)<-NULL
-#res<-cbind(c(2:11),res)
-colnames(res)<-c("p-value, independence test","Best-fit copula",
-                 "Best-fit copula AICw","Normal copula AICw","p, CvM","p, KS","Model-avg. LT","Model-avg. UT","Model-avg. LT minus UT","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
-res<-res[,-1]
-knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
-             caption.short="Summary results for copulas for winter temperature versus green spruce aphid abundance",
-      caption = "Summary results for analysis of copulas for winter temperature versus green spruce 
-aphid abundance for each of the 10 sampling locations, using the same model selection
-and nonparametric methods detailed in the section on methods for Q1. The column labeled p, CvM is the p-value 
-result for the goodness of fit test using the Cramer-von Mises statistic. The 
-column labeled p, KS is the p-value 
-result for the goodness of fit test using the Kolmogorov-Smirnov statistic. Entries with an NA are because model selection and other statistics
-were only employed for copulas for which independence was rejected (5 percent significance level).\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
-#kable_styling(latex_options = c("scale_down"))
 ```
 
 # A means by which missing data can influence perceived copula structure\label{sect:missingdata}

@@ -25,3 +25,10 @@
 \newcommand{\reumax}{\operatorname{max}}
 
 \usepackage[nomarkers,nolists]{endfloat}
+
+
+% This lines to use longtable option in rmarkdown with endfloat environment
+\let\normallongtable=\longtable
+\renewcommand{\longtable}{\clearpage\normallongtable}
+\DeclareDelayedFloatFlavour*{longtable}{table}
+

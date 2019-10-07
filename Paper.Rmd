@@ -2283,10 +2283,27 @@ temperature ultimately causes spatially averaged aphid abundance time series
 to have lower skewness (i.e., less spikiness, and greater stability through time) 
 than they would otherwise.
  
-<!--***DAN: Shyamolina, can you please move what is currently Table S10 (Summary results
-for winter temp and green spruce aphid abundance) to here? Please also replace the two
-columns that show AICw values by the corresponding AIC values, consistent with the switches
-elsewhere in the paper of AICw for AIC.-->
+```{r tab_greenspruceaphid_temp_summary, echo=F, results='asis',message=F}
+library(kableExtra)
+ms_npa_RES_greenspruceaphid_count_temp<-readRDS("./Results/aphid_count_winter_temp_results/ms_npa_RES_greenspruceaphid_count_temp.RDS")
+res<-ms_npa_RES_greenspruceaphid_count_temp$sp10_Green_spruce_aphid$ms_summary_allloc
+#row.names(res)<-NULL
+#res<-cbind(c(2:11),res)
+colnames(res)<-c("p-value, independence test","Best-fit copula",
+                 "Best-fit AIC","Normal AIC","p, CvM","p, KS","Model-avg. LT","Model-avg. UT","Model-avg. LT minus UT","cor$_{l}$ - cor$_{u}$","P$_{l}$ - P$_{u}$","D$_{u}^2$ - D$_{l}^2$")
+res<-res[,-1]
+res<-cbind("Site"=c(2:11),res)
+knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,row.names = F,
+             caption.short="Summary results for copulas for winter temperature versus green spruce aphid abundance",
+      caption = "Summary results for analysis of copulas for winter temperature versus green spruce 
+aphid abundance for each of the 10 sampling locations, using the same model selection
+and nonparametric methods detailed in the section on methods for Q1. The column labeled p, CvM is the p-value 
+result for the goodness of fit test using the Cramer-von Mises statistic. The 
+column labeled p, KS is the p-value 
+result for the goodness of fit test using the Kolmogorov-Smirnov statistic. Entries with an NA are because model selection and other statistics
+were only employed for copulas for which independence was rejected (5 percent significance level).\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.1 cm")#%>%
+#kable_styling(latex_options = c("scale_down"))
+```
 
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
 Our results showed that the skewness of the 

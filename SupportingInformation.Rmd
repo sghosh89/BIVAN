@@ -2221,7 +2221,7 @@ This corresponds to
 resampling, with replacement, the rows and columns of $S$, and is described in detail elsewhere 
 [@bjornstadfalck2001 ; @walteretal2017]. 
 
-# Hypothetical evolutionary mechanism for tail dependence between traits \label{evol_mech}
+# Methods for the hypothetical evolutionary mechanism for tail dependence between traits \label{evol_mech}
 
 \noindent The matrices from which root character states and changes 
 across phylogeny branches were randomly chosen were generated as follows.
@@ -2242,58 +2242,6 @@ the Spearman correlation would be the same as for the extreme tail dependence
 datasets. The moderately right-tail dependent matrix and the symmetric tail dependence
 matrix were constructed similarly, but using an survival Clayton copula and an normal copula,
 respectively. 
-
-<!--***DAN: Move all the rest of it into the Discussion, I think, but can decide when I get to the Discussion. If it is mved, then you may want to retitle this appendix to reflect the 
-fact it is onl methods-->
-Performing statistical tests for associations between continuous traits in different species
-    was a primary motivating example of phylogenetic comparative methods.
-For example, Felsenstein's method of phylogenetically independent contrasts 
-    [@Felsenstein1985] is currently the second most-cited paper in the history
-    of the journal the American Naturalist [@HueyGT2019].
-Frustratingly, the field still lacks a dependable procedure for dealing with branch lengths, 
-    which are a crucial input to the method.
-Ideally, the branch lengths used to correct for phylogenetic effects would represent
-    the expected amounts of change for the characters that are being analyzed.
-Because researchers almost never have a reliable method for providing such branch lengths,
-    most researchers rely on ultrametric trees -- those for which the branch
-    length can be treated as a proxy for the duration of the branch in time.
-Frequently these branch lengths are transformed to assess sensitivity to different 
-    assumptions about the degree of phylogenetic inertia displayed by the traits
-    under study [@Ives2018;@Harmon2018].
-Even if one were able to simply use a time-based set of branch lengths, assigning
-    dates to nodes in phylogenies is difficult.
-DNA sequence data can provide estimates of branch lengths, but these estimates
-    are dependent on the adequacy of models which correct sequences for multiple
-    substitutions occurring at the same location.
-Biases in estimating the evolutionary distance can affect downstream analyses [@Phillips2009].
-Additionally, changes
-    in the rate of molecular evolution make the estimation of dates difficult [@HeathM2014] even when branch lengths in time are accurately estimated.
-
-Without reliable branch length estimates, it is difficult to interpret the significance
-    of the magnitude of changes in traits across a tree.
-Developing tests of association based on copula structure may possibly lead the way to more
-    robust methods for studying associations when we lack defensible estimates of
-    branch lengths. 
-We note that our phylogenetic analyses here consisted merely of simulations to assess
-    whether interesting copula structure in a simple evolutionary process could 
-    leave a detectable signal on the trait data for extant species.
-Substantial work remains to be done before we have a copula-based method for 
-    analyzing data on a phylogenetic tree. 
-But the nonparametric nature of approaches
-    based solely on data ranks, as some of our copula methods are, may be a promising avenue for 
-    avoiding inaccuracies that arise via the highly structured model assumptions implicit
-    in the method of phylogenetically independent contrasts and related methods.
-
-Additionally, character evolution was simulated using one random draw from the relevant matrix
-per phylogeny branch. This was principally because branch lengths are often hugely
-uncertain. If branch lengths were well known, alternative simulation strategies may
-include selecting one draw from the matrix of evolutionary changes per unit time, 
-or selecting one draw for the whole branch but rescaling the variances of the selected
-character changes according to the 
-length of the branch. These choices amount to the same thing for normal copula
-structure, but not otherwise. Modelling choices such as these may have influenced
-our results. Additional research also seems warranted testing the realism 
-of our hypothesized mechanism and simulations.
 
 <!--Following two chunks examine asymetric dependence mechanism with model selection and non-parametric statistics approach-->
 ```{r asym_sens_b_variation, echo=F, results="hide", cache=T, cache.extra=list(seed,mtime("OurBiCopSelect.R"),mtime("MyBiCopGofTest.R"),mtime("preprocessors.R"),mtime("bivfunctionplot.R"),mtime("CopulaFunctions_flexible.R"),mtime("copsurrog2d.R"))}
@@ -4818,8 +4766,9 @@ among all other patches.
 
 # Effects of non-normal copula structure on Taylor's law \label{Consequence_TL_simulation}
 
-We examined using simulations whether copula structure influences spatial Taylor's law, as 
-follows. First, an $n \times n$ covariance matrix $\Sigma$ was created
+As described in the main text, we examined using simulations 
+whether copula structure influences spatial Taylor's law; details are provided here. 
+First, an $n \times n$ covariance matrix $\Sigma$ was created
 with unit diagonal entries 
 and off-diagonal entries $\rho=0.7$; $n=25$ was the number of locations at which populations
 were sampled. Then $N \times 1000$ random vectors were generated from a multivariate normal 
@@ -4828,8 +4777,7 @@ were organized into an $N \times n \times 1000$ array representing $1000$ replic
 simulations of (temporally independent, in this example) 
 spatio-temporal population dynamics measured in 
 $n$ locations over $N$ time steps. We used $N=50$.
-The cumulative distribution function
-(cdf) of the standard normal distribution was applied to these numbers, followed by the 
+The cdf of the standard normal distribution was applied to these numbers, followed by the 
 inverse of the cdf of a gamma distribution with shape and scale parameters $7.5$ and $1$. 
 These transformations made gamma distributed the marginal distributions of populations in 
 each sampling location for each simulation. 
@@ -4838,7 +4786,7 @@ important factor in Taylor's law [@Cohen2015; @Reuman2017]. We refer henceforth 
 resulting $N \times n \times 1000$ array as our *normal-copula population array* 
 for this simulation exercise;
 copula structure of dependences between populations in different locations
-was normal for this array. 
+was normal for this array. The array contains $1000$ population matrices.
 
 We then generated a series of arrays that were the same dimensions ($N \times n \times 1000$)
 as the normal-copula population array, and that were statistically similar to 
@@ -4867,59 +4815,16 @@ Permutations were done in such a way
 that resulting pairwise Spearman correlations were the same as the Clayton copula 
 constructed above, and hence were the same as the normal-copula array, 
 except for sampling variation. Thus, to summarize using mathematical notation,
-if $m^{(\text{N})}$ is our normal-copula population array and $m^{(\text{C})}$ is our 
+if $m^{(\text{N},k)}_{t,j}$ is our normal-copula population array (the three dimensions 
+of the array are indexed, respectively, by $t$, $j$ and $k$, and $m^{(\text{C},k)}_{t,j}$ is our 
 Clayton-copula population array, then,
-for any given $i$ and $j$, the sets $\{m^{(\text{N})}_{tij}: t=1,\ldots,N\}$ and 
-$\{m^{(\text{C})}_{tij}: t=1,\ldots,N\}$ are exactly the same (when considered 
+for any given $j$ and $k$, the sets $\{m^{(\text{N},k)}_{t,j}: t=1,\ldots,N\}$ and 
+$\{m^{(\text{C},k)}_{t,j}: t=1,\ldots,N\}$ are exactly the same (when considered 
 as unordered sets); 
-and for any given $i_1$, $i_2$ and $j$, the Spearman correlations $\cor_t(m^{(\text{C})}_{ti_1j},m^{(\text{C})}_{ti_2j})$
-and $\cor_t(m^{(\text{N})}_{ti_1j},m^{(\text{N})}_{ti_2j})$ are the same, to within 
+and for any given $j_1$, $j_2$ and $k$ with $j_1 \neq j_2$, the Spearman correlations $\cor_t(m^{(\text{C},k)}_{t,j_1},m^{(\text{C},k)}_{t,j_2})$
+and $\cor_t(m^{(\text{N},k)}_{t,j_1},m^{(\text{N},k)}_{t,j_2})$ are the same, to within 
 sampling variation. The whole exercise was repeated preserving Kendall instead of 
 Spearman correlations.
-
-A variety of Taylor's law statistics were computed for each simulation $m^{(X)}_{tij}$ 
-($i=1,\ldots,n$, $t=1,\ldots,N$) for each copula structure $X$ used. First, the $N=50$ 
-spatial means,
-$m_t$, and variances, $v_t$, were computed, and $\log(v_t)$ vs. $\log(m_t)$ plots 
-were considered. As a shorthand, denote $y=\log(v_t)$ and $x=\log(m_t)$ for a 
-single simulation. Linearity of the $y$ vs. $x$ relationship was 
-tested for each simulation by comparing the linear regression
-through these $50$ points to a quadratic alternative via an $F$-test, 
-producing a $p$-value result. If 
-these $p$-values were uniformly distributed across the unit interval for the 1000 replicate 
-simulations, it supported the linearity assumption of Taylor's law; whereas if 
-they were clustered toward smaller values
-the test tended to reject that assumption. We also tested, for each simulation, 
-the assumption of Taylor's 
-law that the $y$ vs. $x$ plot was homoskedastic: we regressed the absolute residuals of the 
-linear regression of $y$ versus $x$ against the predictions of that regression. 
-A significant $p$-value
-result of this test indicates heteroskedasticity. For each simulation we also computed the
-root mean squared error of $y$ vs. $x$ data from the linear regression
-of $y$ versus $x$, as well as the intercept and slope of the linear regression.
-Finally we recorded the quadratic coefficient of the regression of $y$ against
-$x$ and $x^2$, and the mean curvature of the quadratic regression equation itself
-across the values $x$. The distrubutions of all these statistics across 1000 replicate 
-simulations were compared for the Clayton, normal, Frank, and survival Clayton simulations to determine if copula structure 
-influences Taylor's law.
-
-Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
-linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
-(i.e., for simulations in our normal-copula population array), $p$-values for the linearty
-and homoskedasticity tests were roughly uniformly distributed across replicate 
-simulations and Taylor's law appeared visually to be a reasonable approximation
-of the $\log(v_t)$ versus $\log(m_t)$ relationship (Fig. \ref{fig_spTL}B,E,F). 
-Furthermore, quadratic coefficients
-and curvature values were close to $0$ (Fig. \ref{fig_spTL}J,K), and root mean squared
-errors from the linear regression were relatively small (Fig. \ref{fig_spTL}G).
-But linearity or homoskedasticity were violated more frequently for non-normal copula structure
-(Fig. \ref{fig_spTL}A,C,D,E,F); quadratic coefficients and curvatures were frequently 
-non-zero (Fig. \ref{fig_spTL}J,K); and root mean squared
-errors from the linear regression were much higher (Fig. \ref{fig_spTL}G). Slopes 
-and intercepts of the linear regression were also strongly affected by copula
-structure (Fig. \ref{fig_spTL}H,I), though some of the effect here was because
-linear regressions do not always adequately represent the $\log(v_t)$ versus $\log(m_t)$
-relationship when copula structure was not normal.
 
 # Another tool for producing surrogates for multivariate datasets\label{sect:copsurrognd}
 
@@ -4939,6 +4844,7 @@ draws from $C$.
 $t=1,\ldots,T$ by the $k$th smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
 result $y_i(t)$. This is the surrogate dataset.
 
+<!--Moved this stuff to main text for AER
 # From causes to consequences for green spruce aphid abundance, details \label{sect:greenspruce}
 Winter temperature for year $t$ was for December of year $t-1$ to March of 
 year $t$. Temperature data, which pertained to the same locations and years as the aphid data,
@@ -4947,6 +4853,7 @@ describing the relationship between green spruce aphid abundance and winter
 temperature are in Fig. \ref{fig:greenspruce}. Results of analyses of these
 copulas that paralleled the analyses applied to bivariate ecological datasets 
 (see section on methods for Q1) are in Table \ref{tab:greenspruce}.
+-->
 
 ```{r copulaplot_greenspruceaphid_with_temp,echo=F,results="hide"}
 source("./getcopula.R")
@@ -5107,9 +5014,9 @@ res<-res[,-1]
 knitr::kable(res,"latex", booktabs = T, linesep = "",digits=3, escape=F,longtable=T,
              caption.short="Summary results for copulas for winter temperature versus green spruce aphid abundance",
       caption = "Summary results for analysis of copulas for winter temperature versus green spruce 
-aphid abundance for each of the 10 sampling locations. The column labeled p, CvM is the p-value 
-result for the goodness of fit test using the Cramer-von Mises statistic (see section on 
-methods for Q1). The 
+aphid abundance for each of the 10 sampling locations, using the same model selection
+and nonparametric methods detailed in the section on methods for Q1. The column labeled p, CvM is the p-value 
+result for the goodness of fit test using the Cramer-von Mises statistic. The 
 column labeled p, KS is the p-value 
 result for the goodness of fit test using the Kolmogorov-Smirnov statistic. Entries with an NA are because model selection and other statistics
 were only employed for copulas for which independence was rejected (5 percent significance level).\\label{tab:greenspruce}") %>% column_spec(1:12,width="1.2 cm")#%>%
@@ -5199,6 +5106,7 @@ Appendix \ref{sect:missingdata} for details. \label{fig:missingdata}}
 \end{center}
 \end{figure}
 
+<!--Decided to cut this for AER
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/aphid_count_winter_temp_results/copulaplot_greenspruceaphidcount_temp.pdf}
@@ -5207,6 +5115,7 @@ for winter temperature versus green spruce
 aphid abundance for each of the 10 sampling locations. The $p$-values in the header are from the test of independence (see section on methods for Q1).\label{fig:greenspruce}}
 \end{center}
 \end{figure}
+-->
 
 # References
 \setlength{\parindent}{-0.2in}

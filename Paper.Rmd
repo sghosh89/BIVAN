@@ -78,7 +78,7 @@ The importance of copulas in ecology-->
 <!--***DAN: remianing to do:
 1) Edit abstract
 2) Go through the whole thing one more time
-3) send it out to coauthors
+3) send it out to coauthors (done) and maybe get feedback
 4)make sure to say something about tropical systems
 5) maybe write to the editors saying this is coming soon?
 6) In the Discussion, you maybe need to point out not only that we
@@ -86,8 +86,11 @@ use only bivariate copulas (and there are multivariate ones), but also
 that we use only continuous marginals. Probably an adequate approximation
 for our data, but see the other papers I've seen recently which use count data,
 and discrete marginals. Approaches such as that will be necessary for some 
-datasets
+datasets.
 7) change the box around the Cedar Creek data in the main fig
+8) say in Discussion that you could have used non-ranks for the nonparam stats - this
+is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
+9) maybe go back and read the Ecol Monogr reviews again
 -->
 
 # Abstract

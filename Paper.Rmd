@@ -80,14 +80,14 @@ DONE 1) Edit abstract
 2) Go through the whole thing one more time
 3) send it out to coauthors (done) and maybe get feedback
 4)make sure to say something about tropical systems
-5) maybe write to the editors saying this is coming soon?
+DONE 5) maybe write to the editors saying this is coming soon?
 6) In the Discussion, you maybe need to point out not only that we
 use only bivariate copulas (and there are multivariate ones), but also
 that we use only continuous marginals. Probably an adequate approximation
 for our data, but see the other papers I've seen recently which use count data,
 and discrete marginals. Approaches such as that will be necessary for some 
 datasets.
-7) change the box around the Cedar Creek data in the main fig
+DONE 7) change the box around the Cedar Creek data in the main fig
 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
 is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
 9) maybe go back and read the Ecol Monogr reviews again
@@ -817,7 +817,7 @@ using $u_b=1$ and $l_b \geq 0.5$ gives information about association in
 the right parts. The first statistic, a partial Spearman correlation
 \begin{equation}
 \cor_{l_b,u_b}(u,v)=\frac{\sum 
-   (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}},
+   (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}},\label{eq:partialspearman}
 \end{equation}
 \noindent is the portion of the Spearman 
 correlation of $u_i$ and $v_i$ that is attributable to the points 
@@ -2248,6 +2248,47 @@ and their relative importance under different circumstances.
 
 <!--some consequences paragraphs next-->
 
+<!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
+We also elaborated potential consequences of copula structure for ecological understanding. 
+Our results showed that the skewness of the 
+spatial average of local time series is influenced 
+by their tail associations. But the same logic should also apply to any collection of time
+series, whether associated with locations in space or not. 
+Another potential application is time series of abundances of 
+all species from a single community, e.g., all
+plants in a quadrat surveyed repeatedly over time. A large 
+literature has focused on synchrony versus 
+compensatory dynamics between such time series, and 
+the influence of interspecific relationships on the 
+variability of community
+properties such as total biomass (e.g., @Doak1998, @Tilman1999, @Tilman2006,
+@Gonzalez2009). Typically, variability of community biomass 
+is measured with the coefficient of variation, but skewness
+may also be of interest because it can help characterize "spikiness" 
+through time. Future work on copula 
+structure of interspecific relationships in communities and its implications for community 
+variability is likely to be valuable, in our opinion.
+
+<!--A para that sets up Shya's extinction risk paper-->
+Although we demonstrated that tail associations between environmental variables
+can influence extinction risk, substantial work remains to determine the importance 
+of this effect. First, we used 
+a non-density-dependent model. Do similar results pertain
+when density dependence
+is involved? Second, we considered metapopulation extinction risk, but the large field 
+of population viability analysis (PVA) via stochastic 
+matrix modelling [@Caswell2000; @MorrisDoak2002]
+uses a framework in which a single population's 
+vital rates (e.g., life-stage-specific 
+fecundity and survival rates) are considered to
+vary stochastically through time due to environmental variation. Do relationships
+between different vital rates exhibit asymmetric tail associations, 
+and do tail associations influence extinction risk in this context?
+Finally, is the copula structure of environmental variables or vital rates
+changing through time, and, if so, how do such changes influence extinction risks?
+Climate change is known to amplify the factors that lead to extreme weather events
+[@Hansen2012] and hence may alter spatial tail associations for weather variables.
+
 <!--green spruce aphid all the way from causes to consequences-->
 Our hypotheses and results cover the presence, causes, and consequences
 of non-normal copula structure and asymmetric tail associations in ecological 
@@ -2308,45 +2349,67 @@ were only employed for copulas for which independence was rejected (5 percent si
 #kable_styling(latex_options = c("scale_down"))
 ```
 
-<!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
-Our results showed that the skewness of the 
-spatial average of local time series is influenced 
-by their tail associations. But the same logic should also apply to any collection of time
-series, whether associated with locations in space or not. 
-Another potential application is time series of abundances of 
-all species from a single community, e.g., all
-plants in a quadrat surveyed repeatedly over time. A large 
-literature has focused on synchrony versus 
-compensatory dynamics between such time series, and 
-the influence of interspecific relationships on the 
-variability of community
-properties such as total biomass (e.g., @Doak1998, @Tilman1999, @Tilman2006,
-@Gonzalez2009). Typically, variability of community biomass 
-is measured with the coefficient of variation, but skewness
-may also be of interest because it can help characterize "spikiness" 
-through time. Future work on copula 
-structure of interspecific relationships in communities and its implications for community 
-variability is likely to be valuable, in our opinion.
+<!--Alternative methods-->
 
-<!--A para that sets up Shya's extinction risk paper-->
-Although we demonstrated that tail associations between environmental variables
-can influence extinction risk, substantial work remains to determine the importance 
-of this effect. First, we used 
-a non-density-dependent model. Do similar results pertain
-when density dependence
-is involved? Second, we considered metapopulation extinction risk, but the large field 
-of population viability analysis (PVA) via stochastic 
-matrix modelling [@Caswell2000; @MorrisDoak2002]
-uses a framework in which a single population's 
-vital rates (e.g., life-stage-specific 
-fecundity and survival rates) are considered to
-vary stochastically through time due to environmental variation. Do relationships
-between different vital rates exhibit asymmetric tail associations, 
-and do tail associations influence extinction risk in this context?
-Finally, is the copula structure of environmental variables or vital rates
-changing through time, and, if so, how do such changes influence extinction risks?
-Climate change is known to amplify the factors that lead to extreme weather events
-[@Hansen2012] and hence may alter spatial tail associations for weather variables.
+<!--Partial Person correlation-->
+We carried out most of our analyses on data ranks, $u_i$ and $v_i$, for good reasons 
+int he Inrtoduction, Background, and methods sections and 
+reviewed here; but under some circumstances it may also be appropriate to use 
+techniques which parallel our nonparametric statistics but that use unranked data, 
+$x_i$, $y_i$. As mentioned previously, @Genest2007 and others
+recommend carrying out inferences about dependence structures (which was our
+goal) using normalized ranks, stating explicitly "statistical inference concerning
+dependence structures should always be based on ranks." The reason for this is
+that measures of dependence which use unranked data conflate information about
+the maginal distributions of variables with information about the dependence
+between variables. To provide an ecological example, suppose the true population densities $p_{1,t}$
+and $p_{2,t}$ of two species of fish in a lake in year $t$ are unknown,
+but are assessed using catch per unit effort (CPUE), a standard approach in fisheries
+science. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be more
+or less correlated through time than the true densities would be, if they were known,
+if the function $f$ relating $p_{i,t}$ and $c_{i,t}$ is nonlinear and if Pearson
+correlation is used. The function $f$ modifies the marginal distributions, which modifies
+measures such as Pearson correlation that conflate dependence and marginal information.
+Rank-based measures such as Spearman or Kendall correlation, or any of our copula approaches,
+will be unaffected by nonlinear functions such as $f$. The same difficulty will pertain in any
+case for which a measurement of an ecological quantity is a nonlinear index of the true quantity
+of interest. Nevertheless, if one is certain that measurements are linearly related to 
+the true quantities being measured, statistics based on unranked data may be more appropriate 
+under some circumstances, in part because ecological mechanisms which produce relationships 
+between variables are influenced not only by the ordinal informatio in ranks but also 
+by the cardinal information in the unranked data. Judgements of what statistics
+are appropriate depend, of course, on the purpose of the analysis; the goal of this 
+study was to study dependence in isolation, so we used ranks. If one is interested
+in tail associations using cardinal data, a partial Pearson correlation can developed
+straightforwardly by replacing $u$ and $v$ in equation \ref{eq:partialspearman}
+by the $x$ and $y$, but still computing the sum in that equation over data points
+with ranks, $u_i$ and $v_i$ constrained by the bounds $u_i+v_i>2l_b$ and 
+$u_i+v_i<2u_b$. This would result in a different approach to
+tail associations that would conflate dependence and marginal information but 
+that may also be useful for understanding ecological relationships.
+
+<!--6) In the Discussion, you maybe need to point out not only that we
+use only bivariate copulas (and there are multivariate ones), but also
+that we use only continuous marginals. Probably an adequate approximation
+for our data, but see the other papers I've seen recently which use count data,
+and discrete marginals. Approaches such as that will be necessary for some 
+datasets.-->
+Copula methods are numerous, and go well beyond the cases we have considered
+in this introductory paper; we hope our work helps inspire applications of copulas
+in ecology beyond the specific tools we have employed. For instance, multivariate copulas are useful for 
+studying relationships between multiple interacting variables, and have been used in finance
+to model tail risk for portfolio optimization problems [@Czado2019; @Joe2011]. 
+Analogous ecological applications
+exist that may be amenable to the same approach, e.g., ecosystem functioning variables
+such as total primary productivity or carbon flux are the sum of the contributions of
+multiple species in the same way that athe value of an investment portfolio is the sum 
+of the values of its constituent assets. Ecologists may likewise be interested in
+managing the risk that an ecosystem functioning variable will take an extreme value. 
+As another example, we assumed for this paper that univariate marginal 
+distributions have continuous, strictly 
+monotonic distribution functions; this was for simplicity and because such a simpler
+approach was sufficient for our research questions. But count data in ecology have been analyzed
+with approaches not making this assumption [@Anderson2018].
 
 # Acknowledgments
 

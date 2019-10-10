@@ -76,7 +76,7 @@ The importance of copulas in ecology-->
 \newpage
 
 <!--***DAN: remianing to do:
-1) Edit abstract
+DONE 1) Edit abstract
 2) Go through the whole thing one more time
 3) send it out to coauthors (done) and maybe get feedback
 4)make sure to say something about tropical systems
@@ -94,26 +94,26 @@ is the stuff the Ecol Mongr referee talked about. Maybe this should go in Backgr
 -->
 
 # Abstract
-<!--***DAN: I have not edited this abstract at all since Ecol Monogr, it needs to be redone-->
 All branches of ecology study relationships among environmental and biological variables. However, 
 standard approaches to studying such relationships, based on correlation and regression, 
 provide only a small slice of the complex information contained in the relationships. Other 
 statistical approaches exist that provide a complete description of relationships between variables, 
 based on the concept of the *copula*; they are applied in finance, neuroscience and other fields, 
-but not in ecology. We here explore the concepts that underpin copulas and examine the potential 
+but rarely in ecology. We here explore the concepts that underpin copulas and examine the potential 
 for those concepts to improve our understanding of ecology. We find that informative copula 
-structure in dependencies between variables is exceedingly common across all the environmental, 
+structure in dependencies between variables is common across all the environmental, 
 species-trait, phenological, population, community, and ecosystem functioning datasets we 
-considered. Many datasets exhibited asymmetric tail dependence, whereby two variables are more 
+considered. Many datasets exhibited asymmetric tail associations, whereby two variables are more 
 strongly related in their left compared to right tails, or *vice versa*. We describe mechanisms by which 
-observed copula structure and tail dependence can arise in ecological data, including a Moran-like 
+observed copula structure and asymmetric tail associations can arise in ecological data, including a Moran-like 
 effect whereby dependence structures between environmental variables are inherited by ecological 
 variables; and asymmetric or nonlinear influences of environments on ecological variables, such as 
-under Liebig's law of the minimum. Copula structure and tail 
-dependence can also help reveal causal relationships between variables. We also describe consequences of copula structure for ecological phenomena, including impacts 
-on extinction risk and the stability through time of ecosystem services. By documenting the 
-importance of a complete description of dependence, advancing conceptual frameworks, and 
-demonstrating a powerful approach, we aim to elevate copula reasoning to widespread use in ecology, benefiting the discipline.
+under Liebig's law of the minimum. We also describe consequences of copula structure for 
+ecological phenomena, including impacts 
+on extinction risk, Taylor's law, the stability through time of ecosystem services. By documenting the 
+importance of a complete description of dependence between variables, advancing conceptual frameworks, and 
+demonstrating a powerful approach, we aim to encourage widespread use of copulas in ecology, which we
+believe can benefit the discipline.
 
 \noindent \emph{Keywords:} dependence, regression, correlation, copula, population, community, ecosystem functioning
 

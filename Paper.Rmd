@@ -507,7 +507,7 @@ $\lim_{u \rightarrow 1^-} P[U>u | V>u]$, which in turn equals
 $\lim_{u \rightarrow 1^-} P[U>u, V>u]/P[V>u]=\lim_{u \rightarrow 1^-} P[U>u, V>u]/(1-u)$,
 which shows upper-tail dependence is defined symmetrically in the two random variables.
 Lower tail dependence is defined analogously, as 
-$\lambda_L = \lim_{u \rightarrow 1^-} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
+$\lambda_L = \lim_{u \rightarrow 0^+} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
 Tail dependence is a property of the random variable $(U,V)$, so depends only
 on the copula and not on the marginals combined with it. It can be shown 
 (@nelsen2006_copula, section 5.4) that $\lambda_L=\lambda_U=0$ for the normal copula,

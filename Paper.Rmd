@@ -78,17 +78,17 @@ The importance of copulas in ecology-->
 <!--***DAN: remianing to do:
 DONE 1) Edit abstract
 2) Go through the whole thing one more time
-3) send it out to coauthors (done) and maybe get feedback
+3) send it out to coauthors (done) and maybe get feedback, ESP FROM lAWRENCE
 4)make sure to say something about tropical systems
 DONE 5) maybe write to the editors saying this is coming soon?
-6) In the Discussion, you maybe need to point out not only that we
+DONE 6) In the Discussion, you maybe need to point out not only that we
 use only bivariate copulas (and there are multivariate ones), but also
 that we use only continuous marginals. Probably an adequate approximation
 for our data, but see the other papers I've seen recently which use count data,
 and discrete marginals. Approaches such as that will be necessary for some 
 datasets.
-DONE 7) change the box around the Cedar Creek data in the main fig
-8) say in Discussion that you could have used non-ranks for the nonparam stats - this
+7) change the box around the Cedar Creek data in the main fig
+DONE 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
 is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
 9) maybe go back and read the Ecol Monogr reviews again
 -->
@@ -2353,7 +2353,7 @@ were only employed for copulas for which independence was rejected (5 percent si
 
 <!--Partial Person correlation-->
 We carried out most of our analyses on data ranks, $u_i$ and $v_i$, for good reasons 
-int he Inrtoduction, Background, and methods sections and 
+mentioned in the Inrtoduction, Background, and methods sections and 
 reviewed here; but under some circumstances it may also be appropriate to use 
 techniques which parallel our nonparametric statistics but that use unranked data, 
 $x_i$, $y_i$. As mentioned previously, @Genest2007 and others
@@ -2371,7 +2371,7 @@ if the function $f$ relating $p_{i,t}$ and $c_{i,t}$ is nonlinear and if Pearson
 correlation is used. The function $f$ modifies the marginal distributions, which modifies
 measures such as Pearson correlation that conflate dependence and marginal information.
 Rank-based measures such as Spearman or Kendall correlation, or any of our copula approaches,
-will be unaffected by nonlinear functions such as $f$. The same difficulty will pertain in any
+will be unaffected by nonlinear monotonic functions such as $f$. The same difficulty will pertain in any
 case for which a measurement of an ecological quantity is a nonlinear index of the true quantity
 of interest. Nevertheless, if one is certain that measurements are linearly related to 
 the true quantities being measured, statistics based on unranked data may be more appropriate 
@@ -2388,26 +2388,22 @@ $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
 that may also be useful for understanding ecological relationships.
 
-<!--6) In the Discussion, you maybe need to point out not only that we
-use only bivariate copulas (and there are multivariate ones), but also
-that we use only continuous marginals. Probably an adequate approximation
-for our data, but see the other papers I've seen recently which use count data,
-and discrete marginals. Approaches such as that will be necessary for some 
-datasets.-->
+<!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered
 in this introductory paper; we hope our work helps inspire applications of copulas
-in ecology beyond the specific tools we have employed. For instance, multivariate copulas are useful for 
+in ecology both of and 
+beyond the specific tools we have employed. For instance, multivariate copulas are useful for 
 studying relationships between multiple interacting variables, and have been used in finance
 to model tail risk for portfolio optimization problems [@Czado2019; @Joe2011]. 
 Analogous ecological applications
 exist that may be amenable to the same approach, e.g., ecosystem functioning variables
 such as total primary productivity or carbon flux are the sum of the contributions of
-multiple species in the same way that athe value of an investment portfolio is the sum 
+multiple species in the same way that the value of an investment portfolio is the sum 
 of the values of its constituent assets. Ecologists may likewise be interested in
 managing the risk that an ecosystem functioning variable will take an extreme value. 
 As another example, we assumed for this paper that univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions; this was for simplicity and because such a simpler
+monotonic distribution functions; this was for simplicity and because the simpler
 approach was sufficient for our research questions. But count data in ecology have been analyzed
 with approaches not making this assumption [@Anderson2018].
 

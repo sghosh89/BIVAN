@@ -79,7 +79,7 @@ The importance of copulas in ecology-->
 DONE 1) Edit abstract
 2) Go through the whole thing one more time
 3) send it out to coauthors (done) and maybe get feedback, ESP FROM lAWRENCE
-4)make sure to say something about tropical systems
+DONE 4)make sure to say something about tropical systems
 DONE 5) maybe write to the editors saying this is coming soon?
 DONE 6) In the Discussion, you maybe need to point out not only that we
 use only bivariate copulas (and there are multivariate ones), but also
@@ -1064,9 +1064,6 @@ We did the same analyses
 with Cedar Creek data from other available years, 1996-1999 and 2007. For 1996 and 
 2007, biomass and Shannon's index were independent; for 1997-1999, results 
 were similar to 2000. 
-<!--***DAN: cehcking the below with Shya-->
-We did the same analyses with bird or mammal body mass versus BMR datasets filtered
-to include only tropical species. Answers to Q1-Q3 were substantially the same.
 
 We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
@@ -2067,19 +2064,18 @@ immediately. We created several interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
 that build upon existing copula methods. 
 
-<!--***DAN: still working on this-->
-Approaches used and insights gained via our work should apply equally well to 
-tropical and temperate ecosystem; we believe copulas are among the tools 
-that all ecologists should consider for analysis of their data in the 21st century.
-There is certainly no reason to expect that non-normal copula structure and 
-asymmetric tail dependence are special properties of datasets from temperate 
-regions; indeed both of these features were found 
-in mammal and bird body mass versus BMR data filtered to tropical
-species. The Moran-effect and Liebig's law potential mechanisms that we explored
-for copula structure and tail associations (Fig. \ref{MasterFigure}) also seem as 
-likely to hold in tropical as in temperate systems; these are general mechanisms.
-Indeed, Moran effects are widespread, and Liebig's law is a dominant paradigm,
-certainly operating in a wide variety of tropical and temperate ecosystems. 
+<!--tropical ecosystems-->
+The approaches we have demonstrated should apply equally well to 
+data from tropical or temperate ecosystems.
+There is no reason to expect that non-normal copula structure and 
+asymmetric tail dependence should be special properties of datasets from temperate 
+regions. The mechanisms we have proposed of non-normal copula structure and asymmetric tail 
+dependence seem equally likely to apply anywhere. For instance, the Moran effect, which underpins 
+one of our proposed mechanisms (Fig. \ref{MasterFigure}B), is a standard mechanism
+that occurs whenever environmental variables influence populations. And Liebig's
+law and nonlinear environmental influences on ecosystems, which underpin 
+another one of our proposed mechanisms (Fig. \ref{MasterFigureA}), are widely
+demonstrated paradigms that apply to all biomes. 
 
 <!--Stuff about the mechanisms-->
 

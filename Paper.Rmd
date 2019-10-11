@@ -87,7 +87,7 @@ that we use only continuous marginals. Probably an adequate approximation
 for our data, but see the other papers I've seen recently which use count data,
 and discrete marginals. Approaches such as that will be necessary for some 
 datasets.
-7) change the box around the Cedar Creek data in the main fig
+DONE 7) change the box around the Cedar Creek data in the main fig
 DONE 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
 is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
 9) maybe go back and read the Ecol Monogr reviews again
@@ -223,6 +223,8 @@ still rare. Our results suggest that environmental,
 ecological and evolutionary processes 
 may commonly generate and transmit complex dependence structures, including tail 
 dependence, and that greater use of copulas can illuminate the underlying processes.
+We believe copula approaches are among the tools all ecologists, including tropical
+ecologists, should be considering for analysis of their data in the 21st century.
 
 \begin{figure}[!h]
 \begin{center}
@@ -1025,7 +1027,6 @@ about statistical significance. Thus our results provide an
 affirmative answer to Q1 for the soil C and N data; this answer is 
 represented in Fig. \ref{MasterFigure} as a solid outline around "soil C and N"
 in the right-most box in the middle row.
-<!--***DAN: you need to change the box around the Cedar Creek data-->
 
 <!--bivariate summary-->
 Table \ref{tab_bivar_summary} summarizes Q1 results 
@@ -1040,7 +1041,7 @@ difference between these fits was not meaningfully large.
 Thus we answer the first part of Q1 in the affirmative for 3 of 4 of our bivariate datasets. 
 Often, either lower- or upper-tail dependence statistics differed substantially from 0 
 (Table \ref{tab_bivar_summary}, rows 7-8), and/or these statistics differed from each other (Table \ref{tab_bivar_summary}, row 9), 
-helping to answering the second and third parts of Q1. Though again the model
+helping to answer the second and third parts of Q1. Though again the model
 selection results do not provide 
 information on statistical significance of these differences, and are subject to the
 caveat that, for some datasets, even the lowest-AIC copula was not an objectively good fit
@@ -1059,11 +1060,13 @@ empirically based answer to Q1 for the bivariate datasets is
 represented in Fig. \ref{MasterFigure} as solid outlines around the names of 
 the soil C and N and bird and mammal body mass versus metabolic rate
 datasets, in the middle row of boxes.
-<!--***DAN: change the box for Cedar Creek-->
-We did the same analysis 
+We did the same analyses 
 with Cedar Creek data from other available years, 1996-1999 and 2007. For 1996 and 
 2007, biomass and Shannon's index were independent; for 1997-1999, results 
 were similar to 2000. 
+<!--***DAN: cehcking the below with Shya-->
+We did the same analyses with bird or mammal body mass versus BMR datasets filtered
+to include only tropical species. Answers to Q1-Q3 were substantially the same.
 
 We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
@@ -2063,6 +2066,20 @@ open-source computer implementations exist (e.g., the `copula` and
 immediately. We created several interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
 that build upon existing copula methods. 
+
+<!--***DAN: still working on this-->
+Approaches used and insights gained via our work should apply equally well to 
+tropical and temperate ecosystem; we believe copulas are among the tools 
+that all ecologists should consider for analysis of their data in the 21st century.
+There is certainly no reason to expect that non-normal copula structure and 
+asymmetric tail dependence are special properties of datasets from temperate 
+regions; indeed both of these features were found 
+in mammal and bird body mass versus BMR data filtered to tropical
+species. The Moran-effect and Liebig's law potential mechanisms that we explored
+for copula structure and tail associations (Fig. \ref{MasterFigure}) also seem as 
+likely to hold in tropical as in temperate systems; these are general mechanisms.
+Indeed, Moran effects are widespread, and Liebig's law is a dominant paradigm,
+certainly operating in a wide variety of tropical and temperate ecosystems. 
 
 <!--Stuff about the mechanisms-->
 

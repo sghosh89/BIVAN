@@ -2366,7 +2366,7 @@ were only employed for copulas for which independence was rejected (5 percent si
 
 <!--Partial Person correlation-->
 We carried out most of our analyses on data ranks, $u_i$ and $v_i$, for good reasons 
-mentioned in the Inrtoduction, Background, and methods sections and 
+mentioned in the Introduction, Background, and methods sections and 
 reviewed here; but under some circumstances it may also be appropriate to use 
 techniques which parallel our nonparametric statistics but that use unranked data, 
 $x_i$, $y_i$. As mentioned previously, @Genest2007 and others
@@ -2375,10 +2375,10 @@ goal) using normalized ranks, stating explicitly "statistical inference concerni
 dependence structures should always be based on ranks." The reason for this is
 that measures of dependence which use unranked data conflate information about
 the maginal distributions of variables with information about the dependence
-between variables. To provide an ecological example, suppose the true population densities $p_{1,t}$
+between variables. For instance, suppose the true population densities $p_{1,t}$
 and $p_{2,t}$ of two species of fish in a lake in year $t$ are unknown,
 but are assessed using catch per unit effort (CPUE), a standard approach in fisheries
-science. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be more
+science [@Zale2013]. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be more
 or less correlated through time than the true densities would be, if they were known,
 if the function $f$ relating $p_{i,t}$ and $c_{i,t}$ is nonlinear and if Pearson
 correlation is used. The function $f$ modifies the marginal distributions, which modifies
@@ -2389,7 +2389,7 @@ case for which a measurement of an ecological quantity is a nonlinear index of t
 of interest. Nevertheless, if one is certain that measurements are linearly related to 
 the true quantities being measured, statistics based on unranked data may be more appropriate 
 under some circumstances, in part because ecological mechanisms which produce relationships 
-between variables are influenced not only by the ordinal informatio in ranks but also 
+between variables are influenced not only by the ordinal information in ranks but also 
 by the cardinal information in the unranked data. Judgements of what statistics
 are appropriate depend, of course, on the purpose of the analysis; the goal of this 
 study was to study dependence in isolation, so we used ranks. If one is interested
@@ -2399,7 +2399,7 @@ by the $x$ and $y$, but still computing the sum in that equation over data point
 with ranks, $u_i$ and $v_i$ constrained by the bounds $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
-that may also be useful for understanding ecological relationships.
+that may also be useful for understanding some ecological relationships.
 
 <!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered

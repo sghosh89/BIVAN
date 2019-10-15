@@ -2432,11 +2432,11 @@ with approaches not making this assumption [@Anderson2018].
 
 # Acknowledgments
 
-We thank Joel E. Cohen for making us aware of copulas and their potential utility in the 
+We thank Joel E. Cohen for making us aware of copulas and their potential ecological utility in the 
 first place. We thank the many contributors to the large datasets 
 we used; D. Stevens and P. Verrier for data 
 extraction; and David Tilman, Lauren Hallet, Jonathan Walter, Thomas 
-Anderson, Lei Zhao, and editors and annonymous reviewers for helpful suggestions. 
+Anderson, Lei Zhao, Andrew Rypel, and editors and annonymous reviewers for helpful suggestions. 
 We thank James Bell of the Rothamsted Insect Survey (RIS). 
 The RIS, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council 
 under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National 

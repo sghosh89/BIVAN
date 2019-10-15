@@ -173,8 +173,9 @@ $u_i$ is the rank of $x_i$ in the set $x_j$ ($j=1,\ldots,n$), divided by
 $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
 of the smallest element in a set is $1$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
-the empirical cummulative distribution function (cdf) of the $x_i$ and $y_i$,
-respectively. See, for instance,
+the empirical cumulative distribution function of the $x_i$ and $y_i$,
+respectively. (We henceforth abbreviate "cumulative distribution function" as "distribution
+function" or "cdf".) See, for instance,
 Fig. \ref{fig_cop_pedag1}C-D, which show the normalized ranks of 
 A-B, respectively. Ranking makes the marginal distributions of 
 the component datasets uniform, isolating the 
@@ -488,7 +489,8 @@ of which we also already pictured an example (Fig.
 \ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to normal copulas, Clayton copulas
 have stronger left- than right-tail association. The formula is 
 $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
-less direct intuition than do example pdfs (Fig. \ref{figped_C}). The survival
+less direct intuition than do example pdfs (Fig. \ref{figped_C}). Higher values of the parameter,
+$p$ produce copulas from the Clayton family with higher Kendall or Spearman correlation. The survival
 Clayton family is the symmetric opposite of the Clayton family, showing
 stronger right- than left tail association (Fig. \ref{SM-figped_SC}). The BB1 copula 
 family is a two-parameter family, thereby providing more flexibility: for some parameters
@@ -677,7 +679,8 @@ First, we produced normalized ranks
 $u_i$ and $v_i$ as in the Introduction. 
 Second, we tested the independence of the $u_i$ and $v_i$
 using the statistic $T=\sqrt{(9N(N-1))/(4N+10)}|\tau|$, where $\tau$
-is Kendall's tau for the data [@Genest2007]. We used the 
+is Kendall's tau for the data. @Genest2007 argue that this statistic is approximately standard normally
+distributed. We used the 
 implementation of this test given in the `BiCopIndTest` in the `VineCopula` package
 in the R programming language. 
 We tested for independence because our model selection 
@@ -1007,7 +1010,7 @@ was a poor fit ($p=$ `r BivMS_res_Loecke$GofRes_CvM` and `r BivMS_res_Loecke$Gof
 Cramer-von Mises and Kolmogorov-Smirnov goodness-of-fit tests, respectively, to within the precision 
 available from `BiCopGofTest`).
 Our alternative nonparametric
-approach, results detailed next, provides informaton about significance of tail
+approach, results detailed next, provides information about significance of tail
 associations and asymmetries of tail associations.
 
 The values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for the soil
@@ -1021,7 +1024,8 @@ The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,
 $\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
 on surrogates, separately in two 
 comparisons (Table \ref{tab_soilCN_asym}). Results showed that
-upper-tail association was significantly stronger than lower-tail association. These results
+upper-tail association was significantly stronger than lower-tail association; i.e., C and N values are
+more related when high than when low. These results
 are consistent with the model selection results, but go beyond them by providing information
 about statistical significance. Thus our results provide an
 affirmative answer to Q1 for the soil C and N data; this answer is 
@@ -1084,6 +1088,10 @@ the location pair (A,B) will necessarily
 produce the same result as the pair
 (B,A)) is low, 
 $`r 1-pbinom(tab_multivar_summary$Green_spruce_aphid_count$num.non_N/2-1,45,0.5)`$. 
+The average AIC difference `r tab_multivar_summary$Green_spruce_aphid_count$Avg.N_minus_bestfit.AIC` was
+much less than the AIC difference between `r round(min(BivMS_res_Loecke$InfCritRes$AIC),2)` and 
+`r round(BivMS_res_Loecke$InfCritRes$AIC[1],2)` that was obtained for the soil C and N data
+at least in part because the soil C and N data were much more numerous (Table \ref{tab_data_info}).
 These results help answer the first part of Q1: non-normal
 copula structure appears to be meaningfully common in
 these data, even if not universal.
@@ -1362,7 +1370,7 @@ the $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
 time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
 $\cov(\epsilon_1,\epsilon_2)=0.8$. Thus basic ecological dynamics follow the
 very simple AR(1) formulation, influenced by a "regional" environmental factor which
-is correlated across locatons ($\epsilon$) and by an entirely local factor ($\delta$). 
+is correlated across locations ($\epsilon$) and by an entirely local factor ($\delta$). 
 The function $g$ describes how the environmental factor $\epsilon_i(t)$ influences
 $E_i(t)$. We used $g$ equal to $g_1$ or $g_2$ in different simulations:
 $g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise;
@@ -1407,7 +1415,9 @@ The variable $E$ is very general, and could represent deviations
 of a population density from a carrying capacity, deviations of
 total plant community biomass from an average value,
 flux of a biogeochemical variable such as methane, or other quantities.
-The nonlinear population model was $P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right)$ for $i=1,2$, using $r=0.5$, $K=100$, $\epsilon_i(t)$
+The nonlinear population model was a stochastic, multi-habitat-patch version of the Ricer model, 
+$P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right)$ for $i=1,2$, using $r=0.5$, 
+$K=100$, $\epsilon_i(t)$
 as above, and $\sigma=0.1$ or 
 $\sigma=1$ in different simulations. 
 When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
@@ -1962,7 +1972,7 @@ Also consistent with hypothesis, copula structure had a substantial effect on
 Taylor's law. 
 Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
 linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
-(i.e., for simulations that gave normal-copula dependence between populatons
+(i.e., for simulations that gave normal-copula dependence between populations
 in different locations), $p$-values for the linearty
 and homoskedasticity tests were roughly uniformly distributed across replicate 
 simulations and Taylor's law appeared visually to be a reasonable approximation
@@ -2037,11 +2047,11 @@ section for Q3 and Appendices \ref{SM-Consequence_TL_simulation} and
 <!--what we did and why is it important to study?-->
 We showed that non-normal copula structure and asymmetric tail associations are 
 common across multiple sub-disciplines
-in ecology, although these facets of ecological data are only ocassionally 
+in ecology, although these facets of ecological data are only occasionally 
 taken into account [@Valpine2014; @Anderson2018; @Popovic2018]. We hypothesized 
 mechanisms that may cause non-normal copula structures and asymmetric tail associations;
 we discuss below how commonly some of our
-mechanisms may opperate. 
+mechanisms may operate. 
 We also hypothesized and demonstrated important consequences of 
 non-normal copula structure and asymmetric tail associations for the field of ecology. 
 For instance, the skewness
@@ -2391,15 +2401,15 @@ the true quantities being measured, statistics based on unranked data may be mor
 under some circumstances, in part because ecological mechanisms which produce relationships 
 between variables are influenced not only by the ordinal information in ranks but also 
 by the cardinal information in the unranked data. Judgements of what statistics
-are appropriate depend, of course, on the purpose of the analysis; the goal of this 
+are appropriate depend, of course, on the purpose of the analysis. The goal of this 
 study was to study dependence in isolation, so we used ranks. If one is interested
-in tail associations using cardinal data, a partial Pearson correlation can developed
-straightforwardly by replacing $u$ and $v$ in equation \ref{eq:partialspearman}
-by the $x$ and $y$, but still computing the sum in that equation over data points
+in tail associations using cardinal data, a partial Pearson correlation can be developed
+straightforwardly, by replacing $u$ and $v$ in equation \ref{eq:partialspearman}
+by $x$ and $y$, but still computing the sum in that equation over data points
 with ranks, $u_i$ and $v_i$ constrained by the bounds $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
-that may also be useful for understanding some ecological relationships.
+that may also have utility for some applications.
 
 <!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered
@@ -2416,7 +2426,7 @@ of the values of its constituent assets. Ecologists may likewise be interested i
 managing the risk that an ecosystem functioning variable will take an extreme value. 
 As another example, we assumed for this paper that univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions; this was for simplicity and because the simpler
+monotonic distribution functions. Yhis was for simplicity and because the simpler
 approach was sufficient for our research questions. But count data in ecology have been analyzed
 with approaches not making this assumption [@Anderson2018].
 

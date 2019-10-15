@@ -48,6 +48,7 @@ pchval<-20
 cexvalpts<-0.25
 cexvaltxt<-0.75
 cexvalpl<-1.5
+cexaxs<-0.9
 pdf(file="./Results/PedagogFig1.pdf",width=tot_wd,height=tot_ht)
 
 #upper-left panel, normal marginals, left-tail dependence
@@ -57,7 +58,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
           (xmarg_ht+3*pan_ht+2*gap+3*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
 rg<-max(abs(dcc5_nm))
-plot(dcc5_nm[,1],dcc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey")
+plot(dcc5_nm[,1],dcc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey",cex.axis=cexaxs)
 mtext(expression(z[v]),2,line=1.15)
 text(-rg,rg,"A",cex=cexvalpl,adj=c(0,1))
 text(rg,-rg+.25*rg,paste0("P=",round(cor(dcc5_nm[,1],dcc5_nm[,2]),2)),
@@ -72,7 +73,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
           (xmarg_ht+3*pan_ht+2*gap+3*numsp)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 rg<-max(abs(dsc5_nm))
-plot(dsc5_nm[,1],dsc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey")
+plot(dsc5_nm[,1],dsc5_nm[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(-rg,rg),ylim=c(-rg,rg),col="grey",cex.axis=cexaxs)
 text(-rg,rg,"B",cex=cexvalpl,adj=c(0,1))
 text(rg,-rg+.25*rg,paste0("P=",round(cor(dsc5_nm[,1],dsc5_nm[,2]),2)),
      adj=c(1,0),cex=cexvaltxt)
@@ -89,7 +90,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
 rg1<-0
 rg2<-1
 dcc5pobs<-copula::pobs(dcc5)
-plot(dcc5pobs[,1],dcc5pobs[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+plot(dcc5pobs[,1],dcc5pobs[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
 mtext(expression(z[v]),2,line=1.15)
 #the contours
 #x<-seq(from=0,to=1,length.out=101)
@@ -114,7 +115,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 #the data
 dsc5pobs<-copula::pobs(dsc5)
-plot(dsc5pobs[,1],dsc5pobs[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+plot(dsc5pobs[,1],dsc5pobs[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
 #the contours
 #x<-seq(from=0,to=1,length.out=101)
 #y<-x
@@ -139,7 +140,7 @@ dcc5fv<-dcc5pobs
 dcc5fv[,1]<-(-dcc5fv[,1]+1)
 rg1<-0
 rg2<-1
-plot(dcc5fv[,1],dcc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+plot(dcc5fv[,1],dcc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
 text(rg2,rg2,"E",cex=cexvalpl,adj=c(1,1))
 text(rg1,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dcc5fv[,1],dcc5fv[,2]),2)),
      adj=c(0,0),cex=cexvaltxt)
@@ -156,7 +157,7 @@ par(fig=c((ymarg_wd+2*numsp+pan_wd+gap)/tot_wd,
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
 dsc5fv<-dsc5pobs
 dsc5fv[,1]<-(-dsc5fv[,1]+1)
-plot(dsc5fv[,1],dsc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+plot(dsc5fv[,1],dsc5fv[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
 text(rg2,rg2,"F",cex=cexvalpl,adj=c(1,1))
 text(rg1,rg1+.125*(rg2-rg1),paste0("P=",round(cor(dsc5fv[,1],dsc5fv[,2]),2)),
      adj=c(0,0),cex=cexvaltxt)
@@ -216,7 +217,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
           (xmarg_ht+numsp)/tot_ht,
           (xmarg_ht+numsp+pan_ht)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey")
+plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
 lines(c(0,.4),c(.4,0),type='l')
 lines(c(0,.65),c(.65,0),type='l')
 lines(c(0,1.6),c(1.6,0),type='l')

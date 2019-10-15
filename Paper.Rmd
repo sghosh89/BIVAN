@@ -2426,7 +2426,7 @@ of the values of its constituent assets. Ecologists may likewise be interested i
 managing the risk that an ecosystem functioning variable will take an extreme value. 
 As another example, we assumed for this paper that univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions. Yhis was for simplicity and because the simpler
+monotonic distribution functions. This was for simplicity and because the simpler
 approach was sufficient for our research questions. But count data in ecology have been analyzed
 with approaches not making this assumption [@Anderson2018].
 

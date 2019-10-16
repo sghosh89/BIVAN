@@ -420,7 +420,8 @@ tail dependence and other measures of association in the tails.\label{fig_cop_pe
 Let $F$ be the bivariate distribution function
 of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$ assumed to be 
 continuous and strictly monotonic. We show the copula associated with
-$(X,Y)$, which exists and is unique by Sklar's theorem, is the distrbution function
+$(X,Y)$, which exists and is unique by Sklar's theorem, is, in fact, 
+the distribution function
 of the random variable $(U,V)=(F_X(X),F_Y(Y))$. Let $C$ denote the distribution
 function of $(U,V)$, which has uniform margins. By the uniqueness
 statement of Sklar's theorem, it suffices to show that $F(x,y)=C(F_X(x),F_Y(y))$

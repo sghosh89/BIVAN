@@ -78,7 +78,8 @@ The importance of copulas in ecology-->
 <!--***DAN: remianing to do:
 DONE 1) Edit abstract
 2) Go through the whole thing one more time
-3) send it out to coauthors (done) and maybe get feedback, ESP FROM lAWRENCE
+3) send it out to coauthors (done) and maybe get feedback
+DONE 3.5) ESP FROM lAWRENCE
 DONE 4)make sure to say something about tropical systems
 DONE 5) maybe write to the editors saying this is coming soon?
 DONE 6) In the Discussion, you maybe need to point out not only that we
@@ -91,6 +92,7 @@ DONE 7) change the box around the Cedar Creek data in the main fig
 DONE 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
 is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
 9) maybe go back and read the Ecol Monogr reviews again
+10) try to emphasize early on that the focus is on positively associated variables, so 'lower tail' means the lower tail of both variables and it is not necessary to worry about negative relationships (in practice we would always transform these for ease).   The dfinitions of tail dependence we use cannot usefully be applied to untransformed data in fig 1e,f.
 -->
 
 # Abstract
@@ -110,7 +112,7 @@ effect whereby dependence structures between environmental variables are inherit
 variables; and asymmetric or nonlinear influences of environments on ecological variables, such as 
 under Liebig's law of the minimum. We also describe consequences of copula structure for 
 ecological phenomena, including impacts 
-on extinction risk, Taylor's law, the stability through time of ecosystem services. By documenting the 
+on extinction risk, Taylor's law, and the stability through time of ecosystem services. By documenting the 
 importance of a complete description of dependence between variables, advancing conceptual frameworks, and 
 demonstrating a powerful approach, we aim to encourage widespread use of copulas in ecology, which we
 believe can benefit the discipline.
@@ -142,7 +144,7 @@ provide only partial information.
 \begin{center}
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
 \caption{(A-D) Bivariate datasets showing diverse relationships between 
-variables; some of these datasets nevertheless have the same Pearson (P)
+variables. Some of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. C and D show normalized ranks of A, B, 
 respectively. (E,F) Reflections
 of C, D, respectively, about a vertical axis. Subscripts h and v 
@@ -156,7 +158,7 @@ that provide a description of the dependence
 between two or more variables that can be mathematically proven 
 to be complete [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]. 
 The approaches are based on 
-the concept of the *copula*; copula approaches separate the information of a bivariate 
+the concept of the *copula*. Copula approaches separate the information of a bivariate 
 random variable into two distinct parts: the information in the 
 marginal distributions (which says nothing about the dependence between the 
 variables), and the remaining information (which is solely about
@@ -174,8 +176,8 @@ $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
 of the smallest element in a set is $1$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
 the empirical cumulative distribution function of the $x_i$ and $y_i$,
-respectively. (We henceforth abbreviate "cumulative distribution function" as "distribution
-function" or "cdf".) See, for instance,
+respectively. We henceforth abbreviate "cumulative distribution function" as "distribution
+function" or "cdf". See, for instance,
 Fig. \ref{fig_cop_pedag1}C-D, which show the normalized ranks of 
 A-B, respectively. Ranking makes the marginal distributions of 
 the component datasets uniform, isolating the 
@@ -190,8 +192,8 @@ tranformation of the component variables (Appendix
 and therefore reflects not only dependence information, but also
 information on the marginals [@Genest2007]. 
 Spearman and Kendall correlations, being rank-based, 
-are not influenced by monotonic transformations of the component variables; 
-they provide information solely on the dependence between those variables.
+are not influenced by monotonic transformations of the component variables. 
+They provide information solely on the dependence between those variables.
 
 A main benefit of a copula approach is 
 that it can detect associations in the tails of distributions, and asymmetries of such associations. 
@@ -206,24 +208,24 @@ ones (Fig. \ref{fig_cop_pedag1}D). Datasets of the same
 Spearman or Kendall correlation can have a range of tail association 
 (Fig. \ref{SM-fig_cop_pedag}), which can be quantified (see sections on Background and
 methods for Q1 below). Although copulas can be used to model the entire
-complex dependence structure of data, we have found tail associations to be
-a useful aspect of the full structure of dependence, so tail associations 
-is one of the main foci of this paper.
+complex dependence structure of data, we have found tail association to be
+a useful aspect of the full structure of dependence, so tail association 
+is one of the main foci of this paper. 
 
 The goal of this paper is to explore the potential for 
 applications of copulas in ecology. We provide a basic introduction
 to copula concepts in the Background section below, but this is a sketch
 only - readers can find abbreviated [@Anderson2018; @Genest2007] 
-and comprehensive introductions elsewhere
-[@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]. Instead our goal is to 
+and comprehensive [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]
+introductions elsewhere. Instead our goal is to 
 help determine to what extent ecological understanding may benefit generally from
 using copulas. Copulas have already been used very effectively 
 in a few studies to illuminate ecological phenomena 
 [@Valpine2014; @Anderson2018; @Popovic2018], but such usage is
 still rare. Our results suggest that environmental, 
 ecological and evolutionary processes 
-may commonly generate and transmit complex dependence structures, including tail 
-dependence, and that greater use of copulas can illuminate the underlying processes.
+may commonly generate and transmit complex dependence structures, including asymmetric tail 
+associations, and that greater use of copulas can illuminate the underlying processes.
 We believe copula approaches are among the tools all ecologists, including tropical
 ecologists, should be considering for analysis of their data in the 21st century.
 
@@ -262,7 +264,7 @@ plot, but may not be revealed by standard correlation techniques.
 
 A second reason we may expect understanding of complex dependence structures
 to benefit ecological
-research is that prior work has demonstrated (using copulas) complex 
+research is that prior work has demonstrated, using copulas, complex 
 stucture in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
 @li2013]. One may expect an environmental variable 
@@ -331,7 +333,7 @@ of the dependence between wind speeds at multiple generator sites [@li2013].
 Spatially aggregated ecological variables may be subject to a similar 
 effect, with
 possible consequences. For instance, if populations of a 
-pest species in different locations are all positively associated and also more strongly
+pest species in different locations are all positively associated and are also more strongly
 related to each other in their right tails, then local outbreaks will tend 
 to occur together, creating regional epidemics. 
 On the other hand, stronger left-tail associations in a pest species, even if overall 
@@ -347,7 +349,7 @@ do they show asymmetric tail associations? Normal copula structure is assumed
 by standard approaches that use multivariate 
 normal distributions or distributions obtained by transforming
 the marginals of a normal distribution. So Q1 asks whether ecological
-data contain dependency information distinct from the standard or default case. 
+data contain dependency information distinct from a standard or default case. 
 (Q2) If the answer to
 Q1 is "yes," then what are some possible causes/mechanisms of non-normal
 copula structure and asymmetric tail associations in ecology? And (Q3) what are the 
@@ -368,23 +370,26 @@ serve as a *post hoc* guide to the paper.
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000],
-and have been used very effectively, but rarely so far in ecology [@Valpine2014; 
+and have also been used very effectively, but rarely so far, in ecology [@Valpine2014; 
 @Anderson2018; @Popovic2018]. 
 We argue that benefits of wider usage of complete 
 copula descriptions of dependence in ecology will be substantial.
 
 # Background on copulas
 
-We give a brief introduction to copulas, focusing, for simplicity, on bivariate copulas
-and on concepts needed
-for the rest of the paper. See @nelsen2006_copula, @Genest2007, @joe2014_dependence, and
-@MaiScherer2017 for general background, and see also @Anderson2018, part of 
+We give a brief introduction to copulas, focusing, for simplicity, on bivariate 
+copulas and on concepts needed
+for the rest of the paper. We assume familiarity with the basic 
+language of probability distributions and random variables.
+See @nelsen2006_copula, @Genest2007, @joe2014_dependence, and
+@MaiScherer2017 for general background on copulas, 
+and see also @Anderson2018, part of 
 which is a short introduction to 
 copulas for ecologists. A bivariate *copula* can be defined as a bivariate distribution
 function with both margins uniform on $(0,1)$ (@joe2014_dependence, p. 7). 
 This will be the
 distribution function of a bivariate random variable with uniform marginals, and 
-the terminology *copula* is sometimes also applied to the random variable. 
+the terminology *copula* is sometimes also applied to this random vector. 
 A foundational theorem of
 @sklar1959_theorem (see also @MaiScherer2017, p. 16) 
 says that if $F$ is the bivariate distribution function
@@ -392,35 +397,67 @@ of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$, then there
 exists a copula $C$
 such that for all $(x,y)$ in the Euclidean plane, $F(x,y)=C(F_X(x),F_Y(y))$.
 The theorem also says $C$ is unique if $F_X$ and $F_Y$ are continuous.
-Thus $C$ couples the bivariate distribution, $F$, with the two marginal distributions. 
+Thus $C$ couples the bivariate distribution function, $F$, with the 
+distribution functions of the marginals. 
 Finally, Sklar's theorem says that if $D$ is any bivariate copula and 
 $G_A$ and $G_B$ are univariate distribution functions, then 
-$D(G_A(x),G_B(y))$ is a distribution function.
+$D(G_A(x),G_B(y))$ is a valid distribution function 
+of some bivariate random variable.
 The applications of this study fall within the case in which univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions, and this case is simpler, so we 
+monotonic distribution functions, and this case is simpler. So we 
 henceforth make such an assumption. 
-Then, "the" copula (now guaranteed unique) 
-associated with $(X,Y)$ is the distribution
-function of the random variable $(F_X(X),F_Y(Y))$ 
-(Appendix \ref{SM-ContStrictMonoton}). And 
-$D(G_A(x),G_B(y))$ is the distribution function of the random variable 
-$(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ is the random
-vector with distribution function $D$ and
-$G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
-(Appendix \ref{SM-ContStrictMonoton}). Application of the 
-distribution functions of the component random variables translates
-between the uniform-marginal context, which isolates the 
-dependence information, and the context of the original random variable.
 
-Thus Sklar's theorem implies that
-any random vector can be constructed from a copula and marginal 
-distributions. And conversely,
-any copula and any univariate distribution functions give rise to a random vector. 
+Sklar's theorem implies that
+any random vector can be constructed from a unique copula and marginal 
+distribution functions, and, furthermore,
+any copula and any univariate distribution functions give rise to a random vector;
+so Sklar's theorem provides a correspondence between random vectors
+and pairs consisting of a copula and two univariate distribution functions,
+thereby making it possible to study a random vector by studying these two
+constituents.
 Marginals contain no information about the
 dependence structure of a random vector, so the copula contains
 all such information - it is a complete description of the dependence
-between variables. Sklar's theorem makes it possible to construct
+between variables.
+<!--***-->
+The univariate distribution functions associated with a random vector 
+$(X,Y)$ are its margins, $F_X$ and $F_Y$, and the 
+associated copula is the copula, $C$, guaranteed by Sklar's theorem
+(and guaranteed unique, thanks to the assumptions of continuity 
+and monotonicity made above). In fact, and making Sklar's correspondence
+more concrete, we show in Appendix \ref{SM-ContStrictMonoton}
+that $C$ is the bivariate distribution
+function of the random variable $(F_X(X),F_Y(Y))$. 
+<!--***-->
+Conversely, given a copula
+$D$ and univariate distribution functions $G_A$ and $G_B$,
+Sklar's theorem guarantees that $D(G_A(x),G_B(y))$ is a 
+distribution function, so the random variable with this 
+distribution function is the random variable corresponding
+to $D$, $G_A$ and $G_B$ under Sklar's correspondence. 
+Again making Sklar's correspondence
+more concrete, we show in Appendix \ref{SM-ContStrictMonoton}
+that this random variable is $(G_A^{-1}(U),G_B^{-1}(V))$, 
+where $G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
+and $(U,V)$ is the random variable with distribution function $D$
+(which has uniform marginals).
+<!--***-->
+If we conflate a copula with the random vector of 
+which the copula is the distribution function, then Sklar's correspondence
+is between random variables, $(U,V)$, with uniform marginals 
+and random variables, $(X,Y)$, with arbitrary continuous, strictly monotonic
+marginals. The correspondence is simply via the application of the
+univariate distribution functions, or their inverses: $U=F_X(X)$,
+$V=F_Y(Y)$, $X=F^{-1}_X(U)$, $Y=F^{-1}_Y(V)$.
+<!--***-->
+Application of the 
+distribution functions of the component random variables translates
+between the uniform-marginal context, $(U,V)$, which isolates the 
+dependence information, and the context of the original random variable,
+$(X,Y)$.
+
+Thus Sklar's theorem makes it possible to construct
 bivariate distributions in two separate steps: by specifying the marginal 
 distributions and by specifying the dependence structure. For instance,
 construction of several bivariate distributions is carried out in this way in
@@ -482,8 +519,7 @@ directly informative about copula properties as pdf diagrams; Fig. \ref{figped_N
 example pdfs corresponding to bivariate normal copulas for various values of $p$.
 Note that the pdfs are symmetric
 around the diagonal line $v=-u+1$ (Fig. \ref{figped_N}), so normal copulas have symmetric 
-associations between the two variables in the left and right tails (see
-below for a more precise defintion of tail associations). 
+associations between the two variables in the left and right tails. 
 The Clayton copula family,
 of which we also already pictured an example (Fig.
 \ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to normal copulas, Clayton copulas
@@ -533,10 +569,10 @@ But $\hat{F}_X(x_i)$ equals the normalized rank of $x_i$ times
 $n/(n+1)$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ times
 $n/(n+1)$. So the normalized rank in turn approximates the empirical cdf and therefore 
 the cdf. Thus the normalized rank pairs $(u_i,v_i)$ for $i=1,\ldots,n$ can be 
-regarded as approximate samples from the bivariate pdf 
-associated with the copula of $(X,Y)$,
-and the scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula structure
-(see section on methods for Q1 below).
+regarded as approximate samples from the random variable $(F_X(X),F_Y(Y))$, 
+which is the random variable associated with the copula of $(X,Y)$.
+The scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula 
+structure (see section on methods for Q1 below).
 
 \begin{figure}[!h]
 \begin{center}

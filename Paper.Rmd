@@ -835,14 +835,14 @@ the normal and AIC-best copulas across location pairs.
 We also computed the model-averaged lower- and
 upper-tail statistics, and differences
 between these, for each pair of locations, and we characterize
-the distribution of these values across location pairs.  
+the distributions of these values across location pairs.  
 
 In addition to our model selection approach, we also used a
 nonparametric approach, to provide greater 
 confidence in our answers to Q1. We used three 
 statistics which quantify the extent to which 
 the normalized ranks $u_i$ and $v_i$ are 
-related in any part of their distributions; we here describe the 
+related in any part of their distributions. We here describe the 
 statistics, with some additional details in Appendix \ref{SM-nonparam_stats}.
 The statistics are defined with positively associated
 variables in mind. All our variables were positively associated
@@ -855,7 +855,7 @@ between $u_i$ and $v_i$ in the region bounded by these lines.
 Using $l_b=0$ and $u_b\leq 0.5$ gives information about 
 association in the left parts of the distributions of $u$ and $v$, and 
 using $u_b=1$ and $l_b \geq 0.5$ gives information about association in 
-the right parts. The first statistic, a partial Spearman correlation
+the right parts. The first statistic, a partial Spearman correlation,
 \begin{equation}
 \cor_{l_b,u_b}(u,v)=\frac{\sum 
    (u_i-\mean(u)) (v_i-\mean(v))}{(n-1)\sqrt{\var(u)\var(v)}},\label{eq:partialspearman}
@@ -872,7 +872,7 @@ The sum of
 $\cor_{0,0.5}(u,v)$ and $\cor_{0.5,1}(u,v)$ (or some other choice of 
 $\cor_{l_{b_k},u_{b_k}}(u,v)$ for bounds $l_{b_k},u_{b_k}$ that partition the
 interval $(0,1)$) equals the standard Spearman correlation
-as long as no points fall directly on the bounds.
+as long as no points fall exactly on the bounds.
 We also defined a statistic $\Ps_{l_b,u_b}$ (Appendix \ref{SM-nonparam_stats}), 
 which has a similar qualitative
 interpretation to $\cor_{l_{b},u_{b}}$.
@@ -880,7 +880,7 @@ Our third statistic, $\Dsq_{l_b,u_b}$, is the average squared
 distance between points satisfying $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$ and the line $v=u$.
 Unlike $\cor_{l_b,u_b}$ and 
-$\Ps_{l_b,u_b}$, for which large values inidicate strong association
+$\Ps_{l_b,u_b}$, for which large values indicate strong association
 between the bounds, small values of 
 $\Dsq_{l_b,u_b}$ indicate strong association. These statistics are not estimators of the 
 tail dependence quantities
@@ -905,8 +905,8 @@ association than those in the right/upper band.\label{NonparamStatsFig}}
 For large datasets (large $n$),
 we used $l_b$ and $u_b$ close together without incurring undue
 sampling variation in our statistics, and we considered 
-multiple bands $(l_b,u_b)$ to understand how dependence
-varies in different parts of the distributions. But for datasets with 
+multiple bands $(l_b,u_b)$ to understand how association
+varies across different parts of the distributions. But for datasets with 
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$,
 abbreviating $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"). Likewise $\Ps_l=\Ps_{0,.5}$,
@@ -967,7 +967,7 @@ for all pairs of sampling locations, and we then computed means across the pairs
 for each statistic. We used a spatial resampling scheme 
 (Appendix \ref{SM-spatial_resamp}) to calculate confidence intervals of these means.
 The scheme is identical to that proposed by @bjornstadfalck2001 for application in their now 
-widely used spline correlogram method; the same scheme was also used by @walteretal2017 
+widely used spline correlogram method. The same scheme was also used by @walteretal2017 
 as part of a method for 
 performing model selection among matrix regression models.
 Code and data for this
@@ -1014,7 +1014,7 @@ summarize for all multivariate datasets.
 For the soil C and N data (Data section, Table \ref{tab_data_info}, 
 Fig. \ref{fig_biv_multi_raw_cop}A), variables were 
 non-independent ($p=$ `r BivMS_res_Loecke$IndepTestRes`, to within the precision available 
-from `BiCopIndTest` in the `VineCopula` package); non-independence is also visually apparent.
+from `BiCopIndTest` in the `VineCopula` package). Non-independence is also visually apparent.
 The Kendall correlation was `r round(BivMS_res_Loecke$TauVal,2)`. We fitted our 16 copulas
 to the normalized ranks (Fig. \ref{fig_biv_multi_raw_cop}E) 
 and computed AIC and BIC weights and corresponding
@@ -1077,7 +1077,7 @@ always emerged as the lowest-AIC copula
 (Table \ref{tab_bivar_summary}, row 2). 
 The normal copula was a poor fit compared to the lowest-AIC copula 
 (Table \ref{tab_bivar_summary}, rows 3-4), except for Cedar Creek, for which the AIC
-difference between these fits was not meaningfully large.
+difference between these fits was marginal.
 Thus we answer the first part of Q1 in the affirmative for 3 of 4 of our bivariate datasets. 
 Often, either lower- or upper-tail dependence statistics differed substantially from 0 
 (Table \ref{tab_bivar_summary}, rows 7-8), and/or these statistics differed from each other (Table \ref{tab_bivar_summary}, row 9), 
@@ -1102,8 +1102,8 @@ the soil C and N and bird and mammal body mass versus metabolic rate
 datasets, in the middle row of boxes.
 We did the same analyses 
 with Cedar Creek data from other available years, 1996-1999 and 2007. For 1996 and 
-2007, biomass and Shannon's index were independent; for 1997-1999, results 
-were similar to 2000. 
+2007, independence of biomass and Shannon's index could not be rejected; 
+for 1997-1999, results were similar to 2000. 
 
 We present green spruce aphid abundance (Data section; Table \ref{tab_data_info}) results
 as an example multivariate analysis.
@@ -1206,7 +1206,7 @@ the results of Table \ref{tab_multivar_summary}, row 8.
 For the *Ceratium furca* abundance data, confidence intervals were
 (`r unname(round(stat_plankton_north_sea$numericdf[9,c(3,4)],3))`),
 indicating greater lower-tail dependence, and again 
-consistent with the results of Table \ref{tab_multivar_summary} (row 9).
+consistent with the results of Table \ref{tab_multivar_summary}, row 8.
 For the methane-flux data, confidence intervals were 
 (`r unname(round(stat_methane$numericdf[9,c(3,4)],3))`);
 the asymmetry in tail dependence revealed by the model selection
@@ -1221,7 +1221,7 @@ of those datasets, in the middle row of boxes.
 We also carried out the same analyses for abundance and first-flight data for the 18 
 aphid species for which we had data other than the green spruce and leaf-curling plum aphids,
 as well as for the 21 plankton taxa for which we had abundance data other than
-\textit{Ceratium furca} (results not shown); results supported the conclusion that 
+\textit{Ceratium furca} (results not shown). Results supported the conclusion that 
 non-normal copula structure and tail dependence, and asymmetry of tail associations, are 
 common.
 
@@ -1381,20 +1381,19 @@ knitr::kable(tab_multivar_summary_ed,
 # Concepts and methods for Q2 \label{Causes}
 
 Having demonstrated that non-normal copula structure and asymmetric tail associations are 
-common in ecological variables, we 
 addressed Q2 by exploring, using models, three possible mechanisms
 by which these phenomena may arise. 
 Models presented are initial explorations, only, of whether the proposed mechanisms have the 
-potential to explain observed patterns. As such, simple models were used, 
-and comprehensive explorations of
+potential to explain observed patterns. As such, simple models were used. 
+Comprehensive explorations of
 model parameter space and alternative model formulations were left for future work.
 
 The first mechanism relates to the ideas in the Introduction about 
 Liebig's law of the minimum, and to nonlinear influences of environmental
 variables on ecological variables.
 If an environmental variables influences an ecological variable 
-disproportionately strongly in one of its tails, we explored whether the ecological
-variable could then exhibit asymmetric tail dependence across space.
+disproportionately in one of its tails, we explored whether the ecological
+variable could then exhibit asymmetric tail associations across space.
 Let $E_i(t)$ be an ecological variable 
 measured at location $i$ ($i=1,2$) at time $t$.
 Assume the dynamics 
@@ -1416,7 +1415,7 @@ and that occur only below a threshold of $\epsilon=0$;
 and $g_2$ represents effects that positively impact populations and 
 that occur only above a threshold of $\epsilon=0$.
 The values of $b$ selected provide a modicum of exploration of the potential
-for ecological dynamics to influence how complex dependencies between
+for ecological dynamics to also influence how complex dependencies between
 the $E_i(t)$ may arise: 
 negative values of $b$ correspond to overcompensating dynamics 
 and positive values to undercompensating dynamics; larger $|b|$
@@ -1451,8 +1450,9 @@ The variable $E$ is very general, and could represent deviations
 of a population density from a carrying capacity, deviations of
 total plant community biomass from an average value,
 flux of a biogeochemical variable such as methane, or other quantities.
-The nonlinear population model was a stochastic, multi-habitat-patch version of the Ricer model, 
-$P_i(t+1)=P_i(t)\exp \left(r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right)$ for $i=1,2$, using $r=0.5$, 
+The nonlinear population model was a stochastic, multi-habitat-patch version 
+of the Ricker model, 
+$P_i(t+1)=P_i(t)\exp \left[r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right]$ for $i=1,2$, using $r=0.5$, 
 $K=100$, $\epsilon_i(t)$
 as above, and $\sigma=0.1$ or 
 $\sigma=1$ in different simulations. 
@@ -1505,7 +1505,7 @@ All distributions had standard-normal marginals and Spearman
 correlation $0.875$ between components, so our simulations assess 
 the impact of copula structure only. For 
 each of the five copulas, mammalian character
-evolution was simulated 100 times. For each simulation, symmetry of tail dependence 
+evolution was simulated 100 times. For each simulation, symmetry of tail associations 
 of the two characters across phylogeny tips was assessed using our nonparametric
 statistics.
 We hypothesized that cases 1 and 2 above would yield stronger left- than right-tail 
@@ -1587,7 +1587,8 @@ of the same statistic computed on surrogate time series randomized to have norma
 given statistic on the data was less (respectively, more) than its value on $X$ of the 
 surrogates, so entries of the form $<X$ (respectively, $>X$) for $X$ equal to $975$ or above 
 indicate that upper-tail (respectively, lower-tail) dependence was significantly stronger than 
-lower-tail dependence compared to a normal-copula null hypothesis. `FS' stands for `first slice'
+lower-tail (respectively, upper-tail) associations compared to a 
+normal-copula null hypothesis. `FS' stands for `first slice'
 and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to the bounds
 0.9 to 1.\\label{tab_stat_npa_asym}")
 ```
@@ -1621,10 +1622,10 @@ reasonable expectation that there may be a Moran-effect-like correspondence
 between noise and model-output dependence structure across space 
 for typical ecological dynamics,
 as long as environmental noise is small enough that dynamics stay relatively close
-to the model equilibrium. Results that hold for "weak noise" in this sense
+to the model equilibrium. Theoretical results that hold for "weak noise" in this sense
 are common in ecology.
 For strong noise and using our nonlinear model, 
-our correlation and tail-asymmetry statistics, generally 
+our correlation and tail-association-asymmetry statistics, generally 
 speaking, were approximately similar between noise and model
 outputs; however, similarity was reduced relative to previous results, 
 and for a few simulations, asymmetry statistics
@@ -1719,11 +1720,11 @@ for details.\label{fig_Cause4copula_C_kend_ar1}}
 \end{figure}
 
 For our evolutionary model, the hypothesis was 
-correct that asymmetric tail association in evolutionary changes 
+correct, for the models we employed, that asymmetric tail association in evolutionary changes 
 can produce similarly asymmetric tail association between characters across
 phylogeny tips.
 Once character evolution was simulated 100 times for each of the
-dependence structure we used on evolutionary changes, 
+dependence structures we considered for evolutionary changes, 
 we had 817 bivariate characters for each of 500 simulations (see methods 
 section for Q2). We 
 computed our nonparametric asymmetry statistics 
@@ -1734,7 +1735,7 @@ dependence structure (Fig. \ref{fig_cop_evo}). Results showed that
 asymmetries of tail associations in evolutionary changes
 were associated with similar asymmetries of tail associations in extant characters.
 Thus, based on our simulations, we cannot reject the possibility that
-this is a mechanism behind observed asymmetric tail associations
+this is a proximate mechanism behind observed asymmetric tail associations
 in our bird and mammal data.
 This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
 "If character evolution has copula structure" and the arrow labelled "D".
@@ -1750,9 +1751,9 @@ character distributions]{Three measures of asymmetry of tail
 associations ($\cor_{0,0.2}-\cor_{0.8,1}$, A-E; 
 $\Ps_{0,0.2}-\Ps_{0.8,1}$, F-J; $\Dsq_{0.8,1}-\Dsq_{0,0.2}$, K-O) between two characters, across extant species,  were 
 computed for each of 100 simulations of mammalian character evolution for each of five types of tail dependence between 
-evolutionary changes in the characters (extreme left-tail dependence (A, F, K), moderate left-tail dependence (B, G, L), 
-symmetry of tail dependence (C, H, M), moderate right-tail dependence (D, I, N), and extreme right-tail dependence 
-(E, J, O)). See the methods section for Q2 for details. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
+evolutionary changes in the characters (extreme left-tail dependence, A, F, K; moderate left-tail dependence, B, G, L; 
+symmetry of tail dependence, C, H, M; moderate right-tail dependence, D, I, N; and extreme right-tail dependence, 
+E, J, O). See the methods section for Q2 for details. The number above each panel indicates how many statistics out of $100$ were less than or equal to $0$. Values substantially lower (respectively, higher) than $50$ indicate greater left (respectively, right) tail-dependence between characters.\label{fig_cop_evo}}
 \end{center}
 \end{figure}
 

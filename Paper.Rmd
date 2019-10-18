@@ -564,7 +564,12 @@ $(F_X(X),F_Y(Y))$. Given a sample $(x_i,y_i)$, $i=1,\ldots,n$, from $(X,Y)$, let
 $\hat{F}_Y$ be the empirical cdfs associated with the $x_i$ and $y_i$, respectively.
 These are step functions of $x$ and $y$, respectively, that start at $0$ for low values of 
 $x$ and $y$ and jump by $1/n$
-at each of the data points; for large $n$ they approximate the cdfs $F_X$ and $F_Y$. 
+at each of the data points. Therefore $\hat{F}_X(x_j)$ is the rank of $x_j$ in
+the set $\{x_i : i=1,\ldots,n\}$, dividided by $n$, 
+and analogously $\hat{F}_Y(y_j)$ is the rank of $y_j$ in the set 
+$\{y_i : i=1,\dots,n\}$, divided
+by $n$. For large $n$, $\hat{F}_X(x_i)$ and $\hat{F}_Y(y_i)$ 
+approximate the cdfs $F_X$ and $F_Y$, respectively. 
 But $\hat{F}_X(x_i)$ equals the normalized rank of $x_i$ times
 $n/(n+1)$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ times
 $n/(n+1)$. So the normalized rank in turn approximates the empirical cdf and therefore 
@@ -1762,8 +1767,8 @@ E, J, O). See the methods section for Q2 for details. The number above each pane
 
 We addressed Q3 by exploring, using both data and models, three hypothesized
 ecological consequences of non-normal copula structure and asymmetric tail
-associations. As for Q2, models used are intended as initial explorations, only,
-of whether copula structure may possibly have a meaningful influence on important ecological
+associations. As for Q2, the models we used are intended as initial explorations, only,
+of whether copula structure may have a meaningful influence on important ecological
 phenomena. Therefore only simple models are used, and comprehensive explorations of the 
 sensitivity of results to model strucuture and parameters are left for future work.
 
@@ -1772,7 +1777,7 @@ the distribution (through time) of a spatially
 averaged quantity should be influenced by 
 dependencies between the local quantities being averaged, including their
 copula structure and tail associations. 
-To refine this hypothesis, suppose an ecological variable 
+To make this hypothesis more precise, suppose an ecological variable 
 $E_i(t)$ is measured at locations $i=1,\ldots,N$ and times $t=1,\ldots,T$, and
 the spatial mean $\sum_i E_i(t)/N$ is of
 interest. The $E_i(t)$ could be, for instance, local abundances of a pest or 
@@ -1784,6 +1789,7 @@ will tend to increase the skewness of the distribution
 of the spatial mean. Similarly, left-tail associations between local variables
 should tend to decrease skewness. Strong positive skewness of the 
 spatial-mean time series corresponds to "spikiness" of that time series,
+i.e., occassional very large values, 
 which corresponds to instability through time. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
@@ -1905,13 +1911,14 @@ in simulation $k$, regardless of X;
 $\cor_t(m_{t,j_1}^{(\text{X},k)},m_{t,j_2}^{(\text{X},k)})$ were the same, to within sampling
 variation, i.e., correlations through time of populations in two locations were the same,
 up to sampling variation, regardless of X;
-3) the copula for the dependence between $m_{t,j_1}^{(\text{X},k)}$ and $m_{t,j_2}^{(\text{X},k)}$ was X.
+3) the copula for the dependence between $m_{t,j_1}^{(\text{X},k)}$ and $m_{t,j_2}^{(\text{X},k)}$ was  from the family X.
 We used $N=50$ and $n=25$. Details of how these matrices were generated are in 
 Appendices \ref{SM-Consequence_TL_simulation} and \ref{SM-sect:copsurrognd}.
 Thus for each $k$, the poulation matrices $m^{(\text{X},k)}$
 for X taking the values Clayton, normal, Frank, and survival Clayton
 were statistically similar except for the copula structure between locations, which was
-X. Thus comparing how Taylor's law may manifest differently for $m^{(\text{X},k)}$
+X. Thus comparing how the $log(v_g)$ versus $\log(m_g)$ relationship may
+manifest differently for $m^{(\text{X},k)}$
 for different values of X constitutes a test of the influence of copula
 structure on Taylor's law. We selected X equal to the Clayton, normal, Frank, and survival 
 Clayton copulas to explore a range of tail association patterns.  
@@ -1948,7 +1955,7 @@ to determine if copula structure influences Taylor's law.
 
 # Results for Q3: Tail dependence influences skewness of the spatial average, extinction risk, and Taylor's law
 
-\noindent Results were consistent with the hypothesis that the skewness
+\noindent Empirical results were consistent with the hypothesis that the skewness
 of a spatial-average time series is influenced by tail associations
 between the local quantities being averaged. 
 For datasets that
@@ -2006,7 +2013,7 @@ is represented in Fig. \ref{MasterFigure}
 as the dashed box around "Extinction risk" and the dashed arrow labelled "Y".
 
 Also consistent with hypothesis, copula structure had a substantial effect on
-Taylor's law. 
+Taylor's law for the models we considered. 
 Taylor's law was strongly influenced, and was often even invalidated in its assumptions of 
 linearity and homoskedasticity, by non-normal copula structure. For normal copula structure 
 (i.e., for simulations that gave normal-copula dependence between populations
@@ -2094,16 +2101,18 @@ non-normal copula structure and asymmetric tail associations for the field of ec
 For instance, the skewness
 of a spatial-average time series is influenced by asymmetric tail associations between its 
 constituent time series: predominantly right-tail-associated local time series 
-can lead to "spiky" spatially averaged time series, with large outbreaks.
-Thus tail associations could have implications for exploited and pest species.
-Extinction risk and Taylor's law can also be altered by tail association patterns across space
-in environmental variables. 
+can lead to "spiky" spatially averaged time series, with large outbreaks; and 
+predominantly left-tail-associated local time series can lead to spatially
+averaged time series showing accentuated "crashes".
+Thus tail associations could have implications for pest and exploited species.
+Extinction risk and Taylor's law can also be altered by tail association 
+patterns across space. 
 In our view, our results make it reasonable to suggest 
 that a more comprehensive understanding 
 of many ecological phenomena may be possible if a
-complete copula characterization of dependence is employed. 
+complete copula characterization of associations between variables is employed. 
 Copula approaches are
-well developed [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], statistically, 
+well developed, statistically [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], 
 and have been introduced in accessible formats [@Anderson2018; @Genest2007]. Furthermore, 
 open-source computer implementations exist (e.g., the `copula` and 
 `VineCopula` packages in the R programming language). Ecologists can apply these tools
@@ -2115,14 +2124,15 @@ that build upon existing copula methods.
 The approaches we have demonstrated should apply equally well to 
 data from tropical or temperate ecosystems.
 There is no reason to expect that non-normal copula structure and 
-asymmetric tail dependence should be special properties of datasets from temperate 
+asymmetric tail associations should be special properties of datasets from temperate 
 regions. The mechanisms we have proposed of non-normal copula structure and asymmetric tail 
-dependence seem equally likely to apply anywhere. For instance, the Moran effect, which underpins 
-one of our proposed mechanisms (Fig. \ref{MasterFigure}B), is a standard mechanism
+associations seem equally likely to apply anywhere. 
+For instance, the Moran effect, which underpins 
+one of our proposed mechanisms (Fig. \ref{MasterFigure}, B), is a standard mechanism
 that occurs whenever environmental variables influence populations. And Liebig's
 law and nonlinear environmental influences on ecosystems, which underpin 
-another one of our proposed mechanisms (Fig. \ref{MasterFigureA}), are widely
-demonstrated paradigms that apply to all biomes. 
+another one of our proposed mechanisms (Fig. \ref{MasterFigure}, A), are widely
+demonstrated phenomena that apply in all biomes. 
 
 <!--Stuff about the mechanisms-->
 
@@ -2148,26 +2158,29 @@ winter temperature below.
 <!--para on how likely one is to get copula structure via the Moran mechanism-->
 There are also reasons to hypothesize that 
 our Moran mechanism (Fig. \ref{MasterFigure}, B) 
-may operate commonly: Moran effects are common [@Liebhold2004], and 
+may operate commonly: Moran effects are common [@Liebhold2004; @Sheppard2016; 
+@Defriez2017_ocean; @Defriez2017_land], and 
 non-normal copula structures and asymmetric tail associations are often found in 
 environmental variables. If intense meteorological events are 
 also widespread, then
 environmental variables associated with these events should take extreme
-values simultaneously across large spatial areas, producing tail dependence in measurements
+values simultaneously across large spatial areas, producing tail associations in measurements
 made through time at different locations. Non-extreme values may instead
 be associated with local phenomena, and therefore may be
 less correlated across large areas.
 @Serinaldi2008 examined the spatial dependence 
-of rainfall in Central Italy; Gumbel or Student 2-copulas 
+of rainfall in Central Italy. Gumbel or Student 2-copulas 
 were candidates for modelling dependence, and 
 neither of these is a normal copula.
 A long-term study (1950–2014) in the Loess Plateau of China [@She2018]
 showed that a Gumbel copula effectively modeled 
-the spatial dependence of drought variables; the Gumbel copula demonstrates 
+the spatial dependence of drought variables. The Gumbel copula demonstrates 
 asymmetric tail associations.
 Bivariate copula analysis was also used in forecasting the 
 co-occurrence of extreme events (flood or drought) 
 over the North Sikkim Himalayas using spatial datasets [@Goswami2018]. 
+
+<!--***DAN: made it to here 2019 10 18-->
 
 <!--Causal mechanism C, which we also did not test-->
 We suggested in the Introduction that asymmetric competitive relationships

@@ -71,15 +71,16 @@ The importance of copulas in ecology-->
 
 \noindent \emph{Correspondence:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
-\noindent \emph{The number of words in the abstract:} 266 
+\noindent \emph{The number of words in the abstract:} 261
 
 \newpage
 
 <!--***DAN: remianing to do:
 DONE 1) Edit abstract
-2) Go through the whole thing one more time
+DONE 2) Go through the whole thing one more time
 3) send it out to coauthors (done) and maybe get feedback
 DONE 3.5) ESP FROM lAWRENCE
+DONE 3.6) Incorporate Shya feedback
 DONE 4)make sure to say something about tropical systems
 DONE 5) maybe write to the editors saying this is coming soon?
 DONE 6) In the Discussion, you maybe need to point out not only that we
@@ -92,7 +93,7 @@ DONE 7) change the box around the Cedar Creek data in the main fig
 DONE 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
 is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
 9) maybe go back and read the Ecol Monogr reviews again
-10) try to emphasize early on that the focus is on positively associated variables, so 'lower tail' means the lower tail of both variables and it is not necessary to worry about negative relationships (in practice we would always transform these for ease).   The dfinitions of tail dependence we use cannot usefully be applied to untransformed data in fig 1e,f.
+DONE 10) try to emphasize early on that the focus is on positively associated variables, so 'lower tail' means the lower tail of both variables and it is not necessary to worry about negative relationships (in practice we would always transform these for ease).   The dfinitions of tail dependence we use cannot usefully be applied to untransformed data in fig 1e,f.
 -->
 
 # Abstract
@@ -105,7 +106,7 @@ but rarely in ecology. We here explore the concepts that underpin copulas and ex
 for those concepts to improve our understanding of ecology. We find that informative copula 
 structure in dependencies between variables is common across all the environmental, 
 species-trait, phenological, population, community, and ecosystem functioning datasets we 
-considered. Many datasets exhibited asymmetric tail associations, whereby two variables are more 
+considered. Many datasets exhibited asymmetric tail associations, whereby two variables were more 
 strongly related in their left compared to right tails, or *vice versa*. We describe mechanisms by which 
 observed copula structure and asymmetric tail associations can arise in ecological data, including a Moran-like 
 effect whereby dependence structures between environmental variables are inherited by ecological 
@@ -303,10 +304,10 @@ whereas when Sp1 is rare, Sp2
 may be abundant, or may also be relatively rare due to 
 limiting factors other than Sp1. 
 Alternatively, Fig. \ref{fig_cop_pedag1}F may suggest that Sp2
-is the dominant competitor. Although other causal hypotheses may produce 
+is the dominant competitor. Other causal hypotheses may produce 
 similar dependence structure, and it is usually impossible to obtain
 complete information on causal pathways from analyses which are
-fundamentally based on associations, more detailed 
+fundamentally based on associations. However, more detailed 
 examination of the patterns of dependence of variables may
 well be combined with biological and other reasoning to rule out
 some causal hypotheses which could not be eliminated solely 
@@ -343,7 +344,8 @@ We approached our overall goal of exploring the potential of copula approaches
 for ecology by addressing the following specific questions. (Q1) Do datasets
 in ecology have dependence structure distinct from that of a multivariate 
 Gaussian/normal
-distribution (here called non-normal copula structure)? Do they show tail 
+distribution (here called non-normal copula structure)? Do positvely associated 
+ecological variables show tail 
 associations distinct from those of a normal distribution, and in particular
 do they show asymmetric tail associations? Normal copula structure is assumed
 by standard approaches that use multivariate 
@@ -508,7 +510,7 @@ because we will fit these families to data later. The bivariate normal
 copula family, which consists of copulas of bivariate normal
 distributions, is a one-parameter family. The parameter, which we here call $p$,
 corresponds to the correlation
-of the related bivariate normal distribution, and controls the degree of dependence
+of the related bivariate normal distribution, and controls the degree of association
 between the variables. A normal copula with $p=0.7$ was already introduced (Fig.
 \ref{PedagogFigCopThry}A). The formula for the
 copula is $\Phi_{2,p}(\Phi_{1}^{-1}(u),\Phi_{1}^{-1}(v))$, where $\Phi_1^{-1}$ is the inverse of the
@@ -546,7 +548,9 @@ $\lambda_U = \lim_{u \rightarrow 1^-} P[Y>F_Y^{-1}(u) | X>F_X^{-1}(u)]$. This eq
 $\lim_{u \rightarrow 1^-} P[U>u | V>u]$, which in turn equals 
 $\lim_{u \rightarrow 1^-} P[U>u, V>u]/P[V>u]=\lim_{u \rightarrow 1^-} P[U>u, V>u]/(1-u)$,
 which shows upper-tail dependence is defined symmetrically in the two random variables.
-Lower tail dependence is defined analogously, as 
+All the variables we consider were positively associated when they were significantly
+associated, so we think of positively associated variables when conceptualizing the
+definitions presented here. Lower tail dependence is defined analogously, as 
 $\lambda_L = \lim_{u \rightarrow 0^+} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
 Tail dependence is a property of the random variable $(U,V)$, so depends only
 on the copula and not on the marginals combined with it. It can be shown 
@@ -783,7 +787,7 @@ is not important for the reader to
 understand the details of these copulas,
 and, additonally, these copulas have been 
 described formally elsewhere [@Joe1997]; so 
-we only briefly identify each family, say a few words about tail associations 
+we only briefly identify each family, say a few words about tail dependence 
 of the families, and provide pictorial descriptions in the Appendices.
 We used several families that can exhibit positive lower-tail dependence 
 (of strength depending on parameters) and 
@@ -916,7 +920,7 @@ smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$,
 abbreviating $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
 and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"). Likewise $\Ps_l=\Ps_{0,.5}$,
 $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, $\Dsq_u=\Dsq_{0.5,1}$.
-To test for asymmetry of dependence in upper and lower portions of distributions,
+To test for asymmetry of association in upper and lower portions of distributions,
 we used differences $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
 for smaller datasets (note the opposite order
 in the last of these); and $\cor_{0,u_b}-\cor_{1-u_b,1}$, 
@@ -1884,7 +1888,8 @@ given population density or abundance data $x_i(t)$ measured in locations
 $i=1,\ldots,N$ and times $t=1,\ldots,T$, a group $g$ consists of 
 all the measurements $x_i(t)$, $i=1,\ldots,N$ made in different locations at the same time.
 So means $m_g$ and variances $v_g$ are computed across space. We refer to the matrix
-with $x_i(t)$ in the $t$th row and the $i$th column as a *population matrix*. 
+with $x_i(t)$ in the $t^{\text{th}}$ row and the $i^{\text{th}}$ 
+column as a *population matrix*. 
 We consider that 
 Taylor's law holds true for a dataset if the 
 $\log(v_g)$ versus $\log(m_g)$ scatter plot 
@@ -2180,8 +2185,6 @@ Bivariate copula analysis was also used in forecasting the
 co-occurrence of extreme events (flood or drought) 
 over the North Sikkim Himalayas using spatial datasets [@Goswami2018]. 
 
-<!--***DAN: made it to here 2019 10 18-->
-
 <!--Causal mechanism C, which we also did not test-->
 We suggested in the Introduction that asymmetric competitive relationships
 between species could yield asymmetric tail associations between abundance measurements for the 
@@ -2189,7 +2192,14 @@ species. This is another theoretical mechanism for non-normal copula
 structure and asymmetric tail associations, represented in Fig. \ref{MasterFigure} 
 by the box "Asymmetric species interactions" and the arrow labelled "C".
 It could be tested by analyzing copulas of abundances of competing 
-species, sampled across space or time.
+species, sampled across space or time. We note that, whereas all the datasets
+we studied here have been positively associated when they were significantly
+associated, for negatively associated variables such as abundances of competing species,
+the definitions of left- and
+right-tail association no longer apply, strictly speaking: the left tail
+of one distribution corresponds to the right tail of the other. One must
+be careful with terminology, but it is still possible to study asymmetries of
+association.
 
 <!--Holder stuff-->
 Our simulations of character evolution suggest the hypothesis that
@@ -2214,7 +2224,7 @@ association between BMR and body mass, with another,
 i.e., why might we see greater right- than left-tail association in evolutionary 
 changes in these traits?
 
-Performing statistical tests for associations between continuous traits in different species
+Performing statistical tests for associations between continuous traits across different species
     was a primary motivating example of phylogenetic comparative methods.
 For example, Felsenstein's method of phylogenetically independent contrasts 
     [@Felsenstein1985] is currently the second most-cited paper in the history
@@ -2278,7 +2288,7 @@ limitations, there may be a strong
 association between F and $G_1$, for instance. For small F, there may be
 little association because resources not allocated to F can instead be allocated 
 to any combination of the $G_i$. This constitutes 
-asymmetric tail dependence between F and $G_1$. @Winemiller1992
+asymmetric tail association between F and $G_1$. @Winemiller1992
 described a three-way trade-off in fishes between age of reproductive
 maturity, juvenile survivorship, and fecundity. The trade-off should, in theory,
 produce a tight association between age of maturity and fecundity for 
@@ -2294,13 +2304,12 @@ can bias conclusions (Appendix \ref{SM-sect:missingdata},
 Fig. \ref{SM-fig:missingdata}). Multi-dimensional copulas may also be the 
 appropriate copula approach
 to studying multi-dimensional trade-offs. We used only bivariate 
-analyses in this study solely in order to have at least one
-way to constrain the complexity of what is already a complex piece of work.
-But the statistical theory on multi-dimensional copulas is well developed
+analyses in this study solely for simplicity.
+But statistical theory on multi-dimensional copulas is also well developed
 [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], 
 and open-source computer implementations exist for multivariate as well as 
-bivariate copulas (e.g., the `VineCopula`
-package for the R programming language). Such approaches may be an 
+bivariate copula methods (e.g., the `VineCopula`
+package for the R programming language). Such approaches may be a 
 useful next step in life-history theory and other areas. 
 
 <!-- We have only given a few mechanisms, but there are likely to be others, and discoverig
@@ -2308,12 +2317,14 @@ additional mechanisms of copula structure is certainly worthy of future work. --
 Additional mechanisms of non-normal copula structure and asymmetric tail associations
 probably also operate, and should be considered. For instance, 
 measurement error may modify copula structure. 
-Our models were intentionally simple in other respects, 
+Our models investigating potential causes of copula structure 
+were intentionally simple in other respects, 
 too, and did not include factors such as
 delayed density dependence, dispersal, population stage structure, trophic
 interactions, etc.; and we did not comprehensively 
-explore parameter space. We re-emphasize that fuller explorations in future work
-of some of our models, and variant model, are likely to be informative. 
+explore parameter space for our models. We re-emphasize 
+that fuller explorations, in future work,
+of some of our models and of variant model may be informative. 
 We hope by enumerating a few potential mechanisms of copula structure
 we will inspire additional research on the
 potentially numerous mechanisms that may operate in diverse datasets,
@@ -2322,7 +2333,8 @@ and their relative importance under different circumstances.
 <!--some consequences paragraphs next-->
 
 <!--a para on stability of the total biomass time series in a community, and skewness - sets up Shya's later paper as future work-->
-We also elaborated potential consequences of copula structure for ecological understanding. 
+We also elaborated potential consequences of copula structure for ecological 
+phenomena and understanding. 
 Our results showed that the skewness of the 
 spatial average of local time series is influenced 
 by their tail associations. But the same logic should also apply to any collection of time
@@ -2370,11 +2382,11 @@ datasets and models.
 We here take a closer look at the green spruce aphid, which simultaneously 
 illustrates causes and consequences with one system.
 Green spruce aphid abundance, as measured in the data we use,
-is strongly influenced by the temperature of the previous winter (@Sheppard2016,
+is strongly positively associated with the temperature of the previous winter (@Sheppard2016,
 their supplementary figure 6).
 Winter temperature for year $t$ was here taken to be an average for December of year $t-1$ through
 March of year $t$, was available for the locations of aphid sampling, 
-and was processed in the same way as @Sheppard2016.
+and was preprocessed in the same way as @Sheppard2016.
 For each of our 10 sampling locations, we therefore 
 examined the copula of winter temperature
 and aphid abundance time series for the location, finding 
@@ -2398,7 +2410,9 @@ described previously
 (Fig. \ref{fig_skewness_spearman}A). Thus the asymmetric influence of winter 
 temperature ultimately causes spatially averaged aphid abundance time series 
 to have lower skewness (i.e., less spikiness, and greater stability through time) 
-than they would otherwise.
+than they would otherwise. It seems likely that asymmetric influence of winter 
+termperature on populations may be a common phenomenon, so effects such as 
+we have documented for green spruce aphid may be common.
  
 ```{r tab_greenspruceaphid_temp_summary, echo=F, results='asis',message=F}
 library(kableExtra)
@@ -2431,15 +2445,15 @@ reviewed here; but under some circumstances it may also be appropriate to use
 techniques which parallel our nonparametric statistics but that use unranked data, 
 $x_i$, $y_i$. As mentioned previously, @Genest2007 and others
 recommend carrying out inferences about dependence structures (which was our
-goal) using normalized ranks, stating explicitly "statistical inference concerning
+goal) using normalized ranks, stating explicitly that "statistical inference concerning
 dependence structures should always be based on ranks." The reason for this is
 that measures of dependence which use unranked data conflate information about
-the maginal distributions of variables with information about the dependence
+the marginal distributions of variables with information about the dependence
 between variables. For instance, suppose the true population densities $p_{1,t}$
 and $p_{2,t}$ of two species of fish in a lake in year $t$ are unknown,
 but are assessed using catch per unit effort (CPUE), a standard approach in fisheries
-science [@Zale2013]. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be more
-or less correlated through time than the true densities would be, if they were known,
+science [@Zale2013]. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be 
+differently correlated through time than the true densities would be, if they were known,
 if the function $f$ relating $p_{i,t}$ and $c_{i,t}$ is nonlinear and if Pearson
 correlation is used. The function $f$ modifies the marginal distributions, which modifies
 measures such as Pearson correlation that conflate dependence and marginal information.
@@ -2449,21 +2463,21 @@ case for which a measurement of an ecological quantity is a nonlinear index of t
 of interest. Nevertheless, if one is certain that measurements are linearly related to 
 the true quantities being measured, statistics based on unranked data may be more appropriate 
 under some circumstances, in part because ecological mechanisms which produce relationships 
-between variables are influenced not only by the ordinal information in ranks but also 
-by the cardinal information in the unranked data. Judgements of what statistics
+between variables are influenced not only by the ordering information in ranks but also 
+by the relative-size information in the unranked data. Judgements of what statistics
 are appropriate depend, of course, on the purpose of the analysis. The goal of this 
 study was to study dependence in isolation, so we used ranks. If one is interested
-in tail associations using cardinal data, a partial Pearson correlation can be developed
+in tail associations using unranked data, a partial Pearson correlation can be developed
 straightforwardly, by replacing $u$ and $v$ in equation \ref{eq:partialspearman}
 by $x$ and $y$, but still computing the sum in that equation over data points
-with ranks, $u_i$ and $v_i$ constrained by the bounds $u_i+v_i>2l_b$ and 
+with ranks $u_i$ and $v_i$ constrained by the bounds $u_i+v_i>2l_b$ and 
 $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
-that may also have utility for some applications.
+that may also have its own utility for some applications.
 
 <!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered
-in this introductory paper; we hope our work helps inspire applications of copulas
+in this introductory paper. We hope our work helps inspire applications of copulas
 in ecology both of and 
 beyond the specific tools we have employed. For instance, multivariate copulas are useful for 
 studying relationships between multiple interacting variables, and have been used in finance

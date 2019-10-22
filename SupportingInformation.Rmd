@@ -1,6 +1,6 @@
 ---
 title: "Supporting information: Copulas and their potential for ecology"
-author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance E. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
+author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance D. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
 output: 
@@ -404,13 +404,13 @@ correlation.\label{fig_transf_pearson_spearman}}
 \includegraphics[width=16 cm,height=8 cm]{./Results/copula_pedagog_fig_BB1.pdf}
 \caption[Lower- and upper-tail dependence can vary independently of correlation]{Lower- and 
 upper-tail dependence can vary independently of correlation. (A-C) Data generated using the BB1 
-copula (see Background section in the main text) 
+copula (see section \ref{MT-Background} in the main text) 
 with three different 
 sets of parameters chosen to produce a variety of 
 lower-tail (LT) and upper-tail (UT) dependence strengths, but with the same 
 Kendall correlation (K) (to two digits) in all cases. (D-F) Similar to A-C, but
 with stronger correlation. Asymmetry of tail dependence (LT-UT) is the same 
-within each column. See Background section in the main text for a formal description of 
+within each column. See section \ref{Background} in the main text for a formal description of 
 tail dependence and other measures of association in the tails.\label{fig_cop_pedag}}
 \end{center}
 \end{figure}
@@ -2195,9 +2195,6 @@ saveRDS(tab_multivar_summary,"./Results/tab_multivar_summary.RDS")
 ```
 
 # Spatial resampling with multivariate datasets for nonparametric statistics \label{spatial_resamp}
-<!--***DAN: leave this section exactly as it is, but it may be out of order
-now that we describe how this is done in the methods. In fact, I think I
-have to do this more generally.-->
 
 For each pair of 
 locations $i \neq j$, the statistic
@@ -2436,10 +2433,10 @@ knitr::kable(summary_stat, booktabs = T, escape=F,
       caption.short="Asymmetric sensitivity model, model selection results",
       caption="Asymmetric sensitivity model, model selection results. 
 The output of simulations from the first model detailed in 
-the methods section for Q2 (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
+section \\ref{Causes} of the main text (i.e., Figs \\ref{MT-fig_ms_asym_b_0.1} and 
 \\ref{fig_ms_asym_b_-0.1_0.5_-0.5}) were subjected to the model 
-selection procedures detailed in the 
-methods section for Q1. Best-fit copula AICw: the AIC weight of the best-fitting copula family;
+selection procedures detailed in section \\ref{Methods} of the main text. 
+Best-fit copula AICw: the AIC weight of the best-fitting copula family;
 Normal copula AICw: the AIC weight of the normal copula family; Model-avg. LT: the lower-tail 
 statistic, weighted-averaged across models using AICw; Model-avg. UT: same, but for the 
 upper-tail statistic; p, CvM: p-value for goodness of fit test of the best-fitting copula

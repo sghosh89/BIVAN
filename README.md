@@ -1,4 +1,4 @@
-# Repository of analyses: Copulas reveal complex and informative dependencies propagating throughout ecology
+# Repository of analyses: Copulas and their potential for ecology
 
 Shyamolina Ghosh, University of Kansas 
 

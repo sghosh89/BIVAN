@@ -71,7 +71,7 @@ The importance of copulas in ecology-->
 
 \noindent \emph{Correspondence:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
-\noindent \emph{The number of words in the abstract:} 263
+\noindent \emph{The number of words in the abstract:} 253
 
 \newpage
 

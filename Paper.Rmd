@@ -554,12 +554,12 @@ ways this is measured is called *tail dependence* (@joe2014_dependence, section 
 with margins $F_X$, $F_Y$ and defining $U=F_X(X)$, $V=F_Y(Y)$, the upper-tail
 dependence of $X$ and $Y$ is defined as 
 $\lambda_U = \lim_{u \rightarrow 1^-} P[Y>F_Y^{-1}(u) | X>F_X^{-1}(u)]$. This equals
-$\lim_{u \rightarrow 1^-} P[U>u | V>u]$, which in turn equals 
+$\lim_{u \rightarrow 1^-} P[U>u | V>u]$, which in turn equals
 $\lim_{u \rightarrow 1^-} P[U>u, V>u]/P[V>u]=\lim_{u \rightarrow 1^-} P[U>u, V>u]/(1-u)$,
 which shows upper-tail dependence is defined symmetrically in the two random variables.
 All the variables we consider were positively associated when they were significantly
 associated, so we think of positively associated variables when conceptualizing the
-definitions presented here. Lower tail dependence is defined analogously, as 
+definitions presented here. Lower tail dependence is defined analogously, as
 $\lambda_L = \lim_{u \rightarrow 0^+} P[Y \leq F_Y^{-1}(u) | X \leq F_X^{-1}(u)]$.
 Tail dependence is a property of the random variable $(U,V)$, so depends only
 on the copula and not on the marginals combined with it. It can be shown 
@@ -655,7 +655,7 @@ examined environmental variables from the soil instead, using the Rapid Carbon
 Assessment database [RaCA; @Wills2014].
 <!--***DAN: Add Wills and Loecke pending reference if published in time--> 
 The database comprises measurements of soil organic carbon and total soil 
-nitrogen (Mg C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
+nitrogen (megagrams C or N per hectare of soil surface) from `r nrow(d_soilCN)` 
 locations across the coterminous United States (Fig. \ref{SM-fig_SoilCNmapUSA} for sampling locations).
 Species-trait data were average species basal metabolic rate (BMR, KJ per hour) and 
 body mass (grams) for `r nrow(d_birdsBMR)`  species of birds [@Mcnab_2009] 
@@ -803,7 +803,10 @@ understand the details of these copulas,
 and, additonally, these copulas have been 
 described in more detail elsewhere [@Joe1997]; so 
 we only briefly identify each family, say a few words about tail dependence 
-of the families, and provide pictorial descriptions in the Appendices.
+of the families, and provide pictorial descriptions (Figs 
+\ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8}). 
+The pictorial decriptions can also be used to aid quick comparisons of copula
+families when alternative families are being considered for future applications. 
 We used several families that can exhibit positive lower-tail dependence 
 (of strength depending on parameters) and 
 zero upper-tail dependence: the Clayton, survival Gumbel, survival Joe
@@ -823,9 +826,19 @@ and zero lower-tail dependence except for a boundary case.
 180 degrees. 
 See @Joe1997 for details on all these families. We used the implementations
 of these families provided in the `VineCopula` package for the R programming
-language. See Figs \ref{figped_N}-\ref{figped_BB1} and \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
+language. See Figs \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
-pdfs and tail dependence are influenced by the parameters.
+pdfs and tail dependence are influenced by the parameters. See 
+Table X for a summary of some properties of each family.
+<!--***DAN: Shyamolina, please make a table, and replace the X above with 
+a citation to that table. Please place the table chunk in such a way that 
+this citation becomes table 2, since prior to this point the only main text
+table that has been cited is table 1, and we want the table citations to 
+come in order. The columns of the table should include: 1) copula family name,
+2) number of parameters for the family; 3) info on tail dependence that is
+in the above para; 4) a reference to the figure (in the main text or sup mat)
+where there is a picture of this family. Anything else? There should be a 
+row for each of our 16 copula families.-->
 
 <!--***DAN: Info on families kept here for convenience, see also the file
 CopulaFamilyParamRangesAndTailDependence.jpg, stored in the BIVAN folder:

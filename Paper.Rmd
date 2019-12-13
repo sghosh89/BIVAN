@@ -2502,6 +2502,22 @@ $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
 that may also have its own utility for some applications.
 
+<!--para on data requirements of the methods, requested by the AER referees-->
+Data requirements for copula methods will vary depending on multiple factors,
+but our results show that data requirements are not beyond what is common 
+in ecology. With copula methods as with any statistical analysis, the data required to detect 
+an effect or a phenomenon depends on the strength of the effect. For instance,
+detection of mild asymmetry of tail association will require more data than
+detection of strong asymmetry. Different copula or copula-related methods will
+also require different amount of data. For instance, our nonparametric methods 
+such as the partial Spearman correlation should be effective with datasets 
+only slightly bigger than typical guidelines for standard correlation 
+methods; whereas our model-selection approaches may be most effective with more data.
+Some of our datasets were large, but others were much smaller, e.g., aphid datasets
+comprised 30 points, and our analyses still provided robust results. Thus
+many copula methods will be suitable for datasets of sizes that are common in ecology.
+The partial Spearman correlation seems particularly widely applicable.
+
 <!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered
 in this introductory paper. We hope our work helps inspire applications of copulas

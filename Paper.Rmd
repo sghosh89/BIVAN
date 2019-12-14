@@ -718,11 +718,67 @@ tab_data_info$References<-c("US Rapid Carbon Assessment database (RaCA), Wills e
 knitr::kable(tab_data_info, 
              #format="latex", align="l",
              format="latex", align="l",escape=F,
-             caption = "Summary table for the data we used. Bold entries are the multivariate data, the rest are bivariate datasets (see section \ref{Data}). Basal metabolic rate=BMR. \\label{tab_data_info}", 
+             caption = "Summary table for the data we used. Bold entries are the multivariate data, the rest are bivariate datasets (see section \\ref{Data}). Basal metabolic rate=BMR. \\label{tab_data_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(1:4,width="3.4 cm")%>%
              row_spec(c(4,5,6,8), bold=T)
 ```
+
+
+```{r tab_summary_copula_info, echo=F, results="asis",message=F}
+library(kableExtra)
+library(dplyr)
+tab_copula_info<-as.data.frame(matrix(NA,nrow=16,ncol=4))
+colnames(tab_copula_info)<-c("Copula family","No. of parameters","Stronger dependent tail", "Reference")
+
+tab_copula_info$`Copula family`<-c("Normal",
+                                   "Clayton","Survival Clayton",
+                                   "Gumbel","Survival Gumbel",
+                                   "Joe","Survival Joe",
+                                   "Frank", 
+                                   "BB1","Survival BB1",
+                                   "BB6","Survival BB6", 
+                                   "BB7","Survival BB7", 
+                                   "BB8","Survival BB8")
+
+tab_copula_info$`No. of parameters`<-c("1",
+                                       "1","1",
+                                       "1","1",
+                                       "1","1",
+                                       "1",
+                                       "2","2",
+                                       "2","2",
+                                       "2","2",
+                                       "2","2")
+
+tab_copula_info$`Stronger dependent tail`<-c("None",
+                                             "Lower","Upper",
+                                             "Upper","Lower",
+                                             "Upper","Lower",
+                                             "None",
+                                             "Any (depending on the parameters)","Any (depending on the parameters)",
+                                             "Upper","Lower",
+                                             "Any (depending on the parameters)","Any (depending on the parameters)",
+                                             "Either upper or none (depending on the parameters)","Either lower or none (depending on the parameters)")
+  
+# caution: this fig. numbers are not auto-linked
+tab_copula_info$Reference<-c("Fig. 4",
+                              "Fig. 5","Fig. S3",
+                              "Fig. S7","Fig. S8",
+                              "Fig. S9","Fig. S10",
+                              "Fig. S11",
+                              "Fig. 6","Fig. S12",
+                              "Fig. S13","Fig. S14",
+                              "Fig. S15","Fig. S16",
+                              "Fig. S17","Fig. S18")
+
+knitr::kable(tab_copula_info, 
+             format="latex", align="l",escape=F,
+             caption = "Summary table for the sixteen copula families we used (see section \\ref{Background}). \\label{tab_copula_info}", 
+             booktabs = T,linesep = "\\addlinespace") %>%
+             column_spec(2,width="2 cm")
+```
+
 
 # Concepts and methods for Q1 \label{Methods} 
 
@@ -829,7 +885,7 @@ of these families provided in the `VineCopula` package for the R programming
 language. See Figs \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
 pdfs and tail dependence are influenced by the parameters. See 
-Table X for a summary of some properties of each family.
+Table \ref{tab_copula_info} for a summary of some properties of each family.
 <!--***DAN: Shyamolina, please make a table, and replace the X above with 
 a citation to that table. Please place the table chunk in such a way that 
 this citation becomes table 2, since prior to this point the only main text

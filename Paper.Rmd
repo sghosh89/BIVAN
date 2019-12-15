@@ -729,7 +729,7 @@ knitr::kable(tab_data_info,
 library(kableExtra)
 library(dplyr)
 tab_copula_info<-as.data.frame(matrix(NA,nrow=16,ncol=4))
-colnames(tab_copula_info)<-c("Copula family","No. of parameters","Stronger dependent tail", "Reference")
+colnames(tab_copula_info)<-c("Copula family","No. of parameters","Tails with stronger association", "Reference")
 
 tab_copula_info$`Copula family`<-c("Normal",
                                    "Clayton","Survival Clayton",
@@ -751,15 +751,15 @@ tab_copula_info$`No. of parameters`<-c("1",
                                        "2","2",
                                        "2","2")
 
-tab_copula_info$`Stronger dependent tail`<-c("None",
+tab_copula_info$`Tails with stronger association`<-c("Neither (symmetric)",
                                              "Lower","Upper",
                                              "Upper","Lower",
                                              "Upper","Lower",
-                                             "None",
-                                             "Any (depending on the parameters)","Any (depending on the parameters)",
+                                             "Neither (symmetric)",
+                                             "Either (depending on params)","Either (depending on params)",
                                              "Upper","Lower",
-                                             "Any (depending on the parameters)","Any (depending on the parameters)",
-                                             "Either upper or none (depending on the parameters)","Either lower or none (depending on the parameters)")
+                                             "Either (depending on params)","Either (depending on params)",
+                                             "Upper or symmetric (depending on paras)","Lower or symmetric (depending on params)")
   
 # caution: this fig. numbers are not auto-linked
 tab_copula_info$Reference<-c("Fig. 4",
@@ -774,7 +774,7 @@ tab_copula_info$Reference<-c("Fig. 4",
 
 knitr::kable(tab_copula_info, 
              format="latex", align="l",escape=F,
-             caption = "Summary table for the sixteen copula families we used (see section \\ref{Background}). \\label{tab_copula_info}", 
+             caption = "Summary table for the sixteen copula families we used (see section \\ref{Background}). For the parameters we consider, all copula families model positive association between variables. \\label{tab_copula_info}", 
              booktabs = T,linesep = "\\addlinespace") %>%
              column_spec(2,width="2 cm")
 ```
@@ -782,6 +782,13 @@ knitr::kable(tab_copula_info,
 
 # Concepts and methods for Q1 \label{Methods} 
 
+Recall that Q1 has three parts: Do datasets
+in ecology have dependence structure distinct from that of a multivariate 
+Gaussian/normal
+distribution (here called non-normal copula structure)? Do positvely associated 
+ecological variables show tail 
+associations distinct from those of a normal distribution? And in particular
+do they show asymmetric tail associations? 
 We addressed Q1 first via a model selection procedure in which several
 families of copulas were fitted to 
 our ecological datasets and fits were compared via the Akaike and Bayesian 
@@ -1473,8 +1480,10 @@ knitr::kable(tab_multivar_summary_ed,
 <!--Question 2 analyses-->
 # Concepts and methods for Q2 \label{Causes}
 
+Recall that Q2 is: what are some possible causes/mechanisms of non-normal
+copula structure and asymmetric tail associations in ecology?
 Having demonstrated that non-normal copula structure and asymmetric tail associations are 
-addressed Q2 by exploring, using models, three possible mechanisms
+common in ecology, we addressed Q2 by exploring, using models, three possible mechanisms
 by which these phenomena may arise. 
 Models presented are initial explorations, only, of whether the proposed mechanisms have the 
 potential to explain observed patterns. As such, simple models were used. 
@@ -1852,6 +1861,9 @@ E, J, O). See section \ref{Causes} for details. The number above each panel indi
 <!--Question 3 analyses-->
 # Concepts and methods for Q3 \label{Consequences}
 
+Recall that Q3 is: what are the consequences of non-normal copula
+structure and asymmetric tail associations for ecological understanding and
+applications?
 We addressed Q3 by exploring, using both data and models, three hypothesized
 ecological consequences of non-normal copula structure and asymmetric tail
 associations. As for Q2, the models we used are intended as initial explorations, only,

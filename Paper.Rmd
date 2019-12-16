@@ -76,27 +76,6 @@ The importance of copulas in ecology-->
 \newpage
 
 <!--***DAN: remianing to do:
-DONE 1) Edit abstract
-DONE 2) Go through the whole thing one more time
-DONE 3) send it out to coauthors (done) and maybe get feedback
-DONE 3.5) ESP FROM lAWRENCE
-DONE 3.6) Incorporate Shya feedback
-DONE 3.7) Incorporate Reid feedback
-DONE 4)make sure to say something about tropical systems
-DONE 5) maybe write to the editors saying this is coming soon?
-DONE 6) In the Discussion, you maybe need to point out not only that we
-use only bivariate copulas (and there are multivariate ones), but also
-that we use only continuous marginals. Probably an adequate approximation
-for our data, but see the other papers I've seen recently which use count data,
-and discrete marginals. Approaches such as that will be necessary for some 
-datasets.
-DONE 7) change the box around the Cedar Creek data in the main fig
-DONE 8) say in Discussion that you could have used non-ranks for the nonparam stats - this
-is the stuff the Ecol Mongr referee talked about. Maybe this should go in Background instead?
-DONE 9) maybe go back and read the Ecol Monogr reviews again
-DONE 10) try to emphasize early on that the focus is on positively associated variables, so 'lower tail' means the lower tail of both variables and it is not necessary to worry about negative relationships (in practice we would always transform these for ease).   The dfinitions of tail dependence we use cannot usefully be applied to untransformed data in fig 1e,f.
-DONE 11) Number the sections and subsections in the main text and change all the section 
-references to use those numbers. Search for "section" (DONE) also for "methods" (DONE)
 -->
 
 \noindent \textbf{Abstract}
@@ -535,6 +514,7 @@ The Clayton copula family,
 of which we have already pictured an example (Fig.
 \ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to normal copulas, Clayton copulas
 have stronger left- than right-tail association. The formula is 
+<!--***DAN: is it clear implicitly from what came before that this is the cdf or what?-->
 $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
 less direct intuition than do example pdfs (Fig. \ref{figped_C}). Higher values of the parameter,
 $p$ produce copulas from the Clayton family with higher Kendall or Spearman correlation. The survival

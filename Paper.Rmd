@@ -329,7 +329,7 @@ We approached our overall goal of exploring the potential of copula approaches
 for ecology by addressing the following specific questions. (Q1) Do datasets
 in ecology have dependence structure distinct from that of a multivariate 
 Gaussian/normal
-distribution (here called non-normal copula structure)? Do positvely associated 
+distribution (here called non-normal copula structure)? Do positively associated 
 ecological variables show tail 
 associations distinct from those of a normal distribution, and in particular
 do they show asymmetric tail associations? Normal copula structure is assumed
@@ -765,7 +765,7 @@ knitr::kable(tab_copula_info,
 Recall that Q1 has three parts: Do datasets
 in ecology have dependence structure distinct from that of a multivariate 
 Gaussian/normal
-distribution (here called non-normal copula structure)? Do positvely associated 
+distribution (here called non-normal copula structure)? Do positively associated 
 ecological variables show tail 
 associations distinct from those of a normal distribution? And in particular
 do they show asymmetric tail associations? 
@@ -1787,15 +1787,15 @@ the nonlinear models described in the methods section for Q2.\label{fig_Cause4co
 \includegraphics[width=4.3 cm]{./Results/Cause4copula_results/Cause4copula_stat_results_ar1_beta_0.5_Clayton/Clayton_scatter_D2umD2l_Kendall's Tau.pdf}
 \caption{Comparison of correlation and tail association statistics between 
 environmental-noise inputs and ecological-variable 
-outputs, AR(1) model, Clayton copula. Red and blue points give 
+outputs, AR(1) model, Clayton copula. Grey and black points give 
 means over 50 replicate simulations of the listed statistics, 
-red points are for noise inputs and blue points are for
+grey points are for noise inputs and black points are for
 model outputs. Error bars are standard errors. 
 $P$-values (purple points, right axis) are for a 
 paired $t$-test of the null hypothesis that the distributions have the same mean. 
 For bottom panels, headers give Pearson correlations for
-the points. The regression line through the points (black) was similar
-to the 1-1 line (green). 
+the points. The regression line through the points (solid) was similar
+to the 1-1 line (dashed). 
 See section \ref{Causes} for details.\label{fig_Cause4copula_C_kend_ar1}}
 \end{center}
 \end{figure}
@@ -2152,7 +2152,7 @@ log(spatial mean) relationships for $1000$ simulations over $50$ time steps for 
 using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
 locations. Results from all $1000$ 
 simulations were plotted on the same axes for each panel, but two example simulations are 
-shown in red and green to help assess to what extent variation on the plots was between 
+shown in solid and void black dots to help assess to what extent variation on the plots was between 
 simulations or within simulations. For each simulation, we tested the linearity 
 (E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
 and quantified the root mean squared error of points from the linear regression line (G).

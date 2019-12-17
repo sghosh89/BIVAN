@@ -1346,8 +1346,8 @@ knitr::kable(tab_soilCN_asym, booktabs = T, escape=F,
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=16 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
-\caption[Nonparametric tests against a normal-copula null, soil C and N data]{Nonparametric tests for tail association and other deviations from normal copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (red crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (blue and green x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the red cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means association in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
+\includegraphics[width=13 cm]{./Results/stat_results/stat_soilCN/soilCN_bivfunctionplot.pdf}
+\caption[Nonparametric tests against a normal-copula null, soil C and N data]{Nonparametric tests for tail association and other deviations from normal copula structure, for soil C and N data. As described in the main text, the values of the statistics $\cor_{l_b,u_b}$, $\Ps_{l_b,u_b}$ and $\Dsq_{l_b,u_b}$ for real data (crosses) were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates of the data (dark and light grey x's show 0.025 and 0.975 quantiles), separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$. Whenever the cross was outside the range given by the x's, text at the top of panels indicates the number of surrogate values the real-data value was greater than or less than. For instance, a value $>N$ (respectively, $<N$) means the value of the statistic on real data was greater than (respectively, less than) its value on $N$ surrogates. When the statistic was greater than 975 or less than 975 surrogate values, it indicates significance ($95\%$ confidence level). When $\cor$ or $\Ps$ values (respectively, $\Dsq$ values) were greater than surrogates, it means association in that part of the distributions was stronger than (respectively, weaker than) expected from a normal-copula null hypothesis. \label{fig_soilCN_nonparam}}
 \end{center}
 \end{figure}
 
@@ -1794,7 +1794,7 @@ outputs, AR(1) model, Clayton copula. Grey and black points give
 means over 50 replicate simulations of the listed statistics, 
 grey points are for noise inputs and black points are for
 model outputs. Error bars are standard errors. 
-$P$-values (purple points, right axis) are for a 
+$P$-values (triangles, right axis) are for a 
 paired $t$-test of the null hypothesis that the distributions have the same mean. 
 For bottom panels, headers give Pearson correlations for
 the points. The regression line through the points (solid) was similar

@@ -84,7 +84,7 @@ dev.off()
 library(maps)
 pdf("./Results/SoilCNmapUSA.pdf",height=4,width=8)
 map("usa")
-points(x = d$long, y = d$lat, col="red",pch=16,cex=0.5)
+points(x = d$long, y = d$lat, col=rgb(0,0,0,0.2),pch=16,cex=0.5)
 dev.off()
 ```
 
@@ -337,9 +337,9 @@ ylim=c(50, 60)
 pdf("./Results/aphid_map_plot.pdf")
 map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
 map.axes(cex.axis=2.5)
-points(x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",pch=16)
-points(x = df_loc_info$longs, y = df_loc_info$lats, col="blue", pch=0, cex=1.5)
-text(df_loc_info_org$loc_no, x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",  pos=1)
+points(x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="black",pch=16)
+points(x = df_loc_info$longs, y = df_loc_info$lats, col="black", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="black",  pos=1)
 dev.off()
 
 #--------------Plankton map----------------------------
@@ -363,9 +363,9 @@ pdf("./Results/plankton_map_plot.pdf")
 map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
 map.axes(cex.axis=2.5)
 abline(h=seq(from=ylim[1],to=ylim[2],by=2), v=seq(from=xlim[1],to=xlim[2],by=2), col="black", lty=2)
-points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",pch=16)
-points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="blue", pch=0, cex=1.5)
-text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",  pos=1)
+points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="black",pch=16)
+points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="black", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="black",  pos=1)
 dev.off()
 ```
 
@@ -582,8 +582,8 @@ surface) at 5907 sites across the coterminous United States. \label{fig_SoilCNma
 \includegraphics[width=16 cm,height=16 cm]{./Results/aphid_map_plot.pdf} 
 \caption[Sampling locations for aphid data]{Locations of the 
 Rothamsted Insect Survey 
-suction traps from which data were available are indicated by the red circles, 
-out of which only blue boxes had at least 30 years of data and were 
+suction traps from which data were available are indicated by the circles, 
+out of which only squares had at least 30 years of data and were 
 used for our study. \label{fig_aphid_map}}
 \end{center}
 \end{figure}
@@ -593,7 +593,7 @@ used for our study. \label{fig_aphid_map}}
 \includegraphics[width=16 cm,height=16 cm]{./Results/plankton_map_plot.pdf} 
 \caption[Sampling regions for CPR plankton data]{CPR data were available from 
 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ regions on the map) around UK 
-seas (red circles), out of which only blue boxes had at least 45 years of data and
+seas (circles), out of which only squares had at least 45 years of data and
 were used for our study. \label{fig_plankton_map}}
 \end{center}
 \end{figure}
@@ -805,7 +805,7 @@ The message=F is to suppress warnings that come when you pass a parameter
 of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for these families.
 They correspond to the independent copula. The packages we use provide the indepdent copula, but
 issue a message.-->
-```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,busycores,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r stat_testing_save_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,busycores,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 source("TestStats_multivar_dataset.R")
 set.seed(seed)
 
@@ -821,23 +821,24 @@ res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,m
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
 
 b<-callfn$paramlist
-plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
+
+plotter_stat_testing(reslist=res_pt35_rankF,filename="res_pt35_rankF",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt35_rankT,filename="res_pt35_rankT",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt1000_rankF,filename="res_pt1000_rankF",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt1000_rankT,filename="res_pt1000_rankT",xaxparams=b,resultsloc,spearvals)
 ```
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 

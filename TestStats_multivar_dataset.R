@@ -212,7 +212,8 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
   b<-xaxparams
   
   pdf(paste(resultsloc,filename,".pdf",sep=""),width=12, height=8)
-  op<-par(mfcol=c(3,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+  #op<-par(mfcol=c(3,4),mar=c(3,3.5,3,3.5), mgp=c(1.5,0.5,0))
+  op<-par(mfcol=c(3,4),mar=c(4,4.5,3,4.5), mgp=c(2,0.5,0))
   
   t1<-c(1,length(b[[1]])+1,length(b[[1]])+length(b[[2]])+1,length(b[[1]])+length(b[[2]])+length(b[[3]])+1)
   t2<-c(length(b[[1]]),length(b[[1]])+length(b[[2]]),length(b[[1]])+length(b[[2]])+length(b[[3]]),length(b[[1]])+length(b[[2]])+length(b[[3]])+length(b[[4]]))
@@ -223,22 +224,22 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
       #ie<-t2[i]
       
       #t_CorlmCoru<-ttest(reslist,numsims,1,2,is,ie,1)
-     # plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='b',col='orange',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]))
-    #  arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-     # mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+     # plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]))
+    #  arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='black')  
+     # mtext(paste0("p = ",round(t_CorlmCoru,3)),side = 3, line=-1.5, adj=0.5, col='black')
       
      # t_PlmPu<-ttest(reslist,numsims,3,4,is,ie,1)
-     # plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='b',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u]))  
-     # arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
-     # mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+     # plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u]))  
+     # arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='black')  
+     # mtext(paste0("p = ",round(t_PlmPu,3)),side = 3, line=-1.5, adj=0.5, col='black')
       
      # t_D2umD2l<-ttest(reslist,numsims,6,5,is,ie,1)
-     # plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='b',col='red',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2)) 
-     # arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
-     # mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col='purple2')
+     # plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2)) 
+     # arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+     # lines(range(spearvals),c(0,0),type='l',lty='dashed',col='black')
+     # mtext(paste0("p = ",round(t_D2umD2l,3)),side = 3, line=-1.5, adj=0.5, col='black')
       
     #}else{
       
@@ -259,32 +260,33 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
         t_D2umD2l<-c(t_D2umD2l,x3)
       }
       
-      plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='b',col='orange',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]))
-      arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
+      plot(spearvals,a$CorlmCoru[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(cor[l] - cor[u]),cex.lab=2,cex.axis=1.5)
+      arrows(spearvals, a$CorlmCoru[t1[i]:t2[i],][,1],spearvals,a$CorlmCoru[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+      lines(range(spearvals),c(0,0),type='l',lty='dotted',col='black')
       par(new=T)
-      plot(spearvals,t_CorlmCoru,pch=16,axes=F, xlab=NA, ylab=NA, col='purple2',ylim=c(0,1))
-      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='purple2')
-      axis(side=4,col='purple2',col.axis="purple2")
-      mtext(side = 4, line = 1.5, 'p values', col='purple2')
+      plot(spearvals,t_CorlmCoru,pch=2,axes=F, xlab=NA, ylab=NA, col='black',ylim=c(0,1))
+      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='black')
+      axis(side=4,col='black',col.axis="black",cex.axis=1.5)
+      mtext(side = 4, line = 1.7, 'p values', col='black', cex=1.3)
       
-      plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='b',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u])) 
-      arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')  
+      plot(spearvals,a$PlmPu[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.25,0.25),xlab='Spearman',ylab=expression(P[l] - P[u]),cex.lab=2,cex.axis=1.5) 
+      arrows(spearvals,a$PlmPu[t1[i]:t2[i],][,1],spearvals,a$PlmPu[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+      lines(range(spearvals),c(0,0),type='l',lty='dotted',col='black')  
       par(new=T)
-      plot(spearvals,t_PlmPu,pch=16,axes=F, xlab=NA, ylab=NA, col='purple2',ylim=c(0,1))
-      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='purple2')
-      axis(side=4,col='purple2',col.axis="purple2")
-      mtext(side = 4, line = 1.5, 'p values', col='purple2')
+      plot(spearvals,t_PlmPu,pch=2,axes=F, xlab=NA, ylab=NA, col='black',ylim=c(0,1))
+      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='black')
+      axis(side=4,col='black',col.axis="black",cex.axis=1.5)
+      mtext(side = 4, line = 1.7, 'p values', col='black', cex=1.3)
       
-      plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='b',col='red',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2)) 
-      arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='green')
-      lines(range(spearvals),c(0,0),type='l',lty='dashed',col='deepskyblue1')
+      
+      plot(spearvals,a$D2umD2l[t1[i]:t2[i],][,2],type='o',col='black',ylim=c(-0.05,0.05),xlab='Spearman',ylab=expression(D[u]^2 - D[l]^2),cex.lab=2,cex.axis=1.5) 
+      arrows(spearvals,a$D2umD2l[t1[i]:t2[i],][,1],spearvals,a$D2umD2l[t1[i]:t2[i],][,3], length=0.02, angle=90, code=3, col='black')
+      lines(range(spearvals),c(0,0),type='l',lty='dotted',col='black')
       par(new=T)
-      plot(spearvals,t_D2umD2l,pch=16,axes=F, xlab=NA, ylab=NA, col='purple2',ylim=c(0,1))
-      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='purple2')
-      axis(side=4,col='purple2',col.axis="purple2")
-      mtext(side = 4, line = 1.5, 'p values', col='purple2')
+      plot(spearvals,t_D2umD2l,pch=2,axes=F, xlab=NA, ylab=NA, col='black',ylim=c(0,1))
+      lines(range(spearvals),c(0.05,0.05),type='l',lty='dashed',col='black')
+      axis(side=4,col='black',col.axis="black",cex.axis=1.5)
+      mtext(side = 4, line = 1.7, 'p values', col='black', cex=1.3)
       
     #}
     
@@ -293,7 +295,7 @@ plotter_stat_testing<-function(reslist,filename,xaxparams,resultsloc,spearvals){
   op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
   plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
   legend("top", "1st column : Clayton, 2nd column : Normal, 3rd column : Frank, 4th column : Survival Clayton", 
-         cex = 1.5, xpd = TRUE, horiz = TRUE, inset = c(0,0), 
+         cex = 2, xpd = TRUE, horiz = TRUE, inset = c(0,0), 
          bty = "n") 
   par(op2)
   dev.off()

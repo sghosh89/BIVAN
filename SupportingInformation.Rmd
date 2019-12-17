@@ -84,7 +84,7 @@ dev.off()
 library(maps)
 pdf("./Results/SoilCNmapUSA.pdf",height=4,width=8)
 map("usa")
-points(x = d$long, y = d$lat, col="red",pch=16,cex=0.5)
+points(x = d$long, y = d$lat, col=rgb(0,0,0,0.2),pch=16,cex=0.5)
 dev.off()
 ```
 
@@ -337,9 +337,9 @@ ylim=c(50, 60)
 pdf("./Results/aphid_map_plot.pdf")
 map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
 map.axes(cex.axis=2.5)
-points(x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",pch=16)
-points(x = df_loc_info$longs, y = df_loc_info$lats, col="blue", pch=0, cex=1.5)
-text(df_loc_info_org$loc_no, x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="red",  pos=1)
+points(x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="black",pch=16)
+points(x = df_loc_info$longs, y = df_loc_info$lats, col="black", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs, y = df_loc_info_org$lats, col="black",  pos=1)
 dev.off()
 
 #--------------Plankton map----------------------------
@@ -363,9 +363,9 @@ pdf("./Results/plankton_map_plot.pdf")
 map("world", fill=TRUE, col="grey84", bg="white",border=0, xlim=xlim, ylim=ylim)
 map.axes(cex.axis=2.5)
 abline(h=seq(from=ylim[1],to=ylim[2],by=2), v=seq(from=xlim[1],to=xlim[2],by=2), col="black", lty=2)
-points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",pch=16)
-points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="blue", pch=0, cex=1.5)
-text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="red",  pos=1)
+points(x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="black",pch=16)
+points(x = df_loc_info$longs+1, y = df_loc_info$lats+1, col="black", pch=0, cex=1.5)
+text(df_loc_info_org$loc_no, x = df_loc_info_org$longs+1, y = df_loc_info_org$lats+1, col="black",  pos=1)
 dev.off()
 ```
 
@@ -582,8 +582,8 @@ surface) at 5907 sites across the coterminous United States. \label{fig_SoilCNma
 \includegraphics[width=16 cm,height=16 cm]{./Results/aphid_map_plot.pdf} 
 \caption[Sampling locations for aphid data]{Locations of the 
 Rothamsted Insect Survey 
-suction traps from which data were available are indicated by the red circles, 
-out of which only blue boxes had at least 30 years of data and were 
+suction traps from which data were available are indicated by the circles, 
+out of which only squares had at least 30 years of data and were 
 used for our study. \label{fig_aphid_map}}
 \end{center}
 \end{figure}
@@ -593,7 +593,7 @@ used for our study. \label{fig_aphid_map}}
 \includegraphics[width=16 cm,height=16 cm]{./Results/plankton_map_plot.pdf} 
 \caption[Sampling regions for CPR plankton data]{CPR data were available from 
 26 locations ($2^{\circ}$ $\times$ $2^{\circ}$ regions on the map) around UK 
-seas (red circles), out of which only blue boxes had at least 45 years of data and
+seas (circles), out of which only squares had at least 45 years of data and
 were used for our study. \label{fig_plankton_map}}
 \end{center}
 \end{figure}
@@ -805,7 +805,7 @@ The message=F is to suppress warnings that come when you pass a parameter
 of 0 to the Frank or Clayton copulas. These are technicallly boundary cases for these families.
 They correspond to the independent copula. The packages we use provide the indepdent copula, but
 issue a message.-->
-```{r stat_testing_save_and_plot_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,busycores,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
+```{r stat_testing_save_result, message=F, results="hide", echo=F, cache=T, cache.extra=list(seed,busycores,mtime("TestStats_multivar_dataset.R"),mtime("CopulaFunctions.R"),mtime("CopulaFunctions_flexible.R"))}
 source("TestStats_multivar_dataset.R")
 set.seed(seed)
 
@@ -821,23 +821,24 @@ res_pt1000_rankT<-mclapply(X=coplist,FUN=worker,numpts=1000,numsims=100,rank=T,m
 save(res_pt35_rankF,res_pt35_rankT,res_pt1000_rankF,res_pt1000_rankT,file=paste(resultsloc,"StatTestNumericResults.RData",sep=''))
 
 b<-callfn$paramlist
-plotter_stat_testing(res_pt35_rankF,"res_pt35_rankF",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt35_rankT,"res_pt35_rankT",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt1000_rankF,"res_pt1000_rankF",b,resultsloc,spearvals)
-plotter_stat_testing(res_pt1000_rankT,"res_pt1000_rankT",b,resultsloc,spearvals)
+
+plotter_stat_testing(reslist=res_pt35_rankF,filename="res_pt35_rankF",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt35_rankT,filename="res_pt35_rankT",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt1000_rankF,filename="res_pt1000_rankF",xaxparams=b,resultsloc,spearvals)
+plotter_stat_testing(reslist=res_pt1000_rankT,filename="res_pt1000_rankT",xaxparams=b,resultsloc,spearvals)
 ```
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -3251,7 +3252,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_C, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_C,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_C, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_C,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -3370,7 +3371,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SC, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SC,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_SC, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SC,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -3545,7 +3546,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_G, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_G,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_G, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_G,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -3695,7 +3696,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SG, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SG,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_SG, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SG,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -3840,7 +3841,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_J, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_J,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_J, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_J,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -3983,7 +3984,7 @@ for(insd in nsdlist){
 }
 ```
 
-```{r plot_cause4copula_stat_ricker_SJ, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SJ,mtime("Plotter_Cause4copula.R"))}
+```{r plot_cause4copula_stat_ricker_SJ, echo=F, results="hide",cache=T, cache.extra=list(seed,tag_ricker_SJ,mtime("Plotter_Cause4copula_stat.R"))}
 
 set.seed(seed)
 source("Plotter_Cause4copula_stat.R")
@@ -4409,35 +4410,35 @@ ylimits<-range(kend.points.res[[1]][,2,],kend.points.res[[2]][,2,],kend.points.r
 png("./Results/taylorslaw_results/SpatialTL_CNFSC_kendall.png",width=16,height=4,units="in",res=400)
 op<-par(mfrow=c(1,4),mar=c(8,8,2,1),mgp=c(4,1,0))
 ##plot TL for clayton
-plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(kend.points.res[[1]][,1,1],kend.points.res[[1]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(kend.points.res[[1]][,1,2],kend.points.res[[1]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(kend.points.res[[1]][,1,1],kend.points.res[[1]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(kend.points.res[[1]][,1,2],kend.points.res[[1]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Clayton"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 ##plot TL for normal copula
-plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(kend.points.res[[2]][,1,1],kend.points.res[[2]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(kend.points.res[[2]][,1,2],kend.points.res[[2]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(kend.points.res[[2]][,1,1],kend.points.res[[2]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(kend.points.res[[2]][,1,2],kend.points.res[[2]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Normal"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for frank
-plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(kend.points.res[[3]][,1,1],kend.points.res[[3]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(kend.points.res[[3]][,1,2],kend.points.res[[3]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(kend.points.res[[3]][,1,1],kend.points.res[[3]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(kend.points.res[[3]][,1,2],kend.points.res[[3]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for survival clayton
-plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(kend.points.res[[4]][,1,1],kend.points.res[[4]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(kend.points.res[[4]][,1,2],kend.points.res[[4]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(kend.points.res[[4]][,1,1],kend.points.res[[4]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(kend.points.res[[4]][,1,2],kend.points.res[[4]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Survival Clayton"),side=3, line=-2, adj=0.1, col="black",cex=2)
 
 par(op)
@@ -4466,38 +4467,38 @@ x2<-c("C", "N", "F", "SC")
 #  lines(x,s.lin[counter,],col="grey")
 #  points(x,s.lin[counter,],col="red")
 #}
-boxplot(s.lin , col=rainbow(4), xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.lin , col="grey", xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Linearity test", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.hom distr for each set of surrogates
-boxplot(s.hom , col=rainbow(4), xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.hom , col="grey", xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Homoskedasticity test", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 
 #plot s.rmse distr for each set of surrogates
-boxplot(s.rmse , col=rainbow(4) , xlab="Copula family", ylab="rmse", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.rmse , col="grey" , xlab="Copula family", ylab="rmse", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.int distr for each set of surrogates
-boxplot(s.int , col=rainbow(4) , xlab="Copula family", ylab="intercept", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.int , col="grey" , xlab="Copula family", ylab="intercept", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.slope distr for each set of surrogates
-boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="slope", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.slope , col="grey" , xlab="Copula family", ylab="slope", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.quadcoeff distr for each set of surrogates
-boxplot(s.quadcoeff , col=rainbow(4) , xlab="Copula family", ylab="quadratic \n coefficient", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.quadcoeff , col="grey" , xlab="Copula family", ylab="quadratic \n coefficient", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.mncurv distr for each set of surrogates
-boxplot(s.mncurv , col=rainbow(4) , xlab="Copula family", ylab="mean \n curvature", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.mncurv , col="grey" , xlab="Copula family", ylab="mean \n curvature", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
@@ -4514,35 +4515,35 @@ ylimits<-range(spea.points.res[[1]][,2,],spea.points.res[[2]][,2,],spea.points.r
 png("./Results/taylorslaw_results/SpatialTL_CNFSC_spearman.png",height=4,width=16,units="in",res=400)
 op<-par(mfrow=c(1,4),mar=c(8,8,2,1),mgp=c(4,1,0))
 ##plot TL for clayton
-plot(spea.points.res[[1]][,1,],spea.points.res[[1]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(spea.points.res[[1]][,1,],spea.points.res[[1]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(spea.points.res[[1]][,1,1],spea.points.res[[1]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(spea.points.res[[1]][,1,2],spea.points.res[[1]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(spea.points.res[[1]][,1,1],spea.points.res[[1]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(spea.points.res[[1]][,1,2],spea.points.res[[1]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Clayton"),side = 3, line=-2.5, adj=0.1, col="black",cex=2)
 
 ##plot TL for normal copula
-plot(spea.points.res[[2]][,1,],spea.points.res[[2]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(spea.points.res[[2]][,1,],spea.points.res[[2]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(spea.points.res[[2]][,1,1],spea.points.res[[2]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(spea.points.res[[2]][,1,2],spea.points.res[[2]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(spea.points.res[[2]][,1,1],spea.points.res[[2]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(spea.points.res[[2]][,1,2],spea.points.res[[2]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Normal"),side = 3, line=-2.5, adj=0.1, col="black",cex=2)
 
 #plot TL for frank
-plot(spea.points.res[[3]][,1,],spea.points.res[[3]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(spea.points.res[[3]][,1,],spea.points.res[[3]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(spea.points.res[[3]][,1,1],spea.points.res[[3]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(spea.points.res[[3]][,1,2],spea.points.res[[3]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(spea.points.res[[3]][,1,1],spea.points.res[[3]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(spea.points.res[[3]][,1,2],spea.points.res[[3]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for survival clayton
-plot(spea.points.res[[4]][,1,],spea.points.res[[4]][,2,],type='p',pch=20,cex=.75,xlim=xlimits,ylim=ylimits,
+plot(spea.points.res[[4]][,1,],spea.points.res[[4]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
-     cex.axis=2,cex.lab=3)  
-points(spea.points.res[[4]][,1,1],spea.points.res[[4]][,2,1],type='p',pch=20,cex=.75,col='red')
-points(spea.points.res[[4]][,1,2],spea.points.res[[4]][,2,2],type='p',pch=20,cex=.75,col='green')
+     cex.axis=2,cex.lab=3,col="grey")  
+points(spea.points.res[[4]][,1,1],spea.points.res[[4]][,2,1],type='p',pch=19,cex=.75,col='black')
+points(spea.points.res[[4]][,1,2],spea.points.res[[4]][,2,2],type='p',pch=1,cex=.75,col='black')
 mtext(paste("Survival Clayton"),side=3, line=-2.5, adj=0.1, col="black",cex=2)
 
 par(op)
@@ -4562,38 +4563,38 @@ op<-par(mfrow=c(1,7),mar=c(8,9,4,1),mgp=c(4,1,0))
 x2<-c("C", "N", "F", "SC")
 
 #plot s.lin distr for each set of surrogates
-boxplot(s.lin , col=rainbow(4), xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.lin , col="grey", xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Linearity test", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.hom distr for each set of surrogates
-boxplot(s.hom , col=rainbow(4), xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.hom , col="grey", xlab="Copula family", ylab="p-vals", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Homoskedasticity test", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 
 #plot s.rmse distr for each set of surrogates
-boxplot(s.rmse , col=rainbow(4) , xlab="Copula family", ylab="rmse", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.rmse , col="grey" , xlab="Copula family", ylab="rmse", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.int distr for each set of surrogates
-boxplot(s.int , col=rainbow(4) , xlab="Copula family", ylab="intercept", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.int , col="grey" , xlab="Copula family", ylab="intercept", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.slope distr for each set of surrogates
-boxplot(s.slope , col=rainbow(4) , xlab="Copula family", ylab="slope", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.slope , col="grey" , xlab="Copula family", ylab="slope", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.quadcoeff distr for each set of surrogates
-boxplot(s.quadcoeff , col=rainbow(4) , xlab="Copula family", ylab="quadratic \n coefficient", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.quadcoeff , col="grey" , xlab="Copula family", ylab="quadratic \n coefficient", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 
 #plot s.mncurv distr for each set of surrogates
-boxplot(s.mncurv , col=rainbow(4) , xlab="Copula family", ylab="mean \n curvature", cex.axis=2,cex.lab=3,xaxt="n")
+boxplot(s.mncurv , col="grey" , xlab="Copula family", ylab="mean \n curvature", cex.axis=2,cex.lab=3,xaxt="n")
 mtext("Spatial TL", side=3, cex=1.8,line=1.5)
 axis(1, at = c(1:4), x2, cex.axis=2)
 

@@ -177,7 +177,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
        \nKendall correlation preserving Normal surrogates",
        cex.main=1.5,
        xlab="(Pl-Pu)",ylab="Frequency",cex.lab=1.5,cex.axis=1.5)
-  abline(v=PlmPu_d,col="red")
+  abline(v=PlmPu_d,col="black")
   dev.off()
   
   #-------------------------------Ranking--------------------------
@@ -215,7 +215,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   x<-seq(from=0,to=1,by=bingap)
   x<-head(x,-1)+diff(x)/2
   xlimits<-c(0,1)
-  
+  #cexaxs<-0.8
   #plotting layout, units inches
   xht<-0.5
   ywd<-0.5
@@ -225,7 +225,7 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
   gap<-.05
   totwd<-ywd+2*panwd+2*gap
   totht<-xht+3*panht+3*gap+titleht
-  pdf(paste(resloc,nametag,"_bivfunctionplot.pdf",sep=""),width=totwd,height=totht)
+  pdf(paste(resloc,nametag,"_bivfunctionplot.pdf",sep=""),width=totwd,height=totht+1)
   
   #kendall, cor
   par(fig=c(ywd/totwd,
@@ -234,16 +234,17 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
   ylimits_cor<-range(corstats_d,corstats_S,corstats_K,na.rm = T)
-  ylimits_cor[2]<-ylimits_cor[2]+.3*diff(ylimits_cor)
-  plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
+  ylimits_cor[2]<-ylimits_cor[2]+.8*diff(ylimits_cor)
+ 
+  plot(x,corstats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',cex=1.5)
   mtext(side=3,line=0,text="Kendall-preserving surrogates")
   mtext(side=2,line=1,text="cor")
   axis(side=1,labels=F)
-  #segments(x0=x,y0=corstats_K[2,],x1=x,y1=corstats_K[3,],col="blue")
+  #segments(x0=x,y0=corstats_K[2,],x1=x,y1=corstats_K[3,],col="dimgray")
   #lines(x,corstats_K[1,],type='l',lty='dotted')
-  points(x,corstats_Kq[2,],pch=4,col="blue") # low CI 0.025
-  points(x,corstats_Kq[3,],pch=4,col="green") # up CI 0.975
+  points(x,corstats_Kq[2,],pch=4,col="dimgray") # low CI 0.025
+  points(x,corstats_Kq[3,],pch=4,col="gray") # up CI 0.975
   #lines(x,corstats_K[4,],type='l',lty='dotted')
   text(xlimits[1],ylimits_cor[1],labels='A',cex=1.5,adj=c(.5,0))
   #myfracplot(x=x,stats_d = corstats_d,surrog_statsq = corstats_Kq,stats_frac = corstats_frac_K,
@@ -257,13 +258,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+2*panht+2*gap)/totht,
             (xht+3*panht+2*gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  plot(x,corstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_cor,
+  plot(x,corstats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_cor,
        xaxt='n',yaxt='n',cex=1.5)
   mtext(side=3,line=0,text="Spearman-preserving surrogates")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  points(x,corstats_Sq[2,],pch=4,col="blue")
-  points(x,corstats_Sq[3,],pch=4,col="green")
+  points(x,corstats_Sq[2,],pch=4,col="dimgray")
+  points(x,corstats_Sq[3,],pch=4,col="gray")
   text(xlimits[1],ylimits_cor[1],labels='B',cex=1.5,adj=c(.5,0))
   fracplot(x=x,corstats_frac_S,ylimits_cor,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_cor)
@@ -275,12 +276,12 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+2*panht+gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
   ylimits_P<-range(Pstats_d,Pstats_S,Pstats_K,na.rm = T)
-  ylimits_P[2]<-ylimits_P[2]+.3*diff(ylimits_P)
-  plot(x,Pstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=1.5)
+  ylimits_P[2]<-ylimits_P[2]+.8*diff(ylimits_P)
+  plot(x,Pstats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_P,xaxt='n',cex=1.5)
   axis(side=1,labels=F)
   mtext(side=2,line=1,text="P")
-  points(x,Pstats_Kq[2,],pch=4,col="blue")
-  points(x,Pstats_Kq[3,],pch=4,col="green")
+  points(x,Pstats_Kq[2,],pch=4,col="dimgray")
+  points(x,Pstats_Kq[3,],pch=4,col="gray")
   text(xlimits[1],ylimits_P[1],labels='C',cex=1.5,adj=c(.5,0))
   fracplot(x=x,Pstats_frac_K,ylimits_P,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_P)
@@ -291,12 +292,12 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+panht+gap)/totht,
             (xht+2*panht+gap)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  plot(x,Pstats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_P,
+  plot(x,Pstats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_P,
        xaxt='n',yaxt='n',cex=1.5)
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  points(x,Pstats_Sq[2,],pch=4,col="blue")
-  points(x,Pstats_Sq[3,],pch=4,col="green")
+  points(x,Pstats_Sq[2,],pch=4,col="dimgray")
+  points(x,Pstats_Sq[3,],pch=4,col="gray")
   text(xlimits[1],ylimits_P[1],labels='D',cex=1.5,adj=c(.5,0))
   fracplot(x=x,Pstats_frac_S,ylimits_P,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_P)
@@ -308,13 +309,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
   ylimits_D2<-range(D2stats_d,D2stats_S,D2stats_K,na.rm = T)
-  ylimits_D2[2]<-ylimits_D2[2]+.3*diff(ylimits_D2)
-  plot(x,D2stats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_D2,cex=1.5)
+  ylimits_D2[2]<-ylimits_D2[2]+.8*diff(ylimits_D2)
+  plot(x,D2stats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_D2,cex=1.5)
   mtext(side=1,line=1,text="Diagonal slice")
   mtext(side=2,line=1,text=expression(D^{2}))
   axis(side=1,labels=F)
-  points(x,D2stats_Kq[2,],pch=4,col="blue")
-  points(x,D2stats_Kq[3,],pch=4,col="green")
+  points(x,D2stats_Kq[2,],pch=4,col="dimgray")
+  points(x,D2stats_Kq[3,],pch=4,col="gray")
   text(xlimits[1],ylimits_D2[1],labels='E',cex=1.5,adj=c(.5,0))
   fracplot(x=x,D2stats_frac_K,ylimits_D2,numsurrog=numsurrog_success_K)
   vlineplot(x,ylimits_D2)
@@ -325,13 +326,13 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
             (xht)/totht,
             (xht+panht)/totht),
       mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25,new=T)
-  plot(x,D2stats_d,type='p',pch=3,col="red",xlim=xlimits,ylim=ylimits_D2,
+  plot(x,D2stats_d,type='p',pch=3,col="black",xlim=xlimits,ylim=ylimits_D2,
        yaxt='n',cex=1.5)
   mtext(side=1,line=1,text="Diagonal slice")
   axis(side=1,labels=F)
   axis(side=2,labels=F)
-  points(x,D2stats_Sq[2,],pch=4,col="blue")
-  points(x,D2stats_Sq[3,],pch=4,col="green")
+  points(x,D2stats_Sq[2,],pch=4,col="dimgray")
+  points(x,D2stats_Sq[3,],pch=4,col="gray")
   text(xlimits[1],ylimits_D2[1],labels='F',cex=1.5,adj=c(.5,0))
   fracplot(x=x,D2stats_frac_S,ylimits_D2,numsurrog=numsurrog_success_S)
   vlineplot(x,ylimits_D2)
@@ -362,7 +363,15 @@ bivfunctionplot<-function(v,resloc,nametag,numbin,numsurrog=1000){
 #v_CN<-getcopula(d=d,rankon=T,ploton=T) 
 #xxx<-bivfunctionplot(v=v_CN,resloc="./Results/stat_results/stat_soilCN/",nametag="trial",numbin=10)
 
-
+#raw_b<-readxl::read_xls("./Data/BMR/BirdBodyMassesMetabolicRates/BirdMassesAndMetabolicRatesMcNab2008.xls")
+#raw_b<-raw_b[,1:3]
+#raw_b<-na.omit(raw_b)
+#raw_b<-raw_b[,2:3]
+#raw_b<-as.data.frame(raw_b)
+#b<-log10(raw_b)
+#colnames(b)<-c("log10M(g)","log10BMR(KJ/h)")
+#cop_b<-getcopula(d=b,rankon=T,ploton=T) #convert to a copula and plot
+#stat_birds_ga<-bivfunctionplot(v=cop_b,resloc="./Results/BMR_results/birds/",nametag="trial",numbin = 2)
 
 
 

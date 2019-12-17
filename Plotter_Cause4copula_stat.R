@@ -57,12 +57,12 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Spearman correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Spearman_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='grey')
+  plot(corcoef_list,S_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab="Spearman",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
+  segments(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],col='dimgrey')
   bar_len<-0.02
-  segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,S_noise_mat[,3],corcoef_list+bar_len,S_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list-bar_len,S_noise_mat[,1],corcoef_list+bar_len,S_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,S_noise_mat[,3],corcoef_list+bar_len,S_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,S_noise_mat[,1],corcoef_list,S_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,S_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,S_pop_mat[,1],corcoef_list,S_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,S_pop_mat[,1],corcoef_list+bar_len,S_pop_mat[,1],col='black')
@@ -78,11 +78,11 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Kendall correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Kendall_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,K_noise_mat[,3],corcoef_list+bar_len,K_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  plot(corcoef_list,K_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab="Kendall",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
+  segments(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,K_noise_mat[,1],corcoef_list+bar_len,K_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,K_noise_mat[,3],corcoef_list+bar_len,K_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,K_noise_mat[,1],corcoef_list,K_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,K_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,K_pop_mat[,1],corcoef_list,K_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,K_pop_mat[,1],corcoef_list+bar_len,K_pop_mat[,1],col='black')
@@ -98,11 +98,11 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Pearson correlation btw noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pearson_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
-  segments(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,P_noise_mat[,3],corcoef_list+bar_len,P_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  plot(corcoef_list,P_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab="Pearson",xlim=c(0,1),ylim=c(0,1),cex.lab=2,cex.axis=1.5)
+  segments(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,P_noise_mat[,1],corcoef_list+bar_len,P_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,P_noise_mat[,3],corcoef_list+bar_len,P_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,P_noise_mat[,1],corcoef_list,P_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,P_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,P_pop_mat[,1],corcoef_list,P_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,P_pop_mat[,1],corcoef_list+bar_len,P_pop_mat[,1],col='black')
@@ -118,13 +118,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Corl of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("Cor"["l"]),
+  plot(corcoef_list,Corl_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("Cor"["l"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.02+max(Corl_noise_mat[,2],Corl_pop_mat[,2])))
-  segments(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,Corl_noise_mat[,3],corcoef_list+bar_len,Corl_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,Corl_noise_mat[,1],corcoef_list+bar_len,Corl_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,Corl_noise_mat[,3],corcoef_list+bar_len,Corl_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,Corl_noise_mat[,1],corcoef_list,Corl_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,Corl_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,Corl_pop_mat[,1],corcoef_list,Corl_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,Corl_pop_mat[,1],corcoef_list+bar_len,Corl_pop_mat[,1],col='black')
@@ -141,13 +141,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Coru of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("Cor"["u"]),
+  plot(corcoef_list,Coru_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("Cor"["u"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.02+max(Coru_noise_mat[,2],Coru_pop_mat[,2])))
-  segments(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,Coru_noise_mat[,3],corcoef_list+bar_len,Coru_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,Coru_noise_mat[,1],corcoef_list+bar_len,Coru_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,Coru_noise_mat[,3],corcoef_list+bar_len,Coru_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,Coru_noise_mat[,1],corcoef_list,Coru_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,Coru_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,Coru_pop_mat[,1],corcoef_list,Coru_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,Coru_pop_mat[,1],corcoef_list+bar_len,Coru_pop_mat[,1],col='black')
@@ -164,13 +164,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Corl - Coru of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Corl-Coru_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
+  plot(corcoef_list,CorlmCoru_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("Cor"["l"]-"Cor"["u"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.15,0.15))
-  segments(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,3],corcoef_list+bar_len,CorlmCoru_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,1],corcoef_list+bar_len,CorlmCoru_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,CorlmCoru_noise_mat[,3],corcoef_list+bar_len,CorlmCoru_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,CorlmCoru_noise_mat[,1],corcoef_list,CorlmCoru_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,CorlmCoru_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,CorlmCoru_pop_mat[,1],corcoef_list,CorlmCoru_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,CorlmCoru_pop_mat[,1],corcoef_list+bar_len,CorlmCoru_pop_mat[,1],col='black')
@@ -201,9 +201,9 @@ Plotter_Cause4copula_stat<-function(res){
   segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,1],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,1],col='black')
   segments(CorlmCoru_noise_mat[,2]-b_len,CorlmCoru_pop_mat[,3],CorlmCoru_noise_mat[,2]+b_len,CorlmCoru_pop_mat[,3],col='black')
   
-  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2],CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2],col='grey')
-  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]+b_len,col='grey')
-  segments(CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]+b_len,col='grey')
+  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2],CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2],col='dimgrey')
+  segments(CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,1],CorlmCoru_pop_mat[,2]+b_len,col='dimgrey')
+  segments(CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]-b_len,CorlmCoru_noise_mat[,3],CorlmCoru_pop_mat[,2]+b_len,col='dimgrey')
   
   dat<-data.frame(x1=CorlmCoru_noise_mat[,2],y1=CorlmCoru_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
@@ -217,13 +217,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Pl of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("P"["l"]),
+  plot(corcoef_list,Pl_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("P"["l"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.01+max(Pl_noise_mat[,2],Pl_pop_mat[,2])))
-  segments(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,Pl_noise_mat[,3],corcoef_list+bar_len,Pl_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,Pl_noise_mat[,1],corcoef_list+bar_len,Pl_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,Pl_noise_mat[,3],corcoef_list+bar_len,Pl_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,Pl_noise_mat[,1],corcoef_list,Pl_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,Pl_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,Pl_pop_mat[,1],corcoef_list,Pl_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,Pl_pop_mat[,1],corcoef_list+bar_len,Pl_pop_mat[,1],col='black')
@@ -237,7 +237,7 @@ Plotter_Cause4copula_stat<-function(res){
   par(op)
   #op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 1, 0, 0), new = TRUE)
   #plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  #legend("top", c("noise copula","population copula", "p-value(paigrey t-test)"), col = c("grey", "black", "black"),
+  #legend("top", c("noise copula","population copula", "p-value(paired t-test)"), col = c("dimgrey", "black", "black"),
   #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = TRUE, inset = c(0,0),
   #       bty = "n") 
   #par(op)
@@ -246,13 +246,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Pu of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("P"["u"]),
+  plot(corcoef_list,Pu_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("P"["u"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.01+max(Pu_noise_mat[,2],Pu_pop_mat[,2])))
-  segments(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,Pu_noise_mat[,3],corcoef_list+bar_len,Pu_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,Pu_noise_mat[,1],corcoef_list+bar_len,Pu_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,Pu_noise_mat[,3],corcoef_list+bar_len,Pu_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,Pu_noise_mat[,1],corcoef_list,Pu_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,Pu_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,Pu_pop_mat[,1],corcoef_list,Pu_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,Pu_pop_mat[,1],corcoef_list+bar_len,Pu_pop_mat[,1],col='black')
@@ -270,13 +270,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting Pl - Pu of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_Pl-Pu_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
+  plot(corcoef_list,PlmPu_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("P"["l"]-"P"["u"]),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.04,0.04))
-  segments(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,PlmPu_noise_mat[,3],corcoef_list+bar_len,PlmPu_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,PlmPu_noise_mat[,1],corcoef_list+bar_len,PlmPu_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,PlmPu_noise_mat[,3],corcoef_list+bar_len,PlmPu_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,PlmPu_noise_mat[,1],corcoef_list,PlmPu_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,PlmPu_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,PlmPu_pop_mat[,1],corcoef_list,PlmPu_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,PlmPu_pop_mat[,1],corcoef_list+bar_len,PlmPu_pop_mat[,1],col='black')
@@ -310,9 +310,9 @@ Plotter_Cause4copula_stat<-function(res){
   segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,1],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,1],col='black')
   segments(PlmPu_noise_mat[,2]-b_len,PlmPu_pop_mat[,3],PlmPu_noise_mat[,2]+b_len,PlmPu_pop_mat[,3],col='black')
   
-  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2],PlmPu_noise_mat[,3],PlmPu_pop_mat[,2],col='grey')
-  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]+b_len,col='grey')
-  segments(PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]+b_len,col='grey')
+  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2],PlmPu_noise_mat[,3],PlmPu_pop_mat[,2],col='dimgrey')
+  segments(PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,1],PlmPu_pop_mat[,2]+b_len,col='dimgrey')
+  segments(PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]-b_len,PlmPu_noise_mat[,3],PlmPu_pop_mat[,2]+b_len,col='dimgrey')
   
   dat<-data.frame(x1=PlmPu_noise_mat[,2],y1=PlmPu_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
@@ -326,13 +326,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting D2u of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("D"[u]^2),
+  plot(corcoef_list,D2u_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("D"[u]^2),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.0005+max(D2u_noise_mat[,2],D2u_pop_mat[,2])))
-  segments(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,D2u_noise_mat[,3],corcoef_list+bar_len,D2u_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,D2u_noise_mat[,1],corcoef_list+bar_len,D2u_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,D2u_noise_mat[,3],corcoef_list+bar_len,D2u_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,D2u_noise_mat[,1],corcoef_list,D2u_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,D2u_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,D2u_pop_mat[,1],corcoef_list,D2u_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,D2u_pop_mat[,1],corcoef_list+bar_len,D2u_pop_mat[,1],col='black')
@@ -350,13 +350,13 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting D2l of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("D"[l]^2),
+  plot(corcoef_list,D2l_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("D"[l]^2),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(0,0.0005+max(D2l_noise_mat[,2],D2l_pop_mat[,2])))
-  segments(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,D2l_noise_mat[,3],corcoef_list+bar_len,D2l_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,D2l_noise_mat[,1],corcoef_list+bar_len,D2l_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,D2l_noise_mat[,3],corcoef_list+bar_len,D2l_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,D2l_noise_mat[,1],corcoef_list,D2l_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,D2l_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,D2l_pop_mat[,1],corcoef_list,D2l_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,D2l_pop_mat[,1],corcoef_list+bar_len,D2l_pop_mat[,1],col='black')
@@ -374,14 +374,14 @@ Plotter_Cause4copula_stat<-function(res){
   # Plotting D2u - D2l of noise and pop copula
   pdf(paste0(resloc,BiCopName(fcode,short=F),"_D2u-D2l_vs_",xlabel,".pdf",sep=""),height=4,width=5)
   op<-par(mar=c(3.5,4.5,2,3.5), mgp=c(1.9,0.5,0))
-  plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="grey",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
+  plot(corcoef_list,D2umD2l_noise_mat[,2],cex=0.5,col="dimgrey",xlab=xlabel,ylab=expression("D"["u"]^2-"D"["l"]^2),
        cex.lab=2,cex.axis=1.5,
        xlim=c(0,1),ylim=c(-0.004,0.004)) 
   #ylim=c(0,0.002+max(D2umD2l_noise_mat[,2],D2umD2l_pop_mat[,2])))
-  segments(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],col='grey')
-  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,1],corcoef_list+bar_len,D2umD2l_noise_mat[,1],col='grey')
-  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,3],corcoef_list+bar_len,D2umD2l_noise_mat[,3],col='grey')
-  #arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='grey')
+  segments(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],col='dimgrey')
+  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,1],corcoef_list+bar_len,D2umD2l_noise_mat[,1],col='dimgrey')
+  segments(corcoef_list-bar_len,D2umD2l_noise_mat[,3],corcoef_list+bar_len,D2umD2l_noise_mat[,3],col='dimgrey')
+  #arrows(corcoef_list,D2umD2l_noise_mat[,1],corcoef_list,D2umD2l_noise_mat[,3],length=0.03, angle=90, code=3, col='dimgrey')
   points(corcoef_list,D2umD2l_pop_mat[,2],cex=0.5,col="black")
   segments(corcoef_list,D2umD2l_pop_mat[,1],corcoef_list,D2umD2l_pop_mat[,3],col='black')
   segments(corcoef_list-bar_len,D2umD2l_pop_mat[,1],corcoef_list+bar_len,D2umD2l_pop_mat[,1],col='black')
@@ -414,9 +414,9 @@ Plotter_Cause4copula_stat<-function(res){
   segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,1],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,1],col='black')
   segments(D2umD2l_noise_mat[,2]-b_len,D2umD2l_pop_mat[,3],D2umD2l_noise_mat[,2]+b_len,D2umD2l_pop_mat[,3],col='black')
   
-  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2],D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2],col='grey')
-  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]+b_len,col='grey')
-  segments(D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]+b_len,col='grey')
+  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2],D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2],col='dimgrey')
+  segments(D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,1],D2umD2l_pop_mat[,2]+b_len,col='dimgrey')
+  segments(D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]-b_len,D2umD2l_noise_mat[,3],D2umD2l_pop_mat[,2]+b_len,col='dimgrey')
   
   dat<-data.frame(x1=D2umD2l_noise_mat[,2],y1=D2umD2l_pop_mat[,2])
   mylm<-lm(y1~x1,data=dat)
@@ -429,7 +429,7 @@ Plotter_Cause4copula_stat<-function(res){
   
   #op2<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
   #plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  #legend("top", c("noise","population", "p-value(paigrey t-test)"), col = c("grey", "black", "black"),
+  #legend("top", c("noise","population", "p-value(paired t-test)"), col = c("dimgrey", "black", "black"),
   #       cex = 0.8, pch = c(16, 16, 1), xpd = TRUE, horiz = T, inset = c(0,0), 
   #       bty = "n") 
   #par(op2)
@@ -437,8 +437,8 @@ Plotter_Cause4copula_stat<-function(res){
   pdf(paste0(resloc,"common_legend_cause4copula_stat.pdf",sep=""),height=1,width=15)
   op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
   plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("center", c("input noise copula","model output copula", "p-value(paigrey t-test)"), col = c("grey", "black", "black"),
-         cex = 2.5, pch = c(1, 1, 2), xpd = TRUE, horiz = T, inset = c(0,0), 
+  legend("center", c("input noise copula","model output copula", "p-value(paired t-test)"), col = c("dimgrey", "black", "black"),
+         cex = 2.5, pch = c(1, 1, 2), xpd = TRUE, horiz = T, inset = c(0,0), text.col = c("dimgrey", "black", "black"),
          bty = "n")
   par(op)
   dev.off()

@@ -197,7 +197,8 @@ methods for Q1 below, sections \ref{Background} and \ref{Methods}).
 Although copulas can be used to model the entire
 complex dependence structure of data, we have found tail associations to
 usefully describe the full structure of dependence, so tail association 
-is one of the main foci of this paper. 
+is one of the main foci of this paper. We give four examples below which
+illustrate some of the potential ecological meaning of tail associations.
 
 The goal of this paper is to explore the potential for 
 applications of copulas in ecology and to 
@@ -232,8 +233,8 @@ link to locations in the text.\label{MasterFigure}}
 \end{center}
 \end{figure}
 
-One way we may expect, *a priori*, a copula 
-study of complex dependence structures between
+One way we may expect, *a priori*, a study of tail associations and of the 
+complex copula dependence structures between
 ecological variables
 to better reflect ecological relationships relates to Liebig's law of the
 minimum. Liebig's law is 
@@ -242,7 +243,8 @@ are scarcest relative to organism needs.
 If, for instance, the growth of a plant depends on soil 
 nitrogen, N, and other factors, a plot of plant growth rates versus soil N may 
 look more like Fig. \ref{fig_cop_pedag1}A or C than like 
-Fig. \ref{fig_cop_pedag1}B or D. Nitrogen 
+Fig. \ref{fig_cop_pedag1}B or D, i.e., the two variables may show 
+left-tail association. Nitrogen 
 will control plant growth, producing a clear
 relationship, only when it is limiting, in the left portions of the distributions. 
 The portions of the distributions that dominate the association are visible in a rank-based
@@ -266,17 +268,17 @@ tends to beget spatial dependence
 in fluctuations of populations or other ecosystem variables 
 (this is called \emph{spatial synchrony}) which are influenced by the environmental 
 variable. This influence is called the \emph{Moran effect}. 
-If complex dependence structure is transmitted, 
+If asymmetric tail associations, or other complex dependence structure, is transmitted, 
 possibly in modified form, 
 from environmental to ecological variables, then we may expect complex dependence 
-structure to be a common feature of the 
+structure and tail associations to be a common feature of the 
 spatial synchrony of population, community, 
 biogeochemical and other environmentally influenced ecological variables.
 Synchrony is a phenomenon of substantial interest in 
 ecology [@Liebhold2004; @Sheppard2016; @walteretal2017].  
 
 A third reason why we may expect an understanding of complex 
-dependence structures to benefit 
+dependence structures and tail associations to benefit 
 ecological research is that such an approach may help illuminate 
 the causal mechanisms between variables. For instance, if two species
 Sp1 and Sp2 are strong competitors, abundances of the two species
@@ -293,14 +295,15 @@ is the dominant competitor. Other causal hypotheses may produce
 similar dependence structure, and it is usually impossible to obtain
 complete information on causal pathways from analyses which are
 fundamentally based on associations. However, more detailed 
-examination of the patterns of dependence of variables may
+examination of the tail associations and potentially other 
+patterns of dependence of variables may
 well be combined with biological and other reasoning to rule out
 some causal hypotheses which could not be eliminated solely 
 with standard correlation approaches. @Popovic2018 has previously
 used copulas to help illuminate causal aspects of relationships
 between species. 
 
-A fourth reason why we may expect a copula understanding of complex 
+A fourth reason why we may expect an understanding of tail associations and of complex 
 dependence structures to be useful
 for ecology has to do with spatially aggregated or averaged quantities. 
 Many ecological variables of applied importance 
@@ -308,7 +311,8 @@ depend on the spatial average or sum of local
 quantities. For instance, regional methane and CO$_2$ 
 fluxes are the sum of local fluxes; 
 and the total economic value of a fishery is the sum of local catches. 
-We will explore how details, which can be captured using copulas, 
+We will explore how details, which can be captured using copulas and which
+relate to tail associations, 
 of the dependence between fluctuations of local
 quantities can influence fluctuations of 
 the spatial mean or sum, and how this may influence 
@@ -514,7 +518,6 @@ The Clayton copula family,
 of which we have already pictured an example (Fig.
 \ref{PedagogFigCopThry}B), is another one-parameter family. In contrast to normal copulas, Clayton copulas
 have stronger left- than right-tail association. The formula is 
-<!--***DAN: is it clear implicitly from what came before that this is the cdf or what?-->
 $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though this again provides 
 less direct intuition than do example pdfs (Fig. \ref{figped_C}). Higher values of the parameter,
 $p$ produce copulas from the Clayton family with higher Kendall or Spearman correlation. The survival

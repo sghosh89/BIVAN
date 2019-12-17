@@ -1105,7 +1105,8 @@ lower- and upper-tail statistics for the fitted distributions (Table \ref{tab_so
 `r BivMS_res_Loecke$InfCritRes$copname[which.min(BivMS_res_Loecke$InfCritRes$AIC)]` was the 
 minimum-AIC copula, with AIC `r round(min(BivMS_res_Loecke$InfCritRes$AIC),2)`, whereas the 
 normal copula had a much higher AIC, `r round(BivMS_res_Loecke$InfCritRes$AIC[1],2)`, answering the 
-first part of Q1 for these data. Recall that AIC differences of $2$
+first part of Q1 for these data: these data have a dependence structure markedly distinct 
+from that of a normal copula. Recall that AIC differences of $2$
 or $3$ are considered meaningful and differences of $8$ or greater
 are considered definitive, so that data provide essentially no support
 for the higher-AIC model in that case [@burnham2003_modelselection].

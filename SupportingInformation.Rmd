@@ -4413,32 +4413,32 @@ op<-par(mfrow=c(1,4),mar=c(8,8,2,1),mgp=c(4,1,0))
 plot(kend.points.res[[1]][,1,],kend.points.res[[1]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(kend.points.res[[1]][,1,1],kend.points.res[[1]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(kend.points.res[[1]][,1,2],kend.points.res[[1]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(kend.points.res[[1]][,1,1],kend.points.res[[1]][,2,1],type='p',pch=19,cex=2,col='black')
+points(kend.points.res[[1]][,1,2],kend.points.res[[1]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Clayton"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 ##plot TL for normal copula
 plot(kend.points.res[[2]][,1,],kend.points.res[[2]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(kend.points.res[[2]][,1,1],kend.points.res[[2]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(kend.points.res[[2]][,1,2],kend.points.res[[2]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(kend.points.res[[2]][,1,1],kend.points.res[[2]][,2,1],type='p',pch=19,cex=2,col='black')
+points(kend.points.res[[2]][,1,2],kend.points.res[[2]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Normal"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for frank
 plot(kend.points.res[[3]][,1,],kend.points.res[[3]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(kend.points.res[[3]][,1,1],kend.points.res[[3]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(kend.points.res[[3]][,1,2],kend.points.res[[3]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(kend.points.res[[3]][,1,1],kend.points.res[[3]][,2,1],type='p',pch=19,cex=2,col='black')
+points(kend.points.res[[3]][,1,2],kend.points.res[[3]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for survival clayton
 plot(kend.points.res[[4]][,1,],kend.points.res[[4]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(kend.points.res[[4]][,1,1],kend.points.res[[4]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(kend.points.res[[4]][,1,2],kend.points.res[[4]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(kend.points.res[[4]][,1,1],kend.points.res[[4]][,2,1],type='p',pch=19,cex=2,col='black')
+points(kend.points.res[[4]][,1,2],kend.points.res[[4]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Survival Clayton"),side=3, line=-2, adj=0.1, col="black",cex=2)
 
 par(op)
@@ -4518,32 +4518,32 @@ op<-par(mfrow=c(1,4),mar=c(8,8,2,1),mgp=c(4,1,0))
 plot(spea.points.res[[1]][,1,],spea.points.res[[1]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(spea.points.res[[1]][,1,1],spea.points.res[[1]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(spea.points.res[[1]][,1,2],spea.points.res[[1]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(spea.points.res[[1]][,1,1],spea.points.res[[1]][,2,1],type='p',pch=19,cex=2,col='black')
+points(spea.points.res[[1]][,1,2],spea.points.res[[1]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Clayton"),side = 3, line=-2.5, adj=0.1, col="black",cex=2)
 
 ##plot TL for normal copula
 plot(spea.points.res[[2]][,1,],spea.points.res[[2]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(spea.points.res[[2]][,1,1],spea.points.res[[2]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(spea.points.res[[2]][,1,2],spea.points.res[[2]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(spea.points.res[[2]][,1,1],spea.points.res[[2]][,2,1],type='p',pch=19,cex=2,col='black')
+points(spea.points.res[[2]][,1,2],spea.points.res[[2]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Normal"),side = 3, line=-2.5, adj=0.1, col="black",cex=2)
 
 #plot TL for frank
 plot(spea.points.res[[3]][,1,],spea.points.res[[3]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(spea.points.res[[3]][,1,1],spea.points.res[[3]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(spea.points.res[[3]][,1,2],spea.points.res[[3]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(spea.points.res[[3]][,1,1],spea.points.res[[3]][,2,1],type='p',pch=19,cex=2,col='black')
+points(spea.points.res[[3]][,1,2],spea.points.res[[3]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Frank"),side = 3, line=-2, adj=0.1, col="black",cex=2)
 
 #plot TL for survival clayton
 plot(spea.points.res[[4]][,1,],spea.points.res[[4]][,2,],type='p',pch=19,cex=.75,xlim=xlimits,ylim=ylimits,
      xlab=expression(log[10]("spatial mean")),ylab=expression(log[10]("spatial variance")),
      cex.axis=2,cex.lab=3,col="grey")  
-points(spea.points.res[[4]][,1,1],spea.points.res[[4]][,2,1],type='p',pch=19,cex=.75,col='black')
-points(spea.points.res[[4]][,1,2],spea.points.res[[4]][,2,2],type='p',pch=1,cex=.75,col='black')
+points(spea.points.res[[4]][,1,1],spea.points.res[[4]][,2,1],type='p',pch=19,cex=2,col='black')
+points(spea.points.res[[4]][,1,2],spea.points.res[[4]][,2,2],type='p',pch=1,cex=2,col='black')
 mtext(paste("Survival Clayton"),side=3, line=-2.5, adj=0.1, col="black",cex=2)
 
 par(op)

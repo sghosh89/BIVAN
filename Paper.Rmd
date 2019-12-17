@@ -2155,7 +2155,7 @@ log(spatial mean) relationships for $1000$ simulations over $50$ time steps for 
 using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
 locations. Results from all $1000$ 
 simulations were plotted on the same axes for each panel, but two example simulations are 
-shown in solid and void black dots to help assess to what extent variation on the plots was between 
+shown in solid and void black circles to help assess to what extent variation on the plots was between 
 simulations or within simulations. For each simulation, we tested the linearity 
 (E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
 and quantified the root mean squared error of points from the linear regression line (G).

@@ -1101,7 +1101,7 @@ lower- and upper-tail statistics for the fitted distributions (Table \ref{tab_so
 `r BivMS_res_Loecke$InfCritRes$copname[which.min(BivMS_res_Loecke$InfCritRes$AIC)]` was the 
 minimum-AIC copula, with AIC `r round(min(BivMS_res_Loecke$InfCritRes$AIC),2)`, whereas the 
 normal copula had a much higher AIC, `r round(BivMS_res_Loecke$InfCritRes$AIC[1],2)`, answering the 
-first part of Q1 for these data: these data have a dependence structure markedly distinct 
+first part of Q1 for these data: the data have a dependence structure markedly distinct 
 from that of a normal copula. Recall that AIC differences of $2$
 or $3$ are considered meaningful and differences of $8$ or greater
 are considered definitive, so that data provide essentially no support
@@ -1109,14 +1109,19 @@ for the higher-AIC model in that case [@burnham2003_modelselection].
 Model-averaged lower- and upper-tail dependence statistics were `r round(BivMS_res_Loecke$relLTdep_AICw,3)` 
 and `r round(BivMS_res_Loecke$relUTdep_AICw,3)`, respectively (AIC weights were used for averaging). 
 These values are distinct from what a normal copula would give, namely, 0, helping to answer 
-the second part 
+the second part of
 Q1 for these data. The values also differed substantially 
 from each other, helping answer the third part of Q1. 
 The numbers reflect stronger upper- than lower-tail
 dependence, and this is also visible in the extreme upper-right
 and lower-left corners of the copula plot (Fig. \ref{fig_biv_multi_raw_cop}E).
+Apparently C and N are more strongly associated with each other in soils
+for which they are both plentiful than in soils for which they are 
+both less abundant, and C and N are more strongly associated in both
+tails than would be modelled using a normal copula model or methods that
+assume such a model.
 
-Our model selection procedures do not reveal whether tail dependence parameters are 
+However, our model selection procedures do not reveal whether tail dependence parameters are 
 *significantly* different from $0$ and from each other. 
 Furthermore, we caution that, while our model selection results do convincingly show 
 non-normal copula structure, model-averaged tail-dependence statistics may have been biased 
@@ -1134,12 +1139,12 @@ C and N data
 were compared to distributions of their values on 1000 Kendall- or Spearman-preserving normal surrogates
 of the data,
 separately in two comparisons for each of the ranges $(l_b,u_b)=(0,0.1),\ldots,(0.9,1)$ 
-(Fig. \ref{fig_soilCN_nonparam}). Results showed that tail associations of data are stronger in 
+(Fig. \ref{fig_soilCN_nonparam}). Results confirmed that tail associations of data are stronger in 
 both the lower and upper tails than would be expected under a null hypothesis of a normal copula (Fig. \ref{fig_soilCN_nonparam}B-F).
 The values of the statistics $\cor_{0,0.1}-\cor_{0.9,1}$, $\Ps_{0,0.1}-\Ps_{0.9,1}$ and
 $\Dsq_{0.9,1}-\Dsq_{0,0.1}$ for the soil C and N data were also compared to distributions of their values
 on surrogates, separately in two 
-comparisons (Table \ref{tab_soilCN_asym}). Results showed that
+comparisons (Table \ref{tab_soilCN_asym}). Results confirmed that
 upper-tail association was significantly stronger than lower-tail association; i.e., C and N values are
 more related when high than when low. These results
 are consistent with the model selection results, but go beyond them by providing information
@@ -1174,8 +1179,10 @@ Fig. \ref{fig_soilCN_nonparam} for the bivariate datasets other than the soil C 
 data, see Tables \ref{SM-tab_bmr_birds_fit}-\ref{SM-tab_cc2000fit} for analogues to Table \ref{tab_soilCNfit},
 and see Table \ref{SM-tab_3biv_npa_summary} for analogues to Table \ref{tab_soilCN_asym}.
 The first three datasets had stronger upper- 
-than lower-tail dependence, and the last dataset had the reverse, though non-significantly. Our 
-generally affirmative (except for Cedar Creek), 
+than lower-tail dependence, and the last dataset had the reverse, though non-significantly. 
+Apparently species body masses and metabolic rates, for both birds and mammals, are more strongly 
+associated with each other when both these quantities are large than when they are 
+both small. Our generally affirmative (except for Cedar Creek), 
 empirically based answer to Q1 for the bivariate datasets is 
 represented in Fig. \ref{MasterFigure} as solid outlines around the names of 
 the soil C and N and bird and mammal body mass versus metabolic rate
@@ -1270,7 +1277,12 @@ row 4). Best-fitting copulas were nearly always considered an adequate fit
 abundance, \textit{Ceratium furca} abundance, methane-flux) showed stronger 
 lower- than upper-tail dependence 
 (Table \ref{tab_multivar_summary}, rows 6-8), whereas leaf-curling plum aphid first flight
-data showed the reverse. All of the values in Table \ref{tab_multivar_summary}, rows 8 deviated highly significantly
+data showed the reverse. 
+Thus the spatial synchrony of rarity was stronger than that of outbreaks for 
+green spruce aphid and \textit{Ceratium furca} abundance, whereas leaf-curling aphid
+first flights were more spatially related to each other when these flights happened
+late than when they happened early.
+All of the values in Table \ref{tab_multivar_summary}, rows 8 deviated highly significantly
 from what would have been expected under a null hypothesis 
 of equal chances for positive and negative values. 
 
@@ -1615,7 +1627,10 @@ Results using our statistic $\cor_{0,0.1}-\cor_{0.9,1}$
 strongly reflected the visually apparent asymmetry (Table \ref{tab_stat_npa_asym}). 
 Thus asymmetry of environmental effects is a mechanism that may be partly 
 responsible for non-normal copula structure and
-asymmetric tail associations across space in ecological variables.
+asymmetric tail associations across space in ecological variables:
+when populations or other ecological quantities are influenced principally by
+low (respectively, high) values of an environmental variable, one may expect 
+left-tail (respectively, right-tail) associations across space for the ecological variable. 
 This result is represented in Fig. \ref{MasterFigure} as the solid box around 
 "Nonlinear environmental effects, Liebig's law" and the arrows labelled "A".
 It is explained in the Discussion why the box and some of the arrows 
@@ -1679,7 +1694,8 @@ and refers to the bounds 0 to 0.1; `LS' stands for `last slice' and refers to th
 The hypothesis that characteristics of 
 the copula structure of spatial dependence 
 in an ecological variable can be inherited from an environmental 
-variable was found to be reasonable, because it held for the models we examined; 
+variable was found to be reasonable, because it held for the models we examined -
+the Moran effect seems to extend to copula structure and tail associations - 
 however, similarities between environmental- and 
 ecological-variable copula structure were reduced when 
 dynamics were strongly nonlinear.
@@ -1700,7 +1716,7 @@ Though there were again significant differences for many statistics
 and simulations, these were again small relative to overall variation of 
 values of the statistics.
 Since many ecological models are nonlinear, this result provides the 
-reasonable expectation that there may be a Moran-effect-like correspondence 
+reasonable expectation for a Moran-effect-like correspondence 
 between noise and model-output dependence structure across space 
 for typical ecological dynamics,
 as long as environmental noise is small enough that dynamics stay relatively close
@@ -2054,7 +2070,8 @@ average showed a non-significant or marginally significant tendency
 toward being less than surrogate skewnesses (Fig. \ref{fig_skewness_spearman}C,D). 
 Thus copula 
 structure and asymmetric tail associations are important for spatially averaged 
-quantities. This result is represented in Fig. \ref{MasterFigure}
+quantities and can influence the temporal stability of those quantities. 
+This result is represented in Fig. \ref{MasterFigure}
 as the solid box around "Instability/skewness of mean or total 
 time series" and the solid arrows labeled "X". 
 

@@ -417,11 +417,11 @@ tail dependence and other measures of association in the tails.\label{fig_cop_pe
 
 # Proofs of statements related to Sklar's theorem in the case of continuous, strictly monotonic margins \label{ContStrictMonoton}
 
-Let $F$ be the bivariate distribution function
+Let $F$ be the cdf
 of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$ assumed to be 
 continuous and strictly monotonic. We show the copula associated with
 $(X,Y)$, which exists and is unique by Sklar's theorem, is, in fact, 
-the distribution function
+the bivariate cdf
 of the random variable $(U,V)=(F_X(X),F_Y(Y))$. Let $C$ denote the distribution
 function of $(U,V)$, which has uniform margins. By the uniqueness
 statement of Sklar's theorem, it suffices to show that $F(x,y)=C(F_X(x),F_Y(y))$
@@ -434,22 +434,22 @@ where the third equality follows from the strict monotonicity assumption. In fac
 that equality should hold even with non-strict monotonicity, so a stronger 
 statement is possible (see below for more on this topic). The continuity assumption 
 for $F_X$ and $F_Y$ is necessary, however: without it the random variables 
-$U$ and $V$ are not uniformly distributed, so their joint distribution function 
+$U$ and $V$ are not uniformly distributed, so their joint cdf 
 is not even a copula.
 
 Now let $D$ be any bivariate copula and let 
-$G_A$ and $G_B$ be univariate distribution functions, so that 
-$D(G_A(x),G_B(y))$ is guaranteed by Sklar's theorem to be a distribution function.
+$G_A$ and $G_B$ be univariate cdfs, so that 
+$D(G_A(x),G_B(y))$ is guaranteed by Sklar's theorem to be a cdf.
 We here show that if $G_A$ and $G_B$ are continuous and strictly monotonic, then
-$D(G_A(x),G_B(y))$ is the distribution function of the random variable 
+$D(G_A(x),G_B(y))$ is the cdf of the random variable 
 $(G_A^{-1}(U),G_B^{-1}(V))$, where $(U,V)$ now denotes the random
 vector with uniform marginals associated with $D$ and
 $G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$.
 The inverses exist because of the strict monotonicity assumption.
-To get to the desired result, note that the distribution function of 
+To get to the desired result, note that the cdf of 
 $(G_A^{-1}(U),G_B^{-1}(V))$ is $P[G_A^{-1}(U) \leq x, G_B^{-1}(V) \leq y]$,
 which equals $P[U \leq G_A(x), V \leq G_B(y)]$, by strict monotonicity.
-But this is $D(G_A(x),G_B(y))$ because $D$ is the distribution function of 
+But this is $D(G_A(x),G_B(y))$ because $D$ is the cdf of 
 $(U,V)$. In fact, a stronger statement assuming
 neither continuity nor strict monotonicity is possible, if one uses generalized
 inverses for $G_A^{-1}$ and $G_B^{-1}$ [@MaiScherer2017]. We adopt the weaker

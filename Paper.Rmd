@@ -161,8 +161,8 @@ $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
 of the smallest element in a set is $1$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
 the empirical cumulative distribution function of the $x_i$ and $y_i$,
-respectively. We henceforth abbreviate "cumulative distribution function" as "distribution
-function" or "cdf". See, for instance,
+respectively. We henceforth abbreviate "cumulative distribution function" as "cdf". 
+See, for instance,
 Fig. \ref{fig_cop_pedag1}C-D, which show the normalized ranks of 
 A-B, respectively. Ranking makes the marginal distributions of 
 the component datasets uniform, isolating the 
@@ -377,35 +377,35 @@ See @nelsen2006_copula, @Genest2007, @joe2014_dependence, and
 @MaiScherer2017 for general background on copulas, 
 and see also @Anderson2018, part of 
 which is a short introduction to 
-copulas for ecologists. A bivariate *copula* can be defined as a bivariate distribution
-function with both margins uniform on $(0,1)$ (@joe2014_dependence, p. 7). 
-This will be the
-distribution function of a bivariate random variable with uniform marginals, and 
+copulas for ecologists. A bivariate *copula* can be defined as a bivariate cdf 
+with both margins uniform on $(0,1)$ (@joe2014_dependence, p. 7). 
+This will be the 
+cdf of a bivariate random variable with uniform marginals, and 
 the terminology *copula* is sometimes also applied to this random vector. 
 A foundational theorem of
 @sklar1959_theorem (see also @MaiScherer2017, p. 16) 
-says that if $F$ is the bivariate distribution function
+says that if $F$ is the cdf
 of a random vector $(X,Y)$, with margins $F_X$ and $F_Y$, then there 
 exists a copula $C$
 such that for all $(x,y)$ in the Euclidean plane, $F(x,y)=C(F_X(x),F_Y(y))$.
 The theorem also says $C$ is unique if $F_X$ and $F_Y$ are continuous.
-Thus $C$ couples the bivariate distribution function, $F$, with the 
-distribution functions of the marginals. 
+Thus $C$ couples the bivariate cdf, $F$, with the 
+cdfs of the marginals. 
 Finally, Sklar's theorem says that if $D$ is any bivariate copula and 
-$G_A$ and $G_B$ are univariate distribution functions, then 
-$D(G_A(x),G_B(y))$ is a valid distribution function 
+$G_A$ and $G_B$ are univariate cdfs, then 
+$D(G_A(x),G_B(y))$ is a valid cdf 
 of some bivariate random variable.
 The applications of this study fall within the case in which univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions, and this case is simpler. So we 
+monotonic cdfs, and this case is simpler. So we 
 henceforth make such an assumption. 
 
 Sklar's theorem implies that
 any random vector can be constructed from a unique copula and marginal 
-distribution functions, and, furthermore,
-any copula and any univariate distribution functions give rise to a random vector;
+cdfs, and, furthermore,
+any copula and any univariate cdfs give rise to a random vector;
 so Sklar's theorem provides a correspondence between random vectors
-and pairs consisting of a copula and two univariate distribution functions,
+and pairs consisting of a copula and two univariate cdfs,
 thereby making it possible to study a random vector by studying these two
 constituents.
 Marginals contain no information about the
@@ -413,7 +413,7 @@ dependence structure of a random vector, so the copula contains
 all such information - it is a complete description of the dependence
 between variables.
 <!--***-->
-The univariate distribution functions associated with a random vector 
+The univariate cdfs associated with a random vector 
 $(X,Y)$ are its margins, $F_X$ and $F_Y$, and the 
 associated copula is the copula, $C$, guaranteed by Sklar's theorem
 (and guaranteed unique, thanks to the assumptions of continuity 
@@ -423,28 +423,26 @@ that $C$ is the bivariate distribution
 function of the random variable $(F_X(X),F_Y(Y))$. 
 <!--***-->
 Conversely, given a copula
-$D$ and univariate distribution functions $G_A$ and $G_B$,
+$D$ and univariate cdfs $G_A$ and $G_B$,
 Sklar's theorem guarantees that $D(G_A(x),G_B(y))$ is a 
-distribution function, so the random variable with this 
-distribution function is the random variable corresponding
+cdf, so the random variable with this 
+cdf is the random variable corresponding
 to $D$, $G_A$ and $G_B$ under Sklar's correspondence. 
 Again making Sklar's correspondence
 more concrete, we show in Appendix \ref{SM-ContStrictMonoton}
 that this random variable is $(G_A^{-1}(U),G_B^{-1}(V))$, 
 where $G_A^{-1}$ and $G_B^{-1}$ are the inverses of $G_A$ and $G_B$
-and $(U,V)$ is the random variable with distribution function $D$
+and $(U,V)$ is the random variable with cdf $D$
 (which has uniform marginals).
-<!--***-->
 If we conflate a copula with the random vector of 
-which the copula is the distribution function, then Sklar's correspondence
+which the copula is the cdf, then Sklar's correspondence
 is between random variables, $(U,V)$, with uniform marginals 
 and random variables, $(X,Y)$, with arbitrary continuous, strictly monotonic
 marginals. The correspondence is simply via the application of the
-univariate distribution functions, or their inverses: $U=F_X(X)$,
+univariate cdfs, or their inverses: $U=F_X(X)$,
 $V=F_Y(Y)$, $X=F^{-1}_X(U)$, $Y=F^{-1}_Y(V)$.
-<!--***-->
 Application of the 
-distribution functions of the component random variables translates
+cdfs of the component random variables translates
 between the uniform-marginal context, $(U,V)$, which isolates the 
 dependence information, and the context of the original random variable,
 $(X,Y)$.
@@ -505,9 +503,11 @@ between the variables. A normal copula with $p=0.7$ was already introduced (Fig.
 \ref{PedagogFigCopThry}A). The formula for the
 copula is $\Phi_{2,p}(\Phi_{1}^{-1}(u),\Phi_{1}^{-1}(v))$, where $\Phi_1^{-1}$ is the inverse of the
 cummulative dstribution function (cdf) of a (univariate) standard 
-normal and $\Phi_{2,p}$ is the joint cdf of a
+normal and $\Phi_{2,p}$ is the cdf of a
 bivariate normal distribution with mean $(0,0)$ and covariance matrix having $1$s on the diagonal
-and $p$ in the off diagonal positions. However, formulas for copulas are often not as 
+and $p$ in the off diagonal positions. Formulas for the normal copula and all the 
+other copula families we use were provided by @Brechmann2013. 
+However, formulas for copulas are often not as 
 directly informative about copula properties as probability density function (pdf) 
 pictures; Fig. \ref{figped_N} has 
 example pdfs corresponding to bivariate normal copulas for various values of $p$.
@@ -525,7 +525,8 @@ Clayton family is the symmetric opposite of the Clayton family, showing
 stronger right- than left tail association (Fig. \ref{SM-figped_SC}). The BB1 copula 
 family is a two-parameter family, thereby providing more flexibility: for some parameters
 BB1 copulas have stronger left- than right-tail association, and for others the reverse
-(Fig. \ref{figped_BB1}). See @nelsen2006_copula and @joe2014_dependence for further
+(Fig. \ref{figped_BB1}). See @nelsen2006_copula, @joe2014_dependence and 
+@Brechmann2013 for further
 information on these and other copula families.
 
 Having introduced tail association conceptually and referred to it
@@ -555,7 +556,7 @@ introduce nonparametric measures of tail association that apply directly to data
 
 Plots using normalized ranks were proposed in the Introduction as being conceptually
 similar to copulas. We here explain the connection. As stated above, the copula associated
-with a random variable $(X,Y)$ is the joint distribution function of the random variable
+with a random variable $(X,Y)$ is the cdf of the random variable
 $(F_X(X),F_Y(Y))$. Given a sample $(x_i,y_i)$, $i=1,\ldots,n$, from $(X,Y)$, let $\hat{F}_X$ and
 $\hat{F}_Y$ be the empirical cdfs associated with the $x_i$ and $y_i$, respectively.
 These are step functions of $x$ and $y$, respectively, that start at $0$ for low values of 
@@ -847,7 +848,7 @@ selection and multi-model inference procedure. For that purpose, it
 is not important for the reader to
 understand the details of these copulas,
 and, additonally, these copulas have been 
-described in more detail elsewhere [@Joe1997]; so 
+described in more detail elsewhere [@Joe1997; @Brechmann2013]; so 
 we only briefly identify each family, say a few words about tail dependence 
 of the families, and provide pictorial descriptions (Figs 
 \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8}). 
@@ -870,21 +871,12 @@ And we used the survival BB8 copula, which shows zero upper-tail dependence,
 and zero lower-tail dependence except for a boundary case.
 "Survival" families are rotations of the copula with the similar name by
 180 degrees. 
-See @Joe1997 for details on all these families. We used the implementations
+See @Joe1997 and @Brechmann2013 for details on all these families. We used the implementations
 of these families provided in the `VineCopula` package for the R programming
 language. See Figs \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
 pdfs and tail dependence are influenced by the parameters. See 
 Table \ref{tab_copula_info} for a summary of some properties of each family.
-<!--***DAN: Shyamolina, please make a table, and replace the X above with 
-a citation to that table. Please place the table chunk in such a way that 
-this citation becomes table 2, since prior to this point the only main text
-table that has been cited is table 1, and we want the table citations to 
-come in order. The columns of the table should include: 1) copula family name,
-2) number of parameters for the family; 3) info on tail dependence that is
-in the above para; 4) a reference to the figure (in the main text or sup mat)
-where there is a picture of this family. Anything else? There should be a 
-row for each of our 16 copula families.-->
 
 <!--***DAN: Info on families kept here for convenience, see also the file
 CopulaFamilyParamRangesAndTailDependence.jpg, stored in the BIVAN folder:
@@ -2156,7 +2148,7 @@ log(spatial mean) relationships for $1000$ simulations over $50$ time steps for 
 using Clayton (A), normal (B), Frank (C), and survival Clayton (D) copula structures between
 locations. Results from all $1000$ 
 simulations were plotted on the same axes for each panel, but two example simulations are 
-shown in solid and void black circles to help assess to what extent variation on the plots was between 
+shown in solid and hollow black circles to help assess to what extent variation on the plots was between 
 simulations or within simulations. For each simulation, we tested the linearity 
 (E) and homoskedasticity (F) of the log(variance) vs. log(mean) plot for that simulation, 
 and quantified the root mean squared error of points from the linear regression line (G).
@@ -2554,6 +2546,21 @@ $u_i+v_i<2u_b$. This would result in a different approach to
 tail associations that would conflate dependence and marginal information but 
 that may also have its own utility for some applications.
 
+<!--referee-requested para comparing to regression with heteroskedastic error term-->
+Non-copula methods may be useful under some circumstances for exploring
+asymmetries of tail association, but copula approaches have theoretical
+and practical advantages. It was suggested to us that asymmetries of
+tail association can also be explored using, for instance, a regression 
+model with heteroskedastic error term, $y=mx+b+\epsilon(x)$. Whereas this 
+approach seems capable of yielding insight for some datasets, it implicitly assumes
+a particular causal relationship between the variable, an untenable assumption for our
+synchrony applications and many other applications. Furthermore, no equivalent
+of Sklar's theorem exists under this approach, so information on marginal 
+distributions cannot be separated from association information. Sklar's theorem
+means that the copula associated with two variables contains all the information
+about the association. Such statements of 
+mathematical completeness will not be avilable for others methods.
+
 <!--para on data requirements of the methods, requested by the AER referees-->
 Data requirements for copula methods will vary depending on multiple factors,
 but our results show that data requirements are not beyond what is common 
@@ -2585,7 +2592,7 @@ of the values of its constituent assets. Ecologists may likewise be interested i
 managing the risk that an ecosystem functioning variable will take an extreme value. 
 As another example, we assumed for this paper that univariate marginal 
 distributions have continuous, strictly 
-monotonic distribution functions. This was for simplicity and because the simpler
+monotonic cdfs. This was for simplicity and because the simpler
 approach was sufficient for our research questions. But count data in ecology have been analyzed
 with approaches not making this assumption [@Anderson2018].
 

@@ -210,7 +210,11 @@ and comprehensive [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]
 introductions elsewhere. Copulas have already been used very effectively 
 in a few studies to illuminate ecological phenomena 
 [@Valpine2014; @Anderson2018; @Popovic2018], but such usage is
-still rare. Our results suggest that environmental, 
+still rare. Whereas @Anderson2018 provide a specific methodological pathway, based partly 
+on copulas, for the important problem of the 
+analysis of multivariate ecological population count data;
+we instead advocate more broadly for the application of copulas across ecology.
+Our results suggest that environmental, 
 ecological and evolutionary processes 
 may commonly generate and transmit complex dependence structures, including asymmetric tail 
 associations, and that greater use of copulas can illuminate the underlying processes.
@@ -2550,16 +2554,17 @@ that may also have its own utility for some applications.
 Non-copula methods may be useful under some circumstances for exploring
 asymmetries of tail association, but copula approaches have theoretical
 and practical advantages. It was suggested to us that asymmetries of
-tail association can also be explored using, for instance, a regression 
+tail association can also be explored using a regression 
 model with heteroskedastic error term, $y=mx+b+\epsilon(x)$. Whereas this 
 approach seems capable of yielding insight for some datasets, it implicitly assumes
-a particular causal relationship between the variable, an untenable assumption for our
-synchrony applications and many other applications. Furthermore, no equivalent
+a particular causal relationship between $x$ and $y$, an untenable assumption for 
+many applications. Furthermore, no equivalent
 of Sklar's theorem exists under this approach, so information on marginal 
-distributions cannot be separated from association information. Sklar's theorem
-means that the copula associated with two variables contains all the information
+distributions cannot be separated from association information, and the two types
+of information will both influence regression results. Sklar's theorem
+means that the copula associated with two variables contains all and only the information
 about the association. Such statements of 
-mathematical completeness will not be avilable for others methods.
+mathematical completeness will not be avilable for other methods.
 
 <!--para on data requirements of the methods, requested by the AER referees-->
 Data requirements for copula methods will vary depending on multiple factors,
@@ -2598,7 +2603,7 @@ with approaches not making this assumption [@Anderson2018].
 
 # Acknowledgments
 
-We thank Joel E. Cohen for making us aware of copulas and their potential ecological utility in the 
+We thank Joel E. Cohen for making us aware of copulas in the 
 first place. We thank the many contributors to the large datasets 
 we used; D. Stevens and P. Verrier for data 
 extraction; and David Tilman, Lauren Hallet, Jonathan Walter, Thomas 
@@ -2606,7 +2611,9 @@ Anderson, Lei Zhao, Andrew Rypel, and editors and annonymous reviewers for helpf
 We thank James Bell of the Rothamsted Insect Survey (RIS). 
 The RIS, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council 
 under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National 
-Science Foundation grants 1714195 and 1442595 and the James S McDonnell Foundation. 
+Science Foundation grants 1714195 and 1442595, the James S McDonnell Foundation, and the 
+California Delta Science Program.
+. 
 
 \clearpage
 \newpage

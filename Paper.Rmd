@@ -1694,18 +1694,18 @@ are common in ecology.
 For strong noise and using our nonlinear model, 
 our correlation and tail-association-asymmetry statistics, generally 
 speaking, were approximately similar between noise and model
-outputs; however, similarity was reduced relative to previous results, 
+outputs; however, similarity was reduced, 
 and for a few simulations, asymmetry statistics
 had opposite signs for noise and model outputs 
 (Figs \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1} and \ref{SM-fig_Cause4copula_SC_kend_sRicker_nsd_1}). For instance, 
-using a Clayton  copula with a large Kendall $\tau$,
+using a Clayton copula with a large Kendall $\tau$,
 $\cor_l - \cor_u$ was slightly positive for noise, but slightly negative for 
-population model outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}).
+population outputs (Fig. \ref{SM-fig_Cause4copula_C_kend_sRicker_nsd_1}).
 
 We repeated our analyses using the nonlinear model with $r=1.3$. The deterministic 
 one-habitat-patch Ricker model exhibits a monotonic approach to a stable equilibrium
 at $K$ when $r<1$ (undercompensating dynamics, e.g., the value $r=0.5$ used initially), 
-but exhibits an oscillatory approach to $K$ when $r>1$ (overcompensating
+but exhibits an oscillatory approach when $r>1$ (overcompensating
 dynamics, e.g., $r=1.3$). For weak noise, similarities were again dominant between
 values of our statistics on noise and population time series. 
 For strong noise, however, discrepancies were often glaring. Apparently 
@@ -1800,7 +1800,7 @@ produced a histogram for each statistic and for each
 dependence structure (Fig. \ref{fig_cop_evo}). Results showed that 
 asymmetries of tail associations in evolutionary changes
 were associated with similar asymmetries of tail associations in extant characters.
-Thus, based on our simulations, we cannot reject the possibility that
+Thus we cannot reject the possibility that
 this is a proximate mechanism behind observed asymmetric tail associations
 in our bird and mammal data.
 This result is represented in Fig. \ref{MasterFigure} as the dashed box around 
@@ -1830,10 +1830,8 @@ Recall that Q3 is: what are the consequences of non-normal copula
 structure and asymmetric tail associations for ecological understanding and
 applications?
 We addressed Q3 by exploring, using both data and models, three hypothesized
-ecological consequences of non-normal copula structure and asymmetric tail
-associations. As for Q2, the models we used are intended as initial explorations, only,
-of whether copula structure may have a meaningful influence on important ecological
-phenomena. Therefore only simple models are used, and comprehensive explorations of the 
+consequences. As for Q2, the models we used are intended as initial explorations, only. 
+Therefore only simple models are used, and comprehensive explorations of the 
 sensitivity of results to model strucuture and parameters are left for future work.
 
 The hypothesis was presented in the Introduction that
@@ -1848,10 +1846,9 @@ interest. The $E_i(t)$ could be, for instance, local abundances of a pest or
 exploited species, or local fluxes of a greenhouse gas. If  $E_i$ and $E_j$ are 
 associated primarily in their right tails for most location pairs $i$ and $j$, then
 exceptionally large values tend to occur at the same time in most locations.
-We hypothesize that this 
-will tend to increase the skewness of the distribution 
+We hypothesize that this can increase the skewness of the distribution 
 of the spatial mean. Similarly, left-tail associations between local variables
-should tend to decrease skewness. Strong positive skewness of the 
+should decrease skewness. Strong positive skewness of the 
 spatial-mean time series corresponds to "spikiness" of that time series,
 i.e., occassional very large values, 
 which corresponds to instability through time. 
@@ -1901,12 +1898,12 @@ in the right tail. The test examines whether upper-tail associations caused the 
 average to have significantly higher skewness than 
 would have been expected with symmetric tail associations.
 
-To further address Q3, we also examined a hypothesis that 
+We also examined a hypothesis that 
 asymmetric tail associations across space of an environmental variable can influence the 
 extinction risk of a metapopulation. We hypothesized that environmental noises
-exhibiting greater left-tail associations across different habitat patches would 
+exhibiting greater left-tail associations across habitat patches would 
 cause higher metapopulation extinction risks because then very bad years for the 
-component populations would occur simultaneously in many patches,
+component populations occur simultaneously in many patches,
 reducing rescue effects. Here we assume, for simplicity, 
 that low values of the environmental
 variable are "bad" for the populations and high values are "good".
@@ -1932,7 +1929,7 @@ set to $0$. We simulated the model 10000 times for each combination of parameter
 starting from $p_0 = 50$ in each patch, 
 and calculated extinction risk after $25$ time steps.
 
-Finally, and pursuing ideas that sprang from earlier theoretical work [@Reuman2017], we 
+Finally, and pursuing ideas from @Reuman2017, we 
 tested whether the copula structure of the dependences between population variables 
 measured in different locations has consequences for the spatial version of Taylor's
 law. Taylor's law is a commonly observed and widely studied 
@@ -1972,7 +1969,8 @@ we generated $N \times n$ population matrices $m^{(\text{X},k)}$ with the follow
 $\{ m_{t,j}^{(\text{X},k)} : t=1,\ldots,N  \}$ were exactly the same, as unordered
 sets, for all X, i.e., the same actual population values were used for location $j$ 
 in simulation $k$, regardless of X;
-2) for any given $k$ and $j_1$ and $j_2$ such that $j_1 \neq j_2$, the Spearman correlations (computed through time)
+2) for any given $k$, and $j_1$ and $j_2$ such that $j_1 \neq j_2$, the 
+Spearman correlations (computed through time)
 $\cor_t(m_{t,j_1}^{(\text{X},k)},m_{t,j_2}^{(\text{X},k)})$ were the same, to within sampling
 variation, i.e., correlations through time of populations in two locations were the same,
 up to sampling variation, regardless of X;
@@ -2157,48 +2155,48 @@ and Appendices \ref{SM-Consequence_TL_simulation} and
 <!--what we did and why is it important to study?-->
 We showed that non-normal copula structure and asymmetric tail associations are 
 common across multiple sub-disciplines
-in ecology, although these facets of ecological data are only occasionally 
-taken into account [@Valpine2014; @Anderson2018; @Popovic2018]. We hypothesized 
+in ecology, although these facets of data are only occasionally 
+accounted for [@Valpine2014; @Anderson2018; @Popovic2018]. We hypothesized 
 mechanisms that may cause non-normal copula structures and asymmetric tail associations;
 we discuss below how commonly some of our
 mechanisms may operate. 
-We also hypothesized and demonstrated important consequences of 
-non-normal copula structure and asymmetric tail associations for the field of ecology. 
+We also demonstrated important consequences of 
+non-normal copula structure and asymmetric tail associations for ecology. 
 For instance, the skewness
 of a spatial-average time series is influenced by asymmetric tail associations between its 
 constituent time series: predominantly right-tail-associated local time series 
 can lead to "spiky" spatially averaged time series, with large outbreaks; and 
 predominantly left-tail-associated local time series can lead to spatially
 averaged time series showing accentuated "crashes".
-Thus tail associations could have implications for pest and exploited species.
+Thus tail associations could have implications for pests and exploited species.
 Extinction risk and Taylor's law can also be altered by tail association 
 patterns across space. 
 In our view, our results make it reasonable to suggest 
 that a more comprehensive understanding 
 of many ecological phenomena may be possible if a
 complete copula characterization of associations between variables is employed. 
-Copula approaches are
-well developed, statistically [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], 
+Copula statistics are
+well developed [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], 
 and have been introduced in accessible formats [@Anderson2018; @Genest2007]. Furthermore, 
 open-source computer implementations exist (e.g., the `copula` and 
-`VineCopula` packages in the R programming language). Ecologists can apply these tools
+`VineCopula` packages in R). Ecologists can apply these tools
 immediately. We created several interrelated randomization procedures
 (Appendices \ref{SM-surrog_test}, \ref{SM-Surrog_multi}, \ref{SM-sect:copsurrognd}) 
-that have built upon existing copula methods. 
+that built upon existing copula methods. 
 
 <!--tropical ecosystems-->
-The approaches we have demonstrated should apply equally well to 
+The approaches we demonstrated should apply equally well to 
 data from tropical or temperate ecosystems.
 There is no reason to expect that non-normal copula structure and 
 asymmetric tail associations should be special properties of datasets from temperate 
-regions. The mechanisms we have proposed of non-normal copula structure and asymmetric tail 
+regions. The mechanisms we proposed of non-normal copula structure and asymmetric tail 
 associations seem equally likely to apply anywhere. 
 For instance, the Moran effect, which underpins 
 one of our proposed mechanisms (Fig. \ref{MasterFigure}, B), is a standard mechanism
 that occurs whenever environmental variables influence populations. And Liebig's
 law and nonlinear environmental influences on ecosystems, which underpin 
-another one of our proposed mechanisms (Fig. \ref{MasterFigure}, A), are widely
-demonstrated phenomena that apply in all biomes. 
+another one of our mechanisms (Fig. \ref{MasterFigure}, A), are widely
+demonstrated phenomena. 
 
 <!--Stuff about the mechanisms-->
 
@@ -2213,11 +2211,11 @@ variables on ecological quantities.
 Second, fluctuations in environmental variables through time
 are very commonly correlated across space. 
 Because these factors, which are the essential ingredients of
-the mechanism, are so common, it is reasonable to hypothesize that the mechanism
-may operate commonly. It may be a dominant cause of 
+the mechanism, are common, it is reasonable to hypothesize that the mechanism
+may operate commonly and may be a dominant cause of 
 asymmetric tail associations and non-normal copula struture of ecological 
 dependencies across space.
-We provide some further support for the mechanism 
+We provide further support for the mechanism 
 in our discussion of green spruce aphids and
 winter temperature below.
 
@@ -2240,8 +2238,8 @@ were candidates for modelling dependence, and
 neither of these is a normal copula.
 A long-term study (1950–2014) in the Loess Plateau of China [@She2018]
 showed that a Gumbel copula effectively modeled 
-the spatial dependence of drought variables. The Gumbel copula demonstrates 
-asymmetric tail associations.
+the spatial dependence of drought variables. The Gumbel copula has 
+asymmetric tail association.
 Bivariate copula analysis was also used in forecasting the 
 co-occurrence of extreme events (flood or drought) 
 over the North Sikkim Himalayas using spatial datasets [@Goswami2018]. 
@@ -2320,7 +2318,7 @@ We note that our phylogenetic analyses here consisted merely of simulations to a
 Substantial work remains to be done before we have a copula-based method for 
     analyzing data on a phylogenetic tree. 
 But the nonparametric nature of approaches
-    based solely on data ranks, as many of our copula methods are, may be a promising avenue for 
+    based solely on data ranks, as many of our methods are, may be a promising avenue for 
     avoiding inaccuracies that arise via the highly structured model assumptions implicit
     in the method of phylogenetically independent contrasts and related methods.
 
@@ -2354,10 +2352,10 @@ described a three-way trade-off in fishes between age of reproductive
 maturity, juvenile survivorship, and fecundity. The trade-off should, in theory,
 produce a tight association between age of maturity and fecundity for 
 fishes with low age of maturity, but little such association for later-maturing
-fishes because those fishes may invest the resources not invested in maturing quickly into
+fishes because those species may invest the resources not invested in maturing quickly into
 either fecundity or juvenile survival.
 These ideas suggest that copulas may be 
-useful for studying multi-dimensional trade-offs. But applications will 
+useful for studying multi-dimensional life-history trade-offs. But applications will 
 require careful attention to the possible consequences of biased sampling:
 if the degree of completeness of a dataset is associated with one or
 more of the characters, then statistical artefacts
@@ -2370,17 +2368,17 @@ But statistical theory on multi-dimensional copulas is also well developed
 [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017], 
 and open-source computer implementations exist for multivariate as well as 
 bivariate copula methods (e.g., the `VineCopula`
-package for the R programming language). Such approaches may be a 
-useful next step in life-history theory and other areas. 
+package for R). Such approaches may be a 
+useful next step in life-history theory. 
 
 <!-- We have only given a few mechanisms, but there are likely to be others, and discoverig
 additional mechanisms of copula structure is certainly worthy of future work. -->
 Additional mechanisms of non-normal copula structure and asymmetric tail associations
-probably also operate, and should be considered. For instance, 
+probably also operate. For instance, 
 measurement error may modify copula structure. 
 Our models investigating potential causes of copula structure 
 were intentionally simple in other respects, 
-too, and did not include factors such as
+too, not including factors such as
 delayed density dependence, dispersal, population stage structure, trophic
 interactions, etc.; and we did not comprehensively 
 explore parameter space for our models. We re-emphasize 
@@ -2413,7 +2411,7 @@ is measured with the coefficient of variation, but skewness
 may also be of interest because it can help characterize "spikiness" 
 through time. Future work on copula 
 structure of interspecific relationships in communities and its implications for community 
-variability is likely to be valuable, in our opinion.
+variability seems likely to be valuable.
 
 <!--A para that sets up Shya's extinction risk paper-->
 Although we demonstrated that tail associations between environmental variables
@@ -2438,10 +2436,10 @@ Climate change is known to amplify the factors that lead to extreme weather even
 <!--green spruce aphid all the way from causes to consequences-->
 Our hypotheses and results cover the presence, causes, and consequences
 of non-normal copula structure and asymmetric tail associations in ecological 
-systems (Fig. \ref{MasterFigure}), but this is done using a variety of 
+systems (Fig. \ref{MasterFigure}), but this was done using a variety of 
 datasets and models.
-We here take a closer look at the green spruce aphid, which simultaneously 
-illustrates causes and consequences with one system.
+We here take a closer look at the green spruce aphid, because it simultaneously 
+illustrates causes and consequences within one system.
 Green spruce aphid abundance, as measured in the data we use,
 is strongly positively associated with the temperature of the previous winter (@Sheppard2016,
 their supplementary figure 6).
@@ -2509,11 +2507,11 @@ recommend carrying out inferences about dependence structures (which was our
 goal) using normalized ranks, stating explicitly that "statistical inference concerning
 dependence structures should always be based on ranks." The reason for this is
 that measures of dependence which use unranked data conflate information about
-the marginal distributions of variables with information about the dependence
+the marginal distributions of variables with information about the association
 between variables. For instance, suppose the true population densities $p_{1,t}$
 and $p_{2,t}$ of two species of fish in a lake in year $t$ are unknown,
 but are assessed using catch per unit effort (CPUE), a standard approach in fisheries
-science [@Zale2013]. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$ may be 
+science [@Zale2013]. The CPUE measurements, which we denote $c_{1,t}$ and $c_{2,t}$, may be 
 differently correlated through time than the true densities would be, if they were known,
 if the function $f$ relating $p_{i,t}$ and $c_{i,t}$ is nonlinear and if Pearson
 correlation is used. The function $f$ modifies the marginal distributions, which modifies
@@ -2524,7 +2522,7 @@ case for which a measurement of an ecological quantity is a nonlinear index of t
 of interest. Nevertheless, if one is certain that measurements are linearly related to 
 the true quantities being measured, statistics based on unranked data may be more appropriate 
 under some circumstances, in part because ecological mechanisms which produce relationships 
-between variables are influenced not only by the ordering information in ranks but also 
+between variables are influenced not only by ranks but also 
 by the relative-size information in the unranked data. Judgements of what statistics
 are appropriate depend, of course, on the purpose of the analysis. The goal of this 
 study was to study dependence in isolation, so we used ranks. If one is interested
@@ -2554,25 +2552,25 @@ mathematical completeness will not be avilable for other methods.
 
 <!--para on data requirements of the methods, requested by the AER referees-->
 Data requirements for copula methods will vary depending on multiple factors,
-but our results show that data requirements are not beyond what is common 
+but our results show that requirements are not beyond what is common 
 in ecology. With copula methods as with any statistical analysis, the data required to detect 
 an effect or a phenomenon depends on the strength of the effect. For instance,
 detection of mild asymmetry of tail association will require more data than
 detection of strong asymmetry. Different copula or copula-related methods will
-also require different amount of data. For instance, our nonparametric methods 
+also require different amounts of data. For instance, our nonparametric methods 
 such as the partial Spearman correlation should be effective with datasets 
 only slightly bigger than typical guidelines for standard correlation 
 methods; whereas our model-selection approaches may be most effective with more data.
 Some of our datasets were large, but others were much smaller, e.g., aphid datasets
 comprised 30 points, and our analyses still provided robust results. Thus
 many copula methods will be suitable for datasets of sizes that are common in ecology.
-The partial Spearman correlation seems particularly widely applicable.
+Partial Spearman correlation seems particularly widely applicable.
 
 <!--additional copula methods-->
 Copula methods are numerous, and go well beyond the cases we have considered
 in this introductory paper. We hope our work helps inspire applications of copulas
 in ecology both of and 
-beyond the specific tools we have employed. For instance, multivariate copulas are useful for 
+beyond the specific tools we employed. For instance, multivariate copulas are useful for 
 studying relationships between multiple interacting variables, and have been used in finance
 to model tail risk for portfolio optimization problems [@Czado2019; @Joe2011]. 
 Analogous ecological applications

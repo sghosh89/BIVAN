@@ -388,7 +388,13 @@ of some bivariate random variable.
 The applications of this study fall within the case in which univariate marginal 
 distributions have continuous, strictly 
 monotonic cdfs, and this case is simpler. So we 
-henceforth make such an assumption. 
+henceforth make such an assumption. Table SX provides a summary
+of notation.
+<!--***DAN: Shyamolina, once I email you an edited version of the
+table you produced, please make a table in the sup mat Rmd and cause it to be
+cited here in place of the SX above. Please place the table in such
+a way that SX is replaced with S1,  since I believe this is now going
+to be the first supplementary table we are citing.-->
 
 Sklar's theorem implies that
 any random vector can be constructed from a unique copula and marginal 

@@ -127,7 +127,7 @@ provide only partial information.
 \caption{(A-D) Bivariate datasets showing diverse relationships between 
 variables. Some of these datasets nevertheless have the same Pearson (P)
 or Spearman (S) correlation coefficients. C and D show normalized ranks of A, B, 
-respectively. (E,F) Reflections
+respectively. (E, F) Reflections
 of C, D, respectively, about a vertical axis. Subscripts h and v 
 in the axis labels stand for "horizontal" and "vertical".\label{fig_cop_pedag1}}
 \end{center}
@@ -821,7 +821,7 @@ dependence was asymmetric.
 Model selection methods give the *relative* support of several models, but do not 
 indicate whether any of the models are an objectively good fit. To test that, 
 we tested the goodness of fit of our AIC-best copula family using a 
-bootstrapping procedure of @Wang2000 and @Genest2006,
+bootstrapping procedure of @Wang2000 and @genest2006goodness,
 implemented as `BiCopGofTest` in `VineCopula`. The procedure performed 
 one test based on a Cramer-von Mises statistic and another based on a 
 Kolmogorov-Smirnov statistic. To keep computation times reasonable, 
@@ -837,7 +837,7 @@ selection and multi-model inference procedure. For that purpose, it
 is not important for the reader to
 understand the details of these copulas,
 and, additionally, these copulas have been 
-described in detail elsewhere [@Joe1997; @Brechmann2013]. So 
+described in detail elsewhere [@joe1997multivariate; @Brechmann2013]. So 
 we only briefly identify each family, say a few words about its tail 
 dependence, and provide pictorial descriptions (Figs 
 \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8}). 
@@ -860,7 +860,7 @@ And we used the survival BB8 copula, which shows zero upper-tail dependence,
 and zero lower-tail dependence except for a boundary case.
 "Survival" families are rotations of the copula with the similar name by
 180 degrees. 
-See @Joe1997 and @Brechmann2013 for details on all families. We used the implementations
+See @joe1997multivariate and @Brechmann2013 for details on all families. We used the implementations
 of provided in the `VineCopula` package for the R programming
 language. See Figs \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
@@ -1782,7 +1782,7 @@ outputs, AR(1) model, Clayton copula. Grey and black points give
 means over 50 replicate simulations of the listed statistics, 
 grey points are for noise inputs and black points are for
 model outputs. Error bars are standard errors. 
-$P$-values (triangles, right axis) are for a 
+$p$-values (triangles, right axis) are for a 
 paired $t$-test of the null hypothesis that the distributions have the same mean. 
 For bottom panels, headers give Pearson correlations for
 the points. The regression line through the points (solid) was similar
@@ -2035,12 +2035,12 @@ aphid first flight data had stronger upper-tail association, Table
 \ref{tab_multivar_summary}), skewness of the spatial average 
 was less than (respectively, greater than) a significant fraction of 
 surrogate skewness values 
-(Fig. \ref{fig_skewness_spearman}A,B). For datasets with moderately stronger 
+(Fig. \ref{fig_skewness_spearman}A, B). For datasets with moderately stronger 
 lower than upper-tail 
 dependence (\emph{Ceratium furca} abundance and methane data), 
 skewness of the spatial
 average showed a non-significant or marginally significant tendency 
-toward being less than surrogate skewnesses (Fig. \ref{fig_skewness_spearman}C,D). 
+toward being less than surrogate skewnesses (Fig. \ref{fig_skewness_spearman}C, D). 
 Thus copula 
 structure and asymmetric tail associations are important for spatially averaged 
 quantities and can influence the temporal stability of those quantities. 
@@ -2090,17 +2090,17 @@ linearity and homoskedasticity, by non-normal copula structure. For normal copul
 in different locations), $p$-values for the linearity
 and homoskedasticity tests were roughly uniformly distributed across replicate 
 simulations and Taylor's law appeared visually to be a reasonable approximation
-of the $\log(v_g)$ versus $\log(m_g)$ relationship (Fig. \ref{fig_spTL}B,E,F). 
+of the $\log(v_g)$ versus $\log(m_g)$ relationship (Fig. \ref{fig_spTL}B, E, F). 
 Furthermore, quadratic coefficients
-and curvature values were close to $0$ (Fig. \ref{fig_spTL}J,K), and root mean squared
+and curvature values were close to $0$ (Fig. \ref{fig_spTL}J, K), and root mean squared
 errors from the linear regression were relatively small (Fig. \ref{fig_spTL}G).
 But linearity or homoskedasticity were violated more frequently for non-normal 
 copula structure
-(Fig. \ref{fig_spTL}A,C,D,E,F); quadratic coefficients and curvatures were frequently 
-non-zero (Fig. \ref{fig_spTL}J,K); and root mean squared
+(Fig. \ref{fig_spTL}A, C, D, E, F); quadratic coefficients and curvatures were frequently 
+non-zero (Fig. \ref{fig_spTL}J, K); and root mean squared
 errors from the linear regression were much higher (Fig. \ref{fig_spTL}G). Slopes 
 and intercepts of the linear regression were also strongly affected by copula
-structure (Fig. \ref{fig_spTL}H,I), though some of the effect here was because
+structure (Fig. \ref{fig_spTL}H, I), though some of the effect here was because
 linear regressions do not always adequately represent the $\log(v_g)$ versus $\log(m_g)$
 relationship when copula structure was not normal.
 Thus our results substantiated the hypothesis, at least for the models we used,
@@ -2219,7 +2219,7 @@ are very commonly correlated across space.
 Because these factors, which are the essential ingredients of
 the mechanism, are common, it is reasonable to hypothesize that the mechanism
 may operate commonly and may be a dominant cause of 
-asymmetric tail associations and non-normal copula struture of ecological 
+asymmetric tail associations and non-normal copula structure of ecological 
 dependencies across space.
 We provide further support for the mechanism 
 in our discussion of green spruce aphids and
@@ -2272,7 +2272,7 @@ changes through evolutionary time in bird and
 mammal BMR and body size may exhibit greater right- than left-tail association,
 contrary to standard normality assumptions of character evolution models. This is
 a hypothesis only, because the greater right-tail association shown in 
-Fig. \ref{fig_biv_multi_raw_cop}F,G
+Fig. \ref{fig_biv_multi_raw_cop}F, G
 could have come about in another, unknown way rather than via the mechanism we suggested
 which implicated asymmetric tail associations in evolutionary change. 
 Our simulations show that asymmetric tail associations 
@@ -2303,7 +2303,7 @@ Because researchers almost never have a reliable method for providing such branc
     the duration of the branch in time can be treated as a proxy for the branch length.
 Frequently these branch lengths are transformed to assess sensitivity to different 
     assumptions about the degree of phylogenetic inertia displayed by the traits
-    under study [@Ives2018;@Harmon2018].
+    under study [@Ives2018; @Harmon2018].
 Even if one were able to simply use a time-based set of branch lengths, assigning
     dates to nodes in phylogenies is difficult.
 DNA sequence data can provide estimates of branch lengths, but these estimates
@@ -2476,7 +2476,7 @@ described previously
 temperature ultimately causes spatially averaged aphid abundance time series 
 to have lower skewness (i.e., less spikiness, and greater stability through time) 
 than they would otherwise. It seems likely that asymmetric influence of winter 
-termperature on populations may be a common phenomenon, so effects such as 
+temperature on populations may be a common phenomenon, so effects such as 
 we have documented for green spruce aphid may be common.
  
 ```{r tab_greenspruceaphid_temp_summary, echo=F, results='asis',message=F}
@@ -2511,7 +2511,7 @@ techniques which parallel our nonparametric statistics but that use unranked dat
 $x_i$, $y_i$. As mentioned previously, @Genest2007 and others
 recommend carrying out inferences about dependence structures (which was our
 goal) using normalized ranks, stating explicitly that "statistical inference concerning
-dependence structures should always be based on ranks." The reason for this is
+dependence structures should always be based on ranks". The reason for this is
 that measures of dependence which use unranked data conflate information about
 the marginal distributions of variables with information about the association
 between variables. For instance, suppose the true population densities $p_{1,t}$
@@ -2597,13 +2597,12 @@ We thank Joel E. Cohen for making us aware of copulas in the
 first place. We thank the many contributors to the large datasets 
 we used; D. Stevens and P. Verrier for data 
 extraction; and David Tilman, Lauren Hallet, Jonathan Walter, Thomas 
-Anderson, Lei Zhao, Andrew Rypel, and editors and annonymous reviewers for helpful suggestions. 
+Anderson, Lei Zhao, Andrew Rypel, and editors and anonymous reviewers for helpful suggestions. 
 We thank James Bell of the Rothamsted Insect Survey (RIS). 
 The RIS, a UK Capability, is funded by the Biotechnology and Biological Sciences Research Council 
 under the Core Capability Grant BBS/E/C/000J0200. SG, LWS and DCR were partly funded by US National 
 Science Foundation grants 1714195 and 1442595, the James S McDonnell Foundation, and the 
-California Delta Science Program.
-. 
+California Delta Science Program. 
 
 \clearpage
 \newpage

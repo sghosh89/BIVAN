@@ -1986,7 +1986,7 @@ Appendices \ref{SM-Consequence_TL_simulation} and \ref{SM-sect:copsurrognd}.
 Thus for each $k$, the population matrices $m^{(\text{X},k)}$
 for X taking the values Clayton, normal, Frank, and survival Clayton
 were statistically similar except for the copula structure between locations, which was
-X. Thus comparing how the $log(v_g)$ versus $\log(m_g)$ relationship may
+X. Thus comparing how the $\log(v_g)$ versus $\log(m_g)$ relationship may
 manifest differently for $m^{(\text{X},k)}$
 for different values of X constitutes a test of the influence of copula
 structure on Taylor's law. We selected X equal to the Clayton, normal, Frank, and survival 

@@ -553,6 +553,7 @@ tab_summary_notation<- tibble(Notation=c("xi,yi", "$ui,vi$",
 # Shya need to fix this error
 
 knitr::kable(NA, "latex", booktabs = T, linesep = "", escape=F,
+             caption.short = "Summary of principal notation",
       caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Section headers refer to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Copulas and their potential for ecology: Appendices for main text"
+title: "Copulas and their potential for ecology: Appendices"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance D. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 
@@ -378,13 +378,13 @@ source("./MakeBivarDataPlot.R")
 
 The data of Fig. \ref{MT-fig_cop_pedag1}A-B were generated to have standard normal marginals.
 Fig. \ref{fig_transf_pearson_spearman}A can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
-of both variables by the cummulative distribution function (cdf) of the standard normal distribution, and then by the inverse of 
+of both variables by the cumulative distribution function (cdf) of the standard normal distribution, and then by the inverse of 
 the cdf of the gamma distribution with shape and scale parameters 2. 
 The functions `pnorm` and `qgamma` in R were used.
 Fig. \ref{fig_transf_pearson_spearman}B can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way.
 The Pearson correlations differ substantially after transformation, 
 but the Spearman correlations are unchanged (Figs \ref{MT-fig_cop_pedag1}A-B, \ref{fig_transf_pearson_spearman}).
-A scatterplot very simlar to Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
+A scatterplot very similar to Fig. \ref{MT-fig_cop_pedag1}C can be obtained from Fig. \ref{MT-fig_cop_pedag1}A via transformation
 of both variables by the cdf of the standard normal distribution.
 Likewise a scatterplot similar to Fig. \ref{MT-fig_cop_pedag1}D can be obtained from Fig. \ref{MT-fig_cop_pedag1}B in the same way. 
 
@@ -459,7 +459,7 @@ of continuous, strictly monotonic margins. But see @Anderson2018 and
 
 # Details of the data \label{Data_details}
 
-\textbf{Environmental data, soil C and N.} Measurments were from the central pedon of a soil 
+\textbf{Environmental data, soil C and N.} Measurements were from the central pedon of a soil 
 core, to 1m depth. 
 
 \textbf{Phenological and population data on aphids.}
@@ -554,7 +554,7 @@ tab_summary_notation<- tibble(Notation=c("xi,yi", "$ui,vi$",
 
 knitr::kable(NA, "latex", booktabs = T, linesep = "", escape=F,
              caption.short = "Summary of principal notation",
-      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Section headers refer to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
+      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Third coloumns to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
 ```
 
 
@@ -2286,7 +2286,7 @@ entire matrix. The moderately left-tail dependent matrix was based on a Clayton 
 with parameter chosen (using the `iRho` function in the `copula` package) so that
 the Spearman correlation would be the same as for the extreme tail dependence 
 datasets. The moderately right-tail dependent matrix and the symmetric tail dependence
-matrix were constructed similarly, but using an survival Clayton copula and an normal copula,
+matrix were constructed similarly, but using a survival Clayton copula and a normal copula,
 respectively. 
 
 <!--Following two chunks examine asymetric dependence mechanism with model selection and non-parametric statistics approach-->
@@ -4757,7 +4757,7 @@ from the multivariate normal distribution of the previous step.
 - For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.
 - For each $k$ and $i$ for which $a_i(t)$ is not `NA`, replace the 
 $k$th-smallest (non-`NA`) element of the time series 
-$a_i(t)$, $t=1,\ldots,T$ by the $k$th smallest (non-`NA`) 
+$a_i(t)$, $t=1,\ldots,T$ by the $k^{th}$ smallest (non-`NA`) 
 element of $x_i(t)$, $t=1,\ldots,T$.
 Call the result $b_i(t)$. This is a surrogate dataset.
 
@@ -4855,7 +4855,7 @@ the normal-copula population array in a special way
 surrogate/randomized dataset had the copula structure
 of the Clayton copula just constructed. The randomization procedure worked 
 by permuting time series of values in the normal-copula array, separately for each 
-sampling location and simulation. So population marginal distrbutions for each location
+sampling location and simulation. So population marginal distributions for each location
 and simulation were *exactly* the same as those in the normal-copula population array. 
 Permutations were done in such a way
 that resulting pairwise Spearman correlations were the same as the Clayton copula 
@@ -4886,8 +4886,8 @@ $\{x_i(t):t=1,\ldots,T\}$.
 
 - Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent 
 draws from $C$.
-- For each $k$ and $i$, replace the $k$th-smallest element of the time series $a_i(t)$, 
-$t=1,\ldots,T$ by the $k$th smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
+- For each $k$ and $i$, replace the $k^{th}$-smallest element of the time series $a_i(t)$, 
+$t=1,\ldots,T$ by the $k^{th}$ smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
 result $y_i(t)$. This is the surrogate dataset.
 
 <!--Moved this stuff to main text for AER

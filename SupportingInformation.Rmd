@@ -1,5 +1,5 @@
 ---
-title: "Copulas and their potential for ecology: Appendices"
+title: "Copulas and their potential for ecology: Appendices for main text"
 author: "Shyamolina Ghosh, Lawrence W. Sheppard, Mark T. Holder, Terrance D. Loecke, Philip C. Reid, James D. Bever, Daniel C. Reuman"
 geometry: "left=1cm,right=1cm,top=2.2cm,bottom=2.2cm"
 

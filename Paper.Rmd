@@ -776,7 +776,7 @@ $(x_i,y_i)$ for $i=1,...,n$, model selection involved several steps.
 First, we produced normalized ranks 
 $u_i$ and $v_i$ as in the Introduction. 
 Second, we tested the independence of the $u_i$ and $v_i$
-using the statistic $\sqrt{(9N(N-1))/(4N+10)}|\tau|$, where $\tau$
+using the statistic $\sqrt{(9n(n-1))/(4n+10)}|\tau|$, where $\tau$
 is Kendall's tau for the data. @Genest2007 argue that this statistic is approximately standard normally
 distributed. We used the 
 implementation of this test in `BiCopIndTest` in the `VineCopula` package
@@ -2618,4 +2618,4 @@ California Delta Science Program.
 
 <!--<div id="refs"></div>-->
 
->>>>>>> 388469937d1122b7658afeb410096b989dad2f18
+

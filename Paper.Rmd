@@ -167,7 +167,7 @@ separately. Normalized rank plots such as Fig. \ref{fig_cop_pedag1}C-D
 relate to copulas in a way to be described 
 (section \ref{Background}). Note that Pearson correlation, even though it is the most commonly
 used measure of association, is modified by monotonic
-tranformation of the component variables (Appendix 
+transformation of the component variables (Appendix 
 \ref{SM-pedagog1_details}, Fig. \ref{SM-fig_transf_pearson_spearman}),
 and therefore reflects not only dependence information, but also
 information on the marginals [@Genest2007]. 
@@ -250,7 +250,7 @@ plot, but may not be revealed by correlation.
 A second reason why we may expect detailed understanding of dependence structures
 to benefit ecological
 research is that prior work demonstrated, using copulas, complex 
-stucture in the spatial dependence of environmental 
+structure in the spatial dependence of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018;
 @li2013]. An environmental variable 
 measured through time in two locations may show strong tail associations between
@@ -333,7 +333,7 @@ normal distributions or distributions obtained by transforming
 the marginals of a normal distribution. So Q1 asks whether ecological
 data contain dependency information distinct from a standard or default case. 
 (Q2) If the answer to
-Q1 is "yes," then what are some possible causes/mechanisms of non-normal
+Q1 is "yes", then what are some possible causes/mechanisms of non-normal
 copula structure and asymmetric tail associations in ecology? And (Q3), what are the 
 consequences of non-normal copula
 structure and asymmetric tail associations for ecological understanding and
@@ -347,7 +347,7 @@ We address Q2 (sections \ref{Causes} through \ref{Results_Q2}), using
 simple models. We address Q3 (sections \ref{Consequences} through \ref{Results_Q3}) using 
 both data and models. Section \ref{Discussion} is the Discussion.
 Multiple analyses are brought to bear on each question, and these
-are summarized diagramatically in Fig. \ref{MasterFigure}, which can 
+are summarized diagrammatically in Fig. \ref{MasterFigure}, which can 
 serve as a *post hoc* guide to the paper. 
 Copula approaches have been used to great effect in neuroscience [@onken2009], 
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
@@ -553,7 +553,7 @@ $\hat{F}_Y$ be the empirical cdfs associated with the $x_i$ and $y_i$, respectiv
 These are step functions of $x$ and $y$, respectively, that start at $0$ for low values of 
 $x$ and $y$ and jump by $1/n$
 at each of the data points. Therefore $\hat{F}_X(x_j)$ is the rank of $x_j$ in
-the set $\{x_i : i=1,\ldots,n\}$, dividided by $n$, 
+the set $\{x_i : i=1,\ldots,n\}$, divided by $n$, 
 and analogously $\hat{F}_Y(y_j)$ is the rank of $y_j$ in the set 
 $\{y_i : i=1,\dots,n\}$, divided
 by $n$. For large $n$, $\hat{F}_X(x_i)$ and $\hat{F}_Y(y_i)$ 
@@ -827,7 +827,7 @@ one test based on a Cramer-von Mises statistic and another based on a
 Kolmogorov-Smirnov statistic. To keep computation times reasonable, 
 a run using $100$ bootstraps was performed. If
 the $p$-value from either test was $<0.2$, tests were re-run with 
-$1000$ boostraps.
+$1000$ bootstraps.
 
 We fit 16 bivariate copula families, exhibiting a variety of 
 lower- and upper-tail dependence characteristics, with bivariate datasets. The purpose
@@ -836,12 +836,12 @@ variety of alternative dependence structures to have a robust model
 selection and multi-model inference procedure. For that purpose, it 
 is not important for the reader to
 understand the details of these copulas,
-and, additonally, these copulas have been 
+and, additionally, these copulas have been 
 described in detail elsewhere [@Joe1997; @Brechmann2013]. So 
 we only briefly identify each family, say a few words about its tail 
 dependence, and provide pictorial descriptions (Figs 
 \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8}). 
-The pictorial decriptions can also be used to aid quick comparisons of copula
+The pictorial descriptions can also be used to aid quick comparisons of copula
 families when alternative families are being considered for future applications. 
 We used several families that can exhibit positive lower-tail dependence 
 (of strength depending on parameters) and 
@@ -972,7 +972,7 @@ multiple bands $(l_b,u_b)$ to understand how association
 varies across different parts of the distributions. But for datasets with 
 smaller $n$ we considered only $l_b=0$, $u_b=0.5$ and $l_b=0.5$, $u_b=1$,
 abbreviating $\cor_l=\cor_{0,0.5}$ ($l$ is for "lower") 
-and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"). Likewise $\Ps_l=\Ps_{0,.5}$,
+and $\cor_u=\cor_{0.5,1}$ ($u$ is for "upper"). Likewise $\Ps_l=\Ps_{0,0.5}$,
 $\Ps_u=\Ps_{0.5,1}$, $\Dsq_l=\Dsq_{0,0.5}$, $\Dsq_u=\Dsq_{0.5,1}$.
 To test for asymmetry of association in upper and lower portions of distributions,
 we used differences $\cor_l-\cor_u$, $\Ps_l-\Ps_u$ and $\Dsq_u-\Dsq_l$
@@ -1466,23 +1466,23 @@ variable could then exhibit asymmetric tail associations across space.
 Let $E_i(t)$ be an ecological variable 
 measured at location $i$ ($i=1,2$) at time $t$.
 Assume the dynamics 
-$E_i(t+1)=bE_i(t)+g(\epsilon_i(t))+a \delta_i(t)$, where 
+$E_i(t+1)=bE_i(t)+g(\varepsilon_i(t))+a \delta_i(t)$, where 
 the $\delta_i(t)$ are standard-normally distributed 
 and independent across time and locations, $a=0.2$,
 $b=0.1, -0.1, 0.5, -0.5$ in different simulations, and 
-the $(\epsilon_1(t),\epsilon_2(t))$ were drawn, independently through
-time, from a bivariate normal distribution with $\var(\epsilon_i)=1$ and 
-$\cov(\epsilon_1,\epsilon_2)=0.8$. Thus basic ecological dynamics follow the
+the $(\varepsilon_1(t),\varepsilon_2(t))$ were drawn, independently through
+time, from a bivariate normal distribution with $\var(\varepsilon_i)=1$ and 
+$\cov(\varepsilon_1,\varepsilon_2)=0.8$. Thus basic ecological dynamics follow the
 very simple AR(1) formulation, influenced by a "regional" environmental factor which
-is correlated across locations ($\epsilon$) and by a local factor ($\delta$). 
-The function $g$ describes how $\epsilon_i(t)$ influences
+is correlated across locations ($\varepsilon$) and by a local factor ($\delta$). 
+The function $g$ describes how $\varepsilon_i(t)$ influences
 $E_i(t)$. We used $g$ equal to $g_1$ or $g_2$ in different simulations:
-$g_1(\epsilon)$ equals $\epsilon$ if $\epsilon<0$ and $0$ otherwise;
-$g_2(\epsilon)$ equals $\epsilon$ if $\epsilon>0$ and $0$ otherwise. Thus
+$g_1(\varepsilon)$ equals $\varepsilon$ if $\varepsilon<0$ and $0$ otherwise;
+$g_2(\varepsilon)$ equals $\varepsilon$ if $\varepsilon>0$ and $0$ otherwise. Thus
 $g_1$ represents environmental effects that negatively impact populations,
-but only below the threshold $\epsilon=0$; 
+but only below the threshold $\varepsilon=0$; 
 and $g_2$ represents effects that positively impact populations, but 
-only above $\epsilon=0$.
+only above $\varepsilon=0$.
 The values of $b$ provide a modicum of exploration of whether ecological 
 dynamics may also influence how complex dependencies between
 the $E_i(t)$ arise: 
@@ -1498,7 +1498,7 @@ and our Spearman- or Kendall-preserving normal-copula
 surrogate comparison methods (see section \ref{Methods}) to these 
 outputs to discover if the model could
 produce asymmetric tail associations (and therefore non-normal copula structure)
-between the $E_i(t)$. Because $(\epsilon_1,\epsilon_2)$
+between the $E_i(t)$. Because $(\varepsilon_1,\varepsilon_2)$
 and $(\delta_1,\delta_2)$ have normal copula structure (they were drawn
 from bivariate normal distributions), the Moran 
 mechanism analyzed below does not operate here.
@@ -1510,8 +1510,8 @@ two parameterizations of a nonlinear population model which includes density dep
 of population growth. For the linear model, let $E_i(t)$ 
 again be an ecological variable, $i=1,2$.
 We use AR(1) dynamics, 
-$E_i(t+1)=\beta E_{i}(t)+ \sqrt{1-\beta^2} \epsilon_i(t)$, with $\beta=0.5$. 
-The environmental noises $\epsilon_i(t)$ were 
+$E_i(t+1)=\beta E_{i}(t)+ \sqrt{1-\beta^2} \varepsilon_i(t)$, with $\beta=0.5$. 
+The environmental noises $\varepsilon_i(t)$ were 
 standard-normal random variables that were independent for distinct times, $t$, but 
 exhibited different kinds of 
 dependence across locations in different simulations (see below).
@@ -1521,8 +1521,8 @@ total plant community biomass from an average value,
 flux of a biogeochemical variable such as methane, or other quantities.
 The nonlinear population model was a stochastic, multi-habitat-patch version 
 of the Ricker model, 
-$P_i(t+1)=P_i(t)\exp \left[r\left(1-P_i(t)/K  \right)+\sigma\epsilon_i(t)\right]$ for $i=1,2$, using $r=0.5$, 
-$K=100$, $\epsilon_i(t)$
+$P_i(t+1)=P_i(t)\exp \left[r\left(1-P_i(t)/K  \right)+\sigma\varepsilon_i(t)\right]$ for $i=1,2$, using $r=0.5$, 
+$K=100$, $\varepsilon_i(t)$
 as above, and $\sigma=0.1$ or 
 $\sigma=1$ in different simulations. 
 When $\sigma=0.1$, population dynamics stay close to the carrying capacity, 
@@ -1538,7 +1538,7 @@ For each of the three model setups above (the linear model and the nonlinear mod
 with weak and strong stochasticity), for the Clayton and survival Clayton copula families, 
 for each $\tau=0.1,0.2,\ldots,0.9$, and for each of
 $50$ replicate simulations, we generated 5000 noise pairs 
-$(\epsilon_1(t),\epsilon_2(t))$ from the
+$(\varepsilon_1(t),\varepsilon_2(t))$ from the
 bivariate random variable with standard-normal marginals and with 
 the given copula family and the given Kendall
 correlation $\tau$.
@@ -1560,7 +1560,7 @@ trait data across species, e.g., our bird and mammal
 data. This mechanism is a hypothetical explanation for the bias toward right-tail association
 observed in those data (Fig. \ref{fig_biv_multi_raw_cop}F,G). 
 The hypothesis is that asymmetric tail association occurs in evolutionary changes
-in bivariate characters, and gives rise to asymmtric tail association between the 
+in bivariate characters, and gives rise to asymmetric tail association between the 
 two character values across extant species.
 We simulated bivariate character evolution on an estimate of 
 the phylogeny, taken from @GenoudIM2018, of $817$ mammal species.
@@ -1838,7 +1838,7 @@ applications?
 We addressed Q3 by exploring, using both data and models, three hypothesized
 consequences. As for Q2, the models we used are intended as initial explorations, only. 
 Therefore only simple models are used, and comprehensive explorations of the 
-sensitivity of results to model strucuture and parameters are left for future work.
+sensitivity of results to model structure and parameters are left for future work.
 
 The hypothesis was presented in the Introduction that
 the distribution (through time) of a spatially 
@@ -1856,7 +1856,7 @@ We hypothesize that this can increase the skewness of the distribution
 of the spatial mean. Similarly, left-tail associations between local variables
 should decrease skewness. Strong positive skewness of the 
 spatial-mean time series corresponds to "spikiness" of that time series,
-i.e., occassional very large values, 
+i.e., occasional very large values, 
 which corresponds to instability through time. 
 The spatial-mean time series and its skewness may be quantities of 
 principal importance for 
@@ -1920,8 +1920,8 @@ where the $i^{th}$ component of the length-$N$ vector
 $\vec{P}(t)$ represents
 population density in the $i^{th}$ habitat patch at time $t$. 
 The $N \times N$ matrix $\lambda(t)$ was diagonal with $i^{th}$ diagonal entry 
-$\exp(r+\epsilon_i(t))$. Here $r$ is a growth rate; we used $r=0$. The
-$\epsilon_i(t)$ represent environmental noises. They were standard-normally 
+$\exp(r+\varepsilon_i(t))$. Here $r$ is a growth rate; we used $r=0$. The
+$\varepsilon_i(t)$ represent environmental noises. They were standard-normally 
 distributed, were independent through time, and showed the same 
 spatial correlations for every simulation, 
 but were made to exhibit stronger right- or left-tail associations between patches in
@@ -1983,7 +1983,7 @@ up to sampling variation, regardless of X;
 3) the copula for the dependence between $m_{t,j_1}^{(\text{X},k)}$ and $m_{t,j_2}^{(\text{X},k)}$ was  from the family X.
 We used $N=50$ and $n=25$. Details of how these matrices were generated are in 
 Appendices \ref{SM-Consequence_TL_simulation} and \ref{SM-sect:copsurrognd}.
-Thus for each $k$, the poulation matrices $m^{(\text{X},k)}$
+Thus for each $k$, the population matrices $m^{(\text{X},k)}$
 for X taking the values Clayton, normal, Frank, and survival Clayton
 were statistically similar except for the copula structure between locations, which was
 X. Thus comparing how the $log(v_g)$ versus $\log(m_g)$ relationship may
@@ -1992,7 +1992,7 @@ for different values of X constitutes a test of the influence of copula
 structure on Taylor's law. We selected X equal to the Clayton, normal, Frank, and survival 
 Clayton copulas to explore a range of tail association patterns.  
 
-A variety of Taylor's law statistics were computed for each populaton matrix
+A variety of Taylor's law statistics were computed for each population matrix
 $m^{(\text{X},k)}$. First, the $N=50$ 
 spatial means,
 $m_g$, and variances, $v_g$, were computed, and $\log(v_g)$ vs. $\log(m_g)$ plots 
@@ -2017,7 +2017,7 @@ intercept and slope of the linear regression.
 Finally we recorded the quadratic coefficient of the regression of $\log(v_g)$ against
 $\log(m_g)$ and $(\log(m_g))^2$, and the mean curvature of 
 the quadratic regression equation 
-across the values $\log(m_g)$. The distrubutions of all these 
+across the values $\log(m_g)$. The distributions of all these 
 statistics across the 1000 replicate 
 simulations were compared for X the Clayton, normal, Frank, and survival Clayton copulas, 
 to determine if copula structure influences Taylor's law.
@@ -2545,7 +2545,7 @@ Non-copula methods may be useful under some circumstances for exploring
 asymmetries of tail association, but copula approaches have theoretical
 and practical advantages. It was suggested to us that asymmetries of
 tail association can also be explored using a regression 
-model with heteroskedastic error term, $y=mx+b+\epsilon(x)$. Whereas this 
+model with heteroskedastic error term, $y=mx+b+\varepsilon(x)$. Whereas this 
 approach seems capable of yielding insight for some datasets, it implicitly assumes
 a particular causal relationship between $x$ and $y$, an untenable assumption for 
 many applications. Furthermore, no equivalent

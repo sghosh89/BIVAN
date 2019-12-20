@@ -388,7 +388,7 @@ of some bivariate random variable.
 The applications of this study fall within the case in which univariate marginal 
 distributions have continuous, strictly 
 monotonic cdfs, and this case is simpler. So we 
-henceforth make such an assumption. Table SX provides a summary
+henceforth make such an assumption. Table \ref{SM-tab_summary_notation} provides a summary
 of notation.
 <!--***DAN: Shyamolina, once I email you an edited version of the
 table you produced, please make a table in the sup mat Rmd and cause it to be

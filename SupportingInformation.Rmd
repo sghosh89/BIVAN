@@ -492,13 +492,13 @@ obtained from biodiversity experiment E120 conducted at the Cedar Creek Ecosyste
 by Tilman *et al*. In 1994, 168 plots [@ccdataplotse120] (each 9 m $\times$ 9 m) of 39, 35, 29, 30 and 35 replicates,
 were seeded with 1, 2, 4, 8, or 16 perennials, respectively, chosen randomly from a pool of 
 18 species (4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; and 2 species of woody
-plants). All plots received, in total, 10 $gm^{-2}$ of pure live seed in May 1994 and 5 $gm^{-2}$ in May, 1995 
+plants). All plots received, in total, 10 gm$^{-2}$ of pure live seed in May 1994 and 5 gm$^{-2}$ in May, 1995 
 with seed mass divided equally among species. Treatments were maintained by weeding manually 3-4 times a year 
 and sometimes selective herbicides were used. We downloaded the data on July, 2018 from the Cedar Creek website \url{http://www.cedarcreek.umn.edu/research/experiments/e120} and 
 analyzed those data for 6 years 
 (1996-2000, 2007) for which both biomass and percent cover data were available. Plots were annually 
 sampled by clipping 
-different locations each year. For each available year, we analyzed above-ground biomass ($gm^{-2}$) 
+different locations each year. For each available year, we analyzed above-ground biomass (gm$^{-2}$) 
 and Shannon's biodiversity index (computed using percent cover data) averaged over the 
 sampled strips/quadrats taken from each 
 of 168 plots.
@@ -554,7 +554,7 @@ tab_summary_notation<- tibble(Notation=c("xi,yi", "$ui,vi$",
 
 knitr::kable(NA, "latex", booktabs = T, linesep = "", escape=F,
              caption.short = "Summary of principal notation",
-      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Third coloumns to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
+      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Third column refers to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
 ```
 
 
@@ -619,7 +619,7 @@ dependence is $0$.\label{figped_SC}}
 \begin{center}
 \includegraphics[width=16 cm,height=16 cm]{./Results/SoilCNmapUSA.pdf} 
 \caption[Sampling locations for C and N data]{Locations of central pedons sampled 
-for soil organic carbon and total soil nitrogen (Mg C or N per hectare of soil 
+for soil organic carbon and total soil nitrogen (megagrams C or N per hectare of soil 
 surface) at 5907 sites across the coterminous United States. \label{fig_SoilCNmapUSA}}
 \end{center}
 \end{figure}
@@ -767,7 +767,7 @@ denote the two parameters of the family (it is a
 two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
 and $p_2 \in (0,1]$, lower-tail dependence is $0$ and upper-tail
-dependence is $2-2^{1/p_1}$ of $p_2=1$ and $0$ otherwise.\label{figped_BB8}}
+dependence is $2-2^{1/p_1}$ if $p_2=1$ and $0$ otherwise.\label{figped_BB8}}
 \end{center}
 \end{figure}
 
@@ -779,7 +779,7 @@ denote the two parameters of the family (it is a
 two-parameter family); and LT and UT are the measures of lower- and upper-tail dependence, 
 respectively. The parameter ranges for the family are $p_1 \in [1,\infty)$
 and $p_2 \in (0,1]$, upper-tail dependence is $0$ and lower-tail
-dependence is $2-2^{1/p_1}$ of $p_2=1$ and $0$ otherwise.\label{figped_SBB8}}
+dependence is $2-2^{1/p_1}$ if $p_2=1$ and $0$ otherwise.\label{figped_SBB8}}
 \end{center}
 \end{figure}
 
@@ -805,7 +805,7 @@ $S(h)$ for independent data. We then define
 indicate stronger positive association
 between $u$ and $v$ in the region given by the bounds.
 We use both statistics 
-because $\cor_{l_{b_k},u_{b_k}}(u,v)$ is more familiar, but 
+because $\cor_{l_{b},u_{b}}(u,v)$ is more familiar, but 
 in some instances $\Ps_{l_b,u_b}$ appears to have more power to
 reveal tail dependence.
 
@@ -878,14 +878,14 @@ plotter_stat_testing(reslist=res_pt1000_rankT,filename="res_pt1000_rankT",xaxpar
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt35_rankT.pdf}
-\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
+\caption[Testing nonparametric statistics with 35 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles), when less than $0.05$ (below the dashed line), mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=35$. \label{fig_stat_testing35}}
 \end{center}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=16 cm]{./Results/stat_results/stat_testing/res_pt1000_rankT.pdf}
-\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles) when less than $0.05$ (below the dashed line) mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
+\caption[Testing nonparametric statistics with 1000 data points]{Results of tests of whether $\cor_l-\cor_u$, $\Ps_l-\Ps_u$, and $\Dsq_u-\Dsq_l$ reveal the known asymmetry of tail dependence of the Clayton and survival Clayton copulas, and the known symmetry of tail dependence of the normal and Frank copulas. p-values (indicated by the triangles), when less than $0.05$ (below the dashed line), mean there is significant tail asymmetry. See Appendix  \ref{Test_npa_stat} for details. $n=1000$.\label{fig_stat_testing1000}}
 \end{center}
 \end{figure}
 
@@ -4757,7 +4757,7 @@ from the multivariate normal distribution of the previous step.
 - For any $i,t$ for which the datum $x_i(t)$ was missing, replace $a_i(t)$ by `NA`.
 - For each $k$ and $i$ for which $a_i(t)$ is not `NA`, replace the 
 $k$th-smallest (non-`NA`) element of the time series 
-$a_i(t)$, $t=1,\ldots,T$ by the $k^{th}$ smallest (non-`NA`) 
+$a_i(t)$, $t=1,\ldots,T$ by the $k^{\text{th}}$ smallest (non-`NA`) 
 element of $x_i(t)$, $t=1,\ldots,T$.
 Call the result $b_i(t)$. This is a surrogate dataset.
 
@@ -4766,7 +4766,7 @@ Call the result $b_i(t)$. This is a surrogate dataset.
 The code for the Kendall version of the
 algorithm throws an error if there are ties in any of the time series. This is
 because the Kendall correlation in the very commonly used `cor` function in R 
-is the Kendall tau-b coefficient in the event of ties, and index which 
+is the Kendall tau-b coefficient in the event of ties, an index which 
 differs in its definition from the commonly used tau-a that works when there are
 no ties; and `tau` and `iTau` are intended for continuous copulas, which cannot 
 produce data with ties. Our code also throws an error in the event that
@@ -4846,7 +4846,7 @@ constructed as follows; the others were constructed analogously. First, we const
 $n$-dimensional Clayton copula with parameter chosen so that the 
 Spearman correlations between each pair of the $n$ components were the same as those
 of the normal distribution constructed above. This was done using the `rho` and `iRho` functions 
-in the `copula` package in R. Because the Clayton copula is a one-paremeter family, this 
+in the `copula` package in R. Because the Clayton copula is a one-parameter family, this 
 step relies on the fact that all pairs of locations were 
 equally correlated with each other in the original multivariate normal distribution
 constructed above. We then randomized each simulation in 
@@ -4862,7 +4862,7 @@ that resulting pairwise Spearman correlations were the same as the Clayton copul
 constructed above, and hence were the same as the normal-copula array, 
 except for sampling variation. Thus, to summarize using mathematical notation,
 if $m^{(\text{N},k)}_{t,j}$ is our normal-copula population array (the three dimensions 
-of the array are indexed, respectively, by $t$, $j$ and $k$, and $m^{(\text{C},k)}_{t,j}$ is our 
+of the array are indexed, respectively, by $t$, $j$ and $k$), and $m^{(\text{C},k)}_{t,j}$ is our 
 Clayton-copula population array, then,
 for any given $j$ and $k$, the sets $\{m^{(\text{N},k)}_{t,j}: t=1,\ldots,N\}$ and 
 $\{m^{(\text{C},k)}_{t,j}: t=1,\ldots,N\}$ are exactly the same (when considered 
@@ -4886,8 +4886,8 @@ $\{x_i(t):t=1,\ldots,T\}$.
 
 - Generate data $a_i(t)$ for $i=1,\ldots,N$ and $t=1,\ldots,T$ by taking $T$ independent 
 draws from $C$.
-- For each $k$ and $i$, replace the $k^{th}$-smallest element of the time series $a_i(t)$, 
-$t=1,\ldots,T$ by the $k^{th}$ smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
+- For each $k$ and $i$, replace the $k^{\text{th}}$-smallest element of the time series $a_i(t)$, 
+$t=1,\ldots,T$ by the $k^{\text{th}}$ smallest element of $x_i(t)$, $t=1,\ldots,T$. Call the 
 result $y_i(t)$. This is the surrogate dataset.
 
 <!--Moved this stuff to main text for AER

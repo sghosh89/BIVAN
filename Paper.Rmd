@@ -71,7 +71,7 @@ The importance of copulas in ecology-->
 
 \noindent \emph{Correspondence:} Daniel Reuman, 2101 Constant Ave, Lawrence, KS, 66047, reuman@ku.edu, 626 560 7084. 
 
-\noindent \emph{The number of words in the abstract:} 253
+\noindent \emph{The number of words in the abstract:} 241
 
 \newpage
 
@@ -109,7 +109,7 @@ environmental and biological
 variables. However, commonly used correlation and regression 
 approaches to studying 
 such relationships are limited, and 
-provide only a partial description the relationship. 
+provide only a partial description of the relationship. 
 For instance, datasets showing different 
 relationships may have the same correlation coefficient
 (Fig. \ref{fig_cop_pedag1}A-B). The variables of Fig. \ref{fig_cop_pedag1}A 
@@ -861,7 +861,7 @@ and zero lower-tail dependence except for a boundary case.
 "Survival" families are rotations of the copula with the similar name by
 180 degrees. 
 See @joe1997multivariate and @Brechmann2013 for details on all families. We used the implementations
-of provided in the `VineCopula` package for the R programming
+provided in the `VineCopula` package for the R programming
 language. See Figs \ref{figped_N}-\ref{figped_BB1}, \ref{SM-figped_SC} and \ref{SM-figped_G}-\ref{SM-figped_SBB8} 
 for visual depictions of the pdfs of these copulas and how
 pdfs and tail dependence are influenced by the parameters. See 
@@ -1427,7 +1427,7 @@ dt <- tibble(
            "6. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. lower-tail dependence",
            "7. 2.5$^{th}$ and 97.5$^{th}$ quantiles of model-avg. upper-tail dependence",
            "8. Percent pairs showing stronger lower tail dependence",
-           "9. Mean with 2.5$^{th}$ and 97.5$^{th}$ quantiles of cor$_{l}$ - cor${_u}$ across all location pair")
+           "9. Mean with 2.5$^{th}$ and 97.5$^{th}$ quantiles of cor$_{l}$ - cor${_u}$ across all location pairs")
            )
 
 tab_multivar_summary_ed<-cbind(dt,tab_multivar_summary_ed)
@@ -1503,7 +1503,7 @@ and $(\delta_1,\delta_2)$ have normal copula structure (they were drawn
 from bivariate normal distributions), the Moran 
 mechanism analyzed below does not operate here.
 
-Our second mechanism is an extension of the well known Moran
+Our second mechanism is an extension of the well-known Moran
 effect, and was summarized conceptually in the Introduction. 
 We consider a linear model, as well as 
 two parameterizations of a nonlinear population model which includes density dependence
@@ -2554,7 +2554,7 @@ distributions cannot be separated from association information, and the two type
 of information will both influence regression results. Sklar's theorem
 means that the copula associated with two variables contains all and only the information
 about the association. Such statements of 
-mathematical completeness will not be avilable for other methods.
+mathematical completeness will not be available for other methods.
 
 <!--para on data requirements of the methods, requested by the AER referees-->
 Data requirements for copula methods will vary depending on multiple factors,

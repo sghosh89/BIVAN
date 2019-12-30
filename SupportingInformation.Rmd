@@ -514,25 +514,24 @@ gathered for at least 50 dates.
 
 
 <!--table with summarized notation used in maintext-->
-```{r tab_summary_notation, echo=F, results='asis',message=F}
-library(tinytex)
+```{r tab_summary_notation, echo=F, results='markup',message=F}
 library(tibble)
 library(kableExtra)
 library(dplyr)
 
-tab_summary_notation<- tibble(Notation=c("xi,yi", "$ui,vi$",
-                                 "(X,Y)", "F",
-                                 "FX, FY","C",
-                                 "D", "GA,GB",
+tab_summary_notation<- tibble(Notation=c("$x_{i}$,$y_{i}$", "$u_{i}$,$v_{i}$",
+                                 "$(X,Y)$", "F",
+                                 "$F_{X}$, $F_{Y}$","$C$",
+                                 "$D$", "$G_{A}$,$G_{B}$",
                                  "$\\lambda_{L}$, $\\lambda_{U}$",
-                                 "l$_{b}$, u$_{b}$",
+                                 "$l_{b}$, $u_{b}$",
                                  "cor$_{lb,ub}$",
                                  "cor$_{l}$","cor$_{u}$",
                                  "P$_{lb,ub}$, P$_{l}$,P$_{u}$, D$_{lb,ub}^2$, D$_{l}^2$, D$_{u}^2$",
-                                 "b", "g,g$_{1}$,g$_{2}$",
-                                 "E","P"), 
+                                 "$b$", "$g,g_{1},g_{2}$",
+                                 "$E$","$P$"), 
                               Meaning=c("Variables representing raw bivariate data",
-                                "Normalized ranks of $(x_{i}$,$y_{i})$",
+                                "Normalized ranks of ($x_{i}$,$y_{i}$)",
                                 "A bivariate random vector",
                                 "The bivariate cdf of $(X,Y)$",
                                 "The cdfs of the marginals, $X$ and $Y$, respectively",
@@ -540,21 +539,24 @@ tab_summary_notation<- tibble(Notation=c("xi,yi", "$ui,vi$",
                                 "A bivariate copula",
                                 "Two univariate cdfs",
                                 "Lower and upper tail dependence of a copula",
-                                "A lower and upper bound satisfying $0 \\leq l_{b} \\lt u_{b} \\leq 1$",
+                                "A lower and upper bound satisfying $0 \\leq l_{b} \\leq u_{b} \\leq 1$",
                                 "partial Spearman correlation",
-                                "cor$_{lb,ub}$ when $l_{b} = 0, u_{b} = 0.5$",
-                                "cor$_{lb,ub}$ when $l_{b} = 0.5, u_{b} = 1$",
+                                "cor$_{lb,ub}$ when $l_{b}$ = 0, $u_{b}$ = 0.5",
+                                "cor$_{lb,ub}$ when $l_{b}$ = 0.5, $u_{b}$ = 1",
                                 "Related nonparametric statistics",
-                                "AR$(1)$ coefficient in the model related to Leibigs law",
+                                "AR$(1)$ coefficient in the model related to Leibig's law",
                                 "Function describing environmental influence in the model related to Leibigs law",
                                 "An ecological variable",
-                                "A population variable"))
+                                "A population variable"),
+                                "Section in maintext"=c(1,1,
+                                                      2,2,2,2,2,2,2,
+                                                      4,4,4,4,4,
+                                                      6,6,6,6))
 
-# Shya need to fix this error
-
-knitr::kable(NA, "latex", booktabs = T, linesep = "", escape=F,
+knitr::kable(tab_summary_notation, "latex", booktabs = T, linesep = "", escape=F,
              caption.short = "Summary of principal notation",
-      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Third column refers to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")
+      caption = "Summary of principal notation. Many notations are defined and used only within a small part of the paper. This table summarizes notation that is used across larger portions of the paper. Third column refers to the section in which the notation was originally defined. cdf = cumulative distribution function. \\label{tab_summary_notation}")%>%
+     column_spec(column = 2,width="4.5 cm")
 ```
 
 

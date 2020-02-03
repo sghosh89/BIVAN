@@ -217,7 +217,7 @@ par(fig=c((ymarg_wd+numsp)/tot_wd,
           (xmarg_ht+numsp)/tot_ht,
           (xmarg_ht+numsp+pan_ht)/tot_ht),
     mai=c(0,0,0,0),mgp=c(3,.15,0),tcl=-.25)
-plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs)
+plot(dcc5[,1],dcc5[,2],type='p',pch=pchval,cex=cexvalpts,xlim=c(rg1,rg2),ylim=c(rg1,rg2),col="grey",cex.axis=cexaxs,xaxs="i",yaxs="i")
 lines(c(0,.4),c(.4,0),type='l')
 lines(c(0,.65),c(.65,0),type='l')
 lines(c(0,1.6),c(1.6,0),type='l')

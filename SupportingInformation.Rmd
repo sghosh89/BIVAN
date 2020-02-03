@@ -455,7 +455,7 @@ neither continuity nor strict monotonicity is possible, if one uses generalized
 inverses for $G_A^{-1}$ and $G_B^{-1}$ [@MaiScherer2017]. We adopt the weaker
 statements for simplicity and because our applications are solely under the case
 of continuous, strictly monotonic margins. But see @Anderson2018 and 
-@Popovic2018 for applications of copulas outside this case. 
+@Popovic2019 for applications of copulas outside this case. 
 
 # Details of the data \label{Data_details}
 

@@ -126,9 +126,9 @@ provide only partial information.
 \includegraphics[width=3.5in]{./Results/PedagogFig1.pdf}
 \caption{(A-D) Bivariate datasets showing diverse relationships between 
 variables. Some of these datasets nevertheless have the same Pearson (P)
-or Spearman (S) correlation coefficients. C and D show normalized ranks of A, B, 
+or Spearman (S) correlation coefficients. (C) and (D) show normalized ranks of (A), (B), 
 respectively. (E, F) Reflections
-of C, D, respectively, about a vertical axis. Subscripts h and v 
+of (C), (D), respectively, about a vertical axis. Subscripts h and v 
 in the axis labels stand for "horizontal" and "vertical".\label{fig_cop_pedag1}}
 \end{center}
 \end{figure}
@@ -152,7 +152,7 @@ Fig. \ref{fig_cop_pedag1}A-B), information about the structure of the associatio
 between $x$ and $y$ can be separated from information contained 
 in the marginal distributions by 
 considering the plot of $u_i$ versus $v_i$, where
-$u_i$ is the rank of $x_i$ in the set $x_j$ ($j=1,\ldots,n$), divided by
+$u_i$ is the rank of $x_i$ in the set of $x_j$ ($j=1,\ldots,n$), divided by
 $n+1$; and $v_i$ is defined in the same way but using the $y_i$. The rank
 of the smallest element in a set is $1$. The $u_i$ and 
 $v_i$ are called *normalized ranks* of the $x_i$ and $y_i$; they relate to 
@@ -191,7 +191,7 @@ methods for Q1 below, sections \ref{Background} and \ref{Methods}).
 Although copulas can be used to model the entire
 complex dependence structure of data, we have found tail associations to
 be a useful component of that structure, so tail association 
-is a main focus of this paper. We give four examples below which
+is a main focus of this paper. We give four examples, below, which
 illustrate some of the ecological meaning of tail associations.
 
 The goal of this paper is to explore the potential for 
@@ -203,7 +203,7 @@ Readers can find additional abbreviated [@Anderson2018; @Genest2007]
 and comprehensive [@nelsen2006_copula; @joe2014_dependence; @MaiScherer2017]
 introductions elsewhere. Copulas have already been used effectively 
 in a few studies to illuminate ecological phenomena 
-[@Valpine2014; @Anderson2018; @Popovic2018], but such usage is
+[@Valpine2014; @Anderson2018; @Popovic2019], but such usage is
 still rare. Whereas @Anderson2018 provide a specific method, based
 on copulas, for important problems of the 
 analysis of multivariate population count data,
@@ -294,7 +294,7 @@ fundamentally based on associations. However,
 examination of tail associations may
 be combined with biological reasoning to rule out
 some causal hypotheses which could not previously be eliminated. 
-@Popovic2018 used copulas to illuminate causal relationships
+@Popovic2019 used copulas to illuminate causal relationships
 between species. 
 
 A fourth reason why we may expect an understanding of tail associations and complex 
@@ -343,7 +343,7 @@ by analyzing several datasets, including
 environmental, species-trait, phenological, population, community, and 
 ecosystem functioning data, selected to span multiple 
 sub-fields and organizational levels of ecology. 
-We address Q2 (sections \ref{Causes} through \ref{Results_Q2}), using 
+We address Q2 (sections \ref{Causes} through \ref{Results_Q2}) using 
 simple models. We address Q3 (sections \ref{Consequences} through \ref{Results_Q3}) using 
 both data and models. Section \ref{Discussion} is the Discussion.
 Multiple analyses are brought to bear on each question, and these
@@ -353,7 +353,7 @@ Copula approaches have been used to great effect in neuroscience [@onken2009],
 bioinformatics [@Kim2008], medical research [@Emura2016], direct study of environmental 
 variables [@Serinaldi2008; @She2018; @Goswami2018; @li2013], and finance [@Li2000],
 and have also been used effectively, but rarely so far, in ecology [@Valpine2014; 
-@Anderson2018; @Popovic2018]. 
+@Anderson2018; @Popovic2019]. 
 We argue that benefits of wider use of
 copula descriptions of dependence in ecology will be substantial.
 
@@ -513,7 +513,7 @@ $\left[  \reumax(u^{-p}+v^{-p}-1,0)\right]^{-1/p}$, for parameter $p$; though th
 less direct intuition than do example pdfs (Fig. \ref{figped_C}). Higher values of the parameter,
 $p$ produce copulas with higher Kendall or Spearman correlation. The survival
 Clayton family is the symmetric opposite of the Clayton family, showing
-stronger right- than left tail association (Fig. \ref{SM-figped_SC}). The BB1 copula 
+stronger right- than left-tail association (Fig. \ref{SM-figped_SC}). The BB1 copula 
 family is a two-parameter family, thereby providing more flexibility: for some parameters
 BB1 copulas have stronger left- than right-tail association, and for others the reverse
 (Fig. \ref{figped_BB1}). See @nelsen2006_copula, @joe2014_dependence and 
@@ -548,7 +548,7 @@ introduce nonparametric measures of tail association.
 Plots using normalized ranks were proposed in the Introduction as being conceptually
 similar to copulas; we explain the connection. As stated above, the copula associated
 with a random variable $(X,Y)$ is the cdf of the random variable
-$(F_X(X),F_Y(Y))$. Given a sample $(x_i,y_i)$, $i=1,\ldots,n$, from $(X,Y)$, let $\hat{F}_X$ and
+$(F_X(X),F_Y(Y))$. Given a sample $(x_i,y_i)$, $i=1,\ldots,n$ from $(X,Y)$, let $\hat{F}_X$ and
 $\hat{F}_Y$ be the empirical cdfs associated with the $x_i$ and $y_i$, respectively.
 These are step functions of $x$ and $y$, respectively, that start at $0$ for low values of 
 $x$ and $y$ and jump by $1/n$
@@ -563,8 +563,8 @@ $n/(n+1)$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ tim
 $n/(n+1)$. So the normalized rank in turn approximates the empirical cdf and therefore 
 the cdf. Thus the normalized rank pairs $(u_i,v_i)$ for $i=1,\ldots,n$ can be 
 regarded as approximate samples from the random variable $(F_X(X),F_Y(Y))$, 
-which is the random variable associated with the copula of $(X,Y)$.
-The scatterplot of $v_i$ versus $u_i$ can be used to infer aspects of copula 
+which is the random variable associated with the copula of $(X,Y)$. The scatterplot 
+of $v_i$ versus $u_i$ can be used to infer aspects of copula 
 structure (see section \ref{Methods} below).
 
 \begin{figure}[!h]
@@ -650,7 +650,7 @@ for 14 locations (Fig. \ref{SM-fig_plankton_map})
 in the North Sea and British seas for 22 taxa (Table \ref{SM-tab_plankton_info}) for the 
 56 years 1958 to 2013. The locations are $2^\circ$ by $2^\circ$ grid cells.
 These data were computed from the Continuous Plankton Recorder survey of the 
-UK Marine Biological Survey.
+UK Marine Biological Association.
 Community-level data, obtained from the Cedar Creek Ecosystem Science Reserve, were 
 plant aboveground biomass [@ccdataple120] and Shannon's diversity index (computed from plant 
 species percent cover data [@ccdatapce120]) for `r nrow(d_cc[[5]])` plots [@ccdataplotse120], 
@@ -2162,7 +2162,7 @@ and Appendices \ref{SM-Consequence_TL_simulation} and
 We showed that non-normal copula structure and asymmetric tail associations are 
 common across multiple sub-disciplines
 in ecology, although these facets of data are only occasionally 
-accounted for [@Valpine2014; @Anderson2018; @Popovic2018]. We hypothesized 
+accounted for [@Valpine2014; @Anderson2018; @Popovic2019]. We hypothesized 
 mechanisms that may cause non-normal copula structures and asymmetric tail associations;
 we discuss below how commonly some of our
 mechanisms may operate. 
@@ -2389,7 +2389,7 @@ delayed density dependence, dispersal, population stage structure, trophic
 interactions, etc.; and we did not comprehensively 
 explore parameter space for our models. We re-emphasize 
 that fuller explorations, in future work,
-of some of our models and of variant model may be informative. 
+of some of our models and of variant models may be informative. 
 We hope by enumerating a few potential mechanisms of copula structure
 we will inspire additional research on the
 potentially numerous mechanisms that may operate in diverse datasets,

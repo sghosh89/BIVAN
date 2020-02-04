@@ -437,8 +437,8 @@ Plotter_Cause4copula_stat<-function(res){
   pdf(paste0(resloc,"common_legend_cause4copula_stat.pdf",sep=""),height=1,width=15)
   op<-par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0))
   plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-  legend("center", c("input noise copula","model output copula", "p-value(paired t-test)"), col = c("dimgrey", "black", "black"),
-         cex = 2.5, pch = c(1, 1, 2), xpd = TRUE, horiz = T, inset = c(0,0), text.col = c("dimgrey", "black", "black"),
+  legend("center", c("input noise copula","model output copula", "p-value(paired t-test)"), col = c("grey70", "black", "black"),
+         pt.lwd=4.5, cex = 2.5, pch = c(1, 1, 2), xpd = TRUE, horiz = T, inset = c(0,0), text.col = c("grey70", "black", "black"),
          bty = "n")
   par(op)
   dev.off()

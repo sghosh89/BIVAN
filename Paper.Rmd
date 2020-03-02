@@ -559,8 +559,8 @@ $\{y_i : i=1,\dots,n\}$, divided
 by $n$. For large $n$, $\hat{F}_X(x_i)$ and $\hat{F}_Y(y_i)$ 
 approximate the cdfs $F_X$ and $F_Y$, respectively. 
 But $\hat{F}_X(x_i)$ equals the normalized rank of $x_i$ times
-$n/(n+1)$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ times
-$n/(n+1)$. So the normalized rank in turn approximates the empirical cdf and therefore 
+$(n+1)/n$, and likewise $\hat{F}_Y(y_i)$ equals the normalized rank of $y_i$ times
+$(n+1)/n$. So the normalized rank in turn approximates the empirical cdf and therefore 
 the cdf. Thus the normalized rank pairs $(u_i,v_i)$ for $i=1,\ldots,n$ can be 
 regarded as approximate samples from the random variable $(F_X(X),F_Y(Y))$, 
 which is the random variable associated with the copula of $(X,Y)$. The scatterplot 
@@ -1055,7 +1055,7 @@ tab_multivar_summary<-readRDS("./Results/tab_multivar_summary.RDS")
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=6.5in]{./Results/BivarDataPlot.pdf}
-\caption{Upper panels show raw data plots for (A) $\log_{10}$(soil C) and $\log_{10}$(soil N) data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
+\caption{Upper panels show raw data plots for (A) $\log_{10}$(soil N) vs. $\log_{10}$(soil C) data, (B) $\log_{10}$(basal metabolic rate (BMR)) vs. $\log_{10}$(body mass) 
 for birds, (C) the same for mammals, and (D) above-ground plant biomass vs. Shannon's index from Cedar Creek. Bottom panels show the corresponding normalized rank plots. See section \ref{Data} for units used in upper panels. \label{fig_biv_multi_raw_cop}}
 \end{center}
 \end{figure}
